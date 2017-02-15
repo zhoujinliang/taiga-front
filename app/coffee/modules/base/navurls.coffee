@@ -59,7 +59,7 @@ module.service("$tgNavUrls", NavigationUrlsService)
 ## Navigation Urls Directive
 #############################################################################
 
-NavigationUrlsDirective = ($navurls, $auth, $q, $location, lightboxService) ->
+NavigationUrlsDirective = ($navurls, $auth, $q, $location, lightboxService, rs) ->
     # Example:
     # link(tg-nav="project-backlog:project='sss',")
 
@@ -110,6 +110,37 @@ NavigationUrlsDirective = ($navurls, $auth, $q, $location, lightboxService) ->
                 options[key] = $scope.$eval(value)
             return [name, options]
 
+    oldGetByRef = rs.userstories.getByRef
+
+    memo = {}
+
+    rs.userstories.getByRef = (projectId, ref) ->
+        return new Promise (resolve, reject) ->
+            date = new Date()
+            time = date.getTime()
+
+            key = "us-get-by-ref-" + projectId + ref
+
+            if !memo[key]
+                oldGetByRef(projectId, ref).then (result) ->
+                    memo[key] = {
+                        result: result,
+                        time: time
+                    }
+
+                    resolve(memo[key].result)
+
+            else
+                resolve(memo[key].result)
+
+
+    optimisticClick = (url,  $scope) ->
+        if url[0] == "project-userstories-detail"
+            console.log url
+            console.log  $scope.$eval("project.id")
+            #rs.userstories.getByRef(url[1])
+
+
     link = ($scope, $el, $attrs) ->
         if $el.is("a")
             $el.attr("href", "#")
@@ -117,8 +148,10 @@ NavigationUrlsDirective = ($navurls, $auth, $q, $location, lightboxService) ->
         $el.on "mouseenter", (event) ->
             target = $(event.currentTarget)
 
-            if !target.data("fullUrl") || $attrs.tgNavGetParams != target.data("params")
-                parseNav($attrs.tgNav, $scope).then (result) ->
+            parseNav($attrs.tgNav, $scope).then (result) ->
+                optimisticClick(result,  $scope)
+
+                if !target.data("fullUrl") || $attrs.tgNavGetParams != target.data("params")
                     [name, options] = result
                     user = $auth.getUser()
                     options.user = user.username if user
@@ -164,4 +197,4 @@ NavigationUrlsDirective = ($navurls, $auth, $q, $location, lightboxService) ->
 
     return {link: link}
 
-module.directive("tgNav", ["$tgNavUrls", "$tgAuth", "$q", "$tgLocation", "lightboxService", NavigationUrlsDirective])
+module.directive("tgNav", ["$tgNavUrls", "$tgAuth", "$q", "$tgLocation", "lightboxService", "$tgResources", "tgProjectsService", NavigationUrlsDirective])
