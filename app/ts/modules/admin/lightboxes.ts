@@ -24,6 +24,7 @@
 
 import {debounce} from "../../utils"
 import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module("taigaKanban");
 
@@ -84,6 +85,13 @@ class ChangeOwnerLightboxController {
     users:any
     q:string
     commentOpen:boolean
+    activeUsers:any
+    limit:any
+    currentOwnerId:any
+    selected:any
+    loading:any
+    projectId:any
+    comment:any
 
     static initClass() {
         this.prototype.limit = 3;

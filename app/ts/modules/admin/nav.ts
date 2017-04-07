@@ -22,6 +22,8 @@
  * File: modules/admin/nav.coffee
  */
 
+import * as angular from "angular"
+
 let AdminNavigationDirective = function() {
     let link = function($scope, $el, $attrs) {
         let section = $attrs.tgAdminNavigation;

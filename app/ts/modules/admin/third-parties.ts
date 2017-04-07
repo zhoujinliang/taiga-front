@@ -22,12 +22,12 @@
  * File: modules/admin/third-parties.coffee
  */
 
-let { taiga } = this;
-
-let { mixOf } = this.taiga;
-let { bindMethods } = this.taiga;
-let { debounce } = this.taiga;
-let { timeout } = this.taiga;
+import {mixOf, bindMethods, debounce, timeout} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin, FiltersMixin} from "../controllerMixins"
+import * as angular from "angular"
+import * as moment from "moment"
+import * as _ from "lodash"
 
 let module = angular.module("taigaAdmin");
 
@@ -36,7 +36,18 @@ let module = angular.module("taigaAdmin");
 //# Webhooks
 //############################################################################
 
-class WebhooksController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.FiltersMixin) {
+class WebhooksController extends mixOf(Controller, PageMixin, FiltersMixin) {
+    scope: angular.IScope
+    repo:any
+    rs:any
+    params:any
+    location:any
+    navUrls:any
+    appMetaService:any
+    translate:any
+    errorHandlingService:any
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -53,6 +64,7 @@ class WebhooksController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.
     }
 
     constructor(scope, repo, rs, params, location, navUrls, appMetaService, translate, errorHandlingService, projectService) {
+        super()
         this.scope = scope;
         this.repo = repo;
         this.rs = rs;
@@ -208,7 +220,7 @@ let WebhookDirective = function($rs, $repo, $confirm, $loading, $translate) {
                 return save(target);
             } else if (event.keyCode === 27) {
                 target = angular.element(event.currentTarget);
-                return cancel(target);
+                return cancel();
             }
         });
 
@@ -365,7 +377,15 @@ module.directive("tgNewWebhook", ["$tgResources", "$tgRepo", "$tgConfirm", "$tgL
 //# Github Controller
 //############################################################################
 
-class GithubController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.FiltersMixin) {
+class GithubController extends mixOf(Controller, PageMixin, FiltersMixin) {
+    scope: angular.IScope
+    repo:any
+    rs:any
+    params:any
+    appMetaService:any
+    translate:any
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -379,6 +399,7 @@ class GithubController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
     }
 
     constructor(scope, repo, rs, params, appMetaService, translate, projectService) {
+        super()
         this.scope = scope;
         this.repo = repo;
         this.rs = rs;
@@ -431,7 +452,15 @@ module.controller("GithubController", GithubController);
 //# Gitlab Controller
 //############################################################################
 
-class GitlabController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.FiltersMixin) {
+class GitlabController extends mixOf(Controller, PageMixin, FiltersMixin) {
+    scope: angular.IScope
+    repo:any
+    rs:any
+    params:any
+    appMetaService:any
+    translate:any
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -445,6 +474,7 @@ class GitlabController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
     }
 
     constructor(scope, repo, rs, params, appMetaService, translate, projectService) {
+        super()
         this.scope = scope;
         this.repo = repo;
         this.rs = rs;
@@ -500,7 +530,15 @@ module.controller("GitlabController", GitlabController);
 //# Bitbucket Controller
 //############################################################################
 
-class BitbucketController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.FiltersMixin) {
+class BitbucketController extends mixOf(Controller, PageMixin, FiltersMixin) {
+    scope: angular.IScope
+    repo:any
+    rs:any
+    params:any
+    appMetaService:any
+    translate:any
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -514,6 +552,7 @@ class BitbucketController extends mixOf(taiga.Controller, taiga.PageMixin, taiga
     }
 
     constructor(scope, repo, rs, params, appMetaService, translate, projectService) {
+        super()
         this.scope = scope;
         this.repo = repo;
         this.rs = rs;
@@ -735,7 +774,15 @@ module.directive("tgValidOriginIps", ValidOriginIpsDirective);
 //# Gogs Controller
 //############################################################################
 
-class GogsController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.FiltersMixin) {
+class GogsController extends mixOf(Controller, PageMixin, FiltersMixin) {
+    scope: angular.IScope
+    repo:any
+    rs:any
+    params:any
+    appMetaService:any
+    translate:any
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -749,6 +796,7 @@ class GogsController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Filt
     }
 
     constructor(scope, repo, rs, params, appMetaService, translate, projectService) {
+        super()
         this.scope = scope;
         this.repo = repo;
         this.rs = rs;
