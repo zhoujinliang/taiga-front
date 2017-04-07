@@ -22,10 +22,10 @@
  * File: modules/backlog/main.coffee
  */
 
-import {mixOf, toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods} from "../../utils"
+import {toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods} from "../../utils"
 import {generateHash} from "../../app"
 import {Controller} from "../../classes"
-import {PageMixin, FiltersMixin, UsFiltersMixin} from "../controllerMixins"
+import {UsFiltersMixin} from "../controllerMixins"
 import * as _ from "lodash"
 import * as angular from "angular"
 import * as moment from "moment"
@@ -36,7 +36,7 @@ let module = angular.module("taigaBacklog");
 //# Backlog Controller
 //############################################################################
 
-class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFiltersMixin) {
+class BacklogController extends UsFiltersMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -68,6 +68,7 @@ class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFil
     activeFilters:any
     displayVelocity:any
     forecastedStories:any
+    loadingUserstories:boolean
 
     static initClass() {
         this.$inject = [
@@ -215,7 +216,7 @@ class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFil
         });
 
         this.scope.$on("usform:edit:success", (event, data) => {
-            let index = _.findIndex(this.scope.userstories, us => us.id === data.id);
+            let index = _.findIndex(this.scope.userstories, (us:any) => us.id === data.id);
 
             this.scope.userstories[index] = data;
 
@@ -259,9 +260,9 @@ class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFil
     toggleVelocityForecasting() {
         this.displayVelocity = !this.displayVelocity;
         if (!this.displayVelocity) {
-            this.scope.visibleUserStories = _.map(this.scope.userstories, it => it.ref);
+            this.scope.visibleUserStories = _.map(this.scope.userstories, (it:any) => it.ref);
         } else {
-            this.scope.visibleUserStories = _.map(this.forecastedStories, it => it.ref);
+            this.scope.visibleUserStories = _.map(this.forecastedStories, (it:any) => it.ref);
         }
         return scopeDefer(this.scope, () => {
             return this.scope.$broadcast("userstories:loaded");
@@ -351,7 +352,7 @@ class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFil
     }
 
     openSprints() {
-        return _.filter(this.scope.sprints, sprint => !sprint.closed).reverse();
+        return _.filter(this.scope.sprints, (sprint:any) => !sprint.closed).reverse();
     }
 
     loadAllPaginatedUserstories() {
@@ -390,7 +391,7 @@ class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFil
 
             // NOTE: Fix order of USs because the filter orderBy does not work propertly in the partials files
             this.scope.userstories = this.scope.userstories.concat(_.sortBy(userstories, "backlog_order"));
-            this.scope.visibleUserStories = _.map(this.scope.userstories, it => it.ref);
+            this.scope.visibleUserStories = _.map(this.scope.userstories, (it:any) => it.ref);
 
             for (let it of Array.from(this.scope.userstories)) {
                 this.backlogOrder[it.id] = it.backlog_order;
@@ -477,7 +478,7 @@ class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFil
 
     prepareBulkUpdateData(uses, field) {
          if (field == null) { field = "backlog_order"; }
-         return _.map(uses, x => ({"us_id": x.id, "order": x[field]}));
+         return _.map(uses, (x:any) => ({"us_id": x.id, "order": x[field]}));
      }
 
     // --move us api behavior--
@@ -512,7 +513,7 @@ class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFil
             if (newSprintId === null) { // From sprint to backlog
                 for (key = 0; key < usList.length; key++) { // delete from sprint userstories
                     us = usList[key];
-                    _.remove(sprint.user_stories, it => it.id === us.id);
+                    _.remove(sprint.user_stories, (it:any) => it.id === us.id);
                 }
 
                 orderField = "backlog_order";
@@ -524,7 +525,7 @@ class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFil
                 this.scope.userstories = this.scope.userstories.concat(usList);
             } else { // From backlog to sprint
                 for (us of Array.from(usList)) { // delete from sprint userstories
-                    _.remove(this.scope.userstories, it => it.id === us.id);
+                    _.remove(this.scope.userstories, (it:any) => it.id === us.id);
                 }
 
                 orderField = "sprint_order";
@@ -541,8 +542,8 @@ class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFil
                 orderField = "backlog_order";
                 orderList = this.backlogOrder;
 
-                list = _.filter(this.scope.userstories, listIt => // Remove moved US from list
-                    !_.find(usList, moveIt => listIt.id === moveIt.id)
+                list = _.filter(this.scope.userstories, (listIt:any) => // Remove moved US from list
+                    !_.find(usList, (moveIt:any) => listIt.id === moveIt.id)
                 );
 
                 beforeDestination = _.slice(list, 0, newUsIndex);
@@ -551,8 +552,8 @@ class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFil
                 orderField = "sprint_order";
                 orderList = this.milestonesOrder[sprint.id];
 
-                list = _.filter(newSprint.user_stories, listIt => // Remove moved US from list
-                    !_.find(usList, moveIt => listIt.id === moveIt.id)
+                list = _.filter(newSprint.user_stories, (listIt:any) => // Remove moved US from list
+                    !_.find(usList, (moveIt:any) => listIt.id === moveIt.id)
                 );
 
                 beforeDestination = _.slice(list, 0, newUsIndex);
@@ -578,7 +579,7 @@ class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFil
             // order, the backend doens't know after which one do you want to drop
             // the USs
             if (previousWithTheSameOrder.length > 1) {
-                setPreviousOrders = _.map(previousWithTheSameOrder, it => ({us_id: it.id, order: orderList[it.id]}));
+                setPreviousOrders = _.map(previousWithTheSameOrder, (it:any) => ({us_id: it.id, order: orderList[it.id]}));
             }
         }
 
@@ -601,15 +602,15 @@ class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFil
         }
 
         // refresh order
-        this.scope.userstories = _.sortBy(this.scope.userstories, it => this.backlogOrder[it.id]);
-        this.scope.visibleUserStories = _.map(this.scope.userstories, it => it.ref);
+        this.scope.userstories = _.sortBy(this.scope.userstories, (it:any) => this.backlogOrder[it.id]);
+        this.scope.visibleUserStories = _.map(this.scope.userstories, (it:any) => it.ref);
 
         for (sprint of Array.from(this.scope.sprints)) {
-            sprint.user_stories = _.sortBy(sprint.user_stories, it => this.milestonesOrder[sprint.id][it.id]);
+            sprint.user_stories = _.sortBy(sprint.user_stories, (it:any) => this.milestonesOrder[sprint.id][it.id]);
         }
 
         for (sprint of Array.from(this.scope.closedSprints)) {
-            sprint.user_stories = _.sortBy(sprint.user_stories, it => this.milestonesOrder[sprint.id][it.id]);
+            sprint.user_stories = _.sortBy(sprint.user_stories, (it:any) => this.milestonesOrder[sprint.id][it.id]);
         }
 
         // saving
@@ -711,7 +712,7 @@ class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFil
     findCurrentSprint() {
       let currentDate = new Date().getTime();
 
-      return  _.find(this.scope.sprints, function(sprint) {
+      return  _.find(this.scope.sprints, function(sprint:any) {
           let start = moment(sprint.estimated_start, 'YYYY-MM-DD').format('x');
           let end = moment(sprint.estimated_finish, 'YYYY-MM-DD').format('x');
 
@@ -793,7 +794,7 @@ let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
             // Calculating the us's to be modified
             let ussDom = $el.find(".backlog-table-body input:checkbox:checked");
 
-            return _.map(ussDom, function(item) {
+            return _.map(ussDom, function(item:any) {
                 item =  $(item).closest('.tg-scope');
                 let itemScope = item.scope();
                 itemScope.us.milestone = $scope.sprints[0].id;
@@ -807,7 +808,7 @@ let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
             // Remove them from backlog
             $scope.userstories = ussCurrent.without.apply(ussCurrent, selectedUss).value();
 
-            let extraPoints = _.map(selectedUss, (v, k) => v.total_points);
+            let extraPoints = _.map(selectedUss, (v:any, k:any) => v.total_points);
             let totalExtraPoints =  _.reduce(extraPoints, (acc, num) => acc + num);
 
             // Add them to current sprint
@@ -816,7 +817,7 @@ let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
             // Update the total of points
             sprint.total_points += totalExtraPoints;
 
-            let data = _.map(selectedUss, us =>
+            let data = _.map(selectedUss, (us:any) =>
                 ({
                     us_id: us.id,
                     order: us.sprint_order
@@ -911,7 +912,7 @@ let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
         return $el.on("click", ".forecasting-add-sprint", function(event) {
             let ussToMoveList = $ctrl.forecastedStories;
             if ($scope.currentSprint) {
-                ussToMove = _.map(ussToMoveList, function(us, index) {
+                ussToMove = _.map(ussToMoveList, function(us:any, index:any) {
                     us.milestone = $scope.currentSprint.id;
                     us.order = index;
                     return us;
@@ -919,7 +920,7 @@ let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
 
                 return $scope.$apply(_.partial(moveToCurrentSprint, ussToMove));
             } else {
-                ussToMove = _.map(ussToMoveList, function(us, index) {
+                ussToMove = _.map(ussToMoveList, function(us:any, index:any) {
                     us.order = index;
                     return us;
                 });
@@ -1231,7 +1232,7 @@ let ToggleBurndownVisibility = function($storage) {
 
         let toggleGraph = function() {
             if ($scope.isBurndownGraphCollapsed) {
-                hide(firstLoad);
+                hide();
             } else {
                 show(firstLoad);
             }
@@ -1283,14 +1284,14 @@ let BurndownBacklogGraphDirective = function($translate) {
                 show: false
             }
         });
-        let optimal_line = _.map(dataToDraw.milestones, ml => ml.optimal);
+        let optimal_line = _.map(dataToDraw.milestones, (ml:any) => ml.optimal);
         data.push({
             data: _.zip(milestonesRange, optimal_line),
             lines: {
                 fillColor : "rgba(120,120,120,0.2)"
             }
         });
-        let evolution_line = _.filter(_.map(dataToDraw.milestones, ml => ml.evolution), evolution => evolution != null);
+        let evolution_line = _.filter(_.map(dataToDraw.milestones, (ml:any) => ml.evolution), evolution => evolution != null);
         data.push({
             data: _.zip(milestonesRange, evolution_line),
             lines: {
