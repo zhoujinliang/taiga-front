@@ -22,14 +22,30 @@
  * File: modules/events.coffee
  */
 
-let { taiga } = this;
-let { startswith } = this.taiga;
-let { bindMethods } = this.taiga;
+import {startswith, bindMethods} from "../utils"
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module("taigaEvents", []);
 
 
 class EventsService {
+    win:any
+    log:any
+    config:any
+    auth:any
+    liveAnnouncementService:any
+    rootScope: angular.IScope
+    sessionId:any
+    subscriptions:any
+    connected:any
+    error:any
+    pendingMessages:any
+    missedHeartbeats:any
+    heartbeatInterval:any
+    ws:any
+    reconnectTryInterval:any
+
     constructor(win, log, config, auth, liveAnnouncementService, rootScope) {
         this.processMessage = this.processMessage.bind(this);
         this.win = win;
@@ -278,8 +294,9 @@ class EventsService {
 
 
 class EventsProvider {
+    sessionId:any
+
     static initClass() {
-    
         this.prototype.$get.$inject = [
             "$window",
             "$log",

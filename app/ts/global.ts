@@ -1,2 +1,2 @@
-export declare var angular:any;
+export declare var autoScroll:any;
 

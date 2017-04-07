@@ -22,4 +22,6 @@
  * File: modules/kanban.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaKanban", []);

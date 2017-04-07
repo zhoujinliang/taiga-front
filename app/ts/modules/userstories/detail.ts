@@ -22,12 +22,12 @@
  * File: modules/userstories/detail.coffee
  */
 
-let { taiga } = this;
+import {mixOf, groupBy, bindOnce, bindMethods} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin} from "../controllerMixins"
 
-let { mixOf } = this.taiga;
-let { groupBy } = this.taiga;
-let { bindOnce } = this.taiga;
-let { bindMethods } = this.taiga;
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module("taigaUserStories");
 
@@ -35,7 +35,26 @@ let module = angular.module("taigaUserStories");
 //# User story Detail Controller
 //############################################################################
 
-class UserStoryDetailController extends mixOf(taiga.Controller, taiga.PageMixin) {
+class UserStoryDetailController extends mixOf(Controller, PageMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    params:any
+    q:any
+    location:any
+    log:any
+    appMetaService:any
+    navUrls:any
+    analytics:any
+    translate:any
+    modelTransform:any
+    errorHandlingService:any
+    configService:any
+    projectService:any
+    wysiwigService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -62,6 +81,7 @@ class UserStoryDetailController extends mixOf(taiga.Controller, taiga.PageMixin)
     constructor(scope, rootscope, repo, confirm, rs, params, q, location,
                   log, appMetaService, navUrls, analytics, translate, modelTransform,
                   errorHandlingService, configService, projectService, wysiwigService) {
+        super()
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -291,7 +311,7 @@ class UserStoryDetailController extends mixOf(taiga.Controller, taiga.PageMixin)
             let publishTitle = this.translate.instant("US.TRIBE.PUBLISH_MORE_INFO_TITLE");
             let image = $('<img />')
                 .attr({
-                    'src': `/${window._version}/images/monster-fight.png`,
+                    'src': `/${(<any>window)._version}/images/monster-fight.png`,
                     'alt': this.translate.instant("US.TRIBE.PUBLISH_MORE_INFO_TITLE")
                 });
             let text = this.translate.instant("US.TRIBE.PUBLISH_MORE_INFO_TEXT");

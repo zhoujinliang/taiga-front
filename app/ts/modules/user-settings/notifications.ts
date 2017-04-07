@@ -22,9 +22,12 @@
  * File: modules/user-settings/notifications.coffee
  */
 
-let { taiga } = this;
-let { mixOf } = this.taiga;
-let { bindOnce } = this.taiga;
+import {mixOf, bindOnce} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin} from "../controllerMixins"
+
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module("taigaUserSettings");
 
@@ -33,7 +36,19 @@ let module = angular.module("taigaUserSettings");
 //# User settings Controller
 //############################################################################
 
-class UserNotificationsController extends mixOf(taiga.Controller, taiga.PageMixin) {
+class UserNotificationsController extends mixOf(Controller, PageMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    params:any
+    q:any
+    location:any
+    navUrls:any
+    auth:any
+    errorHandlingService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -51,6 +66,7 @@ class UserNotificationsController extends mixOf(taiga.Controller, taiga.PageMixi
     }
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, navUrls, auth, errorHandlingService) {
+        super()
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;

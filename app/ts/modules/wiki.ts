@@ -22,4 +22,6 @@
  * File: modules/wiki.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaWiki", []);

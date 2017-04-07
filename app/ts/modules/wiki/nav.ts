@@ -22,11 +22,11 @@
  * File: modules/wiki/detail.coffee
  */
 
-let { taiga } = this;
+import {groupBy, bindOnce} from "../../utils"
+import {autoScroll} from "../../global"
 
-let { mixOf } = this.taiga;
-let { groupBy } = this.taiga;
-let { bindOnce } = this.taiga;
+import * as angular from "angular"
+import * as dragula from "dragula"
 
 let module = angular.module("taigaWiki");
 

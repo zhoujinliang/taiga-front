@@ -22,8 +22,12 @@
  * File: modules/auth.coffee
  */
 
-let { taiga } = this;
-let { debounce } = this.taiga;
+import {debounce} from "../utils"
+import {Service} from "../classes"
+
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as Immutable from "immutable"
 
 let module = angular.module("taigaAuth", ["taigaResources"]);
 
@@ -66,7 +70,20 @@ module.controller('LoginPage', LoginPage);
 //# Authentication Service
 //############################################################################
 
-class AuthService extends taiga.Service {
+class AuthService extends Service {
+    rootscope: angular.IScope
+    storage:any
+    model:any
+    rs:any
+    http:any
+    urls:any
+    config:any
+    translate:any
+    currentUserService:any
+    themeService:any
+    _currentTheme:any
+    userData:any
+
     static initClass() {
         this.$inject = ["$rootScope",
                      "$tgStorage",
@@ -82,6 +99,7 @@ class AuthService extends taiga.Service {
 
     constructor(rootscope, storage, model, rs, http, urls, config, translate, currentUserService,
                   themeService) {
+        super()
         this.rootscope = rootscope;
         this.storage = storage;
         this.model = model;
@@ -377,7 +395,7 @@ let LoginDirective = function($auth, $confirm, $location, $config, $routeParams,
 
         $el.on("submit", "form", submit);
 
-        window.prerenderReady = true;
+        (<any>window).prerenderReady = true;
 
         return $scope.$on("$destroy", () => $el.off());
     };
@@ -443,7 +461,7 @@ let RegisterDirective = function($auth, $confirm, $location, $navUrls, $config, 
 
         $scope.$on("$destroy", () => $el.off());
 
-        return window.prerenderReady = true;
+        return (<any>window).prerenderReady = true;
     };
 
     return {link};
@@ -492,7 +510,7 @@ let ForgotPasswordDirective = function($auth, $confirm, $location, $navUrls, $tr
 
         $scope.$on("$destroy", () => $el.off());
 
-        return window.prerenderReady = true;
+        return (<any>window).prerenderReady = true;
     };
 
     return {link};

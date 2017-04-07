@@ -22,4 +22,6 @@
  * File: modules/epics.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaEpics", []);
