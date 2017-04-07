@@ -22,9 +22,10 @@
  * File: modules/base/navurl.coffee
  */
 
-let { taiga } = this;
-let { trim } = this.taiga;
-let { bindOnce } = this.taiga;
+import {Service} from "../../../ts/classes"
+import {trim, bindOnce} from "../../../ts/utils"
+import * as _ from "lodash"
+import * as angular from "angular"
 
 let module = angular.module("taigaBase");
 
@@ -33,8 +34,10 @@ let module = angular.module("taigaBase");
 //# Navigation Urls Service
 //############################################################################
 
-class NavigationUrlsService extends taiga.Service {
+class NavigationUrlsService extends Service {
+    urls:any
     constructor() {
+        super()
         this.urls = {};
     }
 

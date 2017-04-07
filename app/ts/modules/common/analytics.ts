@@ -22,16 +22,32 @@
  * File: modules/common/analytics.coffee
  */
 
-let { taiga } = this;
+import {Service} from "../../../ts/classes"
+import * as _ from "lodash"
+import * as angular from "angular"
+
 let module = angular.module("taigaCommon");
 
+class AnalyticsService extends Service {
+    rootscope:any
+    log:any
+    config:any
+    win:any
+    doc:any
+    location:any
+    conf:any
+    accountId:any
+    pageEvent:any
+    trackRoutes:any
+    ignoreFirstPageLoad:any
+    initialized:boolean
 
-class AnalyticsService extends taiga.Service {
     static initClass() {
         this.$inject = ["$rootScope", "$log", "$tgConfig", "$window", "$document", "$location"];
     }
 
     constructor(rootscope, log, config, win, doc, location) {
+        super();
         this.rootscope = rootscope;
         this.log = log;
         this.config = config;

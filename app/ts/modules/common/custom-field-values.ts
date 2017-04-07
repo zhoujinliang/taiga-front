@@ -22,11 +22,13 @@
  * File: modules/common/custom-field-values.coffee
  */
 
-let { taiga } = this;
-let { bindMethods } = this.taiga;
-let { bindOnce } = this.taiga;
-let { debounce } = this.taiga;
-let { generateHash } = taiga;
+import {bindOnce, debounce, bindMethods} from "../../../ts/utils"
+import {generateHash} from "../../../ts/app"
+import {Controller} from "../../../ts/classes"
+import {PageMixin, FiltersMixin, UsFiltersMixin} from "../controllerMixins"
+import * as _ from "lodash"
+import * as angular from "angular"
+import * as moment from "moment"
 
 let module = angular.module("taigaCommon");
 
@@ -63,12 +65,26 @@ let TYPE_CHOICES = [
 
 
 
-class CustomAttributesValuesController extends taiga.Controller {
+class CustomAttributesValuesController extends Controller {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    rs:any
+    confirm:any
+    q:any
+    type:any
+    objectId:any
+    projectId:any
+    customAttributes:any
+    customAttributesValues:any
+    project:any
+
     static initClass() {
         this.$inject = ["$scope", "$rootScope", "$tgRepo", "$tgResources", "$tgConfirm", "$q"];
     }
 
     constructor(scope, rootscope, repo, rs, confirm, q) {
+        super()
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;

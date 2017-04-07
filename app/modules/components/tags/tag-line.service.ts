@@ -17,14 +17,20 @@
  * File: tag-line.service.coffee
  */
 
+import {Service} from "../../../ts/classes"
+import * as angular from "angular"
+import * as _ from "lodash"
+
 let module = angular.module('taigaCommon');
 
-class TagLineService extends taiga.Service {
+class TagLineService extends Service {
     static initClass() {
         this.$inject = [];
     }
 
-    constructor() {}
+    constructor() {
+        super()
+    }
 
     checkPermissions(myPermissions, projectPermissions) {
         return _.includes(myPermissions, projectPermissions);

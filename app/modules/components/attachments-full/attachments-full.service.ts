@@ -17,7 +17,22 @@
  * File: attachments-full.service.coffee
  */
 
-class AttachmentsFullService extends taiga.Service {
+import {Service} from "../../../ts/classes"
+import {defineImmutableProperty, patch} from "../../../ts/utils"
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as Immutable from "immutable"
+
+class AttachmentsFullService extends Service {
+    attachmentsService:any
+    rootScope:any
+    _attachments:any
+    _deprecatedsCount:any
+    _attachmentsVisible:any
+    _deprecatedsVisible:any
+    uploadingAttachments:any
+    attachments:any
+
     static initClass() {
         this.$inject = [
             "tgAttachmentsService",
@@ -26,6 +41,7 @@ class AttachmentsFullService extends taiga.Service {
     }
 
     constructor(attachmentsService, rootScope) {
+        super()
         this.attachmentsService = attachmentsService;
         this.rootScope = rootScope;
         this._attachments = Immutable.List();
@@ -34,10 +50,10 @@ class AttachmentsFullService extends taiga.Service {
         this._deprecatedsVisible = false;
         this.uploadingAttachments = [];
 
-        taiga.defineImmutableProperty(this, 'attachments', () => { return this._attachments; });
-        taiga.defineImmutableProperty(this, 'deprecatedsCount', () => { return this._deprecatedsCount; });
-        taiga.defineImmutableProperty(this, 'attachmentsVisible', () => { return this._attachmentsVisible; });
-        taiga.defineImmutableProperty(this, 'deprecatedsVisible', () => { return this._deprecatedsVisible; });
+        defineImmutableProperty(this, 'attachments', () => { return this._attachments; });
+        defineImmutableProperty(this, 'deprecatedsCount', () => { return this._deprecatedsCount; });
+        defineImmutableProperty(this, 'attachmentsVisible', () => { return this._attachmentsVisible; });
+        defineImmutableProperty(this, 'deprecatedsVisible', () => { return this._deprecatedsVisible; });
     }
 
     toggleDeprecatedsVisible() {
@@ -131,7 +147,7 @@ class AttachmentsFullService extends taiga.Service {
 
             return promises.push(this.attachmentsService.patch(attachment.getIn(['file', 'id']), type, patch));
         });
-            
+
         return Promise.all(promises).then(() => {
             this._attachments = attachments;
 
@@ -144,14 +160,14 @@ class AttachmentsFullService extends taiga.Service {
 
         let oldAttachment = this._attachments.get(index);
 
-        let patch = taiga.patch(oldAttachment.get('file'), toUpdateAttachment.get('file'));
+        let patchData = patch(oldAttachment.get('file'), toUpdateAttachment.get('file'));
 
         if (toUpdateAttachment.get('loading')) {
             this._attachments = this._attachments.set(index, toUpdateAttachment);
 
             return this.regenerate();
         } else {
-            return this.attachmentsService.patch(toUpdateAttachment.getIn(['file', 'id']), type, patch).then(() => {
+            return this.attachmentsService.patch(toUpdateAttachment.getIn(['file', 'id']), type, patchData).then(() => {
                 this._attachments = this._attachments.set(index, toUpdateAttachment);
 
                 return this.regenerate();

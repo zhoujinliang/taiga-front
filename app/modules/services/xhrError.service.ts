@@ -17,7 +17,13 @@
  * File: xhrError.service.coffee
  */
 
-class xhrError extends taiga.Service {
+import {Service} from "../../ts/classes"
+import * as angular from "angular"
+
+class xhrError extends Service {
+    q:any
+    errorHandlingService:any
+
     static initClass() {
         this.$inject = [
             "$q",
@@ -26,6 +32,7 @@ class xhrError extends taiga.Service {
     }
 
     constructor(q, errorHandlingService) {
+        super()
         this.q = q;
         this.errorHandlingService = errorHandlingService;
     }

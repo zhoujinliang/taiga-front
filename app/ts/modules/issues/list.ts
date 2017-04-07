@@ -22,17 +22,13 @@
  * File: modules/issues/list.coffee
  */
 
-let { taiga } = this;
+import {mixOf, groupBy, bindMethods, startswith, trim, bindOnce} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin, FiltersMixin} from "../controllerMixins"
+import * as angular from "angular"
+import * as Immutable from "immutable"
+import * as _ from "lodash"
 
-let { mixOf } = this.taiga;
-let { trim } = this.taiga;
-let { toString } = this.taiga;
-let { joinStr } = this.taiga;
-let { groupBy } = this.taiga;
-let { bindOnce } = this.taiga;
-let { debounceLeading } = this.taiga;
-let { startswith } = this.taiga;
-let { bindMethods } = this.taiga;
 
 let module = angular.module("taigaIssues");
 
@@ -40,7 +36,33 @@ let module = angular.module("taigaIssues");
 //# Issues Controller
 //############################################################################
 
-class IssuesController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.FiltersMixin) {
+class IssuesController extends mixOf(Controller, PageMixin, FiltersMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    urls:any
+    params:any
+    q:any
+    location:any
+    appMetaService:any
+    navUrls:any
+    events:any
+    analytics:any
+    translate:any
+    errorHandlingService:any
+    storage:any
+    filterRemoteStorageService:any
+    projectService:any
+    filtersHashSuffix:any
+    myFiltersHashSuffix:any
+    loadIssuesRequests:any
+    voting:any
+    filters:any
+    filterQ:any
+    customFilters:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -63,10 +85,10 @@ class IssuesController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
             "tgProjectService",
             "tgUserActivityService"
         ];
-    
+
         this.prototype.filtersHashSuffix = "issues-filters";
         this.prototype.myFiltersHashSuffix = "issues-my-filters";
-    
+
         // We need to guarantee that the last petition done here is the finally used
         // When searching by text loadIssues can be called fastly with different parameters and
         // can be resolved in a different order than generated
@@ -76,6 +98,7 @@ class IssuesController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
 
     constructor(scope, rootscope, repo, confirm, rs, urls, params, q, location, appMetaService,
                   navUrls, events, analytics, translate, errorHandlingService, storage, filterRemoteStorageService, projectService) {
+        super()
         this.loadIssues = this.loadIssues.bind(this);
         this.scope = scope;
         this.rootscope = rootscope;
@@ -165,7 +188,7 @@ class IssuesController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
     }
 
     saveCustomFilter(name) {
-        let filters = {};
+        let filters:any = {};
         let urlfilters = this.location.search();
         filters.tags = urlfilters.tags;
         filters.status = urlfilters.status;
@@ -187,7 +210,7 @@ class IssuesController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
 
         let urlfilters = this.location.search();
 
-        let loadFilters = {};
+        let loadFilters:any = {};
         loadFilters.project = this.scope.projectId;
         loadFilters.tags = urlfilters.tags;
         loadFilters.status = urlfilters.status;
@@ -485,7 +508,7 @@ let IssuesDirective = function($log, $location, $template, $compile) {
             $pagEl.show();
 
             let pages = [];
-            let options = {};
+            let options:any = {};
             options.pages = pages;
             options.showPrevious = ($scope.page > 1);
             options.showNext = !($scope.page === numPages);
@@ -671,7 +694,7 @@ let IssueStatusInlineEditionDirective = function($repo, $template, $rootscope) {
             );
         });
 
-        taiga.bindOnce($scope, "project", function(project) {
+        bindOnce($scope, "project", function(project) {
             $el.append(selectionTemplate({ 'statuses':  project.issue_statuses }));
             updateIssueStatus($el, issue, $scope.issueStatusById);
 
@@ -710,7 +733,7 @@ let IssueAssignedToInlineEditionDirective = function($repo, $rootscope, $transla
         let updateIssue = function(issue) {
             let ctx = {
                 name: $translate.instant("COMMON.ASSIGNED_TO.NOT_ASSIGNED"),
-                imgurl: `/${window._version}/images/unnamed.png`
+                imgurl: `/${(<any>window)._version}/images/unnamed.png`
             };
 
             let member = $scope.usersById[issue.assigned_to];
@@ -734,7 +757,7 @@ let IssueAssignedToInlineEditionDirective = function($repo, $rootscope, $transla
 
         $el.on("click", ".issue-assignedto", event => $rootscope.$broadcast("assigned-to:add", issue));
 
-        taiga.bindOnce($scope, "project", function(project) {
+        bindOnce($scope, "project", function(project) {
             // If the user has not enough permissions the click events are unbinded
             if (project.my_permissions.indexOf("modify_issue") === -1) {
                 $el.unbind("click");

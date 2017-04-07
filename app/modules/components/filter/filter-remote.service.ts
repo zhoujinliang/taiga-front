@@ -17,9 +17,16 @@
  * File: filter-utils.service.coffee
  */
 
-let { generateHash } = taiga;
+import {generateHash} from "../../../ts/app"
+import {Service} from "../../../ts/classes"
+import * as angular from "angular"
+import * as _ from "lodash"
 
-class FilterRemoteStorageService extends taiga.Service {
+class FilterRemoteStorageService extends Service {
+    q:any
+    urls:any
+    http:any
+
     static initClass() {
         this.$inject = [
             "$q",
@@ -29,6 +36,7 @@ class FilterRemoteStorageService extends taiga.Service {
     }
 
     constructor(q, urls, http) {
+        super()
         this.q = q;
         this.urls = urls;
         this.http = http;

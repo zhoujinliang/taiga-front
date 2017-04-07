@@ -17,16 +17,20 @@
  * File: projects.service.coffee
  */
 
-let { taiga } = this;
-let { groupBy } = this.taiga;
+import {Service} from "../../ts/classes"
+import {groupBy} from "../../ts/utils"
+import * as angular from "angular"
 
+class ProjectsService extends Service {
+    rs:any
+    projectUrl:any
 
-class ProjectsService extends taiga.Service {
     static initClass() {
         this.$inject = ["tgResources", "$projectUrl"];
     }
 
     constructor(rs, projectUrl) {
+        super()
         this.rs = rs;
         this.projectUrl = projectUrl;
     }

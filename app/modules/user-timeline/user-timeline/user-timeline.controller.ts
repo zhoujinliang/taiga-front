@@ -22,11 +22,21 @@
  * File: modules/profile/profile-timeline/profile-timeline.controller.coffee
  */
 
-let { taiga } = this;
+import {mixOf} from "../../../ts/utils"
+import {Controller} from "../../../ts/classes"
+import {PageMixin, FiltersMixin} from "../../../ts/modules/controllerMixins"
+import * as angular from "angular"
+import * as Immutable from "immutable"
 
-let { mixOf } = this.taiga;
+class UserTimelineController extends mixOf(Controller, PageMixin, FiltersMixin) {
+    userTimelineService:any
+    timelineList:any
+    scrollDisabled:any
+    timeline:any
+    projectId:any
+    currentUser:any
+    user:any
 
-class UserTimelineController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.FiltersMixin) {
     static initClass() {
         this.$inject = [
             "tgUserTimelineService"
@@ -34,6 +44,7 @@ class UserTimelineController extends mixOf(taiga.Controller, taiga.PageMixin, ta
     }
 
     constructor(userTimelineService) {
+        super()
         this.userTimelineService = userTimelineService;
         this.timelineList = Immutable.List();
         this.scrollDisabled = false;

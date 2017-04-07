@@ -17,9 +17,17 @@
  * File: home.service.coffee
  */
 
-let { groupBy } = this.taiga;
+import {Service} from "../../ts/classes"
+import {groupBy} from "../../ts/utils"
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as Immutable from "immutable"
 
-class HomeService extends taiga.Service {
+class HomeService extends Service {
+    navurls:any
+    rs:any
+    projectsService:any
+
     static initClass() {
         this.$inject = [
             "$tgNavUrls",
@@ -29,6 +37,7 @@ class HomeService extends taiga.Service {
     }
 
     constructor(navurls, rs, projectsService) {
+        super()
         this.navurls = navurls;
         this.rs = rs;
         this.projectsService = projectsService;

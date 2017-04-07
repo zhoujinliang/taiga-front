@@ -22,6 +22,7 @@
  * File: modules/base/model.coffee
  */
 
+import {Service} from "../../../ts/classes"
 import * as _ from "lodash"
 import * as angular from "angular"
 
@@ -190,9 +191,7 @@ export class Model {
 }
 
 
-let { taiga } = this;
-
-class ModelService extends taiga.Service {
+class ModelService extends Service {
     q:any
     urls:any
     storage:any
@@ -214,7 +213,7 @@ class ModelService extends taiga.Service {
 ModelService.initClass();
 
 function provider($q, $http, $gmUrls, $gmStorage) {
-    let service = {};
+    let service:any = {};
     service.make_model = function(name, data, cls, dataTypes) {
         if (cls == null) { cls = Model; }
         if (dataTypes == null) { dataTypes = {}; }

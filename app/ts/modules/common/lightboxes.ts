@@ -22,21 +22,27 @@
  * File: modules/common/lightboxes.coffee
  */
 
-let module = angular.module("taigaCommon");
+import {Service} from "../../../ts/classes"
+import {bindOnce, timeout, debounce, sizeFormat, trim} from "../../../ts/utils"
+import * as _ from "lodash"
+import * as angular from "angular"
+import * as Immutable from "immutable"
 
-let { bindOnce } = this.taiga;
-let { timeout } = this.taiga;
-let { debounce } = this.taiga;
-let { sizeFormat } = this.taiga;
-let { trim } = this.taiga;
+let module = angular.module("taigaCommon");
 
 //############################################################################
 //# Common Lightbox Services
 //############################################################################
 
 // the lightboxContent hide/show doesn't have sense because is an IE hack
-class LightboxService extends taiga.Service {
+class LightboxService extends Service {
+    animationFrame:any
+    q:any
+    rootScope: angular.IScope
+    onClose:any
+
     constructor(animationFrame, q, rootScope) {
+        super()
         this.animationFrame = animationFrame;
         this.q = q;
         this.rootScope = rootScope;
@@ -142,7 +148,7 @@ class LightboxService extends taiga.Service {
 module.service("lightboxService", ["animationFrame", "$q", "$rootScope", LightboxService]);
 
 
-class LightboxKeyboardNavigationService extends taiga.Service {
+class LightboxKeyboardNavigationService extends Service {
     stop() {
         let docEl = angular.element(document);
         return docEl.off(".keyboard-navigation");

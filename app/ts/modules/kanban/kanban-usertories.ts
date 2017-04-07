@@ -17,14 +17,28 @@
  * File: kanban-userstories.service.coffee
  */
 
-let { groupBy } = this.taiga;
+import {Service} from "../../../ts/classes"
+import * as _ from "lodash"
+import * as angular from "angular"
+import * as Immutable from "immutable"
 
-class KanbanUserstoriesService extends taiga.Service {
+class KanbanUserstoriesService extends Service {
+    userstoriesRaw:any
+    archivedStatus:any
+    statusHide:any
+    foldStatusChanged:any
+    usByStatus:any
+    project:any
+    usersById:any
+    archived:any
+    order:any
+
     static initClass() {
         this.$inject = [];
     }
 
     constructor() {
+        super()
         this.reset();
     }
 

@@ -17,9 +17,25 @@
  * File: external-app.controller.coffee
  */
 
-let { taiga } = this;
+import {Controller} from "../../ts/classes"
+import * as angular from "angular"
+import * as Immutable from "immutable"
 
-class ExternalAppController extends taiga.Controller {
+class ExternalAppController extends Controller {
+    routeParams:any
+    externalAppsService:any
+    window:any
+    currentUserService:any
+    location:any
+    navUrls:any
+    xhrError:any
+    loader:any
+    _state:any
+    _applicationId:any
+    _user:any
+    _application:any
+    loginWithAnotherUserUrl:any
+
     static initClass() {
         this.$inject = [
             "$routeParams",
@@ -34,7 +50,8 @@ class ExternalAppController extends taiga.Controller {
     }
 
     constructor(routeParams, externalAppsService, window, currentUserService, location,
-    navUrls, xhrError, loader) {
+                navUrls, xhrError, loader) {
+        super()
         this._redirect = this._redirect.bind(this);
         this._getApplicationToken = this._getApplicationToken.bind(this);
         this.createApplicationToken = this.createApplicationToken.bind(this);

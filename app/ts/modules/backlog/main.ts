@@ -22,16 +22,13 @@
  * File: modules/backlog/main.coffee
  */
 
-let { taiga } = this;
-
-let { mixOf } = this.taiga;
-let { toggleText } = this.taiga;
-let { scopeDefer } = this.taiga;
-let { bindOnce } = this.taiga;
-let { groupBy } = this.taiga;
-let { timeout } = this.taiga;
-let { bindMethods } = this.taiga;
-let { generateHash } = this.taiga;
+import {mixOf, toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods} from "../../utils"
+import {generateHash} from "../../app"
+import {Controller} from "../../classes"
+import {PageMixin, FiltersMixin, UsFiltersMixin} from "../controllerMixins"
+import * as _ from "lodash"
+import * as angular from "angular"
+import * as moment from "moment"
 
 let module = angular.module("taigaBacklog");
 
@@ -39,7 +36,39 @@ let module = angular.module("taigaBacklog");
 //# Backlog Controller
 //############################################################################
 
-class BacklogController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.FiltersMixin, taiga.UsFiltersMixin) {
+class BacklogController extends mixOf(Controller, PageMixin, FiltersMixin, UsFiltersMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    params:any
+    q:any
+    location:any
+    appMetaService:any
+    navUrls:any
+    events:any
+    analytics:any
+    translate:any
+    loading:any
+    rs2:any
+    modelTransform:any
+    errorHandlingService:any
+    storage:any
+    filterRemoteStorageService:any
+    projectService:any
+    storeCustomFiltersName:any
+    storeFiltersName:any
+    backlogOrder:any
+    milestonesOrder:any
+    page:any
+    disablePagination:any
+    firstLoadComplete:any
+    showTags:any
+    activeFilters:any
+    displayVelocity:any
+    forecastedStories:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -63,7 +92,7 @@ class BacklogController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.F
             "tgFilterRemoteStorageService",
             "tgProjectService"
         ];
-    
+
         this.prototype.storeCustomFiltersName = 'backlog-custom-filters';
         this.prototype.storeFiltersName = 'backlog-filters';
         this.prototype.backlogOrder = {};
@@ -73,6 +102,7 @@ class BacklogController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.F
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, appMetaService, navUrls,
                   events, analytics, translate, loading, rs2, modelTransform, errorHandlingService,
                   storage, filterRemoteStorageService, projectService) {
+        super()
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;

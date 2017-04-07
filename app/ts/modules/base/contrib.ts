@@ -22,10 +22,22 @@
  * File: modules/base/contrib.coffee
  */
 
+import {Controller} from "../../classes"
+import * as _ from "lodash"
+import * as angular from "angular"
+
 let module = angular.module("taigaBase");
 
 
-class ContribController extends taiga.Controller {
+class ContribController extends Controller {
+    rootScope: angular.IScope
+    scope: angular.IScope
+    params:any
+    repo:any
+    rs:any
+    confirm:any
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "$rootScope",
@@ -39,6 +51,7 @@ class ContribController extends taiga.Controller {
     }
 
     constructor(rootScope, scope, params, repo, rs, confirm, projectService) {
+        super()
         this.rootScope = rootScope;
         this.scope = scope;
         this.params = params;
@@ -71,7 +84,11 @@ ContribController.initClass();
 module.controller("ContribController", ContribController);
 
 
-class ContribUserSettingsController extends taiga.Controller {
+class ContribUserSettingsController extends Controller {
+    rootScope: angular.IScope
+    scope: angular.IScope
+    params:any
+
     static initClass() {
         this.$inject = [
             "$rootScope",
@@ -81,6 +98,7 @@ class ContribUserSettingsController extends taiga.Controller {
     }
 
     constructor(rootScope, scope, params) {
+        super()
         this.rootScope = rootScope;
         this.scope = scope;
         this.params = params;

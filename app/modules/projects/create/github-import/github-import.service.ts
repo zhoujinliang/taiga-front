@@ -17,7 +17,17 @@
  * File: github-import.service.coffee
  */
 
-class GithubImportService extends taiga.Service {
+import {Service} from "../../../../ts/classes"
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
+class GithubImportService extends Service {
+    resources:any
+    location:any
+    projects:Immutable.List<any>
+    projectUsers:Immutable.List<any>
+    token:any
+
     static initClass() {
         this.$inject = [
             'tgResources'
@@ -25,6 +35,7 @@ class GithubImportService extends taiga.Service {
     }
 
     constructor(resources, location) {
+        super()
         this.resources = resources;
         this.location = location;
         this.projects = Immutable.List();

@@ -17,9 +17,14 @@
  * File: watch-project-button.service.coffee
  */
 
-let { taiga } = this;
+import {Service} from "../../../../ts/classes"
+import * as angular from "angular"
 
-class WatchProjectButtonService extends taiga.Service {
+class WatchProjectButtonService extends Service {
+    rs:any
+    currentUserService:any
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "tgResources",
@@ -29,6 +34,7 @@ class WatchProjectButtonService extends taiga.Service {
     }
 
     constructor(rs, currentUserService, projectService) {
+        super()
         this.rs = rs;
         this.currentUserService = currentUserService;
         this.projectService = projectService;

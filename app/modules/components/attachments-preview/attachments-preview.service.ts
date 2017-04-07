@@ -17,12 +17,17 @@
  * File: attachments-preview.service.coffee
  */
 
-class AttachmentsPreviewService extends taiga.Service {
+import {Service} from "../../../ts/classes"
+import * as angular from "angular"
+
+class AttachmentsPreviewService extends Service {
     static initClass() {
         this.$inject = [];
     }
 
-    constructor() {}
+    constructor() {
+        super()
+    }
 }
 AttachmentsPreviewService.initClass();
 

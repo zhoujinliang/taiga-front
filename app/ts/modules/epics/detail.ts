@@ -22,14 +22,11 @@
  * File: modules/epics/detail.coffee
  */
 
-let { taiga } = this;
-
-let { mixOf } = this.taiga;
-let { toString } = this.taiga;
-let { joinStr } = this.taiga;
-let { groupBy } = this.taiga;
-let { bindOnce } = this.taiga;
-let { bindMethods } = this.taiga;
+import {mixOf, groupBy, bindMethods} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin} from "../controllerMixins"
+import * as angular from "angular"
+import * as Immutable from "immutable"
 
 let module = angular.module("taigaEpics");
 
@@ -37,7 +34,25 @@ let module = angular.module("taigaEpics");
 //# Epic Detail Controller
 //############################################################################
 
-class EpicDetailController extends mixOf(taiga.Controller, taiga.PageMixin) {
+class EpicDetailController extends mixOf(Controller, PageMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    rs2:any
+    params:any
+    q:any
+    location:any
+    log:any
+    appMetaService:any
+    analytics:any
+    navUrls:any
+    translate:any
+    modelTransform:any
+    errorHandlingService:any
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -62,6 +77,7 @@ class EpicDetailController extends mixOf(taiga.Controller, taiga.PageMixin) {
 
     constructor(scope, rootscope, repo, confirm, rs, rs2, params, q, location,
                   log, appMetaService, analytics, navUrls, translate, modelTransform, errorHandlingService, projectService) {
+        super()
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;

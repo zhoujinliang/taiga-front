@@ -17,23 +17,39 @@
  * File: discover-projects.service.coffee
  */
 
-let { taiga } = this;
+import {Service} from "../../../ts/classes"
+import {defineImmutableProperty} from "../../../ts/utils"
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as Immutable from "immutable"
 
 var DiscoverProjectsService = (function() {
     let _discoverParams = undefined;
-    DiscoverProjectsService = class DiscoverProjectsService extends taiga.Service {
+    DiscoverProjectsService = class DiscoverProjectsService extends Service {
+        rs:any
+        projectsService:any
+        _mostLiked:any
+        _mostActive:any
+        _featured:any
+        _searchResult:any
+        _projectsCount:any
+        _nextSearchPage:any
+        decorate:any
+
         static initClass() {
             this.$inject = [
                 "tgResources",
                 "tgProjectsService"
             ];
-    
+
             _discoverParams = {
                 discover_mode: true
             };
         }
 
         constructor(rs, projectsService) {
+            super()
+
             this.rs = rs;
             this.projectsService = projectsService;
             this._mostLiked = Immutable.List();
@@ -44,12 +60,12 @@ var DiscoverProjectsService = (function() {
 
             this.decorate = this.projectsService._decorate.bind(this.projectsService);
 
-            taiga.defineImmutableProperty(this, "mostLiked", () => { return this._mostLiked; });
-            taiga.defineImmutableProperty(this, "mostActive", () => { return this._mostActive; });
-            taiga.defineImmutableProperty(this, "featured", () => { return this._featured; });
-            taiga.defineImmutableProperty(this, "searchResult", () => { return this._searchResult; });
-            taiga.defineImmutableProperty(this, "nextSearchPage", () => { return this._nextSearchPage; });
-            taiga.defineImmutableProperty(this, "projectsCount", () => { return this._projectsCount; });
+            defineImmutableProperty(this, "mostLiked", () => { return this._mostLiked; });
+            defineImmutableProperty(this, "mostActive", () => { return this._mostActive; });
+            defineImmutableProperty(this, "featured", () => { return this._featured; });
+            defineImmutableProperty(this, "searchResult", () => { return this._searchResult; });
+            defineImmutableProperty(this, "nextSearchPage", () => { return this._nextSearchPage; });
+            defineImmutableProperty(this, "projectsCount", () => { return this._projectsCount; });
         }
 
         fetchMostLiked(params) {

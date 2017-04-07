@@ -22,19 +22,26 @@
  * File: modules/base/http.coffee
  */
 
+import {Service} from "../../../ts/classes"
+import * as angular from "angular"
+import * as _ from "lodash"
+
 let format = function(fmt, obj) {
     obj = _.clone(obj);
     return fmt.replace(/%s/g, match => String(obj.shift()));
 };
 
-let { taiga } = this;
+class UrlsService extends Service {
+    config:any
+    urls:any
+    mainUrl:any
 
-class UrlsService extends taiga.Service {
     static initClass() {
         this.$inject = ["$tgConfig"];
     }
 
     constructor(config) {
+        super()
         this.config = config;
         this.urls = {};
         this.mainUrl = this.config.get("api");

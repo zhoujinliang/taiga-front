@@ -17,7 +17,18 @@
  * File: jira-import.service.coffee
  */
 
-class JiraImportService extends taiga.Service {
+import {Service} from "../../../../ts/classes"
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
+class JiraImportService extends Service {
+    resources:any
+    location:any
+    projects:Immutable.List<any>
+    projectUsers:Immutable.List<any>
+    token:any
+    url:any
+
     static initClass() {
         this.$inject = [
             'tgResources',
@@ -26,6 +37,7 @@ class JiraImportService extends taiga.Service {
     }
 
     constructor(resources, location) {
+        super()
         this.resources = resources;
         this.location = location;
         this.projects = Immutable.List();

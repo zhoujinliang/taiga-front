@@ -22,9 +22,11 @@
  * File: modules/base/storage.coffee
  */
 
-let { taiga } = this;
+import {Service} from "../../../ts/classes"
+import * as angular from "angular"
+import * as _ from "lodash"
 
-class StorageService extends taiga.Service {
+class StorageService extends Service {
     static initClass() {
         this.$inject = ["$rootScope"];
     }
