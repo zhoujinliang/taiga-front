@@ -2,7 +2,7 @@ var gulp = require("gulp"),
     fs = require('fs'),
     imagemin = require("gulp-imagemin"),
     jade = require("gulp-jade"),
-    coffee = require("gulp-coffee"),
+    ts = require('gulp-typescript'),
     concat = require("gulp-concat"),
     uglify = require("gulp-uglify"),
     plumber = require("gulp-plumber"),
@@ -32,8 +32,7 @@ var gulp = require("gulp"),
     path = require('path'),
     addsrc = require('gulp-add-src'),
     jsonminify = require('gulp-jsonminify'),
-    classPrefix = require('gulp-class-prefix'),
-    coffeelint = require('gulp-coffeelint');
+    classPrefix = require('gulp-class-prefix');
 
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -118,38 +117,38 @@ paths.css_order = [
     paths.tmp + "custom.css"
 ];
 
-paths.coffee = [
-    paths.app + "**/*.coffee",
-    "!" + paths.app + "**/*.spec.coffee",
+paths.ts = [
+    paths.app + "**/*.ts",
+    "!" + paths.app + "**/*.spec.ts",
 ];
 
-paths.coffee_order = [
-    paths.app + "modules/compile-modules/**/*.module.coffee",
-    paths.app + "modules/compile-modules/**/*.coffee",
-    paths.app + "coffee/app.coffee",
-    paths.app + "coffee/*.coffee",
-    paths.app + "coffee/modules/controllerMixins.coffee",
-    paths.app + "coffee/modules/*.coffee",
-    paths.app + "coffee/modules/common/*.coffee",
-    paths.app + "coffee/modules/backlog/*.coffee",
-    paths.app + "coffee/modules/taskboard/*.coffee",
-    paths.app + "coffee/modules/kanban/*.coffee",
-    paths.app + "coffee/modules/epics/*.coffee",
-    paths.app + "coffee/modules/issues/*.coffee",
-    paths.app + "coffee/modules/userstories/*.coffee",
-    paths.app + "coffee/modules/tasks/*.coffee",
-    paths.app + "coffee/modules/team/*.coffee",
-    paths.app + "coffee/modules/wiki/*.coffee",
-    paths.app + "coffee/modules/admin/*.coffee",
-    paths.app + "coffee/modules/projects/*.coffee",
-    paths.app + "coffee/modules/locales/*.coffee",
-    paths.app + "coffee/modules/profile/*.js",
-    paths.app + "coffee/modules/base/*.coffee",
-    paths.app + "coffee/modules/resources/*.coffee",
-    paths.app + "coffee/modules/user-settings/*.coffee",
-    paths.app + "coffee/modules/integrations/*.coffee",
-    paths.app + "modules/**/*.module.coffee",
-    paths.app + "modules/**/*.coffee"
+paths.ts_order = [
+    paths.app + "modules/compile-modules/**/*.module.ts",
+    paths.app + "modules/compile-modules/**/*.ts",
+    paths.app + "ts/app.ts",
+    paths.app + "ts/*.ts",
+    paths.app + "ts/modules/controllerMixins.ts",
+    paths.app + "ts/modules/*.ts",
+    paths.app + "ts/modules/common/*.ts",
+    paths.app + "ts/modules/backlog/*.ts",
+    paths.app + "ts/modules/taskboard/*.ts",
+    paths.app + "ts/modules/kanban/*.ts",
+    paths.app + "ts/modules/epics/*.ts",
+    paths.app + "ts/modules/issues/*.ts",
+    paths.app + "ts/modules/userstories/*.ts",
+    paths.app + "ts/modules/tasks/*.ts",
+    paths.app + "ts/modules/team/*.ts",
+    paths.app + "ts/modules/wiki/*.ts",
+    paths.app + "ts/modules/admin/*.ts",
+    paths.app + "ts/modules/projects/*.ts",
+    paths.app + "ts/modules/locales/*.ts",
+    paths.app + "ts/modules/profile/*.ts",
+    paths.app + "ts/modules/base/*.ts",
+    paths.app + "ts/modules/resources/*.ts",
+    paths.app + "ts/modules/user-settings/*.ts",
+    paths.app + "ts/modules/integrations/*.ts",
+    paths.app + "modules/**/*.module.ts",
+    paths.app + "modules/**/*.ts"
 ];
 
 paths.libs = [
@@ -487,9 +486,19 @@ gulp.task("conf", function() {
 });
 
 gulp.task("app-loader", function() {
-    return gulp.src("app-loader/app-loader.coffee")
+    return gulp.src("app-loader/app-loader.ts")
         .pipe(replace("___VERSION___", version))
-        .pipe(coffee())
+        .pipe(ts({
+            "target": "es5",
+            "module": "commonjs",
+            "moduleResolution": "node",
+            "sourceMap": true,
+            "emitDecoratorMetadata": true,
+            "experimentalDecorators": true,
+            "lib": [ "es2015", "dom" ],
+            // "noImplicitAny": true,
+            "suppressImplicitAnyIndexErrors": true
+        }))
         .pipe(gulpif(isDeploy, uglify()))
         .pipe(gulp.dest(paths.distVersion + "js/"));
 });
@@ -513,34 +522,23 @@ gulp.task("locales", function() {
             .pipe(gulp.dest(paths.distVersion + "locales"));
 });
 
-gulp.task("coffee-lint", function () {
-    gulp.src([
-        paths.app + "modules/**/*.coffee",
-        "!" + paths.app + "modules/**/*.spec.coffee"
-    ])
-        .pipe(gulpif(!isDeploy, cache(coffeelint(), {
-            key: function(lintFile) {
-                return "coffee-lint" + lintFile.contents.toString('utf8');
-            },
-            success: function(lintFile) {
-                return lintFile.coffeelint.success;
-            },
-            value: function(lintFile) {
-                return {
-                    coffeelint: lintFile.coffeelint
-                };
-            }
-        })))
-        .pipe(coffeelint.reporter());
-});
-
-gulp.task("coffee", function() {
+gulp.task("ts", function() {
     var filter = gulpFilter(['*', '!*.map']);
 
-    return gulp.src(paths.coffee)
-        .pipe(order(paths.coffee_order, {base: '.'}))
+    return gulp.src(paths.ts)
+        .pipe(order(paths.ts_order, {base: '.'}))
         .pipe(sourcemaps.init())
-        .pipe(cache(coffee()))
+        .pipe(ts({
+            "target": "es5",
+            "module": "commonjs",
+            "moduleResolution": "node",
+            "sourceMap": true,
+            "emitDecoratorMetadata": true,
+            "experimentalDecorators": true,
+            "lib": [ "es2015", "dom" ],
+            // "noImplicitAny": true,
+            "suppressImplicitAnyIndexErrors": true
+        }))
         .on("error", function(err) {
             console.log(err.toString());
             this.emit("end");
@@ -575,9 +573,9 @@ gulp.task("jslibs-deploy", function() {
         .pipe(gulp.dest(paths.distVersion + "js/"));
 });
 
-gulp.task("app-watch", ["coffee", "conf", "locales", "moment-locales", "app-loader"]);
+gulp.task("app-watch", ["ts", "conf", "locales", "moment-locales", "app-loader"]);
 
-gulp.task("app-deploy", ["coffee", "conf", "locales", "moment-locales", "app-loader"], function() {
+gulp.task("app-deploy", ["ts", "conf", "locales", "moment-locales", "app-loader"], function() {
     return gulp.src(paths.distVersion + "js/app.js")
         .pipe(sourcemaps.init())
             .pipe(uglify())
@@ -718,7 +716,7 @@ gulp.task("watch", function() {
     gulp.watch(paths.sass_watch, ["styles-lint"]);
     gulp.watch(paths.styles_dependencies, ["styles-dependencies"]);
     gulp.watch(paths.svg, ["copy-svg"]);
-    gulp.watch(paths.coffee, ["app-watch"]);
+    gulp.watch(paths.ts, ["app-watch"]);
     gulp.watch(paths.libs, ["jslibs-watch"]);
     gulp.watch([paths.locales, paths.modulesLocales], ["locales"]);
     gulp.watch(paths.images, ["copy-images"]);
