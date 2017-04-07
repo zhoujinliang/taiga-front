@@ -22,11 +22,11 @@
  * File: modules/tasks/detail.coffee
  */
 
-let { taiga } = this;
+import {mixOf, groupBy, bindMethods} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin} from "../controllerMixins"
 
-let { mixOf } = this.taiga;
-let { groupBy } = this.taiga;
-let { bindMethods } = this.taiga;
+import * as angular from "angular"
 
 let module = angular.module("taigaTasks");
 
@@ -35,7 +35,24 @@ let module = angular.module("taigaTasks");
 //# Task Detail Controller
 //############################################################################
 
-class TaskDetailController extends mixOf(taiga.Controller, taiga.PageMixin) {
+class TaskDetailController extends mixOf(Controller, PageMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    params:any
+    q:any
+    location:any
+    log:any
+    appMetaService:any
+    navUrls:any
+    analytics:any
+    translate:any
+    modelTransform:any
+    errorHandlingService:any
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -59,6 +76,7 @@ class TaskDetailController extends mixOf(taiga.Controller, taiga.PageMixin) {
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location,
                   log, appMetaService, navUrls, analytics, translate, modelTransform, errorHandlingService, projectService) {
+        super()
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;

@@ -22,14 +22,13 @@
  * File: modules/taskboard.coffee
  */
 
-let { taiga } = this;
-let { toggleText } = this.taiga;
-let { mixOf } = this.taiga;
-let { groupBy } = this.taiga;
-let { bindOnce } = this.taiga;
-let { scopeDefer } = this.taiga;
-let { timeout } = this.taiga;
-let { bindMethods } = this.taiga;
+import {toggleText, mixOf, groupBy, bindOnce, scopeDefer, timeout, bindMethods, defineImmutableProperty} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin, FiltersMixin} from "../controllerMixins"
+
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as moment from "moment"
 
 let module = angular.module("taigaTaskboard");
 
@@ -38,7 +37,35 @@ let module = angular.module("taigaTaskboard");
 //# Taskboard Controller
 //############################################################################
 
-class TaskboardController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.FiltersMixin) {
+class TaskboardController extends mixOf(Controller, PageMixin, FiltersMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    rs2:any
+    params:any
+    q:any
+    appMetaService:any
+    location:any
+    navUrls:any
+    events:any
+    analytics:any
+    translate:any
+    errorHandlingService:any
+    taskboardTasksService:any
+    storage:any
+    filterRemoteStorageService:any
+    isFirstLoad:any
+    zoomLevel:any
+    zoom:any
+    openFilter:any
+    zoomLoading:any
+    selectedFilters:any
+    filters:any
+    filterQ:any
+    customFilters:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -64,6 +91,7 @@ class TaskboardController extends mixOf(taiga.Controller, taiga.PageMixin, taiga
 
     constructor(scope, rootscope, repo, confirm, rs, rs2, params, q, appMetaService, location, navUrls,
                   events, analytics, translate, errorHandlingService, taskboardTasksService, storage, filterRemoteStorageService) {
+        super()
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -92,7 +120,7 @@ class TaskboardController extends mixOf(taiga.Controller, taiga.PageMixin, taiga
         this.scope.sectionName = this.translate.instant("TASKBOARD.SECTION_NAME");
         this.initializeEventHandlers();
 
-        taiga.defineImmutableProperty(this.scope, "usTasks", () => {
+        defineImmutableProperty(this.scope, "usTasks", () => {
             return this.taskboardTasksService.usTasks;
         });
     }

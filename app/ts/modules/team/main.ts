@@ -22,9 +22,12 @@
  * File: modules/team/main.coffee
  */
 
-let { taiga } = this;
+import {mixOf} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin} from "../controllerMixins"
 
-let { mixOf } = this.taiga;
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module("taigaTeam");
 
@@ -32,7 +35,21 @@ let module = angular.module("taigaTeam");
 //# Team Controller
 //############################################################################
 
-class TeamController extends mixOf(taiga.Controller, taiga.PageMixin) {
+class TeamController extends mixOf(Controller, PageMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    rs:any
+    params:any
+    q:any
+    location:any
+    navUrls:any
+    appMetaService:any
+    auth:any
+    translate:any
+    projectService:any
+    errorHandlingService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -53,6 +70,7 @@ class TeamController extends mixOf(taiga.Controller, taiga.PageMixin) {
 
     constructor(scope, rootscope, repo, rs, params, q, location, navUrls, appMetaService, auth,
                   translate, projectService, errorHandlingService) {
+        super()
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -327,7 +345,6 @@ let membersFilter = () =>
         _.filter(members, m => (!filtersRole || (m.role === filtersRole.id)) &&
                                         (!filtersQ || (m.full_name.search(new RegExp(filtersQ, "i")) >= 0))
          )
-    
 ;
 
 module.filter('membersFilter', membersFilter);

@@ -17,13 +17,26 @@
  * File: home.service.coffee
  */
 
-let { groupBy } = this.taiga;
+import {groupBy} from "../../utils"
+import {Service} from "../../classes"
+import * as Immutable from "immutable"
+import * as _ from "lodash"
+import * as angular from "angular"
 
-class TaskboardTasksService extends taiga.Service {
+class TaskboardTasksService extends Service {
+    tasksRaw:any
+    foldStatusChanged:any
+    usTasks:any
+    project:any
+    usersById:any
+    userstories:any
+    order:any
+
     static initClass() {
         this.$inject = [];
     }
     constructor() {
+        super()
         this.reset();
     }
 
