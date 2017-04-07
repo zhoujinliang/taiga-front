@@ -17,9 +17,19 @@
  * File: user-timeline.service.coffee
  */
 
-let { taiga } = this;
+import {Service} from "../../../ts/classes"
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as Immutable from "immutable"
 
-class UserTimelineService extends taiga.Service {
+class UserTimelineService extends Service {
+    rs:any
+    userTimelinePaginationSequenceService:any
+    userTimelineItemType:any
+    userTimelineItemTitle:any
+    _valid_fields:any
+    _invalid:any
+
     static initClass() {
         this.$inject = [
             "tgResources",
@@ -27,7 +37,7 @@ class UserTimelineService extends taiga.Service {
             "tgUserTimelineItemType",
             "tgUserTimelineItemTitle"
         ];
-    
+
         this.prototype._valid_fields = [
             'status',
             'subject',
@@ -49,15 +59,15 @@ class UserTimelineService extends taiga.Service {
             'milestone',
             'color'
         ];
-    
+
         this.prototype._invalid = [
             {// Items with only invalid fields
                 check(timeline) {
                     let value_diff = timeline.get("data").get("value_diff");
-    
+
                     if (value_diff) {
                         let fieldKey = value_diff.get('key');
-    
+
                         if (this._valid_fields.indexOf(fieldKey) === -1) {
                             return true;
                         } else if ((fieldKey === 'attachments') &&
@@ -65,7 +75,7 @@ class UserTimelineService extends taiga.Service {
                             return true;
                         }
                     }
-    
+
                     return false;
                 }
             },
@@ -97,14 +107,14 @@ class UserTimelineService extends taiga.Service {
                 check(timeline) {
                     let event = timeline.get('event_type').split(".");
                     let value_diff = timeline.get("data").get("value_diff");
-    
+
                     if (value_diff &&
                          (event[1] === "task") &&
                          (event[2] === "change") &&
                          (value_diff.get("key") === "milestone")) {
                         return timeline.get("data").get("value_diff").get("value");
                     }
-    
+
                     return false;
                 }
             }
@@ -112,6 +122,7 @@ class UserTimelineService extends taiga.Service {
     }
 
     constructor(rs, userTimelinePaginationSequenceService, userTimelineItemType, userTimelineItemTitle) {
+        super()
         this.rs = rs;
         this.userTimelinePaginationSequenceService = userTimelinePaginationSequenceService;
         this.userTimelineItemType = userTimelineItemType;
@@ -218,7 +229,7 @@ class UserTimelineService extends taiga.Service {
     }
 
     getProfileTimeline(userId) {
-        let config = {};
+        let config:any = {};
 
         config.fetch = page => {
             return this.rs.users.getProfileTimeline(userId, page)
@@ -237,7 +248,7 @@ class UserTimelineService extends taiga.Service {
     }
 
     getUserTimeline(userId) {
-        let config = {};
+        let config:any = {};
 
         config.fetch = page => {
             return this.rs.users.getUserTimeline(userId, page)
@@ -256,7 +267,7 @@ class UserTimelineService extends taiga.Service {
     }
 
     getProjectTimeline(projectId) {
-        let config = {};
+        let config:any = {};
 
         config.fetch = page => {
             return this.rs.projects.getTimeline(projectId, page)

@@ -17,7 +17,18 @@
  * File: import-project.service.coffee
  */
 
-class ImportProjectService extends taiga.Service {
+import {Service} from "../../../../ts/classes"
+import * as angular from "angular"
+
+class ImportProjectService extends Service {
+    currentUserService:any
+    tgAuth:any
+    lightboxFactory:any
+    translate:any
+    confirm:any
+    location:any
+    tgNavUrls:any
+
     static initClass() {
         this.$inject = [
             'tgCurrentUserService',
@@ -31,6 +42,7 @@ class ImportProjectService extends taiga.Service {
     }
 
     constructor(currentUserService, tgAuth, lightboxFactory, translate, confirm, location, tgNavUrls) {
+        super()
         this.currentUserService = currentUserService;
         this.tgAuth = tgAuth;
         this.lightboxFactory = lightboxFactory;

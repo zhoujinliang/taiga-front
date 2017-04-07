@@ -17,14 +17,20 @@
  * File: like-project-button.service.coffee
  */
 
-let { taiga } = this;
+import {Service} from "../../../../ts/classes"
+import * as angular from "angular"
 
-class LikeProjectButtonService extends taiga.Service {
+class LikeProjectButtonService extends Service {
+    rs:any
+    currentUserService:any
+    projectService:any
+
     static initClass() {
         this.$inject = ["tgResources", "tgCurrentUserService", "tgProjectService"];
     }
 
     constructor(rs, currentUserService, projectService) {
+        super()
         this.rs = rs;
         this.currentUserService = currentUserService;
         this.projectService = projectService;

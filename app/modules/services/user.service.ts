@@ -17,16 +17,19 @@
  * File: user.service.coffee
  */
 
-let { taiga } = this;
-let { bindMethods } = taiga;
+import {bindMethods} from "../../ts/utils"
+import {Service} from "../../ts/classes"
+import * as angular from "angular"
 
+class UserService extends Service {
+    rs:any
 
-class UserService extends taiga.Service {
     static initClass() {
         this.$inject = ["tgResources"];
     }
 
     constructor(rs) {
+        super()
         this.rs = rs;
         bindMethods(this);
     }

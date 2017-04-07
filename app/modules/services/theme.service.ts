@@ -17,10 +17,10 @@
  * File: theme.service.coffee
  */
 
-let { taiga } = this;
+import {Service} from "../../ts/classes"
+import * as angular from "angular"
 
-
-class ThemeService extends (taiga.Service = () =>
+class ThemeService extends (Service = () =>
     ({
         use(themeName) {
             let stylesheetEl = $("link[rel='stylesheet']:first");
@@ -30,7 +30,7 @@ class ThemeService extends (taiga.Service = () =>
                 $("head").append(stylesheetEl);
             }
 
-            return stylesheetEl.attr("href", `/${window._version}/styles/theme-${themeName}.css`);
+            return stylesheetEl.attr("href", `/${(<any>window)._version}/styles/theme-${themeName}.css`);
         }
     })
 ) {}

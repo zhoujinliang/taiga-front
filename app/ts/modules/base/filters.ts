@@ -23,14 +23,20 @@
  */
 
 
-let { taiga } = this;
+import {Service} from "../../../ts/classes"
+import * as _ from "lodash"
+import * as angular from "angular"
 
-class FiltersStorageService extends taiga.Service {
+class FiltersStorageService extends Service {
+    storage:any
+    params:any
+
     static initClass() {
         this.$inject = ["$tgStorage", "$routeParams"];
     }
 
     constructor(storage, params) {
+        super()
         this.storage = storage;
         this.params = params;
     }

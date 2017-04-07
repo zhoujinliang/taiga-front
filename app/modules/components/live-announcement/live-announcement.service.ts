@@ -17,8 +17,16 @@
  * File: notification.service.coffee
  */
 
-class LiveAnnouncementService extends taiga.Service {
+import {Service} from "../../../ts/classes"
+import * as angular from "angular"
+
+class LiveAnnouncementService extends Service {
+    open:boolean
+    title:string
+    desc:string
+
     constructor() {
+        super()
         this.open = false;
         this.title = "";
         this.desc = "";

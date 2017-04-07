@@ -17,12 +17,17 @@
  * File: feedback.service.coffee
  */
 
-class FeedbackService extends taiga.Service {
+import {Service} from "../../ts/classes"
+import * as angular from "angular"
+
+class FeedbackService extends Service {
+    lightboxFactory:any
     static initClass() {
         this.$inject = ["tgLightboxFactory"];
     }
 
     constructor(lightboxFactory) {
+        super()
         this.lightboxFactory = lightboxFactory;
     }
 

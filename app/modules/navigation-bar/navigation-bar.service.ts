@@ -17,9 +17,15 @@
  * File: navigation-bar.service.coffee
  */
 
-class NavigationBarService extends taiga.Service {
+import {Service} from "../../ts/classes"
+import * as angular from "angular"
+import * as _ from "lodash"
+
+class NavigationBarService extends Service {
+    enabledHeader:boolean
 
     constructor() {
+        super()
         this.disableHeader();
     }
 
@@ -31,7 +37,7 @@ class NavigationBarService extends taiga.Service {
         return this.enabledHeader = false;
     }
 
-    isEnabledHeader() {
+    isEnabledHeader():boolean {
         return this.enabledHeader;
     }
 }

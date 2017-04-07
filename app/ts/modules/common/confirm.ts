@@ -22,11 +22,10 @@
  * File: modules/base/confirm.coffee
  */
 
-let { taiga } = this;
-let { timeout } = this.taiga;
-let { cancelTimeout } = this.taiga;
-let { debounce } = this.taiga;
-let { bindMethods } = this.taiga;
+import {timeout, cancelTimeout, debounce, bindMethods, addClass} from "../../../ts/utils"
+import {Service} from "../../../ts/classes"
+import * as _ from "lodash"
+import * as angular from "angular"
 
 let NOTIFICATION_MSG = {
     "success": {
@@ -44,12 +43,19 @@ let NOTIFICATION_MSG = {
 };
 
 
-class ConfirmService extends taiga.Service {
+class ConfirmService extends Service {
+    q:any
+    lightboxService:any
+    loading:any
+    translate:any
+    tsem:any
+
     static initClass() {
         this.$inject = ["$q", "lightboxService", "$tgLoading", "$translate"];
     }
 
     constructor(q, lightboxService, loading, translate) {
+        super();
         this.q = q;
         this.lightboxService = lightboxService;
         this.loading = loading;
@@ -208,9 +214,9 @@ class ConfirmService extends taiga.Service {
                 detailImage = $('<img>').addClass('lb-icon').attr('src', icon.name);
             } else if (icon.type === "svg") {
                 detailImage = document.createElement("div");
-                taiga.addClass(detailImage, "icon");
-                taiga.addClass(detailImage, icon.name);
-                taiga.addClass(detailImage, "lb-icon");
+                addClass(detailImage, "icon");
+                addClass(detailImage, icon.name);
+                addClass(detailImage, "lb-icon");
 
                 let svgContainer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 

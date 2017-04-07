@@ -17,7 +17,14 @@
  * File: joy-ride.service.coffee
  */
 
-class JoyRideService extends taiga.Service {
+import {Service} from "../../../ts/classes"
+import * as angular from "angular"
+import * as _ from "lodash"
+
+class JoyRideService extends Service {
+    translate:any
+    checkPermissionsService:any
+
     static initClass() {
         this.$inject = [
             '$translate',
@@ -26,6 +33,7 @@ class JoyRideService extends taiga.Service {
     }
 
     constructor(translate, checkPermissionsService) {
+        super()
         this.translate = translate;
         this.checkPermissionsService = checkPermissionsService;
     }

@@ -17,7 +17,16 @@
  * File: trello-import.service.coffee
  */
 
-class TrelloImportService extends taiga.Service {
+import {Service} from "../../../../ts/classes"
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
+class TrelloImportService extends Service {
+    resources:any
+    projects:Immutable.List<any>
+    projectUsers:Immutable.List<any>
+    token:any
+
     static initClass() {
         this.$inject = [
             'tgResources'
@@ -25,6 +34,7 @@ class TrelloImportService extends taiga.Service {
     }
 
     constructor(resources) {
+        super()
         this.resources = resources;
         this.projects = Immutable.List();
         this.projectUsers = Immutable.List();

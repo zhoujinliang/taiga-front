@@ -22,20 +22,28 @@
  * File: modules/base/repository.coffee
  */
 
-let { taiga } = this;
+import {Service} from "../../../ts/classes"
+import * as _ from "lodash"
+import * as angular from "angular"
 
-class RepositoryService extends taiga.Service {
+class RepositoryService extends Service {
+    q:any
+    model:any
+    storage:any
+    http:any
+    urls:any
+
     static initClass() {
         this.$inject = ["$q", "$tgModel", "$tgStorage", "$tgHttp", "$tgUrls"];
     }
 
     constructor(q, model, storage, http, urls) {
+        super();
         this.q = q;
         this.model = model;
         this.storage = storage;
         this.http = http;
         this.urls = urls;
-        super();
     }
 
     resolveUrlForModel(model) {
@@ -250,7 +258,7 @@ class RepositoryService extends taiga.Service {
         let httpOptions = _.merge({headers: {}}, options);
         return this.http.get(url, params, httpOptions).then(data => {
             let headers = data.headers();
-            let result = {};
+            let result:any = {};
             result.models = _.map(data.data, x => this.model.make_model(name, x));
             result.count = parseInt(headers["x-pagination-count"], 10);
             result.current = parseInt(headers["x-pagination-current"] || 1, 10);
@@ -267,7 +275,7 @@ class RepositoryService extends taiga.Service {
 
         return this.http.get(url, params, httpOptions).then(data => {
             let headers = data.headers();
-            let result = {};
+            let result:any = {};
             result.data = data.data;
             result.count = parseInt(headers["x-pagination-count"], 10);
             result.current = parseInt(headers["x-pagination-current"] || 1, 10);
@@ -278,7 +286,7 @@ class RepositoryService extends taiga.Service {
     }
 
     resolve(options) {
-        let params = {};
+        let params:any = {};
         if (options.pslug != null) { params.project = options.pslug; }
         if (options.usref != null) { params.us = options.usref; }
         if (options.taskref != null) { params.task = options.taskref; }

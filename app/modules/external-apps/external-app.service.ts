@@ -17,7 +17,11 @@
  * File: external-app.service.coffee
  */
 
-class ExternalAppsService extends taiga.Service {
+import {Service} from "../../ts/classes"
+import * as angular from "angular"
+
+class ExternalAppsService extends Service {
+    rs:any
     static initClass() {
         this.$inject = [
             "tgResources"
@@ -25,6 +29,7 @@ class ExternalAppsService extends taiga.Service {
     }
 
     constructor(rs) {
+        super()
         this.rs = rs;
     }
 
