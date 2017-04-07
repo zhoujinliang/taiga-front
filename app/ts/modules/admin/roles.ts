@@ -22,12 +22,12 @@
  * File: modules/admin/memberships.coffee
  */
 
-let { taiga } = this;
+import {mixOf, bindOnce, debounce, bindMethods} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin, FiltersMixin} from "../controllerMixins"
 
-let { mixOf } = this.taiga;
-let { bindOnce } = this.taiga;
-let { debounce } = this.taiga;
-let { bindMethods } = this.taiga;
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module("taigaAdmin");
 
@@ -36,7 +36,23 @@ let module = angular.module("taigaAdmin");
 //# Project Roles Controller
 //############################################################################
 
-class RolesController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.FiltersMixin) {
+class RolesController extends mixOf(Controller, PageMixin, FiltersMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    params:any
+    q:any
+    location:any
+    navUrls:any
+    model:any
+    appMetaService:any
+    translate:any
+    errorHandlingService:any
+    projectService:any
+    toggleComputable:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -54,7 +70,7 @@ class RolesController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fil
             "tgErrorHandlingService",
             "tgProjectService"
         ];
-    
+
         this.prototype.toggleComputable = debounce(2000, function() {
             if (!this.scope.role.computable) {
                 return this._disableComputable();
@@ -66,6 +82,7 @@ class RolesController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fil
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, navUrls,
                   model, appMetaService, translate, errorHandlingService, projectService) {
+        super()
         this._enableComputable = this._enableComputable.bind(this);
         this._disableComputable = this._disableComputable.bind(this);
         this.scope = scope;

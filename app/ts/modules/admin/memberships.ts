@@ -22,10 +22,11 @@
  * File: modules/admin/memberships.coffee
  */
 
-let { taiga } = this;
-
-let { mixOf } = this.taiga;
-let { bindMethods } = this.taiga;
+import {mixOf, bindMethods} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin, FiltersMixin} from "../controllerMixins"
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module("taigaAdmin");
 
@@ -34,7 +35,24 @@ let module = angular.module("taigaAdmin");
 //# Project Memberships Controller
 //############################################################################
 
-class MembershipsController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.FiltersMixin) {
+class MembershipsController extends mixOf(Controller, PageMixin, FiltersMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    params:any
+    q:any
+    location:any
+    navUrls:any
+    analytics:any
+    appMetaService:any
+    translate:any
+    auth:any
+    lightboxFactory:any
+    errorHandlingService:any
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -58,6 +76,7 @@ class MembershipsController extends mixOf(taiga.Controller, taiga.PageMixin, tai
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, navUrls, analytics,
                   appMetaService, translate, auth, lightboxFactory, errorHandlingService, projectService) {
+        super()
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -159,7 +178,7 @@ class MembershipsController extends mixOf(taiga.Controller, taiga.PageMixin, tai
         let message = this.translate.instant("ADMIN.MEMBERSHIPS.LIMIT_USERS_WARNING_MESSAGE", {
             members: this.scope.project.max_memberships
         });
-        let icon = `/${window._version}/svg/icons/team-question.svg`;
+        let icon = `/${(<any>window)._version}/svg/icons/team-question.svg`;
         return this.confirm.success(title, message, {
             name: icon,
             type: "img"
@@ -207,7 +226,7 @@ let MembershipsDirective = function($template, $compile) {
             }
 
             let pages = [];
-            let options = {};
+            let options:any = {};
             options.pages = pages;
             options.showPrevious = ($scope.page > 1);
             options.showNext = !($scope.page === numPages);

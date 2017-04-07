@@ -22,17 +22,14 @@
  * File: modules/admin/project-profile.coffee
  */
 
-let { taiga } = this;
+import {mixOf, debounce, getDefaulColorList} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin} from "../controllerMixins"
+import {autoScroll} from "../../global"
 
-let { mixOf } = this.taiga;
-let { trim } = this.taiga;
-let { toString } = this.taiga;
-let { joinStr } = this.taiga;
-let { groupBy } = this.taiga;
-let { bindOnce } = this.taiga;
-let { debounce } = this.taiga;
-let { getDefaulColorList } = this.taiga;
-
+import * as angular from "angular"
+import * as dragula from "dragula"
+import * as _ from "lodash"
 
 let module = angular.module("taigaAdmin");
 
@@ -40,7 +37,21 @@ let module = angular.module("taigaAdmin");
 //# Project values section Controller
 //############################################################################
 
-class ProjectValuesSectionController extends mixOf(taiga.Controller, taiga.PageMixin) {
+class ProjectValuesSectionController extends mixOf(Controller, PageMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    params:any
+    q:any
+    location:any
+    navUrls:any
+    appMetaService:any
+    translate:any
+    errorHandlingService:any
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -61,6 +72,7 @@ class ProjectValuesSectionController extends mixOf(taiga.Controller, taiga.PageM
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, navUrls,
                   appMetaService, translate, errorHandlingService, projectService) {
+        super()
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -116,7 +128,13 @@ module.controller("ProjectValuesSectionController", ProjectValuesSectionControll
 //# Project values Controller
 //############################################################################
 
-class ProjectValuesController extends taiga.Controller {
+class ProjectValuesController extends Controller {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -128,6 +146,7 @@ class ProjectValuesController extends taiga.Controller {
     }
 
     constructor(scope, rootscope, repo, confirm, rs) {
+        super()
         this.loadValues = this.loadValues.bind(this);
         this.moveValue = this.moveValue.bind(this);
         this.scope = scope;
@@ -505,7 +524,19 @@ let TYPE_CHOICES = [
     }
 ];
 
-class ProjectCustomAttributesController extends mixOf(taiga.Controller, taiga.PageMixin) {
+class ProjectCustomAttributesController extends mixOf(Controller, PageMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    rs:any
+    params:any
+    q:any
+    location:any
+    navUrls:any
+    appMetaService:any
+    translate:any
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -524,6 +555,7 @@ class ProjectCustomAttributesController extends mixOf(taiga.Controller, taiga.Pa
 
     constructor(scope, rootscope, repo, rs, params, q, location, navUrls, appMetaService,
                   translate, projectService) {
+        super()
         this.loadCustomAttributes = this.loadCustomAttributes.bind(this);
         this.createCustomAttribute = this.createCustomAttribute.bind(this);
         this.saveCustomAttribute = this.saveCustomAttribute.bind(this);
@@ -840,7 +872,16 @@ module.directive("tgProjectCustomAttributes", ["$log", "$tgConfirm", "animationF
 //# Tags Controller
 //############################################################################
 
-class ProjectTagsController extends taiga.Controller {
+class ProjectTagsController extends Controller {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    model:any
+    projectService:any
+    loading:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -854,6 +895,7 @@ class ProjectTagsController extends taiga.Controller {
     }
 
     constructor(scope, rootscope, repo, confirm, rs, model, projectService) {
+        super()
         this.loadTags = this.loadTags.bind(this);
         this.filterAndSortTags = this.filterAndSortTags.bind(this);
         this.createTag = this.createTag.bind(this);

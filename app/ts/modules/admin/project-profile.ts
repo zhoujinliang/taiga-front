@@ -22,15 +22,12 @@
  * File: modules/admin/project-profile.coffee
  */
 
-let { taiga } = this;
+import {mixOf, debounce} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin} from "../controllerMixins"
 
-let { mixOf } = this.taiga;
-let { trim } = this.taiga;
-let { toString } = this.taiga;
-let { joinStr } = this.taiga;
-let { groupBy } = this.taiga;
-let { bindOnce } = this.taiga;
-let { debounce } = this.taiga;
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module("taigaAdmin");
 
@@ -39,7 +36,27 @@ let module = angular.module("taigaAdmin");
 //# Project Profile Controller
 //############################################################################
 
-class ProjectProfileController extends mixOf(taiga.Controller, taiga.PageMixin) {
+class ProjectProfileController extends mixOf(Controller, PageMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    params:any
+    q:any
+    location:any
+    navUrls:any
+    appMetaService:any
+    translate:any
+    tgAuth:any
+    currentUserService:any
+    errorHandlingService:any
+    projectService:any
+    model:any
+    description:any
+    sectionName:any
+    title:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -63,6 +80,7 @@ class ProjectProfileController extends mixOf(taiga.Controller, taiga.PageMixin) 
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, navUrls,
                   appMetaService, translate, tgAuth, currentUserService, errorHandlingService, projectService, model) {
+        super()
         let description, sectionName, title;
         this.scope = scope;
         this.rootscope = rootscope;
@@ -453,7 +471,15 @@ module.directive("tgProjectExport", ["$window", "$tgResources", "$tgConfirm", "$
 //# CSV Export Controllers
 //############################################################################
 
-class CsvExporterController extends taiga.Controller {
+class CsvExporterController extends Controller {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    urls:any
+    confirm:any
+    rs:any
+    translate:any
+    type:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -466,6 +492,7 @@ class CsvExporterController extends taiga.Controller {
     }
 
     constructor(scope, rootscope, urls, confirm, rs, translate) {
+        super()
         this.setCsvUuid = this.setCsvUuid.bind(this);
         this._generateUuid = this._generateUuid.bind(this);
         this.scope = scope;
