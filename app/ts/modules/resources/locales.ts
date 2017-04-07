@@ -23,9 +23,7 @@
  */
 
 
-let { taiga } = this;
-let { sizeFormat } = this.taiga;
-
+import * as angular from "angular"
 
 let resourceProvider = function($repo) {
     let service = {

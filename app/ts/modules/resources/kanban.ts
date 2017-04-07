@@ -23,12 +23,13 @@
  */
 
 
-let { taiga } = this;
 
-let { generateHash } = taiga;
+import {generateHash} from "../../app"
+
+import * as angular from "angular"
 
 let resourceProvider = function($storage) {
-    let service = {};
+    let service:any = {};
     let hashSuffixStatusViewModes = "kanban-statusviewmodels";
     let hashSuffixStatusColumnModes = "kanban-statuscolumnmodels";
 

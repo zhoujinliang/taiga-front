@@ -22,7 +22,7 @@
  * File: modules/resources/custom-field-values.coffee
  */
 
-let { taiga } = this;
+import * as angular from "angular"
 
 let resourceProvider = function($repo) {
     let _get = (objectId, resource) => $repo.queryOne(resource, objectId);

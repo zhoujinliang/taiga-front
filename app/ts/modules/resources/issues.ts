@@ -23,12 +23,14 @@
  */
 
 
-let { taiga } = this;
 
-let { generateHash } = taiga;
+import {generateHash} from "../../app"
+
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let resourceProvider = function($repo, $http, $urls, $storage, $q) {
-    let service = {};
+    let service:any = {};
     let hashSuffix = "issues-queryparams";
 
     service.get = function(projectId, issueId) {

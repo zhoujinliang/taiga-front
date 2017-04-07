@@ -23,12 +23,10 @@
  */
 
 
-let { taiga } = this;
-let { sizeFormat } = this.taiga;
-
+import * as angular from "angular"
 
 let resourceProvider = function($http, $urls) {
-    let service = {};
+    let service:any = {};
 
     service.contacts = function(userId, options) {
         if (options == null) { options = {}; }
