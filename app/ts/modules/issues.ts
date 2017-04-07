@@ -21,5 +21,6 @@
  *
  * File: modules/issues.coffee
  */
+import * as angular from "angular"
 
 let module = angular.module("taigaIssues", []);

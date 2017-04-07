@@ -22,4 +22,6 @@
  * File: modules/tasks.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaTasks", []);

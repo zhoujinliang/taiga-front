@@ -22,9 +22,9 @@
  * File: modules/related-tasks.coffee
  */
 
-let { taiga } = this;
-let { trim } = this.taiga;
-let { debounce } = this.taiga;
+import {trim, debounce, bindOnce} from "../utils"
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module("taigaRelatedTasks", []);
 
@@ -207,7 +207,7 @@ let RelatedTaskCreateFormDirective = function($repo, $compile, $confirm, $tgmode
             createTask(newTask).then(() => close())
         ;
 
-        taiga.bindOnce($scope, "us", reset);
+        bindOnce($scope, "us", reset);
 
         $scope.$on("related-tasks:show-form", () => $scope.$apply(render));
 
@@ -286,7 +286,7 @@ let RelatedTasksDirective = function($repo, $rs, $rootscope) {
 
         $scope.$on("related-tasks:add-new-clicked", () => $scope.$broadcast("related-tasks:show-form"));
 
-        taiga.bindOnce($scope, "us", val => loadTasks());
+        bindOnce($scope, "us", val => loadTasks());
 
         return $scope.$on("$destroy", () => $el.off());
     };
@@ -337,7 +337,7 @@ let RelatedTaskAssignedToInlineEditionDirective = function($repo, $rootscope, $t
 
         $el.on("click", ".task-assignedto", event => $rootscope.$broadcast("assigned-to:add", task));
 
-        taiga.bindOnce($scope, "project", function(project) {
+        bindOnce($scope, "project", function(project) {
             // If the user has not enough permissions the click events are unbinded
             if (project.my_permissions.indexOf("modify_task") === -1) {
                 $el.unbind("click");

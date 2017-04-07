@@ -22,7 +22,9 @@
  * File: modules/common.coffee
  */
 
-let { taiga } = this;
+import {Service} from "../classes"
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module("taigaCommon", []);
 
@@ -196,7 +198,7 @@ let AnimationFrame = function() {
     let animationFrame =
         window.requestAnimationFrame       ||
         window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame;
+        (<any>window).mozRequestAnimationFrame;
 
     var performAnimation = time => {
         fn = tail.shift();
@@ -295,8 +297,6 @@ let Qqueue = function($q) {
             return (...args) => {
                 return lastPromise = lastPromise.then(() => fn.apply(this, args));
             };
-
-            return qqueue;
         },
         add: fn => {
             if (!lastPromise) {
@@ -319,7 +319,14 @@ module.factory("$tgQqueue", ["$q", Qqueue]);
 //# Queue model transformation
 //############################################################################
 
-class QueueModelTransformation extends taiga.Service {
+class QueueModelTransformation extends Service {
+    scope: angular.IScope
+    prop:any
+    qqueue:any
+    repo:any
+    q:any
+    model:any
+
     static initClass() {
         this.$inject = [
             "$tgQqueue",
@@ -330,6 +337,7 @@ class QueueModelTransformation extends taiga.Service {
     }
 
     constructor(qqueue, repo, q, model) {
+        super()
         this.qqueue = qqueue;
         this.repo = repo;
         this.q = q;
@@ -491,7 +499,7 @@ let Autofocus = ($timeout, $parse, animationFrame) =>
 module.directive('tgAutofocus', ['$timeout', '$parse', "animationFrame", Autofocus]);
 
 module.directive('tgPreloadImage', function() {
-    let spinner = `<img class='loading-spinner' src='/${window._version}/svg/spinner-circle.svg' alt='loading...' />`;
+    let spinner = `<img class='loading-spinner' src='/${(<any>window)._version}/svg/spinner-circle.svg' alt='loading...' />`;
 
     let template = `\
 <div>

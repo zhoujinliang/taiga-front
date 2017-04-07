@@ -22,4 +22,6 @@
  * File: modules/team.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaTeam", []);

@@ -22,4 +22,6 @@
  * File: modules/integrations.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaIntegrations", []);

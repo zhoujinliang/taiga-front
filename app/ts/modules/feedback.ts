@@ -22,13 +22,8 @@
  * File: modules/feedback.coffee
  */
 
-let { taiga } = this;
-
-let { groupBy } = this.taiga;
-let { bindOnce } = this.taiga;
-let { mixOf } = this.taiga;
-let { debounce } = this.taiga;
-let { trim } = this.taiga;
+import {groupBy, bindOnce, mixOf, debounce, trim} from "../utils"
+import * as angular from "angular"
 
 let module = angular.module("taigaFeedback", []);
 

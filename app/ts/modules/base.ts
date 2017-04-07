@@ -22,9 +22,7 @@
  * File: modules/base.coffee
  */
 
-let { taiga } = this;
-let { groupBy } = this.taiga;
-let { bindOnce } = this.taiga;
+import * as angular from "angular"
 
 let module = angular.module("taigaBase", []);
 

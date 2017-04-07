@@ -22,14 +22,10 @@
  * File: modules/search.coffee
  */
 
-let { taiga } = this;
-
-let { groupBy } = this.taiga;
-let { bindOnce } = this.taiga;
-let { mixOf } = this.taiga;
-let { debounceLeading } = this.taiga;
-let { trim } = this.taiga;
-let { debounce } = this.taiga;
+import {groupBy, bindOnce, mixOf, debounceLeading, trim, debounce} from "../utils"
+import {Controller} from "../classes"
+import {PageMixin} from "./controllerMixins"
+import * as angular from "angular"
 
 let module = angular.module("taigaSearch", []);
 
@@ -38,7 +34,20 @@ let module = angular.module("taigaSearch", []);
 //# Search Controller
 //############################################################################
 
-class SearchController extends mixOf(taiga.Controller, taiga.PageMixin) {
+class SearchController extends mixOf(Controller, PageMixin) {
+    scope: angular.IScope
+    repo:any
+    rs:any
+    params:any
+    q:any
+    location:any
+    appMetaService:any
+    navUrls:any
+    translate:any
+    errorHandlingService:any
+    projectService:any
+    _promise:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -56,6 +65,7 @@ class SearchController extends mixOf(taiga.Controller, taiga.PageMixin) {
     }
 
     constructor(scope, repo, rs, params, q, location, appMetaService, navUrls, translate, errorHandlingService, projectService) {
+        super()
         this.scope = scope;
         this.repo = repo;
         this.rs = rs;

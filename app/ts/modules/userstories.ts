@@ -22,4 +22,6 @@
  * File: modules/userstories.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaUserStories", []);

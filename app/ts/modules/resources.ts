@@ -22,9 +22,11 @@
  * File: modules/resources.coffee
  */
 
-let { taiga } = this;
+import {Service} from "../classes"
+import * as angular from "angular"
+import * as _ from "lodash"
 
-class ResourcesService extends taiga.Service {}
+class ResourcesService extends Service {}
 
 let urls = {
     // Auth
@@ -60,7 +62,6 @@ let urls = {
 
     // Roles & Permissions
     "roles": "/roles",
-    "permissions": "/permissions",
 
     // Resolver
     "resolver": "/resolver",
@@ -110,7 +111,6 @@ let urls = {
     "bulk-update-us-milestone": "/userstories/bulk_update_milestone",
     "bulk-update-us-miles-order": "/userstories/bulk_update_sprint_order",
     "bulk-update-us-kanban-order": "/userstories/bulk_update_kanban_order",
-    "bulk-update-us-milestone": "/userstories/bulk_update_milestone",
     "userstories-filters": "/userstories/filters_data",
     "userstory-upvote": "/userstories/%s/upvote",
     "userstory-downvote": "/userstories/%s/downvote",

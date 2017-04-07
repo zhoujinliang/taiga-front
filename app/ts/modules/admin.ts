@@ -22,4 +22,6 @@
  * File: modules/admin.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaAdmin", []);

@@ -22,4 +22,6 @@
  * File: modules/user-settings.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaUserSettings", []);

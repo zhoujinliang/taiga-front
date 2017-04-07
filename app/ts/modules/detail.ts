@@ -22,18 +22,17 @@
  * File: modules/detail.coffee
  */
 
-let { taiga } = this;
-
-let { mixOf } = this.taiga;
-let { toString } = this.taiga;
-let { joinStr } = this.taiga;
-let { groupBy } = this.taiga;
-let { bindOnce } = this.taiga;
-let { bindMethods } = this.taiga;
+import * as angular from "angular"
 
 let module = angular.module("taigaCommon");
 
 class DetailController {
+    params:any
+    repo:any
+    projectService:any
+    navurls:any
+    location:any
+
     static initClass() {
         this.$inject = [
             '$routeParams',

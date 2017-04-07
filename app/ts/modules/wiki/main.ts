@@ -22,12 +22,12 @@
  * File: modules/wiki/detail.coffee
  */
 
-let { taiga } = this;
-
-let { mixOf } = this.taiga;
-let { groupBy } = this.taiga;
-let { bindOnce } = this.taiga;
-let { debounce } = this.taiga;
+import {mixOf, groupBy, bindOnce, debounce} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin} from "../controllerMixins"
+import * as angular from "angular"
+import * as moment from "moment"
+import * as _ from "lodash"
 
 let module = angular.module("taigaWiki");
 
@@ -35,7 +35,25 @@ let module = angular.module("taigaWiki");
 //# Wiki Detail Controller
 //############################################################################
 
-class WikiDetailController extends mixOf(taiga.Controller, taiga.PageMixin) {
+class WikiDetailController extends mixOf(Controller, PageMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    model:any
+    confirm:any
+    rs:any
+    params:any
+    q:any
+    location:any
+    filter:any
+    log:any
+    appMetaService:any
+    navUrls:any
+    analytics:any
+    translate:any
+    errorHandlingService:any
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -60,6 +78,7 @@ class WikiDetailController extends mixOf(taiga.Controller, taiga.PageMixin) {
 
     constructor(scope, rootscope, repo, model, confirm, rs, params, q, location,
                   filter, log, appMetaService, navUrls, analytics, translate, errorHandlingService, projectService) {
+        super()
         this.loadWiki = this.loadWiki.bind(this);
         this.moveLink = this.moveLink.bind(this);
         this.scope = scope;
@@ -309,7 +328,7 @@ $qqueue, $repo, $analytics, wikiHistoryService) {
             $scope.item = value;
             $scope.version = value.version;
             return $scope.storageKey = $scope.project.id + "-" + value.id + "-wiki";
-        }); 
+        });
 
         return $scope.$watch('project', function(project) {
             if (!project) { return; }

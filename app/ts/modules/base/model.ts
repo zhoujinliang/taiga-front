@@ -22,7 +22,16 @@
  * File: modules/base/model.coffee
  */
 
-class Model {
+import * as _ from "lodash"
+import * as angular from "angular"
+
+export class Model {
+    _attrs:any
+    _name:any
+    _dataTypes:any
+    _modifiedAttrs:any
+    _isModified:any
+
     constructor(name, data, dataTypes) {
         this._attrs = data;
         this._name = name;
@@ -184,11 +193,17 @@ class Model {
 let { taiga } = this;
 
 class ModelService extends taiga.Service {
+    q:any
+    urls:any
+    storage:any
+    http:any
+
     static initClass() {
         this.$inject = ["$q", "$tgUrls", "$tgStorage", "$tgHttp"];
     }
 
     constructor(q, urls, storage, http) {
+        super()
         this.q = q;
         this.urls = urls;
         this.storage = storage;
@@ -198,7 +213,7 @@ class ModelService extends taiga.Service {
 }
 ModelService.initClass();
 
-let provider = function($q, $http, $gmUrls, $gmStorage) {
+function provider($q, $http, $gmUrls, $gmStorage) {
     let service = {};
     service.make_model = function(name, data, cls, dataTypes) {
         if (cls == null) { cls = Model; }
