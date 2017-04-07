@@ -22,9 +22,9 @@
  * File: modules/kanban/main.coffee
  */
 
-import {mixOf, toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods, defineImmutableProperty} from "../../utils"
+import {toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods, defineImmutableProperty} from "../../utils"
 import {Controller} from "../../classes"
-import {PageMixin, FiltersMixin, UsFiltersMixin} from "../controllerMixins"
+import {UsFiltersMixin} from "../controllerMixins"
 
 import * as angular from "angular"
 import * as _ from "lodash"
@@ -35,7 +35,7 @@ let module = angular.module("taigaKanban");
 //# Kanban Controller
 //############################################################################
 
-class KanbanController extends mixOf(Controller, PageMixin, FiltersMixin, UsFiltersMixin) {
+class KanbanController extends UsFiltersMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -279,7 +279,7 @@ class KanbanController extends mixOf(Controller, PageMixin, FiltersMixin, UsFilt
     }
 
     loadUserstories() {
-        let params = {
+        let params:any = {
             status__is_archived: false
         };
 
@@ -383,7 +383,7 @@ class KanbanController extends mixOf(Controller, PageMixin, FiltersMixin, UsFilt
 
     prepareBulkUpdateData(uses, field) {
         if (field == null) { field = "kanban_order"; }
-        return _.map(uses, x => ({"us_id": x.id, "order": x[field]}));
+        return _.map(uses, (x:any) => ({"us_id": x.id, "order": x[field]}));
     }
 
     moveUs(ctx, us, oldStatusId, newStatusId, index) {
@@ -552,7 +552,7 @@ let KanbanSquishColumnDirective = function(rs, projectService) {
         };
 
         var updateTableWidth = function() {
-            let columnWidths = _.map($scope.usStatusList, function(status) {
+            let columnWidths = _.map($scope.usStatusList, function(status:any) {
                 if ($scope.folds[status.id]) {
                     return 40;
                 } else {
@@ -560,7 +560,7 @@ let KanbanSquishColumnDirective = function(rs, projectService) {
                 }
             });
 
-            let totalWidth = _.reduce(columnWidths, (total, width) => total + width);
+            let totalWidth = _.reduce(columnWidths, (total:number, width:number) => total + width);
 
             return $el.find('.kanban-table-inner').css("width", totalWidth);
         };

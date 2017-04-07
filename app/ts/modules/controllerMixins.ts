@@ -25,13 +25,14 @@
 import * as _ from "lodash"
 import {groupBy, joinStr, trim, toString} from "../utils"
 import {generateHash} from "../app"
+import {Controller} from "../classes"
 
 
 //############################################################################
 //# Page Mixin
 //############################################################################
 
-export class PageMixin {
+export class PageMixin extends Controller {
     scope:any
     q: any
     rs: any
@@ -70,7 +71,7 @@ export class PageMixin {
 //############################################################################
 // This mixin requires @location ($tgLocation), and @scope
 
-export class FiltersMixin {
+export class FiltersMixin extends PageMixin{
     location: any
     scope: any
     storage: any
@@ -191,7 +192,7 @@ export class FiltersMixin {
 //# Us Filters Mixin
 //############################################################################
 
-export class UsFiltersMixin {
+export class UsFiltersMixin extends FiltersMixin {
     changeQ(q) {
         this.replaceFilter("q", q);
         this.filtersReloadContent();
