@@ -22,10 +22,10 @@
  * File: modules/user-settings/main.coffee
  */
 
-let { taiga } = this;
-
-let { mixOf } = this.taiga;
-let { debounce } = this.taiga;
+import {mixOf, debounce} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin} from "../controllerMixins"
+import * as angular from "angular"
 
 let module = angular.module("taigaUserSettings");
 
@@ -34,7 +34,19 @@ let module = angular.module("taigaUserSettings");
 //# User ChangePassword Controller
 //############################################################################
 
-class UserChangePasswordController extends mixOf(taiga.Controller, taiga.PageMixin) {
+class UserChangePasswordController extends mixOf(Controller, PageMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    params:any
+    q:any
+    location:any
+    navUrls:any
+    auth:any
+    translate:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -53,6 +65,7 @@ class UserChangePasswordController extends mixOf(taiga.Controller, taiga.PageMix
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, navUrls,
                   auth, translate) {
+        super()
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
