@@ -22,15 +22,12 @@
  * File: modules/kanban/main.coffee
  */
 
-let { taiga } = this;
+import {mixOf, toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods, defineImmutableProperty} from "../../utils"
+import {Controller} from "../../classes"
+import {PageMixin, FiltersMixin, UsFiltersMixin} from "../controllerMixins"
 
-let { mixOf } = this.taiga;
-let { toggleText } = this.taiga;
-let { scopeDefer } = this.taiga;
-let { bindOnce } = this.taiga;
-let { groupBy } = this.taiga;
-let { timeout } = this.taiga;
-let { bindMethods } = this.taiga;
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module("taigaKanban");
 
@@ -38,7 +35,35 @@ let module = angular.module("taigaKanban");
 //# Kanban Controller
 //############################################################################
 
-class KanbanController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.FiltersMixin, taiga.UsFiltersMixin) {
+class KanbanController extends mixOf(Controller, PageMixin, FiltersMixin, UsFiltersMixin) {
+    scope: angular.IScope
+    rootscope: angular.IScope
+    repo:any
+    confirm:any
+    rs:any
+    rs2:any
+    params:any
+    q:any
+    location:any
+    appMetaService:any
+    navUrls:any
+    events:any
+    analytics:any
+    translate:any
+    errorHandlingService:any
+    model:any
+    kanbanUserstoriesService:any
+    storage:any
+    filterRemoteStorageService:any
+    projectService:any
+    storeCustomFiltersName:any
+    storeFiltersName:any
+    openFilter:any
+    isFirstLoad:any
+    zoomLevel:any
+    zoom:any
+    zoomLoading:any
+
     static initClass() {
         this.$inject = [
             "$scope",
@@ -62,7 +87,7 @@ class KanbanController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
             "tgFilterRemoteStorageService",
             "tgProjectService"
         ];
-    
+
         this.prototype.storeCustomFiltersName = 'kanban-custom-filters';
         this.prototype.storeFiltersName = 'kanban-filters';
     }
@@ -70,6 +95,7 @@ class KanbanController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
     constructor(scope, rootscope, repo, confirm, rs, rs2, params, q, location,
                   appMetaService, navUrls, events, analytics, translate, errorHandlingService,
                   model, kanbanUserstoriesService, storage, filterRemoteStorageService, projectService) {
+        super()
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -99,7 +125,7 @@ class KanbanController extends mixOf(taiga.Controller, taiga.PageMixin, taiga.Fi
         this.scope.sectionName = this.translate.instant("KANBAN.SECTION_NAME");
         this.initializeEventHandlers();
 
-        taiga.defineImmutableProperty(this.scope, "usByStatus", () => {
+        defineImmutableProperty(this.scope, "usByStatus", () => {
             return this.kanbanUserstoriesService.usByStatus;
         });
     }
