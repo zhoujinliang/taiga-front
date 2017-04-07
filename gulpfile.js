@@ -529,6 +529,8 @@ gulp.task("ts", function() {
         .pipe(order(paths.ts_order, {base: '.'}))
         .pipe(sourcemaps.init())
         .pipe(ts({
+            "baseUrl": "types",
+            "typeRoots": ["types"],
             "target": "es5",
             "module": "commonjs",
             "moduleResolution": "node",
