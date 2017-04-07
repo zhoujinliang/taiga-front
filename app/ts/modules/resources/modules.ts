@@ -17,8 +17,10 @@
  * File: modules.coffee
  */
 
+import * as angular from "angular"
+
 let resourceProvider = function($repo) {
-    let service = {};
+    let service:any = {};
 
     service.list = (projectId, module) => $repo.queryOneAttribute("project-modules", projectId, module);
 

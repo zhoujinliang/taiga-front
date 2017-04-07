@@ -23,12 +23,11 @@
  */
 
 
-let { taiga } = this;
-let { sizeFormat } = this.taiga;
-
+import {sizeFormat} from "../../utils"
+import * as angular from "angular"
 
 let resourceProvider = function($config, $repo, $http, $urls, $auth, $q, $translate) {
-    let service = {};
+    let service:any = {};
 
     service.get = projectId => $repo.queryOne("projects", projectId);
 

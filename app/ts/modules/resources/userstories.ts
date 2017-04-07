@@ -22,12 +22,12 @@
  * File: modules/resources/userstories.coffee
  */
 
-let { taiga } = this;
-
-let { generateHash } = taiga;
+import {generateHash} from "../../app"
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let resourceProvider = function($repo, $http, $urls, $storage, $q) {
-    let service = {};
+    let service:any = {};
     let hashSuffix = "userstories-queryparams";
 
     service.get = function(projectId, usId, extraParams) {

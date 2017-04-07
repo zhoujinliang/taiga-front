@@ -23,10 +23,11 @@
  */
 
 
-let { taiga } = this;
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let resourceProvider = function($repo, $http, $urls) {
-    let service = {};
+    let service:any = {};
 
     service.get = id => $repo.queryOne("notify-policies", id);
 

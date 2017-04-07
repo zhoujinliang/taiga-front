@@ -23,10 +23,10 @@
  */
 
 
-let { taiga } = this;
+import * as angular from "angular"
 
 let resourceProvider = function($repo, $http, $urls) {
-    let service = {};
+    let service:any = {};
 
     service.get = (type, objectId) => $repo.queryOneRaw(`history/${type}`, objectId);
 

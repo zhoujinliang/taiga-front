@@ -23,10 +23,10 @@
  */
 
 
-let { taiga } = this;
+import * as angular from "angular"
 
 let resourceProvider = function($repo, $urls, $http) {
-    let service = {};
+    let service:any = {};
 
     service.render = function(projectId, content) {
         // We can't use an empty content

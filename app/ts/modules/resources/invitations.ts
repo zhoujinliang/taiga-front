@@ -23,10 +23,10 @@
  */
 
 
-let { taiga } = this;
+import * as angular from "angular"
 
 let resourceProvider = function($repo) {
-    let service = {};
+    let service:any = {};
 
     service.get = token => $repo.queryOne("invitations", token);
 

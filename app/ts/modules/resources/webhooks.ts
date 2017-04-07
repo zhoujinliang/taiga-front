@@ -17,8 +17,10 @@
  * File: webhooks.coffee
  */
 
+import * as angular from "angular"
+
 let resourceProvider = function($repo, $urls, $http) {
-    let service = {};
+    let service:any = {};
 
     service.list = function(projectId) {
         let params = {project: projectId};

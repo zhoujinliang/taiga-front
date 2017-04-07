@@ -23,9 +23,8 @@
  */
 
 
-let { taiga } = this;
-let { sizeFormat } = this.taiga;
-
+import {sizeFormat} from "../../utils"
+import * as angular from "angular"
 
 let resourceProvider = function($repo) {
     let _list = (projectId, resource) => $repo.queryMany(resource, {project: projectId});

@@ -22,12 +22,11 @@
  * File: modules/resources/sprints.coffee
  */
 
-let { taiga } = this;
-
-let { generateHash } = taiga;
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let resourceProvider = function($repo, $model, $storage) {
-    let service = {};
+    let service:any = {};
 
     service.get = (projectId, sprintId) =>
         $repo.queryOne("milestones", sprintId).then(function(sprint) {

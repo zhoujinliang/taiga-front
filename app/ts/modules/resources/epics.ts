@@ -23,13 +23,12 @@
  */
 
 
-let { taiga } = this;
+import {generateHash} from "../../app"
 
-let { generateHash } = taiga;
-
+import * as angular from "angular"
 
 let resourceProvider = function($repo, $http, $urls, $storage) {
-    let service = {};
+    let service:any = {};
     let hashSuffix = "epics-queryparams";
 
     service.getByRef = function(projectId, ref) {

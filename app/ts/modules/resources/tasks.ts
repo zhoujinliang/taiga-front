@@ -23,12 +23,12 @@
  */
 
 
-let { taiga } = this;
-
-let { generateHash } = taiga;
+import {generateHash} from "../../app"
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let resourceProvider = function($repo, $http, $urls, $storage) {
-    let service = {};
+    let service:any = {};
     let hashSuffix = "tasks-queryparams";
     let hashSuffixStatusColumnModes = "tasks-statuscolumnmodels";
     let hashSuffixUsRowModes = "tasks-usrowmodels";

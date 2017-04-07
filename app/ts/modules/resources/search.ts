@@ -23,10 +23,10 @@
  */
 
 
-let { taiga } = this;
+import * as angular from "angular"
 
 let resourceProvider = function($repo, $urls, $http, $q) {
-    let service = {};
+    let service:any = {};
 
     service.do = function(projectId, term) {
         let deferredAbort = $q.defer();
