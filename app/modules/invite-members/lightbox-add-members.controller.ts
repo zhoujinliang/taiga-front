@@ -17,9 +17,19 @@
  * File: add-members.controller.coffee
  */
 
-let { taiga } = this;
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as Immutable from "immutable"
 
 class AddMembersController {
+    userService:any
+    currentUserService:any
+    projectService:any
+    contactsToInvite: Immutable.List<any>
+    emailsToInvite: Immutable.List<any>
+    displayContactList:boolean
+    contacts:any
+
     static initClass() {
         this.$inject = [
             "tgUserService",
@@ -59,7 +69,7 @@ class AddMembersController {
     }
 
     removeContact(invited) {
-        this.contactsToInvite = this.contactsToInvite.filter( contact => {
+        this.contactsToInvite = <Immutable.List<any>>this.contactsToInvite.filter( contact => {
             return contact.get('id') !== invited.id;
         });
         invited = Immutable.fromJS(invited);
@@ -74,7 +84,7 @@ class AddMembersController {
     }
 
     removeEmail(invited) {
-        this.emailsToInvite = this.emailsToInvite.filter( email => {
+        this.emailsToInvite = <Immutable.List<any>>this.emailsToInvite.filter( email => {
             return email.get('email') !== invited.email;
         });
         return this.testEmptyContacts();
