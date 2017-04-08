@@ -17,7 +17,8 @@
  * File: wiki-history.directive.coffee
  */
 
-let { bindOnce } = this.taiga;
+import {bindOnce} from "../../../ts/utils"
+import * as angular from "angular"
 
 let module = angular.module('taigaWikiHistory');
 

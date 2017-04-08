@@ -17,9 +17,26 @@
  * File: attchments-full.controller.coffee
  */
 
-let { sizeFormat } = this.taiga;
+import {sizeFormat, defineImmutableProperty} from "../../../ts/utils"
+import * as angular from "angular"
+import * as _ from "lodash"
 
 class AttachmentsFullController {
+    translate:any
+    confirm:any
+    config:any
+    storage:any
+    attachmentsFullService:any
+    projectService:any
+    attachmentsPreviewService:any
+    mode:any
+    maxFileSize:any
+    maxFileSizeMsg:any
+    projectId:any
+    objId:any
+    type:any
+    editPermission:any
+
     static initClass() {
         this.$inject = [
             "$translate",
@@ -46,10 +63,10 @@ class AttachmentsFullController {
         if (this.maxFileSize) { this.maxFileSize = sizeFormat(this.maxFileSize); }
         this.maxFileSizeMsg = this.maxFileSize ? this.translate.instant("ATTACHMENT.MAX_UPLOAD_SIZE", {maxFileSize: this.maxFileSize}) : "";
 
-        taiga.defineImmutableProperty(this, 'attachments', () => { return this.attachmentsFullService.attachments; });
-        taiga.defineImmutableProperty(this, 'deprecatedsCount', () => { return this.attachmentsFullService.deprecatedsCount; });
-        taiga.defineImmutableProperty(this, 'attachmentsVisible', () => { return this.attachmentsFullService.attachmentsVisible; });
-        taiga.defineImmutableProperty(this, 'deprecatedsVisible', () => { return this.attachmentsFullService.deprecatedsVisible; });
+        defineImmutableProperty(this, 'attachments', () => { return this.attachmentsFullService.attachments; });
+        defineImmutableProperty(this, 'deprecatedsCount', () => { return this.attachmentsFullService.deprecatedsCount; });
+        defineImmutableProperty(this, 'attachmentsVisible', () => { return this.attachmentsFullService.attachmentsVisible; });
+        defineImmutableProperty(this, 'deprecatedsVisible', () => { return this.attachmentsFullService.deprecatedsVisible; });
     }
 
     uploadingAttachments() {

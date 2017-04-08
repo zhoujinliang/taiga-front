@@ -22,8 +22,10 @@
  * File: modules/components/wysiwyg/wysiwyg.directive.coffee
  */
 
-let { taiga } = this;
-let { bindOnce } = this.taiga;
+import {bindOnce, isImage} from "../../../ts/utils"
+import {MediumEditor} from "../../../ts/global"
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let Medium = function($translate, $confirm, $storage, wysiwygService, animationFrame, tgLoader, wysiwygCodeHightlighterService, wysiwygMentionService, analytics, $location) {
     let removeSelections = function() {
@@ -125,7 +127,7 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
     let AlignRightButton = MediumEditor.extensions.button.extend({
         name: 'rtl',
         init() {
-            let option = _.find(this.base.options.toolbar.buttons, it => it.name === 'rtl');
+            let option = _.find(this.base.options.toolbar.buttons, (it:any) => it.name === 'rtl');
 
             this.button = this.document.createElement('button');
             this.button.classList.add('medium-editor-action');
@@ -158,7 +160,7 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
     let CodeButton = MediumEditor.extensions.button.extend({
         name: 'code',
         init() {
-            let option = _.find(this.base.options.toolbar.buttons, it => it.name === 'code');
+            let option = _.find(this.base.options.toolbar.buttons, (it:any) => it.name === 'code');
 
             this.button = this.document.createElement('button');
             this.button.classList.add('medium-editor-action');
@@ -363,7 +365,7 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
         };
 
         let uploadEnd = function(name, url) {
-            if (taiga.isImage(name)) {
+            if (isImage(name)) {
                 return mediumInstance.pasteHTML(`<img src='${url}' /><br/>`);
             } else {
                 name = $('<div/>').text(name).html();
@@ -437,7 +439,7 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
 
         let localSave = function(markdown) {
             if ($scope.storageKey) {
-                let store = {};
+                let store:any = {};
                 store.version = $scope.version || 0;
                 store.text = markdown;
                 return $storage.set($scope.storageKey, store);
@@ -548,11 +550,11 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
             mediumInstance.subscribe("editableClick", function(e) {
                 let r = new RegExp('^(?:[a-z]+:)?//', 'i');
 
-                if (e.target.href) { 
+                if (e.target.href) {
                     if (r.test(e.target.getAttribute('href')) || (e.target.getAttribute('target') === '_blank')) {
                         e.stopPropagation();
-                        return window.open(e.target.href);                                                 
-                    } else { 
+                        return window.open(e.target.href);
+                    } else {
                         return $location.url(e.target.href);
                     }
                 }
@@ -588,7 +590,7 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
             });
         };
 
-        $(editorMedium[0]).on('mousedown', function(e) { 
+        $(editorMedium[0]).on('mousedown', function(e) {
             if (e.target.href) {
                 e.preventDefault();
                 return e.stopPropagation();
@@ -600,7 +602,7 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
                     }
                 });
             }
-        });                   
+        });
 
         $(editorMedium[0]).on('dblclick', 'pre', e =>
             $scope.$applyAsync(function() {

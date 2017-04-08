@@ -22,10 +22,7 @@
  * File: modules/common/attachments.coffee
  */
 
-let { taiga } = this;
-let { bindOnce } = this.taiga;
-let { timeout } = this.taiga;
-let { debounce } = this.taiga;
+import * as angular from "angular"
 
 let module = angular.module("taigaProject");
 

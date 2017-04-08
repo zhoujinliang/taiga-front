@@ -17,13 +17,21 @@
  * File: tag-line.controller.coffee
  */
 
-let { trim } = this.taiga;
+import {trim} from "../../../../ts/utils"
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module('taigaCommon');
 
 class TagLineController {
+    rootScope: angular.IScope
+    confirm:any
+    modelTransform:any
+    loadingAddTag:any
+    loadingRemoveTag:any
+    addTag:any
+
     static initClass() {
-    
         this.$inject = [
             "$rootScope",
             "$tgConfirm",

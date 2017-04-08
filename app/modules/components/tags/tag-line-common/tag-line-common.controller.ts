@@ -17,13 +17,22 @@
  * File: tag-line.controller.coffee
  */
 
-let { trim } = this.taiga;
+import {trim} from "../../../../ts/utils"
+import * as angular from "angular"
 
 let module = angular.module('taigaCommon');
 
 class TagLineCommonController {
+    tagLineService:any
+    disableColorSelection:any
+    newTag:any
+    colorArray:any
+    addTag:any
+    project:any
+    permissions:any
+    onAddTag:any
+
     static initClass() {
-    
         this.$inject = [
             "tgTagLineService"
         ];

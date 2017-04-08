@@ -17,7 +17,8 @@
  * File: color-selector.directive.coffee
  */
 
-let { bindOnce } = this.taiga;
+import {bindOnce} from "../../../ts/utils"
+import * as angular from "angular"
 
 let ColorSelectorDirective = function($timeout) {
     let link = function(scope, el, attrs, ctrl) {

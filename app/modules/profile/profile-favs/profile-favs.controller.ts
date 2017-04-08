@@ -17,11 +17,34 @@
  * File: profile-favs.controller.coffee
  */
 
-let { debounceLeading } = this.taiga;
+import {debounceLeading} from "../../../ts/utils"
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as Immutable from "immutable"
 
 class FavsBaseController {
+    filterByTextQuery: any
+    enableFilterByAll:boolean
+    enableFilterByProjects:boolean
+    enableFilterByEpics:boolean
+    enableFilterByUserStories:boolean
+    enableFilterByTasks:boolean
+    enableFilterByIssues:boolean
+    enableFilterByTextQuery:boolean
+    q:any
+    _page:any
+    isLoading:any
+    items:any
+    type:any
+    scrollDisabled:any
+    hasNoResults:any
+    user:any
+    userService:any
+    tabName:string
+    _getItems:any
+
+
     static initClass() {
-    
         //###############################################
         //# Filtre actions
         //###############################################
@@ -168,8 +191,8 @@ class ProfileLikedController extends FavsBaseController {
     }
 
     constructor(userService) {
-        this.userService = userService;
         super();
+        this.userService = userService;
         this.tabName = 'likes';
         this.enableFilterByAll = false;
         this.enableFilterByProjects = false;
@@ -199,8 +222,8 @@ class ProfileVotedController extends FavsBaseController {
     }
 
     constructor(userService) {
-        this.userService = userService;
         super();
+        this.userService = userService;
         this.tabName = 'upvotes';
         this.enableFilterByAll = true;
         this.enableFilterByProjects = false;
@@ -232,8 +255,8 @@ class ProfileWatchedController extends FavsBaseController {
     }
 
     constructor(userService) {
-        this.userService = userService;
         super();
+        this.userService = userService;
         this.tabName = 'watchers';
         this._getItems = this.userService.getWatched;
     }
