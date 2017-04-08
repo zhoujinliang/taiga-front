@@ -362,8 +362,7 @@ class BacklogController extends UsFiltersMixin {
         });
     }
 
-    loadUserstories(resetPagination, pageSize) {
-        if (resetPagination == null) { resetPagination = false; }
+    loadUserstories(resetPagination=false, pageSize=null) {
         if (!this.scope.projectId) { return null; }
 
         this.loadingUserstories = true;
