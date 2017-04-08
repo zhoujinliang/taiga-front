@@ -22,7 +22,7 @@
  * File: modules/admin/project-profile.coffee
  */
 
-import {mixOf, debounce} from "../../utils"
+import {debounce} from "../../utils"
 import {Controller} from "../../classes"
 import {PageMixin} from "../controllerMixins"
 
@@ -36,7 +36,7 @@ let module = angular.module("taigaAdmin");
 //# Project Profile Controller
 //############################################################################
 
-class ProjectProfileController extends mixOf(Controller, PageMixin) {
+class ProjectProfileController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -144,7 +144,7 @@ class ProjectProfileController extends mixOf(Controller, PageMixin) {
         this.scope.severitiesList = _.sortBy(project.severities, "order");
         this.scope.$emit('project:loaded', project);
 
-        this.scope.projectTags = _.map(this.scope.project.tags, it => {
+        this.scope.projectTags = _.map(this.scope.project.tags, (it:any) => {
             return [it, this.scope.project.tags_colors[it]];
     });
 

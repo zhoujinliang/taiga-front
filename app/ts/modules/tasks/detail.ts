@@ -22,8 +22,7 @@
  * File: modules/tasks/detail.coffee
  */
 
-import {mixOf, groupBy, bindMethods} from "../../utils"
-import {Controller} from "../../classes"
+import {groupBy, bindMethods} from "../../utils"
 import {PageMixin} from "../controllerMixins"
 
 import * as angular from "angular"
@@ -35,7 +34,7 @@ let module = angular.module("taigaTasks");
 //# Task Detail Controller
 //############################################################################
 
-class TaskDetailController extends mixOf(Controller, PageMixin) {
+class TaskDetailController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -135,7 +134,7 @@ class TaskDetailController extends mixOf(Controller, PageMixin) {
     }
 
     initializeOnDeleteGoToUrl() {
-        let ctx = {project: this.scope.project.slug};
+        let ctx:any = {project: this.scope.project.slug};
         this.scope.onDeleteGoToUrl = this.navUrls.resolve("project", ctx);
         if (this.scope.project.is_backlog_activated) {
             if (this.scope.task.milestone) {

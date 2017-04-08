@@ -22,8 +22,7 @@
  * File: modules/search.coffee
  */
 
-import {groupBy, bindOnce, mixOf, debounceLeading, trim, debounce} from "../utils"
-import {Controller} from "../classes"
+import {groupBy, bindOnce, debounceLeading, trim, debounce} from "../utils"
 import {PageMixin} from "./controllerMixins"
 import * as angular from "angular"
 
@@ -34,7 +33,7 @@ let module = angular.module("taigaSearch", []);
 //# Search Controller
 //############################################################################
 
-class SearchController extends mixOf(Controller, PageMixin) {
+class SearchController extends PageMixin {
     scope: angular.IScope
     repo:any
     rs:any
@@ -229,7 +228,7 @@ let SearchDirective = function($log, $compile, $templatecache, $routeparams, $lo
 
         let getActiveSection = function(data) {
             let maxVal = 0;
-            let selectedSection = {};
+            let selectedSection:any = {};
             selectedSection.name = "userstories";
             selectedSection.value = [];
 

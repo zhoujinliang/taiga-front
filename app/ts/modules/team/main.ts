@@ -22,8 +22,6 @@
  * File: modules/team/main.coffee
  */
 
-import {mixOf} from "../../utils"
-import {Controller} from "../../classes"
 import {PageMixin} from "../controllerMixins"
 
 import * as angular from "angular"
@@ -35,7 +33,7 @@ let module = angular.module("taigaTeam");
 //# Team Controller
 //############################################################################
 
-class TeamController extends mixOf(Controller, PageMixin) {
+class TeamController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -188,9 +186,9 @@ class TeamController extends mixOf(Controller, PageMixin) {
         this.fillUsersAndRoles(project.members, project.roles);
         this.loadMembers();
 
-        let userRoles = _.map(this.scope.users, user => user.role);
+        let userRoles = _.map(this.scope.users, (user:any) => user.role);
 
-        this.scope.roles = _.filter(this.scope.roles, role => userRoles.indexOf(role.id) !== -1);
+        this.scope.roles = _.filter(this.scope.roles, (role:any) => userRoles.indexOf(role.id) !== -1);
 
         return this.loadMemberStats();
     }
@@ -342,7 +340,7 @@ module.directive("tgLeaveProject", ["$tgRepo", "$tgConfirm", "$tgLocation", "$tg
 
 let membersFilter = () =>
     (members, filtersQ, filtersRole) =>
-        _.filter(members, m => (!filtersRole || (m.role === filtersRole.id)) &&
+        _.filter(members, (m:any) => (!filtersRole || (m.role === filtersRole.id)) &&
                                         (!filtersQ || (m.full_name.search(new RegExp(filtersQ, "i")) >= 0))
          )
 ;

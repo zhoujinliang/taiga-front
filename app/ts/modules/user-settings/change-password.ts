@@ -22,8 +22,7 @@
  * File: modules/user-settings/main.coffee
  */
 
-import {mixOf, debounce} from "../../utils"
-import {Controller} from "../../classes"
+import {debounce} from "../../utils"
 import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 
@@ -34,7 +33,7 @@ let module = angular.module("taigaUserSettings");
 //# User ChangePassword Controller
 //############################################################################
 
-class UserChangePasswordController extends mixOf(Controller, PageMixin) {
+class UserChangePasswordController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any

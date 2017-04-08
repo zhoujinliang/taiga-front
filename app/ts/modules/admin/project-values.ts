@@ -22,7 +22,7 @@
  * File: modules/admin/project-profile.coffee
  */
 
-import {mixOf, debounce, getDefaulColorList} from "../../utils"
+import {debounce, getDefaulColorList} from "../../utils"
 import {Controller} from "../../classes"
 import {PageMixin} from "../controllerMixins"
 import {autoScroll} from "../../global"
@@ -37,7 +37,7 @@ let module = angular.module("taigaAdmin");
 //# Project values section Controller
 //############################################################################
 
-class ProjectValuesSectionController extends mixOf(Controller, PageMixin) {
+class ProjectValuesSectionController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -164,7 +164,7 @@ class ProjectValuesController extends Controller {
         });
     }
     loadValues() {
-        return this.rs[this.scope.resource].listValues(this.scope.projectId, this.scope.type).then(values => {
+        return this.rs[this.scope.resource].listValues(this.scope.projectId, this.scope.type).then((values:any[]) => {
             this.scope.values = values;
             this.scope.maxValueOrder = _.maxBy(values, "order").order;
             return values;
@@ -524,7 +524,7 @@ let TYPE_CHOICES = [
     }
 ];
 
-class ProjectCustomAttributesController extends mixOf(Controller, PageMixin) {
+class ProjectCustomAttributesController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -929,11 +929,11 @@ class ProjectTagsController extends Controller {
     }
 
     filterAndSortTags() {
-        this.scope.projectTags = _.sortBy(this.scope.projectTagsAll, it => it.name.toLowerCase());
+        this.scope.projectTags = _.sortBy(this.scope.projectTagsAll, (it:any) => it.name.toLowerCase());
 
         return this.scope.projectTags = _.filter(
             this.scope.projectTags,
-            tag => tag.name.indexOf(this.scope.tagsFilter.name) !== -1
+            (tag:any) => tag.name.indexOf(this.scope.tagsFilter.name) !== -1
         );
     }
 
