@@ -22,8 +22,7 @@
  * File: modules/wiki/detail.coffee
  */
 
-import {mixOf, groupBy, bindOnce, debounce} from "../../utils"
-import {Controller} from "../../classes"
+import {groupBy, bindOnce, debounce} from "../../utils"
 import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as moment from "moment"
@@ -35,7 +34,7 @@ let module = angular.module("taigaWiki");
 //# Wiki Detail Controller
 //############################################################################
 
-class WikiDetailController extends mixOf(Controller, PageMixin) {
+class WikiDetailController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any

@@ -22,8 +22,7 @@
  * File: modules/epics/detail.coffee
  */
 
-import {mixOf, groupBy, bindMethods} from "../../utils"
-import {Controller} from "../../classes"
+import {groupBy, bindMethods} from "../../utils"
 import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as Immutable from "immutable"
@@ -34,7 +33,7 @@ let module = angular.module("taigaEpics");
 //# Epic Detail Controller
 //############################################################################
 
-class EpicDetailController extends mixOf(Controller, PageMixin) {
+class EpicDetailController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any

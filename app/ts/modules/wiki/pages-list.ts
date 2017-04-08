@@ -22,9 +22,7 @@
  * File: modules/wiki/pages-list.coffee
  */
 
-import {mixOf} from "../../utils"
 import {PageMixin} from "../controllerMixins"
-import {Controller} from "../../classes"
 import * as angular from "angular"
 import * as _ from "lodash"
 
@@ -34,7 +32,7 @@ let module = angular.module("taigaWiki");
 //# Wiki Pages List Controller
 //############################################################################
 
-class WikiPagesListController extends mixOf(Controller, PageMixin) {
+class WikiPagesListController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo: any

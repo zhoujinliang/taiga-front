@@ -22,8 +22,7 @@
  * File: modules/userstories/detail.coffee
  */
 
-import {mixOf, groupBy, bindOnce, bindMethods} from "../../utils"
-import {Controller} from "../../classes"
+import {groupBy, bindOnce, bindMethods} from "../../utils"
 import {PageMixin} from "../controllerMixins"
 
 import * as angular from "angular"
@@ -35,7 +34,7 @@ let module = angular.module("taigaUserStories");
 //# User story Detail Controller
 //############################################################################
 
-class UserStoryDetailController extends mixOf(Controller, PageMixin) {
+class UserStoryDetailController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -122,7 +121,7 @@ class UserStoryDetailController extends mixOf(Controller, PageMixin) {
 
     _setMeta() {
         let totalTasks = this.scope.tasks.length;
-        let closedTasks = _.filter(this.scope.tasks, t => this.scope.taskStatusById[t.status].is_closed).length;
+        let closedTasks = _.filter(this.scope.tasks, (t:any) => this.scope.taskStatusById[t.status].is_closed).length;
         let progressPercentage = totalTasks > 0 ? Math.round((100 * closedTasks) / totalTasks) : 0;
 
         let title = this.translate.instant("US.PAGE_TITLE", {
@@ -145,7 +144,7 @@ class UserStoryDetailController extends mixOf(Controller, PageMixin) {
     initializeEventHandlers() {
         this.scope.$on("related-tasks:update", () => {
             this.scope.tasks = _.clone(this.scope.tasks, false);
-            let allClosed = _.every(this.scope.tasks, task => task.is_closed);
+            let allClosed = _.every(this.scope.tasks, (task:any) => task.is_closed);
 
             if (this.scope.us.is_closed !== allClosed) {
                 return this.loadUs();
@@ -162,7 +161,7 @@ class UserStoryDetailController extends mixOf(Controller, PageMixin) {
     }
 
     initializeOnDeleteGoToUrl() {
-        let ctx = {project: this.scope.project.slug};
+        let ctx:any = {project: this.scope.project.slug};
         this.scope.onDeleteGoToUrl = this.navUrls.resolve("project", ctx);
         if (this.scope.project.is_backlog_activated) {
             if (this.scope.us.milestone) {
@@ -191,7 +190,7 @@ class UserStoryDetailController extends mixOf(Controller, PageMixin) {
     }
 
     loadUs() {
-        let httpParams = _.pick(this.location.search(), "milestone", "no-milestone", "kanban-status");
+        let httpParams:any = _.pick(this.location.search(), "milestone", "no-milestone", "kanban-status");
         let { milestone } = httpParams;
         if (milestone) {
             this.rs.userstories.storeQueryParams(this.scope.projectId, {

@@ -22,8 +22,7 @@
  * File: modules/issues/detail.coffee
  */
 
-import {mixOf, groupBy, bindMethods} from "../../utils"
-import {Controller} from "../../classes"
+import {groupBy, bindMethods} from "../../utils"
 import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"
@@ -34,7 +33,7 @@ let module = angular.module("taigaIssues");
 //# Issue Detail Controller
 //############################################################################
 
-class IssueDetailController extends mixOf(Controller, PageMixin) {
+class IssueDetailController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any

@@ -22,8 +22,7 @@
  * File: modules/user-settings/notifications.coffee
  */
 
-import {mixOf, bindOnce} from "../../utils"
-import {Controller} from "../../classes"
+import {bindOnce} from "../../utils"
 import {PageMixin} from "../controllerMixins"
 
 import * as angular from "angular"
@@ -36,7 +35,7 @@ let module = angular.module("taigaUserSettings");
 //# User settings Controller
 //############################################################################
 
-class UserNotificationsController extends mixOf(Controller, PageMixin) {
+class UserNotificationsController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
