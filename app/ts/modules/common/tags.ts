@@ -119,12 +119,12 @@ let LbTagLineDirective = function($rs, $template, $compile) {
 
         //# Render
         let renderTags = function(tags, tagsColors=[]) {
-            let color = !withoutColors ? tagsColors[t] : null;
+            let color = !withoutColors ? tagsColors : [];
 
             let ctx = {
-                tags: _.map(tags, t => ({
+                tags: _.map(tags, (t:string) => ({
                     name: t,
-                    style: color ? `border-left: 5px solid ${color}` : ""
+                    style: tagsColors[t] ? `border-left: 5px solid ${tagsColors[t]}` : ""
                 }) )
             };
 
