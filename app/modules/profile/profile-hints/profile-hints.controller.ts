@@ -17,7 +17,14 @@
  * File: profile-hints.controller.coffee
  */
 
+import * as angular from "angular"
+
 class ProfileHints {
+    translate:any
+    HINTS:any
+    hintKey:any
+    hint:any
+
     static initClass() {
         this.prototype.HINTS = [
             { //hint1

@@ -17,7 +17,16 @@
  * File: trello-import-project-members.controller.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 class SelectImportUserLightboxCtrl {
+    mode: string
+    invalid: boolean
+    onSelectUser:any
+    user: any
+    userEmail:any
+
     static initClass() {
         this.$inject = [];
     }

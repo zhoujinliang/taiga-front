@@ -17,7 +17,18 @@
  * File: profile.controller.coffee
  */
 
+import * as angular from "angular"
+
 class ProfileController {
+    appMetaService:any
+    currentUserService:any
+    routeParams:any
+    userService:any
+    xhrError:any
+    translate:any
+    isCurrentUser:boolean
+    user:any
+
     static initClass() {
         this.$inject = [
             "tgAppMetaService",

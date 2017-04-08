@@ -17,7 +17,14 @@
  * File: discover-search-list-header.controller.coffee
  */
 
+import * as angular from "angular"
+
 class DiscoverSearchListHeaderController {
+    like_is_open:boolean
+    activity_is_open:boolean
+    orderBy:any
+    onChange:any
+
     static initClass() {
         this.$inject = [];
     }

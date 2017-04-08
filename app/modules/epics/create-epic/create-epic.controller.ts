@@ -17,12 +17,23 @@
  * File: create-epic.controller.coffee
  */
 
-let { taiga } = this;
-let { trim } = taiga;
-let { getRandomDefaultColor } = taiga;
-
+import {getRandomDefaultColor, trim} from "../../../ts/utils"
+import * as angular from "angular"
+import * as Immutable from "immutable"
+import * as _ from "lodash"
 
 class CreateEpicController {
+    confirm:any
+    projectService:any
+    epicsService:any
+    project:any
+    loading:boolean
+    newEpic:any
+    attachments:Immutable.List<any>
+    validateForm:any
+    onCreateEpic:any
+    setFormErrors:any
+
     static initClass() {
         this.$inject = [
             "$tgConfirm",

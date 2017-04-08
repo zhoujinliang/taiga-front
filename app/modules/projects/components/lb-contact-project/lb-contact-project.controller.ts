@@ -17,7 +17,16 @@
  * File: lb-contact-team.controller.coffee
  */
 
+import * as angular from "angular"
+
 class ContactProjectLbController {
+    lightboxService:any
+    rs:any
+    confirm:any
+    contact:any
+    project:any
+    sendingFeedback:boolean
+
     static initClass() {
         this.$inject = [
             "lightboxService",
