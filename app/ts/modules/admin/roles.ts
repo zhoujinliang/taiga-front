@@ -22,9 +22,8 @@
  * File: modules/admin/memberships.coffee
  */
 
-import {mixOf, bindOnce, debounce, bindMethods} from "../../utils"
-import {Controller} from "../../classes"
-import {PageMixin, FiltersMixin} from "../controllerMixins"
+import {bindOnce, debounce, bindMethods} from "../../utils"
+import {FiltersMixin} from "../controllerMixins"
 
 import * as angular from "angular"
 import * as _ from "lodash"
@@ -36,7 +35,7 @@ let module = angular.module("taigaAdmin");
 //# Project Roles Controller
 //############################################################################
 
-class RolesController extends mixOf(Controller, PageMixin, FiltersMixin) {
+class RolesController extends FiltersMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -128,7 +127,7 @@ class RolesController extends mixOf(Controller, PageMixin, FiltersMixin) {
         this.scope.project = project;
 
         this.scope.$emit('project:loaded', project);
-        this.scope.anyComputableRole = _.some(_.map(project.roles, point => point.computable));
+        this.scope.anyComputableRole = _.some(_.map(project.roles, (point:any) => point.computable));
 
         return project;
     }
@@ -333,7 +332,7 @@ let NewRoleDirective = function($tgrepo, $confirm) {
                     project: $scope.projectId,
                     name: target.val(),
                     permissions: DEFAULT_PERMISSIONS,
-                    order: _.maxBy($scope.roles, r => r.order).order + 1,
+                    order: _.maxBy($scope.roles, (r:any) => r.order).order + 1,
                     computable: false
                 };
 
@@ -426,7 +425,7 @@ let RolePermissionsDirective = function($rootscope, $repo, $confirm, $compile) {
             };
 
             let setActivePermissionsPerCategory = category =>
-                _.map(category, function(cat) {
+                _.map(category, function(cat:any) {
                     cat.permissions = cat.permissions.map(function(permission) {
                         permission.editable = isPermissionEditable(permission, role, $scope.project);
 
@@ -520,7 +519,7 @@ let RolePermissionsDirective = function($rootscope, $repo, $confirm, $compile) {
         let renderResume = (element, category) => element.find(".resume").html($compile(resumeTemplate({category}))($scope));
 
         let renderCategory = function(category, index) {
-            let html = categoryTemplate({category, index});
+            let html:any = categoryTemplate({category, index});
             html = angular.element(html);
             renderResume(html, category);
             return $compile(html)($scope);
@@ -528,7 +527,7 @@ let RolePermissionsDirective = function($rootscope, $repo, $confirm, $compile) {
 
         let renderPermissions = function() {
             $el.off();
-            let html = baseTemplate();
+            let html:any = baseTemplate();
             _.each(generateCategoriesFromRole($scope.role), (category, index) => html = angular.element(html).append(renderCategory(category, index)));
 
             $el.html(html);

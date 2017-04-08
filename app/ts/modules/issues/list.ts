@@ -22,9 +22,8 @@
  * File: modules/issues/list.coffee
  */
 
-import {mixOf, groupBy, bindMethods, startswith, trim, bindOnce} from "../../utils"
-import {Controller} from "../../classes"
-import {PageMixin, FiltersMixin} from "../controllerMixins"
+import {groupBy, bindMethods, startswith, trim, bindOnce} from "../../utils"
+import {FiltersMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
@@ -36,7 +35,7 @@ let module = angular.module("taigaIssues");
 //# Issues Controller
 //############################################################################
 
-class IssuesController extends mixOf(Controller, PageMixin, FiltersMixin) {
+class IssuesController extends FiltersMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -62,6 +61,7 @@ class IssuesController extends mixOf(Controller, PageMixin, FiltersMixin) {
     filters:any
     filterQ:any
     customFilters:any
+    selectedFilters:any
 
     static initClass() {
         this.$inject = [
@@ -229,35 +229,35 @@ class IssuesController extends mixOf(Controller, PageMixin, FiltersMixin) {
             let data = result[0];
             let customFiltersRaw = result[1];
 
-            let statuses = _.map(data.statuses, function(it) {
+            let statuses = _.map(data.statuses, function(it:any) {
                 it.id = it.id.toString();
 
                 return it;
             });
-            let type = _.map(data.types, function(it) {
+            let type = _.map(data.types, function(it:any) {
                 it.id = it.id.toString();
 
                 return it;
             });
-            let severity = _.map(data.severities, function(it) {
+            let severity = _.map(data.severities, function(it:any) {
                 it.id = it.id.toString();
 
                 return it;
             });
-            let priority = _.map(data.priorities, function(it) {
+            let priority = _.map(data.priorities, function(it:any) {
                 it.id = it.id.toString();
 
                 return it;
             });
-            let tags = _.map(data.tags, function(it) {
+            let tags = _.map(data.tags, function(it:any) {
                 it.id = it.name;
 
                 return it;
             });
 
-            let tagsWithAtLeastOneElement = _.filter(tags, tag => tag.count > 0);
+            let tagsWithAtLeastOneElement = _.filter(tags, (tag:any) => tag.count > 0);
 
-            let assignedTo = _.map(data.assigned_to, function(it) {
+            let assignedTo = _.map(data.assigned_to, function(it:any) {
                 if (it.id) {
                     it.id = it.id.toString();
                 } else {
@@ -268,7 +268,7 @@ class IssuesController extends mixOf(Controller, PageMixin, FiltersMixin) {
 
                 return it;
             });
-            let owner = _.map(data.owners, function(it) {
+            let owner = _.map(data.owners, function(it:any) {
                 it.id = it.id.toString();
                 it.name = it.full_name;
 
@@ -488,7 +488,7 @@ let IssuesDirective = function($log, $location, $template, $compile) {
         let $pagEl = $el.find(".issues-paginator");
 
         let getNumPages = function() {
-            let numPages = $scope.count / $scope.paginatedBy;
+            let numPages:any = $scope.count / $scope.paginatedBy;
             if (parseInt(numPages, 10) < numPages) {
                 numPages = parseInt(numPages, 10) + 1;
             } else {
@@ -733,7 +733,8 @@ let IssueAssignedToInlineEditionDirective = function($repo, $rootscope, $transla
         let updateIssue = function(issue) {
             let ctx = {
                 name: $translate.instant("COMMON.ASSIGNED_TO.NOT_ASSIGNED"),
-                imgurl: `/${(<any>window)._version}/images/unnamed.png`
+                imgurl: `/${(<any>window)._version}/images/unnamed.png`,
+                bg: null
             };
 
             let member = $scope.usersById[issue.assigned_to];

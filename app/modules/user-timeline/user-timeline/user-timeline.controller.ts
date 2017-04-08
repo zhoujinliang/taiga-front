@@ -22,13 +22,11 @@
  * File: modules/profile/profile-timeline/profile-timeline.controller.coffee
  */
 
-import {mixOf} from "../../../ts/utils"
-import {Controller} from "../../../ts/classes"
-import {PageMixin, FiltersMixin} from "../../../ts/modules/controllerMixins"
+import {FiltersMixin} from "../../../ts/modules/controllerMixins"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class UserTimelineController extends mixOf(Controller, PageMixin, FiltersMixin) {
+class UserTimelineController extends FiltersMixin {
     userTimelineService:any
     timelineList:any
     scrollDisabled:any

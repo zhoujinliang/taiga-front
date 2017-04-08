@@ -22,9 +22,8 @@
  * File: modules/admin/third-parties.coffee
  */
 
-import {mixOf, bindMethods, debounce, timeout} from "../../utils"
-import {Controller} from "../../classes"
-import {PageMixin, FiltersMixin} from "../controllerMixins"
+import {bindMethods, debounce, timeout} from "../../utils"
+import {FiltersMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as moment from "moment"
 import * as _ from "lodash"
@@ -36,7 +35,7 @@ let module = angular.module("taigaAdmin");
 //# Webhooks
 //############################################################################
 
-class WebhooksController extends mixOf(Controller, PageMixin, FiltersMixin) {
+class WebhooksController extends FiltersMixin {
     scope: angular.IScope
     repo:any
     rs:any
@@ -377,7 +376,7 @@ module.directive("tgNewWebhook", ["$tgResources", "$tgRepo", "$tgConfirm", "$tgL
 //# Github Controller
 //############################################################################
 
-class GithubController extends mixOf(Controller, PageMixin, FiltersMixin) {
+class GithubController extends FiltersMixin {
     scope: angular.IScope
     repo:any
     rs:any
@@ -452,7 +451,7 @@ module.controller("GithubController", GithubController);
 //# Gitlab Controller
 //############################################################################
 
-class GitlabController extends mixOf(Controller, PageMixin, FiltersMixin) {
+class GitlabController extends FiltersMixin {
     scope: angular.IScope
     repo:any
     rs:any
@@ -530,7 +529,7 @@ module.controller("GitlabController", GitlabController);
 //# Bitbucket Controller
 //############################################################################
 
-class BitbucketController extends mixOf(Controller, PageMixin, FiltersMixin) {
+class BitbucketController extends FiltersMixin {
     scope: angular.IScope
     repo:any
     rs:any
@@ -774,7 +773,7 @@ module.directive("tgValidOriginIps", ValidOriginIpsDirective);
 //# Gogs Controller
 //############################################################################
 
-class GogsController extends mixOf(Controller, PageMixin, FiltersMixin) {
+class GogsController extends FiltersMixin {
     scope: angular.IScope
     repo:any
     rs:any
