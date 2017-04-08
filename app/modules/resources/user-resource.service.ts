@@ -17,8 +17,11 @@
  * File: user-resource.service.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 let Resource = function(urlsService, http, paginateResponseService) {
-    let service = {};
+    let service:any = {};
 
     service.getUserStorage = function(key) {
         let url = urlsService.resolve("user-storage");

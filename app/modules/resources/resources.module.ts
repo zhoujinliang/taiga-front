@@ -17,4 +17,6 @@
  * File: resources.module.coffee
  */
 
+import * as angular from "angular"
+
 angular.module("taigaResources2", []);

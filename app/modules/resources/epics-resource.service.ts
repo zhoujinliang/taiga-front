@@ -17,8 +17,11 @@
  * File: epics-resource.service.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 let Resource = function(urlsService, http) {
-    let service = {};
+    let service:any = {};
 
     service.listInAllProjects = function(params) {
         let url = urlsService.resolve("epics");

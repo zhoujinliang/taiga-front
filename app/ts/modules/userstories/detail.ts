@@ -143,7 +143,7 @@ class UserStoryDetailController extends PageMixin {
 
     initializeEventHandlers() {
         this.scope.$on("related-tasks:update", () => {
-            this.scope.tasks = _.clone(this.scope.tasks, false);
+            this.scope.tasks = _.clone(this.scope.tasks);
             let allClosed = _.every(this.scope.tasks, (task:any) => task.is_closed);
 
             if (this.scope.us.is_closed !== allClosed) {

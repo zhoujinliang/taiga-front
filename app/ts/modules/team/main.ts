@@ -154,12 +154,12 @@ class TeamController extends PageMixin {
     }
 
     _processStat(stat) {
-        let max = _.max(_.toArray(stat));
-        let min = _.min(_.toArray(stat));
+        let max:number = <number>_.max(_.toArray(stat));
+        let min:number = <number>_.min(_.toArray(stat));
 
         let singleStat = Object();
         for (let key of Object.keys(stat || {})) {
-            let value = stat[key];
+            let value:number = stat[key];
             if (value === min) {
                 singleStat[key] = 0.1;
             } else if (value === max) {

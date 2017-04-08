@@ -170,7 +170,9 @@ class WikiDetailController extends PageMixin {
             let selectedWikiLink;
             this.scope.wikiLinks = wikiLinks;
 
-            for (let link of Array.from(this.scope.wikiLinks)) {
+            let link:any;
+
+            for (link of Array.from(this.scope.wikiLinks)) {
                 link.url = this.navUrls.resolve("project-wiki-page", {
                     project: this.scope.projectSlug,
                     slug: link.href

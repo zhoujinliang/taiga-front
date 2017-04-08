@@ -22,13 +22,10 @@
  * File: modules/taskboard/sortable.coffee
  */
 
-let { taiga } = this;
-
-let { mixOf } = this.taiga;
-let { toggleText } = this.taiga;
-let { scopeDefer } = this.taiga;
-let { bindOnce } = this.taiga;
-let { groupBy } = this.taiga;
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as dragula from "dragula"
+import {autoScroll} from "../../global"
 
 let module = angular.module("taigaBacklog");
 
@@ -37,7 +34,7 @@ let module = angular.module("taigaBacklog");
 //# Sortable Directive
 //############################################################################
 
-let TaskboardSortableDirective = function($repo, $rs, $rootscope, $translate) {
+let TaskboardSortableDirective = function($repo, $rs, $rootscope, $translate, $tgConfirm) {
     let link = function($scope, $el, $attrs) {
         let unwatch;
         return unwatch = $scope.$watch("usTasks", function(usTasks) {
@@ -134,5 +131,6 @@ module.directive("tgTaskboardSortable", [
     "$tgResources",
     "$rootScope",
     "$translate",
+    "$tgConfirm",
     TaskboardSortableDirective
 ]);

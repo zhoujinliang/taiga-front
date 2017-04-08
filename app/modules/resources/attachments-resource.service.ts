@@ -23,11 +23,12 @@
  * File: attachments-resource.service.coffee
  */
 
-let { taiga } = this;
-let { sizeFormat } = this.taiga;
+import {sizeFormat} from "../../ts/utils"
+import * as angular from "angular"
+import * as Immutable from "immutable"
 
 let Resource = function(urlsService, http, config, $rootScope, $q, storage) {
-    let service = {};
+    let service:any = {};
 
     service.list = function(type, objectId, projectId) {
         let urlname = `attachments/${type}`;

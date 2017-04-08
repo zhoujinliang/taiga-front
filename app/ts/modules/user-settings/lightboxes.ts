@@ -22,9 +22,8 @@
  * File: modules/issues/lightboxes.coffee
  */
 
-let { taiga } = this;
-let { bindOnce } = this.taiga;
-let { debounce } = this.taiga;
+import {debounce} from "../../utils"
+import * as angular from "angular"
 
 let module = angular.module("taigaUserSettings");
 

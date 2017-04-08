@@ -17,8 +17,11 @@
  * File: users-resource.service.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 let Resource = function(urlsService, http, paginateResponseService) {
-    let service = {};
+    let service:any = {};
 
     service.getUserByUsername = function(username) {
         let url = urlsService.resolve("by_username");
@@ -53,7 +56,7 @@ let Resource = function(urlsService, http, paginateResponseService) {
     service.getContacts = function(userId, excludeProjectId) {
         let url = urlsService.resolve("user-contacts", userId);
 
-        let params = {};
+        let params:any = {};
         if (excludeProjectId != null) { params.exclude_project = excludeProjectId; }
 
         let httpOptions = {
@@ -69,7 +72,7 @@ let Resource = function(urlsService, http, paginateResponseService) {
     service.getLiked = function(userId, page, type, q) {
         let url = urlsService.resolve("user-liked", userId);
 
-        let params = {};
+        let params:any = {};
         if (page != null) { params.page = page; }
         if (type != null) { params.type = type; }
         if (q != null) { params.q = q; }
@@ -89,7 +92,7 @@ let Resource = function(urlsService, http, paginateResponseService) {
     service.getVoted = function(userId, page, type, q) {
         let url = urlsService.resolve("user-voted", userId);
 
-        let params = {};
+        let params:any = {};
         if (page != null) { params.page = page; }
         if (type != null) { params.type = type; }
         if (q != null) { params.q = q; }
@@ -107,7 +110,7 @@ let Resource = function(urlsService, http, paginateResponseService) {
     service.getWatched = function(userId, page, type, q) {
         let url = urlsService.resolve("user-watched", userId);
 
-        let params = {};
+        let params:any = {};
         if (page != null) { params.page = page; }
         if (type != null) { params.type = type; }
         if (q != null) { params.q = q; }

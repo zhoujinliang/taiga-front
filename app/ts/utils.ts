@@ -69,20 +69,6 @@ export function bindOnce(scope, attr, continuation) {
 };
 
 
-export function mixOf(base, ...mixins) {
-    class Mixed extends base {}
-
-    for (let i = mixins.length - 1; i >= 0; i--) { //earlier mixins override later ones
-        let mixin = mixins[i];
-        for (let name in mixin.prototype) {
-            let method = mixin.prototype[name];
-            Mixed.prototype[name] = method;
-        }
-    }
-    return Mixed;
-};
-
-
 export function trim(data, char=undefined) {
    return _.trim(data, char);
 }
@@ -190,8 +176,7 @@ export function truncate(str, maxLength, suffix) {
 };
 
 
-export function sizeFormat(input, precision) {
-    if (precision == null) { precision = 1; }
+export function sizeFormat(input, precision=1) {
     if (isNaN(parseFloat(input)) || !isFinite(input)) {
         return "-";
     }
@@ -256,15 +241,15 @@ export function defineImmutableProperty(obj, name, fn) {
 _.mixin({
     removeKeys(obj, keys) {
         return _.chain([keys]).flatten().reduce(
-            function(obj, key) {
+            function(obj:any, key:any) {
                 delete obj[key]; return obj;
             }
             , obj).value();
     },
 
-    cartesianProduct() {
+    cartesianProduct(...args) {
         return _.reduceRight(
-            arguments, (a,b) => _.flatten(_.map(a, x => _.map(b, y => [y].concat(x))), true)
+            args, (a:any,b:any) => _.flatten(_.map(a, x => _.map(b, y => [y].concat(x))), true)
             , [ [] ]);
     }
 });
