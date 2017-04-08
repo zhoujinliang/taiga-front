@@ -17,9 +17,29 @@
  * File: history.controller.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 let module = angular.module("taigaHistory");
 
 class HistorySectionController {
+    rs:any
+    repo:any
+    storage:any
+    projectService:any
+    editing:any
+    deleting:any
+    editMode:any
+    viewComments:any
+    reverse:any
+    name:any
+    id:any
+    type:any
+    comments:any
+    commentsNum:any
+    activities:any
+    activitiesNum:any
+
     static initClass() {
         this.$inject = [
             "$tgResources",
@@ -50,7 +70,7 @@ class HistorySectionController {
     }
 
     _getComments(comments) {
-        this.comments = _.filter(comments, item => item.comment !== "");
+        this.comments = _.filter(comments, (item:any) => item.comment !== "");
         if (this.reverse) {
             this.comments - _.reverse(this.comments);
         }
@@ -58,7 +78,7 @@ class HistorySectionController {
     }
 
     _getActivities(activities) {
-        this.activities =  _.filter(activities, item => Object.keys(item.values_diff).length > 0);
+        this.activities =  _.filter(activities, (item:any) => Object.keys(item.values_diff).length > 0);
         return this.activitiesNum = this.activities.length;
     }
 

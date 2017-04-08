@@ -17,9 +17,22 @@
  * File: epics.service.coffee
  */
 
-let { taiga } = this;
+import {defineImmutableProperty} from "../../ts/utils"
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as Immutable from "immutable"
 
 class EpicsService {
+    projectService:any
+    attachmentsService:any
+    resources:any
+    xhrError:any
+    _page:number
+    _loadingEpics:boolean
+    _disablePagination:boolean
+    _epics:any
+    epics:any
+
     static initClass() {
         this.$inject = [
             'tgProjectService',
@@ -36,7 +49,7 @@ class EpicsService {
         this.xhrError = xhrError;
         this.clear();
 
-        taiga.defineImmutableProperty(this, 'epics', () => { return this._epics; });
+        defineImmutableProperty(this, 'epics', () => { return this._epics; });
     }
 
     clear() {
@@ -46,8 +59,7 @@ class EpicsService {
         return this._epics = Immutable.List();
     }
 
-    fetchEpics(reset) {
-        if (reset == null) { reset = false; }
+    fetchEpics(reset=false) {
         this._loadingEpics = true;
         this._disablePagination = true;
 
@@ -83,7 +95,7 @@ class EpicsService {
 
         return this.resources.epics.post(epicData)
             .then(epic => {
-                let promises = _.map(attachments.toJS(), attachment => {
+                let promises = _.map(attachments.toJS(), (attachment:any) => {
                     return this.attachmentsService.upload(attachment.file, epic.get('id'), epic.get('project'), 'epic');
                 });
 

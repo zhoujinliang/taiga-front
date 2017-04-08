@@ -17,7 +17,15 @@
  * File: like-project-button.controller.coffee
  */
 
+import * as angular from "angular"
+
 class LikeProjectButtonController {
+    confirm:any
+    likeButtonService:any
+    isMouseOver:boolean
+    loading:boolean
+    project:any
+
     static initClass() {
         this.$inject = [
             "$tgConfirm",
