@@ -24,7 +24,6 @@
 
 import {toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods} from "../../utils"
 import {generateHash} from "../../app"
-import {Controller} from "../../classes"
 import {UsFiltersMixin} from "../controllerMixins"
 import * as _ from "lodash"
 import * as angular from "angular"

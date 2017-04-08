@@ -23,7 +23,6 @@
  */
 
 import {toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods, defineImmutableProperty} from "../../utils"
-import {Controller} from "../../classes"
 import {UsFiltersMixin} from "../controllerMixins"
 
 import * as angular from "angular"
