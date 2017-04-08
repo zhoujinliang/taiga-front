@@ -17,7 +17,18 @@
  * File: trello-import.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../../../ts/utils"
+import * as angular from "angular"
+
 class TrelloImportController {
+    trelloImportService:any
+    confirm:any
+    translate:any
+    importProjectService:any
+    project:any
+    step:any
+    fetchingUsers:any
+
     static initClass() {
         this.$inject = [
             'tgTrelloImportService',
@@ -33,8 +44,8 @@ class TrelloImportController {
         this.translate = translate;
         this.importProjectService = importProjectService;
         this.project = null;
-        taiga.defineImmutableProperty(this, 'projects', () => { return this.trelloImportService.projects; });
-        taiga.defineImmutableProperty(this, 'members', () => { return this.trelloImportService.projectUsers; });
+        defineImmutableProperty(this, 'projects', () => { return this.trelloImportService.projects; });
+        defineImmutableProperty(this, 'members', () => { return this.trelloImportService.projectUsers; });
     }
 
     startProjectSelector() {

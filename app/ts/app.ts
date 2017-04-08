@@ -24,6 +24,7 @@
 
 import * as _ from "lodash"
 import * as angular from "angular"
+import * as moment from "moment"
 
 export let taigaContribPlugins = this.taigaContribPlugins || window.taigaContribPlugins || [];
 
@@ -94,7 +95,6 @@ let configure = function($routeProvider, $locationProvider, $httpProvider, $prov
             controllerAs: "vm",
             loader: true,
             title: "HOME.PAGE_TITLE",
-            loader: true,
             description: "HOME.PAGE_DESCRIPTION",
             joyride: "dashboard"
         }
@@ -565,7 +565,7 @@ let configure = function($routeProvider, $locationProvider, $httpProvider, $prov
     let defaultHeaders = {
         "Content-Type": "application/json",
         "Accept-Language": window.taigaConfig.defaultLanguage || "en",
-        "X-Session-Id": taiga.sessionId
+        "X-Session-Id": sessionId
     };
 
     $httpProvider.defaults.headers.delete = defaultHeaders;
@@ -573,12 +573,12 @@ let configure = function($routeProvider, $locationProvider, $httpProvider, $prov
     $httpProvider.defaults.headers.post = defaultHeaders;
     $httpProvider.defaults.headers.put = defaultHeaders;
     $httpProvider.defaults.headers.get = {
-        "X-Session-Id": taiga.sessionId
+        "X-Session-Id": sessionId
     };
 
     $httpProvider.useApplyAsync(true);
 
-    $tgEventsProvider.setSessionId(taiga.sessionId);
+    $tgEventsProvider.setSessionId(sessionId);
 
     // Add next param when user try to access to a secction need auth permissions.
     let authHttpIntercept = function($q, $location, $navUrls, $lightboxService, errorHandlingService) {
