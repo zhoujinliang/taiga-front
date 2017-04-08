@@ -194,11 +194,13 @@ export class UsFiltersMixin extends FiltersMixin {
     storeFiltersName:any
     params:any
     selectedFilters:any
-    filtersReloadContent:any
     filters:any
     filterQ:any
     customFilters:any
     translate:any
+
+    filtersReloadContent() {
+    }
 
     changeQ(q) {
         this.replaceFilter("q", q);
