@@ -29,13 +29,15 @@ import {Prism, ljs} from "../../../ts/global"
 
 class WysiwygCodeHightlighterService {
     languages: any
+    loadPromise:any
+
     constructor() {
         Prism.plugins.customClass.prefix('prism-');
         Prism.plugins.customClass.map({});
     }
 
     getLanguages() {
-        return new Promise((function(resolve, reject) {
+        return new Promise((resolve, reject) => {
             if (this.languages) {
                 return resolve(this.languages);
             } else if (this.loadPromise) {
@@ -52,7 +54,7 @@ class WysiwygCodeHightlighterService {
                     return resolve(this.languages);
                 });
             }
-        }.bind(this)));
+        });
     }
 
     getLanguageInClassList(classes) {
@@ -91,7 +93,10 @@ class WysiwygCodeHightlighterService {
     addHightlighter(element) {
         let codes = $(element).find('code');
 
-        return codes.each((index, code) => this.hightlightCode(code));
+        return codes.each((index, code) => {
+            this.hightlightCode(code);
+            return true;
+        });
     }
 }
 

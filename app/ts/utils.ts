@@ -244,12 +244,6 @@ _.mixin({
                 delete obj[key]; return obj;
             }
             , obj).value();
-    },
-
-    cartesianProduct(...args) {
-        return _.reduceRight(
-            args, (a:any,b:any) => _.flatten(_.map(a, x => _.map(b, y => [y].concat(x))), true)
-            , [ [] ]);
     }
 });
 
@@ -310,3 +304,9 @@ export function getMatches(string, regex, index=1) {
 
     return matches;
 };
+
+export function cartesianProduct(...args) {
+    return _.reduceRight(
+        args, (a:any,b:any) => _.flatten(_.map(a, x => _.map(b, y => [y].concat(x))), true)
+        , [ [] ]);
+}

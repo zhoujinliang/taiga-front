@@ -711,8 +711,8 @@ class BacklogController extends UsFiltersMixin {
       let currentDate = new Date().getTime();
 
       return  _.find(this.scope.sprints, function(sprint:any) {
-          let start = moment(sprint.estimated_start, 'YYYY-MM-DD').format('x');
-          let end = moment(sprint.estimated_finish, 'YYYY-MM-DD').format('x');
+          let start:any = moment(sprint.estimated_start, 'YYYY-MM-DD').format('x');
+          let end:any = moment(sprint.estimated_finish, 'YYYY-MM-DD').format('x');
 
           return (currentDate >= start) && (currentDate <= end);
       });

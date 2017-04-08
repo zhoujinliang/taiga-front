@@ -19,6 +19,7 @@
 
 import * as angular from "angular"
 import * as _ from "lodash"
+import {cartesianProduct} from "../../ts/utils"
 import {murmurhash3_32_gc} from "../../ts/global"
 
 class ProjectLogoService {
@@ -40,7 +41,7 @@ class ProjectLogoService {
             "rgba( 152, 224, 168,  1 )"
         ];
 
-        this.logos = _.cartesianProduct(IMAGES, COLORS);
+        this.logos = cartesianProduct(IMAGES, COLORS);
     }
 
     getDefaultProjectLogo(slug, id) {

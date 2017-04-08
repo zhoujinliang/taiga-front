@@ -65,12 +65,12 @@ export class Model {
             let result = [];
             for (let attrName in this._dataTypes) {
                 let castName = this._dataTypes[attrName];
-                let castMethod = service.casts[castName];
-                if (!castMethod) {
-                    continue;
-                }
-
-                result.push(this._attrs[attrName] = castMethod(this._attrs[attrName]));
+                // let castMethod = service.casts[castName];
+                // if (!castMethod) {
+                //     continue;
+                // }
+                //
+                // result.push(this._attrs[attrName] = castMethod(this._attrs[attrName]));
             }
             return result;
         })();
