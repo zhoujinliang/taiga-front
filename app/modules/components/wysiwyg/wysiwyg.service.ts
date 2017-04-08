@@ -32,6 +32,7 @@ class WysiwygService {
     projectService:any
     navurls:any
     emojis:any
+    tagBuilder: any
 
     static initClass() {
         this.$inject = [

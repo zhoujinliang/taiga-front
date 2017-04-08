@@ -17,13 +17,16 @@
  * File: navigation-bar.directive.coffee
  */
 
+import {defineImmutableProperty} from "../../ts/utils"
+import * as angular from "angular"
+
 let NavigationBarDirective = function(currentUserService, navigationBarService, locationService, navUrlsService, config) {
     let link = function(scope, el, attrs, ctrl) {
         scope.vm = {};
 
-        taiga.defineImmutableProperty(scope.vm, "projects", () => currentUserService.projects.get("recents"));
-        taiga.defineImmutableProperty(scope.vm, "isAuthenticated", () => currentUserService.isAuthenticated());
-        taiga.defineImmutableProperty(scope.vm, "isEnabledHeader", () => navigationBarService.isEnabledHeader());
+        defineImmutableProperty(scope.vm, "projects", () => currentUserService.projects.get("recents"));
+        defineImmutableProperty(scope.vm, "isAuthenticated", () => currentUserService.isAuthenticated());
+        defineImmutableProperty(scope.vm, "isEnabledHeader", () => navigationBarService.isEnabledHeader());
 
         scope.vm.publicRegisterEnabled = config.get("publicRegisterEnabled");
 

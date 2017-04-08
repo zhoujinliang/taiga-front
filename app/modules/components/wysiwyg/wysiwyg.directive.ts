@@ -23,7 +23,7 @@
  */
 
 import {bindOnce, isImage} from "../../../ts/utils"
-import {MediumEditor} from "../../../ts/global"
+import {MediumEditor, AutoList, MentionExtension} from "../../../ts/global"
 import * as angular from "angular"
 import * as _ from "lodash"
 
@@ -36,8 +36,8 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
         } else if (window.getSelection().removeAllRanges) {
             return window.getSelection().removeAllRanges();
 
-        } else if (document.selection) {
-            return document.selection.empty();
+        } else if ((<any>document).selection) {
+            return (<any>document).selection.empty();
         }
     };
 
@@ -178,7 +178,7 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
         handleClick(event) {
             let range = MediumEditor.selection.getSelectionRange(self.document);
 
-            if (isCodeBlockSelected(range, this.base)) {
+            if (isCodeBlockSelected(range)) {
                 removeCodeBlockAndHightlight(range.endContainer, this.base);
             } else {
                 addCodeBlockAndHightlight(range, this.base);
@@ -409,7 +409,7 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
             if ($scope.content === $scope.markdown) {
                 $scope.cancel();
 
-                document.activeElement.blur();
+                (<HTMLElement>document.activeElement).blur();
                 document.body.click();
 
                 return null;
