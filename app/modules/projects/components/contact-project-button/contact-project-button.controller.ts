@@ -17,7 +17,12 @@
  * File: like-project-button.controller.coffee
  */
 
+import * as angular from "angular"
+
 class ContactProjectButtonController {
+    lightboxFactory:any
+    project:any
+
     static initClass() {
         this.$inject = ['tgLightboxFactory'];
     }

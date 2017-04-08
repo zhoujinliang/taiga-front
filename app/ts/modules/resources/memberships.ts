@@ -24,6 +24,7 @@
 
 
 import * as angular from "angular"
+import * as _ from "lodash"
 
 let resourceProvider = function($repo, $http, $urls) {
     let service:any = {};

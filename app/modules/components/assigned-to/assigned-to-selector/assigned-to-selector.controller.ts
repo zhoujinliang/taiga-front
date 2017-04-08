@@ -17,7 +17,15 @@
  * File: assigned-to-selector.controller.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 class AssignedToSelectorController {
+    project:any
+    assigned:any
+    assignedMember:any
+    nonAssignedMembers:any
+
     static initClass() {
         this.$inject = [];
     }
@@ -30,14 +38,14 @@ class AssignedToSelectorController {
     }
 
     _getAssignedMember() {
-        return this.assignedMember = _.filter(this.project.members, member => {
+        return this.assignedMember = _.filter(this.project.members, (member:any) => {
             return member.id === this.assigned.get('id');
         });
     }
 
     _filterAssignedMember() {
         if (this.assigned) {
-            return this.nonAssignedMembers = _.filter(this.project.members, member => {
+            return this.nonAssignedMembers = _.filter(this.project.members, (member:any) => {
                 return member.id !== this.assigned.get('id');
             });
         } else {

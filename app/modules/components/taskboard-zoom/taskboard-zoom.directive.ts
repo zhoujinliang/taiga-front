@@ -17,6 +17,9 @@
  * File: taskboard-zoom.directive.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 let TaskboardZoomDirective = function(storage) {
     let link = function(scope, el, attrs, ctrl) {
         scope.zoomIndex = storage.get("taskboard_zoom") || 2;
@@ -37,7 +40,7 @@ let TaskboardZoomDirective = function(storage) {
                 storage.set("taskboard_zoom", zoomIndex);
             }
 
-            return _.reduce(zooms, function(result, value, key) {
+            return _.reduce(zooms, function(result:string[], value, key) {
                 if (key <= zoomIndex) {
                     result = result.concat(value);
                 }

@@ -45,7 +45,7 @@ export function bindMethods(object) {
     let methods = [];
 
     _.forIn(object, (value, key) => {
-        if (!Array.from(dependencies).includes(key) && _.isFunction(value)) {
+        if (!dependencies.includes(key) && _.isFunction(value)) {
             return methods.push(key);
         }
     });
@@ -102,7 +102,7 @@ export function toggleText(element, texts) {
 
 export function groupBy(coll, pred) {
     let result = {};
-    for (let item of Array.from(coll)) {
+    for (let item of coll) {
         result[pred(item)] = item;
     }
 
@@ -296,8 +296,7 @@ export function getDefaulColorList() {
     return _.clone(DEFAULT_COLOR_LIST);
 }
 
-export function getMatches(string, regex, index) {
-    index || (index = 1);
+export function getMatches(string, regex, index=1) {
     let matches = [];
     let match = null;
 

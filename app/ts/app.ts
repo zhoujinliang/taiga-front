@@ -25,8 +25,10 @@
 import * as _ from "lodash"
 import * as angular from "angular"
 import * as moment from "moment"
+import {ljs, checksley} from "./global"
+import {nl2br} from "./utils"
 
-export let taigaContribPlugins = this.taigaContribPlugins || window.taigaContribPlugins || [];
+export let taigaContribPlugins = this.taigaContribPlugins || (<any>window).taigaContribPlugins || [];
 
 // Generic function for generate hash from a arbitrary length
 // collection of parameters.
@@ -564,7 +566,7 @@ let configure = function($routeProvider, $locationProvider, $httpProvider, $prov
 
     let defaultHeaders = {
         "Content-Type": "application/json",
-        "Accept-Language": window.taigaConfig.defaultLanguage || "en",
+        "Accept-Language": (<any>window).taigaConfig.defaultLanguage || "en",
         "X-Session-Id": sessionId
     };
 
@@ -710,19 +712,19 @@ let configure = function($routeProvider, $locationProvider, $httpProvider, $prov
     $httpProvider.interceptors.push("blockingIntercept");
 
 
-    $compileProvider.debugInfoEnabled(window.taigaConfig.debugInfo || false);
+    $compileProvider.debugInfoEnabled((<any>window).taigaConfig.debugInfo || false);
 
     if (localStorage.userInfo) {
         userInfo = JSON.parse(localStorage.userInfo);
     }
 
     // i18n
-    let preferedLangCode = (userInfo != null ? userInfo.lang : undefined) || window.taigaConfig.defaultLanguage || "en";
+    let preferedLangCode = (userInfo != null ? userInfo.lang : undefined) || (<any>window).taigaConfig.defaultLanguage || "en";
 
     $translatePartialLoaderProvider.addPart('taiga');
     $translateProvider
         .useLoader('$translatePartialLoader', {
-            urlTemplate: `/${window._version}/locales/{part}/locale-{lang}.json`
+            urlTemplate: `/${(<any>window)._version}/locales/{part}/locale-{lang}.json`
         })
         .useSanitizeValueStrategy('escapeParameters')
         .addInterpolation('$translateMessageFormatInterpolation')
@@ -742,7 +744,7 @@ let i18nInit = function(lang, $translate) {
     moment.locale(lang);
 
     if (lang !== 'en') { // en is the default, the file doesn't exist
-        ljs.load(`/${window._version}/locales/moment-locales/` + lang + ".js");
+        ljs.load(`/${(<any>window)._version}/locales/moment-locales/` + lang + ".js");
     }
 
     // i18n - checksley.js
@@ -788,8 +790,7 @@ let init = function($log, $rootscope, $auth, $events, $analytics, $translate, $l
     // Checksley - Extra validators
     let validators = {
         linewidth(val, width) {
-            let lines = taiga.nl2br(val).split("<br />");
-
+            let lines = nl2br(val).split("<br />");
             let valid = _.every(lines, line => line.length < width);
 
             return valid;
@@ -882,8 +883,8 @@ let init = function($log, $rootscope, $auth, $events, $analytics, $translate, $l
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 500);
 
 // Load modules
-let pluginsWithModule = _.filter(this.taigaContribPlugins, plugin => plugin.module);
-let pluginsModules = _.map(pluginsWithModule, plugin => plugin.module);
+let pluginsWithModule = _.filter(this.taigaContribPlugins, (plugin:any) => plugin.module);
+let pluginsModules = _.map(pluginsWithModule, (plugin:any) => plugin.module);
 
 let modules = [
     // Main Global Modules

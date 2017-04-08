@@ -17,6 +17,8 @@
  * File: card.directive.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaComponents");
 
 let cardDirective = () =>

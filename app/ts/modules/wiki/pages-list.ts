@@ -114,7 +114,7 @@ class WikiPagesListController extends PageMixin {
 
             let link:any;
 
-            for (link of Array.from(this.scope.wikiLinks)) {
+            for (link of this.scope.wikiLinks) {
                 link.url = this.navUrls.resolve("project-wiki-page", {
                     project: this.scope.projectSlug,
                     slug: link.href

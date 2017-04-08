@@ -35,7 +35,7 @@ let CustomFieldEditWysiwyg = function(attachmentsFullService) {
         ;
 
         return $scope.uploadFiles = (files, cb) =>
-            Array.from(files).map((file) =>
+            files.map((file) =>
                 uploadFile(file, cb))
         ;
     };

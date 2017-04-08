@@ -17,7 +17,14 @@
  * File: working-on.controller.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 class WorkingOnController {
+    homeService:any
+    assignedTo: Immutable.Map<any,any>
+    watching: Immutable.Map<any,any>
+
     static initClass() {
         this.$inject = [
             "tgHomeService"
@@ -38,7 +45,7 @@ class WorkingOnController {
 
         this.assignedTo = userStories.concat(tasks).concat(issues).concat(epics);
         if (this.assignedTo.size > 0) {
-            return this.assignedTo = this.assignedTo.sortBy(elem => elem.get("modified_date")).reverse();
+            return this.assignedTo = <Immutable.Map<any,any>>this.assignedTo.sortBy(elem => elem.get("modified_date")).reverse();
         }
     }
 
@@ -50,7 +57,7 @@ class WorkingOnController {
 
         this.watching = userStories.concat(tasks).concat(issues).concat(epics);
         if (this.watching.size > 0) {
-            return this.watching = this.watching.sortBy(elem => elem.get("modified_date")).reverse();
+            return this.watching = <Immutable.Map<any,any>>this.watching.sortBy(elem => elem.get("modified_date")).reverse();
         }
     }
 

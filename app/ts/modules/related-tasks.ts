@@ -61,7 +61,7 @@ let RelatedTaskRowDirective = function($repo, $compile, $confirm, $rootscope, $l
             this.childScope.$destroy();
             this.childScope = $scope.$new();
             $el.off();
-            $el.html($compile(templateEdit({task}))(childScope));
+            $el.html($compile(templateEdit({task}))(this.childScope));
 
             $el.find(".task-name input").val(task.subject);
 
@@ -255,7 +255,7 @@ let RelatedTasksDirective = function($repo, $rs, $rootscope) {
     let link = function($scope, $el, $attrs) {
         let loadTasks = () =>
             $rs.tasks.list($scope.projectId, null, $scope.usId).then(tasks => {
-                $scope.tasks = _.sortBy(tasks, x => [x.us_order, x.ref]);
+                $scope.tasks = _.sortBy(tasks, (x:any) => [x.us_order, x.ref]);
                 return tasks;
             })
         ;
@@ -305,7 +305,7 @@ let RelatedTaskAssignedToInlineEditionDirective = function($repo, $rootscope, $t
 
     let link = function($scope, $el, $attrs) {
         let updateRelatedTask = function(task) {
-            let ctx = {
+            let ctx:any = {
                 name: $translate.instant("COMMON.ASSIGNED_TO.NOT_ASSIGNED"),
             };
 

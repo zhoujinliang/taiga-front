@@ -179,7 +179,7 @@ class KanbanController extends UsFiltersMixin {
             let openArchived = _.difference(this.kanbanUserstoriesService.archivedStatus,
                                         this.kanbanUserstoriesService.statusHide);
             if (openArchived.length) {
-                return Array.from(openArchived).map((statusId) =>
+                return openArchived.map((statusId) =>
                     this.loadUserStoriesForStatus({}, statusId));
             }
         });

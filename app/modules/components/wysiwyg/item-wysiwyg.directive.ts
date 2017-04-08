@@ -49,7 +49,7 @@ let ItemWysiwyg = function($modelTransform, $rootscope, $confirm, attachmentsFul
         ;
 
         $scope.uploadFiles = (files, cb) =>
-            Array.from(files).map((file) =>
+            files.map((file) =>
                 uploadFile(file, cb))
         ;
 

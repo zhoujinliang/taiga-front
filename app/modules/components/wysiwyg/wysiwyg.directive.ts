@@ -88,7 +88,7 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
         if (!mediumInstance) { return; }
 
         // clean empty <p> content editable adds it when range.extractContents has been execute it
-        for (let mainChildren of Array.from(mediumInstance.elements[0].children)) {
+        for (let mainChildren of mediumInstance.elements[0].children) {
             if (mainChildren && (mainChildren.tagName.toLowerCase() === 'p') && !mainChildren.innerHTML.trim().length) {
                 mainChildren.parentNode.removeChild(mainChildren);
             }
@@ -98,7 +98,7 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
 
         return (() => {
             let result = [];
-            for (let pre of Array.from(preList)) {
+            for (let pre of preList) {
             // prevent edit a pre
                 let item;
                 pre.setAttribute('contenteditable', false);
@@ -591,7 +591,7 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
         };
 
         $(editorMedium[0]).on('mousedown', function(e) {
-            if (e.target.href) {
+            if (e.target.getAttribute("href")) {
                 e.preventDefault();
                 return e.stopPropagation();
             } else {

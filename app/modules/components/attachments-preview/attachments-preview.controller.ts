@@ -17,7 +17,13 @@
  * File: attchments-preview.controller.coffee
  */
 
+import {defineImmutableProperty, isImage} from "../../../ts/utils"
+import * as angular from "angular"
+
 class AttachmentsPreviewController {
+    attachmentsPreviewService:any
+    attachments:any
+
     static initClass() {
         this.$inject = [
             "tgAttachmentsPreviewService"
@@ -26,7 +32,7 @@ class AttachmentsPreviewController {
 
     constructor(attachmentsPreviewService) {
         this.attachmentsPreviewService = attachmentsPreviewService;
-        taiga.defineImmutableProperty(this, "current", () => {
+        defineImmutableProperty(this, "current", () => {
             if (!this.attachmentsPreviewService.fileId) {
                 return null;
             }
@@ -37,7 +43,7 @@ class AttachmentsPreviewController {
 
     hasPagination() {
         let images = this.attachments.filter(attachment => {
-            return taiga.isImage(attachment.getIn(['file', 'name']));
+            return isImage(attachment.getIn(['file', 'name']));
         });
 
         return images.size > 1;
@@ -62,10 +68,10 @@ class AttachmentsPreviewController {
     next() {
         let attachmentIndex = this.getIndex();
 
-        let image = this.attachments.slice(attachmentIndex + 1).find(attachment => taiga.isImage(attachment.getIn(['file', 'name'])));
+        let image = this.attachments.slice(attachmentIndex + 1).find(attachment => isImage(attachment.getIn(['file', 'name'])));
 
         if (!image) {
-            image = this.attachments.find(attachment => taiga.isImage(attachment.getIn(['file', 'name'])));
+            image = this.attachments.find(attachment => isImage(attachment.getIn(['file', 'name'])));
         }
 
 
@@ -75,10 +81,10 @@ class AttachmentsPreviewController {
     previous() {
         let attachmentIndex = this.getIndex();
 
-        let image = this.attachments.slice(0, attachmentIndex).findLast(attachment => taiga.isImage(attachment.getIn(['file', 'name'])));
+        let image = this.attachments.slice(0, attachmentIndex).findLast(attachment => isImage(attachment.getIn(['file', 'name'])));
 
         if (!image) {
-            image = this.attachments.findLast(attachment => taiga.isImage(attachment.getIn(['file', 'name'])));
+            image = this.attachments.findLast(attachment => isImage(attachment.getIn(['file', 'name'])));
         }
 
         return this.attachmentsPreviewService.fileId = image.getIn(['file', 'id']);

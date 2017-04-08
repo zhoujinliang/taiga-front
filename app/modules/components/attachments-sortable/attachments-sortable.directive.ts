@@ -17,6 +17,10 @@
  * File: attachments-sortable.directive.coffee
  */
 
+import {autoScroll} from "../../../ts/global"
+import * as angular from "angular"
+import * as dragula from "dragula"
+
 let AttachmentSortableDirective = function($parse) {
     let link = function(scope, el, attrs) {
         let callback = $parse(attrs.tgAttachmentsSortable);

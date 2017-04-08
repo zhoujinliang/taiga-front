@@ -58,7 +58,7 @@ export class PageMixin extends Controller {
         ]);
 
         return promise.then(results => {
-            let [users, roles] = Array.from(results);
+            let [users, roles] = results;
             this.fillUsersAndRoles(users, roles);
             return results;
         });
@@ -103,7 +103,7 @@ export class FiltersMixin extends PageMixin{
         return location.search(filters);
     }
 
-    unselectFilter(name, value, load=false) {
+    unselectFilter(name, value=null, load=false) {
         let params = this.location.search();
 
         if (params[name] === undefined) {

@@ -23,6 +23,7 @@
  */
 
 import {debounce} from "../../utils"
+import {checksley} from "../../global"
 import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 

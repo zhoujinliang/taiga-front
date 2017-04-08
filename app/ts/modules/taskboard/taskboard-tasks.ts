@@ -79,7 +79,7 @@ class TaskboardTasksService extends Service {
     refreshRawOrder() {
         this.order = {};
 
-        return Array.from(this.tasksRaw).map((task) => (this.order[task.id] = task.taskboard_order));
+        return this.tasksRaw.map((task) => (this.order[task.id] = task.taskboard_order));
     }
 
     assignOrders(order) {
@@ -158,7 +158,7 @@ class TaskboardTasksService extends Service {
     });
 
         if (previousWithTheSameOrder.length > 1) {
-            for (it of Array.from(previousWithTheSameOrder)) {
+            for (it of previousWithTheSameOrder) {
                 setOrders[it.id] = this.order[it.id];
             }
         }
@@ -194,14 +194,14 @@ class TaskboardTasksService extends Service {
 
         // Iterate over all userstories and
         // null userstory for unassigned tasks
-        for (let us of Array.from(_.union(this.userstories, [{id:null}]))) {
+        for (let us of _.union(this.userstories, [{id:null}])) {
             usTasks[us.id] = {};
-            for (status of Array.from(taskStatusList)) {
+            for (status of taskStatusList) {
                 usTasks[us.id][status.id] = [];
             }
         }
 
-        for (let taskModel of Array.from(tasks)) {
+        for (let taskModel of tasks) {
             if ((usTasks[taskModel.user_story] != null) && (usTasks[taskModel.user_story][taskModel.status] != null)) {
                 let task:any = {};
 

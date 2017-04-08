@@ -22,6 +22,8 @@
  * File: modules/user-settings/nav.coffee
  */
 
+import * as angular from "angular"
+
 let UserSettingsNavigationDirective = function() {
     let link = function($scope, $el, $attrs) {
         let section = $attrs.tgUserSettingsNavigation;

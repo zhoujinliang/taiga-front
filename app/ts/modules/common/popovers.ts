@@ -247,8 +247,9 @@ $.fn.popover = function() {
 
 
     let closeAll = () => {
-        return $(".popover.active").each(function() {
-            return $(this).trigger("popup:close");
+        return $(".popover.active").each(function(index, element) {
+            $(this).trigger("popup:close");
+            return true;
         });
     };
 

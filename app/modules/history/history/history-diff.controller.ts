@@ -17,9 +17,17 @@
  * File: history.controller.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 let module = angular.module("taigaHistory");
 
 class ActivitiesDiffController {
+    type:any
+    diffRemoveTags:any
+    diffAddTags:any
+    diff:any
+
     static initClass() {
         this.$inject = [
         ];

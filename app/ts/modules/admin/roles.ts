@@ -173,7 +173,7 @@ class RolesController extends FiltersMixin {
 
     delete() {
         let choices = {};
-        for (let role of Array.from(this.scope.roles)) {
+        for (let role of this.scope.roles) {
             if (role.id !== this.scope.role.id) {
                 choices[role.id] = role.name;
             }
@@ -412,7 +412,7 @@ let RolePermissionsDirective = function($rootscope, $repo, $confirm, $compile) {
         let $ctrl = $el.controller();
 
         let generateCategoriesFromRole = function(role) {
-            let setActivePermissions = permissions => _.map(permissions, x => _.extend({}, x, {active: Array.from(role.permissions).includes(x["key"])}));
+            let setActivePermissions = permissions => _.map(permissions, x => _.extend({}, x, {active: role.permissions.includes(x["key"])}));
 
             let isPermissionEditable = function(permission, role, project) {
                 if (role.external_user &&

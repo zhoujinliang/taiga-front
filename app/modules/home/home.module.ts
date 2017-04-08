@@ -17,4 +17,6 @@
  * File: home.module.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaHome", []);

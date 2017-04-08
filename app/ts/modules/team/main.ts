@@ -113,7 +113,7 @@ class TeamController extends PageMixin {
 
         // Calculate totals
         this.scope.totals = {};
-        for (let member of Array.from(this.scope.activeUsers)) {
+        for (let member of this.scope.activeUsers) {
             this.scope.totals[member.id] = 0;
         }
 

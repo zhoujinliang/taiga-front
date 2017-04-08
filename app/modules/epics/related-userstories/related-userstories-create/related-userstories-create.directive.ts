@@ -17,6 +17,8 @@
  * File: related-userstory-create.directive.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module('taigaEpics');
 
 let RelatedUserstoriesCreateDirective = function(lightboxService) {

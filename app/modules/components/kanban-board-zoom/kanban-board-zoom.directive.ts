@@ -17,6 +17,9 @@
  * File: kanban-board-zoom.directive.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 let KanbanBoardZoomDirective = function(storage, projectService) {
     let link = function(scope, el, attrs, ctrl) {
         let unwatch;
@@ -37,7 +40,7 @@ let KanbanBoardZoomDirective = function(storage, projectService) {
                 storage.set("kanban_zoom", zoomIndex);
             }
 
-            return _.reduce(zooms, function(result, value, key) {
+            return _.reduce(zooms, function(result:string[], value, key) {
                 if (key <= zoomIndex) {
                     result = result.concat(value);
                 }

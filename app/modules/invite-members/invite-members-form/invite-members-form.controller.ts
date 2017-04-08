@@ -64,7 +64,7 @@ class InviteMembersFormController {
     _areRolesValidated() {
         return Object.defineProperty(this, 'areRolesValidated', {
             get: () => {
-                let roleIds = _.filter(Object.values(this.rolesValues), it => it);
+                let roleIds = _.filter(this.rolesValues.values(), it => it);
                 return roleIds.length === (this.contactsToInvite.size + this.emailsToInvite.size);
             }
         });

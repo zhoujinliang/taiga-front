@@ -17,6 +17,8 @@
  * File: filter.directive.coffee
  */
 
+import * as angular from "angular"
+
 let FilterDirective = function() {
     let link = function(scope, el, attrs, ctrl) {
         var unwatch = scope.$watch("vm.defaultQ", function(q) {
@@ -50,7 +52,6 @@ let FilterDirective = function() {
             customFilters: "<",
             defaultQ: "=q",
             filters: "<",
-            customFilters: "<",
             selectedFilters: "<"
         },
         bindToController: true,

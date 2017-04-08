@@ -17,7 +17,16 @@
  * File: most-active.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../../../ts/utils"
+import * as angular from "angular"
+
+
 class MostActiveController {
+    discoverProjectsService:any
+    currentOrderBy:any
+    order_by:any
+    loading:boolean
+
     static initClass() {
         this.$inject = [
             "tgDiscoverProjectsService"
@@ -26,7 +35,7 @@ class MostActiveController {
 
     constructor(discoverProjectsService) {
         this.discoverProjectsService = discoverProjectsService;
-        taiga.defineImmutableProperty(this, "highlighted", () => { return this.discoverProjectsService.mostActive; });
+        defineImmutableProperty(this, "highlighted", () => { return this.discoverProjectsService.mostActive; });
 
         this.currentOrderBy = 'week';
         this.order_by = this.getOrderBy();
@@ -47,7 +56,7 @@ class MostActiveController {
         return this.fetch();
     }
 
-    getOrderBy(type) {
+    getOrderBy() {
         if (this.currentOrderBy === 'all') {
             return '-total_activity';
         } else {

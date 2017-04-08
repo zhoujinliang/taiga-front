@@ -17,4 +17,6 @@
  * File: utils.module.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaUtils", []);

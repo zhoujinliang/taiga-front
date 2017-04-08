@@ -139,7 +139,7 @@ class LightboxService extends Service {
 
     closeAll() {
         let docEl = angular.element(document);
-        return Array.from(docEl.find(".lightbox.open")).map((lightboxEl) =>
+        return docEl.find(".lightbox.open").map((lightboxEl) =>
             this.close($(lightboxEl)));
     }
 }
@@ -256,7 +256,7 @@ let BlockLightboxDirective = function($rootscope, $tgrepo, $confirm, lightboxSer
                 return finishCallback();
             });
 
-            transform.then(null, function() {
+            transform.then(null, function(item) {
                 $confirm.notify("error");
                 return item.revert();
             });
@@ -390,7 +390,7 @@ let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScope, ligh
             if ((tags == null)) { tags = []; }
             if ((projectTags == null)) { projectTags = {}; }
 
-            if (!Array.from(tags).includes(value)) {
+            if (!tags.includes(value)) {
                 tags.push(value);
             }
 

@@ -25,6 +25,7 @@
 import {bindOnce, debounce, bindMethods} from "../../../ts/utils"
 import {generateHash} from "../../../ts/app"
 import {Controller} from "../../../ts/classes"
+import {Pikaday} from "../../../ts/global"
 import * as _ from "lodash"
 import * as angular from "angular"
 import * as moment from "moment"

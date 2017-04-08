@@ -17,7 +17,12 @@
  * File: projects-listing.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../../ts/utils"
+import * as angular from "angular"
+
 class ProjectsListingController {
+    currentUserService:any
+
     static initClass() {
         this.$inject = [
             "tgCurrentUserService"
@@ -26,7 +31,7 @@ class ProjectsListingController {
 
     constructor(currentUserService) {
         this.currentUserService = currentUserService;
-        taiga.defineImmutableProperty(this, "projects", () => this.currentUserService.projects.get("all"));
+        defineImmutableProperty(this, "projects", () => this.currentUserService.projects.get("all"));
     }
 }
 ProjectsListingController.initClass();

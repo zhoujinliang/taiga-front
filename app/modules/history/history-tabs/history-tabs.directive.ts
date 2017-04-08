@@ -17,6 +17,8 @@
  * File: history-tabs.directive.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module('taigaHistory');
 
 let HistoryTabsDirective = () =>

@@ -17,7 +17,16 @@
  * File: profile-contacts.controller.coffee
  */
 
+import * as angular from "angular"
+
 class ProfileContactsController {
+    userService:any
+    currentUserService:any
+    currentUser:any
+    isCurrentUser:boolean
+    user:any
+    contacts:any
+
     static initClass() {
         this.$inject = [
             "tgUserService",

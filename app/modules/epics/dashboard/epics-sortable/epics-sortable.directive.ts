@@ -17,6 +17,10 @@
  * File: epics-sortable.directive.coffee
  */
 
+import {autoScroll} from "../../../../ts/global"
+import * as angular from "angular"
+import * as dragula from "dragula"
+
 let EpicsSortableDirective = function($parse, projectService) {
     let link = function(scope, el, attrs) {
         if (!projectService.hasPermission("modify_epic")) { return; }

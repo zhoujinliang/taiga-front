@@ -17,7 +17,15 @@
  * File: discover-search-bar.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../../../ts/utils"
+import * as angular from "angular"
+
 class DiscoverSearchBarController {
+    discoverProjectsService:any
+    onChange:any
+    q:any
+    filter:any
+
     static initClass() {
         this.$inject = [
             'tgDiscoverProjectsService'
@@ -26,7 +34,7 @@ class DiscoverSearchBarController {
 
     constructor(discoverProjectsService) {
         this.discoverProjectsService = discoverProjectsService;
-        taiga.defineImmutableProperty(this, 'projects', () => { return this.discoverProjectsService.projectsCount; });
+        defineImmutableProperty(this, 'projects', () => { return this.discoverProjectsService.projectsCount; });
 
         this.discoverProjectsService.fetchStats();
     }

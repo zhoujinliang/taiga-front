@@ -17,7 +17,18 @@
  * File: attchment.controller.coffee
  */
 
+import * as angular from "angular"
+import * as moment from "moment"
+
 class AttachmentController {
+    attachmentsService:any
+    translate:any
+    form:any
+    attachment:any
+    title:any
+    onUpdate:any
+    onDelete:any
+
     static initClass() {
         this.$inject = [
             'tgAttachmentsService',

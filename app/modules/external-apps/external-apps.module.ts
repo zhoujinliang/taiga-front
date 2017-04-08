@@ -17,4 +17,6 @@
  * File: external-apps.module.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaExternalApps", []);

@@ -103,7 +103,7 @@ class KanbanUserstoriesService extends Service {
 
     deleteStatus(statusId) {
         let toDelete = _.filter(this.userstoriesRaw, (us:any) => us.status === statusId);
-        toDelete = _.map(it => it.id);
+        toDelete = _.map(toDelete, it => it.id);
 
         this.archived = _.difference(this.archived, toDelete);
 
@@ -115,7 +115,7 @@ class KanbanUserstoriesService extends Service {
     refreshRawOrder() {
         this.order = {};
 
-        return Array.from(this.userstoriesRaw).map((it) => (this.order[it.id] = it.kanban_order));
+        return this.userstoriesRaw.map((it) => (this.order[it.id] = it.kanban_order));
     }
 
     assignOrders(order) {
@@ -148,7 +148,7 @@ class KanbanUserstoriesService extends Service {
     });
 
         if (previousWithTheSameOrder.length > 1) {
-            for (it of Array.from(previousWithTheSameOrder)) {
+            for (it of previousWithTheSameOrder) {
                 setOrders[it.id] = this.order[it.id];
             }
         }

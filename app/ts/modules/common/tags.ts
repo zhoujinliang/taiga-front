@@ -23,6 +23,7 @@
  */
 
 import {bindOnce, trim} from "../../utils"
+import {Awesomplete} from "../../global"
 import * as angular from "angular"
 import * as _ from "lodash"
 
@@ -148,7 +149,7 @@ let LbTagLineDirective = function($rs, $template, $compile) {
 
             let tags = _.clone($model.$modelValue);
             if ((tags == null)) { tags = []; }
-            if (!Array.from(tags).includes(value)) { tags.push(value); }
+            if (!tags.includes(value)) { tags.push(value); }
 
             $scope.$apply(() => $model.$setViewValue(tags));
 

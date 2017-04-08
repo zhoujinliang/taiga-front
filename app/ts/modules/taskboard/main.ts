@@ -674,9 +674,7 @@ let TaskboardSquishColumnDirective = function(rs) {
         };
 
         $scope.foldUs = function(us) {
-            if (!us) {
-                $scope.usFolded[null] = !!!$scope.usFolded[null];
-            } else {
+            if (us) {
                 $scope.usFolded[us.id] = !!!$scope.usFolded[us.id];
             }
 

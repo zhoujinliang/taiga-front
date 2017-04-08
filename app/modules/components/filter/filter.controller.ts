@@ -17,7 +17,22 @@
  * File: filter.controller.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 class FilterController {
+    opened: any
+    customFilterForm:any
+    customFilterName:any
+    q:any
+    selectedFilters:any
+    onSaveCustomFilter:any
+    onRemoveFilter:any
+    onChangeQ:any
+    onAddFilter:any
+    onRemoveCustomFilter:any
+    onSelectCustomFilter:any
+
     static initClass() {
         this.$inject = [];
     }
@@ -55,9 +70,6 @@ class FilterController {
         return this.onRemoveFilter({filter});
     }
 
-    unselectFilter(filter) {
-        return this.onRemoveFilter({filter});
-    }
 
     selectFilter(filterCategory, filter) {
         filter = {
@@ -77,7 +89,7 @@ class FilterController {
     }
 
     isFilterSelected(filterCategory, filter) {
-        return !!_.find(this.selectedFilters, it => (filter.id === it.id) && (filterCategory.dataType === it.dataType));
+        return !!_.find(this.selectedFilters, (it:any) => (filter.id === it.id) && (filterCategory.dataType === it.dataType));
     }
 }
 FilterController.initClass();

@@ -117,7 +117,7 @@ export class Model {
                     return self[name];
                 }
 
-                if (!Array.from(_.keys(self._modifiedAttrs)).includes(name)) {
+                if (!_.keys(self._modifiedAttrs).includes(name)) {
                     return self._attrs[name];
                 }
 

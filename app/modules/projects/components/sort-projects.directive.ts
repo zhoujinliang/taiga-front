@@ -17,6 +17,11 @@
  * File: sort-projects.directive.coffee
  */
 
+import {autoScroll} from "../../../ts/global"
+import * as angular from "angular"
+import * as dragula from "dragula"
+import * as _ from "lodash"
+
 let SortProjectsDirective = function(currentUserService) {
     let link = function(scope, el, attrs, ctrl) {
         let itemEl = null;
@@ -33,7 +38,7 @@ let SortProjectsDirective = function(currentUserService) {
             let { project } = itemEl.scope();
             let index = itemEl.index();
 
-            let sorted_project_ids = _.map(scope.projects.toJS(), p => p.id);
+            let sorted_project_ids = _.map(scope.projects.toJS(), (p:any) => p.id);
             sorted_project_ids = _.without(sorted_project_ids, project.get("id"));
             sorted_project_ids.splice(index, 0, project.get('id'));
 

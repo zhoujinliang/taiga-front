@@ -17,7 +17,7 @@
  * File: project-menu.directive.coffee
  */
 
-let { taiga } = this;
+import * as angular from "angular"
 
 let ProjectMenuDirective = function(projectService, lightboxFactory) {
     let link = function(scope, el, attrs, ctrl) {

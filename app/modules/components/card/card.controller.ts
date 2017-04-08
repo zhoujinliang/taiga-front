@@ -17,7 +17,15 @@
  * File: card.controller.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 class CardController {
+    zoom:any
+    item:any
+    onToggleFold:any
+    type:any
+
     static initClass() {
         this.$inject = [];
     }

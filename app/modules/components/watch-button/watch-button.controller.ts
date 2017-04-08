@@ -17,7 +17,18 @@
  * File: watch-button.controller.coffee
  */
 
+import * as angular from "angular"
+
 class WatchButtonController {
+    rootScope: angular.IScope
+    currentUserService:any
+    user:any
+    isMouseOver:boolean
+    loading:boolean
+    item:any
+    onWatch:any
+    onUnwatch:any
+
     static initClass() {
         this.$inject = [
             "tgCurrentUserService",

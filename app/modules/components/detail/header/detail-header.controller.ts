@@ -17,9 +17,27 @@
  * File: story-header.controller.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 let module = angular.module("taigaUserStories");
 
 class StoryHeaderController {
+    rootScope: angular.IScope
+    confirm:any
+    modelTransform:any
+    navUrls:any
+    window:any
+    editMode:any
+    loadingSubject:any
+    originalSubject:any
+    item:any
+    project:any
+    previousUrl:any
+    nextUrl:any
+    permissions:any
+    requiredPerm:any
+
     static initClass() {
         this.$inject = [
             "$rootScope",

@@ -17,7 +17,15 @@
  * File: discover-home-order-by.controller.coffee
  */
 
+import * as angular from "angular"
+
 class DiscoverHomeOrderByController {
+    translate:any
+    is_open:boolean
+    texts:any
+    currentOrderBy:any
+    onChange:any
+
     static initClass() {
         this.$inject = [
             '$translate'

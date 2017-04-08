@@ -17,6 +17,8 @@
  * File: transfer-project.directive.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module('taigaProjects');
 
 let TransferProjectDirective = function() {

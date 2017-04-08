@@ -72,7 +72,7 @@ let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $loading,
             if ((tags == null)) { tags = []; }
             if ((projectTags == null)) { projectTags = {}; }
 
-            if (!Array.from(tags).includes(value)) {
+            if (!tags.includes(value)) {
                 tags.push(value);
             }
 

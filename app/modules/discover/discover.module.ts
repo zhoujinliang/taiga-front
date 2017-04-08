@@ -17,4 +17,6 @@
  * File: discover.module.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaDiscover", []);

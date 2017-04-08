@@ -17,7 +17,17 @@
  * File: vote-button.controller.coffee
  */
 
+import * as angular from "angular"
+
 class VoteButtonController {
+    currentUserService:any
+    user:any
+    isMouseOver:boolean
+    loading:boolean
+    item:any
+    onUpvote:any
+    onDownvote:any
+
     static initClass() {
         this.$inject = [
             "tgCurrentUserService",

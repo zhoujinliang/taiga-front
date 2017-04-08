@@ -17,4 +17,6 @@
  * File: profile.module.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaProfile", []);

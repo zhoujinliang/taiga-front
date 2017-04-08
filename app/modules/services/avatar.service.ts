@@ -19,7 +19,7 @@
 
 import {sizeFormat} from "../../ts/utils"
 import * as angular from "angular"
-import * as Immutable from "immutabld"
+import * as Immutable from "immutable"
 import * as _ from "lodash"
 
 class AvatarService {

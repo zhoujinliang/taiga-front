@@ -130,7 +130,7 @@ class UserTimelineService extends Service {
     }
 
     _isInValidTimeline(timeline) {
-        return _.some(this._invalid, invalid => {
+        return _.some(this._invalid, (invalid:any) => {
             return invalid.check.call(this, timeline);
         });
     }

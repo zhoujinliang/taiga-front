@@ -38,12 +38,12 @@ let services = [
 ];
 
 let Resources = function($injector) {
-    for (let serviceName of Array.from(services)) {
+    for (let serviceName of services) {
         let serviceFn = $injector.get(serviceName);
 
         let service = $injector.invoke(serviceFn);
 
-        for (let serviceProperty of Array.from(Object.keys(service))) {
+        for (let serviceProperty of Object.keys(service)) {
             if (this[serviceProperty]) {
                 console.warn(`repeated resource ${serviceProperty}`);
             }
