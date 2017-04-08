@@ -17,7 +17,20 @@
  * File: create-project-form.controller.coffee
  */
 
+import * as angular from "angular"
+
 class CreatetProjectFormController {
+    currentUserService:any
+    projectsService:any
+    projectUrl:any
+    location:any
+    navUrls:any
+    projectForm:any
+    canCreatePublicProjects:any
+    canCreatePrivateProjects:any
+    type:any
+    formSubmitLoading:any
+
     static initClass() {
         this.$inject = [
             "tgCurrentUserService",

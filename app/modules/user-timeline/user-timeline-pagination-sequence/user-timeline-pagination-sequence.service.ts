@@ -17,12 +17,15 @@
  * File: user-timeline-pagination-sequence.service.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 let UserTimelinePaginationSequence = function() {
-    let obj = {};
+    let obj:any = {};
 
     obj.generate = function(config) {
         let page = 1;
-        let items = Immutable.List();
+        let items:any = Immutable.List();
 
         config.minItems = config.minItems || 20;
 
