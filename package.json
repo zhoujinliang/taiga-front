@@ -18,7 +18,9 @@
   "scripts": {
     "scss-lint": "gulp scss-lint --fail",
     "test": "./node_modules/karma/bin/karma start",
-    "e2e": "./node_modules/.bin/babel-node run-e2e.js"
+    "e2e": "./node_modules/.bin/babel-node run-e2e.js",
+    "prepublish": "typings install",
+    "watch": "webpack --watch"
   },
   "devDependencies": {
     "angular-mocks": "1.5.5",
@@ -94,8 +96,11 @@
     "run-sequence": "^1.0.2",
     "sinon": "^1.14.1",
     "through2": "^2.0.1",
+    "ts-loader": "^2.0.3",
     "typescript": "^2.2.2",
-    "vinyl-fs": "^2.1.1"
+    "typings": "^2.1.0",
+    "vinyl-fs": "^2.1.1",
+    "webpack": "^2.3.3"
   },
   "pre-commit": [
     "scss-lint"
