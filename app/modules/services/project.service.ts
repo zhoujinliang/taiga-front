@@ -17,9 +17,21 @@
  * File: project.service.coffee
  */
 
-let { taiga } = this;
+import {defineImmutableProperty} from "../../ts/utils"
+import * as angular from "angular"
+import * as Immutable from "immutable"
 
 class ProjectService {
+    projectsService:any
+    xhrError:any
+    userActivityService:any
+    interval:any
+    _project:any
+    _section:any
+    _sectionsBreadcrumb: Immutable.List<any>
+    _activeMembers: Immutable.List<any>
+    project: Immutable.Map<any,any>
+
     static initClass() {
         this.$inject = [
             "tgProjectsService",
@@ -39,10 +51,10 @@ class ProjectService {
         this._sectionsBreadcrumb = Immutable.List();
         this._activeMembers = Immutable.List();
 
-        taiga.defineImmutableProperty(this, "project", () => { return this._project; });
-        taiga.defineImmutableProperty(this, "section", () => { return this._section; });
-        taiga.defineImmutableProperty(this, "sectionsBreadcrumb", () => { return this._sectionsBreadcrumb; });
-        taiga.defineImmutableProperty(this, "activeMembers", () => { return this._activeMembers; });
+        defineImmutableProperty(this, "project", () => { return this._project; });
+        defineImmutableProperty(this, "section", () => { return this._section; });
+        defineImmutableProperty(this, "sectionsBreadcrumb", () => { return this._sectionsBreadcrumb; });
+        defineImmutableProperty(this, "activeMembers", () => { return this._activeMembers; });
 
         if (!window.localStorage.e2e) { this.autoRefresh(); }
     }
