@@ -22,9 +22,8 @@
  * File: modules/admin/memberships.coffee
  */
 
-import {mixOf, bindMethods} from "../../utils"
-import {Controller} from "../../classes"
-import {PageMixin, FiltersMixin} from "../controllerMixins"
+import {bindMethods} from "../../utils"
+import {FiltersMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"
 
@@ -35,7 +34,7 @@ let module = angular.module("taigaAdmin");
 //# Project Memberships Controller
 //############################################################################
 
-class MembershipsController extends mixOf(Controller, PageMixin, FiltersMixin) {
+class MembershipsController extends FiltersMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -134,7 +133,7 @@ class MembershipsController extends mixOf(Controller, PageMixin, FiltersMixin) {
         let httpFilters = this.getUrlFilters();
 
         return this.rs.memberships.list(this.scope.projectId, httpFilters).then(data => {
-            this.scope.memberships = _.filter(data.models, membership => (membership.user === null) || membership.is_user_active);
+            this.scope.memberships = _.filter(data.models, (membership:any) => (membership.user === null) || membership.is_user_active);
 
             this.scope.page = data.current;
             this.scope.count = data.count;
@@ -153,7 +152,7 @@ class MembershipsController extends mixOf(Controller, PageMixin, FiltersMixin) {
     }
 
     getUrlFilters() {
-        let filters = _.pick(this.location.search(), "page");
+        let filters:any = _.pick(this.location.search(), "page");
         if (!filters.page) { filters.page = 1; }
         return filters;
     }
@@ -207,7 +206,7 @@ let MembershipsDirective = function($template, $compile) {
         let $pagEl = $el.find(".memberships-paginator");
 
         let getNumPages = function() {
-            let numPages = $scope.count / $scope.paginatedBy;
+            let numPages:any = $scope.count / $scope.paginatedBy;
             if (parseInt(numPages, 10) < numPages) {
                 numPages = parseInt(numPages, 10) + 1;
             } else {

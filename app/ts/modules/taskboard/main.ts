@@ -22,9 +22,8 @@
  * File: modules/taskboard.coffee
  */
 
-import {toggleText, mixOf, groupBy, bindOnce, scopeDefer, timeout, bindMethods, defineImmutableProperty} from "../../utils"
-import {Controller} from "../../classes"
-import {PageMixin, FiltersMixin} from "../controllerMixins"
+import {toggleText, groupBy, bindOnce, scopeDefer, timeout, bindMethods, defineImmutableProperty} from "../../utils"
+import {FiltersMixin} from "../controllerMixins"
 
 import * as angular from "angular"
 import * as _ from "lodash"
@@ -37,7 +36,7 @@ let module = angular.module("taigaTaskboard");
 //# Taskboard Controller
 //############################################################################
 
-class TaskboardController extends mixOf(Controller, PageMixin, FiltersMixin) {
+class TaskboardController extends FiltersMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -198,7 +197,7 @@ class TaskboardController extends mixOf(Controller, PageMixin, FiltersMixin) {
     }
 
     saveCustomFilter(name) {
-        let filters = {};
+        let filters:any = {};
         let urlfilters = this.location.search();
         filters.tags = urlfilters.tags;
         filters.status = urlfilters.status;
@@ -217,7 +216,7 @@ class TaskboardController extends mixOf(Controller, PageMixin, FiltersMixin) {
 
         let urlfilters = this.location.search();
 
-        let loadFilters = {};
+        let loadFilters:any = {};
         loadFilters.project = this.scope.projectId;
         loadFilters.milestone = this.scope.sprintId;
         loadFilters.tags = urlfilters.tags;
@@ -234,20 +233,20 @@ class TaskboardController extends mixOf(Controller, PageMixin, FiltersMixin) {
             let data = result[0];
             let customFiltersRaw = result[1];
 
-            let statuses = _.map(data.statuses, function(it) {
+            let statuses = _.map(data.statuses, function(it:any) {
                 it.id = it.id.toString();
 
                 return it;
             });
-            let tags = _.map(data.tags, function(it) {
+            let tags = _.map(data.tags, function(it:any) {
                 it.id = it.name;
 
                 return it;
             });
 
-            let tagsWithAtLeastOneElement = _.filter(tags, tag => tag.count > 0);
+            let tagsWithAtLeastOneElement = _.filter(tags, (tag:any) => tag.count > 0);
 
-            let assignedTo = _.map(data.assigned_to, function(it) {
+            let assignedTo = _.map(data.assigned_to, function(it:any) {
                 if (it.id) {
                     it.id = it.id.toString();
                 } else {
@@ -258,7 +257,7 @@ class TaskboardController extends mixOf(Controller, PageMixin, FiltersMixin) {
 
                 return it;
             });
-            let owner = _.map(data.owners, function(it) {
+            let owner = _.map(data.owners, function(it:any) {
                 it.id = it.id.toString();
                 it.name = it.full_name;
 
@@ -418,8 +417,8 @@ class TaskboardController extends mixOf(Controller, PageMixin, FiltersMixin) {
 
     loadSprintStats() {
         return this.rs.sprints.stats(this.scope.projectId, this.scope.sprintId).then(stats => {
-            let totalPointsSum =_.reduce(_.values(stats.total_points), ((res, n) => res + n), 0);
-            let completedPointsSum = _.reduce(_.values(stats.completed_points), ((res, n) => res + n), 0);
+            let totalPointsSum =_.reduce(_.values(stats.total_points), ((res:number, n:number) => res + n), 0);
+            let completedPointsSum = _.reduce(_.values(stats.completed_points), ((res:number, n:number) => res + n), 0);
             let remainingPointsSum = totalPointsSum - completedPointsSum;
             let remainingTasks = stats.total_tasks - stats.completed_tasks;
             this.scope.stats = stats;
@@ -456,7 +455,7 @@ class TaskboardController extends mixOf(Controller, PageMixin, FiltersMixin) {
     }
 
     loadTasks() {
-        let params = {};
+        let params:any = {};
 
         if (this.zoomLevel > 1) {
             params.include_attachments = 1;
@@ -577,15 +576,15 @@ class TaskboardController extends mixOf(Controller, PageMixin, FiltersMixin) {
 
         let getRole = roleId => {
             roleId = parseInt(roleId, 10);
-            return _.find(computableRoles, role => role.id === roleId);
+            return _.find(computableRoles, (role:any) => role.id === roleId);
         };
 
         let getPoint = pointId => {
             let poitnId = parseInt(pointId, 10);
-            return _.find(this.scope.project.points, point => point.id === pointId);
+            return _.find(this.scope.project.points, (point:any) => point.id === pointId);
         };
 
-        let pointsByRole = _.reduce(this.scope.userstories, (result, us, key) => {
+        let pointsByRole = _.reduce(this.scope.userstories, (result, us:any, key) => {
             _.forOwn(us.points, function(pointId, roleId) {
                 let role = getRole(roleId);
                 let point = getPoint(pointId);
