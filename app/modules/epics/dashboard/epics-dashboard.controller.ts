@@ -17,10 +17,22 @@
  * File: epics.dashboard.controller.coffee
  */
 
-let { taiga } = this;
-
+import {defineImmutableProperty} from "../../../ts/utils"
+import * as angular from "angular"
 
 class EpicsDashboardController {
+    params:any
+    errorHandlingService:any
+    lightboxFactory:any
+    lightboxService:any
+    confirm:any
+    projectService:any
+    epicsService:any
+    appMetaService:any
+    translate:any
+    sectionName:string
+    project:any
+
     static initClass() {
         this.$inject = [
             "$routeParams",
@@ -37,7 +49,6 @@ class EpicsDashboardController {
 
     constructor(params, errorHandlingService, lightboxFactory, lightboxService,
                   confirm, projectService, epicsService, appMetaService, translate) {
-
         this.params = params;
         this.errorHandlingService = errorHandlingService;
         this.lightboxFactory = lightboxFactory;
@@ -49,8 +60,8 @@ class EpicsDashboardController {
         this.translate = translate;
         this.sectionName = "EPICS.SECTION_NAME";
 
-        taiga.defineImmutableProperty(this, 'project', () => { return this.projectService.project; });
-        taiga.defineImmutableProperty(this, 'epics', () => { return this.epicsService.epics; });
+        defineImmutableProperty(this, 'project', () => { return this.projectService.project; });
+        defineImmutableProperty(this, 'epics', () => { return this.epicsService.epics; });
 
         this.appMetaService.setfn(this._setMeta.bind(this));
     }

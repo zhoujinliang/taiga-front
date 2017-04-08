@@ -17,7 +17,22 @@
  * File: epics-table.controller.coffee
  */
 
+import * as angular from "angular"
+
 class EpicRowController {
+    confirm:any
+    projectService:any
+    epicsService:any
+    displayUserStories:boolean
+    displayAssignedTo:boolean
+    displayStatusList:boolean
+    loadingStatus:boolean
+    project:any
+    epic:any
+    percentage:any
+    epicStories:any
+    assignLoader:any
+
     static initClass() {
         this.$inject = [
             "$tgConfirm",

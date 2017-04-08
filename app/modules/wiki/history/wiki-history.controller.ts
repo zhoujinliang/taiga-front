@@ -17,11 +17,14 @@
  * File: wiki-history.controller.coffee
  */
 
-let { taiga } = this;
+import {defineImmutableProperty} from "../../../ts/utils"
+import * as angular from "angular"
 
 let module = angular.module("taigaWikiHistory");
 
 class WikiHistoryController {
+    wikiHistoryService:any
+
     static initClass() {
         this.$inject = [
             "tgWikiHistoryService"
@@ -30,7 +33,7 @@ class WikiHistoryController {
 
     constructor(wikiHistoryService) {
         this.wikiHistoryService = wikiHistoryService;
-        taiga.defineImmutableProperty(this, 'historyEntries', () => { return this.wikiHistoryService.historyEntries; });
+        defineImmutableProperty(this, 'historyEntries', () => { return this.wikiHistoryService.historyEntries; });
     }
 
     initializeHistoryEntries(wikiId) {

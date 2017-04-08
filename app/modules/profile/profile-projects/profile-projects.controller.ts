@@ -17,7 +17,14 @@
  * File: profile-projects.controller.coffee
  */
 
+import * as angular from "angular"
+
 class ProfileProjectsController {
+    projectsService:any
+    userService:any
+    user:any
+    projects:any
+
     static initClass() {
         this.$inject = [
             "tgProjectsService",
