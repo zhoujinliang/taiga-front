@@ -17,11 +17,20 @@
  * File: current-user.service.coffee
  */
 
-let { taiga } = this;
-
-let { groupBy } = this.taiga;
+import {groupBy, defineImmutableProperty} from "../../ts/utils"
+import * as angular from "angular"
+import * as Immutable from "immutable"
 
 class CurrentUserService {
+    projectsService:any
+    storageService:any
+    rs:any
+    _user:any
+    _projects: Immutable.Map<any, any>;
+    _projectsById: Immutable.Map<any, any>;
+    _joyride:any
+    projects:any
+
     static initClass() {
         this.$inject = [
             "tgProjectsService",
@@ -39,8 +48,8 @@ class CurrentUserService {
         this._projectsById = Immutable.Map();
         this._joyride = null;
 
-        taiga.defineImmutableProperty(this, "projects", () => { return this._projects; });
-        taiga.defineImmutableProperty(this, "projectsById", () => { return this._projectsById; });
+        defineImmutableProperty(this, "projects", () => { return this._projects; });
+        defineImmutableProperty(this, "projectsById", () => { return this._projectsById; });
     }
 
     isAuthenticated() {
