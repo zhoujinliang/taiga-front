@@ -20,6 +20,28 @@
 let module = angular.module('taigaProjects');
 
 class TransferProject {
+    routeParams:any
+    projectService:any
+    location:any
+    authService:any
+    currentUserService:any
+    navUrls:any
+    translate:any
+    confirmService:any
+    errorHandlingService:any
+    projectId:any
+    token:any
+    showAddComment:any
+    project:any
+    canBeOwnedByUser:any
+    ownerMessage:any
+    maxProjects:any
+    currentProjects:any
+    validNumberOfMemberships:any
+    loadingAccept:any
+    loadingReject:any
+    reason:any
+
     static initClass() {
         this.$inject = [
             "$routeParams",

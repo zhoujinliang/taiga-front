@@ -17,7 +17,21 @@
  * File: trello-import-project-form.controller.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 class TrelloImportProjectFormController {
+    currentUserService:any
+    canCreatePublicProjects:any
+    canCreatePrivateProjects:any
+    projectForm:any
+    platformName:any
+    project:any
+    limitMembersPrivateProject:any
+    limitMembersPublicProject:any
+    members:any
+    onSaveProjectDetails:any
+
     static initClass() {
         this.$inject = [
             "tgCurrentUserService"
