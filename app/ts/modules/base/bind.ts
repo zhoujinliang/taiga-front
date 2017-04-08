@@ -22,7 +22,8 @@
  * File: modules/base/bind.coffee
  */
 
-let { bindOnce } = this.taiga;
+import {bindOnce} from "../../utils"
+import * as angular from "angular"
 
 // Escape Html bind once directive
 let BindOnceBindDirective = function() {

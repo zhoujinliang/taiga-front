@@ -22,6 +22,7 @@
  * File: modules/base/location.coffee
  */
 
+import * as angular from "angular"
 
 let locationFactory = function($location, $route, $rootscope) {
     $location.noreload =  function(scope) {

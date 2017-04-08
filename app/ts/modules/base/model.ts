@@ -33,7 +33,7 @@ export class Model {
     _modifiedAttrs:any
     _isModified:any
 
-    constructor(name, data, dataTypes) {
+    constructor(name, data, dataTypes=null) {
         this._attrs = data;
         this._name = name;
         this._dataTypes = dataTypes;
@@ -84,8 +84,7 @@ export class Model {
         return this._name;
     }
 
-    getAttrs(patch) {
-        if (patch == null) { patch = false; }
+    getAttrs(patch=false) {
         if (this._attrs.version != null) {
             this._modifiedAttrs.version = this._attrs.version;
         }
@@ -227,7 +226,7 @@ function provider($q, $http, $gmUrls, $gmStorage) {
         },
 
         float(value) {
-            return parseFloat(value, 10);
+            return parseFloat(value);
         }
     };
 

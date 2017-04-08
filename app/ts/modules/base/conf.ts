@@ -22,9 +22,13 @@
  * File: modules/base/conf.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 class ConfigurationService {
+    config:any
     constructor() {
-        this.config = window.taigaConfig;
+        this.config = (<any>window).taigaConfig;
     }
 
     get(key, defaultValue) {

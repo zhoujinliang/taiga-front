@@ -17,7 +17,18 @@
  * File: github-import.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../../../ts/utils"
+import * as angular from "angular"
+
 class GithubImportController {
+    githubImportService:any
+    confirm:any
+    translate:any
+    importProjectService:any
+    step:string
+    project:any
+    fetchingUsers:any
+
     static initClass() {
         this.$inject = [
             'tgGithubImportService',
@@ -35,8 +46,8 @@ class GithubImportController {
         this.step = 'autorization-github';
         this.project = null;
 
-        taiga.defineImmutableProperty(this, 'projects', () => { return this.githubImportService.projects; });
-        taiga.defineImmutableProperty(this, 'members', () => { return this.githubImportService.projectUsers; });
+        defineImmutableProperty(this, 'projects', () => { return this.githubImportService.projects; });
+        defineImmutableProperty(this, 'members', () => { return this.githubImportService.projectUsers; });
     }
 
     startProjectSelector() {

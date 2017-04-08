@@ -17,7 +17,18 @@
  * File: asana-import.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../../../ts/utils"
+import * as angular from "angular"
+
 class AsanaImportController {
+    asanaImportService:any
+    confirm:any
+    translate:any
+    importProjectService:any
+    step:string
+    project:any
+    fetchingUsers:any
+
     static initClass() {
         this.$inject = [
             'tgAsanaImportService',
@@ -34,8 +45,8 @@ class AsanaImportController {
         this.importProjectService = importProjectService;
         this.step = 'autorization-asana';
         this.project = null;
-        taiga.defineImmutableProperty(this, 'projects', () => { return this.asanaImportService.projects; });
-        taiga.defineImmutableProperty(this, 'members', () => { return this.asanaImportService.projectUsers; });
+        defineImmutableProperty(this, 'projects', () => { return this.asanaImportService.projects; });
+        defineImmutableProperty(this, 'members', () => { return this.asanaImportService.projectUsers; });
     }
 
     startProjectSelector() {
@@ -57,7 +68,7 @@ class AsanaImportController {
     }
 
     onCancelMemberSelection() {
-        return this.step = 'project-form-asana';        
+        return this.step = 'project-form-asana';
     }
 
     startImport(users) {
