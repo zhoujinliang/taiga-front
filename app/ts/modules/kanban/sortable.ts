@@ -24,7 +24,6 @@
 
 let { taiga } = this;
 
-let { mixOf } = this.taiga;
 let { toggleText } = this.taiga;
 let { scopeDefer } = this.taiga;
 let { bindOnce } = this.taiga;

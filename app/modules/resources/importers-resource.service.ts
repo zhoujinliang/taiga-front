@@ -22,11 +22,11 @@
  * File: modules/resources/importers.coffee
  */
 
-
-let { taiga } = this;
+import * as angular from "angular"
+import * as Immutable from "immutable"
 
 let TrelloResource = function(urlsService, http) {
-    let service = {};
+    let service:any = {};
 
     service.getAuthUrl = function(url) {
         url = urlsService.resolve("importers-trello-auth-url");
@@ -69,7 +69,7 @@ let TrelloResource = function(urlsService, http) {
 TrelloResource.$inject = ["$tgUrls", "$tgHttp"];
 
 let JiraResource = function(urlsService, http) {
-    let service = {};
+    let service:any = {};
 
     service.getAuthUrl = function(jira_url) {
         let url = urlsService.resolve("importers-jira-auth-url") + "?url=" + jira_url;
@@ -120,7 +120,7 @@ let JiraResource = function(urlsService, http) {
 JiraResource.$inject = ["$tgUrls", "$tgHttp"];
 
 let GithubResource = function(urlsService, http) {
-    let service = {};
+    let service:any = {};
 
     service.getAuthUrl = function(callbackUri) {
         let url = urlsService.resolve("importers-github-auth-url") + "?uri=" + callbackUri;
@@ -164,7 +164,7 @@ let GithubResource = function(urlsService, http) {
 GithubResource.$inject = ["$tgUrls", "$tgHttp"];
 
 let AsanaResource = function(urlsService, http) {
-    let service = {};
+    let service:any = {};
 
     service.getAuthUrl = function() {
         let url = urlsService.resolve("importers-asana-auth-url");

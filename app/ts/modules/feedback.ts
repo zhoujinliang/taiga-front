@@ -22,7 +22,7 @@
  * File: modules/feedback.coffee
  */
 
-import {groupBy, bindOnce, mixOf, debounce, trim} from "../utils"
+import {groupBy, bindOnce, debounce, trim} from "../utils"
 import * as angular from "angular"
 
 let module = angular.module("taigaFeedback", []);

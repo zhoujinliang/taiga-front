@@ -17,8 +17,11 @@
  * File: external-apps-resource.service.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 let Resource = function(urlsService, http) {
-    let service = {};
+    let service:any = {};
 
     service.getApplicationToken = function(applicationId, state) {
         let url = urlsService.resolve("applications");

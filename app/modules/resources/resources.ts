@@ -17,6 +17,8 @@
  * File: resources.coffee
  */
 
+import * as angular from "angular"
+
 let services = [
     "tgProjectsResources",
     "tgUserResources",

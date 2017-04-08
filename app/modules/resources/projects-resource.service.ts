@@ -17,10 +17,13 @@
  * File: projects-resource.service.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 let pagination = function() {};
 
 let Resource = function(urlsService, http, paginateResponseService) {
-    let service = {};
+    let service:any = {};
 
     service.create = function(data) {
         let url = urlsService.resolve('projects');
@@ -76,7 +79,7 @@ let Resource = function(urlsService, http, paginateResponseService) {
     service.getProjectsByUserId = function(userId, paginate) {
         if (paginate == null) { paginate = false; }
         let url = urlsService.resolve("projects");
-        let httpOptions = {};
+        let httpOptions:any = {};
 
         if (!paginate) {
             httpOptions.headers = {
