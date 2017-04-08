@@ -17,19 +17,22 @@
  * File: attachment-link.directive.coffee
  */
 
+import * as angular from "angular"
+import {isImage, isPdf} from "../../../ts/utils"
+
 let AttachmentLinkDirective = function($parse, attachmentsPreviewService, lightboxService) {
     let link = function(scope, el, attrs) {
         let attachment = $parse(attrs.tgAttachmentLink)(scope);
 
         el.on("click", function(event) {
-            if (taiga.isImage(attachment.getIn(['file', 'name']))) {
+            if (isImage(attachment.getIn(['file', 'name']))) {
                 event.preventDefault();
 
                 return scope.$apply(function() {
                     lightboxService.open($('tg-attachments-preview'));
                     return attachmentsPreviewService.fileId = attachment.getIn(['file', 'id']);
                 });
-            } else if (taiga.isPdf(attachment.getIn(['file', 'name']))) {
+            } else if (isPdf(attachment.getIn(['file', 'name']))) {
                 event.preventDefault();
                 return window.open(attachment.getIn(['file', 'url']));
             }

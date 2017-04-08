@@ -25,7 +25,7 @@
 import * as _ from "lodash"
 import * as angular from "angular"
 import * as moment from "moment"
-import {ljs, checksley} from "./global"
+import {ljs, checksley, hex_sha1} from "./global"
 import {nl2br} from "./utils"
 
 export let taigaContribPlugins = this.taigaContribPlugins || (<any>window).taigaContribPlugins || [];
@@ -733,7 +733,7 @@ let configure = function($routeProvider, $locationProvider, $httpProvider, $prov
     $translateProvider.fallbackLanguage(preferedLangCode);
 
     // decoratos plugins
-    let decorators = window.getDecorators();
+    let decorators = (<any>window).getDecorators();
 
     return _.each(decorators, decorator => $provide.decorator(decorator.provider, decorator.decorator));
 };
