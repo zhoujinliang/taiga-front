@@ -17,7 +17,27 @@
  * File: project.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../../../ts/utils"
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as Immutable from "immutable"
+
 class DuplicateProjectController {
+    currentUserService:any
+    projectsService:any
+    location:any
+    navUrls:any
+    user:any
+    members: Immutable.List<any>
+    canCreatePublicProjects:any
+    canCreatePrivateProjects:any
+    projectForm:any
+    referenceProject:any
+    invitedMembers:any
+    limitMembersPrivateProject:any
+    limitMembersPublicProject:any
+    formSubmitLoading:any
+
     static initClass() {
         this.$inject = [
             "tgCurrentUserService",
@@ -38,7 +58,7 @@ class DuplicateProjectController {
         this.canCreatePublicProjects = this.currentUserService.canCreatePublicProjects();
         this.canCreatePrivateProjects = this.currentUserService.canCreatePrivateProjects();
 
-        taiga.defineImmutableProperty(this, 'projects', () => this.currentUserService.projects.get("all"));
+        defineImmutableProperty(this, 'projects', () => this.currentUserService.projects.get("all"));
 
         this.projectForm = {
             is_private: false

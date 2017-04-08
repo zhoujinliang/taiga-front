@@ -22,7 +22,10 @@
  * File: modules/common/filters.coffee
  */
 
-let { taiga } = this;
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as moment from "moment"
+import * as Immutable from "immutable"
 
 let module = angular.module("taigaCommon");
 
@@ -108,7 +111,7 @@ let byRefFilter = $filterFilter=>
     function(userstories, filter) {
         if (filter != null ? filter.startsWith("#") : undefined) {
             let cleanRef= filter.substr(1);
-            return _.filter(userstories, us => String(us.ref).startsWith(cleanRef));
+            return _.filter(userstories, (us:any) => String(us.ref).startsWith(cleanRef));
         }
 
         return $filterFilter(userstories, filter);
@@ -130,7 +133,7 @@ let darkerFilter = () =>
 
         // convert to decimal and change luminosity
         let newColor = "#";
-        let c = 0;
+        let c:any = 0;
         let i = 0;
         let black = 0;
         let white = 255;

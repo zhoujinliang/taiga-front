@@ -374,7 +374,7 @@ let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScope, ligh
         $scope.addAttachment = attachment => attachmentsToAdd = attachmentsToAdd.push(attachment);
 
         $scope.deleteAttachment = function(attachment) {
-            attachmentsToAdd = attachmentsToAdd.filter(it => it.get('name') !== attachment.get('name'));
+            attachmentsToAdd = <Immutable.List<any>>attachmentsToAdd.filter((it:Immutable.Map<string,any>) => it.get('name') !== attachment.get('name'));
 
             if (attachment.get("id")) {
                 return attachmentsToDelete = attachmentsToDelete.push(attachment);
@@ -492,13 +492,13 @@ let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScope, ligh
         });
 
         let createAttachments = function(obj) {
-            let promises = _.map(attachmentsToAdd.toJS(), attachment => attachmentsService.upload(attachment.file, obj.id, $scope.us.project, 'us'));
+            let promises = _.map(attachmentsToAdd.toJS(), (attachment:any) => attachmentsService.upload(attachment.file, obj.id, $scope.us.project, 'us'));
 
             return $q.all(promises);
         };
 
         let deleteAttachments = function(obj) {
-            let promises = _.map(attachmentsToDelete.toJS(), attachment => attachmentsService.delete("us", attachment.id));
+            let promises = _.map(attachmentsToDelete.toJS(), (attachment:any) => attachmentsService.delete("us", attachment.id));
 
             return $q.all(promises);
         };
@@ -595,7 +595,7 @@ module.directive("tgLbCreateEditUserstory", [
 //# Creare Bulk Userstories Lightbox Directive
 //############################################################################
 
-let CreateBulkUserstoriesDirective = function($repo, $rs, $rootscope, lightboxService, $loading, $model) {
+let CreateBulkUserstoriesDirective = function($repo, $rs, $rootscope, lightboxService, $loading, $model, $confirm) {
     let link = function($scope, $el, attrs) {
         let form = null;
 
@@ -656,6 +656,7 @@ module.directive("tgLbCreateBulkUserstories", [
     "lightboxService",
     "$tgLoading",
     "$tgModel",
+    "$tgConfirm",
     CreateBulkUserstoriesDirective
 ]);
 
@@ -688,15 +689,15 @@ let AssignedToLightboxDirective = function(lightboxService, lightboxKeyboardNavi
             return _.includes(username, text);
         };
 
-        let render = function(selected, text) {
-            let users = _.clone($scope.activeUsers, true);
+        let render = function(selected, text=null) {
+            let users = _.cloneDeep($scope.activeUsers);
             if (selected != null) { users = _.reject(users, {"id": selected.id}); }
-            users = _.sortBy(users, function(o) { if (o.id === $scope.user.id) { return 0; } else { return o.id; } });
+            users = _.sortBy(users, function(o:any) { if (o.id === $scope.user.id) { return 0; } else { return o.id; } });
             if (text != null) { users = _.filter(users, _.partial(filterUsers, text)); }
 
             let visibleUsers = _.slice(users, 0, 5);
 
-            visibleUsers = _.map(visibleUsers, user => user.avatar = avatarService.getAvatar(user));
+            visibleUsers = _.map(visibleUsers, (user:any) => user.avatar = avatarService.getAvatar(user));
 
             if (selected) {
                 if (selected) { selected.avatar = avatarService.getAvatar(selected); }
@@ -794,8 +795,7 @@ let WatchersLightboxDirective = function($repo, lightboxService, lightboxKeyboar
 
         // Get prefiltered users by text
         // and without now watched users.
-        let getFilteredUsers = function(text) {
-            if (text == null) { text = ""; }
+        let getFilteredUsers = function(text="") {
             let _filterUsers = function(text, user) {
                 if (selectedItem && _.find(selectedItem.watchers, x => x === user.id)) {
                     return false;
@@ -806,7 +806,7 @@ let WatchersLightboxDirective = function($repo, lightboxService, lightboxKeyboar
                 return _.includes(username, text);
             };
 
-            let users = _.clone($scope.activeUsers, true);
+            let users = _.cloneDeep($scope.activeUsers);
             users = _.filter(users, _.partial(_filterUsers, text));
             return users;
         };
@@ -815,7 +815,7 @@ let WatchersLightboxDirective = function($repo, lightboxService, lightboxKeyboar
         let render = function(users) {
             let visibleUsers = _.slice(users, 0, 5);
 
-            visibleUsers = _.map(visibleUsers, function(user) {
+            visibleUsers = _.map(visibleUsers, function(user:any) {
                 user.avatar = avatarService.getAvatar(user);
 
                 return user;

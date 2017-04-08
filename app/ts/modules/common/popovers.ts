@@ -22,9 +22,8 @@
  * File: modules/common/popovers.coffee
  */
 
-let { taiga } = this;
-let { bindOnce } = this.taiga;
-let { debounce } = this.taiga;
+import {bindOnce, debounce} from "../../utils"
+import * as angular from "angular"
 
 let module = angular.module("taigaCommon");
 
@@ -180,7 +179,7 @@ let RelatedTaskStatusDirective = function($repo, $template) {
             return updateTaskStatus($el, task, $scope.taskStatusById);
         });
 
-        taiga.bindOnce($scope, "project", function(project) {
+        bindOnce($scope, "project", function(project) {
             $el.append(selectionTemplate({ 'statuses':  project.task_statuses }));
             updateTaskStatus($el, task, $scope.taskStatusById);
 

@@ -22,8 +22,10 @@
  * File: modules/common/components.coffee
  */
 
-let { taiga } = this;
-let { bindOnce } = this.taiga;
+import {bindOnce} from "../../utils"
+import * as angular from "angular"
+import * as moment from "moment"
+import * as _ from "lodash"
 
 let module = angular.module("taigaCommon");
 
@@ -245,7 +247,7 @@ let WatchersDirective = function($rootscope, $confirm, $repo, $modelTransform, $
             });
 
             transform.then(function() {
-                watchers = _.map(watchers, watcherId => $scope.usersById[watcherId]);
+                watchers = _.map(watchers, (watcherId:number) => $scope.usersById[watcherId]);
                 renderWatchers(watchers);
                 return $rootscope.$broadcast("object:updated");
             });
@@ -262,7 +264,7 @@ let WatchersDirective = function($rootscope, $confirm, $repo, $modelTransform, $
 
             transform.then(function() {
                 let item = $modelTransform.getObj();
-                let watchers = _.map(item.watchers, watcherId => $scope.usersById[watcherId]);
+                let watchers = _.map(item.watchers, (watcherId:number) => $scope.usersById[watcherId]);
                 renderWatchers(watchers);
                 return $rootscope.$broadcast("object:updated");
             });
@@ -290,7 +292,7 @@ let WatchersDirective = function($rootscope, $confirm, $repo, $modelTransform, $
             return $confirm.askOnDelete(title, message).then(askResponse => {
                 askResponse.finish();
 
-                let watcherIds = _.clone($model.$modelValue.watchers, false);
+                let watcherIds = _.clone($model.$modelValue.watchers);
                 watcherIds = _.pull(watcherIds, watcherId);
 
                 return deleteWatcher(watcherIds);
@@ -298,7 +300,7 @@ let WatchersDirective = function($rootscope, $confirm, $repo, $modelTransform, $
         });
 
         $scope.$on("watcher:added", function(ctx, watcherId) {
-            let watchers = _.clone($model.$modelValue.watchers, false);
+            let watchers = _.clone($model.$modelValue.watchers);
             watchers.push(watcherId);
             watchers = _.uniq(watchers);
 
@@ -307,7 +309,7 @@ let WatchersDirective = function($rootscope, $confirm, $repo, $modelTransform, $
 
         $scope.$watch($attrs.ngModel, function(item) {
             if ((item == null)) { return; }
-            let watchers = _.map(item.watchers, watcherId => $scope.usersById[watcherId]);
+            let watchers = _.map(item.watchers, (watcherId:number) => $scope.usersById[watcherId]);
             watchers = _.filter(watchers, it => !!it);
 
             return renderWatchers(watchers);
@@ -687,7 +689,7 @@ let ListItemAssignedtoDirective = function($template, $translate, avatarService)
     let link = ($scope, $el, $attrs) =>
         bindOnce($scope, "usersById", function(usersById) {
             let item = $scope.$eval($attrs.tgListitemAssignedto);
-            let ctx = {
+            let ctx:any = {
                 name: $translate.instant("COMMON.ASSIGNED_TO.NOT_ASSIGNED"),
             };
 

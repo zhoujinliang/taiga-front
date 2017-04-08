@@ -115,7 +115,7 @@ class CustomAttributesValuesController extends Controller {
     }
 
     getAttributeValue(attribute) {
-        let attributeValue = _.clone(attribute, false);
+        let attributeValue = _.clone(attribute);
         attributeValue.value = this.customAttributesValues.attributes_values[attribute.id];
         return attributeValue;
     }
@@ -131,7 +131,7 @@ class CustomAttributesValuesController extends Controller {
         };
 
         // We need to update the full array so angular understand the model is modified
-        let attributesValues = _.clone(this.customAttributesValues.attributes_values, true);
+        let attributesValues = _.cloneDeep(this.customAttributesValues.attributes_values);
         attributesValues[attributeValue.id] = attributeValue.value;
         this.customAttributesValues.attributes_values = attributesValues;
         this.customAttributesValues.id = this.objectId;
@@ -193,9 +193,8 @@ let CustomAttributeValueDirective = function($template, $selectedText, $compile,
     let link = function($scope, $el, $attrs, $ctrl) {
         let prettyDate = $translate.instant("COMMON.PICKERDATE.FORMAT");
 
-        let render = function(attributeValue, edit) {
+        let render = function(attributeValue, edit=false) {
             let html, value;
-            if (edit == null) { edit = false; }
             if ((attributeValue.type === DATE_TYPE) && attributeValue.value) {
                 value = moment(attributeValue.value, "YYYY-MM-DD").format(prettyDate);
             } else {
