@@ -17,9 +17,23 @@
  * File: history.controller.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 let module = angular.module("taigaHistory");
 
 class CommentController {
+    currentUserService:any
+    permissionService:any
+    lightboxFactory:any
+    hiddenDeletedComment:any
+    comment:any
+    onEditMode:any
+    onEditComment:any
+    user:any
+    name:any
+    object:any
+
     static initClass() {
         this.$inject = [
             "tgCurrentUserService",

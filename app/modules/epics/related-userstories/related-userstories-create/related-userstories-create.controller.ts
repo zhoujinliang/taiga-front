@@ -17,9 +17,27 @@
  * File: related-userstory-create.controller.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 let module = angular.module("taigaEpics");
 
 class RelatedUserstoriesCreateController {
+    currentUserService:any
+    rs:any
+    confirm:any
+    analytics:any
+    projects:any
+    projectUserstories: Immutable.List<any>
+    loading:boolean
+    epicUserstories:any
+    epic:any
+    validateExistingUserstoryForm:any
+    setExistingUserstoryFormErrors:any
+    loadRelatedUserstories:any
+    validateNewUserstoryForm:any
+    setNewUserstoryFormErrors:any
+
     static initClass() {
         this.$inject = [
             "tgCurrentUserService",

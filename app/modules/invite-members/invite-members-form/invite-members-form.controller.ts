@@ -17,10 +17,27 @@
  * File: add-members.controller.coffee
  */
 
-let { taiga } = this;
-
+import * as angular from "angular"
+import * as _ from "lodash"
 
 class InviteMembersFormController {
+    projectService:any
+    rs:any
+    lightboxService:any
+    confirm:any
+    rootScope: angular.IScope
+    project:any
+    roles:any
+    rolesValues:any
+    loading:boolean
+    defaultMaxInvites:any
+    contactsToInvite:any
+    emailsToInvite:any
+    membersLimit:any
+    showWarningMessage:boolean
+    setInvitedContacts:any
+    inviteContactsMessage:any
+
     static initClass() {
         this.$inject = [
             "tgProjectService",

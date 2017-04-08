@@ -17,9 +17,21 @@
  * File: reñated-userstory-row.controller.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 let module = angular.module("taigaEpics");
 
 class RelatedUserstoryRowController {
+    avatarService:any
+    translate:any
+    confirm:any
+    rs:any
+    userstory:any
+    avatar:any
+    epic:any
+    loadRelatedUserstories:any
+
     static initClass() {
         this.$inject = [
             "tgAvatarService",
