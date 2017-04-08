@@ -25,9 +25,8 @@
 // FIXME: this code not follows any style and any good practices on coffeescript
 // and it should be rewritten in coffeescript style classes.
 
-let { taiga } = this;
-let { sizeFormat } = this.taiga;
-let { timeout } = this.taiga;
+import {timeout} from "../../utils"
+import * as angular from "angular"
 
 let module = angular.module("taigaCommon");
 
@@ -61,8 +60,7 @@ let Loader = function($rootscope) {
     let requestCount = 0;
     let lastResponseDate = 0;
 
-    let pageLoaded = function(force) {
-        if (force == null) { force = false; }
+    let pageLoaded = function(force=false) {
         if (startLoadTime) {
             let timeoutValue = 0;
 
@@ -78,7 +76,7 @@ let Loader = function($rootscope) {
             timeout(timeoutValue, function() {
                 $rootscope.$broadcast("loader:end");
                 open = false;
-                return window.prerenderReady = true;
+                return (<any>window).prerenderReady = true;
             }); // Needed by Prerender Server
         }
 
