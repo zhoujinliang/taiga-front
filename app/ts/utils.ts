@@ -83,7 +83,7 @@ export function mixOf(base, ...mixins) {
 };
 
 
-export function trim(data, char) {
+export function trim(data, char=undefined) {
    return _.trim(data, char);
 }
 

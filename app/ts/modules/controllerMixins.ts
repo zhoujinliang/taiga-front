@@ -38,7 +38,7 @@ export class PageMixin extends Controller {
     rs: any
 
     fillUsersAndRoles(users, roles) {
-        let activeUsers = _.filter(users, user => user.is_active);
+        let activeUsers = _.filter(users, (user:any) => user.is_active);
         this.scope.activeUsers = _.sortBy(activeUsers, "full_name_display");
         this.scope.activeUsersById = groupBy(this.scope.activeUsers, e => e.id);
 
@@ -48,7 +48,7 @@ export class PageMixin extends Controller {
         this.scope.roles = _.sortBy(roles, "order");
         let computableRoles = _(this.scope.project.members).map("role").uniq().value();
         return this.scope.computableRoles = _(roles).filter("computable")
-                                         .filter(x => _.includes(computableRoles, x.id))
+                                         .filter((x:any) => _.includes(computableRoles, x.id))
                                          .value();
     }
     loadUsersAndRoles() {
@@ -76,8 +76,7 @@ export class FiltersMixin extends PageMixin{
     scope: any
     storage: any
 
-    selectFilter(name, value, load) {
-        if (load == null) { load = false; }
+    selectFilter(name, value, load=false) {
         let params = this.location.search();
         if ((params[name] !== undefined) && (name !== "page")) {
             let existing = _.map(toString(params[name]).split(","), x => trim(x));
@@ -92,22 +91,19 @@ export class FiltersMixin extends PageMixin{
         }
     }
 
-    replaceFilter(name, value, load) {
-        if (load == null) { load = false; }
+    replaceFilter(name, value, load=false) {
         if (!this.location.isInCurrentRouteParams(name, value)) {
             let location = load ? this.location : this.location.noreload(this.scope);
             return location.search(name, value);
         }
     }
 
-    replaceAllFilters(filters, load) {
-        if (load == null) { load = false; }
+    replaceAllFilters(filters, load=false) {
         let location = load ? this.location : this.location.noreload(this.scope);
         return location.search(filters);
     }
 
-    unselectFilter(name, value, load) {
-        if (load == null) { load = false; }
+    unselectFilter(name, value, load=false) {
         let params = this.location.search();
 
         if (params[name] === undefined) {
@@ -161,9 +157,9 @@ export class FiltersMixin extends PageMixin{
 
     formatSelectedFilters(type, list, urlIds) {
         let selectedIds = urlIds.split(',');
-        let selectedFilters = _.filter(list, it => selectedIds.indexOf(_.toString(it.id)) !== -1);
+        let selectedFilters = _.filter(list, (it:any) => selectedIds.indexOf(_.toString(it.id)) !== -1);
 
-        let invalidTags = _.filter(selectedIds, it => !_.find(selectedFilters, sit => _.toString(sit.id) === it));
+        let invalidTags = _.filter(selectedIds, (it:any) => !_.find(selectedFilters, sit => _.toString(sit.id) === it));
 
         let invalidAppliedTags =  _.map(invalidTags, it =>
             ({
@@ -174,7 +170,7 @@ export class FiltersMixin extends PageMixin{
             })
     );
 
-        let validAppliedTags = _.map(selectedFilters, it =>
+        let validAppliedTags = _.map(selectedFilters, (it:any) =>
             ({
                 id: it.id,
                 key: type + ":" + it.id,
@@ -193,6 +189,17 @@ export class FiltersMixin extends PageMixin{
 //############################################################################
 
 export class UsFiltersMixin extends FiltersMixin {
+    filterRemoteStorageService:any
+    storeCustomFiltersName:any
+    storeFiltersName:any
+    params:any
+    selectedFilters:any
+    filtersReloadContent:any
+    filters:any
+    filterQ:any
+    customFilters:any
+    translate:any
+
     changeQ(q) {
         this.replaceFilter("q", q);
         this.filtersReloadContent();
@@ -218,7 +225,7 @@ export class UsFiltersMixin extends FiltersMixin {
     }
 
     saveCustomFilter(name) {
-        let filters = {};
+        let filters:any = {};
         let urlfilters = this.location.search();
         filters.tags = urlfilters.tags;
         filters.status = urlfilters.status;
@@ -246,7 +253,7 @@ export class UsFiltersMixin extends FiltersMixin {
 
         let urlfilters = this.location.search();
 
-        let loadFilters = {};
+        let loadFilters:any = {};
         loadFilters.project = this.scope.projectId;
         loadFilters.tags = urlfilters.tags;
         loadFilters.status = urlfilters.status;
@@ -263,18 +270,18 @@ export class UsFiltersMixin extends FiltersMixin {
             let data = result[0];
             let customFiltersRaw = result[1];
 
-            let statuses = _.map(data.statuses, function(it) {
+            let statuses = _.map(data.statuses, function(it:any) {
                 it.id = it.id.toString();
 
                 return it;
             });
-            let tags = _.map(data.tags, function(it) {
+            let tags = _.map(data.tags, function(it:any) {
                 it.id = it.name;
 
                 return it;
             });
-            let tagsWithAtLeastOneElement = _.filter(tags, tag => tag.count > 0);
-            let assignedTo = _.map(data.assigned_to, function(it) {
+            let tagsWithAtLeastOneElement = _.filter(tags, (tag:any) => tag.count > 0);
+            let assignedTo = _.map(data.assigned_to, function(it:any) {
                 if (it.id) {
                     it.id = it.id.toString();
                 } else {
@@ -285,13 +292,13 @@ export class UsFiltersMixin extends FiltersMixin {
 
                 return it;
             });
-            let owner = _.map(data.owners, function(it) {
+            let owner = _.map(data.owners, function(it:any) {
                 it.id = it.id.toString();
                 it.name = it.full_name;
 
                 return it;
             });
-            let epic = _.map(data.epics, function(it) {
+            let epic = _.map(data.epics, function(it:any) {
                 if (it.id) {
                     it.id = it.id.toString();
                     it.name = `#${it.ref} ${it.subject}`;

@@ -22,8 +22,9 @@
  * File: modules/common/estimation.coffee
  */
 
-let { taiga } = this;
-let { groupBy } = this.taiga;
+import {groupBy} from "../../utils"
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module("taigaCommon");
 
@@ -168,6 +169,17 @@ let EstimationsService = function($template, $repo, $confirm, $q, $qqueue) {
     let pointsTemplate = $template.get("common/estimation/us-estimation-points.html", true);
 
     class EstimationProcess {
+        $el:any
+        us:any
+        project:any
+        isEditable:any
+        roles:any
+        points:any
+        loading:any
+        pointsById:any
+        onSelectedPointForRole:any
+        render:any
+
         constructor($el, us, project) {
             this.bindClickEvents = this.bindClickEvents.bind(this);
             this.$el = $el;
@@ -204,7 +216,7 @@ let EstimationsService = function($template, $repo, $confirm, $q, $qqueue) {
         }
 
         calculateTotalPoints() {
-            let values = _.map(this.us.points, (v, k) => (this.pointsById[v] != null ? this.pointsById[v].value : undefined));
+            let values = _.map(this.us.points, (v:number, k) => (this.pointsById[v] != null ? this.pointsById[v].value : undefined));
 
             if (values.length === 0) {
                 return "?";
@@ -220,7 +232,7 @@ let EstimationsService = function($template, $repo, $confirm, $q, $qqueue) {
 
         calculateRoles() {
             let computableRoles = _.filter(this.project.roles, "computable");
-            let roles = _.map(computableRoles, role => {
+            let roles = _.map(computableRoles, (role:any) => {
                 let pointId = this.us.points[role.id];
                 let pointObj = this.pointsById[pointId];
                 role = _.clone(role, true);
@@ -259,7 +271,7 @@ let EstimationsService = function($template, $repo, $confirm, $q, $qqueue) {
         }
 
         renderPointsSelector(roleId, target) {
-            let points = _.map(this.points, point => {
+            let points = _.map(this.points, (point:any) => {
                 point = _.clone(point, true);
                 point.selected = this.us.points[roleId] === point.id ? false : true;
                 return point;
