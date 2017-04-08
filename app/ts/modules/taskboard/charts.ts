@@ -22,13 +22,10 @@
  * File: modules/taskboard/charts.coffee
  */
 
-let { taiga } = this;
-
-let { toggleText } = this.taiga;
-let { scopeDefer } = this.taiga;
-let { bindOnce } = this.taiga;
-let { groupBy } = this.taiga;
-let { timeout } = this.taiga;
+import {timeout} from "../../utils"
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as moment from "moment"
 
 let module = angular.module("taigaTaskboard");
 
@@ -41,17 +38,17 @@ let SprintGraphDirective = function($translate){
         let width = element.width();
         element.height(240);
 
-        let days = _.map(dataToDraw, x => moment(x.day));
+        let days = _.map(dataToDraw, (x:any) => moment(x.day));
 
         let data = [];
         data.unshift({
-            data: _.zip(days, _.map(dataToDraw, d => d.optimal_points)),
+            data: _.zip(days, _.map(dataToDraw, (d:any) => d.optimal_points)),
             lines: {
                 fillColor : "rgba(120,120,120,0.2)"
             }
         });
         data.unshift({
-            data: _.zip(days, _.map(dataToDraw, d => d.open_points)),
+            data: _.zip(days, _.map(dataToDraw, (d:any) => d.open_points)),
             lines: {
                 fillColor : "rgba(102,153,51,0.3)"
             }

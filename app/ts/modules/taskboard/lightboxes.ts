@@ -22,10 +22,10 @@
  * File: modules/taskboard/lightboxes.coffee
  */
 
-let { taiga } = this;
-let { bindOnce } = this.taiga;
-let { debounce } = this.taiga;
-let { trim } = this.taiga;
+import {debounce, trim} from "../../utils"
+import * as angular from "angular"
+import * as Immutable from "immutable"
+import * as _ from "lodash"
 
 let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $loading, lightboxService, $translate, $q, attachmentsService) {
     let link = function($scope, $el, attrs) {
@@ -42,7 +42,7 @@ let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $loading,
         $scope.addAttachment = attachment => attachmentsToAdd = attachmentsToAdd.push(attachment);
 
         $scope.deleteAttachment = function(attachment) {
-            attachmentsToAdd = attachmentsToAdd.filter(it => it.get('name') !== attachment.get('name'));
+            attachmentsToAdd = <Immutable.List<any>>attachmentsToAdd.filter((it:Immutable.Map<string,any>) => it.get('name') !== attachment.get('name'));
 
             if (attachment.get("id")) {
                 return attachmentsToDelete = attachmentsToDelete.push(attachment);
@@ -50,13 +50,13 @@ let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $loading,
         };
 
         let createAttachments = function(obj) {
-            let promises = _.map(attachmentsToAdd.toJS(), attachment => attachmentsService.upload(attachment.file, obj.id, $scope.task.project, 'task'));
+            let promises = _.map(attachmentsToAdd.toJS(), (attachment:any) => attachmentsService.upload(attachment.file, obj.id, $scope.task.project, 'task'));
 
             return $q.all(promises);
         };
 
         let deleteAttachments = function(obj) {
-            let promises = _.map(attachmentsToDelete.toJS(), attachment => attachmentsService.delete("task", attachment.id));
+            let promises = _.map(attachmentsToDelete.toJS(), (attachment:any) => attachmentsService.delete("task", attachment.id));
 
             return $q.all(promises);
         };
