@@ -495,7 +495,7 @@ gulp.task("app-loader", function() {
             "sourceMap": true,
             "emitDecoratorMetadata": true,
             "experimentalDecorators": true,
-            "lib": [ "es2015", "dom" ],
+            "lib": [ "es2016", "dom" ],
             // "noImplicitAny": true,
             "suppressImplicitAnyIndexErrors": true
         }))
@@ -537,7 +537,7 @@ gulp.task("ts", function() {
             "sourceMap": true,
             "emitDecoratorMetadata": true,
             "experimentalDecorators": true,
-            "lib": [ "es2015", "dom" ],
+            "lib": [ "es2016", "dom" ],
             // "noImplicitAny": true,
             "suppressImplicitAnyIndexErrors": true
         }))

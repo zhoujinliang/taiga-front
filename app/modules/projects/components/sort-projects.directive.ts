@@ -17,9 +17,8 @@
  * File: sort-projects.directive.coffee
  */
 
-import {autoScroll} from "../../../ts/global"
+import {autoScroll, dragula} from "../../../ts/global"
 import * as angular from "angular"
-import * as dragula from "dragula"
 import * as _ from "lodash"
 
 let SortProjectsDirective = function(currentUserService) {

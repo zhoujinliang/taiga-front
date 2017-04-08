@@ -17,11 +17,14 @@
  * File: home-project-list.directive.coffee
  */
 
+import * as angular from "angular"
+import {defineImmutableProperty} from "../../../ts/utils"
+
 let HomeProjectListDirective = function(currentUserService) {
     let link = function(scope, el, attrs, ctrl) {
         scope.vm = {};
 
-        return taiga.defineImmutableProperty(scope.vm, "projects", () => currentUserService.projects.get("recents"));
+        return defineImmutableProperty(scope.vm, "projects", () => currentUserService.projects.get("recents"));
     };
 
     let directive = {

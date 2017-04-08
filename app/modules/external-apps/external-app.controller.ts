@@ -17,6 +17,7 @@
  * File: external-app.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../ts/utils"
 import {Controller} from "../../ts/classes"
 import * as angular from "angular"
 import * as Immutable from "immutable"
@@ -73,8 +74,8 @@ class ExternalAppController extends Controller {
         let loginUrl = this.navUrls.resolve("login");
         this.loginWithAnotherUserUrl = `${loginUrl}?next=${nextUrl}`;
 
-        taiga.defineImmutableProperty(this, "user", () => this._user);
-        taiga.defineImmutableProperty(this, "application", () => this._application);
+        defineImmutableProperty(this, "user", () => this._user);
+        defineImmutableProperty(this, "application", () => this._application);
     }
 
     _redirect(applicationToken) {

@@ -19,6 +19,7 @@
 
 import * as angular from "angular"
 import * as _ from "lodash"
+import {murmurhash3_32_gc} from "../../ts/global"
 
 class ProjectLogoService {
     logos: any

@@ -25,10 +25,9 @@
 import {debounce, getDefaulColorList} from "../../utils"
 import {Controller} from "../../classes"
 import {PageMixin} from "../controllerMixins"
-import {autoScroll} from "../../global"
+import {autoScroll, dragula} from "../../global"
 
 import * as angular from "angular"
-import * as dragula from "dragula"
 import * as _ from "lodash"
 
 let module = angular.module("taigaAdmin");
