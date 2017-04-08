@@ -17,7 +17,13 @@
  * File: lightbox-factory.service.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 class LightboxFactory {
+    rootScope: angular.IScope
+    compile: any
+
     static initClass() {
         this.$inject = ["$rootScope", "$compile"];
     }
@@ -32,8 +38,8 @@ class LightboxFactory {
         scope = _.merge(scope, scopeAttrs);
 
         let elm = $("<div>")
-            .attr(name, true)
-            .attr("tg-bind-scope", true);
+            .attr(name, "1")
+            .attr("tg-bind-scope", "1");
 
         if (attrs) {
             elm.attr(attrs);

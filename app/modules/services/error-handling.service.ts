@@ -17,9 +17,11 @@
  * File: error-handling.service.coffee
  */
 
-let { taiga } = this;
+import * as angular from "angular"
 
 class ErrorHandlingService {
+    rootScope: angular.IScope
+
     static initClass() {
         this.$inject = [
             "$rootScope"

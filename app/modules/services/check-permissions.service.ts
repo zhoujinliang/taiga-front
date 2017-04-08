@@ -17,9 +17,11 @@
  * File: check-permissions.service.coffee
  */
 
-let { taiga } = this;
+import * as angular from "angular"
 
 class CheckPermissionsService {
+    projectService:any
+
     static initClass() {
         this.$inject = [
             "tgProjectService"

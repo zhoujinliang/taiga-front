@@ -17,6 +17,9 @@
  * File: paginate-response.service.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 let PaginateResponse = () =>
     function(result) {
         let paginateResponse = Immutable.Map({

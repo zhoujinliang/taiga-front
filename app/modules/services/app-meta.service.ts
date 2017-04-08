@@ -17,12 +17,14 @@
  * File: app-meta.service.coffee
  */
 
-let { taiga } = this;
-
-let { truncate } = taiga;
-
+import {truncate} from "../../ts/utils"
+import * as angular from "angular"
 
 class AppMetaService {
+    rootScope: angular.IScope
+    listener:any
+    _listener:any
+
     static initClass() {
         this.$inject = [
             "$rootScope"
@@ -80,7 +82,7 @@ class AppMetaService {
         this._set("twitter:site", "@taigaio");
         this._set("twitter:title", title);
         this._set("twitter:description", truncate(description, 300));
-        return this._set("twitter:image", `${window.location.origin}/${window._version}/images/logo-color.png`);
+        return this._set("twitter:image", `${window.location.origin}/${(<any>window)._version}/images/logo-color.png`);
     }
 
     setOpenGraphMetas(title, description) {
@@ -88,7 +90,7 @@ class AppMetaService {
         this._set("og:site_name", "Taiga - Love your projects");
         this._set("og:title", title);
         this._set("og:description", truncate(description, 300));
-        this._set("og:image", `${window.location.origin}/${window._version}/images/logo-color.png`);
+        this._set("og:image", `${window.location.origin}/${(<any>window)._version}/images/logo-color.png`);
         return this._set("og:url", window.location.href);
     }
 
@@ -113,7 +115,7 @@ content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalabl
     setfn(fn) {
         if (this.listener) { this._listener(); }
 
-        return this._listener = this.rootScope.$watchCollection(fn, metas => {
+        return this._listener = this.rootScope.$watchCollection(fn, (metas:any) => {
             if (metas) {
                 this.setAll(metas.title, metas.description);
                 return this._listener();
