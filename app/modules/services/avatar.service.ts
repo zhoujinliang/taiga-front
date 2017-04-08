@@ -17,7 +17,7 @@
  * File: avatar.service.coffee
  */
 
-import {sizeFormat} from "../../ts/utils"
+import {sizeFormat, cartesianProduct} from "../../ts/utils"
 import {murmurhash3_32_gc} from "../../ts/global"
 import * as angular from "angular"
 import * as Immutable from "immutable"
@@ -45,7 +45,7 @@ class AvatarService {
             "rgba( 247, 154, 154, 1 )"
         ];
 
-        this.logos = _.cartesianProduct(IMAGES, COLORS);
+        this.logos = cartesianProduct(IMAGES, COLORS);
     }
 
     getDefault(key) {
