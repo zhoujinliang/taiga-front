@@ -82,7 +82,7 @@ class KanbanUserstoriesService extends Service {
     }
 
     isUsInArchivedHiddenStatus(usId) {
-        let us = this.getUsModel(usId);
+        let us:any = this.getUsModel(usId);
 
         return (this.archivedStatus.indexOf(us.status) !== -1) &&
             (this.statusHide.indexOf(us.status) !== -1);
@@ -98,16 +98,16 @@ class KanbanUserstoriesService extends Service {
     }
 
     getStatus(statusId) {
-        return _.filter(this.userstoriesRaw, us => us.status === statusId);
+        return _.filter(this.userstoriesRaw, (us:any) => us.status === statusId);
     }
 
     deleteStatus(statusId) {
-        let toDelete = _.filter(this.userstoriesRaw, us => us.status === statusId);
+        let toDelete = _.filter(this.userstoriesRaw, (us:any) => us.status === statusId);
         toDelete = _.map(it => it.id);
 
         this.archived = _.difference(this.archived, toDelete);
 
-        this.userstoriesRaw = _.filter(this.userstoriesRaw, us => us.status !== statusId);
+        this.userstoriesRaw = _.filter(this.userstoriesRaw, (us:any) => us.status !== statusId);
 
         return this.refresh();
     }
@@ -126,10 +126,10 @@ class KanbanUserstoriesService extends Service {
     }
 
     move(id, statusId, index) {
-        let it;
-        let us = this.getUsModel(id);
+        let it:any;
+        let us:any = this.getUsModel(id);
 
-        let usByStatus = _.filter(this.userstoriesRaw, it => {
+        let usByStatus = _.filter(this.userstoriesRaw, (it:any) => {
             return it.status === statusId;
         });
 
@@ -185,7 +185,7 @@ class KanbanUserstoriesService extends Service {
     }
 
     replaceModel(us) {
-        this.userstoriesRaw = _.map(this.userstoriesRaw, function(usItem) {
+        this.userstoriesRaw = _.map(this.userstoriesRaw, function(usItem:any) {
             if (us.id === usItem.id) {
                 return us;
             } else {
@@ -209,23 +209,23 @@ class KanbanUserstoriesService extends Service {
     }
 
     getUsModel(id) {
-        return _.find(this.userstoriesRaw, us => us.id === id);
+        return _.find(this.userstoriesRaw, (us:any) => us.id === id);
     }
 
     refresh() {
         let model;
-        this.userstoriesRaw = _.sortBy(this.userstoriesRaw, it => this.order[it.id]);
+        this.userstoriesRaw = _.sortBy(this.userstoriesRaw, (it:any) => this.order[it.id]);
 
         let userstories = this.userstoriesRaw;
-        userstories = _.map(userstories, usModel => {
-            let us = {};
+        userstories = _.map(userstories, (usModel:any) => {
+            let us:any = {};
 
             model = usModel.getAttrs();
 
             us.foldStatusChanged = this.foldStatusChanged[usModel.id];
 
             us.model = model;
-            us.images = _.filter(model.attachments, it => !!it.thumbnail_card_url);
+            us.images = _.filter(model.attachments, (it:any) => !!it.thumbnail_card_url);
 
             us.id = usModel.id;
             us.assigned_to = this.usersById[usModel.assigned_to];
@@ -236,7 +236,7 @@ class KanbanUserstoriesService extends Service {
             return us;
         });
 
-        let usByStatus = _.groupBy(userstories, us => us.model.status);
+        let usByStatus = _.groupBy(userstories, (us:any) => us.model.status);
 
         return this.usByStatus = Immutable.fromJS(usByStatus);
     }
