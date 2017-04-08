@@ -17,7 +17,21 @@
  * File: asana-import-project-form.controller.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 class AsanaImportProjectFormController {
+    currentUserService:any
+    canCreatePublicProjects:any
+    canCreatePrivateProjects:any
+    projectForm:any
+    platformName:string
+    project:any
+    limitMembersPrivateProject:any
+    limitMembersPublicProject:any
+    members:any
+    onSaveProjectDetails:any
+
     static initClass() {
         this.$inject = [
             "tgCurrentUserService"

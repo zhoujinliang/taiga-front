@@ -17,7 +17,15 @@
  * File: watch-project-button.controller.coffee
  */
 
+import * as angular from "angular"
+
 class WatchProjectButtonController {
+    confirm:any
+    watchButtonService:any
+    showWatchOptions:boolean
+    loading:boolean
+    project:any
+
     static initClass() {
         this.$inject = [
             "$tgConfirm",

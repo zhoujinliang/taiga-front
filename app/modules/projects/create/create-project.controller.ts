@@ -17,7 +17,19 @@
  * File: project.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../../ts/utils"
+import * as angular from "angular"
+
 class CreateProjectController {
+    appMetaService:any
+    translate:any
+    projectService:any
+    location:any
+    authService:any
+    displayScrumDesc:boolean
+    displayKanbanDesc:boolean
+    project:any
+
     static initClass() {
         this.$inject = [
             "tgAppMetaService",
@@ -34,7 +46,7 @@ class CreateProjectController {
         this.projectService = projectService;
         this.location = location;
         this.authService = authService;
-        taiga.defineImmutableProperty(this, "project", () => { return this.projectService.project; });
+        defineImmutableProperty(this, "project", () => { return this.projectService.project; });
 
         this.appMetaService.setfn(this._setMeta.bind(this));
 

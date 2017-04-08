@@ -17,7 +17,29 @@
  * File: import-project-members.controller.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+import * as _ from "lodash"
+
 class ImportProjectMembersController {
+    currentUserService:any
+    userService:any
+    selectImportUserLightbox:boolean
+    warningImportUsers:boolean
+    displayEmailSelector:boolean
+    cancelledUsers: Immutable.List<any>;
+    selectedUsers: Immutable.List<any>;
+    selectableUsers: Immutable.List<any>;
+    userContacts: Immutable.List<any>;
+    currentUser:any
+    searchingUser:any
+    members:any
+    onSubmit:any
+    limitMembersPrivateProject:any
+    limitMembersPublicProject:any
+    importMoreUsersDisabled:any
+    project:any
+
     static initClass() {
         this.$inject = [
             'tgCurrentUserService',
@@ -156,7 +178,7 @@ class ImportProjectMembersController {
         if (this.importMoreUsersDisabled) {
             let users = this.getDistinctSelectedTaigaUsers();
 
-            this.selectableUsers = users.map(it => it.get('taigaUser'));
+            this.selectableUsers = <Immutable.List<any>>users.map(it => it.get('taigaUser'));
             this.displayEmailSelector = false;
         } else {
             this.selectableUsers = this.userContacts;
