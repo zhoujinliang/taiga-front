@@ -118,8 +118,7 @@ let LbTagLineDirective = function($rs, $template, $compile) {
         let withoutColors = _.has($attrs, "withoutColors");
 
         //# Render
-        let renderTags = function(tags, tagsColors) {
-            if (tagsColors == null) { tagsColors = []; }
+        let renderTags = function(tags, tagsColors=[]) {
             let color = !withoutColors ? tagsColors[t] : null;
 
             let ctx = {

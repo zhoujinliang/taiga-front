@@ -20,20 +20,18 @@
 import {Service} from "../../ts/classes"
 import * as angular from "angular"
 
-class ThemeService extends (Service = () =>
-    ({
-        use(themeName) {
-            let stylesheetEl = $("link[rel='stylesheet']:first");
+class ThemeService extends Service {
+    use(themeName) {
+        let stylesheetEl = $("link[rel='stylesheet']:first");
 
-            if (stylesheetEl.length === 0) {
-                stylesheetEl = $("<link rel='stylesheet' href='' type='text/css'>");
-                $("head").append(stylesheetEl);
-            }
-
-            return stylesheetEl.attr("href", `/${(<any>window)._version}/styles/theme-${themeName}.css`);
+        if (stylesheetEl.length === 0) {
+            stylesheetEl = $("<link rel='stylesheet' href='' type='text/css'>");
+            $("head").append(stylesheetEl);
         }
-    })
-) {}
+
+        return stylesheetEl.attr("href", `/${(<any>window)._version}/styles/theme-${themeName}.css`);
+    }
+}
 
 
 angular.module("taigaCommon").service("tgThemeService", ThemeService);
