@@ -91,10 +91,10 @@ let NavigationUrlsDirective = function($navurls, $auth, $q, $location, lightboxS
             let result = params.split(/(\w+)=/);
 
             // remove empty string
-            result = _.filter(result, str => str.length);
+            result = _.filter(result, (str:string) => str.length);
 
             // remove , at the end of the string
-            result = _.map(result, str => trim(str.replace(/,$/g, '')));
+            result = _.map(result, (str:string) => trim(str.replace(/,$/g, '')));
 
             params = [];
             let index = 0;

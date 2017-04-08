@@ -35,7 +35,7 @@ class StorageService extends Service {
         super();
     }
 
-    get(key, _default) {
+    get(key, _default=null) {
         let serializedValue = localStorage.getItem(key);
         if (serializedValue === null) {
             return _default || null;

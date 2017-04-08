@@ -92,11 +92,8 @@ class RepositoryService extends Service {
         return this.q.all(promises);
     }
 
-    save(model, patch, params, options, returnHeaders) {
+    save(model, patch=true, params={}, options={}, returnHeaders=false) {
         let promise;
-        if (patch == null) { patch = true; }
-        if (params == null) { params = {}; }
-        if (returnHeaders == null) { returnHeaders = false; }
         let defered = this.q.defer();
 
         if (!model.isModified() && patch) {
