@@ -30,8 +30,9 @@ let FilterSlideDownDirective = function() {
                 let wrapperHeight = filter.height();
                 let contentHeight = 0;
 
-                filter.children().each(function() {
-                    return contentHeight += $(this).outerHeight(true);
+                filter.children().each(function(index, elem) {
+                    contentHeight += $(this).outerHeight(true);
+                    return true
                 });
 
                 return $(el.context.nextSibling)

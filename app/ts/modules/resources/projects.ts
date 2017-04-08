@@ -25,6 +25,7 @@
 
 import {sizeFormat} from "../../utils"
 import * as angular from "angular"
+import * as _ from "lodash"
 
 let resourceProvider = function($config, $repo, $http, $urls, $auth, $q, $translate) {
     let service:any = {};
@@ -182,7 +183,7 @@ let resourceProvider = function($config, $repo, $http, $urls, $auth, $q, $transl
                     memberships: parseInt(evt.target.getResponseHeader('Taiga-Info-Project-Memberships'))
                 };
             }
-            if ([201, 202].includes(response.status)) { defered.resolve(response); }
+            if (_.includes([201, 202], response.status)) { defered.resolve(response); }
             return defered.reject(response);
         };
 

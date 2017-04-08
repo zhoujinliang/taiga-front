@@ -17,9 +17,8 @@
  * File: related-userstories-sortable.directive.coffee
  */
 
-import {autoScroll} from "../../../../ts/global"
+import {autoScroll, dragula} from "../../../../ts/global"
 import * as angular from "angular"
-import * as dragula from "dragula"
 
 let module = angular.module('taigaEpics');
 

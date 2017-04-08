@@ -45,7 +45,7 @@ export function bindMethods(object) {
     let methods = [];
 
     _.forIn(object, (value, key) => {
-        if (!dependencies.includes(key) && _.isFunction(value)) {
+        if (!_.includes(dependencies, key) && _.isFunction(value)) {
             return methods.push(key);
         }
     });

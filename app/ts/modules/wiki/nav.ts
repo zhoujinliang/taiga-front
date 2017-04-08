@@ -23,10 +23,9 @@
  */
 
 import {groupBy, bindOnce} from "../../utils"
-import {autoScroll} from "../../global"
+import {autoScroll, dragula} from "../../global"
 
 import * as angular from "angular"
-import * as dragula from "dragula"
 
 let module = angular.module("taigaWiki");
 

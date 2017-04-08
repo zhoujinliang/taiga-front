@@ -17,11 +17,14 @@
  * File: dropdown-project-list.directive.coffee
  */
 
+import * as angular from "angular"
+import {defineImmutableProperty} from "../../../ts/utils"
+
 let DropdownProjectListDirective = function(currentUserService, projectsService) {
     let link = function(scope, el, attrs, ctrl) {
         scope.vm = {};
 
-        taiga.defineImmutableProperty(scope.vm, "projects", () => currentUserService.projects.get("recents"));
+        defineImmutableProperty(scope.vm, "projects", () => currentUserService.projects.get("recents"));
 
         return scope.vm.newProject = () => projectsService.newProject();
     };

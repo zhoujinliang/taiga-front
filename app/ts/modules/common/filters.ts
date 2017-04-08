@@ -26,6 +26,7 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import * as moment from "moment"
 import * as Immutable from "immutable"
+import * as utils from "../../utils"
 
 let module = angular.module("taigaCommon");
 
@@ -55,7 +56,7 @@ let yesNoFilter = $translate =>
 module.filter("yesNo", ["$translate", yesNoFilter]);
 
 
-let unslugify = () => taiga.unslugify;
+let unslugify = () => utils.unslugify;
 
 module.filter("unslugify", unslugify);
 

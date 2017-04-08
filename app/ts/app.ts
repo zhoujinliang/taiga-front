@@ -25,6 +25,7 @@
 import * as _ from "lodash"
 import * as angular from "angular"
 import * as moment from "moment"
+import * as Promise from "bluebird"
 import {ljs, checksley, hex_sha1} from "./global"
 import {nl2br} from "./utils"
 

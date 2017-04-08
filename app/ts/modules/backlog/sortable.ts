@@ -25,9 +25,8 @@
 
 import * as angular from "angular"
 import * as _ from "lodash"
-import * as dragula from "dragula"
 import {bindOnce} from "../../utils"
-import {autoScroll} from "../../global"
+import {autoScroll, dragula} from "../../global"
 
 let module = angular.module("taigaBacklog");
 

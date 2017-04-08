@@ -18,6 +18,7 @@
  */
 
 import {sizeFormat} from "../../ts/utils"
+import {murmurhash3_32_gc} from "../../ts/global"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"

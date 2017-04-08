@@ -102,7 +102,9 @@
   ],
   "dependencies": {
     "@types/angular": "^1.6.14",
+    "@types/bluebird": "^3.5.2",
     "@types/dragula": "^2.1.30",
+    "@types/es6-promise": "0.0.32",
     "@types/i18next": "^2.3.35",
     "@types/lodash": "^4.14.61",
     "@types/moment": "^2.13.0",
