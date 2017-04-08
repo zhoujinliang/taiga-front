@@ -38,7 +38,7 @@ class UserService extends Service {
         return this.rs.users.getUserByUsername(username);
     }
 
-    getContacts(userId, excludeProjectId) {
+    getContacts(userId, excludeProjectId=null) {
         return this.rs.users.getContacts(userId, excludeProjectId);
     }
 

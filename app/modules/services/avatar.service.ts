@@ -17,15 +17,23 @@
  * File: avatar.service.coffee
  */
 
+import {sizeFormat} from "../../ts/utils"
+import * as angular from "angular"
+import * as Immutable from "immutabld"
+import * as _ from "lodash"
+
 class AvatarService {
+    config:any
+    logos:any
+
     constructor(config) {
         this.config = config;
         let IMAGES = [
-            `/${window._version}/images/user-avatars/user-avatar-01.png`,
-            `/${window._version}/images/user-avatars/user-avatar-02.png`,
-            `/${window._version}/images/user-avatars/user-avatar-03.png`,
-            `/${window._version}/images/user-avatars/user-avatar-04.png`,
-            `/${window._version}/images/user-avatars/user-avatar-05.png`
+            `/${(<any>window)._version}/images/user-avatars/user-avatar-01.png`,
+            `/${(<any>window)._version}/images/user-avatars/user-avatar-02.png`,
+            `/${(<any>window)._version}/images/user-avatars/user-avatar-03.png`,
+            `/${(<any>window)._version}/images/user-avatars/user-avatar-04.png`,
+            `/${(<any>window)._version}/images/user-avatars/user-avatar-05.png`
         ];
 
         let COLORS = [
@@ -48,7 +56,7 @@ class AvatarService {
 
     getUnnamed() {
         return {
-            url: `/${window._version}/images/unnamed.png`
+            url: `/${(<any>window)._version}/images/unnamed.png`
         };
     }
 

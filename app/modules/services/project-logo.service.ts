@@ -17,14 +17,18 @@
  * File: project-logo.service.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 class ProjectLogoService {
+    logos: any
     constructor() {
         let IMAGES = [
-            `/${window._version}/images/project-logos/project-logo-01.png`,
-            `/${window._version}/images/project-logos/project-logo-02.png`,
-            `/${window._version}/images/project-logos/project-logo-03.png`,
-            `/${window._version}/images/project-logos/project-logo-04.png`,
-            `/${window._version}/images/project-logos/project-logo-05.png`
+            `/${(<any>window)._version}/images/project-logos/project-logo-01.png`,
+            `/${(<any>window)._version}/images/project-logos/project-logo-02.png`,
+            `/${(<any>window)._version}/images/project-logos/project-logo-03.png`,
+            `/${(<any>window)._version}/images/project-logos/project-logo-04.png`,
+            `/${(<any>window)._version}/images/project-logos/project-logo-05.png`
         ];
 
         let COLORS = [

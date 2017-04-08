@@ -17,9 +17,17 @@
  * File: attachments.service.coffee
  */
 
-let { sizeFormat } = this.taiga;
+import {sizeFormat} from "../../ts/utils"
+import * as angular from "angular"
 
 class AttachmentsService {
+    confirm:any
+    config:any
+    translate:any
+    rs:any
+    maxFileSize:any
+    maxFileSizeFormated:any
+
     static initClass() {
         this.$inject = [
             "$tgConfirm",

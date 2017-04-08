@@ -160,8 +160,7 @@ export function startswith(str1, str2) {
 }
 
 
-export function truncate(str, maxLength, suffix) {
-    if (suffix == null) { suffix = "..."; }
+export function truncate(str, maxLength, suffix="...") {
     if ((typeof str !== "string") && !(str instanceof String)) { return str; }
 
     let out = str.slice(0);

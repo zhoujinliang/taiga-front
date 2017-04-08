@@ -17,14 +17,19 @@
  * File: user-activity.service.coffee
  */
 
-let { taiga } = this;
-
-let { groupBy } = this.taiga;
+import * as angular from "angular"
+import * as _ from "lodash"
 
 class UserActivityService {
+    timeout: any
+    idleTimeout: any
+    subscriptionsActive: any
+    subscriptionsInactive: any
+    isActive: any
+    timerId: any
+
     static initClass() {
         this.$inject = ['$timeout'];
-    
         this.prototype.idleTimeout = 60 * 5 * 1000;
     }
 
