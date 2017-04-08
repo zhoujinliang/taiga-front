@@ -120,11 +120,11 @@ class TaskboardTasksService extends Service {
     }
 
     getTaskModel(id) {
-        return _.find(this.tasksRaw, task => task.id === id);
+        return _.find(this.tasksRaw, (task:any) => task.id === id);
     }
 
     replaceModel(task) {
-        this.tasksRaw = _.map(this.tasksRaw, function(it) {
+        this.tasksRaw = _.map(this.tasksRaw, function(it:any) {
             if (task.id === it.id) {
                 return task;
             } else {
@@ -139,13 +139,13 @@ class TaskboardTasksService extends Service {
         let it;
         let task = this.getTaskModel(id);
 
-        let taskByUsStatus = _.filter(this.tasksRaw, task => {
+        let taskByUsStatus = _.filter(this.tasksRaw, (task:any) => {
             return (task.status === statusId) && (task.user_story === usId);
         });
 
-        taskByUsStatus = _.sortBy(taskByUsStatus, it => this.order[it.id]);
+        taskByUsStatus = _.sortBy(taskByUsStatus, (it:any) => this.order[it.id]);
 
-        let taksWithoutMoved = _.filter(taskByUsStatus, it => it.id !== id);
+        let taksWithoutMoved = _.filter(taskByUsStatus, (it:any) => it.id !== id);
         let beforeDestination = _.slice(taksWithoutMoved, 0, index);
         let afterDestination = _.slice(taksWithoutMoved, index);
 
@@ -153,7 +153,7 @@ class TaskboardTasksService extends Service {
 
         let previous = beforeDestination[beforeDestination.length - 1];
 
-        let previousWithTheSameOrder = _.filter(beforeDestination, it => {
+        let previousWithTheSameOrder = _.filter(beforeDestination, (it:any) => {
             return this.order[it.id] === this.order[previous.id];
     });
 
@@ -185,7 +185,7 @@ class TaskboardTasksService extends Service {
 
     refresh() {
         let status;
-        this.tasksRaw = _.sortBy(this.tasksRaw, it => this.order[it.id]);
+        this.tasksRaw = _.sortBy(this.tasksRaw, (it:any) => this.order[it.id]);
 
         let tasks = this.tasksRaw;
         let taskStatusList = _.sortBy(this.project.task_statuses, "order");
@@ -203,13 +203,13 @@ class TaskboardTasksService extends Service {
 
         for (let taskModel of Array.from(tasks)) {
             if ((usTasks[taskModel.user_story] != null) && (usTasks[taskModel.user_story][taskModel.status] != null)) {
-                let task = {};
+                let task:any = {};
 
                 let model = taskModel.getAttrs();
 
                 task.foldStatusChanged = this.foldStatusChanged[taskModel.id];
                 task.model = model;
-                task.images = _.filter(model.attachments, it => !!it.thumbnail_card_url);
+                task.images = _.filter(model.attachments, (it:any) => !!it.thumbnail_card_url);
                 task.id = taskModel.id;
                 task.assigned_to = this.usersById[taskModel.assigned_to];
                 task.colorized_tags = _.map(task.model.tags, tag => {
