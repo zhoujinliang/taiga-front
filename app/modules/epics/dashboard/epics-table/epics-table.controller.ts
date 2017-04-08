@@ -17,10 +17,22 @@
  * File: epics-table.controller.coffee
  */
 
-let { taiga } = this;
-let { generateHash } = this.taiga;
+import {generateHash} from "../../../../ts/app"
+import {defineImmutableProperty} from "../../../../ts/utils"
+import * as angular from "angular"
 
 class EpicsTableController {
+    confirm:any
+    epicsService:any
+    timeout:any
+    storage:any
+    projectService:any
+    hash:any
+    displayOptions:any
+    displayVotes:any
+    column:any
+    timer:any
+
     static initClass() {
         this.$inject = [
             "$tgConfirm",
@@ -50,9 +62,9 @@ class EpicsTableController {
             progress: true
         });
 
-        taiga.defineImmutableProperty(this, 'epics', () => { return this.epicsService.epics; });
-        taiga.defineImmutableProperty(this, 'disabledEpicsPagination', () => { return this.epicsService._disablePagination; });
-        taiga.defineImmutableProperty(this, 'loadingEpics', () => { return this.epicsService._loadingEpics; });
+        defineImmutableProperty(this, 'epics', () => { return this.epicsService.epics; });
+        defineImmutableProperty(this, 'disabledEpicsPagination', () => { return this.epicsService._disablePagination; });
+        defineImmutableProperty(this, 'loadingEpics', () => { return this.epicsService._loadingEpics; });
     }
 
     toggleEpicTableOptions() {

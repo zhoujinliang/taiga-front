@@ -22,13 +22,10 @@
  * File: modules/kanban/sortable.coffee
  */
 
-let { taiga } = this;
-
-let { toggleText } = this.taiga;
-let { scopeDefer } = this.taiga;
-let { bindOnce } = this.taiga;
-let { groupBy } = this.taiga;
-let { timeout } = this.taiga;
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as dragula from "dragula"
+import {autoScroll} from "../../global"
 
 let module = angular.module("taigaKanban");
 

@@ -17,7 +17,8 @@
  * File: attchments-full.directive.coffee
  */
 
-let { bindOnce } = this.taiga;
+import {bindOnce} from "../../../ts/utils"
+import * as angular from "angular"
 
 let AttachmentsFullDirective = function() {
     let link = (scope, el, attrs, ctrl) =>
