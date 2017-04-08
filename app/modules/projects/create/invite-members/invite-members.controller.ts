@@ -17,7 +17,11 @@
  * File: invite-members.controller.coffee
  */
 
+import * as angular from "angular"
+
 class InviteMembersController {
+    invitedMembers:any
+
     static initClass() {
         this.$inject = [];
     }

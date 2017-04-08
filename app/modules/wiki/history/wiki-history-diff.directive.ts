@@ -17,6 +17,8 @@
  * File: wiki-history.directive.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module('taigaWikiHistory');
 
 let WikiHistoryDiffDirective = () =>

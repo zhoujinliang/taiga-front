@@ -185,7 +185,7 @@ class EventsService {
         let messages = _.map(this.pendingMessages, this.serialize);
         this.pendingMessages = [];
 
-        return Array.from(messages).map((msg) =>
+        return messages.map((msg) =>
             this.ws.send(msg));
     }
 

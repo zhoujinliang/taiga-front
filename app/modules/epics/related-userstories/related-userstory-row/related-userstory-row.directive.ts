@@ -17,6 +17,8 @@
  * File: related-userstory-row.directive.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module('taigaEpics');
 
 let RelatedUserstoryRowDirective = function() {

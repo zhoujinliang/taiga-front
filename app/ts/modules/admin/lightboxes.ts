@@ -148,7 +148,7 @@ class ChangeOwnerLightboxController {
     }
 
     selectUser(user) {
-        this.activeUsers = _.map(this.activeUsers, function(user) {
+        this.activeUsers = _.map(this.activeUsers, function(user:any) {
             user.selected = false;
 
             return user;

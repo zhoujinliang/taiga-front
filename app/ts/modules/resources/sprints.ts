@@ -46,7 +46,7 @@ let resourceProvider = function($repo, $model, $storage) {
             let milestones = result[0];
             let headers = result[1];
 
-            for (let m of Array.from(milestones)) {
+            for (let m of milestones) {
                 let uses = m.user_stories;
                 uses = _.map(uses, u => $model.make_model("userstories", u));
                 m._attrs.user_stories = uses;

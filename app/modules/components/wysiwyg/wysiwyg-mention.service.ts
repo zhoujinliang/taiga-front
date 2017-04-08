@@ -22,7 +22,17 @@
  * File: modules/components/wysiwyg/wysiwyg-mention.service.coffee
  */
 
+import {slugify} from "../../../ts/utils"
+import * as angular from "angular"
+import * as _ from "lodash"
+
 class WysiwygMentionService {
+    projectService:any
+    wysiwygService:any
+    navurls:any
+    rs:any
+    cancelablePromise:any
+
     static initClass() {
         this.$inject = [
             "tgProjectService",
@@ -51,8 +61,8 @@ class WysiwygMentionService {
         let searchProps = ['username', 'full_name', 'full_name_display'];
 
         let users = this.projectService.project.toJS().members.filter(user => {
-            for (let prop of Array.from(searchProps)) {
-                if (taiga.slugify(user[prop]).indexOf(term) >= 0) {
+            for (let prop of searchProps) {
+                if (slugify(user[prop]).indexOf(term) >= 0) {
                     return true;
                 } else if (user[prop].indexOf(term) >= 0) {
                     return true;
@@ -76,7 +86,7 @@ class WysiwygMentionService {
 
     searchItem(term) {
         return new Promise((function(resolve, reject) {
-            term = taiga.slugify(term);
+            term = slugify(term);
 
             let searchTypes = ['issues', 'tasks', 'userstories'];
 
@@ -89,8 +99,8 @@ class WysiwygMentionService {
             let searchProps = ['ref', 'subject'];
 
             let filter = item => {
-                for (let prop of Array.from(searchProps)) {
-                    if (taiga.slugify(item[prop]).indexOf(term) >= 0) {
+                for (let prop of searchProps) {
+                    if (slugify(item[prop]).indexOf(term) >= 0) {
                         return true;
                     }
                 }
@@ -107,7 +117,7 @@ class WysiwygMentionService {
                     return resolve([]);
                 } else {
                     let result = [];
-                    for (var type of Array.from(searchTypes)) {
+                    for (var type of searchTypes) {
                         if (res[type] && (res[type].length > 0)) {
                             let items = res[type].filter(filter);
                             items = items.map(it => {

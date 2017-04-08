@@ -17,9 +17,15 @@
  * File: suggest-add-members.controller.coffee
  */
 
-let { taiga } = this;
+import {isEmail} from "../../../ts/utils"
+import * as angular from "angular"
 
 class SuggestAddMembersController {
+    contactQuery:any
+    filteredContacts:any
+    onInviteSuggested:any
+    contacts:any
+
     static initClass() {
         this.$inject = [];
     }
@@ -29,7 +35,7 @@ class SuggestAddMembersController {
     }
 
     isEmail() {
-        return taiga.isEmail(this.contactQuery);
+        return isEmail(this.contactQuery);
     }
 
     filterContacts() {

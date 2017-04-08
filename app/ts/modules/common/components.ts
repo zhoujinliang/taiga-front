@@ -23,6 +23,7 @@
  */
 
 import {bindOnce} from "../../utils"
+import {Pikaday} from "../../global"
 import * as angular from "angular"
 import * as moment from "moment"
 import * as _ from "lodash"
@@ -43,7 +44,7 @@ let DateRangeDirective = function($translate) {
     };
 
     let link = function($scope, $el, $attrs) {
-        let [first, second] = Array.from($attrs.tgDateRange.split(","));
+        let [first, second] = $attrs.tgDateRange.split(",");
 
         return bindOnce($scope, first, valFirst =>
             bindOnce($scope, second, valSecond => renderRange($el, valFirst, valSecond))
@@ -269,7 +270,7 @@ let WatchersDirective = function($rootscope, $confirm, $repo, $modelTransform, $
                 return $rootscope.$broadcast("object:updated");
             });
 
-            return transform.then(null, function() {
+            return transform.then(null, function(item) {
                 item.revert();
                 return $confirm.notify("error");
             });

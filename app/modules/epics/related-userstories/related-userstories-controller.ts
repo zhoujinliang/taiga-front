@@ -17,9 +17,18 @@
  * File: related-userstories.controller.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaEpics");
 
 class RelatedUserStoriesController {
+    projectService:any
+    epicsService:any
+    sectionName:any
+    showCreateRelatedUserstoriesLightbox:any
+    userstories:any
+    epic:any
+
     static initClass() {
         this.$inject = [
             "tgProjectService",

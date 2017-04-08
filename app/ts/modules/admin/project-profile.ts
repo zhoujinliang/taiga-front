@@ -515,8 +515,7 @@ class CsvExporterController extends Controller {
         return this.scope.csvUuid = this.scope.project[`${this.type}_csv_uuid`];
     }
 
-    _generateUuid(response) {
-        if (response == null) { response = null; }
+    _generateUuid(response=null) {
         let promise = this.rs.projects[`regenerate_${this.type}_csv_uuid`](this.scope.projectId);
 
         promise.then(data => {

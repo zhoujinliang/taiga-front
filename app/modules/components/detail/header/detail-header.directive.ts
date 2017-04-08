@@ -17,6 +17,8 @@
  * File: story-header.directive.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module('taigaUserStories');
 
 let DetailHeaderDirective = function() {

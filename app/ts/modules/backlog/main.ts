@@ -286,9 +286,9 @@ class BacklogController extends UsFiltersMixin {
     }
 
     setMilestonesOrder(sprints) {
-        return Array.from(sprints).map((sprint) =>
+        return sprints.map((sprint) =>
             ((this.milestonesOrder[sprint.id] = {}),
-            Array.from(sprint.user_stories).map((it) =>
+            sprint.user_stories.map((it) =>
                 (this.milestonesOrder[sprint.id][it.id] = it.sprint_order))));
     }
 
@@ -309,7 +309,7 @@ class BacklogController extends UsFiltersMixin {
             this.scope.totalClosedMilestones = result.closed;
 
             // NOTE: Fix order of USs because the filter orderBy does not work propertly in partials files
-            for (let sprint of Array.from(sprints)) {
+            for (let sprint of sprints) {
                 sprint.user_stories = _.sortBy(sprint.user_stories, "sprint_order");
             }
             this.scope.closedSprints =  sprints;
@@ -332,7 +332,7 @@ class BacklogController extends UsFiltersMixin {
             this.scope.totalMilestones = this.scope.totalOpenMilestones + this.scope.totalClosedMilestones;
 
             // NOTE: Fix order of USs because the filter orderBy does not work propertly in partials files
-            for (let sprint of Array.from(sprints)) {
+            for (let sprint of sprints) {
                 sprint.user_stories = _.sortBy(sprint.user_stories, "sprint_order");
             }
 
@@ -391,7 +391,7 @@ class BacklogController extends UsFiltersMixin {
             this.scope.userstories = this.scope.userstories.concat(_.sortBy(userstories, "backlog_order"));
             this.scope.visibleUserStories = _.map(this.scope.userstories, (it:any) => it.ref);
 
-            for (let it of Array.from(this.scope.userstories)) {
+            for (let it of this.scope.userstories) {
                 this.backlogOrder[it.id] = it.backlog_order;
             }
 
@@ -429,7 +429,7 @@ class BacklogController extends UsFiltersMixin {
 
         return (() => {
             let result = [];
-            for (let us of Array.from(this.scope.userstories)) {
+            for (let us of this.scope.userstories) {
                 let item;
                 current_sum += us.total_points;
                 backlog_points_sum += us.total_points;
@@ -522,7 +522,7 @@ class BacklogController extends UsFiltersMixin {
 
                 this.scope.userstories = this.scope.userstories.concat(usList);
             } else { // From backlog to sprint
-                for (us of Array.from(usList)) { // delete from sprint userstories
+                for (us of usList) { // delete from sprint userstories
                     _.remove(this.scope.userstories, (it:any) => it.id === us.id);
                 }
 
@@ -603,11 +603,11 @@ class BacklogController extends UsFiltersMixin {
         this.scope.userstories = _.sortBy(this.scope.userstories, (it:any) => this.backlogOrder[it.id]);
         this.scope.visibleUserStories = _.map(this.scope.userstories, (it:any) => it.ref);
 
-        for (sprint of Array.from(this.scope.sprints)) {
+        for (sprint of this.scope.sprints) {
             sprint.user_stories = _.sortBy(sprint.user_stories, (it:any) => this.milestonesOrder[sprint.id][it.id]);
         }
 
-        for (sprint of Array.from(this.scope.closedSprints)) {
+        for (sprint of this.scope.closedSprints) {
             sprint.user_stories = _.sortBy(sprint.user_stories, (it:any) => this.milestonesOrder[sprint.id][it.id]);
         }
 
@@ -620,7 +620,7 @@ class BacklogController extends UsFiltersMixin {
             promise = this.rs.userstories.bulkUpdateBacklogOrder(project, data);
         } else {  // drag single
             let setOrders = {};
-            for (it of Array.from(setPreviousOrders)) {
+            for (it of setPreviousOrders) {
                 setOrders[it.us_id] = it.order;
             }
 

@@ -17,7 +17,16 @@
  * File: attchments-simple.controller.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+import * as _ from "lodash"
+
 class AttachmentsSimpleController {
+    attachmentsService:any
+    attachments:any
+    onAdd:any
+    onDelete:any
+
     static initClass() {
         this.$inject = [
             "tgAttachmentsService"

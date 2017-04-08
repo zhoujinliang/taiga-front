@@ -17,7 +17,15 @@
  * File: msot-liked.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../../../ts/utils"
+import * as angular from "angular"
+
 class MostLikedController {
+    discoverProjectsService:any
+    currentOrderBy:any
+    order_by:any
+    loading:boolean
+
     static initClass() {
         this.$inject = [
             "tgDiscoverProjectsService"
@@ -26,7 +34,7 @@ class MostLikedController {
 
     constructor(discoverProjectsService) {
         this.discoverProjectsService = discoverProjectsService;
-        taiga.defineImmutableProperty(this, "highlighted", () => { return this.discoverProjectsService.mostLiked; });
+        defineImmutableProperty(this, "highlighted", () => { return this.discoverProjectsService.mostLiked; });
 
         this.currentOrderBy = 'week';
         this.order_by = this.getOrderBy();

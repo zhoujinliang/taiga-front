@@ -17,6 +17,7 @@
  * File: tag-line.directive.coffee
  */
 
+import * as angular from "angular"
 let module = angular.module('taigaCommon');
 
 let TagDirective = () =>

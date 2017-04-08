@@ -17,6 +17,8 @@
  * File: bind-scope.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaCommon");
 
 let BindScope = function(config) {

@@ -17,7 +17,17 @@
  * File: project-menu.controller.coffee
  */
 
+import {slugify} from "../../../ts/utils"
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 class ProjectMenuController {
+    projectService:any
+    lightboxFactory:any
+    project:any
+    menu: Immutable.Map<any,any>
+    active:any
+
     static initClass() {
         this.$inject = [
             "tgProjectService",
@@ -43,7 +53,7 @@ class ProjectMenuController {
 
     hide() {
         this.project = null;
-        return this.menu = {};
+        return this.menu = Immutable.Map();
     }
 
     search() {
@@ -137,7 +147,7 @@ class ProjectMenuController {
 
         // Add prefix to the chat room name if exist
         if (this.project.get("videoconferences_extra_data")) {
-            url = this.project.get("slug") + "-" + taiga.slugify(this.project.get("videoconferences_extra_data"));
+            url = this.project.get("slug") + "-" + slugify(this.project.get("videoconferences_extra_data"));
         } else {
             url = this.project.get("slug");
         }

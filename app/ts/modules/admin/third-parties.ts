@@ -134,9 +134,9 @@ let WebhookDirective = function($rs, $repo, $confirm, $loading, $translate) {
             let prettyDate = $translate.instant("ADMIN.WEBHOOKS.DATE");
 
             return $rs.webhooklogs.list(webhook.id).then(webhooklogs => {
-                for (let log of Array.from(webhooklogs)) {
+                for (let log of webhooklogs) {
                     log.validStatus = 200 <= log.status && log.status < 300;
-                    log.prettySentHeaders = _.map(_.toPairs(log.request_headers), function(...args) { let [header, value] = Array.from(args[0]); return `${header}: ${value}`; }).join("\n");
+                    log.prettySentHeaders = _.map(_.toPairs(log.request_headers), function(...args) { let [header, value] = args[0]; return `${header}: ${value}`; }).join("\n");
                     log.prettySentData = JSON.stringify(log.request_data);
                     log.prettyDate = moment(log.created).format(prettyDate);
                 }

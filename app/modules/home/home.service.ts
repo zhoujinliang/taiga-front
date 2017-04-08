@@ -127,22 +127,22 @@ class HomeService extends Service {
 
         let assignedTo = Immutable.Map();
 
-        let params_epics = {
+        let params_epics:any = {
             status__is_closed: false,
             assigned_to: userId
         };
 
-        let params_uss = {
+        let params_uss:any = {
             is_closed: false,
             assigned_to: userId
         };
 
-        let params_tasks = {
+        let params_tasks:any = {
             status__is_closed: false,
             assigned_to: userId
         };
 
-        let params_issues = {
+        let params_issues:any = {
             status__is_closed: false,
             assigned_to: userId
         };

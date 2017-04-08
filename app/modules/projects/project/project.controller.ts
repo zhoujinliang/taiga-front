@@ -17,7 +17,18 @@
  * File: project.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../../ts/utils"
+import * as angular from "angular"
+
 class ProjectController {
+    routeParams:any
+    appMetaService:any
+    auth:any
+    translate:any
+    projectService:any
+    user:any
+    project:any
+
     static initClass() {
         this.$inject = [
             "$routeParams",
@@ -36,8 +47,8 @@ class ProjectController {
         this.projectService = projectService;
         this.user = this.auth.userData;
 
-        taiga.defineImmutableProperty(this, "project", () => { return this.projectService.project; });
-        taiga.defineImmutableProperty(this, "members", () => { return this.projectService.activeMembers; });
+        defineImmutableProperty(this, "project", () => { return this.projectService.project; });
+        defineImmutableProperty(this, "members", () => { return this.projectService.activeMembers; });
 
         this.appMetaService.setfn(this._setMeta.bind(this));
     }

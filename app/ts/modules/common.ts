@@ -211,10 +211,10 @@ let AnimationFrame = function() {
 
     var tail = [];
 
-    let add = function() {
+    let add = function(...args) {
         return (() => {
             let result = [];
-            for (fn of Array.from(arguments)) {
+            for (fn of args) {
                 let item;
                 tail.push(fn);
 

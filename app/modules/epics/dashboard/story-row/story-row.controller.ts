@@ -17,9 +17,14 @@
  * File: epics-table.controller.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaEpics");
 
 class StoryRowController {
+    story:any
+    percentage:any
+
     static initClass() {
         this.$inject = [];
     }

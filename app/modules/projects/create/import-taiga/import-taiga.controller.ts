@@ -17,7 +17,14 @@
  * File: import-project.controller.coffee
  */
 
+import * as angular from "angular"
+
 class ImportTaigaController {
+    confirm:any
+    rs:any
+    importProjectService:any
+    translate:any
+
     static initClass() {
         this.$inject = [
             '$tgConfirm',

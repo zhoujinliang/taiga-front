@@ -22,12 +22,17 @@
  * File: modules/components/wysiwyg/wysiwyg-code-hightlighter.service.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+import {Prism, ljs} from "../../../ts/global"
+
 class WysiwygCodeHightlighterService {
+    languages: any
     constructor() {
         Prism.plugins.customClass.prefix('prism-');
-        Prism.plugins.customClass.map({});        
+        Prism.plugins.customClass.map({});
     }
-        
+
     getLanguages() {
         return new Promise((function(resolve, reject) {
             if (this.languages) {
@@ -35,10 +40,10 @@ class WysiwygCodeHightlighterService {
             } else if (this.loadPromise) {
                 return this.loadPromise.then(() => resolve(this.languages));
             } else {
-                return this.loadPromise = $.getJSON(`/${window._version}/prism/prism-languages.json`).then(_languages_ => {
+                return this.loadPromise = $.getJSON(`/${(<any>window)._version}/prism/prism-languages.json`).then(_languages_ => {
                     this.loadPromise = null;
-                    this.languages = _.map(_languages_, function(it) {
-                        it.url = `/${window._version}/prism/` + it.file;
+                    this.languages = _.map(_languages_, function(it:any) {
+                        it.url = `/${(<any>window)._version}/prism/` + it.file;
 
                         return it;
                     });
@@ -50,7 +55,7 @@ class WysiwygCodeHightlighterService {
     }
 
     getLanguageInClassList(classes) {
-        let lan = _.find(this.languages, it =>
+        let lan = _.find(this.languages, (it:any) =>
             !!_.find(classes, className => (`language-${it.name}`) === className)
         );
 
@@ -60,7 +65,7 @@ class WysiwygCodeHightlighterService {
     loadLanguage(lan) {
         return new Promise(function(resolve) {
             if (!Prism.languages[lan]) {
-                return ljs.load(`/${window._version}/prism/prism-${lan}.min.js`, resolve);
+                return ljs.load(`/${(<any>window)._version}/prism/prism-${lan}.min.js`, resolve);
             } else {
                 return resolve();
             }

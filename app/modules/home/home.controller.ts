@@ -17,7 +17,13 @@
  * File: home.controller.coffee
  */
 
+import * as angular from "angular"
+
 class HomeController {
+    currentUserService:any
+    location:any
+    navUrls:any
+
     static initClass() {
         this.$inject = [
             "tgCurrentUserService",

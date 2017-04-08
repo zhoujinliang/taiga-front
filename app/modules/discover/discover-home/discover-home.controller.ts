@@ -17,7 +17,14 @@
  * File: discover-home.controller.coffee
  */
 
+import * as angular from "angular"
+
 class DiscoverHomeController {
+    location:any
+    navUrls:any
+    appMetaService:any
+    translate:any
+
     static initClass() {
         this.$inject = [
             '$tgLocation',

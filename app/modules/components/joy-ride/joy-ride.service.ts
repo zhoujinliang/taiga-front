@@ -177,7 +177,7 @@ class JoyRideService extends Service {
         let joyRides = this.getConfig();
         let joyRide = joyRides[name].call(this);
 
-        return _.map(joyRide, function(item) {
+        return _.map(joyRide, function(item:any) {
             let html = "";
 
             if (item.joyride.title) {

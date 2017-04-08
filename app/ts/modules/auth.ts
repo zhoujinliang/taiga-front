@@ -24,6 +24,7 @@
 
 import {debounce} from "../utils"
 import {Service} from "../classes"
+import {checksley} from "../global"
 
 import * as angular from "angular"
 import * as _ from "lodash"
@@ -222,7 +223,7 @@ class AuthService extends Service {
     login(data, type) {
         let url = this.urls.resolve("auth");
 
-        data = _.clone(data, false);
+        data = _.clone(data);
         data.type = type ? type : "normal";
 
         this.removeToken();
@@ -248,7 +249,7 @@ class AuthService extends Service {
     register(data, type, existing) {
         let url = this.urls.resolve("auth-register");
 
-        data = _.clone(data, false);
+        data = _.clone(data);
         data.type = type ? type : "public";
         if (type === "private") {
             data.existing = existing ? existing : false;
@@ -274,27 +275,27 @@ class AuthService extends Service {
 
     forgotPassword(data) {
         let url = this.urls.resolve("users-password-recovery");
-        data = _.clone(data, false);
+        data = _.clone(data);
         this.removeToken();
         return this.http.post(url, data);
     }
 
     changePasswordFromRecovery(data) {
         let url = this.urls.resolve("users-change-password-from-recovery");
-        data = _.clone(data, false);
+        data = _.clone(data);
         this.removeToken();
         return this.http.post(url, data);
     }
 
     changeEmail(data) {
         let url = this.urls.resolve("users-change-email");
-        data = _.clone(data, false);
+        data = _.clone(data);
         return this.http.post(url, data);
     }
 
     cancelAccount(data) {
         let url = this.urls.resolve("users-cancel-account");
-        data = _.clone(data, false);
+        data = _.clone(data);
         return this.http.post(url, data);
     }
 }
@@ -745,7 +746,7 @@ module.directive("tgChangeEmail", ["$tgRepo", "$tgModel", "$tgAuth", "$tgConfirm
 //# Cancel account
 //############################################################################
 
-let CancelAccountDirective = function($repo, $model, $auth, $confirm, $location, $params, $navUrls) {
+let CancelAccountDirective = function($repo, $model, $auth, $confirm, $location, $params, $navUrls, $translate) {
     let link = function($scope, $el, $attrs) {
         $scope.data = {};
         $scope.data.cancel_token = $params.cancel_token;
@@ -786,4 +787,4 @@ let CancelAccountDirective = function($repo, $model, $auth, $confirm, $location,
 };
 
 module.directive("tgCancelAccount", ["$tgRepo", "$tgModel", "$tgAuth", "$tgConfirm", "$tgLocation",
-                                     "$routeParams","$tgNavUrls", CancelAccountDirective]);
+                                     "$routeParams","$tgNavUrls", "$translate", CancelAccountDirective]);

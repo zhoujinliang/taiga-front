@@ -28,7 +28,6 @@ import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
 
-
 let module = angular.module("taigaIssues");
 
 //############################################################################

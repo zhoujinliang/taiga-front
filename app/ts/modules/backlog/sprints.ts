@@ -22,7 +22,9 @@
  * File: modules/backlog/sprints.coffee
  */
 
-let { taiga } = this;
+import * as angular from "angular"
+import * as _ from "lodash"
+import * as moment from "moment"
 
 let module = angular.module("taigaBacklog");
 

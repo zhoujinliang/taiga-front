@@ -17,9 +17,17 @@
  * File: history.controller.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaHistory");
 
 class LightboxDisplayHistoricController {
+    rs:any
+    name:any
+    object:any
+    comment:any
+    commentHistoryEntries:any
+
     static initClass() {
         this.$inject = [
             "$tgResources",

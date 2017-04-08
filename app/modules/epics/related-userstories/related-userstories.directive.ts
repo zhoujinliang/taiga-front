@@ -17,6 +17,8 @@
  * File: related-userstories.directive.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module('taigaEpics');
 
 let RelatedUserStoriesDirective = () =>

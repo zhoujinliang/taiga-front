@@ -17,7 +17,7 @@
  * File: joy-ride.directive.coffee
  */
 
-let { taiga } = this;
+import * as angular from "angular"
 
 let JoyRideDirective = function($rootScope, currentUserService, joyRideService, $location, $translate) {
     let link = function(scope, el, attrs, ctrl) {

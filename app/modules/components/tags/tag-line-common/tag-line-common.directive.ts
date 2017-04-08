@@ -17,6 +17,9 @@
  * File: tag-line.directive.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 let module = angular.module('taigaCommon');
 
 let TagLineCommonDirective = function() {

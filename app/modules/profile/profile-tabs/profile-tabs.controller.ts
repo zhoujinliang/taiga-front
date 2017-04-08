@@ -17,7 +17,11 @@
  * File: profile-tabs.controller.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 class ProfileTabsController {
+    tabs:any
     constructor() {
         this.tabs = [];
     }
@@ -27,7 +31,7 @@ class ProfileTabsController {
     }
 
     toggleTab(tab) {
-        _.map(this.tabs, tab => tab.active = false);
+        _.map(this.tabs, (tab:any) => tab.active = false);
 
         return tab.active = true;
     }

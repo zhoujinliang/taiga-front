@@ -98,7 +98,7 @@ class SearchController extends PageMixin {
             }
         });
 
-        this.scope.$watch("searchTerm", term => {
+        this.scope.$watch("searchTerm", (term:string) => {
             if ((term !== undefined) && this.scope.projectId) {
                 return this.loadSearchData(term);
             }
@@ -126,8 +126,7 @@ class SearchController extends PageMixin {
         return project;
     }
 
-    loadSearchData(term) {
-        if (term == null) { term = ""; }
+    loadSearchData(term="") {
         this.scope.loading = true;
 
         return this._loadSearchData(term).then(data => {

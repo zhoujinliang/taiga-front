@@ -22,7 +22,17 @@
  * File: modules/components/wysiwyg/wysiwyg.service.coffee
  */
 
+import {getMatches, slugify} from "../../../ts/utils"
+import {Autolinker} from "../../../ts/global"
+import * as angular from "angular"
+import * as _ from "lodash"
+
 class WysiwygService {
+    wysiwygCodeHightlighterService: any
+    projectService:any
+    navurls:any
+    emojis:any
+
     static initClass() {
         this.$inject = [
             "tgWysiwygCodeHightlighterService",
@@ -37,33 +47,33 @@ class WysiwygService {
     }
 
     searchEmojiByName(name) {
-        return _.filter(this.emojis, it => it.name.indexOf(name) !== -1);
+        return _.filter(this.emojis, (it:any) => it.name.indexOf(name) !== -1);
     }
 
     setEmojiImagePath(emojis) {
-        return this.emojis = _.map(emojis, function(it) {
-            it.image = `/${window._version}/emojis/` + it.image;
+        return this.emojis = _.map(emojis, function(it:any) {
+            it.image = `/${(<any>window)._version}/emojis/` + it.image;
 
             return it;
         });
     }
 
     loadEmojis() {
-        return $.getJSON(`/${window._version}/emojis/emojis-data.json`).then(this.setEmojiImagePath.bind(this));
+        return $.getJSON(`/${(<any>window)._version}/emojis/emojis-data.json`).then(this.setEmojiImagePath.bind(this));
     }
 
     getEmojiById(id) {
-        return _.find(this.emojis, it => it.id === id);
+        return _.find(this.emojis, (it:any) => it.id === id);
     }
 
     getEmojiByName(name) {
-        return _.find(this.emojis, it => it.name === name);
+        return _.find(this.emojis, (it:any) => it.name === name);
     }
 
     replaceImgsByEmojiName(html) {
-        let emojiIds = taiga.getMatches(html, /emojis\/([^"]+).png"/gi);
+        let emojiIds = getMatches(html, /emojis\/([^"]+).png"/gi);
 
-        for (let emojiId of Array.from(emojiIds)) {
+        for (let emojiId of emojiIds) {
             let regexImgs = new RegExp(`<img(.*)${emojiId}[^>]+\>`, 'g');
             let emoji = this.getEmojiById(emojiId);
             html = html.replace(regexImgs, `:${emoji.name}:`);
@@ -73,9 +83,9 @@ class WysiwygService {
     }
 
     replaceEmojiNameByImgs(text) {
-        let emojiIds = taiga.getMatches(text, /:([\w ]*):/g);
+        let emojiIds = getMatches(text, /:([\w ]*):/g);
 
-        for (let emojiId of Array.from(emojiIds)) {
+        for (let emojiId of emojiIds) {
             let regexImgs = new RegExp(`:${emojiId}:`, 'g');
             let emoji = this.getEmojiByName(emojiId);
 
@@ -104,7 +114,7 @@ class WysiwygService {
 
         return text.replace(link, function(match, p1, offset, str) {
             if (p1.indexOf(' ') >= 0) {
-                return match.replace(/\(.*\)/, `(${taiga.slugify(p1)})`);
+                return match.replace(/\(.*\)/, `(${slugify(p1)})`);
             } else {
                 return match;
             }
@@ -117,7 +127,7 @@ class WysiwygService {
 
         let links = el.querySelectorAll('a');
 
-        for (let link of Array.from(links)) {
+        for (let link of [].slice.call(links)) {
             if (link.getAttribute('href').indexOf('/profile/') !== -1) {
                 link.parentNode.replaceChild(document.createTextNode(link.innerText), link);
             } else if (link.getAttribute('href').indexOf('/t/') !== -1) {
@@ -134,7 +144,7 @@ class WysiwygService {
 
         let links = el.querySelectorAll('a');
 
-        for (let link of Array.from(links)) {
+        for (let link of [].slice.call(links)) {
             if (link.getAttribute('href').indexOf('/') === -1) {
                 let url = this.navurls.resolve('project-wiki-page', {
                     project: this.projectService.project.get('slug'),
@@ -180,7 +190,7 @@ class WysiwygService {
         html = this.replaceUrls(html);
         html = this.removeTrailingListBr(html);
 
-        let markdown = toMarkdown(html, {
+        let markdown = (<any>window).toMarkdown(html, {
             gfm: true,
             converters: [cleanIssueConverter, codeLanguageConverter]
         });
@@ -222,7 +232,6 @@ class WysiwygService {
 
     autoLinkHTML(html) {
         // override Autolink parser
-        
         let matchRegexStr = String(Autolinker.matcher.Mention.prototype.matcherRegexes.twitter);
         if (matchRegexStr.indexOf('.') === -1) {
             matchRegexStr = '@[^\s]{1,50}[^.\s]';
@@ -263,14 +272,14 @@ class WysiwygService {
         };
 
         text = this.replaceEmojiNameByImgs(text);
-        text = this.pipeLinks(text);        
+        text = this.pipeLinks(text);
         text = this.linkTitleWithSpaces(text);
 
-        let md = window.markdownit({
+        let md = (<any>window).markdownit({
             breaks: true
         });
 
-        md.use(window.markdownitLazyHeaders);
+        md.use((<any>window).markdownitLazyHeaders);
         let result = md.render(text);
         result = this.searchWikiLinks(result);
 

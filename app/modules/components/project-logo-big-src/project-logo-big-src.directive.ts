@@ -17,6 +17,9 @@
  * File: project-logo-big-src.directive.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 let ProjectLogoBigSrcDirective = function(projectLogoService) {
     let link = (scope, el, attrs) =>
         scope.$watch('project', function(project) {

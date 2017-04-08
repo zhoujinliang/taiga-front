@@ -73,7 +73,7 @@ let BacklogSortableDirective = function() {
 
                 let isChecked = $(item).find("input[type='checkbox']").is(":checked");
 
-                return window.dragMultiple.start(item, container);
+                return (<any>window).dragMultiple.start(item, container);
             });
 
             drake.on('cloned', item => $(item).addClass('backlog-us-mirror'));
@@ -94,7 +94,7 @@ let BacklogSortableDirective = function() {
                     sameContainer = $(item).scope().sprint.id === parent.scope().sprint.id;
                 }
 
-                let dragMultipleItems = window.dragMultiple.stop();
+                let dragMultipleItems = (<any>window).dragMultiple.stop();
 
                 $(document.body).removeClass("drag-active");
 

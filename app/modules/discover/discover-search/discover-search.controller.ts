@@ -17,7 +17,24 @@
  * File: discover-search.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../../ts/utils"
+import * as angular from "angular"
+import * as _ from "lodash"
+
 class DiscoverSearchController {
+    routeParams:any
+    discoverProjectsService:any
+    route:any
+    appMetaService:any
+    translate:any
+    page:number
+    q:any
+    filter:any
+    orderBy:any
+    loadingGlobal:boolean
+    loadingList:boolean
+    loadingPagination:boolean
+
     static initClass() {
         this.$inject = [
             '$routeParams',
@@ -36,8 +53,8 @@ class DiscoverSearchController {
         this.translate = translate;
         this.page = 1;
 
-        taiga.defineImmutableProperty(this, "searchResult", () => { return this.discoverProjectsService.searchResult; });
-        taiga.defineImmutableProperty(this, "nextSearchPage", () => { return this.discoverProjectsService.nextSearchPage; });
+        defineImmutableProperty(this, "searchResult", () => { return this.discoverProjectsService.searchResult; });
+        defineImmutableProperty(this, "nextSearchPage", () => { return this.discoverProjectsService.nextSearchPage; });
 
         this.q = this.routeParams.text;
         this.filter = this.routeParams.filter || 'all';

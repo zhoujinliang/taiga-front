@@ -17,7 +17,12 @@
  * File: card-slideshow.controller.coffee
  */
 
+import * as angular from "angular"
+
 class CardSlideshowController {
+    index: any
+    images: any
+
     static initClass() {
         this.$inject = [];
     }

@@ -17,7 +17,18 @@
  * File: assigned-to.controller.coffee
  */
 
+import * as angular from "angular"
+import * as _ from "lodash"
+
 class AssignedToController {
+    lightboxService:any
+    lightboxFactory:any
+    has_permissions:any
+    project:any
+    assignedTo:any
+    onRemoveAssigned:any
+    onAssignTo:any
+
     static initClass() {
         this.$inject = [
             "tgLightboxFactory",

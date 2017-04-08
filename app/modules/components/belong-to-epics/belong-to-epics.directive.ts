@@ -17,6 +17,9 @@
  * File: belong-to-epics.directive.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 let module = angular.module('taigaEpics');
 
 let BelongToEpicsDirective = function() {

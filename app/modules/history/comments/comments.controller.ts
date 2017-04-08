@@ -15,9 +15,14 @@
  * File: comments.controller.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaHistory");
 
 class CommentsController {
+    canAddCommentPermission:any
+    name:any
+
     static initClass() {
         this.$inject = [];
     }

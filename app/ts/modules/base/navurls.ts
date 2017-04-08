@@ -82,7 +82,7 @@ let NavigationUrlsDirective = function($navurls, $auth, $q, $location, lightboxS
     };
 
     let parseNav = function(data, $scope) {
-        let [name, params] = Array.from(_.map(data.split(":"), trim));
+        let [name, params]:any[] = _.map(data.split(":"), trim);
         if (params) {
             // split by 'xxx='
             // example
@@ -115,7 +115,7 @@ let NavigationUrlsDirective = function($navurls, $auth, $q, $location, lightboxS
 
         return $q.all(promises).then(function() {
             let options = {};
-            for (let param of Array.from(params)) {
+            for (let param of params) {
                 let key = Object.keys(param)[0];
                 let value = param[key];
 
@@ -134,7 +134,7 @@ let NavigationUrlsDirective = function($navurls, $auth, $q, $location, lightboxS
 
             if (!target.data("fullUrl") || ($attrs.tgNavGetParams !== target.data("params"))) {
                 return parseNav($attrs.tgNav, $scope).then(function(result) {
-                    let [name, options] = Array.from(result);
+                    let [name, options] = result;
                     let user = $auth.getUser();
                     if (user) { options.user = user.username; }
 

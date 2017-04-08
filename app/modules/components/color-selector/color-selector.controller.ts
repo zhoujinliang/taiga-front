@@ -17,11 +17,22 @@
  * File: color-selector.controller.coffee
  */
 
-let { taiga } = this;
-let { getDefaulColorList } = taiga;
-
+import {getDefaulColorList} from "../../../ts/utils"
+import * as angular from "angular"
+import * as Immutable from "immutable"
+import * as _ from "lodash"
 
 class ColorSelectorController {
+    projectService:any
+    colorList:any
+    displayColorList:any
+    requiredPerm:any
+    isColorRequired:any
+    color:any
+    customColor:any
+    initColor:any
+    onSelectColor:any
+
     static initClass() {
         this.$inject = [
             "tgProjectService",

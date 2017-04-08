@@ -17,6 +17,10 @@
  * File: user-timeline-item-type.service.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+import * as _ from "lodash"
+
 let timelineType = function(timeline, event) {
     let types = [
         { // NewMember

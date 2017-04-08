@@ -17,7 +17,12 @@
  * File: featured-projects.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../../../ts/utils"
+import * as angular from "angular"
+
 class FeaturedProjectsController {
+    discoverProjectsService:any
+
     static initClass() {
         this.$inject = [
             "tgDiscoverProjectsService"
@@ -26,7 +31,7 @@ class FeaturedProjectsController {
 
     constructor(discoverProjectsService) {
         this.discoverProjectsService = discoverProjectsService;
-        taiga.defineImmutableProperty(this, "featured", () => { return this.discoverProjectsService.featured; });
+        defineImmutableProperty(this, "featured", () => { return this.discoverProjectsService.featured; });
 
         this.discoverProjectsService.fetchFeatured();
     }

@@ -17,7 +17,13 @@
  * File: profile-bar.controller.coffee
  */
 
+import * as angular from "angular"
+
 class ProfileBarController {
+    userService:any
+    stats:any
+    user:any
+
     static initClass() {
         this.$inject = [
             "tgUserService"

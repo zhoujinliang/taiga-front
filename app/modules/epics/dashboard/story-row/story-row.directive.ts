@@ -17,6 +17,8 @@
  * File: epics-table.directive.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module('taigaEpics');
 
 let StoryRowDirective = () =>

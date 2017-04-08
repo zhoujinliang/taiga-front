@@ -72,7 +72,7 @@ class HistorySectionController {
     _getComments(comments) {
         this.comments = _.filter(comments, (item:any) => item.comment !== "");
         if (this.reverse) {
-            this.comments - _.reverse(this.comments);
+            this.comments = _.reverse(this.comments);
         }
         return this.commentsNum = this.comments.length;
     }

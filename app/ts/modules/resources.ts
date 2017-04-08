@@ -242,7 +242,7 @@ let initResources = function($log, $rs) {
     $log.debug("Initialize resources");
     let providers = _.toArray(arguments).slice(2);
 
-    return Array.from(providers).map((provider) =>
+    return providers.map((provider) =>
         provider($rs));
 };
 

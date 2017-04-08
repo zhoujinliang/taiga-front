@@ -22,8 +22,8 @@
  * File: modules/common/raven-logger.coffee
  */
 
-
 import * as angular from "angular"
+import {Raven} from "../../global"
 
 let module = angular.module("taigaCommon");
 
