@@ -71,8 +71,7 @@ class ConfirmService extends Service {
         }
     }
 
-    ask(title, subtitle, message, lightboxSelector) {
-        if (lightboxSelector == null) { lightboxSelector = ".lightbox-generic-ask"; }
+    ask(title, subtitle, message, lightboxSelector=".lightbox-generic-ask") {
         let defered = this.q.defer();
 
         let el = angular.element(lightboxSelector);

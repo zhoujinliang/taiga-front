@@ -22,10 +22,12 @@
  * File: modules/lightboxes.coffee
  */
 
+import * as angular from "angular"
+
 let module = angular.module("taigaCommon");
 
 let TgLoadingService = function($compile) {
-    let spinner = `<img class='loading-spinner' src='/${window._version}/svg/spinner-circle.svg' alt='loading...' />`;
+    let spinner = `<img class='loading-spinner' src='/${(<any>window)._version}/svg/spinner-circle.svg' alt='loading...' />`;
 
     return function() {
         var service = {
@@ -34,7 +36,8 @@ let TgLoadingService = function($compile) {
                 scope: null,
                 classes: [],
                 timeout: 0,
-                template: null
+                template: null,
+                timeoutId: null
             },
             target(target) {
                 service.settings.target = target;

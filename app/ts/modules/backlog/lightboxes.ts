@@ -22,9 +22,10 @@
  * File: modules/backlog/lightboxes.coffee
  */
 
-let { taiga } = this;
-let { bindOnce } = this.taiga;
-let { debounce } = this.taiga;
+import { debounce } from "../../utils"
+import * as angular from "angular"
+import * as moment from "moment"
+import * as _ from "lodash"
 
 let module = angular.module("taigaBacklog");
 
@@ -97,7 +98,7 @@ let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightboxServic
                 currentLoading.finish();
                 if (createSprint) { $scope.sprintsCounter += 1; }
 
-                $scope.sprints = _.map($scope.sprints, function(it) {
+                $scope.sprints = _.map($scope.sprints, function(it:any) {
                     if (it.id === data.id) {
                         return data;
                     } else {
@@ -147,9 +148,9 @@ let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightboxServic
         };
 
         let getLastSprint = function() {
-            let openSprints = _.filter($scope.sprints, sprint => !sprint.closed);
+            let openSprints = _.filter($scope.sprints, (sprint:any) => !sprint.closed);
 
-            let sortedSprints = _.sortBy(openSprints, sprint => moment(sprint.estimated_finish, 'YYYY-MM-DD').format('X'));
+            let sortedSprints = _.sortBy(openSprints, (sprint:any) => moment(sprint.estimated_finish, 'YYYY-MM-DD').format('X'));
 
             return sortedSprints[sortedSprints.length - 1];
         };

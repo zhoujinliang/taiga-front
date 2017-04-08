@@ -22,10 +22,9 @@
  * File: modules/common/tags.coffee
  */
 
-let { taiga } = this;
-let { trim } = this.taiga;
-let { bindOnce } = this.taiga;
-
+import {bindOnce, trim} from "../../utils"
+import * as angular from "angular"
+import * as _ from "lodash"
 
 let module = angular.module("taigaCommon");
 
@@ -147,7 +146,7 @@ let LbTagLineDirective = function($rs, $template, $compile) {
             value = trim(value.toLowerCase());
             if (value.length === 0) { return; }
 
-            let tags = _.clone($model.$modelValue, false);
+            let tags = _.clone($model.$modelValue);
             if ((tags == null)) { tags = []; }
             if (!Array.from(tags).includes(value)) { tags.push(value); }
 
@@ -160,7 +159,7 @@ let LbTagLineDirective = function($rs, $template, $compile) {
             value = trim(value.toLowerCase());
             if (value.length === 0) { return; }
 
-            let tags = _.clone($model.$modelValue, false);
+            let tags = _.clone($model.$modelValue);
             tags = _.pull(tags, value);
 
             return $scope.$apply(() => $model.$setViewValue(tags));

@@ -17,6 +17,8 @@
  * File: compile-html.directive.coffee
  */
 
+import * as angular from "angular"
+
 let CompileHtmlDirective = function($compile) {
     let link = (scope, element, attrs) =>
         scope.$watch(attrs.tgCompileHtml, function(newValue, oldValue) {

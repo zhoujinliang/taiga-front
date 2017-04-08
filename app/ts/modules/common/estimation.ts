@@ -235,7 +235,7 @@ let EstimationsService = function($template, $repo, $confirm, $q, $qqueue) {
             let roles = _.map(computableRoles, (role:any) => {
                 let pointId = this.us.points[role.id];
                 let pointObj = this.pointsById[pointId];
-                role = _.clone(role, true);
+                role = _.cloneDeep(role);
                 role.points = (pointObj != null) && (pointObj.name != null) ? pointObj.name : "?";
                 return role;
             });
@@ -263,7 +263,7 @@ let EstimationsService = function($template, $repo, $confirm, $q, $qqueue) {
                 let pointId = target.data("point-id");
                 this.$el.find(".popover").popover().close();
 
-                let points = _.clone(this.us.points, true);
+                let points = _.cloneDeep(this.us.points);
                 points[roleId] = pointId;
 
                 return this.onSelectedPointForRole(roleId, pointId, points);
@@ -272,7 +272,7 @@ let EstimationsService = function($template, $repo, $confirm, $q, $qqueue) {
 
         renderPointsSelector(roleId, target) {
             let points = _.map(this.points, (point:any) => {
-                point = _.clone(point, true);
+                point = _.cloneDeep(point);
                 point.selected = this.us.points[roleId] === point.id ? false : true;
                 return point;
             });
