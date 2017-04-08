@@ -22,10 +22,10 @@
  * File: modules/issues/lightboxes.coffee
  */
 
-let { taiga } = this;
-let { bindOnce } = this.taiga;
-let { debounce } = this.taiga;
-let { trim } = this.taiga;
+import {debounce, trim} from "../../utils"
+import * as angular from "angular"
+import * as Immutable from "immutable"
+import * as _ from "lodash"
 
 let module = angular.module("taigaIssues");
 
@@ -63,7 +63,7 @@ let CreateIssueDirective = function($repo, $confirm, $rootscope, lightboxService
         $scope.$on("$destroy", () => $el.off());
 
         let createAttachments = function(obj) {
-            let promises = _.map(attachmentsToAdd.toJS(), attachment => attachmentsService.upload(attachment.file, obj.id, $scope.issue.project, 'issue'));
+            let promises = _.map(attachmentsToAdd.toJS(), (attachment:any) => attachmentsService.upload(attachment.file, obj.id, $scope.issue.project, 'issue'));
 
             return $q.all(promises);
         };
@@ -78,7 +78,7 @@ let CreateIssueDirective = function($repo, $confirm, $rootscope, lightboxService
         $scope.addAttachment = attachment => attachmentsToAdd = attachmentsToAdd.push(attachment);
 
         $scope.deleteAttachment = attachment =>
-            attachmentsToAdd = attachmentsToAdd.filter(it => it.get('name') !== attachment.get('name'))
+            attachmentsToAdd = <Immutable.List<any>>attachmentsToAdd.filter((it:Immutable.Map<string,any>) => it.get('name') !== attachment.get('name'))
         ;
 
         $scope.addTag = function(tag, color) {

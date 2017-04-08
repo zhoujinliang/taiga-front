@@ -95,7 +95,7 @@ let resourceProvider = function($config, $repo, $http, $urls, $auth, $q, $transl
 
     service.createTag = function(projectId, tag, color) {
         let url = `${$urls.resolve("projects")}/${projectId}/create_tag`;
-        let data = {};
+        let data:any = {};
         data.tag = tag;
         data.color = null;
         if (color) {
@@ -106,7 +106,7 @@ let resourceProvider = function($config, $repo, $http, $urls, $auth, $q, $transl
 
     service.editTag = function(projectId, from_tag, to_tag, color) {
         let url = `${$urls.resolve("projects")}/${projectId}/edit_tag`;
-        let data = {};
+        let data:any = {};
         data.from_tag = from_tag;
         if (to_tag) {
             data.to_tag = to_tag;
