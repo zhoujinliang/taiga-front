@@ -17,7 +17,18 @@
  * File: jira-import.controller.coffee
  */
 
+import {defineImmutableProperty} from "../../../../ts/utils"
+import * as angular from "angular"
+
 class JiraImportController {
+    jiraImportService:any
+    confirm:any
+    translate:any
+    importProjectService:any
+    step:any
+    project:any
+    fetchingUsers:any
+
     static initClass() {
         this.$inject = [
             'tgJiraImportService',
@@ -34,8 +45,8 @@ class JiraImportController {
         this.importProjectService = importProjectService;
         this.step = 'autorization-jira';
         this.project = null;
-        taiga.defineImmutableProperty(this, 'projects', () => { return this.jiraImportService.projects; });
-        taiga.defineImmutableProperty(this, 'members', () => { return this.jiraImportService.projectUsers; });
+        defineImmutableProperty(this, 'projects', () => { return this.jiraImportService.projects; });
+        defineImmutableProperty(this, 'members', () => { return this.jiraImportService.projectUsers; });
     }
 
     startProjectSelector() {
@@ -57,7 +68,7 @@ class JiraImportController {
     }
 
     onCancelMemberSelection() {
-        return this.step = 'project-form-jira';        
+        return this.step = 'project-form-jira';
     }
 
     startImport(users) {

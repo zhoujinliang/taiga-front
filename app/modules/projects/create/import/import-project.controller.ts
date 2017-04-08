@@ -17,7 +17,24 @@
  * File: import-project.controller.coffee
  */
 
+import * as angular from "angular"
+
 class ImportProjectController {
+    trelloService:any
+    jiraService:any
+    githubService:any
+    asanaService:any
+    location:any
+    window:any
+    routeParams:any
+    tgNavUrls:any
+    config:any
+    confirm:any
+    token:any
+    from:any
+    jiraUrl:any
+    unfoldedOptions:any
+
     static initClass() {
         this.$inject = [
             'tgTrelloImportService',

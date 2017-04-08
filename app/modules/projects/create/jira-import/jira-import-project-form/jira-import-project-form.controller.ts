@@ -17,7 +17,20 @@
  * File: jira-import-project-form.controller.coffee
  */
 
+import * as angular from "angular"
+import * as Immutable from "immutable"
+
 class JiraImportProjectFormController {
+    currentUserService:any
+    canCreatePublicProjects:any
+    canCreatePrivateProjects:any
+    project:any
+    projectForm:any
+    limitMembersPrivateProject:any
+    limitMembersPublicProject:any
+    members:any
+    onSaveProjectDetails: any
+
     static initClass() {
         this.$inject = [
             "tgCurrentUserService"
