@@ -3,6 +3,7 @@ var gulp = require("gulp"),
     imagemin = require("gulp-imagemin"),
     jade = require("gulp-jade"),
     ts = require('gulp-typescript'),
+    webpack = require('webpack-stream'),
     concat = require("gulp-concat"),
     uglify = require("gulp-uglify"),
     plumber = require("gulp-plumber"),
@@ -33,6 +34,42 @@ var gulp = require("gulp"),
     addsrc = require('gulp-add-src'),
     jsonminify = require('gulp-jsonminify'),
     classPrefix = require('gulp-class-prefix');
+    browserify = require("browserify"),
+    source = require('vinyl-source-stream'),
+    watchify = require("watchify"),
+    tsify = require("tsify"),
+    gutil = require("gulp-util");
+
+
+var watchedBrowserifyApp = watchify(browserify({
+    basedir: '.',
+    debug: true,
+    entries: ['app/ts/app.ts'],
+    cache: {},
+    packageCache: {}
+}).plugin(tsify));
+
+var watchedBrowserifyLoader = watchify(browserify({
+    basedir: '.',
+    debug: true,
+    entries: ['app-loader/app-loader.ts'],
+    cache: {},
+    packageCache: {}
+}).plugin(tsify));
+
+function bundleApp() {
+    return watchedBrowserifyApp
+        .bundle()
+        .pipe(source('app.js'))
+        .pipe(gulp.dest("dist"));
+}
+
+function bundleLoader() {
+    return watchedBrowserifyLoader
+        .bundle()
+        .pipe(source('app-loader.js'))
+        .pipe(gulp.dest("dist"));
+}
 
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -44,7 +81,8 @@ if (argv.theme) {
     themes.set(argv.theme);
 }
 
-var version = "v-" + Date.now();
+//var version = "v-" + Date.now();
+var version = "same";
 
 var paths = {};
 paths.app = "app/";
@@ -485,23 +523,7 @@ gulp.task("conf", function() {
         .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task("app-loader", function() {
-    return gulp.src("app-loader/app-loader.ts")
-        .pipe(replace("___VERSION___", version))
-        .pipe(ts({
-            "target": "es5",
-            "module": "commonjs",
-            "moduleResolution": "node",
-            "sourceMap": true,
-            "emitDecoratorMetadata": true,
-            "experimentalDecorators": true,
-            "lib": [ "es2016", "dom" ],
-            // "noImplicitAny": true,
-            "suppressImplicitAnyIndexErrors": true
-        }))
-        .pipe(gulpif(isDeploy, uglify()))
-        .pipe(gulp.dest(paths.distVersion + "js/"));
-});
+gulp.task("app-loader", bundleLoader);
 
 gulp.task("locales", function() {
     var plugins = gulp.src(paths.app + "modules/**/locales/*.json")
@@ -522,35 +544,7 @@ gulp.task("locales", function() {
             .pipe(gulp.dest(paths.distVersion + "locales"));
 });
 
-gulp.task("ts", function() {
-    var filter = gulpFilter(['*', '!*.map']);
-
-    return gulp.src(paths.ts)
-        .pipe(order(paths.ts_order, {base: '.'}))
-        .pipe(sourcemaps.init())
-        .pipe(ts({
-            "baseUrl": "types",
-            "typeRoots": ["types"],
-            "target": "es5",
-            "module": "commonjs",
-            "moduleResolution": "node",
-            "sourceMap": true,
-            "emitDecoratorMetadata": true,
-            "experimentalDecorators": true,
-            "lib": [ "es2016", "dom" ],
-            // "noImplicitAny": true,
-            "suppressImplicitAnyIndexErrors": true
-        }))
-        .on("error", function(err) {
-            console.log(err.toString());
-            this.emit("end");
-        })
-        .pipe(concat("app.js"))
-        .pipe(sourcemaps.write('./maps'))
-        .pipe(gulp.dest(paths.distVersion + "js/"))
-        .pipe(filter)
-        .pipe(livereload());
-});
+gulp.task("ts", bundleApp);
 
 gulp.task("moment-locales", function() {
     return gulp.src(paths.modules + "moment/locale/*")
@@ -746,3 +740,8 @@ gulp.task("default", function(cb) {
         "watch"
     ], cb);
 });
+
+watchedBrowserifyApp.on("update", bundleApp);
+watchedBrowserifyApp.on("log", gutil.log);
+watchedBrowserifyLoader.on("update", bundleLoader);
+watchedBrowserifyLoader.on("log", gutil.log);

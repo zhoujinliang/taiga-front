@@ -9,7 +9,6 @@ export declare var checksley:any;
 export declare var Pikaday:any;
 export declare var Raven:any;
 export declare var Awesomplete:any;
-export declare var hex_sha1:any;
 export declare var introJs:any;
 export declare var dragula:any;
 export declare var murmurhash3_32_gc:any;

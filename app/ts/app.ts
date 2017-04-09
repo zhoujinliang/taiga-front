@@ -26,8 +26,9 @@ import * as _ from "lodash"
 import * as angular from "angular"
 import * as moment from "moment"
 import * as Promise from "bluebird"
-import {ljs, checksley, hex_sha1} from "./global"
+import {ljs, checksley} from "./global"
 import {nl2br} from "./utils"
+import {hex_sha1} from "./libs/sha1-custom"
 
 export let taigaContribPlugins = this.taigaContribPlugins || (<any>window).taigaContribPlugins || [];
 

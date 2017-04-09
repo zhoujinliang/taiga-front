@@ -17,11 +17,17 @@
  * File: attchment.controller.spec.coffee
  */
 
+import {expect} from "chai"
+import {describe, it, beforeEach} from "mocha"
+import {module} from "angular"
+import * as sinon from "sinon"
+import * as immutable from "immutable"
+
 describe("AttachmentController", function() {
     let $provide = null;
     let $controller = null;
     let scope = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockAttachmentsService = function() {
         mocks.attachmentsService = {};

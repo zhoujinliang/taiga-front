@@ -1,6 +1,8 @@
 // Karma configuration
 // Generated on Wed Apr 15 2015 09:44:14 GMT+0200 (CEST)
 
+var webpackConfig = require('./webpack.config')
+
 // this is needed by theme.service.spec
 module.exports = function(config) {
   var configuration = {
@@ -23,7 +25,7 @@ module.exports = function(config) {
       'test-utils.js',
       'dist/**/js/app.js',
       'dist/**/js/templates.js',
-      'app/**/*spec.coffee'
+      'app/**/*spec.ts'
     ],
 
 
@@ -35,8 +37,12 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      '**/*.spec.coffee': ['coffee'],
+      '**/*.spec.ts': ['webpack'],
       'dist/js/app.js': ['sourcemap']
+    },
+    webpack: {
+      module: webpackConfig.module,
+      resolve: webpackConfig.resolve
     },
 
     coffeePreprocessor: {
