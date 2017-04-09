@@ -28,8 +28,6 @@ import * as _ from "lodash"
 import {bindOnce} from "../../utils"
 import {autoScroll, dragula} from "../../global"
 
-let module = angular.module("taigaBacklog");
-
 //############################################################################
 //# Sortable Directive
 //############################################################################
@@ -40,7 +38,7 @@ let deleteElement = function(el) {
     return $(el).remove();
 };
 
-let BacklogSortableDirective = function() {
+export let BacklogSortableDirective = function() {
     let link = ($scope, $el, $attrs) =>
         bindOnce($scope, "project", function(project) {
             // If the user has not enough permissions we don't enable the sortable
@@ -149,5 +147,3 @@ let BacklogSortableDirective = function() {
 
     return {link};
 };
-
-module.directive("tgBacklogSortable", BacklogSortableDirective);

@@ -28,14 +28,11 @@ import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaUserSettings");
-
-
 //############################################################################
 //# User settings Controller
 //############################################################################
 
-class UserNotificationsController extends PageMixin {
+export class UserNotificationsController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -92,14 +89,11 @@ class UserNotificationsController extends PageMixin {
 }
 UserNotificationsController.initClass();
 
-module.controller("UserNotificationsController", UserNotificationsController);
-
-
 //############################################################################
 //# User Notifications Directive
 //############################################################################
 
-let UserNotificationsDirective = function() {
+export let UserNotificationsDirective = function() {
     let link = ($scope, $el, $attrs) =>
         $scope.$on("$destroy", () => $el.off())
     ;
@@ -107,14 +101,11 @@ let UserNotificationsDirective = function() {
     return {link};
 };
 
-module.directive("tgUserNotifications", UserNotificationsDirective);
-
-
 //############################################################################
 //# User Notifications List Directive
 //############################################################################
 
-let UserNotificationsListDirective = function($repo, $confirm, $compile) {
+export let UserNotificationsListDirective = function($repo, $confirm, $compile) {
     let template = _.template(`\
 <% _.each(notifyPolicies, function (notifyPolicy, index) { %>
 <div class="policy-table-row" data-index="<%- index %>">
@@ -187,6 +178,3 @@ let UserNotificationsListDirective = function($repo, $confirm, $compile) {
 
     return {link};
 };
-
-module.directive("tgUserNotificationsList", ["$tgRepo", "$tgConfirm", "$compile",
-                                             UserNotificationsListDirective]);

@@ -21,9 +21,8 @@ import {groupBy} from "../../utils"
 import {Service} from "../../classes"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
-import * as angular from "angular"
 
-class TaskboardTasksService extends Service {
+export class TaskboardTasksService extends Service {
     tasksRaw:any
     foldStatusChanged:any
     usTasks:any
@@ -224,5 +223,3 @@ class TaskboardTasksService extends Service {
     }
 }
 TaskboardTasksService.initClass();
-
-angular.module("taigaKanban").service("tgTaskboardTasks", TaskboardTasksService);

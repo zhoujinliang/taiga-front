@@ -23,5 +23,19 @@
  */
 
 import * as angular from "angular"
+import * as main from "./main"
+import {SprintGraphDirective} from "./charts"
+import * as lightboxes from "./lightboxes"
+import {TaskboardSortableDirective} from "./sortable"
+import {TaskboardTasksService} from "./taskboard-tasks"
 
 let module = angular.module("taigaTaskboard", []);
+module.controller("TaskboardController", main.TaskboardController);
+module.directive("tgTaskboard", ["$rootScope", main.TaskboardDirective]);
+module.directive("tgTaskboardSquishColumn", ["$tgResources", main.TaskboardSquishColumnDirective]);
+module.directive("tgSprintGraph", ["$translate", SprintGraphDirective]);
+
+module.directive("tgLbCreateEditTask", ["$tgRepo", "$tgModel", "$tgResources", "$rootScope", "$tgLoading", "lightboxService", "$translate", "$q", "tgAttachmentsService", lightboxes.CreateEditTaskDirective]);
+module.directive("tgLbCreateBulkTasks", ["$tgRepo", "$tgResources", "$rootScope", "$tgLoading", "lightboxService", "$tgModel", lightboxes.CreateBulkTasksDirective]);
+module.directive("tgTaskboardSortable", ["$tgRepo", "$tgResources", "$rootScope", "$translate", "$tgConfirm", TaskboardSortableDirective]);
+module.service("tgTaskboardTasks", TaskboardTasksService);

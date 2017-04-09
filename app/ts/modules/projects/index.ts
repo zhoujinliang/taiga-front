@@ -19,9 +19,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: modules/userstories.coffee
+ * File: modules/projects.coffee
  */
 
 import * as angular from "angular"
+import {DeleteProjectDirective} from "./lightboxes"
 
-let module = angular.module("taigaUserStories", []);
+let module = angular.module("taigaProject", []);
+module.directive("tgLbDeleteProject", ["$tgRepo", "$rootScope", "$tgAuth", "$tgLocation", "$tgNavUrls",
+                                       "$tgConfirm", "lightboxService", "tgLoader", "tgCurrentUserService", DeleteProjectDirective]);

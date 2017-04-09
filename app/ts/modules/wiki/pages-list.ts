@@ -26,13 +26,11 @@ import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaWiki");
-
 //############################################################################
 //# Wiki Pages List Controller
 //############################################################################
 
-class WikiPagesListController extends PageMixin {
+export class WikiPagesListController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo: any
@@ -141,5 +139,3 @@ class WikiPagesListController extends PageMixin {
     }
 }
 WikiPagesListController.initClass();
-
-module.controller("WikiPagesListController", WikiPagesListController);

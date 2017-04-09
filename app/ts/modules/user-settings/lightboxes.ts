@@ -25,14 +25,11 @@
 import {debounce} from "../../utils"
 import * as angular from "angular"
 
-let module = angular.module("taigaUserSettings");
-
-
 //############################################################################
 //# Delete User Lightbox Directive
 //############################################################################
 
-let DeleteUserDirective = function($repo, $rootscope, $auth, $location, $navUrls, lightboxService, $loading) {
+export let DeleteUserDirective = function($repo, $rootscope, $auth, $location, $navUrls, lightboxService, $loading) {
     let link = function($scope, $el, $attrs) {
         let submitButton;
         $scope.$on("deletelightbox:new", (ctx, user)=> lightboxService.open($el));
@@ -79,6 +76,3 @@ let DeleteUserDirective = function($repo, $rootscope, $auth, $location, $navUrls
         templateUrl: "user/lightbox/lightbox-delete-account.html"
     };
 };
-
-module.directive("tgLbDeleteUser", ["$tgRepo", "$rootScope", "$tgAuth", "$tgLocation", "$tgNavUrls",
-                                    "lightboxService", "$tgLoading", DeleteUserDirective]);

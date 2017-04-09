@@ -19,10 +19,9 @@
 
 import {Service} from "../../../ts/classes"
 import * as _ from "lodash"
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class KanbanUserstoriesService extends Service {
+export class KanbanUserstoriesService extends Service {
     userstoriesRaw:any
     archivedStatus:any
     statusHide:any
@@ -242,5 +241,3 @@ class KanbanUserstoriesService extends Service {
     }
 }
 KanbanUserstoriesService.initClass();
-
-angular.module("taigaKanban").service("tgKanbanUserstories", KanbanUserstoriesService);

@@ -26,13 +26,11 @@ import {debounce} from "../../utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaKanban");
-
 //############################################################################
 //# Warning message directive
 //############################################################################
 
-let LightboxAddMembersWarningMessageDirective = () =>
+export let LightboxAddMembersWarningMessageDirective = () =>
     ({
           templateUrl: "admin/memberships-warning-message.html",
           scope: {
@@ -41,14 +39,11 @@ let LightboxAddMembersWarningMessageDirective = () =>
     })
 ;
 
-module.directive("tgLightboxAddMembersWarningMessage", [LightboxAddMembersWarningMessageDirective]);
-
-
 //############################################################################
 //# Transfer project ownership
 //############################################################################
 
-let LbRequestOwnershipDirective = (lightboxService, rs, confirmService, $translate) =>
+export let LbRequestOwnershipDirective = (lightboxService, rs, confirmService, $translate) =>
     ({
         link(scope, el) {
             lightboxService.open(el);
@@ -70,14 +65,7 @@ let LbRequestOwnershipDirective = (lightboxService, rs, confirmService, $transla
     })
 ;
 
-module.directive('tgLbRequestOwnership', [
-    "lightboxService",
-    "tgResources",
-    "$tgConfirm",
-    "$translate",
-    LbRequestOwnershipDirective]);
-
-class ChangeOwnerLightboxController {
+export class ChangeOwnerLightboxController {
     rs:any
     lightboxService:any
     confirm:any
@@ -185,9 +173,7 @@ ChangeOwnerLightboxController.$inject = [
         "$translate"
 ];
 
-module.controller('ChangeOwnerLightbox', ChangeOwnerLightboxController);
-
-let ChangeOwnerLightboxDirective = function(lightboxService, lightboxKeyboardNavigationService, $template, $compile) {
+export let ChangeOwnerLightboxDirective = function(lightboxService, lightboxKeyboardNavigationService, $template, $compile) {
     let link = (scope, el) => lightboxService.open(el);
 
     return {
@@ -204,10 +190,7 @@ let ChangeOwnerLightboxDirective = function(lightboxService, lightboxKeyboardNav
     };
 };
 
-
-module.directive("tgLbChangeOwner", ["lightboxService", "lightboxKeyboardNavigationService", "$tgTemplate", "$compile", ChangeOwnerLightboxDirective]);
-
-let TransferProjectStartSuccessDirective = function(lightboxService) {
+export let TransferProjectStartSuccessDirective = function(lightboxService) {
     let link = function(scope, el) {
         scope.close = () => lightboxService.close(el);
 
@@ -219,6 +202,3 @@ let TransferProjectStartSuccessDirective = function(lightboxService) {
         link
     };
 };
-
-
-module.directive("tgLbTransferProjectStartSuccess", ["lightboxService", TransferProjectStartSuccessDirective]);

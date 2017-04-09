@@ -19,8 +19,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: modules/issues.coffee
+ * File: modules/tasks.coffee
  */
-import * as angular from "angular"
 
-let module = angular.module("taigaIssues", []);
+import * as angular from "angular"
+import * as detail from "./detail"
+
+let module = angular.module("taigaTasks", []);
+module.controller("TaskDetailController", detail.TaskDetailController);
+module.directive("tgTaskStatusDisplay", ["$tgTemplate", "$compile", detail.TaskStatusDisplayDirective]);
+module.directive("tgTaskStatusButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation",
+                                        "$compile", "$translate", "$tgTemplate", detail.TaskStatusButtonDirective]);
+module.directive("tgTaskIsIocaineButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation",
+                                           "$compile", "$tgTemplate", detail.TaskIsIocaineButtonDirective]);

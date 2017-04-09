@@ -28,13 +28,11 @@ import * as angular from "angular"
 import * as moment from "moment"
 import * as _ from "lodash"
 
-let module = angular.module("taigaWiki");
-
 //############################################################################
 //# Wiki Detail Controller
 //############################################################################
 
-class WikiDetailController extends PageMixin {
+export class WikiDetailController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -231,14 +229,11 @@ class WikiDetailController extends PageMixin {
 }
 WikiDetailController.initClass();
 
-module.controller("WikiDetailController", WikiDetailController);
-
-
 //############################################################################
 //# Wiki Summary Directive
 //############################################################################
 
-let WikiSummaryDirective = function($log, $template, $compile, $translate, avatarService) {
+export let WikiSummaryDirective = function($log, $template, $compile, $translate, avatarService) {
     let template = $template.get("wiki/wiki-summary.html", true);
 
     let link = function($scope, $el, $attrs, $model) {
@@ -283,9 +278,7 @@ let WikiSummaryDirective = function($log, $template, $compile, $translate, avata
     };
 };
 
-module.directive("tgWikiSummary", ["$log", "$tgTemplate", "$compile", "$translate",  "tgAvatarService", WikiSummaryDirective]);
-
-let WikiWysiwyg = function($modelTransform, $rootscope, $confirm, attachmentsFullService,
+export let WikiWysiwyg = function($modelTransform, $rootscope, $confirm, attachmentsFullService,
 $qqueue, $repo, $analytics, wikiHistoryService) {
     let link = function($scope, $el, $attrs) {
         $scope.editableDescription = false;
@@ -366,11 +359,3 @@ $qqueue, $repo, $analytics, wikiHistoryService) {
 `
     };
 };
-
-module.directive("tgWikiWysiwyg", [
-    "$tgQueueModelTransformation",
-    "$rootScope",
-    "$tgConfirm",
-    "tgAttachmentsFullService",
-    "$tgQqueue", "$tgRepo", "$tgAnalytics", "tgWikiHistoryService",
-    WikiWysiwyg]);

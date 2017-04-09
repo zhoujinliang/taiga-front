@@ -19,9 +19,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: modules/backlog.coffee
+ * File: modules/kanban.coffee
  */
 
 import * as angular from "angular"
+import * as main from "./main"
+import {KanbanUserstoriesService} from "./kanban-usertories"
+import {KanbanSortableDirective} from "./sortable"
 
-let module = angular.module("taigaBacklog", []);
+let module = angular.module("taigaKanban", []);
+module.controller("KanbanController", main.KanbanController);
+module.directive("tgKanban", ["$tgRepo", "$rootScope", main.KanbanDirective]);
+module.directive("tgKanbanArchivedStatusHeader", [ "$rootScope", "$translate", "tgKanbanUserstories", main.KanbanArchivedStatusHeaderDirective]);
+module.directive("tgKanbanArchivedStatusIntro", ["$translate", "tgKanbanUserstories", main.KanbanArchivedStatusIntroDirective]);
+module.directive("tgKanbanSquishColumn", ["$tgResources", "tgProjectService", main.KanbanSquishColumnDirective]);
+module.directive("tgKanbanWipLimit", main.KanbanWipLimitDirective);
+module.service("tgKanbanUserstories", KanbanUserstoriesService);
+module.directive("tgKanbanSortable", ["$tgRepo", "$tgResources", "$rootScope", KanbanSortableDirective]);

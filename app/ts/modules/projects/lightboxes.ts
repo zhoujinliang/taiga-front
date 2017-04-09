@@ -24,13 +24,11 @@
 
 import * as angular from "angular"
 
-let module = angular.module("taigaProject");
-
 //############################################################################
 //# Delete Project Lightbox Directive
 //############################################################################
 
-let DeleteProjectDirective = function($repo, $rootscope, $auth, $location, $navUrls, $confirm, lightboxService, tgLoader, currentUserService) {
+export let DeleteProjectDirective = function($repo, $rootscope, $auth, $location, $navUrls, $confirm, lightboxService, tgLoader, currentUserService) {
     let link = function($scope, $el, $attrs) {
         let projectToDelete = null;
         $scope.$on("deletelightbox:new", function(ctx, project){
@@ -74,6 +72,3 @@ let DeleteProjectDirective = function($repo, $rootscope, $auth, $location, $navU
 
     return {link};
 };
-
-module.directive("tgLbDeleteProject", ["$tgRepo", "$rootScope", "$tgAuth", "$tgLocation", "$tgNavUrls",
-                                       "$tgConfirm", "lightboxService", "tgLoader", "tgCurrentUserService", DeleteProjectDirective]);

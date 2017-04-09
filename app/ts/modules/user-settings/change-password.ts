@@ -27,14 +27,11 @@ import {checksley} from "../../global"
 import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 
-let module = angular.module("taigaUserSettings");
-
-
 //############################################################################
 //# User ChangePassword Controller
 //############################################################################
 
-class UserChangePasswordController extends PageMixin {
+export class UserChangePasswordController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -83,14 +80,11 @@ class UserChangePasswordController extends PageMixin {
 }
 UserChangePasswordController.initClass();
 
-module.controller("UserChangePasswordController", UserChangePasswordController);
-
-
 //############################################################################
 //# User ChangePassword Directive
 //############################################################################
 
-let UserChangePasswordDirective = function($rs, $confirm, $loading, $translate) {
+export let UserChangePasswordDirective = function($rs, $confirm, $loading, $translate) {
     let link = function($scope, $el, $attrs, ctrl) {
         let form = new checksley.Form($el.find("form"));
 
@@ -133,5 +127,3 @@ let UserChangePasswordDirective = function($rs, $confirm, $loading, $translate) 
         link
     };
 };
-
-module.directive("tgUserChangePassword", ["$tgResources", "$tgConfirm", "$tgLoading", "$translate", UserChangePasswordDirective]);

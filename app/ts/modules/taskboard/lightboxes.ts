@@ -23,11 +23,10 @@
  */
 
 import {debounce, trim} from "../../utils"
-import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
 
-let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $loading, lightboxService, $translate, $q, attachmentsService) {
+export let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $loading, lightboxService, $translate, $q, attachmentsService) {
     let link = function($scope, $el, attrs) {
         $scope.isNew = true;
 
@@ -205,7 +204,7 @@ let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $loading,
 };
 
 
-let CreateBulkTasksDirective = function($repo, $rs, $rootscope, $loading, lightboxService, $model) {
+export let CreateBulkTasksDirective = function($repo, $rs, $rootscope, $loading, lightboxService, $model) {
     let link = function($scope, $el, attrs) {
         let data, form;
         $scope.form = {data: "", usId: null};
@@ -256,29 +255,3 @@ let CreateBulkTasksDirective = function($repo, $rs, $rootscope, $loading, lightb
 
     return {link};
 };
-
-
-let module = angular.module("taigaTaskboard");
-
-module.directive("tgLbCreateEditTask", [
-    "$tgRepo",
-    "$tgModel",
-    "$tgResources",
-    "$rootScope",
-    "$tgLoading",
-    "lightboxService",
-    "$translate",
-    "$q",
-    "tgAttachmentsService",
-    CreateEditTaskDirective
-]);
-
-module.directive("tgLbCreateBulkTasks", [
-    "$tgRepo",
-    "$tgResources",
-    "$rootScope",
-    "$tgLoading",
-    "lightboxService",
-    "$tgModel",
-    CreateBulkTasksDirective
-]);
