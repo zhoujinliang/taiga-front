@@ -29,6 +29,8 @@ import * as Promise from "bluebird"
 import {ljs, checksley} from "./global"
 import {nl2br} from "./utils"
 import {hex_sha1} from "./libs/sha1-custom"
+import "ng-infinite-scroll"
+import "../modules/home/home.module"
 
 export let taigaContribPlugins = this.taigaContribPlugins || (<any>window).taigaContribPlugins || [];
 
@@ -51,8 +53,9 @@ export function generateUniqueSessionIdentifier() {
 export var sessionId = generateUniqueSessionIdentifier();
 
 
-let configure = function($routeProvider, $locationProvider, $httpProvider, $provide, $tgEventsProvider,
+function configure($routeProvider, $locationProvider, $httpProvider, $provide, $tgEventsProvider,
              $compileProvider, $translateProvider, $translatePartialLoaderProvider, $animateProvider) {
+    console.log("Configuring application");
 
     let userInfo;
     $animateProvider.classNameFilter(/^(?:(?!ng-animate-disabled).)*$/);
@@ -783,7 +786,7 @@ let i18nInit = function(lang, $translate) {
 };
 
 
-let init = function($log, $rootscope, $auth, $events, $analytics, $translate, $location, $navUrls, appMetaService,
+function init($log, $rootscope, $auth, $events, $analytics, $translate, $location, $navUrls, appMetaService,
         loaderService, navigationBarService, errorHandlingService, lightboxService) {
     $log.debug("Initialize application");
 
@@ -943,35 +946,37 @@ let modules = [
     "tgRepeat"
 ].concat(pluginsModules);
 
-// Main module definition
-let module = angular.module("taiga", modules);
+export function run() {
+    // Main module definition
+    let module = angular.module("taiga", modules);
+    debugger;
+    module.config([
+        "$routeProvider",
+        "$locationProvider",
+        "$httpProvider",
+        "$provide",
+        "$tgEventsProvider",
+        "$compileProvider",
+        "$translateProvider",
+        "$translatePartialLoaderProvider",
+        "$animateProvider",
+        configure
+    ]);
 
-module.config([
-    "$routeProvider",
-    "$locationProvider",
-    "$httpProvider",
-    "$provide",
-    "$tgEventsProvider",
-    "$compileProvider",
-    "$translateProvider",
-    "$translatePartialLoaderProvider",
-    "$animateProvider",
-    configure
-]);
-
-module.run([
-    "$log",
-    "$rootScope",
-    "$tgAuth",
-    "$tgEvents",
-    "$tgAnalytics",
-    "$translate",
-    "$tgLocation",
-    "$tgNavUrls",
-    "tgAppMetaService",
-    "tgLoader",
-    "tgNavigationBarService",
-    "tgErrorHandlingService",
-    "lightboxService",
-    init
-]);
+    module.run([
+        "$log",
+        "$rootScope",
+        "$tgAuth",
+        "$tgEvents",
+        "$tgAnalytics",
+        "$translate",
+        "$tgLocation",
+        "$tgNavUrls",
+        "tgAppMetaService",
+        "tgLoader",
+        "tgNavigationBarService",
+        "tgErrorHandlingService",
+        "lightboxService",
+        init
+    ]);
+}

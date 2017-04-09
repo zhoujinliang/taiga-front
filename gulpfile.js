@@ -44,15 +44,7 @@ var gulp = require("gulp"),
 var watchedBrowserifyApp = watchify(browserify({
     basedir: '.',
     debug: true,
-    entries: ['app/ts/app.ts'],
-    cache: {},
-    packageCache: {}
-}).plugin(tsify));
-
-var watchedBrowserifyLoader = watchify(browserify({
-    basedir: '.',
-    debug: true,
-    entries: ['app-loader/app-loader.ts'],
+    entries: ['app/ts/main.ts'],
     cache: {},
     packageCache: {}
 }).plugin(tsify));
@@ -60,14 +52,7 @@ var watchedBrowserifyLoader = watchify(browserify({
 function bundleApp() {
     return watchedBrowserifyApp
         .bundle()
-        .pipe(source('app.js'))
-        .pipe(gulp.dest("dist"));
-}
-
-function bundleLoader() {
-    return watchedBrowserifyLoader
-        .bundle()
-        .pipe(source('app-loader.js'))
+        .pipe(source('js/app.js'))
         .pipe(gulp.dest("dist"));
 }
 
@@ -81,13 +66,10 @@ if (argv.theme) {
     themes.set(argv.theme);
 }
 
-//var version = "v-" + Date.now();
-var version = "same";
-
 var paths = {};
 paths.app = "app/";
 paths.dist = "dist/";
-paths.distVersion = paths.dist + version + "/";
+paths.distVersion = paths.dist + "/";
 paths.tmp = "tmp/";
 paths.extras = "extras/";
 paths.modules = "node_modules/";
@@ -258,7 +240,7 @@ gulp.task("jade", function() {
     return gulp.src(paths.jade)
         .pipe(plumber())
         .pipe(cached("jade"))
-        .pipe(jade({pretty: true, locals:{v:version}}))
+        .pipe(jade({pretty: true}))
         .pipe(gulp.dest(paths.tmp));
 });
 
@@ -267,7 +249,7 @@ gulp.task("jade-inheritance", function() {
         .pipe(plumber())
         .pipe(cached("jade"))
         .pipe(jadeInheritance({basedir: "./app/"}))
-        .pipe(jade({pretty: true, locals:{v: version}}))
+        .pipe(jade({pretty: true}))
         .pipe(gulp.dest(paths.tmp));
 });
 
@@ -523,8 +505,6 @@ gulp.task("conf", function() {
         .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task("app-loader", bundleLoader);
-
 gulp.task("locales", function() {
     var plugins = gulp.src(paths.app + "modules/**/locales/*.json")
         .pipe(rename(function (localeFile) {
@@ -569,9 +549,9 @@ gulp.task("jslibs-deploy", function() {
         .pipe(gulp.dest(paths.distVersion + "js/"));
 });
 
-gulp.task("app-watch", ["ts", "conf", "locales", "moment-locales", "app-loader"]);
+gulp.task("app-watch", ["ts", "conf", "locales", "moment-locales"]);
 
-gulp.task("app-deploy", ["ts", "conf", "locales", "moment-locales", "app-loader"], function() {
+gulp.task("app-deploy", ["ts", "conf", "locales", "moment-locales"], function() {
     return gulp.src(paths.distVersion + "js/app.js")
         .pipe(sourcemaps.init())
             .pipe(uglify())
@@ -680,16 +660,16 @@ gulp.task("express", function() {
 
     app.use(compression()); //gzip
 
-    app.use("/" + version + "/js", express.static(__dirname + "/dist/" + version + "/js"));
-    app.use("/" + version + "/styles", express.static(__dirname + "/dist/" + version + "/styles"));
-    app.use("/" + version + "/images", express.static(__dirname + "/dist/" + version + "/images"));
-    app.use("/" + version + "/emojis", express.static(__dirname + "/dist/" + version + "/emojis"));
-    app.use("/" + version + "/svg", express.static(__dirname + "/dist/" + version + "/svg"));
-    app.use("/" + version + "/partials", express.static(__dirname + "/dist/" + version + "/partials"));
-    app.use("/" + version + "/fonts", express.static(__dirname + "/dist/" + version + "/fonts"));
-    app.use("/" + version + "/locales", express.static(__dirname + "/dist/" + version + "/locales"));
-    app.use("/" + version + "/maps", express.static(__dirname + "/dist/" + version + "/maps"));
-    app.use("/" + version + "/prism", express.static(__dirname + "/dist/" + version + "/prism"));
+    app.use("/js", express.static(__dirname + "/dist/js"));
+    app.use("/styles", express.static(__dirname + "/dist/styles"));
+    app.use("/images", express.static(__dirname + "/dist/images"));
+    app.use("/emojis", express.static(__dirname + "/dist/emojis"));
+    app.use("/svg", express.static(__dirname + "/dist/svg"));
+    app.use("/partials", express.static(__dirname + "/dist/partials"));
+    app.use("/fonts", express.static(__dirname + "/dist/fonts"));
+    app.use("/locales", express.static(__dirname + "/dist/locales"));
+    app.use("/maps", express.static(__dirname + "/dist/maps"));
+    app.use("/prism", express.static(__dirname + "/dist/prism"));
     app.use("/plugins", express.static(__dirname + "/dist/plugins"));
     app.use("/conf.json", express.static(__dirname + "/dist/conf.json"));
     app.use(require('connect-livereload')({
@@ -743,5 +723,3 @@ gulp.task("default", function(cb) {
 
 watchedBrowserifyApp.on("update", bundleApp);
 watchedBrowserifyApp.on("log", gutil.log);
-watchedBrowserifyLoader.on("update", bundleLoader);
-watchedBrowserifyLoader.on("log", gutil.log);

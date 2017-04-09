@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class HomeController {
+export class HomeController {
     currentUserService:any
     location:any
     navUrls:any
@@ -41,7 +41,3 @@ class HomeController {
         }
     }
 }
-HomeController.initClass();
-
-
-angular.module("taigaHome").controller("Home", HomeController);

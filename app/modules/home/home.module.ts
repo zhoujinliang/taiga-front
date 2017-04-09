@@ -18,5 +18,13 @@
  */
 
 import * as angular from "angular"
+import {HomeController} from "./home.controller"
+import {HomeService} from "./home.service"
 
 let module = angular.module("taigaHome", []);
+
+HomeController.initClass();
+module.controller("Home", HomeController);
+
+HomeService.initClass();
+angular.module("taigaHome").service("tgHomeService", HomeService);

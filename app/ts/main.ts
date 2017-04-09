@@ -1,8 +1,6 @@
-//declare var $: any;
-declare var ljs: any;
-declare var _: any;
-declare var angular: any;
-declare var Promise: any;
+import {run} from "./app"
+import * as $ from "jquery"
+import * as _ from "lodash"
 
 (<any>window).taigaConfig = {
     "api": "http://localhost:8000/api/v1/",
@@ -70,10 +68,10 @@ promise.fail(() => console.error("Your conf.json file is not a valid json file, 
 
 promise.always(function() {
     if ((<any>window).taigaConfig.contribPlugins.length > 0) {
-        return loadPlugins((<any>window).taigaConfig.contribPlugins).then(() =>
-            ljs.load(`/js/app.js`, () => angular.bootstrap(document, ['taiga']))
-        );
+        return loadPlugins((<any>window).taigaConfig.contribPlugins).then(() => {
+            run();
+        });
     } else {
-        return ljs.load(`/js/app.js`, () => angular.bootstrap(document, ['taiga']));
+        run()
     }
 });
