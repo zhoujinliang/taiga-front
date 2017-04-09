@@ -23,7 +23,7 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
 
-class HomeService extends Service {
+export class HomeService extends Service {
     navurls:any
     rs:any
     projectsService:any
@@ -207,6 +207,3 @@ class HomeService extends Service {
         });
     }
 }
-HomeService.initClass();
-
-angular.module("taigaHome").service("tgHomeService", HomeService);
