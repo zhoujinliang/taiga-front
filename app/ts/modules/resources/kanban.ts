@@ -22,13 +22,9 @@
  * File: modules/resources/kanban.coffee
  */
 
-
-
 import {generateHash} from "../../app"
 
-import * as angular from "angular"
-
-let resourceProvider = function($storage) {
+export function KanbanResourcesProvider($storage) {
     let service:any = {};
     let hashSuffixStatusViewModes = "kanban-statusviewmodels";
     let hashSuffixStatusColumnModes = "kanban-statuscolumnmodels";
@@ -47,7 +43,3 @@ let resourceProvider = function($storage) {
 
     return instance => instance.kanban = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgKanbanResourcesProvider", ["$tgStorage", resourceProvider]);

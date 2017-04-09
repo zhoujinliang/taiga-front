@@ -17,11 +17,7 @@
  * File: bind-scope.coffee
  */
 
-import * as angular from "angular"
-
-let module = angular.module("taigaCommon");
-
-let BindScope = function(config) {
+export function BindScope(config) {
     if (!config.debugInfo) {
         jQuery.fn.scope = function() { return this.data('scope'); };
     }
@@ -36,5 +32,3 @@ let BindScope = function(config) {
 
     return {link};
 };
-
-module.directive("tgBindScope", ["$tgConfig", BindScope]);

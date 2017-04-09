@@ -17,7 +17,7 @@
  * File: asana-import.directive.coffee
  */
 
-let AsanaImportDirective = () =>
+export let AsanaImportDirective = () =>
     ({
         link(scope, elm, attrs, ctrl) {
             return ctrl.startProjectSelector();
@@ -31,7 +31,4 @@ let AsanaImportDirective = () =>
         }
     })
 ;
-
 AsanaImportDirective.$inject = [];
-
-angular.module("taigaProjects").directive("tgAsanaImport", AsanaImportDirective);

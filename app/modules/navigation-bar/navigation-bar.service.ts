@@ -18,10 +18,9 @@
  */
 
 import {Service} from "../../ts/classes"
-import * as angular from "angular"
 import * as _ from "lodash"
 
-class NavigationBarService extends Service {
+export class NavigationBarService extends Service {
     enabledHeader:boolean
 
     constructor() {
@@ -41,5 +40,3 @@ class NavigationBarService extends Service {
         return this.enabledHeader;
     }
 }
-
-angular.module("taigaNavigationBar").service("tgNavigationBarService", NavigationBarService);

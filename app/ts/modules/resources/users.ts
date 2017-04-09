@@ -22,10 +22,7 @@
  * File: modules/resources/user.coffee
  */
 
-
-import * as angular from "angular"
-
-let resourceProvider = function($http, $urls) {
+export function UsersResourcesProvider($http, $urls) {
     let service:any = {};
 
     service.contacts = function(userId, options) {
@@ -43,8 +40,3 @@ let resourceProvider = function($http, $urls) {
 
     return instance => instance.users = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgUsersResourcesProvider", ["$tgHttp", "$tgUrls", "$q",
-                                                    resourceProvider]);

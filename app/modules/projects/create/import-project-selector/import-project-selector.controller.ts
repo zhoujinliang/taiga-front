@@ -17,15 +17,12 @@
  * File: import-project-selector.controller.coffee
  */
 
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class ImportProjectSelectorController {
+export class ImportProjectSelectorController {
     onSelectProject:any
 
     selectProject(project) {
         return this.onSelectProject({project: Immutable.fromJS(project)});
     }
 }
-
-angular.module('taigaProjects').controller('ImportProjectSelectorCtrl', ImportProjectSelectorController);

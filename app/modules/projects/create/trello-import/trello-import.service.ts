@@ -18,10 +18,9 @@
  */
 
 import {Service} from "../../../../ts/classes"
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class TrelloImportService extends Service {
+export class TrelloImportService extends Service {
     resources:any
     projects:Immutable.List<any>
     projectUsers:Immutable.List<any>
@@ -79,5 +78,3 @@ class TrelloImportService extends Service {
     }
 }
 TrelloImportService.initClass();
-
-angular.module("taigaProjects").service("tgTrelloImportService", TrelloImportService);

@@ -25,7 +25,7 @@
 
 import * as angular from "angular"
 
-let resourceProvider = function($repo, $urls, $http, $q) {
+export function SearchResourcesProvider($repo, $urls, $http, $q) {
     let service:any = {};
 
     service.do = function(projectId, term) {
@@ -58,6 +58,3 @@ let resourceProvider = function($repo, $urls, $http, $q) {
 
     return instance => instance.search = service;
 };
-
-let module = angular.module("taigaResources");
-module.factory("$tgSearchResourcesProvider", ["$tgRepo", "$tgUrls", "$tgHttp", "$q", resourceProvider]);

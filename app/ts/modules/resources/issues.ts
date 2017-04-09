@@ -22,14 +22,10 @@
  * File: modules/resources/issues.coffee
  */
 
-
-
 import {generateHash} from "../../app"
-
-import * as angular from "angular"
 import * as _ from "lodash"
 
-let resourceProvider = function($repo, $http, $urls, $storage, $q) {
+export function IssuesResourcesProvider($repo, $http, $urls, $storage, $q) {
     let service:any = {};
     let hashSuffix = "issues-queryparams";
 
@@ -105,7 +101,3 @@ let resourceProvider = function($repo, $http, $urls, $storage, $q) {
 
     return instance => instance.issues = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgIssuesResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", "$tgStorage", "$q", resourceProvider]);

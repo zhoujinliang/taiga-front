@@ -26,13 +26,11 @@ import {groupBy} from "../../utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaCommon");
-
 //############################################################################
 //# User story estimation directive (for Lightboxes)
 //############################################################################
 
-let LbUsEstimationDirective = function($tgEstimationsService, $rootScope, $repo, $template, $compile) {
+export let LbUsEstimationDirective = function($tgEstimationsService, $rootScope, $repo, $template, $compile) {
     // Display the points of a US and you can edit it.
     //
     // Example:
@@ -80,15 +78,12 @@ let LbUsEstimationDirective = function($tgEstimationsService, $rootScope, $repo,
     };
 };
 
-module.directive("tgLbUsEstimation", ["$tgEstimationsService", "$rootScope", "$tgRepo", "$tgTemplate",
-                                      "$compile", LbUsEstimationDirective]);
-
 
 //############################################################################
 //# User story estimation directive
 //############################################################################
 
-let UsEstimationDirective = function($tgEstimationsService, $rootScope, $repo, $template, $compile, $modelTransform, $confirm) {
+export let UsEstimationDirective = function($tgEstimationsService, $rootScope, $repo, $template, $compile, $modelTransform, $confirm) {
     // Display the points of a US and you can edit it.
     //
     // Example:
@@ -156,16 +151,11 @@ let UsEstimationDirective = function($tgEstimationsService, $rootScope, $repo, $
     };
 };
 
-module.directive("tgUsEstimation", ["$tgEstimationsService", "$rootScope", "$tgRepo",
-                                    "$tgTemplate", "$compile", "$tgQueueModelTransformation",
-                                    "$tgConfirm", UsEstimationDirective]);
-
-
 //############################################################################
 //# Estimations service
 //############################################################################
 
-let EstimationsService = function($template, $repo, $confirm, $q, $qqueue) {
+export let EstimationsService = function($template, $repo, $confirm, $q, $qqueue) {
     let pointsTemplate = $template.get("common/estimation/us-estimation-points.html", true);
 
     class EstimationProcess {
@@ -322,6 +312,3 @@ let EstimationsService = function($template, $repo, $confirm, $q, $qqueue) {
         create
     };
 };
-
-module.factory("$tgEstimationsService", ["$tgTemplate", "$tgRepo", "$tgConfirm",
-                                         "$q", "$tgQqueue", EstimationsService]);

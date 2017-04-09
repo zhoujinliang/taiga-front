@@ -22,10 +22,7 @@
  * File: modules/resources/memberships.coffee
  */
 
-
-import * as angular from "angular"
-
-let resourceProvider = function($repo, $http, $urls) {
+export function RolesResourcesProvider($repo, $http, $urls) {
     let service:any = {};
 
     service.get = id => $repo.queryOne("roles", id);
@@ -34,7 +31,3 @@ let resourceProvider = function($repo, $http, $urls) {
 
     return instance => instance.roles = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgRolesResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", resourceProvider]);

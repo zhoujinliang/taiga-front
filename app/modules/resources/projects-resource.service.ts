@@ -17,12 +17,11 @@
  * File: projects-resource.service.coffee
  */
 
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
 let pagination = function() {};
 
-let Resource = function(urlsService, http, paginateResponseService) {
+export let ProjectsResource = function(urlsService, http, paginateResponseService) {
     let service:any = {};
 
     service.create = function(data) {
@@ -201,8 +200,4 @@ let Resource = function(urlsService, http, paginateResponseService) {
 
     return () => ({"projects": service});
 };
-
-Resource.$inject = ["$tgUrls", "$tgHttp", "tgPaginateResponseService"];
-
-let module = angular.module("taigaResources2");
-module.factory("tgProjectsResources", Resource);
+ProjectsResource.$inject = ["$tgUrls", "$tgHttp", "tgPaginateResponseService"];

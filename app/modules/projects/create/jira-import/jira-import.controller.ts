@@ -18,9 +18,8 @@
  */
 
 import {defineImmutableProperty} from "../../../../ts/utils"
-import * as angular from "angular"
 
-class JiraImportController {
+export class JiraImportController {
     jiraImportService:any
     confirm:any
     translate:any
@@ -101,5 +100,3 @@ class JiraImportController {
     }
 }
 JiraImportController.initClass();
-
-angular.module('taigaProjects').controller('JiraImportCtrl', JiraImportController);

@@ -22,11 +22,65 @@
  * File: modules/resources.coffee
  */
 
-import {Service} from "../classes"
+import {Service} from "../../classes"
 import * as angular from "angular"
 import * as _ from "lodash"
 
+import {CustomAttributesResourcesProvider} from "./custom-attributes"
+import {CustomAttributesValuesResourcesProvider} from "./custom-attributes-values"
+import {EpicsResourcesProvider} from "./epics"
+import {HistoryResourcesProvider} from "./history"
+import {InvitationsResourcesProvider} from "./invitations"
+import {IssuesResourcesProvider} from "./issues"
+import {KanbanResourcesProvider} from "./kanban"
+import {LocalesResourcesProvider} from "./locales"
+import {MdRenderResourcesProvider} from "./mdrender"
+import {MembershipsResourcesProvider} from "./memberships"
+import {ModulesResourcesProvider} from "./modules"
+import {NotifyPoliciesResourcesProvider} from "./notify-policies"
+import {ProjectsResourcesProvider} from "./projects"
+import {RolesResourcesProvider} from "./roles"
+import {SearchResourcesProvider} from "./search"
+import {SprintsResourcesProvider} from "./sprints"
+import {TasksResourcesProvider} from "./tasks"
+import {UserSettingsResourcesProvider} from "./user-settings"
+import {UserstoriesResourcesProvider} from "./userstories"
+import {UsersResourcesProvider} from "./users"
+import {WebhookLogsResourcesProvider} from "./webhooklogs"
+import {WebhooksResourcesProvider} from "./webhooks"
+import {WikiResourcesProvider} from "./wiki"
+
+let module = angular.module("taigaResources", ["taigaBase"]);
+
+module.factory("$tgCustomAttributesValuesResourcesProvider", ["$tgRepo", CustomAttributesValuesResourcesProvider]);
+module.factory("$tgCustomAttributesResourcesProvider", ["$tgRepo", CustomAttributesResourcesProvider]);
+module.factory("$tgEpicsResourcesProvider", ["$tgRepo","$tgHttp", "$tgUrls", "$tgStorage", EpicsResourcesProvider]);
+module.factory("$tgHistoryResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", HistoryResourcesProvider]);
+module.factory("$tgInvitationsResourcesProvider", ["$tgRepo", InvitationsResourcesProvider]);
+module.factory("$tgIssuesResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", "$tgStorage", "$q", IssuesResourcesProvider]);
+module.factory("$tgKanbanResourcesProvider", ["$tgStorage", KanbanResourcesProvider]);
+module.factory("$tgLocalesResourcesProvider", ["$tgRepo", LocalesResourcesProvider]);
+module.factory("$tgMdRenderResourcesProvider", ["$tgRepo", "$tgUrls", "$tgHttp", MdRenderResourcesProvider]);
+module.factory("$tgMembershipsResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", MembershipsResourcesProvider]);
+module.factory("$tgModulesResourcesProvider", ["$tgRepo", ModulesResourcesProvider]);
+module.factory("$tgNotifyPoliciesResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", NotifyPoliciesResourcesProvider]);
+module.factory("$tgProjectsResourcesProvider", ["$tgConfig", "$tgRepo", "$tgHttp", "$tgUrls", "$tgAuth",
+                                                "$q", "$translate", ProjectsResourcesProvider]);
+module.factory("$tgRolesResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", RolesResourcesProvider]);
+module.factory("$tgSearchResourcesProvider", ["$tgRepo", "$tgUrls", "$tgHttp", "$q", SearchResourcesProvider]);
+module.factory("$tgSprintsResourcesProvider", ["$tgRepo", "$tgModel", "$tgStorage", SprintsResourcesProvider]);
+module.factory("$tgTasksResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", "$tgStorage", TasksResourcesProvider]);
+module.factory("$tgUserSettingsResourcesProvider", ["$tgConfig", "$tgRepo", "$tgHttp", "$tgUrls", "$q",
+                                                    UserSettingsResourcesProvider]);
+module.factory("$tgUserstoriesResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", "$tgStorage", "$q", UserstoriesResourcesProvider]);
+module.factory("$tgUsersResourcesProvider", ["$tgHttp", "$tgUrls", "$q",
+                                                    UsersResourcesProvider]);
+module.factory("$tgWebhookLogsResourcesProvider", ["$tgRepo", "$tgUrls", "$tgHttp", WebhookLogsResourcesProvider]);
+module.factory("$tgWebhooksResourcesProvider", ["$tgRepo", "$tgUrls", "$tgHttp", WebhooksResourcesProvider]);
+module.factory("$tgWikiResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", WikiResourcesProvider]);
+
 class ResourcesService extends Service {}
+module.service("$tgResources", ResourcesService);
 
 let urls = {
     // Auth
@@ -245,9 +299,6 @@ let initResources = function($log, $rs) {
     return providers.map((provider) =>
         provider($rs));
 };
-
-let module = angular.module("taigaResources", ["taigaBase"]);
-module.service("$tgResources", ResourcesService);
 
 // Module entry point
 module.run(["$log", "$tgUrls", initUrls]);

@@ -22,18 +22,10 @@
  * File: modules/resources/locales.coffee
  */
 
-
-import * as angular from "angular"
-
-let resourceProvider = function($repo) {
+export function LocalesResourcesProvider($repo) {
     let service = {
         list() { return $repo.queryMany("locales"); }
     };
 
     return instance => instance.locales = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgLocalesResourcesProvider", ["$tgRepo", resourceProvider]);
-

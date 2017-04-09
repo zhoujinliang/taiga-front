@@ -17,7 +17,7 @@
  * File: invite-members.directive.coffee
  */
 
-let InviteMembersDirective = function() {
+export let InviteMembersDirective = function() {
     let link = function(scope, el, attr, ctrl) {};
 
     return {
@@ -33,7 +33,4 @@ let InviteMembersDirective = function() {
         }
     };
 };
-
 InviteMembersDirective.$inject = [];
-
-angular.module("taigaProjects").directive("tgInviteMembers", InviteMembersDirective);

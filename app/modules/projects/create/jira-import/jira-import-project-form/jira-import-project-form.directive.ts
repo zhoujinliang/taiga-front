@@ -17,7 +17,7 @@
  * File: jira-import-project-form.directive.coffee
  */
 
-let JiraImportProjectFormDirective = () =>
+export let JiraImportProjectFormDirective = () =>
     ({
         link(scope, elm, attr, ctrl) {
             return scope.$watch('vm.members', ctrl.checkUsersLimit.bind(ctrl));
@@ -36,7 +36,4 @@ let JiraImportProjectFormDirective = () =>
         }
     })
 ;
-
 JiraImportProjectFormDirective.$inject = [];
-
-angular.module("taigaProjects").directive("tgJiraImportProjectForm", JiraImportProjectFormDirective);

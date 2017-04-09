@@ -22,10 +22,7 @@
  * File: modules/resources/history.coffee
  */
 
-
-import * as angular from "angular"
-
-let resourceProvider = function($repo, $http, $urls) {
+export function HistoryResourcesProvider($repo, $http, $urls) {
     let service:any = {};
 
     service.get = (type, objectId) => $repo.queryOneRaw(`history/${type}`, objectId);
@@ -73,7 +70,3 @@ let resourceProvider = function($repo, $http, $urls) {
 
     return instance => instance.history = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgHistoryResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", resourceProvider]);

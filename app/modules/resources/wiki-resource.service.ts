@@ -17,10 +17,9 @@
  * File: wiki-resource.service.coffee
  */
 
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-let Resource = function(urlsService, http) {
+export let WikiHistoryResource = function(urlsService, http) {
     let service:any = {};
 
     service.getWikiHistory = function(wikiId) {
@@ -38,8 +37,4 @@ let Resource = function(urlsService, http) {
 
     return () => ({"wikiHistory": service});
 };
-
-Resource.$inject = ["$tgUrls", "$tgHttp"];
-
-let module = angular.module("taigaResources2");
-module.factory("tgWikiHistory", Resource);
+WikiHistoryResource.$inject = ["$tgUrls", "$tgHttp"];

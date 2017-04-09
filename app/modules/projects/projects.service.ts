@@ -19,9 +19,8 @@
 
 import {Service} from "../../ts/classes"
 import {groupBy} from "../../ts/utils"
-import * as angular from "angular"
 
-class ProjectsService extends Service {
+export class ProjectsService extends Service {
     rs:any
     projectUrl:any
 
@@ -86,6 +85,3 @@ class ProjectsService extends Service {
     }
 }
 ProjectsService.initClass();
-
-
-angular.module("taigaProjects").service("tgProjectsService", ProjectsService);

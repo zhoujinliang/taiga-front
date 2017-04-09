@@ -17,11 +17,10 @@
  * File: dropdown-user.directive.coffee
  */
 
-import * as angular from "angular"
 import * as _ from "lodash"
 import {defineImmutableProperty} from "../../../ts/utils"
 
-let DropdownUserDirective = function(authService, configService, locationService,
+export let DropdownUserDirective = function(authService, configService, locationService,
         navUrlsService, feedbackService, $rootScope) {
 
     let link = function(scope, el, attrs, ctrl) {
@@ -57,5 +56,3 @@ DropdownUserDirective.$inject = [
     "tgFeedbackService",
     "$rootScope"
 ];
-
-angular.module("taigaNavigationBar").directive("tgDropdownUser", DropdownUserDirective);

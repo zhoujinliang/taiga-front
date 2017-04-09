@@ -17,7 +17,7 @@
  * File: warning-user-import.directive.coffee
  */
 
-let WarningUserImportDirective = (lightboxService, lightboxKeyboardNavigationService) =>
+export let WarningUserImportDirective = (lightboxService, lightboxKeyboardNavigationService) =>
     ({
         link(scope, el, attr) {
             return scope.$watch('visible', function(visible) {
@@ -40,7 +40,4 @@ let WarningUserImportDirective = (lightboxService, lightboxKeyboardNavigationSer
         }
     })
 ;
-
 WarningUserImportDirective.$inject = ['lightboxService', 'lightboxKeyboardNavigationService'];
-
-angular.module("taigaProjects").directive("tgWarningUserImportLightbox", WarningUserImportDirective);

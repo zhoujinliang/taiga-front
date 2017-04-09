@@ -17,7 +17,7 @@
  * File: lb-contact-team.directive.coffee
  */
 
-let ContactProjectLbDirective = function(lightboxService) {
+export let ContactProjectLbDirective = function(lightboxService) {
 
     this.inject = ['lightboxService'];
 
@@ -33,5 +33,3 @@ let ContactProjectLbDirective = function(lightboxService) {
         link
     };
 };
-
-angular.module("taigaProjects").directive("tgLbContactProject", ["lightboxService", ContactProjectLbDirective]);

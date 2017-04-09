@@ -17,7 +17,7 @@
  * File: single-member.directive.coffee
  */
 
-let SingleMemberDirective = () =>
+export let SingleMemberDirective = () =>
     ({
         templateUrl:"projects/create/invite-members/single-member/single-member.html",
         scope: {
@@ -26,7 +26,4 @@ let SingleMemberDirective = () =>
         }
     })
 ;
-
 SingleMemberDirective.$inject = [];
-
-angular.module("taigaProjects").directive("tgSingleMember", SingleMemberDirective);

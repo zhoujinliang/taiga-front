@@ -17,7 +17,7 @@
  * File: import-project.directive.coffee
  */
 
-let ImportProjectDirective = function() {
+export let ImportProjectDirective = function() {
 
     let link = (scope, el, attr, ctrl) => ctrl.start();
 
@@ -32,7 +32,4 @@ let ImportProjectDirective = function() {
         }
     };
 };
-
 ImportProjectDirective.$inject = [];
-
-angular.module("taigaProjects").directive("tgImportProject", ImportProjectDirective);

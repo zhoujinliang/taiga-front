@@ -28,14 +28,12 @@ import * as _ from "lodash"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-let module = angular.module("taigaCommon");
-
 //############################################################################
 //# Common Lightbox Services
 //############################################################################
 
 // the lightboxContent hide/show doesn't have sense because is an IE hack
-class LightboxService extends Service {
+export class LightboxService extends Service {
     animationFrame:any
     q:any
     rootScope: angular.IScope
@@ -144,11 +142,7 @@ class LightboxService extends Service {
     }
 }
 
-
-module.service("lightboxService", ["animationFrame", "$q", "$rootScope", LightboxService]);
-
-
-class LightboxKeyboardNavigationService extends Service {
+export class LightboxKeyboardNavigationService extends Service {
     stop() {
         let docEl = angular.element(document);
         return docEl.off(".keyboard-navigation");
@@ -204,9 +198,6 @@ class LightboxKeyboardNavigationService extends Service {
     }
 }
 
-module.service("lightboxKeyboardNavigationService", LightboxKeyboardNavigationService);
-
-
 //############################################################################
 //# Generic Lighthbox Directive
 //############################################################################
@@ -214,7 +205,7 @@ module.service("lightboxKeyboardNavigationService", LightboxKeyboardNavigationSe
 // This adds generic behavior to all blocks with lightbox class like
 // close button event handlers.
 
-let LightboxDirective = function(lightboxService) {
+export let LightboxDirective = function(lightboxService) {
     let link = function($scope, $el, $attrs) {
 
         if (!$attrs.$attr.visible) {
@@ -228,15 +219,13 @@ let LightboxDirective = function(lightboxService) {
     return {restrict: "C", link};
 };
 
-module.directive("lightbox", ["lightboxService", LightboxDirective]);
-
 //############################################################################
 //# Block Lightbox Directive
 //############################################################################
 
 // Issue/Userstory blocking message lightbox directive.
 
-let BlockLightboxDirective = function($rootscope, $tgrepo, $confirm, lightboxService, $loading, $modelTransform, $translate) {
+export let BlockLightboxDirective = function($rootscope, $tgrepo, $confirm, lightboxService, $loading, $modelTransform, $translate) {
     let link = function($scope, $el, $attrs, $model) {
         let transform;
         let title = $translate.instant($attrs.title);
@@ -316,14 +305,11 @@ let BlockLightboxDirective = function($rootscope, $tgrepo, $confirm, lightboxSer
     };
 };
 
-module.directive("tgLbBlock", ["$rootScope", "$tgRepo", "$tgConfirm", "lightboxService", "$tgLoading", "$tgQueueModelTransformation", "$translate", BlockLightboxDirective]);
-
-
 //############################################################################
 //# Generic Lightbox Blocking-Message Input Directive
 //############################################################################
 
-let BlockingMessageInputDirective = function($log, $template, $compile) {
+export let BlockingMessageInputDirective = function($log, $template, $compile) {
     let template = $template.get("common/lightbox/lightbox-blocking-message-input.html", true);
 
     let link = function($scope, $el, $attrs, $model) {
@@ -350,14 +336,11 @@ let BlockingMessageInputDirective = function($log, $template, $compile) {
     };
 };
 
-module.directive("tgBlockingMessageInput", ["$log", "$tgTemplate", "$compile", BlockingMessageInputDirective]);
-
-
 //############################################################################
 //# Create/Edit Userstory Lightbox Directive
 //############################################################################
 
-let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScope, lightboxService, $loading, $translate, $confirm, $q, attachmentsService) {
+export let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScope, lightboxService, $loading, $translate, $confirm, $q, attachmentsService) {
     let link = function($scope, $el, attrs) {
         let form = null;
         $scope.createEditUs = {};
@@ -576,26 +559,11 @@ let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScope, ligh
     return {link};
 };
 
-module.directive("tgLbCreateEditUserstory", [
-    "$tgRepo",
-    "$tgModel",
-    "$tgResources",
-    "$rootScope",
-    "lightboxService",
-    "$tgLoading",
-    "$translate",
-    "$tgConfirm",
-    "$q",
-    "tgAttachmentsService",
-    CreateEditUserstoryDirective
-]);
-
-
 //############################################################################
 //# Creare Bulk Userstories Lightbox Directive
 //############################################################################
 
-let CreateBulkUserstoriesDirective = function($repo, $rs, $rootscope, lightboxService, $loading, $model, $confirm) {
+export let CreateBulkUserstoriesDirective = function($repo, $rs, $rootscope, lightboxService, $loading, $model, $confirm) {
     let link = function($scope, $el, attrs) {
         let form = null;
 
@@ -649,23 +617,11 @@ let CreateBulkUserstoriesDirective = function($repo, $rs, $rootscope, lightboxSe
     return {link};
 };
 
-module.directive("tgLbCreateBulkUserstories", [
-    "$tgRepo",
-    "$tgResources",
-    "$rootScope",
-    "lightboxService",
-    "$tgLoading",
-    "$tgModel",
-    "$tgConfirm",
-    CreateBulkUserstoriesDirective
-]);
-
-
 //############################################################################
 //# AssignedTo Lightbox Directive
 //############################################################################
 
-let AssignedToLightboxDirective = function(lightboxService, lightboxKeyboardNavigationService, $template, $compile, avatarService) {
+export let AssignedToLightboxDirective = function(lightboxService, lightboxKeyboardNavigationService, $template, $compile, avatarService) {
     let link = function($scope, $el, $attrs) {
         let selectedUser = null;
         let selectedItem = null;
@@ -780,15 +736,11 @@ let AssignedToLightboxDirective = function(lightboxService, lightboxKeyboardNavi
     };
 };
 
-
-module.directive("tgLbAssignedto", ["lightboxService", "lightboxKeyboardNavigationService", "$tgTemplate", "$compile", "tgAvatarService", AssignedToLightboxDirective]);
-
-
 //############################################################################
 //# Watchers Lightbox directive
 //############################################################################
 
-let WatchersLightboxDirective = function($repo, lightboxService, lightboxKeyboardNavigationService, $template, $compile, avatarService) {
+export let WatchersLightboxDirective = function($repo, lightboxService, lightboxKeyboardNavigationService, $template, $compile, avatarService) {
     let link = function($scope, $el, $attrs) {
         let selectedItem = null;
         let usersTemplate = $template.get("common/lightbox/lightbox-assigned-to-users.html", true);
@@ -889,10 +841,7 @@ let WatchersLightboxDirective = function($repo, lightboxService, lightboxKeyboar
     };
 };
 
-module.directive("tgLbWatchers", ["$tgRepo", "lightboxService", "lightboxKeyboardNavigationService", "$tgTemplate", "$compile", "tgAvatarService", WatchersLightboxDirective]);
-
-
-let LightboxLeaveProjectWarningDirective = function(lightboxService, $template, $compile) {
+export let LightboxLeaveProjectWarningDirective = function(lightboxService, $template, $compile) {
     let link = ($scope, $el, attrs) => lightboxService.open($el);
 
     return {
@@ -901,5 +850,3 @@ let LightboxLeaveProjectWarningDirective = function(lightboxService, $template, 
         scope: true
     };
 };
-
-module.directive("tgLightboxLeaveProjectWarning", ["lightboxService", LightboxLeaveProjectWarningDirective]);

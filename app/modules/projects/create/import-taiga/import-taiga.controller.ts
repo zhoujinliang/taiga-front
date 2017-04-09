@@ -17,9 +17,7 @@
  * File: import-project.controller.coffee
  */
 
-import * as angular from "angular"
-
-class ImportTaigaController {
+export class ImportTaigaController {
     confirm:any
     rs:any
     importProjectService:any
@@ -55,5 +53,3 @@ class ImportTaigaController {
     }
 }
 ImportTaigaController.initClass();
-
-angular.module("taigaProjects").controller("ImportTaigaCtrl", ImportTaigaController);

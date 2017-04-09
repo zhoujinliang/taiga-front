@@ -24,9 +24,8 @@
 
 
 import {sizeFormat} from "../../utils"
-import * as angular from "angular"
 
-let resourceProvider = function($repo) {
+export function CustomAttributesResourcesProvider($repo) {
     let _list = (projectId, resource) => $repo.queryMany(resource, {project: projectId});
 
     let service = {
@@ -47,6 +46,3 @@ let resourceProvider = function($repo) {
     return instance => instance.customAttributes = service;
 };
 
-
-let module = angular.module("taigaResources");
-module.factory("$tgCustomAttributesResourcesProvider", ["$tgRepo", resourceProvider]);

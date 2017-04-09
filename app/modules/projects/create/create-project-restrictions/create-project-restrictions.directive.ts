@@ -17,11 +17,7 @@
  * File: create-project-restrictions.directive.coffee
  */
 
-import * as angular from "angular"
-
-let module = angular.module("taigaProject");
-
-let createProjectRestrictionsDirective = () =>
+export let createProjectRestrictionsDirective = () =>
     ({
         scope: {
             isPrivate: '=',
@@ -31,5 +27,3 @@ let createProjectRestrictionsDirective = () =>
         templateUrl: "projects/create/create-project-restrictions/create-project-restrictions.html"
     })
 ;
-
-module.directive('tgCreateProjectRestrictions', [createProjectRestrictionsDirective]);

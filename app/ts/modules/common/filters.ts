@@ -22,16 +22,12 @@
  * File: modules/common/filters.coffee
  */
 
-import * as angular from "angular"
 import * as _ from "lodash"
 import * as moment from "moment"
 import * as Immutable from "immutable"
 import * as utils from "../../utils"
 
-let module = angular.module("taigaCommon");
-
-
-let defaultFilter = () =>
+export let defaultFilter = () =>
     function(value, defaultValue) {
         if (value === [null, undefined]) {
             return defaultValue;
@@ -40,10 +36,7 @@ let defaultFilter = () =>
     }
 ;
 
-module.filter("default", defaultFilter);
-
-
-let yesNoFilter = $translate =>
+export let yesNoFilter = $translate =>
     function(value) {
         if (value) {
             return $translate.instant("COMMON.YES");
@@ -53,15 +46,9 @@ let yesNoFilter = $translate =>
     }
 ;
 
-module.filter("yesNo", ["$translate", yesNoFilter]);
+export let unslugify = () => utils.unslugify;
 
-
-let unslugify = () => utils.unslugify;
-
-module.filter("unslugify", unslugify);
-
-
-let momentFormat = () =>
+export let momentFormat = () =>
     function(input, format) {
         if (input) {
             return moment(input).format(format);
@@ -70,10 +57,7 @@ let momentFormat = () =>
     }
 ;
 
-module.filter("momentFormat", momentFormat);
-
-
-let momentFromNow = () =>
+export let momentFromNow = () =>
     function(input, without_suffix) {
         if (input) {
             return moment(input).fromNow(without_suffix || false);
@@ -82,16 +66,11 @@ let momentFromNow = () =>
     }
 ;
 
-module.filter("momentFromNow", momentFromNow);
-
-
-let sizeFormat = () => {
+export let sizeFormat = () => {
     return this.taiga.sizeFormat;
 };
 
-module.filter("sizeFormat", sizeFormat);
-
-let toMutableFilter =  function() {
+export let toMutableFilter =  function() {
     let toMutable = js => js.toJS();
 
     let memoizedMutable = _.memoize(toMutable);
@@ -105,10 +84,7 @@ let toMutableFilter =  function() {
   };
 };
 
-module.filter("toMutable", toMutableFilter);
-
-
-let byRefFilter = $filterFilter=>
+export let byRefFilter = $filterFilter=>
     function(userstories, filter) {
         if (filter != null ? filter.startsWith("#") : undefined) {
             let cleanRef= filter.substr(1);
@@ -119,10 +95,7 @@ let byRefFilter = $filterFilter=>
     }
 ;
 
-module.filter("byRef", ["filterFilter", byRefFilter]);
-
-
-let darkerFilter = () =>
+export let darkerFilter = () =>
     function(color, luminosity) {
         // validate hex string
         color = new String(color).replace(/[^0-9a-f]/gi, '');
@@ -149,10 +122,7 @@ let darkerFilter = () =>
     }
 ;
 
-
-module.filter("darker", darkerFilter);
-
-let markdownToHTML = wysiwigService =>
+export let markdownToHTML = wysiwigService =>
     function(input) {
         if (input) {
             return wysiwigService.getHTML(input);
@@ -162,9 +132,7 @@ let markdownToHTML = wysiwigService =>
     }
 ;
 
-module.filter("markdownToHTML", ["tgWysiwygService", markdownToHTML]);
-
-let inArray = $filter =>
+export let inArray = $filter =>
     function(list, arrayFilter, element) {
         if (arrayFilter) {
             let filter = $filter("filter");
@@ -172,4 +140,3 @@ let inArray = $filter =>
         }
     }
 ;
-module.filter("inArray", ["$filter", inArray]);

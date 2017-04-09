@@ -17,7 +17,7 @@
  * File: trello-import.directive.coffee
  */
 
-let TrelloImportDirective = () =>
+export let TrelloImportDirective = () =>
     ({
         link(scope, elm, attrs, ctrl) {
             return ctrl.startProjectSelector();
@@ -31,7 +31,4 @@ let TrelloImportDirective = () =>
         }
     })
 ;
-
 TrelloImportDirective.$inject = [];
-
-angular.module("taigaProjects").directive("tgTrelloImport", TrelloImportDirective);

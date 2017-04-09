@@ -18,9 +18,8 @@
  */
 
 import {Service} from "../../../../ts/classes"
-import * as angular from "angular"
 
-class ImportProjectService extends Service {
+export class ImportProjectService extends Service {
     currentUserService:any
     tgAuth:any
     lightboxFactory:any
@@ -163,5 +162,3 @@ class ImportProjectService extends Service {
     }
 }
 ImportProjectService.initClass();
-
-angular.module("taigaProjects").service("tgImportProjectService", ImportProjectService);

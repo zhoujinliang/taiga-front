@@ -18,10 +18,9 @@
  */
 
 import {Service} from "../../../../ts/classes"
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class JiraImportService extends Service {
+export class JiraImportService extends Service {
     resources:any
     location:any
     projects:Immutable.List<any>
@@ -87,5 +86,3 @@ class JiraImportService extends Service {
     }
 }
 JiraImportService.initClass();
-
-angular.module("taigaProjects").service("tgJiraImportService", JiraImportService);

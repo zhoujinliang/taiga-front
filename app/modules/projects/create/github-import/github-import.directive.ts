@@ -17,7 +17,7 @@
  * File: github-import.directive.coffee
  */
 
-let GithubImportDirective = () =>
+export let GithubImportDirective = () =>
     ({
         link(scope, elm, attrs, ctrl) {
             return ctrl.startProjectSelector();
@@ -31,7 +31,4 @@ let GithubImportDirective = () =>
         }
     })
 ;
-
 GithubImportDirective.$inject = [];
-
-angular.module("taigaProjects").directive("tgGithubImport", GithubImportDirective);

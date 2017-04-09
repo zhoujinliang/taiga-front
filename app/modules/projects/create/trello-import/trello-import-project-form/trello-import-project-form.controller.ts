@@ -17,10 +17,9 @@
  * File: trello-import-project-form.controller.coffee
  */
 
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class TrelloImportProjectFormController {
+export class TrelloImportProjectFormController {
     currentUserService:any
     canCreatePublicProjects:any
     canCreatePrivateProjects:any
@@ -76,5 +75,3 @@ class TrelloImportProjectFormController {
     }
 }
 TrelloImportProjectFormController.initClass();
-
-angular.module('taigaProjects').controller('TrelloImportProjectFormCtrl', TrelloImportProjectFormController);

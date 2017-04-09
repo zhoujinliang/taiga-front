@@ -43,7 +43,7 @@ let NOTIFICATION_MSG = {
 };
 
 
-class ConfirmService extends Service {
+export class ConfirmService extends Service {
     q:any
     lightboxService:any
     loading:any
@@ -340,7 +340,3 @@ class ConfirmService extends Service {
     }
 }
 ConfirmService.initClass();
-
-
-let module = angular.module("taigaCommon");
-module.service("$tgConfirm", ConfirmService);

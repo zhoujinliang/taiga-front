@@ -18,9 +18,8 @@
  */
 
 import {defineImmutableProperty} from "../../../ts/utils"
-import * as angular from "angular"
 
-class ProjectsListingController {
+export class ProjectsListingController {
     currentUserService:any
 
     static initClass() {
@@ -35,5 +34,3 @@ class ProjectsListingController {
     }
 }
 ProjectsListingController.initClass();
-
-angular.module("taigaProjects").controller("ProjectsListing", ProjectsListingController);

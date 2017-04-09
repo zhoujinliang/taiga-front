@@ -18,9 +18,8 @@
  */
 
 import {defineImmutableProperty} from "../../../ts/utils"
-import * as angular from "angular"
 
-class ProjectController {
+export class ProjectController {
     routeParams:any
     appMetaService:any
     auth:any
@@ -65,5 +64,3 @@ class ProjectController {
     }
 }
 ProjectController.initClass();
-
-angular.module("taigaProjects").controller("Project", ProjectController);

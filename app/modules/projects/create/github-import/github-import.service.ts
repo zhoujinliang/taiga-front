@@ -18,10 +18,9 @@
  */
 
 import {Service} from "../../../../ts/classes"
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class GithubImportService extends Service {
+export class GithubImportService extends Service {
     resources:any
     location:any
     projects:Immutable.List<any>
@@ -80,5 +79,3 @@ class GithubImportService extends Service {
     }
 }
 GithubImportService.initClass();
-
-angular.module("taigaProjects").service("tgGithubImportService", GithubImportService);

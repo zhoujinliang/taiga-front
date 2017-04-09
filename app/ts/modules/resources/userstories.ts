@@ -23,10 +23,9 @@
  */
 
 import {generateHash} from "../../app"
-import * as angular from "angular"
 import * as _ from "lodash"
 
-let resourceProvider = function($repo, $http, $urls, $storage, $q) {
+export function UserstoriesResourcesProvider($repo, $http, $urls, $storage, $q) {
     let service:any = {};
     let hashSuffix = "userstories-queryparams";
 
@@ -153,6 +152,3 @@ let resourceProvider = function($repo, $http, $urls, $storage, $q) {
 
     return instance => instance.userstories = service;
 };
-
-let module = angular.module("taigaResources");
-module.factory("$tgUserstoriesResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", "$tgStorage", "$q", resourceProvider]);

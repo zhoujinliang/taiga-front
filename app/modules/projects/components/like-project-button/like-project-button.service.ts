@@ -18,9 +18,8 @@
  */
 
 import {Service} from "../../../../ts/classes"
-import * as angular from "angular"
 
-class LikeProjectButtonService extends Service {
+export class LikeProjectButtonService extends Service {
     rs:any
     currentUserService:any
     projectService:any
@@ -91,5 +90,3 @@ class LikeProjectButtonService extends Service {
     }
 }
 LikeProjectButtonService.initClass();
-
-angular.module("taigaProjects").service("tgLikeProjectButtonService", LikeProjectButtonService);

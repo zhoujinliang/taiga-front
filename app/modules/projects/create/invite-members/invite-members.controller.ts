@@ -17,9 +17,7 @@
  * File: invite-members.controller.coffee
  */
 
-import * as angular from "angular"
-
-class InviteMembersController {
+export class InviteMembersController {
     invitedMembers:any
 
     static initClass() {
@@ -31,5 +29,3 @@ class InviteMembersController {
     }
 }
 InviteMembersController.initClass();
-
-angular.module("taigaProjects").controller("InviteMembersCtrl", InviteMembersController);

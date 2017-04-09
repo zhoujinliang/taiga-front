@@ -17,7 +17,7 @@
  * File: duplicate-project.directive.coffee
  */
 
-let DuplicateProjectDirective = function() {
+export let DuplicateProjectDirective = function() {
 
     let link = function(scope, el, attr, ctrl) {};
 
@@ -30,7 +30,4 @@ let DuplicateProjectDirective = function() {
         scope: {}
     };
 };
-
 DuplicateProjectDirective.$inject = [];
-
-angular.module("taigaProjects").directive("tgDuplicateProject", DuplicateProjectDirective);

@@ -30,8 +30,6 @@ import * as _ from "lodash"
 import * as angular from "angular"
 import * as moment from "moment"
 
-let module = angular.module("taigaCommon");
-
 // Custom attributes types (see taiga-back/taiga/projects/custom_attributes/choices.py)
 let TEXT_TYPE = "text";
 let RICHTEXT_TYPE = "url";
@@ -142,7 +140,7 @@ class CustomAttributesValuesController extends Controller {
 CustomAttributesValuesController.initClass();
 
 
-let CustomAttributesValuesDirective = function($templates, $storage) {
+export let CustomAttributesValuesDirective = function($templates, $storage) {
     let template = $templates.get("custom-attributes/custom-attributes-values.html", true);
 
     let collapsedHash = type => generateHash(["custom-attributes-collapsed", type]);
@@ -183,11 +181,8 @@ let CustomAttributesValuesDirective = function($templates, $storage) {
     };
 };
 
-module.directive("tgCustomAttributesValues", ["$tgTemplate", "$tgStorage", "$translate",
-                                              CustomAttributesValuesDirective]);
 
-
-let CustomAttributeValueDirective = function($template, $selectedText, $compile, $translate, datePickerConfigService, wysiwygService) {
+export let CustomAttributeValueDirective = function($template, $selectedText, $compile, $translate, datePickerConfigService, wysiwygService) {
     let template = $template.get("custom-attributes/custom-attribute-value.html", true);
     let templateEdit = $template.get("custom-attributes/custom-attribute-value-edit.html", true);
 
@@ -330,6 +325,3 @@ let CustomAttributeValueDirective = function($template, $selectedText, $compile,
         restrict: "AE"
     };
 };
-
-module.directive("tgCustomAttributeValue", ["$tgTemplate", "$selectedText", "$compile", "$translate",
-                                            "tgDatePickerConfigService", "tgWysiwygService", CustomAttributeValueDirective]);

@@ -23,16 +23,10 @@
  */
 
 
-import * as angular from "angular"
-
-let resourceProvider = function($repo) {
+export function InvitationsResourcesProvider($repo) {
     let service:any = {};
 
     service.get = token => $repo.queryOne("invitations", token);
 
     return instance => instance.invitations = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgInvitationsResourcesProvider", ["$tgRepo", resourceProvider]);

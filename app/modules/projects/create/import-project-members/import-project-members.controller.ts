@@ -17,11 +17,10 @@
  * File: import-project-members.controller.coffee
  */
 
-import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
 
-class ImportProjectMembersController {
+export class ImportProjectMembersController {
     currentUserService:any
     userService:any
     selectImportUserLightbox:boolean
@@ -203,5 +202,3 @@ class ImportProjectMembersController {
     }
 }
 ImportProjectMembersController.initClass();
-
-angular.module('taigaProjects').controller('ImportProjectMembersCtrl', ImportProjectMembersController);

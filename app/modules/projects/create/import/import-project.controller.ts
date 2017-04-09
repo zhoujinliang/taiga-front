@@ -17,9 +17,7 @@
  * File: import-project.controller.coffee
  */
 
-import * as angular from "angular"
-
-class ImportProjectController {
+export class ImportProjectController {
     trelloService:any
     jiraService:any
     githubService:any
@@ -173,5 +171,3 @@ class ImportProjectController {
     }
 }
 ImportProjectController.initClass();
-
-angular.module("taigaProjects").controller("ImportProjectCtrl", ImportProjectController);

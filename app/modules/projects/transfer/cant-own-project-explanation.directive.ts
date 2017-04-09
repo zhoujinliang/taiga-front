@@ -17,10 +17,8 @@
  * File: cant-own-project-explanation.directive.coffee
  */
 
-let CantOwnProjectExplanationDirective = () =>
+export let CantOwnProjectExplanationDirective = () =>
     ({
         templateUrl: "projects/transfer/cant-own-project-explanation.html"
     })
 ;
-
-angular.module("taigaProjects").directive("tgCantOwnProjectExplanation", CantOwnProjectExplanationDirective);

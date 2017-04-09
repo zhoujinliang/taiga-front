@@ -22,10 +22,9 @@
  * File: modules/resources/sprints.coffee
  */
 
-import * as angular from "angular"
 import * as _ from "lodash"
 
-let resourceProvider = function($repo, $model, $storage) {
+export function SprintsResourcesProvider($repo, $model, $storage) {
     let service:any = {};
 
     service.get = (projectId, sprintId) =>
@@ -63,6 +62,3 @@ let resourceProvider = function($repo, $model, $storage) {
 
     return instance => instance.sprints = service;
 };
-
-let module = angular.module("taigaResources");
-module.factory("$tgSprintsResourcesProvider", ["$tgRepo", "$tgModel", "$tgStorage", resourceProvider]);

@@ -17,9 +17,7 @@
  * File: like-project-button.controller.coffee
  */
 
-import * as angular from "angular"
-
-class LikeProjectButtonController {
+export class LikeProjectButtonController {
     confirm:any
     likeButtonService:any
     isMouseOver:boolean
@@ -79,5 +77,3 @@ class LikeProjectButtonController {
     }
 }
 LikeProjectButtonController.initClass();
-
-angular.module("taigaProjects").controller("LikeProjectButton", LikeProjectButtonController);

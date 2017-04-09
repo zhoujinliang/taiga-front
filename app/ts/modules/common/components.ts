@@ -28,14 +28,11 @@ import * as angular from "angular"
 import * as moment from "moment"
 import * as _ from "lodash"
 
-let module = angular.module("taigaCommon");
-
-
 //############################################################################
 //# Date Range Directive (used mainly for sprint date range)
 //############################################################################
 
-let DateRangeDirective = function($translate) {
+export let DateRangeDirective = function($translate) {
     let renderRange = function($el, first, second) {
         let prettyDate = $translate.instant("BACKLOG.SPRINTS.DATE");
         let initDate = moment(first).format(prettyDate);
@@ -54,14 +51,12 @@ let DateRangeDirective = function($translate) {
     return {link};
 };
 
-module.directive("tgDateRange", ["$translate", DateRangeDirective]);
-
 
 //############################################################################
 //# Date Selector Directive (using pikaday)
 //############################################################################
 
-let DateSelectorDirective = function($rootscope, datePickerConfigService) {
+export let DateSelectorDirective = function($rootscope, datePickerConfigService) {
     let link = function($scope, $el, $attrs, $model) {
         let selectedDate = null;
 
@@ -103,14 +98,12 @@ let DateSelectorDirective = function($rootscope, datePickerConfigService) {
     };
 };
 
-module.directive("tgDateSelector", ["$rootScope", "tgDatePickerConfigService", DateSelectorDirective]);
-
 
 //############################################################################
 //# Sprint Progress Bar Directive
 //############################################################################
 
-let SprintProgressBarDirective = function() {
+export let SprintProgressBarDirective = function() {
     let renderProgress = function($el, percentage, visual_percentage) {
         if ($el.hasClass(".current-progress")) {
             return $el.css("width", `${percentage}%`);
@@ -139,14 +132,12 @@ let SprintProgressBarDirective = function() {
     return {link};
 };
 
-module.directive("tgSprintProgressbar", SprintProgressBarDirective);
-
 
 //############################################################################
 //# Created-by display directive
 //############################################################################
 
-let CreatedByDisplayDirective = function($template, $compile, $translate, $navUrls, avatarService){
+export let CreatedByDisplayDirective = function($template, $compile, $translate, $navUrls, avatarService){
     // Display the owner information (full name and photo) and the date of
     // creation of an object (like USs, tasks and issues).
     //
@@ -189,11 +180,8 @@ let CreatedByDisplayDirective = function($template, $compile, $translate, $navUr
     };
 };
 
-module.directive("tgCreatedByDisplay", ["$tgTemplate", "$compile", "$translate", "$tgNavUrls", "tgAvatarService",
-                                        CreatedByDisplayDirective]);
 
-
-let UserDisplayDirective = function($template, $compile, $translate, $navUrls, avatarService){
+export let UserDisplayDirective = function($template, $compile, $translate, $navUrls, avatarService){
     // Display the user information (full name and photo).
     //
     // Example:
@@ -226,14 +214,12 @@ let UserDisplayDirective = function($template, $compile, $translate, $navUrls, a
     };
 };
 
-module.directive("tgUserDisplay", ["$tgTemplate", "$compile", "$translate", "$tgNavUrls", "tgAvatarService",
-                                   UserDisplayDirective]);
 
 //############################################################################
 //# Watchers directive
 //############################################################################
 
-let WatchersDirective = function($rootscope, $confirm, $repo, $modelTransform, $template, $compile, $translate) {
+export let WatchersDirective = function($rootscope, $confirm, $repo, $modelTransform, $template, $compile, $translate) {
     // You have to include a div with the tg-lb-watchers directive in the page
     // where use this directive
 
@@ -327,15 +313,12 @@ let WatchersDirective = function($rootscope, $confirm, $repo, $modelTransform, $
     };
 };
 
-module.directive("tgWatchers", ["$rootScope", "$tgConfirm", "$tgRepo", "$tgQueueModelTransformation", "$tgTemplate", "$compile",
-                                "$translate", WatchersDirective]);
-
 
 //############################################################################
 //# Assigned to directive
 //############################################################################
 
-let AssignedToDirective = function($rootscope, $confirm, $repo, $loading, $modelTransform, $template, $translate, $compile, $currentUserService, avatarService) {
+export let AssignedToDirective = function($rootscope, $confirm, $repo, $loading, $modelTransform, $template, $translate, $compile, $currentUserService, avatarService) {
     // You have to include a div with the tg-lb-assignedto directive in the page
     // where use this directive
     let template = $template.get("common/components/assigned-to.html", true);
@@ -442,15 +425,12 @@ let AssignedToDirective = function($rootscope, $confirm, $repo, $loading, $model
     };
 };
 
-module.directive("tgAssignedTo", ["$rootScope", "$tgConfirm", "$tgRepo", "$tgLoading", "$tgQueueModelTransformation", "$tgTemplate", "$translate", "$compile","tgCurrentUserService", "tgAvatarService",
-                                  AssignedToDirective]);
-
 
 //############################################################################
 //# Block Button directive
 //############################################################################
 
-let BlockButtonDirective = function($rootscope, $loading, $template) {
+export let BlockButtonDirective = function($rootscope, $loading, $template) {
     let template = $template.get("common/components/block-button.html");
 
     let link = function($scope, $el, $attrs, $model) {
@@ -499,14 +479,12 @@ let BlockButtonDirective = function($rootscope, $loading, $template) {
     };
 };
 
-module.directive("tgBlockButton", ["$rootScope", "$tgLoading", "$tgTemplate", BlockButtonDirective]);
-
 
 //############################################################################
 //# Delete Button directive
 //############################################################################
 
-let DeleteButtonDirective = function($log, $repo, $confirm, $location, $template) {
+export let DeleteButtonDirective = function($log, $repo, $confirm, $location, $template) {
     let template = $template.get("common/components/delete-button.html");
 
     let link = function($scope, $el, $attrs, $model) {
@@ -546,13 +524,12 @@ let DeleteButtonDirective = function($log, $repo, $confirm, $location, $template
     };
 };
 
-module.directive("tgDeleteButton", ["$log", "$tgRepo", "$tgConfirm", "$tgLocation", "$tgTemplate", DeleteButtonDirective]);
 
 //############################################################################
 //# Editable subject directive
 //############################################################################
 
-let EditableSubjectDirective = function($rootscope, $repo, $confirm, $loading, $modelTransform, $template) {
+export let EditableSubjectDirective = function($rootscope, $repo, $confirm, $loading, $modelTransform, $template) {
     let template = $template.get("common/components/editable-subject.html");
 
     let link = function($scope, $el, $attrs, $model) {
@@ -639,8 +616,6 @@ let EditableSubjectDirective = function($rootscope, $repo, $confirm, $loading, $
     };
 };
 
-module.directive("tgEditableSubject", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation",
-                                       "$tgTemplate", EditableSubjectDirective]);
 
 //############################################################################
 //# Common list directives
@@ -649,7 +624,7 @@ module.directive("tgEditableSubject", ["$rootScope", "$tgRepo", "$tgConfirm", "$
 //#       completely bindonce, they only serves for visualization of data.
 //############################################################################
 
-let ListItemEpicStatusDirective = function() {
+export let ListItemEpicStatusDirective = function() {
     let link = function($scope, $el, $attrs) {
         let epic = $scope.$eval($attrs.tgListitemEpicStatus);
         return bindOnce($scope, "epicStatusById", epicStatusById => $el.html(epicStatusById[epic.status].name));
@@ -658,9 +633,8 @@ let ListItemEpicStatusDirective = function() {
     return {link};
 };
 
-module.directive("tgListitemEpicStatus", ListItemEpicStatusDirective);
 
-let ListItemUsStatusDirective = function() {
+export let ListItemUsStatusDirective = function() {
     let link = function($scope, $el, $attrs) {
         let us = $scope.$eval($attrs.tgListitemUsStatus);
         return bindOnce($scope, "usStatusById", usStatusById => $el.html(usStatusById[us.status].name));
@@ -669,10 +643,9 @@ let ListItemUsStatusDirective = function() {
     return {link};
 };
 
-module.directive("tgListitemUsStatus", ListItemUsStatusDirective);
 
 
-let ListItemTaskStatusDirective = function() {
+export let ListItemTaskStatusDirective = function() {
     let link = function($scope, $el, $attrs) {
         let task = $scope.$eval($attrs.tgListitemTaskStatus);
         return bindOnce($scope, "taskStatusById", taskStatusById => $el.html(taskStatusById[task.status].name));
@@ -681,10 +654,9 @@ let ListItemTaskStatusDirective = function() {
     return {link};
 };
 
-module.directive("tgListitemTaskStatus", ListItemTaskStatusDirective);
 
 
-let ListItemAssignedtoDirective = function($template, $translate, avatarService) {
+export let ListItemAssignedtoDirective = function($template, $translate, avatarService) {
     let template = $template.get("common/components/list-item-assigned-to-avatar.html", true);
 
     let link = ($scope, $el, $attrs) =>
@@ -711,10 +683,9 @@ let ListItemAssignedtoDirective = function($template, $translate, avatarService)
     return {link};
 };
 
-module.directive("tgListitemAssignedto", ["$tgTemplate", "$translate", "tgAvatarService", ListItemAssignedtoDirective]);
 
 
-let ListItemIssueStatusDirective = function() {
+export let ListItemIssueStatusDirective = function() {
     let link = function($scope, $el, $attrs) {
         let issue = $scope.$eval($attrs.tgListitemIssueStatus);
         return bindOnce($scope, "issueStatusById", issueStatusById => $el.html(issueStatusById[issue.status].name));
@@ -723,10 +694,8 @@ let ListItemIssueStatusDirective = function() {
     return {link};
 };
 
-module.directive("tgListitemIssueStatus", ListItemIssueStatusDirective);
 
-
-let ListItemTypeDirective = function() {
+export let ListItemTypeDirective = function() {
     let link = function($scope, $el, $attrs) {
         let render = function(issueTypeById, issue) {
             let type = issueTypeById[issue.type];
@@ -749,10 +718,8 @@ let ListItemTypeDirective = function() {
     };
 };
 
-module.directive("tgListitemType", ListItemTypeDirective);
 
-
-let ListItemPriorityDirective = function() {
+export let ListItemPriorityDirective = function() {
     let link = function($scope, $el, $attrs) {
         let render = function(priorityById, issue) {
             let priority = priorityById[issue.priority];
@@ -775,10 +742,8 @@ let ListItemPriorityDirective = function() {
     };
 };
 
-module.directive("tgListitemPriority", ListItemPriorityDirective);
 
-
-let ListItemSeverityDirective = function() {
+export let ListItemSeverityDirective = function() {
     let link = function($scope, $el, $attrs) {
         let render = function(severityById, issue) {
             let severity = severityById[issue.severity];
@@ -801,14 +766,12 @@ let ListItemSeverityDirective = function() {
     };
 };
 
-module.directive("tgListitemSeverity", ListItemSeverityDirective);
-
 
 //############################################################################
 //# Progress bar directive
 //############################################################################
 
-let TgProgressBarDirective = function($template) {
+export let TgProgressBarDirective = function($template) {
     let template = $template.get("common/components/progress-bar.html", true);
 
     let render = (el, percentage) => el.html(template({percentage}));
@@ -828,14 +791,12 @@ let TgProgressBarDirective = function($template) {
     return {link};
 };
 
-module.directive("tgProgressBar", ["$tgTemplate", TgProgressBarDirective]);
-
 
 //############################################################################
 //# Main title directive
 //############################################################################
 
-let TgMainTitleDirective = function($translate) {
+export let TgMainTitleDirective = function($translate) {
     let link = function($scope, $el, $attrs) {
         $attrs.$observe("i18nSectionName", i18nSectionName => $scope.sectionName = i18nSectionName);
 
@@ -851,7 +812,6 @@ let TgMainTitleDirective = function($translate) {
     };
 };
 
-module.directive("tgMainTitle", ["$translate",  TgMainTitleDirective]);
 
 function __guard__(value, transform) {
   return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;

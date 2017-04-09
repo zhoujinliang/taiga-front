@@ -27,7 +27,7 @@ import {sizeFormat} from "../../ts/utils"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-let Resource = function(urlsService, http, config, $rootScope, $q, storage) {
+export let AttachmentsResource = function(urlsService, http, config, $rootScope, $q, storage) {
     let service:any = {};
 
     service.list = function(type, objectId, projectId) {
@@ -153,7 +153,7 @@ loompas, try it with a smaller than (${sizeFormat(maxFileSize)})`
     return () => ({"attachments": service});
 };
 
-Resource.$inject = [
+AttachmentsResource.$inject = [
     "$tgUrls",
     "$tgHttp",
     "$tgConfig",
@@ -161,6 +161,3 @@ Resource.$inject = [
     "$q",
     "$tgStorage"
 ];
-
-let module = angular.module("taigaResources2");
-module.factory("tgAttachmentsResource", Resource);

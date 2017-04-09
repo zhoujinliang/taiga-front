@@ -18,9 +18,8 @@
  */
 
 import {defineImmutableProperty} from "../../ts/utils"
-import * as angular from "angular"
 
-let NavigationBarDirective = function(currentUserService, navigationBarService, locationService, navUrlsService, config) {
+export let NavigationBarDirective = function(currentUserService, navigationBarService, locationService, navUrlsService, config) {
     let link = function(scope, el, attrs, ctrl) {
         scope.vm = {};
 
@@ -61,5 +60,3 @@ NavigationBarDirective.$inject = [
     "$tgNavUrls",
     "$tgConfig"
 ];
-
-angular.module("taigaNavigationBar").directive("tgNavigationBar", NavigationBarDirective);

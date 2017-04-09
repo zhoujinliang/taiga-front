@@ -25,9 +25,7 @@
 import * as angular from "angular"
 import {Raven} from "../../global"
 
-let module = angular.module("taigaCommon");
-
-let ExceptionHandlerFactory = function($log, config) {
+export let ExceptionHandlerFactory = function($log, config) {
     this.config = config;
     let ravenConfig = this.config.get("ravenConfig", null);
     if (ravenConfig) {
@@ -45,5 +43,3 @@ let ExceptionHandlerFactory = function($log, config) {
         };
     }
   };
-
-module.factory("$exceptionHandler", ["$log", "$tgConfig", ExceptionHandlerFactory]);
