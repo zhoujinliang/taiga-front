@@ -1,10 +1,18 @@
+path = require("path")
 module.exports = {
-    entry: './app/ts/app.ts',
+    entry: {
+        app: './app/ts/app',
+        loader: './app-loader/app-loader'
+    },
     output: {
-        filename: './dist/app.js'
+        filename: '[name].js'
     },
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js'],
+        alias: {
+            moment: path.join(__dirname, "node_modules/moment/moment"),
+            bluebird: path.join(__dirname, "node_modules/bluebird/js/release/bluebird")
+        },
     },
     module: {
         loaders: [

@@ -24,7 +24,7 @@
 
 
 import {Service} from "../../../ts/classes"
-import {hex_sha1} from "../../../ts/global"
+import {hex_sha1} from "../../../ts/libs/sha1-custom"
 import * as _ from "lodash"
 import * as angular from "angular"
 

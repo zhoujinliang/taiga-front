@@ -1,7 +1,8 @@
-declare var $: any;
+//declare var $: any;
 declare var ljs: any;
 declare var _: any;
 declare var angular: any;
+declare var Promise: any;
 
 (<any>window)._version = "___VERSION___";
 
