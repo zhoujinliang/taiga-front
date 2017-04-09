@@ -19,9 +19,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: modules/projects.coffee
+ * File: modules/userstories.coffee
  */
 
 import * as angular from "angular"
+import * as detail from "./detail"
 
-let module = angular.module("taigaProject", []);
+let module = angular.module("taigaUserStories", []);
+module.controller("UserStoryDetailController", detail.UserStoryDetailController);
+module.directive("tgUsStatusDisplay", ["$tgTemplate", "$compile", detail.UsStatusDisplayDirective]);
+module.directive("tgUsStatusButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading","$tgQueueModelTransformation", "$tgTemplate", "$compile",
+                                      detail.UsStatusButtonDirective]);
+module.directive("tgUsTeamRequirementButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation", "$tgTemplate", "$compile",
+                                               detail.UsTeamRequirementButtonDirective]);
+module.directive("tgUsClientRequirementButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation", "$tgTemplate", "$compile",
+                                                 detail.UsClientRequirementButtonDirective]);

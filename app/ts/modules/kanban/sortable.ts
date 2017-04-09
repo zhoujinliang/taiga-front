@@ -22,18 +22,14 @@
  * File: modules/kanban/sortable.coffee
  */
 
-import * as angular from "angular"
 import * as _ from "lodash"
 import {autoScroll, dragula} from "../../global"
-
-let module = angular.module("taigaKanban");
-
 
 //############################################################################
 //# Sortable Directive
 //############################################################################
 
-let KanbanSortableDirective = function($repo, $rs, $rootscope) {
+export let KanbanSortableDirective = function($repo, $rs, $rootscope) {
     let link = function($scope, $el, $attrs) {
         let unwatch;
         return unwatch = $scope.$watch("usByStatus", function(usByStatus) {
@@ -104,11 +100,3 @@ let KanbanSortableDirective = function($repo, $rs, $rootscope) {
 
     return {link};
 };
-
-
-module.directive("tgKanbanSortable", [
-    "$tgRepo",
-    "$tgResources",
-    "$rootScope",
-    KanbanSortableDirective
-]);

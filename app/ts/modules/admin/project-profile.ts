@@ -29,14 +29,11 @@ import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaAdmin");
-
-
 //############################################################################
 //# Project Profile Controller
 //############################################################################
 
-class ProjectProfileController extends PageMixin {
+export class ProjectProfileController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -180,14 +177,11 @@ class ProjectProfileController extends PageMixin {
 }
 ProjectProfileController.initClass();
 
-module.controller("ProjectProfileController", ProjectProfileController);
-
-
 //############################################################################
 //# Project Profile Directive
 //############################################################################
 
-let ProjectProfileDirective = function($repo, $confirm, $loading, $navurls, $location, projectService, currentUserService) {
+export let ProjectProfileDirective = function($repo, $confirm, $loading, $navurls, $location, projectService, currentUserService) {
     let link = function($scope, $el, $attrs) {
         let $ctrl = $el.controller();
 
@@ -234,15 +228,11 @@ let ProjectProfileDirective = function($repo, $confirm, $loading, $navurls, $loc
     return {link};
 };
 
-module.directive("tgProjectProfile", ["$tgRepo", "$tgConfirm", "$tgLoading", "$tgNavUrls", "$tgLocation",
-                                      "tgProjectService", "tgCurrentUserService", ProjectProfileDirective]);
-
-
 //############################################################################
 //# Project Default Values Directive
 //############################################################################
 
-let ProjectDefaultValuesDirective = function($repo, $confirm, $loading) {
+export let ProjectDefaultValuesDirective = function($repo, $confirm, $loading) {
     let link = function($scope, $el, $attrs) {
         let form = $el.find("form").checksley({"onlyOneErrorElement": true});
         let submit = debounce(2000, event => {
@@ -279,14 +269,11 @@ let ProjectDefaultValuesDirective = function($repo, $confirm, $loading) {
     return {link};
 };
 
-module.directive("tgProjectDefaultValues", ["$tgRepo", "$tgConfirm", "$tgLoading",
-                                            ProjectDefaultValuesDirective]);
-
 //############################################################################
 //# Project Modules Directive
 //############################################################################
 
-let ProjectModulesDirective = function($repo, $confirm, $loading, projectService) {
+export let ProjectModulesDirective = function($repo, $confirm, $loading, projectService) {
     let link = function($scope, $el, $attrs) {
         let submit = () => {
             let form = $el.find("form").checksley();
@@ -359,15 +346,11 @@ let ProjectModulesDirective = function($repo, $confirm, $loading, projectService
     return {link};
 };
 
-module.directive("tgProjectModules", ["$tgRepo", "$tgConfirm", "$tgLoading", "tgProjectService",
-                                      ProjectModulesDirective]);
-
-
 //############################################################################
 //# Project Export Directive
 //############################################################################
 
-let ProjectExportDirective = function($window, $rs, $confirm, $translate) {
+export let ProjectExportDirective = function($window, $rs, $confirm, $translate) {
     let link = function($scope, $el, $attrs) {
         let buttonsEl = $el.find(".admin-project-export-buttons");
         let showButtons = () => buttonsEl.removeClass("hidden");
@@ -463,10 +446,6 @@ let ProjectExportDirective = function($window, $rs, $confirm, $translate) {
     return {link};
 };
 
-module.directive("tgProjectExport", ["$window", "$tgResources", "$tgConfirm", "$translate",
-                                     ProjectExportDirective]);
-
-
 //############################################################################
 //# CSV Export Controllers
 //############################################################################
@@ -546,7 +525,7 @@ class CsvExporterController extends Controller {
 CsvExporterController.initClass();
 
 
-class CsvExporterEpicsController extends CsvExporterController {
+export class CsvExporterEpicsController extends CsvExporterController {
     static initClass() {
         this.prototype.type = "epics";
     }
@@ -554,7 +533,7 @@ class CsvExporterEpicsController extends CsvExporterController {
 CsvExporterEpicsController.initClass();
 
 
-class CsvExporterUserstoriesController extends CsvExporterController {
+export class CsvExporterUserstoriesController extends CsvExporterController {
     static initClass() {
         this.prototype.type = "userstories";
     }
@@ -562,7 +541,7 @@ class CsvExporterUserstoriesController extends CsvExporterController {
 CsvExporterUserstoriesController.initClass();
 
 
-class CsvExporterTasksController extends CsvExporterController {
+export class CsvExporterTasksController extends CsvExporterController {
     static initClass() {
         this.prototype.type = "tasks";
     }
@@ -570,25 +549,18 @@ class CsvExporterTasksController extends CsvExporterController {
 CsvExporterTasksController.initClass();
 
 
-class CsvExporterIssuesController extends CsvExporterController {
+export class CsvExporterIssuesController extends CsvExporterController {
     static initClass() {
         this.prototype.type = "issues";
     }
 }
 CsvExporterIssuesController.initClass();
 
-
-module.controller("CsvExporterEpicsController", CsvExporterEpicsController);
-module.controller("CsvExporterUserstoriesController", CsvExporterUserstoriesController);
-module.controller("CsvExporterTasksController", CsvExporterTasksController);
-module.controller("CsvExporterIssuesController", CsvExporterIssuesController);
-
-
 //############################################################################
 //# CSV Directive
 //############################################################################
 
-let CsvEpicDirective = function($translate) {
+export let CsvEpicDirective = function($translate) {
     let link = $scope => $scope.sectionTitle = "ADMIN.CSV.SECTION_TITLE_EPIC";
 
     return {
@@ -600,10 +572,7 @@ let CsvEpicDirective = function($translate) {
     };
 };
 
-module.directive("tgCsvEpic", ["$translate", CsvEpicDirective]);
-
-
-let CsvUsDirective = function($translate) {
+export let CsvUsDirective = function($translate) {
     let link = $scope => $scope.sectionTitle = "ADMIN.CSV.SECTION_TITLE_US";
 
     return {
@@ -615,10 +584,7 @@ let CsvUsDirective = function($translate) {
     };
 };
 
-module.directive("tgCsvUs", ["$translate", CsvUsDirective]);
-
-
-let CsvTaskDirective = function($translate) {
+export let CsvTaskDirective = function($translate) {
     let link = $scope => $scope.sectionTitle = "ADMIN.CSV.SECTION_TITLE_TASK";
 
     return {
@@ -630,10 +596,7 @@ let CsvTaskDirective = function($translate) {
     };
 };
 
-module.directive("tgCsvTask", ["$translate", CsvTaskDirective]);
-
-
-let CsvIssueDirective = function($translate) {
+export let CsvIssueDirective = function($translate) {
     let link = $scope => $scope.sectionTitle = "ADMIN.CSV.SECTION_TITLE_ISSUE";
 
     return {
@@ -645,14 +608,11 @@ let CsvIssueDirective = function($translate) {
     };
 };
 
-module.directive("tgCsvIssue", ["$translate", CsvIssueDirective]);
-
-
 //############################################################################
 //# Project Logo Directive
 //############################################################################
 
-let ProjectLogoDirective = function($auth, $model, $rs, $confirm) {
+export let ProjectLogoDirective = function($auth, $model, $rs, $confirm) {
     let link = function($scope, $el, $attrs) {
         let showSizeInfo = () => $el.find(".size-info").addClass("active");
 
@@ -692,14 +652,11 @@ let ProjectLogoDirective = function($auth, $model, $rs, $confirm) {
     return {link};
 };
 
-module.directive("tgProjectLogo", ["$tgAuth", "$tgModel", "$tgResources", "$tgConfirm", ProjectLogoDirective]);
-
-
 //############################################################################
 //# Project Logo Model Directive
 //############################################################################
 
-let ProjectLogoModelDirective = function($parse) {
+export let ProjectLogoModelDirective = function($parse) {
     let link = function($scope, $el, $attrs) {
         let model = $parse($attrs.tgProjectLogoModel);
         let modelSetter = model.assign;
@@ -712,10 +669,7 @@ let ProjectLogoModelDirective = function($parse) {
     return {link};
 };
 
-module.directive('tgProjectLogoModel', ['$parse', ProjectLogoModelDirective]);
-
-
-let AdminProjectRestrictionsDirective = () =>
+export let AdminProjectRestrictionsDirective = () =>
     ({
         scope: {
             "project": "="
@@ -724,9 +678,7 @@ let AdminProjectRestrictionsDirective = () =>
     })
 ;
 
-module.directive('tgAdminProjectRestrictions', [AdminProjectRestrictionsDirective]);
-
-let AdminProjectRequestOwnershipDirective = lightboxFactory =>
+export let AdminProjectRequestOwnershipDirective = lightboxFactory =>
     ({
         link(scope) {
             return scope.requestOwnership = () =>
@@ -746,9 +698,7 @@ let AdminProjectRequestOwnershipDirective = lightboxFactory =>
     })
 ;
 
-module.directive('tgAdminProjectRequestOwnership', ["tgLightboxFactory", AdminProjectRequestOwnershipDirective]);
-
-let AdminProjectChangeOwnerDirective = lightboxFactory =>
+export let AdminProjectChangeOwnerDirective = lightboxFactory =>
     ({
         link(scope) {
             return scope.changeOwner = () =>
@@ -775,5 +725,3 @@ let AdminProjectChangeOwnerDirective = lightboxFactory =>
         templateUrl: "admin/admin-project-change-owner.html"
     })
 ;
-
-module.directive('tgAdminProjectChangeOwner', ["tgLightboxFactory", AdminProjectChangeOwnerDirective]);

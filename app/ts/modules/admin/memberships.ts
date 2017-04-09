@@ -27,14 +27,11 @@ import {FiltersMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaAdmin");
-
-
 //############################################################################
 //# Project Memberships Controller
 //############################################################################
 
-class MembershipsController extends FiltersMixin {
+export class MembershipsController extends FiltersMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -186,14 +183,11 @@ class MembershipsController extends FiltersMixin {
 }
 MembershipsController.initClass();
 
-module.controller("MembershipsController", MembershipsController);
-
-
 //############################################################################
 //# Member Avatar Directive
 //############################################################################
 
-let MembershipsDirective = function($template, $compile) {
+export let MembershipsDirective = function($template, $compile) {
     let template = $template.get("admin/admin-membership-paginator.html", true);
 
     let linkPagination = function($scope, $el, $attrs, $ctrl) {
@@ -300,14 +294,11 @@ let MembershipsDirective = function($template, $compile) {
     return {link};
 };
 
-module.directive("tgMemberships", ["$tgTemplate", "$compile", MembershipsDirective]);
-
-
 //############################################################################
 //# Member Avatar Directive
 //############################################################################
 
-let MembershipsRowAvatarDirective = function($log, $template, $translate, $compile, avatarService) {
+export let MembershipsRowAvatarDirective = function($log, $template, $translate, $compile, avatarService) {
     let template = $template.get("admin/memberships-row-avatar.html", true);
 
     let link = function($scope, $el, $attrs) {
@@ -343,15 +334,11 @@ let MembershipsRowAvatarDirective = function($log, $template, $translate, $compi
     return {link};
 };
 
-
-module.directive("tgMembershipsRowAvatar", ["$log", "$tgTemplate", '$translate', "$compile", "tgAvatarService", MembershipsRowAvatarDirective]);
-
-
 //############################################################################
 //# Member IsAdminCheckbox Directive
 //############################################################################
 
-let MembershipsRowAdminCheckboxDirective = function($log, $repo, $confirm, $template, $compile) {
+export let MembershipsRowAdminCheckboxDirective = function($log, $repo, $confirm, $template, $compile) {
     let template = $template.get("admin/admin-memberships-row-checkbox.html", true);
 
     let link = function($scope, $el, $attrs) {
@@ -401,16 +388,11 @@ let MembershipsRowAdminCheckboxDirective = function($log, $repo, $confirm, $temp
     return {link};
 };
 
-
-module.directive("tgMembershipsRowAdminCheckbox", ["$log", "$tgRepo", "$tgConfirm",
-    "$tgTemplate", "$compile", MembershipsRowAdminCheckboxDirective]);
-
-
 //############################################################################
 //# Member RoleSelector Directive
 //############################################################################
 
-let MembershipsRowRoleSelectorDirective = function($log, $repo, $confirm) {
+export let MembershipsRowRoleSelectorDirective = function($log, $repo, $confirm) {
     let template = _.template(`\
 <select>
     <% _.each(roleList, function(role) { %>
@@ -460,16 +442,11 @@ let MembershipsRowRoleSelectorDirective = function($log, $repo, $confirm) {
     return {link};
 };
 
-
-module.directive("tgMembershipsRowRoleSelector", ["$log", "$tgRepo", "$tgConfirm",
-                                                  MembershipsRowRoleSelectorDirective]);
-
-
 //############################################################################
 //# Member Actions Directive
 //############################################################################
 
-let MembershipsRowActionsDirective = function($log, $repo, $rs, $confirm, $compile, $translate, $location,
+export let MembershipsRowActionsDirective = function($log, $repo, $rs, $confirm, $compile, $translate, $location,
                                   $navUrls, lightboxFactory, projectService) {
     let activedTemplate = `\
 <div class="active"
@@ -587,16 +564,11 @@ let MembershipsRowActionsDirective = function($log, $repo, $rs, $confirm, $compi
     return {link};
 };
 
-module.directive("tgMembershipsRowActions", ["$log", "$tgRepo", "$tgResources", "$tgConfirm", "$compile",
-                                             "$translate", "$tgLocation", "$tgNavUrls", "tgLightboxFactory",
-                                             "tgProjectService", MembershipsRowActionsDirective]);
-
-
 //############################################################################
 //# No more memberships explanation directive
 //############################################################################
 
-let NoMoreMembershipsExplanationDirective = () =>
+export let NoMoreMembershipsExplanationDirective = () =>
     ({
           templateUrl: "admin/no-more-memberships-explanation.html",
           scope: {
@@ -604,5 +576,3 @@ let NoMoreMembershipsExplanationDirective = () =>
           }
     })
 ;
-
-module.directive("tgNoMoreMembershipsExplanation", [NoMoreMembershipsExplanationDirective]);

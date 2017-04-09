@@ -28,14 +28,11 @@ import {FiltersMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaAdmin");
-
-
 //############################################################################
 //# Project Roles Controller
 //############################################################################
 
-class RolesController extends FiltersMixin {
+export class RolesController extends FiltersMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -244,10 +241,7 @@ class RolesController extends FiltersMixin {
 }
 RolesController.initClass();
 
-module.controller("RolesController", RolesController);
-
-
-let EditRoleDirective = function($repo, $confirm) {
+export let EditRoleDirective = function($repo, $confirm) {
     let link = function($scope, $el, $attrs) {
         let toggleView = function() {
             $el.find('.total').toggle();
@@ -294,9 +288,7 @@ let EditRoleDirective = function($repo, $confirm) {
     return {link};
 };
 
-module.directive("tgEditRole", ["$tgRepo", "$tgConfirm", EditRoleDirective]);
-
-let RolesDirective =  function() {
+export let RolesDirective =  function() {
     let link = function($scope, $el, $attrs) {
         let $ctrl = $el.controller();
 
@@ -306,9 +298,7 @@ let RolesDirective =  function() {
     return {link};
 };
 
-module.directive("tgRoles", RolesDirective);
-
-let NewRoleDirective = function($tgrepo, $confirm) {
+export let NewRoleDirective = function($tgrepo, $confirm) {
     let DEFAULT_PERMISSIONS = ["view_project", "view_milestones", "view_us", "view_tasks", "view_issues"];
 
     let link = function($scope, $el, $attrs) {
@@ -363,11 +353,9 @@ let NewRoleDirective = function($tgrepo, $confirm) {
     return {link};
 };
 
-module.directive("tgNewRole", ["$tgRepo", "$tgConfirm", NewRoleDirective]);
-
 
 // Use category-config.scss styles
-let RolePermissionsDirective = function($rootscope, $repo, $confirm, $compile) {
+export let RolePermissionsDirective = function($rootscope, $repo, $confirm, $compile) {
     let resumeTemplate = _.template(`\
 <div class="resume-title" translate="<%- category.name %>"></div>
 <div class="summary-role">
@@ -592,6 +580,3 @@ let RolePermissionsDirective = function($rootscope, $repo, $confirm, $compile) {
 
     return {link};
 };
-
-module.directive("tgRolePermissions", ["$rootScope", "$tgRepo", "$tgConfirm", "$compile",
-                                       RolePermissionsDirective]);

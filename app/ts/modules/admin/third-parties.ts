@@ -28,14 +28,11 @@ import * as angular from "angular"
 import * as moment from "moment"
 import * as _ from "lodash"
 
-let module = angular.module("taigaAdmin");
-
-
 //############################################################################
 //# Webhooks
 //############################################################################
 
-class WebhooksController extends FiltersMixin {
+export class WebhooksController extends FiltersMixin {
     scope: angular.IScope
     repo:any
     rs:any
@@ -119,14 +116,11 @@ class WebhooksController extends FiltersMixin {
 }
 WebhooksController.initClass();
 
-module.controller("WebhooksController", WebhooksController);
-
-
 //############################################################################
 //# Webhook Directive
 //############################################################################
 
-let WebhookDirective = function($rs, $repo, $confirm, $loading, $translate) {
+export let WebhookDirective = function($rs, $repo, $confirm, $loading, $translate) {
     let link = function($scope, $el, $attrs) {
         let webhook = $scope.$eval($attrs.tgWebhook);
 
@@ -285,15 +279,11 @@ let WebhookDirective = function($rs, $repo, $confirm, $loading, $translate) {
     return {link};
 };
 
-module.directive("tgWebhook", ["$tgResources", "$tgRepo", "$tgConfirm", "$tgLoading", "$translate",
-                               WebhookDirective]);
-
-
 //############################################################################
 //# New webhook Directive
 //############################################################################
 
-let NewWebhookDirective = function($rs, $repo, $confirm, $loading) {
+export let NewWebhookDirective = function($rs, $repo, $confirm, $loading) {
     let link = function($scope, $el, $attrs) {
         let webhook = $scope.$eval($attrs.tgWebhook);
         let formDOMNode = $el.find(".new-webhook-form");
@@ -369,14 +359,11 @@ let NewWebhookDirective = function($rs, $repo, $confirm, $loading) {
     return {link};
 };
 
-module.directive("tgNewWebhook", ["$tgResources", "$tgRepo", "$tgConfirm", "$tgLoading", NewWebhookDirective]);
-
-
 //############################################################################
 //# Github Controller
 //############################################################################
 
-class GithubController extends FiltersMixin {
+export class GithubController extends FiltersMixin {
     scope: angular.IScope
     repo:any
     rs:any
@@ -444,14 +431,11 @@ class GithubController extends FiltersMixin {
 }
 GithubController.initClass();
 
-module.controller("GithubController", GithubController);
-
-
 //############################################################################
 //# Gitlab Controller
 //############################################################################
 
-class GitlabController extends FiltersMixin {
+export class GitlabController extends FiltersMixin {
     scope: angular.IScope
     repo:any
     rs:any
@@ -522,14 +506,11 @@ class GitlabController extends FiltersMixin {
 }
 GitlabController.initClass();
 
-module.controller("GitlabController", GitlabController);
-
-
 //############################################################################
 //# Bitbucket Controller
 //############################################################################
 
-class BitbucketController extends FiltersMixin {
+export class BitbucketController extends FiltersMixin {
     scope: angular.IScope
     repo:any
     rs:any
@@ -600,10 +581,7 @@ class BitbucketController extends FiltersMixin {
 }
 BitbucketController.initClass();
 
-module.controller("BitbucketController", BitbucketController);
-
-
-let SelectInputText =  function() {
+export let SelectInputText =  function() {
     let link = ($scope, $el, $attrs) =>
         $el.on("click", ".select-input-content", function() {
             $el.find("input").select();
@@ -614,14 +592,11 @@ let SelectInputText =  function() {
     return {link};
 };
 
-module.directive("tgSelectInputText", SelectInputText);
-
-
 //############################################################################
 //# GithubWebhooks Directive
 //############################################################################
 
-let GithubWebhooksDirective = function($repo, $confirm, $loading) {
+export let GithubWebhooksDirective = function($repo, $confirm, $loading) {
     let link = function($scope, $el, $attrs) {
         let form = $el.find("form").checksley({"onlyOneErrorElement": true});
         let submit = debounce(2000, event => {
@@ -656,14 +631,11 @@ let GithubWebhooksDirective = function($repo, $confirm, $loading) {
     return {link};
 };
 
-module.directive("tgGithubWebhooks", ["$tgRepo", "$tgConfirm", "$tgLoading", GithubWebhooksDirective]);
-
-
 //############################################################################
 //# GitlabWebhooks Directive
 //############################################################################
 
-let GitlabWebhooksDirective = function($repo, $confirm, $loading) {
+export let GitlabWebhooksDirective = function($repo, $confirm, $loading) {
     let link = function($scope, $el, $attrs) {
         let form = $el.find("form").checksley({"onlyOneErrorElement": true});
         let submit = debounce(2000, event => {
@@ -699,14 +671,11 @@ let GitlabWebhooksDirective = function($repo, $confirm, $loading) {
     return {link};
 };
 
-module.directive("tgGitlabWebhooks", ["$tgRepo", "$tgConfirm", "$tgLoading", GitlabWebhooksDirective]);
-
-
 //############################################################################
 //# BitbucketWebhooks Directive
 //############################################################################
 
-let BitbucketWebhooksDirective = function($repo, $confirm, $loading) {
+export let BitbucketWebhooksDirective = function($repo, $confirm, $loading) {
     let link = function($scope, $el, $attrs) {
         let form = $el.find("form").checksley({"onlyOneErrorElement": true});
         let submit = debounce(2000, event => {
@@ -742,13 +711,10 @@ let BitbucketWebhooksDirective = function($repo, $confirm, $loading) {
     return {link};
 };
 
-module.directive("tgBitbucketWebhooks", ["$tgRepo", "$tgConfirm", "$tgLoading", BitbucketWebhooksDirective]);
-
-
 //############################################################################
 //# Valid Origin IP's Directive
 //############################################################################
-let ValidOriginIpsDirective = function() {
+export let ValidOriginIpsDirective = function() {
     let link = ($scope, $el, $attrs, $ngModel) =>
         $ngModel.$parsers.push(function(value) {
             value = $.trim(value);
@@ -767,13 +733,11 @@ let ValidOriginIpsDirective = function() {
     };
 };
 
-module.directive("tgValidOriginIps", ValidOriginIpsDirective);
-
 //############################################################################
 //# Gogs Controller
 //############################################################################
 
-class GogsController extends FiltersMixin {
+export class GogsController extends FiltersMixin {
     scope: angular.IScope
     repo:any
     rs:any
@@ -840,5 +804,3 @@ class GogsController extends FiltersMixin {
     }
 }
 GogsController.initClass();
-
-module.controller("GogsController", GogsController);

@@ -28,13 +28,11 @@ import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaUserStories");
-
 //############################################################################
 //# User story Detail Controller
 //############################################################################
 
-class UserStoryDetailController extends PageMixin {
+export class UserStoryDetailController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -320,14 +318,11 @@ class UserStoryDetailController extends PageMixin {
 }
 UserStoryDetailController.initClass();
 
-module.controller("UserStoryDetailController", UserStoryDetailController);
-
-
 //############################################################################
 //# User story status display directive
 //############################################################################
 
-let UsStatusDisplayDirective = function($template, $compile) {
+export let UsStatusDisplayDirective = function($template, $compile) {
     // Display if a US is open or closed and its kanban status.
     //
     // Example:
@@ -366,13 +361,11 @@ let UsStatusDisplayDirective = function($template, $compile) {
     };
 };
 
-module.directive("tgUsStatusDisplay", ["$tgTemplate", "$compile", UsStatusDisplayDirective]);
-
 //############################################################################
 //# User story status button directive
 //############################################################################
 
-let UsStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $template, $compile) {
+export let UsStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $template, $compile) {
     // Display the status of a US and you can edit it.
     //
     // Example:
@@ -465,15 +458,11 @@ let UsStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, $m
     };
 };
 
-module.directive("tgUsStatusButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading","$tgQueueModelTransformation", "$tgTemplate", "$compile",
-                                      UsStatusButtonDirective]);
-
-
 //############################################################################
 //# User story team requirements button directive
 //############################################################################
 
-let UsTeamRequirementButtonDirective = function($rootscope, $tgrepo, $confirm, $loading, $modelTransform, $template, $compile) {
+export let UsTeamRequirementButtonDirective = function($rootscope, $tgrepo, $confirm, $loading, $modelTransform, $template, $compile) {
     let template = $template.get("us/us-team-requirement-button.html", true);
 
     let link = function($scope, $el, $attrs, $model) {
@@ -537,13 +526,11 @@ let UsTeamRequirementButtonDirective = function($rootscope, $tgrepo, $confirm, $
     };
 };
 
-module.directive("tgUsTeamRequirementButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation", "$tgTemplate", "$compile", UsTeamRequirementButtonDirective]);
-
 //############################################################################
 //# User story client requirements button directive
 //############################################################################
 
-let UsClientRequirementButtonDirective = function($rootscope, $tgrepo, $confirm, $loading, $modelTransform, $template, $compile) {
+export let UsClientRequirementButtonDirective = function($rootscope, $tgrepo, $confirm, $loading, $modelTransform, $template, $compile) {
     let template = $template.get("us/us-client-requirement-button.html", true);
 
     let link = function($scope, $el, $attrs, $model) {
@@ -599,6 +586,3 @@ let UsClientRequirementButtonDirective = function($rootscope, $tgrepo, $confirm,
         require: "ngModel"
     };
 };
-
-module.directive("tgUsClientRequirementButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation", "$tgTemplate", "$compile",
-                                                 UsClientRequirementButtonDirective]);

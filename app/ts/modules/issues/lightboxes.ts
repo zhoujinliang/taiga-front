@@ -27,13 +27,11 @@ import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
 
-let module = angular.module("taigaIssues");
-
 //############################################################################
 //# Issue Create Lightbox Directive
 //############################################################################
 
-let CreateIssueDirective = function($repo, $confirm, $rootscope, lightboxService, $loading, $q, attachmentsService) {
+export let CreateIssueDirective = function($repo, $confirm, $rootscope, lightboxService, $loading, $q, attachmentsService) {
     let link = function($scope, $el, $attrs) {
         let form = $el.find("form").checksley();
         $scope.issue = {};
@@ -158,15 +156,12 @@ let CreateIssueDirective = function($repo, $confirm, $rootscope, lightboxService
     return {link};
 };
 
-module.directive("tgLbCreateIssue", ["$tgRepo", "$tgConfirm", "$rootScope", "lightboxService", "$tgLoading",
-                                     "$q", "tgAttachmentsService", CreateIssueDirective]);
-
 
 //############################################################################
 //# Issue Bulk Create Lightbox Directive
 //############################################################################
 
-let CreateBulkIssuesDirective = function($repo, $rs, $confirm, $rootscope, $loading, lightboxService) {
+export let CreateBulkIssuesDirective = function($repo, $rs, $confirm, $rootscope, $loading, lightboxService) {
     let link = function($scope, $el, attrs) {
         let form = null;
 
@@ -218,6 +213,3 @@ let CreateBulkIssuesDirective = function($repo, $rs, $confirm, $rootscope, $load
 
     return {link};
 };
-
-module.directive("tgLbCreateBulkIssues", ["$tgRepo", "$tgResources", "$tgConfirm", "$rootScope", "$tgLoading",
-                                          "lightboxService", CreateBulkIssuesDirective]);

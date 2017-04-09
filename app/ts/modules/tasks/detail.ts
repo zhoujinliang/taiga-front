@@ -27,14 +27,11 @@ import {PageMixin} from "../controllerMixins"
 
 import * as angular from "angular"
 
-let module = angular.module("taigaTasks");
-
-
 //############################################################################
 //# Task Detail Controller
 //############################################################################
 
-class TaskDetailController extends PageMixin {
+export class TaskDetailController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -274,14 +271,11 @@ class TaskDetailController extends PageMixin {
 }
 TaskDetailController.initClass();
 
-module.controller("TaskDetailController", TaskDetailController);
-
-
 //############################################################################
 //# Task status display directive
 //############################################################################
 
-let TaskStatusDisplayDirective = function($template, $compile) {
+export let TaskStatusDisplayDirective = function($template, $compile) {
     // Display if a Task is open or closed and its taskboard status.
     //
     // Example:
@@ -320,14 +314,11 @@ let TaskStatusDisplayDirective = function($template, $compile) {
     };
 };
 
-module.directive("tgTaskStatusDisplay", ["$tgTemplate", "$compile", TaskStatusDisplayDirective]);
-
-
 //############################################################################
 //# Task status button directive
 //############################################################################
 
-let TaskStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $compile, $translate, $template) {
+export let TaskStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $compile, $translate, $template) {
     // Display the status of Task and you can edit it.
     //
     // Example:
@@ -416,11 +407,7 @@ let TaskStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, 
     };
 };
 
-module.directive("tgTaskStatusButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation",
-                                        "$compile", "$translate", "$tgTemplate", TaskStatusButtonDirective]);
-
-
-let TaskIsIocaineButtonDirective = function($rootscope, $tgrepo, $confirm, $loading, $modelTransform, $compile, $template) {
+export let TaskIsIocaineButtonDirective = function($rootscope, $tgrepo, $confirm, $loading, $modelTransform, $compile, $template) {
     let template = $template.get("issue/iocaine-button.html", true);
 
     let link = function($scope, $el, $attrs, $model) {
@@ -480,6 +467,3 @@ let TaskIsIocaineButtonDirective = function($rootscope, $tgrepo, $confirm, $load
         require: "ngModel"
     };
 };
-
-module.directive("tgTaskIsIocaineButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation",
-                                           "$compile", "$tgTemplate", TaskIsIocaineButtonDirective]);

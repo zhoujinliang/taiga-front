@@ -27,14 +27,11 @@ import {autoScroll, dragula} from "../../global"
 
 import * as angular from "angular"
 
-let module = angular.module("taigaWiki");
-
-
 //############################################################################
 //# Wiki Main Directive
 //############################################################################
 
-let WikiNavDirective = function($tgrepo, $log, $location, $confirm, $analytics, $loading, $template,
+export let WikiNavDirective = function($tgrepo, $log, $location, $confirm, $analytics, $loading, $template,
                     $compile, $translate) {
     let template = $template.get("wiki/wiki-nav.html", true);
 
@@ -192,9 +189,6 @@ let WikiNavDirective = function($tgrepo, $log, $location, $confirm, $analytics, 
 
     return {link};
 };
-
-module.directive("tgWikiNav", ["$tgRepo", "$log", "$tgLocation", "$tgConfirm", "$tgAnalytics",
-                               "$tgLoading", "$tgTemplate", "$compile", "$translate", WikiNavDirective]);
 
 function __guard__(value, transform) {
   return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;

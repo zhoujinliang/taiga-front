@@ -27,13 +27,11 @@ import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaTeam");
-
 //############################################################################
 //# Team Controller
 //############################################################################
 
-class TeamController extends PageMixin {
+export class TeamController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -195,27 +193,23 @@ class TeamController extends PageMixin {
 }
 TeamController.initClass();
 
-module.controller("TeamController", TeamController);
-
 
 //############################################################################
 //# Team Filters Directive
 //############################################################################
 
-let TeamFiltersDirective = () =>
+export let TeamFiltersDirective = () =>
     ({
         templateUrl: "team/team-filter.html"
     })
 ;
-
-module.directive("tgTeamFilters", [TeamFiltersDirective]);
 
 
 //############################################################################
 //# Team Member Stats Directive
 //############################################################################
 
-let TeamMemberStatsDirective = () =>
+export let TeamMemberStatsDirective = () =>
     ({
         templateUrl: "team/team-member-stats.html",
         scope: {
@@ -228,14 +222,11 @@ let TeamMemberStatsDirective = () =>
     })
 ;
 
-module.directive("tgTeamMemberStats", TeamMemberStatsDirective);
-
-
 //############################################################################
 //# Team Current User Directive
 //############################################################################
 
-let TeamMemberCurrentUserDirective = () =>
+export let TeamMemberCurrentUserDirective = () =>
     ({
         templateUrl: "team/team-member-current-user.html",
         scope: {
@@ -250,14 +241,11 @@ let TeamMemberCurrentUserDirective = () =>
     })
 ;
 
-module.directive("tgTeamCurrentUser", TeamMemberCurrentUserDirective);
-
-
 //############################################################################
 //# Team Members Directive
 //############################################################################
 
-let TeamMembersDirective = function() {
+export let TeamMembersDirective = function() {
     let template = "team/team-members.html";
 
     return {
@@ -275,14 +263,11 @@ let TeamMembersDirective = function() {
     };
 };
 
-module.directive("tgTeamMembers", TeamMembersDirective);
-
-
 //############################################################################
 //# Leave project Directive
 //############################################################################
 
-let LeaveProjectDirective = function($repo, $confirm, $location, $rs, $navurls, $translate, lightboxFactory, currentUserService) {
+export let LeaveProjectDirective = function($repo, $confirm, $location, $rs, $navurls, $translate, lightboxFactory, currentUserService) {
     let link = function($scope, $el, $attrs) {
         let leaveConfirm = function() {
             let leave_project_text = $translate.instant("TEAM.ACTION_LEAVE_PROJECT");
@@ -330,19 +315,13 @@ let LeaveProjectDirective = function($repo, $confirm, $location, $rs, $navurls, 
     };
 };
 
-module.directive("tgLeaveProject", ["$tgRepo", "$tgConfirm", "$tgLocation", "$tgResources", "$tgNavUrls", "$translate", "tgLightboxFactory", "tgCurrentUserService",
-                                    LeaveProjectDirective]);
-
-
 //############################################################################
 //# Team Filters
 //############################################################################
 
-let membersFilter = () =>
+export let membersFilter = () =>
     (members, filtersQ, filtersRole) =>
         _.filter(members, (m:any) => (!filtersRole || (m.role === filtersRole.id)) &&
                                         (!filtersQ || (m.full_name.search(new RegExp(filtersQ, "i")) >= 0))
          )
 ;
-
-module.filter('membersFilter', membersFilter);

@@ -27,13 +27,11 @@ import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaIssues");
-
 //############################################################################
 //# Issue Detail Controller
 //############################################################################
 
-class IssueDetailController extends PageMixin {
+export class IssueDetailController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -264,14 +262,11 @@ class IssueDetailController extends PageMixin {
 }
 IssueDetailController.initClass();
 
-module.controller("IssueDetailController", IssueDetailController);
-
-
 //############################################################################
 //# Issue status display directive
 //############################################################################
 
-let IssueStatusDisplayDirective = function($template, $compile){
+export let IssueStatusDisplayDirective = function($template, $compile){
     // Display if a Issue is open or closed and its issueboard status.
     //
     // Example:
@@ -311,14 +306,11 @@ let IssueStatusDisplayDirective = function($template, $compile){
     };
 };
 
-module.directive("tgIssueStatusDisplay", ["$tgTemplate", "$compile", IssueStatusDisplayDirective]);
-
-
 //############################################################################
 //# Issue status button directive
 //############################################################################
 
-let IssueStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $template, $compile) {
+export let IssueStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $template, $compile) {
     // Display the status of Issue and you can edit it.
     //
     // Example:
@@ -409,13 +401,11 @@ let IssueStatusButtonDirective = function($rootScope, $repo, $confirm, $loading,
     };
 };
 
-module.directive("tgIssueStatusButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation", "$tgTemplate", "$compile", IssueStatusButtonDirective]);
-
 //############################################################################
 //# Issue type button directive
 //############################################################################
 
-let IssueTypeButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $template, $compile) {
+export let IssueTypeButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $template, $compile) {
     // Display the type of Issue and you can edit it.
     //
     // Example:
@@ -506,14 +496,11 @@ let IssueTypeButtonDirective = function($rootScope, $repo, $confirm, $loading, $
     };
 };
 
-module.directive("tgIssueTypeButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation", "$tgTemplate", "$compile", IssueTypeButtonDirective]);
-
-
 //############################################################################
 //# Issue severity button directive
 //############################################################################
 
-let IssueSeverityButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $template, $compile) {
+export let IssueSeverityButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $template, $compile) {
     // Display the severity of Issue and you can edit it.
     //
     // Example:
@@ -605,14 +592,11 @@ let IssueSeverityButtonDirective = function($rootScope, $repo, $confirm, $loadin
     };
 };
 
-module.directive("tgIssueSeverityButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation", "$tgTemplate", "$compile", IssueSeverityButtonDirective]);
-
-
 //############################################################################
 //# Issue priority button directive
 //############################################################################
 
-let IssuePriorityButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $template, $compile) {
+export let IssuePriorityButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $template, $compile) {
     // Display the priority of Issue and you can edit it.
     //
     // Example:
@@ -704,14 +688,11 @@ let IssuePriorityButtonDirective = function($rootScope, $repo, $confirm, $loadin
     };
 };
 
-module.directive("tgIssuePriorityButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation", "$tgTemplate", "$compile", IssuePriorityButtonDirective]);
-
-
 //############################################################################
 //# Promote Issue to US button directive
 //############################################################################
 
-let PromoteIssueToUsButtonDirective = function($rootScope, $repo, $confirm, $translate) {
+export let PromoteIssueToUsButtonDirective = function($rootScope, $repo, $confirm, $translate) {
     let link = function($scope, $el, $attrs, $model) {
 
         let save = (issue, askResponse) => {
@@ -762,6 +743,3 @@ let PromoteIssueToUsButtonDirective = function($rootScope, $repo, $confirm, $tra
         link
     };
 };
-
-module.directive("tgPromoteIssueToUsButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$translate",
-                                              PromoteIssueToUsButtonDirective]);

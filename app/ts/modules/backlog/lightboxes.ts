@@ -27,13 +27,11 @@ import * as angular from "angular"
 import * as moment from "moment"
 import * as _ from "lodash"
 
-let module = angular.module("taigaBacklog");
-
 //############################################################################
 //# Creare/Edit Sprint Lightbox Directive
 //############################################################################
 
-let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightboxService, $loading, $translate) {
+export let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightboxService, $loading, $translate) {
     let link = function($scope, $el, attrs) {
         let estimated_start, newSprint, prettyDate;
         let hasErrors = false;
@@ -258,15 +256,3 @@ let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightboxServic
 
     return {link};
 };
-
-
-module.directive("tgLbCreateEditSprint", [
-    "$tgRepo",
-    "$tgConfirm",
-    "$tgResources",
-    "$rootScope",
-    "lightboxService",
-    "$tgLoading",
-    "$translate",
-    CreateEditSprint
-]);

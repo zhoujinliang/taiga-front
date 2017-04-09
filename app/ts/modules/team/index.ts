@@ -19,9 +19,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: modules/kanban.coffee
+ * File: modules/team.coffee
  */
 
 import * as angular from "angular"
+import * as main from "./main"
 
-let module = angular.module("taigaKanban", []);
+let module = angular.module("taigaTeam", []);
+module.controller("TeamController", main.TeamController);
+module.directive("tgTeamFilters", [main.TeamFiltersDirective]);
+module.directive("tgTeamMemberStats", main.TeamMemberStatsDirective);
+module.directive("tgTeamCurrentUser", main.TeamMemberCurrentUserDirective);
+module.directive("tgTeamMembers", main.TeamMembersDirective);
+module.directive("tgLeaveProject", ["$tgRepo", "$tgConfirm", "$tgLocation", "$tgResources", "$tgNavUrls", "$translate", "tgLightboxFactory", "tgCurrentUserService",
+                                    main.LeaveProjectDirective]);
+module.filter('membersFilter', main.membersFilter);

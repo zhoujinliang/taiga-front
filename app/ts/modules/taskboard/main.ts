@@ -29,14 +29,11 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import * as moment from "moment"
 
-let module = angular.module("taigaTaskboard");
-
-
 //############################################################################
 //# Taskboard Controller
 //############################################################################
 
-class TaskboardController extends FiltersMixin {
+export class TaskboardController extends FiltersMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -606,14 +603,11 @@ class TaskboardController extends FiltersMixin {
 }
 TaskboardController.initClass();
 
-module.controller("TaskboardController", TaskboardController);
-
-
 //############################################################################
 //# TaskboardDirective
 //############################################################################
 
-let TaskboardDirective = function($rootscope) {
+export let TaskboardDirective = function($rootscope) {
     let link = function($scope, $el, $attrs) {
         let $ctrl = $el.controller();
 
@@ -637,13 +631,11 @@ let TaskboardDirective = function($rootscope) {
     return {link};
 };
 
-module.directive("tgTaskboard", ["$rootScope", TaskboardDirective]);
-
 //############################################################################
 //# Taskboard Squish Column Directive
 //############################################################################
 
-let TaskboardSquishColumnDirective = function(rs) {
+export let TaskboardSquishColumnDirective = function(rs) {
     let avatarWidth = 40;
     let maxColumnWidth = 300;
 
@@ -753,5 +745,3 @@ let TaskboardSquishColumnDirective = function(rs) {
 
     return {link};
 };
-
-module.directive("tgTaskboardSquishColumn", ["$tgResources", TaskboardSquishColumnDirective]);

@@ -19,9 +19,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: modules/user-settings.coffee
+ * File: modules/wiki.coffee
  */
 
 import * as angular from "angular"
+import * as main from "./main"
+import {WikiNavDirective} from "./nav"
+import {WikiPagesListController} from "./pages-list"
 
-let module = angular.module("taigaUserSettings", []);
+let module = angular.module("taigaWiki", []);
+module.controller("WikiDetailController", main.WikiDetailController);
+module.directive("tgWikiSummary", ["$log", "$tgTemplate", "$compile", "$translate",  "tgAvatarService", main.WikiSummaryDirective]);
+module.directive("tgWikiWysiwyg", ["$tgQueueModelTransformation", "$rootScope", "$tgConfirm", "tgAttachmentsFullService", "$tgQqueue",
+                                   "$tgRepo", "$tgAnalytics", "tgWikiHistoryService", main.WikiWysiwyg]);
+module.directive("tgWikiNav", ["$tgRepo", "$log", "$tgLocation", "$tgConfirm", "$tgAnalytics",
+                               "$tgLoading", "$tgTemplate", "$compile", "$translate", WikiNavDirective]);
+module.controller("WikiPagesListController", WikiPagesListController);

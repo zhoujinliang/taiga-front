@@ -22,9 +22,7 @@
  * File: modules/admin/nav.coffee
  */
 
-import * as angular from "angular"
-
-let AdminNavigationDirective = function() {
+export let AdminNavigationDirective = function() {
     let link = function($scope, $el, $attrs) {
         let section = $attrs.tgAdminNavigation;
         $el.find(".active").removeClass("active");
@@ -35,6 +33,3 @@ let AdminNavigationDirective = function() {
 
     return {link};
 };
-
-let module = angular.module("taigaAdmin");
-module.directive("tgAdminNavigation", AdminNavigationDirective);

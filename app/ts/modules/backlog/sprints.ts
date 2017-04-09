@@ -22,18 +22,14 @@
  * File: modules/backlog/sprints.coffee
  */
 
-import * as angular from "angular"
 import * as _ from "lodash"
 import * as moment from "moment"
-
-let module = angular.module("taigaBacklog");
-
 
 //############################################################################
 //# Sprint Actions Directive
 //############################################################################
 
-let BacklogSprintDirective = function($repo, $rootscope) {
+export let BacklogSprintDirective = function($repo, $rootscope) {
     let sprintTableMinHeight = 50;
     let slideOptions = {
         duration: 500,
@@ -81,14 +77,11 @@ let BacklogSprintDirective = function($repo, $rootscope) {
     return {link};
 };
 
-module.directive("tgBacklogSprint", ["$tgRepo", "$rootScope", BacklogSprintDirective]);
-
-
 //############################################################################
 //# Sprint Header Directive
 //############################################################################
 
-let BacklogSprintHeaderDirective = function($navUrls, $template, $compile, $translate) {
+export let BacklogSprintHeaderDirective = function($navUrls, $template, $compile, $translate) {
     let template = $template.get("backlog/sprint-header.html");
 
     let link = function($scope, $el, $attrs, $model) {
@@ -136,15 +129,11 @@ let BacklogSprintHeaderDirective = function($navUrls, $template, $compile, $tran
     };
 };
 
-module.directive("tgBacklogSprintHeader", ["$tgNavUrls", "$tgTemplate", "$compile", "$translate",
-                                           BacklogSprintHeaderDirective]);
-
-
 //############################################################################
 //# Toggle Closed Sprints Directive
 //############################################################################
 
-let ToggleExcludeClosedSprintsVisualization = function($rootscope, $loading, $translate) {
+export let ToggleExcludeClosedSprintsVisualization = function($rootscope, $loading, $translate) {
     let excludeClosedSprints = true;
 
     let link = function($scope, $el, $attrs) {
@@ -190,6 +179,3 @@ let ToggleExcludeClosedSprintsVisualization = function($rootscope, $loading, $tr
 
     return {link};
 };
-
-module.directive("tgBacklogToggleClosedSprintsVisualization", ["$rootScope", "$tgLoading", "$translate",
-                                                               ToggleExcludeClosedSprintsVisualization]);

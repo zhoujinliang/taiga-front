@@ -30,13 +30,11 @@ import {autoScroll, dragula} from "../../global"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaAdmin");
-
 //############################################################################
 //# Project values section Controller
 //############################################################################
 
-class ProjectValuesSectionController extends PageMixin {
+export class ProjectValuesSectionController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -120,14 +118,11 @@ class ProjectValuesSectionController extends PageMixin {
 }
 ProjectValuesSectionController.initClass();
 
-
-module.controller("ProjectValuesSectionController", ProjectValuesSectionController);
-
 //############################################################################
 //# Project values Controller
 //############################################################################
 
-class ProjectValuesController extends Controller {
+export class ProjectValuesController extends Controller {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -182,14 +177,11 @@ class ProjectValuesController extends Controller {
 }
 ProjectValuesController.initClass();
 
-module.controller("ProjectValuesController", ProjectValuesController);
-
-
 //############################################################################
 //# Project values directive
 //############################################################################
 
-let ProjectValuesDirective = function($log, $repo, $confirm, $location, animationFrame, $translate, $rootscope, projectService) {
+export let ProjectValuesDirective = function($log, $repo, $confirm, $location, animationFrame, $translate, $rootscope, projectService) {
     //# Drag & Drop Link
 
     let linkDragAndDrop = function($scope, $el, $attrs) {
@@ -411,15 +403,11 @@ let ProjectValuesDirective = function($log, $repo, $confirm, $location, animatio
     return {link};
 };
 
-module.directive("tgProjectValues", ["$log", "$tgRepo", "$tgConfirm", "$tgLocation", "animationFrame",
-                                     "$translate", "$rootScope", "tgProjectService", ProjectValuesDirective]);
-
-
 //############################################################################
 //# Color selection directive
 //############################################################################
 
-let ColorSelectionDirective = function() {
+export let ColorSelectionDirective = function() {
     //# Color selection Link
 
     let link = function($scope, $el, $attrs, $model) {
@@ -485,9 +473,6 @@ let ColorSelectionDirective = function() {
       };
 };
 
-module.directive("tgColorSelection", ColorSelectionDirective);
-
-
 //############################################################################
 //# Custom Attributes Controller
 //############################################################################
@@ -523,7 +508,7 @@ let TYPE_CHOICES = [
     }
 ];
 
-class ProjectCustomAttributesController extends PageMixin {
+export class ProjectCustomAttributesController extends PageMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -626,15 +611,11 @@ class ProjectCustomAttributesController extends PageMixin {
 }
 ProjectCustomAttributesController.initClass();
 
-
-module.controller("ProjectCustomAttributesController", ProjectCustomAttributesController);
-
-
 //############################################################################
 //# Custom Attributes Directive
 //############################################################################
 
-let ProjectCustomAttributesDirective = function($log, $confirm, animationFrame, $translate) {
+export let ProjectCustomAttributesDirective = function($log, $confirm, animationFrame, $translate) {
     let link = function($scope, $el, $attrs) {
         let $ctrl = $el.controller();
 
@@ -863,15 +844,11 @@ let ProjectCustomAttributesDirective = function($log, $confirm, animationFrame, 
     return {link};
 };
 
-module.directive("tgProjectCustomAttributes", ["$log", "$tgConfirm", "animationFrame", "$translate",
-                                               ProjectCustomAttributesDirective]);
-
-
 //############################################################################
 //# Tags Controller
 //############################################################################
 
-class ProjectTagsController extends Controller {
+export class ProjectTagsController extends Controller {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -1000,14 +977,11 @@ class ProjectTagsController extends Controller {
 }
 ProjectTagsController.initClass();
 
-module.controller("ProjectTagsController", ProjectTagsController);
-
-
 //############################################################################
 //# Tags directive
 //############################################################################
 
-let ProjectTagsDirective = function($log, $repo, $confirm, $location, animationFrame, $translate, $rootscope) {
+export let ProjectTagsDirective = function($log, $repo, $confirm, $location, animationFrame, $translate, $rootscope) {
     let link = function($scope, $el, $attrs) {
         let form, formEl, promise, row, tag;
         let $window = $(window);
@@ -1233,9 +1207,6 @@ let ProjectTagsDirective = function($log, $repo, $confirm, $location, animationF
 
     return {link};
 };
-
-module.directive("tgProjectTags", ["$log", "$tgRepo", "$tgConfirm", "$tgLocation", "animationFrame",
-                                   "$translate", "$rootScope", ProjectTagsDirective]);
 
 function __guard__(value, transform) {
   return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;

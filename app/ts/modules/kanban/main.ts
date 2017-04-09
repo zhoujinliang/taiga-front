@@ -28,13 +28,11 @@ import {UsFiltersMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaKanban");
-
 //############################################################################
 //# Kanban Controller
 //############################################################################
 
-class KanbanController extends UsFiltersMixin {
+export class KanbanController extends UsFiltersMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -417,13 +415,11 @@ class KanbanController extends UsFiltersMixin {
 }
 KanbanController.initClass();
 
-module.controller("KanbanController", KanbanController);
-
 //############################################################################
 //# Kanban Directive
 //############################################################################
 
-let KanbanDirective = function($repo, $rootscope) {
+export let KanbanDirective = function($repo, $rootscope) {
     let link = function($scope, $el, $attrs) {
         let tableBodyDom = $el.find(".kanban-table-body");
 
@@ -439,13 +435,11 @@ let KanbanDirective = function($repo, $rootscope) {
     return {link};
 };
 
-module.directive("tgKanban", ["$tgRepo", "$rootScope", KanbanDirective]);
-
 //############################################################################
 //# Kanban Archived Status Column Header Control
 //############################################################################
 
-let KanbanArchivedStatusHeaderDirective = function($rootscope, $translate, kanbanUserstoriesService) {
+export let KanbanArchivedStatusHeaderDirective = function($rootscope, $translate, kanbanUserstoriesService) {
     let showArchivedText = $translate.instant("KANBAN.ACTION_SHOW_ARCHIVED");
     let hideArchivedText = $translate.instant("KANBAN.ACTION_HIDE_ARCHIVED");
 
@@ -485,14 +479,11 @@ let KanbanArchivedStatusHeaderDirective = function($rootscope, $translate, kanba
     return {link};
 };
 
-module.directive("tgKanbanArchivedStatusHeader", [ "$rootScope", "$translate", "tgKanbanUserstories", KanbanArchivedStatusHeaderDirective]);
-
-
 //############################################################################
 //# Kanban Archived Status Column Intro Directive
 //############################################################################
 
-let KanbanArchivedStatusIntroDirective = function($translate, kanbanUserstoriesService) {
+export let KanbanArchivedStatusIntroDirective = function($translate, kanbanUserstoriesService) {
     let userStories = [];
 
     let link = function($scope, $el, $attrs) {
@@ -535,13 +526,11 @@ let KanbanArchivedStatusIntroDirective = function($translate, kanbanUserstoriesS
     return {link};
 };
 
-module.directive("tgKanbanArchivedStatusIntro", ["$translate", "tgKanbanUserstories", KanbanArchivedStatusIntroDirective]);
-
 //############################################################################
 //# Kanban Squish Column Directive
 //############################################################################
 
-let KanbanSquishColumnDirective = function(rs, projectService) {
+export let KanbanSquishColumnDirective = function(rs, projectService) {
     let link = function($scope, $el, $attrs) {
         let unwatch;
         $scope.foldStatus = function(status) {
@@ -577,13 +566,11 @@ let KanbanSquishColumnDirective = function(rs, projectService) {
     return {link};
 };
 
-module.directive("tgKanbanSquishColumn", ["$tgResources", "tgProjectService", KanbanSquishColumnDirective]);
-
 //############################################################################
 //# Kanban WIP Limit Directive
 //############################################################################
 
-let KanbanWipLimitDirective = function() {
+export let KanbanWipLimitDirective = function() {
     let link = function($scope, $el, $attrs) {
         let status = $scope.$eval($attrs.tgKanbanWipLimit);
 
@@ -609,5 +596,3 @@ let KanbanWipLimitDirective = function() {
 
     return {link};
 };
-
-module.directive("tgKanbanWipLimit", KanbanWipLimitDirective);

@@ -25,13 +25,12 @@
 import {sizeFormat, debounce} from "../../utils"
 import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
-let module = angular.module("taigaUserSettings");
 
 //############################################################################
 //# User settings Controller
 //############################################################################
 
-class UserSettingsController extends PageMixin {
+export class UserSettingsController extends PageMixin {
     scope:angular.IScope
     rootscope:angular.IScope
     config:any
@@ -129,14 +128,11 @@ class UserSettingsController extends PageMixin {
 }
 UserSettingsController.initClass();
 
-module.controller("UserSettingsController", UserSettingsController);
-
-
 //############################################################################
 //# User Profile Directive
 //############################################################################
 
-let UserProfileDirective = function($confirm, $auth, $repo, $translate) {
+export let UserProfileDirective = function($confirm, $auth, $repo, $translate) {
     let link = function($scope, $el, $attrs) {
         let submit = debounce(2000, event => {
             event.preventDefault();
@@ -175,14 +171,11 @@ let UserProfileDirective = function($confirm, $auth, $repo, $translate) {
     return {link};
 };
 
-module.directive("tgUserProfile", ["$tgConfirm", "$tgAuth", "$tgRepo", "$translate", UserProfileDirective]);
-
-
 //############################################################################
 //# User Avatar Directive
 //############################################################################
 
-let UserAvatarDirective = function($auth, $model, $rs, $confirm) {
+export let UserAvatarDirective = function($auth, $model, $rs, $confirm) {
     let link = function($scope, $el, $attrs) {
         let showSizeInfo = () => $el.find(".size-info").removeClass("hidden");
 
@@ -223,14 +216,11 @@ let UserAvatarDirective = function($auth, $model, $rs, $confirm) {
     return {link};
 };
 
-module.directive("tgUserAvatar", ["$tgAuth", "$tgModel", "$tgResources", "$tgConfirm", UserAvatarDirective]);
-
-
 //############################################################################
 //# User Avatar Model Directive
 //############################################################################
 
-let TaigaAvatarModelDirective = function($parse) {
+export let TaigaAvatarModelDirective = function($parse) {
     let link = function($scope, $el, $attrs) {
         let model = $parse($attrs.tgAvatarModel);
         let modelSetter = model.assign;
@@ -242,5 +232,3 @@ let TaigaAvatarModelDirective = function($parse) {
 
     return {link};
 };
-
-module.directive('tgAvatarModel', ['$parse', TaigaAvatarModelDirective]);

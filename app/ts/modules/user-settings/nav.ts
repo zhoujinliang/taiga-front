@@ -22,9 +22,7 @@
  * File: modules/user-settings/nav.coffee
  */
 
-import * as angular from "angular"
-
-let UserSettingsNavigationDirective = function() {
+export let UserSettingsNavigationDirective = function() {
     let link = function($scope, $el, $attrs) {
         let section = $attrs.tgUserSettingsNavigation;
         $el.find(".active").removeClass("active");
@@ -35,6 +33,3 @@ let UserSettingsNavigationDirective = function() {
 
     return {link};
 };
-
-let module = angular.module("taigaUserSettings");
-module.directive("tgUserSettingsNavigation", UserSettingsNavigationDirective);

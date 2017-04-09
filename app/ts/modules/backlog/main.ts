@@ -29,13 +29,11 @@ import * as _ from "lodash"
 import * as angular from "angular"
 import * as moment from "moment"
 
-let module = angular.module("taigaBacklog");
-
 //############################################################################
 //# Backlog Controller
 //############################################################################
 
-class BacklogController extends UsFiltersMixin {
+export class BacklogController extends UsFiltersMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -720,13 +718,12 @@ class BacklogController extends UsFiltersMixin {
 }
 BacklogController.initClass();
 
-module.controller("BacklogController", BacklogController);
 
 //############################################################################
 //# Backlog Directive
 //############################################################################
 
-let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
+export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
     //# Doom line Link
     let doomLineTemplate = _.template(`\
 <div class="doom-line"><span><%- text %></span></div>\
@@ -1013,13 +1010,11 @@ let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
 };
 
 
-module.directive("tgBacklog", ["$tgRepo", "$rootScope", "$translate", "$tgResources", BacklogDirective]);
-
 //############################################################################
 //# User story points directive
 //############################################################################
 
-let UsRolePointsSelectorDirective = function($rootscope, $template, $compile, $translate) {
+export let UsRolePointsSelectorDirective = function($rootscope, $template, $compile, $translate) {
     let selectionTemplate = $template.get("backlog/us-role-points-popover.html", true);
 
     let link = function($scope, $el, $attrs) {
@@ -1079,10 +1074,7 @@ let UsRolePointsSelectorDirective = function($rootscope, $template, $compile, $t
     return {link};
 };
 
-module.directive("tgUsRolePointsSelector", ["$rootScope", "$tgTemplate", "$compile", "$translate", UsRolePointsSelectorDirective]);
-
-
-let UsPointsDirective = function($tgEstimationsService, $repo, $tgTemplate) {
+export let UsPointsDirective = function($tgEstimationsService, $repo, $tgTemplate) {
     let rolesTemplate = $tgTemplate.get("common/estimation/us-points-roles-popover.html", true);
 
     let link = function($scope, $el, $attrs) {
@@ -1200,13 +1192,10 @@ let UsPointsDirective = function($tgEstimationsService, $repo, $tgTemplate) {
     return {link};
 };
 
-module.directive("tgBacklogUsPoints", ["$tgEstimationsService", "$tgRepo", "$tgTemplate", UsPointsDirective]);
-
-
 //############################################################################
 //# Burndown graph directive
 //############################################################################
-let ToggleBurndownVisibility = function($storage) {
+export let ToggleBurndownVisibility = function($storage) {
     let hide = function() {
         $(".js-burndown-graph").removeClass("shown");
         $(".js-toggle-burndown-visibility-button").removeClass("active");
@@ -1259,14 +1248,11 @@ let ToggleBurndownVisibility = function($storage) {
     };
 };
 
-module.directive("tgToggleBurndownVisibility", ["$tgStorage", ToggleBurndownVisibility]);
-
-
 //############################################################################
 //# Burndown graph directive
 //############################################################################
 
-let BurndownBacklogGraphDirective = function($translate) {
+export let BurndownBacklogGraphDirective = function($translate) {
     let redrawChart = function(element, dataToDraw) {
         let width = element.width();
         element.height(width/6);
@@ -1396,14 +1382,11 @@ let BurndownBacklogGraphDirective = function($translate) {
     return {link};
 };
 
-module.directive("tgBurndownBacklogGraph", ["$translate", BurndownBacklogGraphDirective]);
-
-
 //############################################################################
 //# Backlog progress bar directive
 //############################################################################
 
-let TgBacklogProgressBarDirective = function($template, $compile) {
+export let TgBacklogProgressBarDirective = function($template, $compile) {
     let template = $template.get("backlog/progress-bar.html", true);
 
     let render = function(scope, el, projectPointsPercentaje, closedPointsPercentaje) {
@@ -1449,8 +1432,6 @@ let TgBacklogProgressBarDirective = function($template, $compile) {
 
     return {link};
 };
-
-module.directive("tgBacklogProgressBar", ["$tgTemplate", "$compile", TgBacklogProgressBarDirective]);
 
 function __range__(left, right, inclusive) {
   let range = [];

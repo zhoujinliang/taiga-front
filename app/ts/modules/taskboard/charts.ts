@@ -27,13 +27,11 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import * as moment from "moment"
 
-let module = angular.module("taigaTaskboard");
-
 //############################################################################
 //# Sprint burndown graph directive
 //############################################################################
 
-let SprintGraphDirective = function($translate){
+export let SprintGraphDirective = function($translate){
     let redrawChart = function(element, dataToDraw) {
         let width = element.width();
         element.height(240);
@@ -148,5 +146,3 @@ let SprintGraphDirective = function($translate){
 
     return {link};
 };
-
-module.directive("tgSprintGraph", ["$translate", SprintGraphDirective]);

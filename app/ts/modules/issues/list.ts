@@ -28,13 +28,11 @@ import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
 
-let module = angular.module("taigaIssues");
-
 //############################################################################
 //# Issues Controller
 //############################################################################
 
-class IssuesController extends FiltersMixin {
+export class IssuesController extends FiltersMixin {
     scope: angular.IScope
     rootscope: angular.IScope
     repo:any
@@ -467,13 +465,11 @@ class IssuesController extends FiltersMixin {
 }
 IssuesController.initClass();
 
-module.controller("IssuesController", IssuesController);
-
 //############################################################################
 //# Issues Directive
 //############################################################################
 
-let IssuesDirective = function($log, $location, $template, $compile) {
+export let IssuesDirective = function($log, $location, $template, $compile) {
     //# Issues Pagination
     let template = $template.get("issue/issue-paginator.html", true);
 
@@ -632,14 +628,11 @@ let IssuesDirective = function($log, $location, $template, $compile) {
     return {link};
 };
 
-module.directive("tgIssues", ["$log", "$tgLocation", "$tgTemplate", "$compile", IssuesDirective]);
-
-
 //############################################################################
 //# Issue status Directive (popover for change status)
 //############################################################################
 
-let IssueStatusInlineEditionDirective = function($repo, $template, $rootscope) {
+export let IssueStatusInlineEditionDirective = function($repo, $template, $rootscope) {
     /*
     Print the status of an Issue and a popover to change it.
     - tg-issue-status-inline-edition: The issue
@@ -714,15 +707,11 @@ let IssueStatusInlineEditionDirective = function($repo, $template, $rootscope) {
     return {link};
 };
 
-module.directive("tgIssueStatusInlineEdition", ["$tgRepo", "$tgTemplate", "$rootScope",
-                                                IssueStatusInlineEditionDirective]);
-
-
 //############################################################################
 //# Issue assigned to Directive
 //############################################################################
 
-let IssueAssignedToInlineEditionDirective = function($repo, $rootscope, $translate, avatarService) {
+export let IssueAssignedToInlineEditionDirective = function($repo, $rootscope, $translate, avatarService) {
     let template = _.template(`\
 <img style="background-color: <%- bg %>" src="<%- imgurl %>" alt="<%- name %>"/>
 <figcaption><%- name %></figcaption>\
@@ -782,6 +771,3 @@ let IssueAssignedToInlineEditionDirective = function($repo, $rootscope, $transla
 
     return {link};
 };
-
-module.directive("tgIssueAssignedToInlineEdition", ["$tgRepo", "$rootScope", "$translate", "tgAvatarService",
-                                                    IssueAssignedToInlineEditionDirective]);
