@@ -1,4 +1,4 @@
-let LbImportErrorDirective = function(lightboxService) {
+export let LbImportErrorDirective = function(lightboxService) {
     let link = function(scope, el, attrs) {
         lightboxService.open(el);
 
@@ -12,7 +12,4 @@ let LbImportErrorDirective = function(lightboxService) {
         link
     };
 };
-
 LbImportErrorDirective.$inject = ["lightboxService"];
-
-angular.module("taigaProjects").directive("tgLbImportError", LbImportErrorDirective);

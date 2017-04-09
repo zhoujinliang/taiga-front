@@ -24,9 +24,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module("taigaCommon");
-
-let TgLoadingService = function($compile) {
+export let TgLoadingService = function($compile) {
     let spinner = `<img class='loading-spinner' src='/${(<any>window)._version}/svg/spinner-circle.svg' alt='loading...' />`;
 
     return function() {
@@ -113,14 +111,9 @@ let TgLoadingService = function($compile) {
         return service;
     };
 };
+TgLoadingService.$inject = ["$compile"];
 
-TgLoadingService.$inject = [
-    "$compile"
-];
-
-module.factory("$tgLoading", TgLoadingService);
-
-let LoadingDirective = function($loading) {
+export let LoadingDirective = function($loading) {
     let link = function($scope, $el, attr) {
         let currentLoading = null;
         let template = $el.html();
@@ -145,5 +138,3 @@ let LoadingDirective = function($loading) {
         link
     };
 };
-
-module.directive("tgLoading", ["$tgLoading", LoadingDirective]);

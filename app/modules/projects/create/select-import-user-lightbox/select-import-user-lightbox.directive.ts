@@ -17,7 +17,7 @@
  * File: select-import-user-lightbox.directive.coffee
  */
 
-let SelectImportUserLightboxDirective = function(lightboxService, lightboxKeyboardNavigationService) {
+export let SelectImportUserLightboxDirective = function(lightboxService, lightboxKeyboardNavigationService) {
     let link = (scope, el, attrs, ctrl) =>
         scope.$watch('vm.visible', function(visible) {
             if (visible && !el.hasClass('open')) {
@@ -54,7 +54,4 @@ let SelectImportUserLightboxDirective = function(lightboxService, lightboxKeyboa
         link
     };
 };
-
 SelectImportUserLightboxDirective.$inject = ['lightboxService', 'lightboxKeyboardNavigationService'];
-
-angular.module("taigaProjects").directive("tgSelectImportUserLightbox", SelectImportUserLightboxDirective);

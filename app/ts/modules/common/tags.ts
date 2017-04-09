@@ -27,11 +27,9 @@ import {Awesomplete} from "../../global"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaCommon");
-
 // Directive that parses/format tags inputfield.
 
-let TagsDirective = function() {
+export let TagsDirective = function() {
     let formatter = function(v) {
         if (_.isArray(v)) {
             return v.join(", ");
@@ -59,10 +57,7 @@ let TagsDirective = function() {
     };
 };
 
-module.directive("tgTags", TagsDirective);
-
-
-let ColorizeTagsBacklogDirective = function() {
+export let ColorizeTagsBacklogDirective = function() {
     let template = _.template(`\
 <% _.each(tags, function(tag) { %>
     <% if (tag[1] !== null) { %>
@@ -99,14 +94,11 @@ let ColorizeTagsBacklogDirective = function() {
     return {link};
 };
 
-module.directive("tgColorizeBacklogTags", ColorizeTagsBacklogDirective);
-
-
 //############################################################################
 //# TagLine  Directive (for Lightboxes)
 //############################################################################
 
-let LbTagLineDirective = function($rs, $template, $compile) {
+export let LbTagLineDirective = function($rs, $template, $compile) {
     let ENTER_KEY = 13;
     let COMMA_KEY = 188;
 
@@ -231,5 +223,3 @@ let LbTagLineDirective = function($rs, $template, $compile) {
         templateUrl: "common/tag/lb-tag-line.html"
     };
 };
-
-module.directive("tgLbTagLine", ["$tgResources", "$tgTemplate", "$compile", LbTagLineDirective]);

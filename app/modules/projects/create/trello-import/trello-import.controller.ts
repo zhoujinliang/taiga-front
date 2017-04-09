@@ -18,9 +18,8 @@
  */
 
 import {defineImmutableProperty} from "../../../../ts/utils"
-import * as angular from "angular"
 
-class TrelloImportController {
+export class TrelloImportController {
     trelloImportService:any
     confirm:any
     translate:any
@@ -93,5 +92,3 @@ class TrelloImportController {
     }
 }
 TrelloImportController.initClass();
-
-angular.module('taigaProjects').controller('TrelloImportCtrl', TrelloImportController);

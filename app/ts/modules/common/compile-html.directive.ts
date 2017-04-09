@@ -17,9 +17,7 @@
  * File: compile-html.directive.coffee
  */
 
-import * as angular from "angular"
-
-let CompileHtmlDirective = function($compile) {
+export function CompileHtmlDirective($compile) {
     let link = (scope, element, attrs) =>
         scope.$watch(attrs.tgCompileHtml, function(newValue, oldValue) {
             element.html(newValue);
@@ -31,7 +29,4 @@ let CompileHtmlDirective = function($compile) {
         link
     };
 };
-
 CompileHtmlDirective.$inject = ["$compile"];
-
-angular.module("taigaCommon").directive("tgCompileHtml", CompileHtmlDirective);

@@ -22,10 +22,9 @@
  * File: modules/resources/importers.coffee
  */
 
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-let TrelloResource = function(urlsService, http) {
+export let TrelloResource = function(urlsService, http) {
     let service:any = {};
 
     service.getAuthUrl = function(url) {
@@ -68,7 +67,7 @@ let TrelloResource = function(urlsService, http) {
 
 TrelloResource.$inject = ["$tgUrls", "$tgHttp"];
 
-let JiraResource = function(urlsService, http) {
+export let JiraResource = function(urlsService, http) {
     let service:any = {};
 
     service.getAuthUrl = function(jira_url) {
@@ -119,7 +118,7 @@ let JiraResource = function(urlsService, http) {
 
 JiraResource.$inject = ["$tgUrls", "$tgHttp"];
 
-let GithubResource = function(urlsService, http) {
+export let GithubResource = function(urlsService, http) {
     let service:any = {};
 
     service.getAuthUrl = function(callbackUri) {
@@ -163,7 +162,7 @@ let GithubResource = function(urlsService, http) {
 
 GithubResource.$inject = ["$tgUrls", "$tgHttp"];
 
-let AsanaResource = function(urlsService, http) {
+export let AsanaResource = function(urlsService, http) {
     let service:any = {};
 
     service.getAuthUrl = function() {
@@ -204,11 +203,4 @@ let AsanaResource = function(urlsService, http) {
 
     return () => ({"asanaImporter": service});
 };
-
 AsanaResource.$inject = ["$tgUrls", "$tgHttp"];
-
-let module = angular.module("taigaResources2");
-module.factory("tgTrelloImportResource", TrelloResource);
-module.factory("tgJiraImportResource", JiraResource);
-module.factory("tgGithubImportResource", GithubResource);
-module.factory("tgAsanaImportResource", AsanaResource);

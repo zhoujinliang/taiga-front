@@ -18,10 +18,9 @@
  */
 
 import {Service} from "../../../../ts/classes"
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class AsanaImportService extends Service {
+export class AsanaImportService extends Service {
     resources:any
     location:any
     projects:Immutable.List<any>
@@ -82,5 +81,3 @@ class AsanaImportService extends Service {
     }
 }
 AsanaImportService.initClass();
-
-angular.module("taigaProjects").service("tgAsanaImportService", AsanaImportService);

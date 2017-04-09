@@ -17,7 +17,7 @@
  * File: like-project-button.directive.coffee
  */
 
-let LikeProjectButtonDirective = () =>
+export let LikeProjectButtonDirective = () =>
     ({
         scope: {},
         controller: "LikeProjectButton",
@@ -28,5 +28,3 @@ let LikeProjectButtonDirective = () =>
         templateUrl: "projects/components/like-project-button/like-project-button.html",
     })
 ;
-
-angular.module("taigaProjects").directive("tgLikeProjectButton", LikeProjectButtonDirective);

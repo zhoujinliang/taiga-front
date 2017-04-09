@@ -26,7 +26,7 @@
 import {sizeFormat} from "../../utils"
 import * as angular from "angular"
 
-let resourceProvider = function($config, $repo, $http, $urls, $q) {
+export function UserSettingsResourcesProvider($config, $repo, $http, $urls, $q) {
     let service:any = {};
 
     service.changeAvatar = function(file) {
@@ -69,8 +69,3 @@ loompas, try it with a smaller than (${sizeFormat(maxFileSize)})`
 
     return instance => instance.userSettings = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgUserSettingsResourcesProvider", ["$tgConfig", "$tgRepo", "$tgHttp", "$tgUrls", "$q",
-                                                    resourceProvider]);

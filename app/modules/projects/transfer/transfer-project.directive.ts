@@ -17,11 +17,7 @@
  * File: transfer-project.directive.coffee
  */
 
-import * as angular from "angular"
-
-let module = angular.module('taigaProjects');
-
-let TransferProjectDirective = function() {
+export let TransferProjectDirective = function() {
     let link = (scope, el, attrs, ctrl) => ctrl.initialize();
 
     return {
@@ -35,5 +31,3 @@ let TransferProjectDirective = function() {
         controllerAs: 'vm'
     };
 };
-
-module.directive('tgTransferProject', TransferProjectDirective);

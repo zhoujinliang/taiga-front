@@ -17,7 +17,7 @@
  * File: jira-import.directive.coffee
  */
 
-let JiraImportDirective = () =>
+export let JiraImportDirective = () =>
     ({
         link(scope, elm, attrs, ctrl) {
             return ctrl.startProjectSelector();
@@ -31,7 +31,4 @@ let JiraImportDirective = () =>
         }
     })
 ;
-
 JiraImportDirective.$inject = [];
-
-angular.module("taigaProjects").directive("tgJiraImport", JiraImportDirective);

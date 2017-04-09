@@ -17,7 +17,7 @@
  * File: import-project-selector.directive.coffee
  */
 
-let ImportProjectSelectorDirective = () =>
+export let ImportProjectSelectorDirective = () =>
     ({
         templateUrl:"projects/create/import-project-selector/import-project-selector.html",
         controller: "ImportProjectSelectorCtrl",
@@ -33,5 +33,3 @@ let ImportProjectSelectorDirective = () =>
         }
     })
 ;
-
-angular.module("taigaProjects").directive("tgImportProjectSelector", ImportProjectSelectorDirective);

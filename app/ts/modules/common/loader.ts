@@ -28,9 +28,7 @@
 import {timeout} from "../../utils"
 import * as angular from "angular"
 
-let module = angular.module("taigaCommon");
-
-let LoaderDirective = function(tgLoader, $rootscope) {
+export let LoaderDirective = function(tgLoader, $rootscope) {
     let link = function($scope, $el, $attrs) {
         tgLoader.onStart(function() {
             $(document.body).addClass("loader-active");
@@ -48,9 +46,7 @@ let LoaderDirective = function(tgLoader, $rootscope) {
     };
 };
 
-module.directive("tgLoader", ["tgLoader", "$rootScope", LoaderDirective]);
-
-let Loader = function($rootscope) {
+export let Loader = function($rootscope) {
     let config = {
         minTime: 300
     };
@@ -130,8 +126,4 @@ let Loader = function($rootscope) {
         }
     };
 };
-
-
 Loader.$inject = ["$rootScope"];
-
-module.factory("tgLoader", Loader);

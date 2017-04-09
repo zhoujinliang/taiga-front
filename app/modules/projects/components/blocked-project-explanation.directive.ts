@@ -17,10 +17,8 @@
  * File: blocked-project-explanation.directive.coffee
  */
 
-let BlockedProjectExplanationDirective = () =>
+export let BlockedProjectExplanationDirective = () =>
     ({
         templateUrl: "projects/project/blocked-project-explanation.html"
     })
 ;
-
-angular.module("taigaProjects").directive("tgBlockedProjectExplanation", BlockedProjectExplanationDirective);

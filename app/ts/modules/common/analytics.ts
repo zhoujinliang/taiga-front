@@ -24,11 +24,8 @@
 
 import {Service} from "../../../ts/classes"
 import * as _ from "lodash"
-import * as angular from "angular"
 
-let module = angular.module("taigaCommon");
-
-class AnalyticsService extends Service {
+export class AnalyticsService extends Service {
     rootscope:any
     log:any
     config:any
@@ -122,8 +119,3 @@ class AnalyticsService extends Service {
         return this.win.ga("send", "event", category, action, label, value);
     }
 }
-AnalyticsService.initClass();
-
-
-module.service("$tgAnalytics", AnalyticsService);
-

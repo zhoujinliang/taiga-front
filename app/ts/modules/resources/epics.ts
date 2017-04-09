@@ -25,9 +25,7 @@
 
 import {generateHash} from "../../app"
 
-import * as angular from "angular"
-
-let resourceProvider = function($repo, $http, $urls, $storage) {
+export function EpicsResourcesProvider($repo, $http, $urls, $storage) {
     let service:any = {};
     let hashSuffix = "epics-queryparams";
 
@@ -78,7 +76,3 @@ let resourceProvider = function($repo, $http, $urls, $storage) {
 
     return instance => instance.epics = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgEpicsResourcesProvider", ["$tgRepo","$tgHttp", "$tgUrls", "$tgStorage", resourceProvider]);

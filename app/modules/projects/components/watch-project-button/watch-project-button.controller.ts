@@ -17,9 +17,7 @@
  * File: watch-project-button.controller.coffee
  */
 
-import * as angular from "angular"
-
-class WatchProjectButtonController {
+export class WatchProjectButtonController {
     confirm:any
     watchButtonService:any
     showWatchOptions:boolean
@@ -69,5 +67,3 @@ class WatchProjectButtonController {
     }
 }
 WatchProjectButtonController.initClass();
-
-angular.module("taigaProjects").controller("WatchProjectButton", WatchProjectButtonController);

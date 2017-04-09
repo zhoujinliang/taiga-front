@@ -17,7 +17,7 @@
  * File: import-taiga.directive.coffee
  */
 
-let ImportTaigaDirective = () =>
+export let ImportTaigaDirective = () =>
     ({
         templateUrl:"projects/create/import-taiga/import-taiga.html",
         controller: "ImportTaigaCtrl",
@@ -26,5 +26,3 @@ let ImportTaigaDirective = () =>
         scope: {}
     })
 ;
-
-angular.module("taigaProjects").directive("tgImportTaiga", ImportTaigaDirective);

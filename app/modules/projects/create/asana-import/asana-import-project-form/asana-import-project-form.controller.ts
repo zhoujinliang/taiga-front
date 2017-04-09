@@ -17,10 +17,9 @@
  * File: asana-import-project-form.controller.coffee
  */
 
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class AsanaImportProjectFormController {
+export class AsanaImportProjectFormController {
     currentUserService:any
     canCreatePublicProjects:any
     canCreatePrivateProjects:any
@@ -77,5 +76,3 @@ class AsanaImportProjectFormController {
     }
 }
 AsanaImportProjectFormController.initClass();
-
-angular.module('taigaProjects').controller('AsanaImportProjectFormCtrl', AsanaImportProjectFormController);

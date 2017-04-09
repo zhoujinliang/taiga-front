@@ -17,7 +17,7 @@
  * File: create-project-form.directive.coffee
  */
 
-let CreateProjectFormDirective = () =>
+export let CreateProjectFormDirective = () =>
     ({
         templateUrl:"projects/create/create-project-form/create-project-form.html",
         controller: "CreateProjectFormCtrl",
@@ -28,5 +28,3 @@ let CreateProjectFormDirective = () =>
         }
     })
 ;
-
-angular.module("taigaProjects").directive("tgCreateProjectForm", CreateProjectFormDirective);

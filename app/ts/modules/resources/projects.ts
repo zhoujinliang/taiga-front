@@ -27,7 +27,7 @@ import {sizeFormat} from "../../utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let resourceProvider = function($config, $repo, $http, $urls, $auth, $q, $translate) {
+export function ProjectsResourcesProvider($config, $repo, $http, $urls, $auth, $q, $translate) {
     let service:any = {};
 
     service.get = projectId => $repo.queryOne("projects", projectId);
@@ -241,8 +241,3 @@ loompas, try it with a smaller than (${sizeFormat(maxFileSize)})`
 
     return instance => instance.projects = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgProjectsResourcesProvider", ["$tgConfig", "$tgRepo", "$tgHttp", "$tgUrls", "$tgAuth",
-                                                "$q", "$translate", resourceProvider]);

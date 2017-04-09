@@ -18,11 +18,10 @@
  */
 
 import {defineImmutableProperty} from "../../../../ts/utils"
-import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
 
-class DuplicateProjectController {
+export class DuplicateProjectController {
     currentUserService:any
     projectsService:any
     location:any
@@ -123,5 +122,3 @@ class DuplicateProjectController {
     }
 }
 DuplicateProjectController.initClass();
-
-angular.module("taigaProjects").controller("DuplicateProjectCtrl", DuplicateProjectController);

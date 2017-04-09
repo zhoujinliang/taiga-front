@@ -18,10 +18,9 @@
  */
 
 import {autoScroll, dragula} from "../../../ts/global"
-import * as angular from "angular"
 import * as _ from "lodash"
 
-let SortProjectsDirective = function(currentUserService) {
+export let SortProjectsDirective = function(currentUserService) {
     let link = function(scope, el, attrs, ctrl) {
         let itemEl = null;
 
@@ -75,5 +74,3 @@ let SortProjectsDirective = function(currentUserService) {
 
     return directive;
 };
-
-angular.module("taigaProjects").directive("tgSortProjects", ["tgCurrentUserService", SortProjectsDirective]);

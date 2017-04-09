@@ -17,7 +17,7 @@
  * File: watch-project-button.directive.coffee
  */
 
-let WatchProjectButtonDirective = () =>
+export let WatchProjectButtonDirective = () =>
     ({
         scope: {},
         controller: "WatchProjectButton",
@@ -28,5 +28,3 @@ let WatchProjectButtonDirective = () =>
         templateUrl: "projects/components/watch-project-button/watch-project-button.html",
     })
 ;
-
-angular.module("taigaProjects").directive("tgWatchProjectButton", WatchProjectButtonDirective);

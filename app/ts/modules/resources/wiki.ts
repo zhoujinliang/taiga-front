@@ -22,10 +22,7 @@
  * File: modules/resources/wikis.coffee
  */
 
-
-import * as angular from "angular"
-
-let resourceProvider = function($repo, $http, $urls) {
+export function WikiResourcesProvider($repo, $http, $urls) {
     let service:any = {};
 
     service.get = wikiId => $repo.queryOne("wiki", wikiId);
@@ -38,7 +35,3 @@ let resourceProvider = function($repo, $http, $urls) {
 
     return instance => instance.wiki = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgWikiResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", resourceProvider]);

@@ -17,7 +17,7 @@
  * File: github-import-project-form.directive.coffee
  */
 
-let GithubImportProjectFormDirective = () =>
+export let GithubImportProjectFormDirective = () =>
     ({
         link(scope, elm, attr, ctrl) {
             return scope.$watch('vm.members', ctrl.checkUsersLimit.bind(ctrl));
@@ -36,7 +36,4 @@ let GithubImportProjectFormDirective = () =>
         }
     })
 ;
-
 GithubImportProjectFormDirective.$inject = [];
-
-angular.module("taigaProjects").directive("tgGithubImportProjectForm", GithubImportProjectFormDirective);

@@ -17,7 +17,7 @@
  * File: asana-import-project-form.directive.coffee
  */
 
-let AsanaImportProjectFormDirective = () =>
+export let AsanaImportProjectFormDirective = () =>
     ({
         link(scope, elm, attr, ctrl) {
             return scope.$watch('vm.members', ctrl.checkUsersLimit.bind(ctrl));
@@ -36,7 +36,4 @@ let AsanaImportProjectFormDirective = () =>
         }
     })
 ;
-
 AsanaImportProjectFormDirective.$inject = [];
-
-angular.module("taigaProjects").directive("tgAsanaImportProjectForm", AsanaImportProjectFormDirective);

@@ -22,9 +22,7 @@
  * File: modules/resources/custom-field-values.coffee
  */
 
-import * as angular from "angular"
-
-let resourceProvider = function($repo) {
+export function CustomAttributesValuesResourcesProvider($repo) {
     let _get = (objectId, resource) => $repo.queryOne(resource, objectId);
 
     let service = {
@@ -44,6 +42,3 @@ let resourceProvider = function($repo) {
 
     return instance => instance.customAttributesValues = service;
 };
-
-let module = angular.module("taigaResources");
-module.factory("$tgCustomAttributesValuesResourcesProvider", ["$tgRepo", resourceProvider]);

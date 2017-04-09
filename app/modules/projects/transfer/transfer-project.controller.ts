@@ -17,11 +17,7 @@
  * File: transfer-project.directive.coffee
  */
 
-import * as angular from "angular"
-
-let module = angular.module('taigaProjects');
-
-class TransferProject {
+export class TransferProject {
     routeParams:any
     projectService:any
     location:any
@@ -156,6 +152,3 @@ class TransferProject {
     }
 }
 TransferProject.initClass();
-
-
-module.controller("TransferProjectController", TransferProject);

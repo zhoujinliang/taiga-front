@@ -23,10 +23,9 @@
  */
 
 
-import * as angular from "angular"
 import * as _ from "lodash"
 
-let resourceProvider = function($repo, $http, $urls) {
+export function MembershipsResourcesProvider($repo, $http, $urls) {
     let service:any = {};
 
     service.get = id => $repo.queryOne("memberships", id);
@@ -62,7 +61,3 @@ let resourceProvider = function($repo, $http, $urls) {
 
     return instance => instance.memberships = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgMembershipsResourcesProvider", ["$tgRepo", "$tgHttp", "$tgUrls", resourceProvider]);

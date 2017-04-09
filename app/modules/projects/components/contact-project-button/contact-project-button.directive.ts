@@ -17,7 +17,7 @@
  * File: contact-project-button.directive.coffee
  */
 
-let ContactProjectButtonDirective = () =>
+export let ContactProjectButtonDirective = () =>
     ({
         scope: {},
         controller: "ContactProjectButtonCtrl",
@@ -29,5 +29,3 @@ let ContactProjectButtonDirective = () =>
         templateUrl: "projects/components/contact-project-button/contact-project-button.html",
     })
 ;
-
-angular.module("taigaProjects").directive("tgContactProjectButton", ContactProjectButtonDirective);

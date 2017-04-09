@@ -22,10 +22,7 @@
  * File: modules/resources/mdrender.coffee
  */
 
-
-import * as angular from "angular"
-
-let resourceProvider = function($repo, $urls, $http) {
+export function MdRenderResourcesProvider($repo, $urls, $http) {
     let service:any = {};
 
     service.render = function(projectId, content) {
@@ -44,7 +41,3 @@ let resourceProvider = function($repo, $urls, $http) {
 
     return instance => instance.mdrender = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgMdRenderResourcesProvider", ["$tgRepo", "$tgUrls", "$tgHttp", resourceProvider]);

@@ -17,10 +17,9 @@
  * File: dropdown-project-list.directive.coffee
  */
 
-import * as angular from "angular"
 import {defineImmutableProperty} from "../../../ts/utils"
 
-let DropdownProjectListDirective = function(currentUserService, projectsService) {
+export let DropdownProjectListDirective = function(currentUserService, projectsService) {
     let link = function(scope, el, attrs, ctrl) {
         scope.vm = {};
 
@@ -42,5 +41,3 @@ DropdownProjectListDirective.$inject = [
     "tgCurrentUserService",
     "tgProjectsService"
 ];
-
-angular.module("taigaNavigationBar").directive("tgDropdownProjectList", DropdownProjectListDirective);

@@ -17,10 +17,9 @@
  * File: github-import-project-form.controller.coffee
  */
 
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class GithubImportProjectFormController {
+export class GithubImportProjectFormController {
     currentUserService:any
     canCreatePublicProjects:any
     canCreatePrivateProjects:any
@@ -77,6 +76,3 @@ class GithubImportProjectFormController {
     }
 }
 GithubImportProjectFormController.initClass();
-
-
-angular.module('taigaProjects').controller('GithubImportProjectFormCtrl', GithubImportProjectFormController);

@@ -17,9 +17,7 @@
  * File: webhooklogs.coffee
  */
 
-import * as angular from "angular"
-
-let resourceProvider = function($repo, $urls, $http) {
+export function WebhookLogsResourcesProvider($repo, $urls, $http) {
     let service:any = {};
 
     service.list = function(webhookId) {
@@ -34,7 +32,3 @@ let resourceProvider = function($repo, $urls, $http) {
 
     return instance => instance.webhooklogs = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgWebhookLogsResourcesProvider", ["$tgRepo", "$tgUrls", "$tgHttp", resourceProvider]);

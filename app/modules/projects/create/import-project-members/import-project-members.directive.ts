@@ -17,7 +17,7 @@
  * File: import-project-form.directive.coffee
  */
 
-let ImportProjectMembersDirective = () =>
+export let ImportProjectMembersDirective = () =>
     ({
         link(scope, elm, attr, ctrl) {
             ctrl.fetchUser();
@@ -39,7 +39,4 @@ let ImportProjectMembersDirective = () =>
         }
     })
 ;
-
 ImportProjectMembersDirective.$inject = [];
-
-angular.module("taigaProjects").directive("tgImportProjectMembers", ImportProjectMembersDirective);

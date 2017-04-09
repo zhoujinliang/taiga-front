@@ -18,9 +18,8 @@
  */
 
 import {defineImmutableProperty} from "../../../../ts/utils"
-import * as angular from "angular"
 
-class GithubImportController {
+export class GithubImportController {
     githubImportService:any
     confirm:any
     translate:any
@@ -96,5 +95,3 @@ class GithubImportController {
     }
 }
 GithubImportController.initClass();
-
-angular.module('taigaProjects').controller('GithubImportCtrl', GithubImportController);

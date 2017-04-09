@@ -17,7 +17,7 @@
  * File: trello-import-project-form.directive.coffee
  */
 
-let TrelloImportProjectFormDirective = () =>
+export let TrelloImportProjectFormDirective = () =>
     ({
         link(scope, elm, attr, ctrl) {
             return scope.$watch('vm.members', ctrl.checkUsersLimit.bind(ctrl));
@@ -36,7 +36,4 @@ let TrelloImportProjectFormDirective = () =>
         }
     })
 ;
-
 TrelloImportProjectFormDirective.$inject = [];
-
-angular.module("taigaProjects").directive("tgTrelloImportProjectForm", TrelloImportProjectFormDirective);

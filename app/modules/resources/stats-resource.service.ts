@@ -17,10 +17,9 @@
  * File: stats-resource.service.coffee
  */
 
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-let Resource = function(urlsService, http) {
+export let StatsResource = function(urlsService, http) {
     let service:any = {};
 
     service.discover = function(applicationId, state) {
@@ -30,8 +29,4 @@ let Resource = function(urlsService, http) {
 
     return () => ({"stats": service});
 };
-
-Resource.$inject = ["$tgUrls", "$tgHttp"];
-
-let module = angular.module("taigaResources2");
-module.factory("tgStatsResource", Resource);
+StatsResource.$inject = ["$tgUrls", "$tgHttp"];

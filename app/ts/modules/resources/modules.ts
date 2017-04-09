@@ -17,16 +17,10 @@
  * File: modules.coffee
  */
 
-import * as angular from "angular"
-
-let resourceProvider = function($repo) {
+export function ModulesResourcesProvider($repo) {
     let service:any = {};
 
     service.list = (projectId, module) => $repo.queryOneAttribute("project-modules", projectId, module);
 
     return instance => instance.modules = service;
 };
-
-
-let module = angular.module("taigaResources");
-module.factory("$tgModulesResourcesProvider", ["$tgRepo", resourceProvider]);

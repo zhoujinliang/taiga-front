@@ -18,9 +18,8 @@
  */
 
 import {defineImmutableProperty} from "../../../../ts/utils"
-import * as angular from "angular"
 
-class AsanaImportController {
+export class AsanaImportController {
     asanaImportService:any
     confirm:any
     translate:any
@@ -95,5 +94,3 @@ class AsanaImportController {
     }
 }
 AsanaImportController.initClass();
-
-angular.module('taigaProjects').controller('AsanaImportCtrl', AsanaImportController);

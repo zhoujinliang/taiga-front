@@ -17,9 +17,7 @@
  * File: create-project-form.controller.coffee
  */
 
-import * as angular from "angular"
-
-class CreatetProjectFormController {
+export class CreatetProjectFormController {
     currentUserService:any
     projectsService:any
     projectUrl:any
@@ -90,5 +88,3 @@ class CreatetProjectFormController {
     }
 }
 CreatetProjectFormController.initClass();
-
-angular.module('taigaProjects').controller('CreateProjectFormCtrl', CreatetProjectFormController);

@@ -17,10 +17,9 @@
  * File: tasks-resource.service.coffee
  */
 
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-let Resource = function(urlsService, http) {
+export let TasksResource = function(urlsService, http) {
     let service:any = {};
 
     service.listInAllProjects = function(params) {
@@ -38,8 +37,4 @@ let Resource = function(urlsService, http) {
 
     return () => ({"tasks": service});
 };
-
-Resource.$inject = ["$tgUrls", "$tgHttp"];
-
-let module = angular.module("taigaResources2");
-module.factory("tgTasksResource", Resource);
+TasksResource.$inject = ["$tgUrls", "$tgHttp"];

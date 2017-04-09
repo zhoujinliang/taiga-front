@@ -17,9 +17,7 @@
  * File: lb-contact-team.controller.coffee
  */
 
-import * as angular from "angular"
-
-class ContactProjectLbController {
+export class ContactProjectLbController {
     lightboxService:any
     rs:any
     confirm:any
@@ -56,5 +54,3 @@ class ContactProjectLbController {
     }
 }
 ContactProjectLbController.initClass();
-
-angular.module("taigaProjects").controller("ContactProjectLbCtrl", ContactProjectLbController);

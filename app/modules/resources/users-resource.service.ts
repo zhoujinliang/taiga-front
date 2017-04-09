@@ -17,10 +17,9 @@
  * File: users-resource.service.coffee
  */
 
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-let Resource = function(urlsService, http, paginateResponseService) {
+export let UsersResource = function(urlsService, http, paginateResponseService) {
     let service:any = {};
 
     service.getUserByUsername = function(username) {
@@ -165,8 +164,4 @@ let Resource = function(urlsService, http, paginateResponseService) {
 
     return () => ({"users": service});
 };
-
-Resource.$inject = ["$tgUrls", "$tgHttp", "tgPaginateResponseService"];
-
-let module = angular.module("taigaResources2");
-module.factory("tgUsersResources", Resource);
+UsersResource.$inject = ["$tgUrls", "$tgHttp", "tgPaginateResponseService"];

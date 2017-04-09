@@ -24,14 +24,13 @@
 
 import {bindOnce, debounce} from "../../utils"
 import * as angular from "angular"
-
-let module = angular.module("taigaCommon");
+import * as $ from "jquery"
 
 //############################################################################
 //# UserStory status Directive (popover for change status)
 //############################################################################
 
-let UsStatusDirective = function($repo, $template) {
+export let UsStatusDirective = function($repo, $template) {
     /*
     Print the status of a US and a popover to change it.
     - tg-us-status: The user story
@@ -108,13 +107,11 @@ let UsStatusDirective = function($repo, $template) {
     return {link};
 };
 
-module.directive("tgUsStatus", ["$tgRepo", "$tgTemplate", UsStatusDirective]);
-
 //############################################################################
 //# Related Task Status Directive
 //############################################################################
 
-let RelatedTaskStatusDirective = function($repo, $template) {
+export let RelatedTaskStatusDirective = function($repo, $template) {
     /*
     Print the status of a related task and a popover to change it.
     - tg-related-task-status: The related task
@@ -195,8 +192,6 @@ let RelatedTaskStatusDirective = function($repo, $template) {
 
     return {link};
 };
-
-module.directive("tgRelatedTaskStatus", ["$tgRepo", "$tgTemplate", RelatedTaskStatusDirective]);
 
 //############################################################################
 //# jQuery plugin for Popover

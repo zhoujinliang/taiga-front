@@ -17,9 +17,7 @@
  * File: like-project-button.controller.coffee
  */
 
-import * as angular from "angular"
-
-class ContactProjectButtonController {
+export class ContactProjectButtonController {
     lightboxFactory:any
     project:any
 
@@ -45,6 +43,3 @@ class ContactProjectButtonController {
     }
 }
 ContactProjectButtonController.initClass();
-
-
-angular.module("taigaProjects").controller("ContactProjectButtonCtrl", ContactProjectButtonController);

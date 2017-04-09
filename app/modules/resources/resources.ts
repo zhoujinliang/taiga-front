@@ -17,8 +17,6 @@
  * File: resources.coffee
  */
 
-import * as angular from "angular"
-
 let services = [
     "tgProjectsResources",
     "tgUserResources",
@@ -37,7 +35,7 @@ let services = [
     "tgAsanaImportResource"
 ];
 
-let Resources = function($injector) {
+export let Resources = function($injector) {
     for (let serviceName of services) {
         let serviceFn = $injector.get(serviceName);
 
@@ -54,8 +52,4 @@ let Resources = function($injector) {
 
     return this;
 };
-
-
 Resources.$inject = ["$injector"];
-
-angular.module("taigaResources2").service("tgResources", Resources);

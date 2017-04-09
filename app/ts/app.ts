@@ -31,6 +31,15 @@ import {nl2br} from "./utils"
 import {hex_sha1} from "./libs/sha1-custom"
 import "ng-infinite-scroll"
 import "../modules/home/home.module"
+import "./modules/base"
+import "./modules/common"
+import "./modules/resources"
+import "../modules/resources"
+import "../modules/navigation-bar"
+import "./modules/auth"
+import "./modules/events"
+import "../modules/projects"
+import "./modules/related-tasks"
 
 export let taigaContribPlugins = this.taigaContribPlugins || (<any>window).taigaContribPlugins || [];
 
@@ -949,7 +958,7 @@ let modules = [
 export function run() {
     // Main module definition
     let module = angular.module("taiga", modules);
-    debugger;
+
     module.config([
         "$routeProvider",
         "$locationProvider",
@@ -979,4 +988,6 @@ export function run() {
         "lightboxService",
         init
     ]);
+
+    angular.bootstrap(document, ['taiga']);
 }
