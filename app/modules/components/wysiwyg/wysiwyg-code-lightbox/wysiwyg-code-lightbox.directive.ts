@@ -22,7 +22,7 @@
  * File: modules/components/wysiwyg/wysiwyg-code-lightbox/wysiwyg-code-lightbox.directive.coffee
  */
 
-let WysiwygCodeLightbox = function(lightboxService) {
+export let WysiwygCodeLightbox = function(lightboxService) {
     let link = (scope, el, attrs, ctrl) =>
         scope.$watch('visible', function(visible) {
             if (visible && !el.hasClass('open')) {
@@ -56,6 +56,3 @@ let WysiwygCodeLightbox = function(lightboxService) {
         templateUrl: "components/wysiwyg/wysiwyg-code-lightbox/wysiwyg-code-lightbox.html"
     };
 };
-
-angular.module("taigaComponents")
-    .directive("tgWysiwygCodeLightbox", ["lightboxService", WysiwygCodeLightbox]);

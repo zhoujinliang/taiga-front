@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module("taigaComponents");
-
-let cardDirective = () =>
+export let cardDirective = () =>
     ({
         link(scope) {},
 
@@ -43,4 +41,3 @@ let cardDirective = () =>
     })
 ;
 
-module.directive('tgCard', cardDirective);

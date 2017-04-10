@@ -25,16 +25,12 @@
 import {Service} from "../../../ts/classes"
 import {trim, bindOnce} from "../../../ts/utils"
 import * as _ from "lodash"
-import * as angular from "angular"
-
-let module = angular.module("taigaBase");
-
 
 //############################################################################
 //# Navigation Urls Service
 //############################################################################
 
-class NavigationUrlsService extends Service {
+export class NavigationUrlsService extends Service {
     urls:any
     constructor() {
         super()
@@ -62,14 +58,11 @@ class NavigationUrlsService extends Service {
     }
 }
 
-module.service("$tgNavUrls", NavigationUrlsService);
-
-
 //############################################################################
 //# Navigation Urls Directive
 //############################################################################
 
-let NavigationUrlsDirective = function($navurls, $auth, $q, $location, lightboxService) {
+export let NavigationUrlsDirective = function($navurls, $auth, $q, $location, lightboxService) {
     // Example:
     // link(tg-nav="project-backlog:project='sss',")
 
@@ -190,5 +183,3 @@ let NavigationUrlsDirective = function($navurls, $auth, $q, $location, lightboxS
 
     return {link};
 };
-
-module.directive("tgNav", ["$tgNavUrls", "$tgAuth", "$q", "$tgLocation", "lightboxService", NavigationUrlsDirective]);

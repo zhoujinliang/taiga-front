@@ -22,7 +22,7 @@ import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
 
-class ColorSelectorController {
+export class ColorSelectorController {
     projectService:any
     colorList:any
     displayColorList:any
@@ -90,6 +90,3 @@ class ColorSelectorController {
     }
 }
 ColorSelectorController.initClass();
-
-
-angular.module('taigaComponents').controller("ColorSelectorCtrl", ColorSelectorController);

@@ -21,7 +21,7 @@ import {groupBy, defineImmutableProperty} from "../../ts/utils"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class CurrentUserService {
+export class CurrentUserService {
     projectsService:any
     storageService:any
     rs:any
@@ -239,5 +239,3 @@ class CurrentUserService {
     }
 }
 CurrentUserService.initClass();
-
-angular.module("taigaCommon").service("tgCurrentUserService", CurrentUserService);

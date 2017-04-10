@@ -17,7 +17,7 @@
  * File: avatar.directive.coffee
  */
 
-let AvatarDirective = function(avatarService) {
+export let AvatarDirective = function(avatarService) {
     let link = function(scope, el, attrs) {
         let attributeName;
         if (attrs.tgAvatarBig) {
@@ -46,6 +46,3 @@ let AvatarDirective = function(avatarService) {
 AvatarDirective.$inject = [
     'tgAvatarService'
 ];
-
-angular.module("taigaComponents").directive("tgAvatar", AvatarDirective);
-angular.module("taigaComponents").directive("tgAvatarBig", AvatarDirective);

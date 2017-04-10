@@ -23,8 +23,40 @@
  */
 
 import * as angular from "angular"
+import * as bind from "./bind"
+import {ConfigurationService} from "./conf"
+import {ContribUserSettingsController, ContribController} from "./contrib"
+import {FiltersStorageService} from "./filters"
+import {HttpService} from "./http"
+import {locationFactory} from "./location"
+import {modelProvider} from "./model"
+import {NavigationUrlsService, NavigationUrlsDirective} from "./navurls"
+import {RepositoryService} from "./repository"
+import {StorageService} from "./storage"
+import {UrlsService} from "./urls"
 
 let module = angular.module("taigaBase", []);
+module.directive("tgBoBind", bind.BindOnceBindDirective);
+module.directive("tgBoHtml", bind.BindOnceHtmlDirective);
+module.directive("tgBoRef", bind.BindOnceRefDirective);
+module.directive("tgBoSrc", bind.BindOnceSrcDirective);
+module.directive("tgBoHref", bind.BindOnceHrefDirective);
+module.directive("tgBoAlt", bind.BindOnceAltDirective);
+module.directive("tgBoTitle", bind.BindOnceTitleDirective);
+module.directive("tgBindTitle", bind.BindTitleDirective);
+module.directive("tgBindHtml", bind.BindHtmlDirective);
+module.service("$tgConfig", ConfigurationService);
+module.controller("ContribUserSettingsController", ContribUserSettingsController);
+module.controller("ContribController", ContribController);
+module.service("FiltersStorageService", FiltersStorageService);
+module.service("$tgHttp", HttpService);
+module.factory("$tgLocation", ["$location", "$route", "$rootScope", locationFactory]);
+module.factory("$tgModel", ["$q", "$http", "$tgUrls", "$tgStorage", modelProvider]);
+module.service("$tgNavUrls", NavigationUrlsService);
+module.directive("tgNav", ["$tgNavUrls", "$tgAuth", "$q", "$tgLocation", "lightboxService", NavigationUrlsDirective]);
+module.service("$tgRepo", RepositoryService);
+module.service("$tgStorage", StorageService);
+module.service('$tgUrls', UrlsService);
 
 //############################################################################
 //# Main Directive
@@ -133,3 +165,4 @@ let init = function($log, $navurls) {
 };
 
 module.run(["$log", "$tgNavUrls", init]);
+

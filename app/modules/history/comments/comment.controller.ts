@@ -20,9 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaHistory");
-
-class CommentController {
+export class CommentController {
     currentUserService:any
     permissionService:any
     lightboxFactory:any
@@ -88,5 +86,3 @@ class CommentController {
     }
 }
 CommentController.initClass();
-
-module.controller("CommentCtrl", CommentController);

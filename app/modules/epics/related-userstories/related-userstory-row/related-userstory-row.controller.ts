@@ -20,9 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaEpics");
-
-class RelatedUserstoryRowController {
+export class RelatedUserstoryRowController {
     avatarService:any
     translate:any
     confirm:any
@@ -86,5 +84,3 @@ class RelatedUserstoryRowController {
     }
 }
 RelatedUserstoryRowController.initClass();
-
-module.controller("RelatedUserstoryRowCtrl", RelatedUserstoryRowController);

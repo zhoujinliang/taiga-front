@@ -20,9 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaHistory");
-
-class ActivitiesDiffController {
+export class ActivitiesDiffController {
     type:any
     diffRemoveTags:any
     diffAddTags:any
@@ -43,6 +41,3 @@ class ActivitiesDiffController {
     }
 }
 ActivitiesDiffController.initClass();
-
-
-module.controller("ActivitiesDiffCtrl", ActivitiesDiffController);

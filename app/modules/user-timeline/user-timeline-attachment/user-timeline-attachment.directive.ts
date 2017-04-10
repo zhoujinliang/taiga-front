@@ -17,7 +17,7 @@
  * File: user-timeline-attachment.directive.coffee
  */
 
-let UserTimelineAttachmentDirective = function(template, $compile) {
+export let UserTimelineAttachmentDirective = function(template, $compile) {
     let validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
 
     let isImage = function(url) {
@@ -54,6 +54,3 @@ UserTimelineAttachmentDirective.$inject = [
     "$tgTemplate",
     "$compile"
 ];
-
-angular.module("taigaUserTimeline")
-    .directive("tgUserTimelineAttachment", UserTimelineAttachmentDirective);

@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class LightboxFactory {
+export class LightboxFactory {
     rootScope: angular.IScope
     compile: any
 
@@ -54,5 +54,3 @@ class LightboxFactory {
     }
 }
 LightboxFactory.initClass();
-
-angular.module("taigaCommon").service("tgLightboxFactory", LightboxFactory);

@@ -22,7 +22,7 @@ import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
 
-class CreateEpicController {
+export class CreateEpicController {
     confirm:any
     projectService:any
     epicsService:any
@@ -105,5 +105,3 @@ class CreateEpicController {
     }
 }
 CreateEpicController.initClass();
-
-angular.module("taigaEpics").controller("CreateEpicCtrl", CreateEpicController);

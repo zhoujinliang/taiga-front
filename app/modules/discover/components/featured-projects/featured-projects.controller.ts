@@ -20,7 +20,7 @@
 import {defineImmutableProperty} from "../../../../ts/utils"
 import * as angular from "angular"
 
-class FeaturedProjectsController {
+export class FeaturedProjectsController {
     discoverProjectsService:any
 
     static initClass() {
@@ -37,5 +37,3 @@ class FeaturedProjectsController {
     }
 }
 FeaturedProjectsController.initClass();
-
-angular.module("taigaDiscover").controller("FeaturedProjects", FeaturedProjectsController);

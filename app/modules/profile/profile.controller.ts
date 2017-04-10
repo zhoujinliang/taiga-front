@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class ProfileController {
+export class ProfileController {
     appMetaService:any
     currentUserService:any
     routeParams:any
@@ -86,5 +86,3 @@ class ProfileController {
     }
 }
 ProfileController.initClass();
-
-angular.module("taigaProfile").controller("Profile", ProfileController);

@@ -17,7 +17,7 @@
  * File: isolate-click.directive.coffee
  */
 
-let IsolateClickDirective = function() {
+export let IsolateClickDirective = function() {
     let link = (scope, el, attrs) =>
         el.on('click', e => {
             return e.stopPropagation();
@@ -26,5 +26,3 @@ let IsolateClickDirective = function() {
 
     return {link};
 };
-
-angular.module("taigaUtils").directive("tgIsolateClick", IsolateClickDirective);

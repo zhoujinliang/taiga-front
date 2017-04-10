@@ -23,9 +23,7 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
 
-let module = angular.module('taigaWikiHistory');
-
-class WikiHistoryService extends Service {
+export class WikiHistoryService extends Service {
     rs:any
     xhrError:any
     _wikiId:any
@@ -68,4 +66,3 @@ class WikiHistoryService extends Service {
     }
 }
 WikiHistoryService.initClass();
-module.service("tgWikiHistoryService", WikiHistoryService);

@@ -17,7 +17,7 @@
  * File: most-liked.directive.coffee
  */
 
-let MostLikedDirective = function() {
+export let MostLikedDirective = function() {
     let link = (scope, el, attrs, ctrl) => ctrl.fetch();
 
     return {
@@ -30,5 +30,3 @@ let MostLikedDirective = function() {
 };
 
 MostLikedDirective.$inject = [];
-
-angular.module("taigaDiscover").directive("tgMostLiked", MostLikedDirective);

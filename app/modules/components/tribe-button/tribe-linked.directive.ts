@@ -17,7 +17,7 @@
  * File: tribe-linked.directive.coffee
  */
 
-let TribeLinkedDirective = function(configService) {
+export let TribeLinkedDirective = function(configService) {
     let link = function(scope, el, attrs) {
 
         scope.vm = {};
@@ -44,5 +44,3 @@ let TribeLinkedDirective = function(configService) {
 TribeLinkedDirective.$inject = [
     "$tgConfig"
 ];
-
-angular.module("taigaComponents").directive("tgTribeLinked", TribeLinkedDirective);

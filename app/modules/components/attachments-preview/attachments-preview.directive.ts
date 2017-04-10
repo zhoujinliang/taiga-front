@@ -17,7 +17,7 @@
  * File: attachments-preview.directive.coffee
  */
 
-let AttachmentPreviewLightboxDirective = function(lightboxService, attachmentsPreviewService) {
+export let AttachmentPreviewLightboxDirective = function(lightboxService, attachmentsPreviewService) {
     let link = function($scope, el, attrs, ctrl) {
         $(document.body).on("keydown.image-preview", function(e) {
             if (attachmentsPreviewService.fileId) {
@@ -45,8 +45,3 @@ let AttachmentPreviewLightboxDirective = function(lightboxService, attachmentsPr
         }
     };
 };
-
-angular.module('taigaComponents').directive("tgAttachmentsPreview", [
-    "lightboxService",
-    "tgAttachmentsPreviewService",
-    AttachmentPreviewLightboxDirective]);

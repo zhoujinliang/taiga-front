@@ -17,7 +17,7 @@
  * File: attachment-gallery.directive.coffee
  */
 
-let AttachmentGalleryDirective = function() {
+export let AttachmentGalleryDirective = function() {
     let link = function(scope, el, attrs, ctrl) {};
 
     return {
@@ -36,5 +36,3 @@ let AttachmentGalleryDirective = function() {
 };
 
 AttachmentGalleryDirective.$inject = [];
-
-angular.module("taigaComponents").directive("tgAttachmentGallery", AttachmentGalleryDirective);

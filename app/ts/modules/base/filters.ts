@@ -26,9 +26,8 @@
 import {Service} from "../../../ts/classes"
 import {hex_sha1} from "../../../ts/libs/sha1-custom"
 import * as _ from "lodash"
-import * as angular from "angular"
 
-class FiltersStorageService extends Service {
+export class FiltersStorageService extends Service {
     storage:any
     params:any
 

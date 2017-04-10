@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class ProfileContactsController {
+export class ProfileContactsController {
     userService:any
     currentUserService:any
     currentUser:any
@@ -54,6 +54,3 @@ class ProfileContactsController {
     }
 }
 ProfileContactsController.initClass();
-
-angular.module("taigaProfile")
-    .controller("ProfileContacts", ProfileContactsController);

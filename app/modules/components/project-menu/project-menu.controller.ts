@@ -21,7 +21,7 @@ import {slugify} from "../../../ts/utils"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class ProjectMenuController {
+export class ProjectMenuController {
     projectService:any
     lightboxFactory:any
     project:any
@@ -161,5 +161,3 @@ class ProjectMenuController {
     }
 }
 ProjectMenuController.initClass();
-
-angular.module("taigaComponents").controller("ProjectMenu", ProjectMenuController);

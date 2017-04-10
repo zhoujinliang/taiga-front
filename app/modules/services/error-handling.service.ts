@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class ErrorHandlingService {
+export class ErrorHandlingService {
     rootScope: angular.IScope
 
     static initClass() {
@@ -57,5 +57,3 @@ class ErrorHandlingService {
     }
 }
 ErrorHandlingService.initClass();
-
-angular.module("taigaCommon").service("tgErrorHandlingService", ErrorHandlingService);

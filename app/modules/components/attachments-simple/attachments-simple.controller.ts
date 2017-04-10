@@ -21,7 +21,7 @@ import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
 
-class AttachmentsSimpleController {
+export class AttachmentsSimpleController {
     attachmentsService:any
     attachments:any
     onAdd:any
@@ -62,5 +62,3 @@ class AttachmentsSimpleController {
     }
 }
 AttachmentsSimpleController.initClass();
-
-angular.module("taigaComponents").controller("AttachmentsSimple", AttachmentsSimpleController);

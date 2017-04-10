@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module("taigaEpics");
-
-class RelatedUserStoriesController {
+export class RelatedUserStoriesController {
     projectService:any
     epicsService:any
     sectionName:any
@@ -66,5 +64,3 @@ class RelatedUserStoriesController {
     }
 }
 RelatedUserStoriesController.initClass();
-
-module.controller("RelatedUserStoriesCtrl", RelatedUserStoriesController);

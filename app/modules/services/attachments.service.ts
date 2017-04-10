@@ -20,7 +20,7 @@
 import {sizeFormat} from "../../ts/utils"
 import * as angular from "angular"
 
-class AttachmentsService {
+export class AttachmentsService {
     confirm:any
     config:any
     translate:any
@@ -113,5 +113,3 @@ class AttachmentsService {
     }
 }
 AttachmentsService.initClass();
-
-angular.module("taigaCommon").service("tgAttachmentsService", AttachmentsService);

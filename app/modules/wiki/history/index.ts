@@ -14,9 +14,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: utils.module.coffee
+ * File: wiki-history.module.coffee
  */
 
 import * as angular from "angular"
 
-let module = angular.module("taigaUtils", []);
+import {WikiHistoryController} from "./wiki-history.controller"
+import {WikiHistoryDiffDirective} from "./wiki-history-diff.directive"
+import {WikiHistoryDirective} from "./wiki-history.directive"
+import {WikiHistoryEntryDirective} from "./wiki-history-entry.directive"
+import {WikiHistoryService} from "./wiki-history.service"
+
+let module = angular.module("taigaWikiHistory", []);
+module.controller("WikiHistoryCtrl", WikiHistoryController);
+module.directive("tgWikiHistoryDiff", WikiHistoryDiffDirective);
+module.directive("tgWikiHistory", WikiHistoryDirective);
+module.directive("tgWikiHistoryEntry", WikiHistoryEntryDirective);
+module.service("tgWikiHistoryService", WikiHistoryService);

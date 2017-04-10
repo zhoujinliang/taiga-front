@@ -106,9 +106,9 @@ function Point(elements){
         if(elements[i] !== undefined){
             if(typeof elements[i] === 'string'){
                 try{
-                    el.push(document.querySelector(e));
+                    el.push(document.querySelector(elements[i]));
                 }catch(err){
-                    throw new Error(e + ' is not a valid selector used by pointer.');
+                    throw new Error(elements[i] + ' is not a valid selector used by pointer.');
                 }
             }else{
                 el.push(elements[i]);
@@ -117,9 +117,9 @@ function Point(elements){
         }
     }
 
-    var pos = {}, direction = {}, rect, local,
+    var pos:any = {}, direction:any = {}, rect, local,
         lastmousex=-1, lastmousey=-1, timestamp, mousetravel = 0,
-        startX=-1, startY=-1, scrolling = false, buf = 10, timeOut = false,
+        startX=-1, startY=-1, scrolling = false, buf = 10, timeOut = null,
         downTime;
 
     var special = {
@@ -385,12 +385,12 @@ function Point(elements){
     this.add = function(element){
         if(typeof element === 'string'){
             try{
-                el.push(document.querySelector(e));
+                el.push(document.querySelector(element));
             }catch(err){
-                throw new Error(e + ' is not a valid selector, and can\'t be used add to pointer.');
+                throw new Error(element + ' is not a valid selector, and can\'t be used add to pointer.');
             }
         }else if(!element){
-            throw new Error(e + ' can not be added to pointer.');
+            throw new Error(element + ' can not be added to pointer.');
         }
 
         el.push(element);
@@ -426,11 +426,9 @@ Point.prototype = {
 };
 
 function elementFromPoint(x, y){
-    if(document.getElementFromPoint)
-        return document.getElementFromPoint(x, y);
-    else
-        return document.elementFromPoint(x, y);
-    return null;
+    if((<any>document).getElementFromPoint)
+        return (<any>document).getElementFromPoint(x, y);
+    return document.elementFromPoint(x, y);
 }
 
 function safeObject(src){
@@ -452,9 +450,14 @@ function getRect(el){
         };
 
     }else{
-        return el.getBoundingClientRect();
+        try{
+            return el.getBoundingClientRect();
+        }catch(e){
+            throw new TypeError("Can't call getBoundingClientRect on "+el);
+        }
     }
 }
+
 
 var pointer =  function(element){
     return new Point(element);
@@ -699,27 +702,6 @@ function AutoScroller(elements, options){
         }, self.interval);
     }
 
-}
-
-function getRect(el){
-    if(el === window){
-        return {
-            top: 0,
-            left: 0,
-            right: window.innerWidth,
-            bottom: window.innerHeight,
-            width: window.innerWidth,
-            height: window.innerHeight
-        };
-
-    }else{
-        try{
-            return el.getBoundingClientRect();
-        }catch(e){
-            throw new TypeError("Can't call getBoundingClientRect on "+el);
-        }
-
-    }
 }
 
 function inside(point, el, rect){

@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module("taigaComponents");
-
-let cardSlideshowDirective = () =>
+export let cardSlideshowDirective = () =>
     ({
         controller: "CardSlideshow",
         templateUrl: "components/card-slideshow/card-slideshow.html",
@@ -33,4 +31,3 @@ let cardSlideshowDirective = () =>
     })
 ;
 
-module.directive('tgCardSlideshow', cardSlideshowDirective);

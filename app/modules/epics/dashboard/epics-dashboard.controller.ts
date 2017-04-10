@@ -20,7 +20,7 @@
 import {defineImmutableProperty} from "../../../ts/utils"
 import * as angular from "angular"
 
-class EpicsDashboardController {
+export class EpicsDashboardController {
     params:any
     errorHandlingService:any
     lightboxFactory:any
@@ -115,5 +115,3 @@ class EpicsDashboardController {
     }
 }
 EpicsDashboardController.initClass();
-
-angular.module("taigaEpics").controller("EpicsDashboardCtrl", EpicsDashboardController);

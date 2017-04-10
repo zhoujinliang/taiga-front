@@ -20,9 +20,7 @@
 import {defineImmutableProperty} from "../../../ts/utils"
 import * as angular from "angular"
 
-let module = angular.module("taigaWikiHistory");
-
-class WikiHistoryController {
+export class WikiHistoryController {
     wikiHistoryService:any
 
     static initClass() {
@@ -45,5 +43,3 @@ class WikiHistoryController {
     }
 }
 WikiHistoryController.initClass();
-
-module.controller("WikiHistoryCtrl", WikiHistoryController);

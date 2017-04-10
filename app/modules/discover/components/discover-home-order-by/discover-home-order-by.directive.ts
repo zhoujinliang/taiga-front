@@ -17,7 +17,7 @@
  * File: discover-home-order-by.directive.coffee
  */
 
-let DiscoverHomeOrderByDirective = function() {
+export let DiscoverHomeOrderByDirective = function() {
     let link = function(scope, el, attrs) {};
 
     return {
@@ -34,5 +34,3 @@ let DiscoverHomeOrderByDirective = function() {
 };
 
 DiscoverHomeOrderByDirective.$inject = [];
-
-angular.module("taigaDiscover").directive("tgDiscoverHomeOrderBy", DiscoverHomeOrderByDirective);

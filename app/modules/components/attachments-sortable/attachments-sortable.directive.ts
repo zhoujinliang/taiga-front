@@ -20,7 +20,7 @@
 import {autoScroll, dragula} from "../../../ts/global"
 import * as angular from "angular"
 
-let AttachmentSortableDirective = function($parse) {
+export let AttachmentSortableDirective = function($parse) {
     let link = function(scope, el, attrs) {
         let callback = $parse(attrs.tgAttachmentsSortable);
 
@@ -64,5 +64,3 @@ let AttachmentSortableDirective = function($parse) {
 AttachmentSortableDirective.$inject = [
     "$parse"
 ];
-
-angular.module("taigaComponents").directive("tgAttachmentsSortable", AttachmentSortableDirective);

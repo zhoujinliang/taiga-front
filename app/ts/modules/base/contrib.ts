@@ -26,10 +26,7 @@ import {Controller} from "../../classes"
 import * as _ from "lodash"
 import * as angular from "angular"
 
-let module = angular.module("taigaBase");
-
-
-class ContribController extends Controller {
+export class ContribController extends Controller {
     rootScope: angular.IScope
     scope: angular.IScope
     params:any
@@ -81,10 +78,7 @@ class ContribController extends Controller {
 }
 ContribController.initClass();
 
-module.controller("ContribController", ContribController);
-
-
-class ContribUserSettingsController extends Controller {
+export class ContribUserSettingsController extends Controller {
     rootScope: angular.IScope
     scope: angular.IScope
     params:any
@@ -106,5 +100,3 @@ class ContribUserSettingsController extends Controller {
     }
 }
 ContribUserSettingsController.initClass();
-
-module.controller("ContribUserSettingsController", ContribUserSettingsController);

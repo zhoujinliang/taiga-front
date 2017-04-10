@@ -26,7 +26,7 @@ import {slugify} from "../../../ts/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class WysiwygMentionService {
+export class WysiwygMentionService {
     projectService:any
     wysiwygService:any
     navurls:any
@@ -155,6 +155,3 @@ class WysiwygMentionService {
     }
 }
 WysiwygMentionService.initClass();
-
-
-angular.module("taigaComponents").service("tgWysiwygMentionService", WysiwygMentionService);

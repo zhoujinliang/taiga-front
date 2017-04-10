@@ -19,8 +19,9 @@
 
 import {Service} from "../../ts/classes"
 import * as angular from "angular"
+import * as $ from "jquery"
 
-class ThemeService extends Service {
+export class ThemeService extends Service {
     use(themeName) {
         let stylesheetEl = $("link[rel='stylesheet']:first");
 
@@ -33,5 +34,3 @@ class ThemeService extends Service {
     }
 }
 
-
-angular.module("taigaCommon").service("tgThemeService", ThemeService);

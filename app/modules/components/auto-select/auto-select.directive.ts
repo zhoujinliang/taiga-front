@@ -17,7 +17,7 @@
  * File: auto-select.directive.coffee
  */
 
-let AutoSelectDirective = $timeout =>
+export let AutoSelectDirective = $timeout =>
     ({
         link(scope, elm) {
             return $timeout(() => elm[0].select());
@@ -28,5 +28,3 @@ let AutoSelectDirective = $timeout =>
 AutoSelectDirective.$inject = [
     '$timeout'
 ];
-
-angular.module("taigaComponents").directive("tgAutoSelect", AutoSelectDirective);

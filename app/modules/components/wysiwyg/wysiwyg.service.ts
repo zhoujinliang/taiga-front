@@ -27,7 +27,7 @@ import {Autolinker} from "../../../ts/global"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class WysiwygService {
+export class WysiwygService {
     wysiwygCodeHightlighterService: any
     projectService:any
     navurls:any
@@ -290,6 +290,3 @@ class WysiwygService {
     }
 }
 WysiwygService.initClass();
-
-angular.module("taigaComponents")
-    .service("tgWysiwygService", WysiwygService);

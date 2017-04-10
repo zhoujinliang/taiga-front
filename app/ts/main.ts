@@ -1,6 +1,7 @@
 import {run} from "./app"
 import * as $ from "jquery"
 import * as _ from "lodash"
+import "l.js"
 
 (<any>window).taigaConfig = {
     "api": "http://localhost:8000/api/v1/",
@@ -63,15 +64,15 @@ let loadPlugins = function(plugins) {
 
 let promise = $.getJSON("/conf.json");
 promise.done(data => (<any>window).taigaConfig = _.assign({}, (<any>window).taigaConfig, data));
-
 promise.fail(() => console.error("Your conf.json file is not a valid json file, please review it."));
-
 promise.always(function() {
-    if ((<any>window).taigaConfig.contribPlugins.length > 0) {
-        return loadPlugins((<any>window).taigaConfig.contribPlugins).then(() => {
-            run();
-        });
-    } else {
-        run()
-    }
+    (<any>window).ljs.load("/js/templates.js", function() {
+        if ((<any>window).taigaConfig.contribPlugins.length > 0) {
+            return loadPlugins((<any>window).taigaConfig.contribPlugins).then(() => {
+                run();
+            });
+        } else {
+            run()
+        }
+    });
 });

@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import {isImage, isPdf} from "../../../ts/utils"
 
-let AttachmentLinkDirective = function($parse, attachmentsPreviewService, lightboxService) {
+export let AttachmentLinkDirective = function($parse, attachmentsPreviewService, lightboxService) {
     let link = function(scope, el, attrs) {
         let attachment = $parse(attrs.tgAttachmentLink)(scope);
 
@@ -50,5 +50,3 @@ AttachmentLinkDirective.$inject = [
     "tgAttachmentsPreviewService",
     "lightboxService"
 ];
-
-angular.module("taigaComponents").directive("tgAttachmentLink", AttachmentLinkDirective);

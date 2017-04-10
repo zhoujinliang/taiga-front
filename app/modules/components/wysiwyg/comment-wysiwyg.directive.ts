@@ -22,7 +22,7 @@
  * File: modules/components/wysiwyg/comment-wysiwyg.directive.coffee
  */
 
-let CommentWysiwyg = function(attachmentsFullService) {
+export let CommentWysiwyg = function(attachmentsFullService) {
     let link = function($scope, $el, $attrs) {
         $scope.editableDescription = false;
 
@@ -77,6 +77,3 @@ let CommentWysiwyg = function(attachmentsFullService) {
 `
     };
 };
-
-angular.module("taigaComponents")
-    .directive("tgCommentWysiwyg", ["tgAttachmentsFullService", CommentWysiwyg]);

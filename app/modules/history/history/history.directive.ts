@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaHistory');
-
-let HistoryDirective = function() {
+export let HistoryDirective = function() {
     let link = function(scope, el, attrs) {};
 
     return {
@@ -32,5 +30,3 @@ let HistoryDirective = function() {
         link
     };
 };
-
-module.directive("tgHistory", HistoryDirective);

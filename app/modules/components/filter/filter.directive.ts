@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-let FilterDirective = function() {
+export let FilterDirective = function() {
     let link = function(scope, el, attrs, ctrl) {
         var unwatch = scope.$watch("vm.defaultQ", function(q) {
             if (q && !scope.vm.filtersForm.$dirty) {
@@ -61,5 +61,3 @@ let FilterDirective = function() {
         link
     };
 };
-
-angular.module('taigaComponents').directive("tgFilter", [FilterDirective]);

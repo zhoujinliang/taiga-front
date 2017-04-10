@@ -20,7 +20,7 @@
 import {Service} from "../../../ts/classes"
 import * as angular from "angular"
 
-class AttachmentsPreviewService extends Service {
+export class AttachmentsPreviewService extends Service {
     static initClass() {
         this.$inject = [];
     }
@@ -30,5 +30,3 @@ class AttachmentsPreviewService extends Service {
     }
 }
 AttachmentsPreviewService.initClass();
-
-angular.module("taigaComponents").service("tgAttachmentsPreviewService", AttachmentsPreviewService);

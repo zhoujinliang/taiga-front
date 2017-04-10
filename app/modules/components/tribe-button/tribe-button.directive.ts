@@ -17,7 +17,7 @@
  * File: tribe-button.directive.coffee
  */
 
-let TribeButtonDirective = function(configService, locationService) {
+export let TribeButtonDirective = function(configService, locationService) {
     let link = function(scope, el, attrs) {
 
         scope.vm = {};
@@ -41,5 +41,3 @@ let TribeButtonDirective = function(configService, locationService) {
 TribeButtonDirective.$inject = [
     "$tgConfig", "$tgLocation"
 ];
-
-angular.module("taigaComponents").directive("tgTribeButton", TribeButtonDirective);

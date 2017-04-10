@@ -22,7 +22,7 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
 
-class FavsBaseController {
+export class FavsBaseController {
     filterByTextQuery: any
     enableFilterByAll:boolean
     enableFilterByProjects:boolean
@@ -207,8 +207,6 @@ class ProfileLikedController extends FavsBaseController {
 ProfileLikedController.initClass();
 
 
-angular.module("taigaProfile")
-    .controller("ProfileLiked", ProfileLikedController);
 
 //###################################################
 //# Voted
@@ -238,8 +236,6 @@ class ProfileVotedController extends FavsBaseController {
 ProfileVotedController.initClass();
 
 
-angular.module("taigaProfile")
-    .controller("ProfileVoted", ProfileVotedController);
 
 
 
@@ -262,7 +258,3 @@ class ProfileWatchedController extends FavsBaseController {
     }
 }
 ProfileWatchedController.initClass();
-
-
-angular.module("taigaProfile")
-    .controller("ProfileWatched", ProfileWatchedController);

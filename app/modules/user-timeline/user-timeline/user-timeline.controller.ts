@@ -26,7 +26,7 @@ import {FiltersMixin} from "../../../ts/modules/controllerMixins"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class UserTimelineController extends FiltersMixin {
+export class UserTimelineController extends FiltersMixin {
     userTimelineService:any
     timelineList:any
     scrollDisabled:any
@@ -75,6 +75,3 @@ class UserTimelineController extends FiltersMixin {
     }
 }
 UserTimelineController.initClass();
-
-angular.module("taigaUserTimeline")
-    .controller("UserTimeline", UserTimelineController);

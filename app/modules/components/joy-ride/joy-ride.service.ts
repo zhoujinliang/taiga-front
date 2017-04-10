@@ -21,7 +21,7 @@ import {Service} from "../../../ts/classes"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class JoyRideService extends Service {
+export class JoyRideService extends Service {
     translate:any
     checkPermissionsService:any
 
@@ -197,5 +197,3 @@ class JoyRideService extends Service {
     }
 }
 JoyRideService.initClass();
-
-angular.module("taigaComponents").service("tgJoyRideService", JoyRideService);

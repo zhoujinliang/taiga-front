@@ -17,7 +17,7 @@
  * File: featured-projects.directive.coffee
  */
 
-let FeaturedProjectsDirective = function() {
+export let FeaturedProjectsDirective = function() {
     let link = function(scope, el, attrs) {};
 
     return {
@@ -30,5 +30,3 @@ let FeaturedProjectsDirective = function() {
 };
 
 FeaturedProjectsDirective.$inject = [];
-
-angular.module("taigaDiscover").directive("tgFeaturedProjects", FeaturedProjectsDirective);

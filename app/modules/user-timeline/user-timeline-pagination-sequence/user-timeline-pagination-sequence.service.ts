@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-let UserTimelinePaginationSequence = function() {
+export let UserTimelinePaginationSequence = function() {
     let obj:any = {};
 
     obj.generate = function(config) {
@@ -68,5 +68,3 @@ let UserTimelinePaginationSequence = function() {
 
     return obj;
 };
-
-angular.module("taigaUserTimeline").factory("tgUserTimelinePaginationSequenceService", UserTimelinePaginationSequence);

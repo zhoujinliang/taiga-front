@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaHistory');
-
-let HistoryDiffDirective = function() {
+export let HistoryDiffDirective = function() {
     let link = (scope, el, attrs, ctrl) => ctrl.diffTags();
 
     return {
@@ -36,5 +34,3 @@ let HistoryDiffDirective = function() {
         link
     };
 };
-
-module.directive("tgHistoryDiff", HistoryDiffDirective);

@@ -17,7 +17,7 @@
  * File: create-epic.directive.coffee
  */
 
-let CreateEpicDirective = function() {
+export let CreateEpicDirective = function() {
     let link = function(scope, el, attrs, ctrl) {
         let form = el.find("form").checksley();
 
@@ -41,5 +41,3 @@ let CreateEpicDirective = function() {
         scope: {}
     };
 };
-
-angular.module('taigaEpics').directive("tgCreateEpic", CreateEpicDirective);

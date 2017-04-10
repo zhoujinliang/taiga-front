@@ -17,7 +17,7 @@
  * File: vote-button.directive.coffee
  */
 
-let VoteButtonDirective = () =>
+export let VoteButtonDirective = () =>
     ({
         scope: {},
         controller: "VoteButton",
@@ -30,5 +30,3 @@ let VoteButtonDirective = () =>
         templateUrl: "components/vote-button/vote-button.html",
     })
 ;
-
-angular.module("taigaComponents").directive("tgVoteButton", VoteButtonDirective);

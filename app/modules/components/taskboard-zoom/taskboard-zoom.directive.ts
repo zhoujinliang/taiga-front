@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let TaskboardZoomDirective = function(storage) {
+export let TaskboardZoomDirective = function(storage) {
     let link = function(scope, el, attrs, ctrl) {
         scope.zoomIndex = storage.get("taskboard_zoom") || 2;
 
@@ -69,5 +69,3 @@ let TaskboardZoomDirective = function(storage) {
         link
     };
 };
-
-angular.module('taigaComponents').directive("tgTaskboardZoom", ["$tgStorage", TaskboardZoomDirective]);

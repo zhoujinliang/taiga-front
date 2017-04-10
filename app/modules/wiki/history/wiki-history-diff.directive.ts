@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaWikiHistory');
-
-let WikiHistoryDiffDirective = () =>
+export let WikiHistoryDiffDirective = () =>
     ({
         templateUrl:"wiki/history/wiki-history-diff.html",
         scope: {
@@ -30,5 +28,3 @@ let WikiHistoryDiffDirective = () =>
         }
     })
 ;
-
-module.directive("tgWikiHistoryDiff", WikiHistoryDiffDirective);

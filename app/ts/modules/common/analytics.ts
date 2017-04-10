@@ -119,3 +119,4 @@ export class AnalyticsService extends Service {
         return this.win.ga("send", "event", category, action, label, value);
     }
 }
+AnalyticsService.initClass();

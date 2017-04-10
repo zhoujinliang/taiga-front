@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaEpics');
-
-let RelatedUserStoriesDirective = () =>
+export let RelatedUserStoriesDirective = () =>
     ({
         templateUrl:"epics/related-userstories/related-userstories.html",
         controller: "RelatedUserStoriesCtrl",
@@ -36,5 +34,3 @@ let RelatedUserStoriesDirective = () =>
 ;
 
 RelatedUserStoriesDirective.$inject = [];
-
-module.directive("tgRelatedUserstories", RelatedUserStoriesDirective);

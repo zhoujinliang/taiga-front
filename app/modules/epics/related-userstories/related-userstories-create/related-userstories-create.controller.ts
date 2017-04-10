@@ -20,9 +20,7 @@
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-let module = angular.module("taigaEpics");
-
-class RelatedUserstoriesCreateController {
+export class RelatedUserstoriesCreateController {
     currentUserService:any
     rs:any
     confirm:any
@@ -125,6 +123,3 @@ class RelatedUserstoriesCreateController {
     }
 }
 RelatedUserstoriesCreateController.initClass();
-
-
-module.controller("RelatedUserstoriesCreateCtrl", RelatedUserstoriesCreateController);

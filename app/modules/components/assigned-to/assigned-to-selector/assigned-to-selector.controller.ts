@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class AssignedToSelectorController {
+export class AssignedToSelectorController {
     project:any
     assigned:any
     assignedMember:any
@@ -54,5 +54,3 @@ class AssignedToSelectorController {
     }
 }
 AssignedToSelectorController.initClass();
-
-angular.module('taigaComponents').controller('AssignedToSelectorCtrl', AssignedToSelectorController);

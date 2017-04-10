@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-let PaginateResponse = () =>
+export let PaginateResponse = () =>
     function(result) {
         let paginateResponse = Immutable.Map({
             "data": result.get("data"),
@@ -33,5 +33,3 @@ let PaginateResponse = () =>
         return paginateResponse;
     }
 ;
-
-angular.module("taigaCommon").factory("tgPaginateResponseService", PaginateResponse);

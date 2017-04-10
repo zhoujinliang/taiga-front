@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-let ProjectMenuDirective = function(projectService, lightboxFactory) {
+export let ProjectMenuDirective = function(projectService, lightboxFactory) {
     let link = function(scope, el, attrs, ctrl) {
         let projectChange = function() {
             if (projectService.project) {
@@ -57,5 +57,3 @@ ProjectMenuDirective.$inject = [
     "tgProjectService",
     "tgLightboxFactory"
 ];
-
-angular.module("taigaComponents").directive("tgProjectMenu", ProjectMenuDirective);

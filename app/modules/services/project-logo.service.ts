@@ -22,7 +22,7 @@ import * as _ from "lodash"
 import {cartesianProduct} from "../../ts/utils"
 import {murmurhash3_32_gc} from "../../ts/global"
 
-class ProjectLogoService {
+export class ProjectLogoService {
     logos: any
     constructor() {
         let IMAGES = [
@@ -52,8 +52,6 @@ class ProjectLogoService {
         return { src: logo[0], color: logo[1] };
     }
 }
-
-angular.module("taigaCommon").service("tgProjectLogoService", ProjectLogoService);
 
 function __mod__(a, b) {
   a = +a;

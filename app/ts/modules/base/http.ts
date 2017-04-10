@@ -26,7 +26,7 @@ import {Service} from "../../../ts/classes"
 import * as _ from "lodash"
 import * as angular from "angular"
 
-class HttpService extends Service {
+export class HttpService extends Service {
     http:any
     q:any
     storage:any
@@ -116,7 +116,3 @@ class HttpService extends Service {
     }
 }
 HttpService.initClass();
-
-
-let module = angular.module("taigaBase");
-module.service("$tgHttp", HttpService);

@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaEpics');
-
-let StoryRowDirective = () =>
+export let StoryRowDirective = () =>
     ({
         templateUrl:"epics/dashboard/story-row/story-row.html",
         controller: "StoryRowCtrl",
@@ -33,5 +31,3 @@ let StoryRowDirective = () =>
         }
     })
 ;
-
-module.directive("tgStoryRow", StoryRowDirective);

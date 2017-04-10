@@ -17,7 +17,7 @@
  * File: assigned-to-selector.directive.coffee
  */
 
-let AssignedItemDirective = function() {
+export let AssignedItemDirective = function() {
 
     let link = function(scope, el, attrs) {};
 
@@ -29,7 +29,4 @@ let AssignedItemDirective = function() {
         link
     };
 };
-
 AssignedItemDirective.$inject = [];
-
-angular.module("taigaComponents").directive("tgAssignedItem", AssignedItemDirective);

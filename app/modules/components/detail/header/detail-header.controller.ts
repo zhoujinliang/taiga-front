@@ -20,9 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaUserStories");
-
-class StoryHeaderController {
+export class StoryHeaderController {
     rootScope: angular.IScope
     confirm:any
     modelTransform:any
@@ -129,4 +127,3 @@ class StoryHeaderController {
 }
 StoryHeaderController.initClass();
 
-module.controller("StoryHeaderCtrl", StoryHeaderController);

@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaCommon');
-
-let TagOptionDirective = function() {
+export let TagOptionDirective = function() {
     let select = function(selected) {
         selected.addClass('selected');
 
@@ -94,4 +92,3 @@ let TagOptionDirective = function() {
     };
 };
 
-module.directive("tgTagsDropdown", TagOptionDirective);

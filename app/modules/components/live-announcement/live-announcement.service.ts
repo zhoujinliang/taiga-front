@@ -20,7 +20,7 @@
 import {Service} from "../../../ts/classes"
 import * as angular from "angular"
 
-class LiveAnnouncementService extends Service {
+export class LiveAnnouncementService extends Service {
     open:boolean
     title:string
     desc:string
@@ -38,5 +38,3 @@ class LiveAnnouncementService extends Service {
         return this.desc = desc;
     }
 }
-
-angular.module("taigaComponents").service("tgLiveAnnouncementService", LiveAnnouncementService);

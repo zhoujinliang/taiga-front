@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class CardSlideshowController {
+export class CardSlideshowController {
     index: any
     images: any
 
@@ -48,5 +48,3 @@ class CardSlideshowController {
     }
 }
 CardSlideshowController.initClass();
-
-angular.module('taigaComponents').controller('CardSlideshow', CardSlideshowController);

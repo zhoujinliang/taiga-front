@@ -22,7 +22,7 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
 
-class UserTimelineService extends Service {
+export class UserTimelineService extends Service {
     rs:any
     userTimelinePaginationSequenceService:any
     userTimelineItemType:any
@@ -284,5 +284,3 @@ class UserTimelineService extends Service {
     }
 }
 UserTimelineService.initClass();
-
-angular.module("taigaUserTimeline").service("tgUserTimelineService", UserTimelineService);

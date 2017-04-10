@@ -23,10 +23,9 @@
  */
 
 import {bindOnce} from "../../utils"
-import * as angular from "angular"
 
 // Escape Html bind once directive
-let BindOnceBindDirective = function() {
+export let BindOnceBindDirective = function() {
     let link = ($scope, $el, $attrs) =>
         bindOnce($scope, $attrs.tgBoBind, val => $el.text(val))
     ;
@@ -35,7 +34,7 @@ let BindOnceBindDirective = function() {
 };
 
 // Html bind once directive
-let BindOnceHtmlDirective = function() {
+export let BindOnceHtmlDirective = function() {
     let link = ($scope, $el, $attrs) =>
         bindOnce($scope, $attrs.tgBoHtml, val => $el.html(val))
     ;
@@ -44,7 +43,7 @@ let BindOnceHtmlDirective = function() {
 };
 
 // Object reference bind once helper.
-let BindOnceRefDirective = function() {
+export let BindOnceRefDirective = function() {
     let link = ($scope, $el, $attrs) =>
         bindOnce($scope, $attrs.tgBoRef, val => $el.html(`#${val} `))
     ;
@@ -52,7 +51,7 @@ let BindOnceRefDirective = function() {
 };
 
 // Object src bind once helper.
-let BindOnceSrcDirective = function() {
+export let BindOnceSrcDirective = function() {
     let link = ($scope, $el, $attrs) =>
         bindOnce($scope, $attrs.tgBoSrc, val => $el.attr("src", val))
     ;
@@ -60,7 +59,7 @@ let BindOnceSrcDirective = function() {
 };
 
 // Object href bind once helper.
-let BindOnceHrefDirective = function() {
+export let BindOnceHrefDirective = function() {
     let link = ($scope, $el, $attrs) =>
         bindOnce($scope, $attrs.tgBoHref, val => $el.attr("href", val))
     ;
@@ -68,7 +67,7 @@ let BindOnceHrefDirective = function() {
 };
 
 // Object alt bind once helper.
-let BindOnceAltDirective = function() {
+export let BindOnceAltDirective = function() {
     let link = ($scope, $el, $attrs) =>
         bindOnce($scope, $attrs.tgBoAlt, val => $el.attr("alt", val))
     ;
@@ -76,14 +75,14 @@ let BindOnceAltDirective = function() {
 };
 
 // Object title bind once helper.
-let BindOnceTitleDirective = function() {
+export let BindOnceTitleDirective = function() {
     let link = ($scope, $el, $attrs) =>
         bindOnce($scope, $attrs.tgBoTitle, val => $el.attr("title", val))
     ;
     return {link};
 };
 
-let BindTitleDirective = function() {
+export let BindTitleDirective = function() {
     let link = ($scope, $el, $attrs) =>
         $scope.$watch($attrs.tgTitleHtml, function(val) {
             if (val != null) { return $el.attr("title", val); }
@@ -93,7 +92,7 @@ let BindTitleDirective = function() {
     return {link};
 };
 
-let BindHtmlDirective = function() {
+export let BindHtmlDirective = function() {
     let link = ($scope, $el, $attrs) =>
         $scope.$watch($attrs.tgBindHtml, function(val) {
             if (val != null) { return $el.html(val); }
@@ -102,14 +101,3 @@ let BindHtmlDirective = function() {
 
     return {link};
 };
-
-let module = angular.module("taigaBase");
-module.directive("tgBoBind", BindOnceBindDirective);
-module.directive("tgBoHtml", BindOnceHtmlDirective);
-module.directive("tgBoRef", BindOnceRefDirective);
-module.directive("tgBoSrc", BindOnceSrcDirective);
-module.directive("tgBoHref", BindOnceHrefDirective);
-module.directive("tgBoAlt", BindOnceAltDirective);
-module.directive("tgBoTitle", BindOnceTitleDirective);
-module.directive("tgBindTitle", BindTitleDirective);
-module.directive("tgBindHtml", BindHtmlDirective);

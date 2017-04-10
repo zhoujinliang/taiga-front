@@ -20,7 +20,7 @@
 import {defineImmutableProperty, isImage} from "../../../ts/utils"
 import * as angular from "angular"
 
-class AttachmentsPreviewController {
+export class AttachmentsPreviewController {
     attachmentsPreviewService:any
     attachments:any
 
@@ -91,5 +91,3 @@ class AttachmentsPreviewController {
     }
 }
 AttachmentsPreviewController.initClass();
-
-angular.module('taigaComponents').controller('AttachmentsPreview', AttachmentsPreviewController);

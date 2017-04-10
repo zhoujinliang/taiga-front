@@ -17,7 +17,7 @@
  * File: assigned-to-selector.directive.coffee
  */
 
-let AssignedToSelectorDirective = () =>
+export let AssignedToSelectorDirective = () =>
 
     ({
         controller: "AssignedToSelectorCtrl",
@@ -34,5 +34,3 @@ let AssignedToSelectorDirective = () =>
 ;
 
 AssignedToSelectorDirective.$inject = [];
-
-angular.module("taigaComponents").directive("tgAssignedToSelector", AssignedToSelectorDirective);

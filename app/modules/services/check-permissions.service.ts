@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class CheckPermissionsService {
+export class CheckPermissionsService {
     projectService:any
 
     static initClass() {
@@ -39,5 +39,3 @@ class CheckPermissionsService {
     }
 }
 CheckPermissionsService.initClass();
-
-angular.module("taigaCommon").service("tgCheckPermissionsService", CheckPermissionsService);

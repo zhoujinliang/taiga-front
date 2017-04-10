@@ -40,6 +40,7 @@ updateScope(block.scope, index, valueIdentifier, immutable_value, keyIdentifier,
 */
 
 import * as angular from "angular"
+import * as $ from "jquery"
 
 var NODE_TYPE_ELEMENT = 1;
 var uid = 0;
@@ -113,9 +114,9 @@ var isArray = Array.isArray;
 
 var jqLite = $;
 
-function ngRepeatDirective($parse, $animate) {
+function tgRepeatDirective($parse, $animate) {
     var NG_REMOVED = '$$NG_REMOVED';
-    var ngRepeatMinErr = angular.$$minErr('ngRepeat');
+    var ngRepeatMinErr = (<any>angular).$$minErr('ngRepeat');
     var updateScope = function(scope, index, valueIdentifier, value, keyIdentifier, key, arrayLength) {
         // TODO(perf): generate setters to shave off ~40ms or 1-1.5%
         scope[valueIdentifier] = value;
@@ -323,4 +324,5 @@ function ngRepeatDirective($parse, $animate) {
     };
 };
 
-angular.module("tgRepeat", []).directive("tgRepeat", ['$parse', '$animate', ngRepeatDirective]);
+let module = angular.module("tgRepeat", []);
+module.directive("tgRepeat", ["$parse", "$animate", <any>tgRepeatDirective]);

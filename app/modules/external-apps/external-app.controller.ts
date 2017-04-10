@@ -22,7 +22,7 @@ import {Controller} from "../../ts/classes"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class ExternalAppController extends Controller {
+export class ExternalAppController extends Controller {
     routeParams:any
     externalAppsService:any
     window:any
@@ -112,6 +112,3 @@ class ExternalAppController extends Controller {
     }
 }
 ExternalAppController.initClass();
-
-
-angular.module("taigaExternalApps").controller("ExternalApp", ExternalAppController);

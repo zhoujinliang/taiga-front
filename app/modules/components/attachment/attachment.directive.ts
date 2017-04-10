@@ -17,7 +17,7 @@
  * File: attachment.directive.coffee
  */
 
-let AttachmentDirective = function() {
+export let AttachmentDirective = function() {
     let link = function(scope, el, attrs, ctrl) {};
 
     return {
@@ -36,5 +36,3 @@ let AttachmentDirective = function() {
 };
 
 AttachmentDirective.$inject = [];
-
-angular.module("taigaComponents").directive("tgAttachment", AttachmentDirective);

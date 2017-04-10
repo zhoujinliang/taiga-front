@@ -20,9 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module("taigaHistory");
-
-class HistorySectionController {
+export class HistorySectionController {
     rs:any
     repo:any
     storage:any
@@ -150,5 +148,3 @@ class HistorySectionController {
     }
 }
 HistorySectionController.initClass();
-
-module.controller("HistorySection", HistorySectionController);

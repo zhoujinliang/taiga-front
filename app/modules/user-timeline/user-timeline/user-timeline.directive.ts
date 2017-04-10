@@ -17,7 +17,7 @@
  * File: user-timeline.directive.coffee
  */
 
-let UserTimelineDirective = () =>
+export let UserTimelineDirective = () =>
     ({
         templateUrl: "user-timeline/user-timeline/user-timeline.html",
         controller: "UserTimeline",
@@ -30,5 +30,3 @@ let UserTimelineDirective = () =>
         bindToController: true
     })
 ;
-
-angular.module("taigaProfile").directive("tgUserTimeline", UserTimelineDirective);

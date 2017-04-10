@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaEpics');
-
-let RelatedUserstoryRowDirective = function() {
+export let RelatedUserstoryRowDirective = function() {
     let link = (scope, el, attrs, ctrl) => ctrl.setAvatarData();
 
     return {
@@ -40,5 +38,3 @@ let RelatedUserstoryRowDirective = function() {
 };
 
 RelatedUserstoryRowDirective.$inject = [];
-
-module.directive("tgRelatedUserstoryRow", RelatedUserstoryRowDirective);

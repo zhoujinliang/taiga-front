@@ -22,7 +22,7 @@
  * File: modules/components/wysiwyg/comment-edit-wysiwyg.directive.coffee
  */
 
-let CustomFieldEditWysiwyg = function(attachmentsFullService) {
+export let CustomFieldEditWysiwyg = function(attachmentsFullService) {
     let link = function($scope, $el, $attrs) {
         let types = {
             userstories: "us",
@@ -56,6 +56,3 @@ let CustomFieldEditWysiwyg = function(attachmentsFullService) {
 `
     };
 };
-
-angular.module("taigaComponents")
-    .directive("tgCustomFieldEditWysiwyg", ["tgAttachmentsFullService", CustomFieldEditWysiwyg]);

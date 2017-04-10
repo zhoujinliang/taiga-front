@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class ProfileProjectsController {
+export class ProfileProjectsController {
     projectsService:any
     userService:any
     user:any
@@ -47,6 +47,3 @@ class ProfileProjectsController {
     }
 }
 ProfileProjectsController.initClass();
-
-angular.module("taigaProfile")
-    .controller("ProfileProjects", ProfileProjectsController);
