@@ -21,7 +21,7 @@ import {defineImmutableProperty} from "../../../../ts/utils"
 import * as angular from "angular"
 
 
-class MostActiveController {
+export class MostActiveController {
     discoverProjectsService:any
     currentOrderBy:any
     order_by:any
@@ -65,5 +65,3 @@ class MostActiveController {
     }
 }
 MostActiveController.initClass();
-
-angular.module("taigaDiscover").controller("MostActive", MostActiveController);

@@ -23,7 +23,7 @@
  */
 
 
-let LiveAnnouncementDirective = function(liveAnnouncementService) {
+export let LiveAnnouncementDirective = function(liveAnnouncementService) {
     let link = function(scope, el, attrs) {};
 
     return {
@@ -53,6 +53,3 @@ let LiveAnnouncementDirective = function(liveAnnouncementService) {
 LiveAnnouncementDirective.$inject = [
     "tgLiveAnnouncementService"
 ];
-
-angular.module("taigaComponents")
-    .directive("tgLiveAnnouncement", LiveAnnouncementDirective);

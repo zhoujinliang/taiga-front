@@ -17,7 +17,7 @@
  * File: attachments-drop.directive.coffee
  */
 
-let AttachmentsDropDirective = function($parse) {
+export let AttachmentsDropDirective = function($parse) {
     let link = function(scope, el, attrs) {
         let eventAttr = $parse(attrs.tgAttachmentsDrop);
 
@@ -46,5 +46,3 @@ let AttachmentsDropDirective = function($parse) {
 AttachmentsDropDirective.$inject = [
     "$parse"
 ];
-
-angular.module("taigaComponents").directive("tgAttachmentsDrop", AttachmentsDropDirective);

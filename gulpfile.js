@@ -41,17 +41,20 @@ var gulp = require("gulp"),
     gutil = require("gulp-util");
 
 
-var watchedBrowserifyApp = watchify(browserify({
+var BrowserifyApp = browserify({
     basedir: '.',
     debug: true,
     entries: ['app/ts/main.ts'],
     cache: {},
     packageCache: {}
-}).plugin(tsify));
+}).plugin(tsify);
+var watchedBrowserifyApp = watchify(BrowserifyApp);
+watchedBrowserifyApp.on("update", bundleApp);
+watchedBrowserifyApp.on("log", gutil.log);
 
 function bundleApp() {
     return watchedBrowserifyApp
-        .bundle()
+        .bundle().on('error', gutil.log)
         .pipe(source('js/app.js'))
         .pipe(gulp.dest("dist"));
 }
@@ -720,6 +723,3 @@ gulp.task("default", function(cb) {
         "watch"
     ], cb);
 });
-
-watchedBrowserifyApp.on("update", bundleApp);
-watchedBrowserifyApp.on("log", gutil.log);

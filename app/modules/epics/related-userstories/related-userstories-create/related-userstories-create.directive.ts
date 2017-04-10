@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaEpics');
-
-let RelatedUserstoriesCreateDirective = function(lightboxService) {
+export let RelatedUserstoriesCreateDirective = function(lightboxService) {
     this.lightboxService = lightboxService;
     let link = function(scope, el, attrs, ctrl) {
         let newUserstoryForm = el.find(".new-user-story-form").checksley();
@@ -89,5 +87,3 @@ let RelatedUserstoriesCreateDirective = function(lightboxService) {
 };
 
 RelatedUserstoriesCreateDirective.$inject = ["lightboxService",];
-
-module.directive("tgRelatedUserstoriesCreate", RelatedUserstoriesCreateDirective);

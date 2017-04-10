@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class VoteButtonController {
+export class VoteButtonController {
     currentUserService:any
     user:any
     isMouseOver:boolean
@@ -75,5 +75,3 @@ class VoteButtonController {
     }
 }
 VoteButtonController.initClass();
-
-angular.module("taigaComponents").controller("VoteButton", VoteButtonController);

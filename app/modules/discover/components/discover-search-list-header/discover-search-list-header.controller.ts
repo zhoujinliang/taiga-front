@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class DiscoverSearchListHeaderController {
+export class DiscoverSearchListHeaderController {
     like_is_open:boolean
     activity_is_open:boolean
     orderBy:any
@@ -59,5 +59,3 @@ class DiscoverSearchListHeaderController {
     }
 }
 DiscoverSearchListHeaderController.initClass();
-
-angular.module("taigaDiscover").controller("DiscoverSearchListHeader", DiscoverSearchListHeaderController);

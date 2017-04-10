@@ -23,7 +23,7 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
 
-var DiscoverProjectsService = (function() {
+export var DiscoverProjectsService = (function() {
     let _discoverParams = undefined;
     DiscoverProjectsService = class DiscoverProjectsService extends Service {
         rs:any
@@ -135,5 +135,3 @@ var DiscoverProjectsService = (function() {
     DiscoverProjectsService.initClass();
     return DiscoverProjectsService;
 })();
-
-angular.module("taigaDiscover").service("tgDiscoverProjectsService", DiscoverProjectsService);

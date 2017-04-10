@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class WatchButtonController {
+export class WatchButtonController {
     rootScope: angular.IScope
     currentUserService:any
     user:any
@@ -97,5 +97,3 @@ class WatchButtonController {
     }
 }
 WatchButtonController.initClass();
-
-angular.module("taigaComponents").controller("WatchButton", WatchButtonController);

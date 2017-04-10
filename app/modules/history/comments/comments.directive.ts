@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaHistory');
-
-let CommentsDirective = function() {
+export let CommentsDirective = function() {
     let link = (scope, el, attrs, ctrl) => ctrl.initializePermissions();
 
     return {
@@ -48,5 +46,3 @@ let CommentsDirective = function() {
         link
     };
 };
-
-module.directive("tgComments", CommentsDirective);

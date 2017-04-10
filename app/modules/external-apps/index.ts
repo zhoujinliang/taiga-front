@@ -14,9 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: profile.module.coffee
+ * File: external-apps.module.coffee
  */
 
 import * as angular from "angular"
 
-let module = angular.module("taigaProfile", []);
+import {ExternalAppController} from "./external-app.controller"
+import {ExternalAppsService} from "./external-app.service"
+
+let module = angular.module("taigaExternalApps", []);
+module.controller("ExternalApp", ExternalAppController);
+module.service("tgExternalAppsService", ExternalAppsService);

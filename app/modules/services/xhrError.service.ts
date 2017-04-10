@@ -20,7 +20,7 @@
 import {Service} from "../../ts/classes"
 import * as angular from "angular"
 
-class xhrError extends Service {
+export class xhrError extends Service {
     q:any
     errorHandlingService:any
 
@@ -59,5 +59,3 @@ class xhrError extends Service {
     }
 }
 xhrError.initClass();
-
-angular.module("taigaCommon").service("tgXhrErrorService", xhrError);

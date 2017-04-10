@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class AssignedToController {
+export class AssignedToController {
     lightboxService:any
     lightboxFactory:any
     has_permissions:any
@@ -68,5 +68,3 @@ class AssignedToController {
     }
 }
 AssignedToController.initClass();
-
-angular.module('taigaComponents').controller('AssignedToCtrl', AssignedToController);

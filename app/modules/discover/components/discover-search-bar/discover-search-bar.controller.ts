@@ -20,7 +20,7 @@
 import {defineImmutableProperty} from "../../../../ts/utils"
 import * as angular from "angular"
 
-class DiscoverSearchBarController {
+export class DiscoverSearchBarController {
     discoverProjectsService:any
     onChange:any
     q:any
@@ -48,5 +48,3 @@ class DiscoverSearchBarController {
     }
 }
 DiscoverSearchBarController.initClass();
-
-angular.module("taigaDiscover").controller("DiscoverSearchBar", DiscoverSearchBarController);

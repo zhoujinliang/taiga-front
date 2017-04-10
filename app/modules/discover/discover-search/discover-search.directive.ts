@@ -17,7 +17,7 @@
  * File: discover-search.directive.coffee
  */
 
-let DiscoverSearchDirective = function() {
+export let DiscoverSearchDirective = function() {
     let link = (scope, element, attrs, ctrl) => ctrl.fetch();
 
     return {
@@ -28,5 +28,3 @@ let DiscoverSearchDirective = function() {
 };
 
 DiscoverSearchDirective.$inject = [];
-
-angular.module("taigaDiscover").directive("tgDiscoverSearch", DiscoverSearchDirective);

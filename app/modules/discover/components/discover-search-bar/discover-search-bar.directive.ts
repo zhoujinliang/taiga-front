@@ -17,7 +17,7 @@
  * File: discover-search.directive.coffee
  */
 
-let DiscoverSearchBarDirective = function() {
+export let DiscoverSearchBarDirective = function() {
     let link = function(scope, el, attrs, ctrl) {};
 
     return {
@@ -40,5 +40,3 @@ let DiscoverSearchBarDirective = function() {
 };
 
 DiscoverSearchBarDirective.$inject = [];
-
-angular.module('taigaDiscover').directive('tgDiscoverSearchBar', DiscoverSearchBarDirective);

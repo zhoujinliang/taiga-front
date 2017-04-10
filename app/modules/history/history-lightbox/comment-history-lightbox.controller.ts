@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module("taigaHistory");
-
-class LightboxDisplayHistoricController {
+export class LightboxDisplayHistoricController {
     rs:any
     name:any
     object:any
@@ -49,5 +47,3 @@ class LightboxDisplayHistoricController {
     }
 }
 LightboxDisplayHistoricController.initClass();
-
-module.controller("LightboxDisplayHistoricCtrl", LightboxDisplayHistoricController);

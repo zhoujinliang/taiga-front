@@ -17,7 +17,7 @@
  * File: highlighted.directive.coffee
  */
 
-let HighlightedDirective = () =>
+export let HighlightedDirective = () =>
     ({
         templateUrl: "discover/components/highlighted/highlighted.html",
         scope: {
@@ -29,5 +29,3 @@ let HighlightedDirective = () =>
 ;
 
 HighlightedDirective.$inject = [];
-
-angular.module("taigaDiscover").directive("tgHighlighted", HighlightedDirective);

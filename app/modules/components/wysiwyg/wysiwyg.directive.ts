@@ -27,7 +27,7 @@ import {MediumEditor, AutoList, MentionExtension} from "../../../ts/global"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let Medium = function($translate, $confirm, $storage, wysiwygService, animationFrame, tgLoader, wysiwygCodeHightlighterService, wysiwygMentionService, analytics, $location) {
+export let Medium = function($translate, $confirm, $storage, wysiwygService, animationFrame, tgLoader, wysiwygCodeHightlighterService, wysiwygMentionService, analytics, $location) {
     let removeSelections = function() {
         if (window.getSelection) {
             if (window.getSelection().empty) {
@@ -671,17 +671,3 @@ let Medium = function($translate, $confirm, $storage, wysiwygService, animationF
         link
     };
 };
-
-angular.module("taigaComponents").directive("tgWysiwyg", [
-    "$translate",
-    "$tgConfirm",
-    "$tgStorage",
-    "tgWysiwygService",
-    "animationFrame",
-    "tgLoader",
-    "tgWysiwygCodeHightlighterService",
-    "tgWysiwygMentionService",
-    "$tgAnalytics",
-    "$location",
-    Medium
-]);

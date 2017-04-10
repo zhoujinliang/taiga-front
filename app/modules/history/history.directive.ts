@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaHistory');
-
-let HistorySectionDirective = function() {
+export let HistorySectionDirective = function() {
     let link = (scope, el, attr, ctrl) => scope.$on("object:updated", () => ctrl._loadHistory(scope.type, scope.id));
 
     return {
@@ -40,5 +38,3 @@ let HistorySectionDirective = function() {
 };
 
 HistorySectionDirective.$inject = [];
-
-module.directive("tgHistorySection", HistorySectionDirective);

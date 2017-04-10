@@ -23,7 +23,7 @@ import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
 
-class AvatarService {
+export class AvatarService {
     config:any
     logos:any
 
@@ -108,8 +108,6 @@ class AvatarService {
         }
     }
 }
-
-angular.module("taigaCommon").service("tgAvatarService", ["$tgConfig", AvatarService]);
 
 function __mod__(a, b) {
   a = +a;

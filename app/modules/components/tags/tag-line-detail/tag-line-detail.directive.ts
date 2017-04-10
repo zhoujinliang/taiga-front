@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaCommon');
-
-let TagLineDirective = () =>
+export let TagLineDirective = () =>
     ({
         scope: {
             item: "=",
@@ -35,4 +33,3 @@ let TagLineDirective = () =>
     })
 ;
 
-module.directive("tgTagLine", TagLineDirective);

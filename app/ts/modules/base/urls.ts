@@ -23,7 +23,6 @@
  */
 
 import {Service} from "../../../ts/classes"
-import * as angular from "angular"
 import * as _ from "lodash"
 
 let format = function(fmt, obj) {
@@ -31,7 +30,7 @@ let format = function(fmt, obj) {
     return fmt.replace(/%s/g, match => String(obj.shift()));
 };
 
-class UrlsService extends Service {
+export class UrlsService extends Service {
     config:any
     urls:any
     mainUrl:any
@@ -79,7 +78,3 @@ class UrlsService extends Service {
     }
 }
 UrlsService.initClass();
-
-
-let module = angular.module("taigaBase");
-module.service('$tgUrls', UrlsService);

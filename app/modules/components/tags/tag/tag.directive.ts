@@ -18,9 +18,8 @@
  */
 
 import * as angular from "angular"
-let module = angular.module('taigaCommon');
 
-let TagDirective = () =>
+export let TagDirective = () =>
     ({
         templateUrl:"components/tags/tag/tag.html",
         scope: {
@@ -32,4 +31,3 @@ let TagDirective = () =>
     })
 ;
 
-module.directive("tgTag", TagDirective);

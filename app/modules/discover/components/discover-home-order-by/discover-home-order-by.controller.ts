@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class DiscoverHomeOrderByController {
+export class DiscoverHomeOrderByController {
     translate:any
     is_open:boolean
     texts:any
@@ -63,5 +63,3 @@ class DiscoverHomeOrderByController {
     }
 }
 DiscoverHomeOrderByController.initClass();
-
-angular.module("taigaDiscover").controller("DiscoverHomeOrderBy", DiscoverHomeOrderByController);

@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class ProfileHints {
+export class ProfileHintsController {
     translate:any
     HINTS:any
     hintKey:any
@@ -52,10 +52,8 @@ class ProfileHints {
         this.hint.text = this.translate.instant(`HINTS.HINT${hintKey}_TEXT`);
     }
 }
-ProfileHints.initClass();
+ProfileHintsController.initClass();
 
-ProfileHints.$inject = [
+ProfileHintsController.$inject = [
     "$translate"
 ];
-
-angular.module("taigaProfile").controller("ProfileHints", ProfileHints);

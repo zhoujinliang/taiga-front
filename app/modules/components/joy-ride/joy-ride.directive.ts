@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import {introJs} from "../../../ts/global"
 
-let JoyRideDirective = function($rootScope, currentUserService, joyRideService, $location, $translate) {
+export let JoyRideDirective = function($rootScope, currentUserService, joyRideService, $location, $translate) {
     let link = function(scope, el, attrs, ctrl) {
         let unsuscribe = null;
         let intro = introJs();
@@ -86,5 +86,3 @@ JoyRideDirective.$inject = [
     "$location",
     "$translate"
 ];
-
-angular.module("taigaComponents").directive("tgJoyRide", JoyRideDirective);

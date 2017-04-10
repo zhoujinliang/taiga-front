@@ -17,7 +17,7 @@
  * File: board-zoom.directive.coffee
  */
 
-let BoardZoomDirective = () =>
+export let BoardZoomDirective = () =>
     ({
         scope: {
             levels: "=",
@@ -26,5 +26,3 @@ let BoardZoomDirective = () =>
         templateUrl: 'components/board-zoom/board-zoom.html'
     })
 ;
-
-angular.module('taigaComponents').directive("tgBoardZoom", [BoardZoomDirective]);

@@ -21,7 +21,7 @@ import {sizeFormat, defineImmutableProperty} from "../../../ts/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class AttachmentsFullController {
+export class AttachmentsFullController {
     translate:any
     confirm:any
     config:any
@@ -139,5 +139,3 @@ class AttachmentsFullController {
     }
 }
 AttachmentsFullController.initClass();
-
-angular.module("taigaComponents").controller("AttachmentsFull", AttachmentsFullController);

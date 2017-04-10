@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaHistory');
-
-let CommentDirective = () =>
+export let CommentDirective = () =>
 
     ({
         scope: {
@@ -45,5 +43,3 @@ let CommentDirective = () =>
         controllerAs: "vm",
     })
 ;
-
-module.directive("tgComment", CommentDirective);

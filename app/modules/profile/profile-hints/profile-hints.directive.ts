@@ -17,7 +17,7 @@
  * File: profile-hints.directive.coffee
  */
 
-let ProfileHints = $translate =>
+export let ProfileHintsDirective = $translate =>
     ({
         scope: {},
         controller: "ProfileHints",
@@ -26,8 +26,6 @@ let ProfileHints = $translate =>
     })
 ;
 
-ProfileHints.$inject = [
+ProfileHintsDirective.$inject = [
     "$translate"
 ];
-
-angular.module("taigaProfile").directive("tgProfileHints", ProfileHints);

@@ -21,7 +21,7 @@ import {defineImmutableProperty} from "../../../ts/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class DiscoverSearchController {
+export class DiscoverSearchController {
     routeParams:any
     discoverProjectsService:any
     route:any
@@ -152,5 +152,3 @@ class DiscoverSearchController {
     }
 }
 DiscoverSearchController.initClass();
-
-angular.module("taigaDiscover").controller("DiscoverSearch", DiscoverSearchController);

@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class ProfileTabsController {
+export class ProfileTabsController {
     tabs:any
     constructor() {
         this.tabs = [];
@@ -36,6 +36,3 @@ class ProfileTabsController {
         return tab.active = true;
     }
 }
-
-angular.module("taigaProfile")
-    .controller("ProfileTabs", ProfileTabsController);

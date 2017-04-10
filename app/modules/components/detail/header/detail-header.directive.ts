@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaUserStories');
-
-let DetailHeaderDirective = function() {
+export let DetailHeaderDirective = function() {
     this.$inject = [];
 
     let link = function(scope, el, attrs, ctrl) {
@@ -44,4 +42,3 @@ let DetailHeaderDirective = function() {
 };
 
 
-module.directive("tgDetailHeader", DetailHeaderDirective);

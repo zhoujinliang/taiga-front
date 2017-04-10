@@ -17,9 +17,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module("taigaHistory");
-
-class CommentsController {
+export class CommentsController {
     canAddCommentPermission:any
     name:any
 
@@ -34,5 +32,3 @@ class CommentsController {
     }
 }
 CommentsController.initClass();
-
-module.controller("CommentsCtrl", CommentsController);

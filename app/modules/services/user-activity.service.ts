@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class UserActivityService {
+export class UserActivityService {
     timeout: any
     idleTimeout: any
     subscriptionsActive: any
@@ -95,5 +95,3 @@ class UserActivityService {
     }
 }
 UserActivityService.initClass();
-
-angular.module("taigaCommon").service("tgUserActivityService", UserActivityService);

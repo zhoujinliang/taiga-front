@@ -17,7 +17,7 @@
  * File: profile-contacts.directive.coffee
  */
 
-let ProfileContactsDirective = function() {
+export let ProfileContactsDirective = function() {
     let link = (scope, elm, attrs, ctrl) => ctrl.loadContacts();
 
     return {
@@ -31,5 +31,3 @@ let ProfileContactsDirective = function() {
         bindToController: true
     };
 };
-
-angular.module("taigaProfile").directive("tgProfileContacts", ProfileContactsDirective);

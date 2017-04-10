@@ -22,9 +22,8 @@
  * File: modules/base/location.coffee
  */
 
-import * as angular from "angular"
 
-let locationFactory = function($location, $route, $rootscope) {
+export let locationFactory = function($location, $route, $rootscope) {
     $location.noreload =  function(scope) {
         let lastRoute = $route.current;
         var un = scope.$on("$locationChangeSuccess", function() {
@@ -43,7 +42,3 @@ let locationFactory = function($location, $route, $rootscope) {
 
     return $location;
 };
-
-
-let module = angular.module("taigaBase");
-module.factory("$tgLocation", ["$location", "$route", "$rootScope", locationFactory]);

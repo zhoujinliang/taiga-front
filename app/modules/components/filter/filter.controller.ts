@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class FilterController {
+export class FilterController {
     opened: any
     customFilterForm:any
     customFilterName:any
@@ -93,5 +93,3 @@ class FilterController {
     }
 }
 FilterController.initClass();
-
-angular.module('taigaComponents').controller('Filter', FilterController);

@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-let ProjectLogoBigSrcDirective = function(projectLogoService) {
+export let ProjectLogoBigSrcDirective = function(projectLogoService) {
     let link = (scope, el, attrs) =>
         scope.$watch('project', function(project) {
             project = Immutable.fromJS(project); // Necesary for old code
@@ -51,5 +51,3 @@ let ProjectLogoBigSrcDirective = function(projectLogoService) {
 ProjectLogoBigSrcDirective.$inject = [
     "tgProjectLogoService"
 ];
-
-angular.module("taigaComponents").directive("tgProjectLogoBigSrc", ProjectLogoBigSrcDirective);

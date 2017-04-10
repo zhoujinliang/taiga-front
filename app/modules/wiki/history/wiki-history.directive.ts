@@ -20,10 +20,7 @@
 import {bindOnce} from "../../../ts/utils"
 import * as angular from "angular"
 
-let module = angular.module('taigaWikiHistory');
-
-
-let WikiHistoryDirective = function() {
+export let WikiHistoryDirective = function() {
     let link = (scope, el, attrs, ctrl) =>
         bindOnce(scope, 'vm.wikiId', value => ctrl.initializeHistoryEntries(value))
     ;
@@ -39,5 +36,3 @@ let WikiHistoryDirective = function() {
         link
     };
 };
-
-module.directive("tgWikiHistory", WikiHistoryDirective);

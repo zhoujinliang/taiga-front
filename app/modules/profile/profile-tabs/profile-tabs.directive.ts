@@ -17,7 +17,7 @@
  * File: profile-tabs.directive.coffee
  */
 
-let ProfileTabsDirective = () =>
+export let ProfileTabsDirective = () =>
     ({
         scope: {},
         controller: "ProfileTabs",
@@ -26,6 +26,3 @@ let ProfileTabsDirective = () =>
         transclude: true
     })
 ;
-
-angular.module("taigaProfile")
-    .directive("tgProfileTabs", ProfileTabsDirective);

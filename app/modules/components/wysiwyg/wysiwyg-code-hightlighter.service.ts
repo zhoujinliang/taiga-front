@@ -27,7 +27,7 @@ import * as _ from "lodash"
 import * as Promise from "bluebird"
 import {Prism, ljs} from "../../../ts/global"
 
-class WysiwygCodeHightlighterService {
+export class WysiwygCodeHightlighterService {
     languages: any
     loadPromise:any
 
@@ -99,6 +99,3 @@ class WysiwygCodeHightlighterService {
         });
     }
 }
-
-angular.module("taigaComponents")
-    .service("tgWysiwygCodeHightlighterService", WysiwygCodeHightlighterService);

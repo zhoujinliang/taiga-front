@@ -20,7 +20,7 @@
 import {truncate} from "../../ts/utils"
 import * as angular from "angular"
 
-class AppMetaService {
+export class AppMetaService {
     rootScope: angular.IScope
     listener:any
     _listener:any
@@ -124,5 +124,3 @@ content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalabl
     }
 }
 AppMetaService.initClass();
-
-angular.module("taigaCommon").service("tgAppMetaService", AppMetaService);

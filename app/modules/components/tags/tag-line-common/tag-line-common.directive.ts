@@ -20,9 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module('taigaCommon');
-
-let TagLineCommonDirective = function() {
+export let TagLineCommonDirective = function() {
     let link = function(scope, el, attr, ctrl) {
         if (!_.isUndefined(attr.disableColorSelection)) {
             ctrl.disableColorSelection = true;
@@ -79,4 +77,3 @@ let TagLineCommonDirective = function() {
     };
 };
 
-module.directive("tgTagLineCommon", TagLineCommonDirective);

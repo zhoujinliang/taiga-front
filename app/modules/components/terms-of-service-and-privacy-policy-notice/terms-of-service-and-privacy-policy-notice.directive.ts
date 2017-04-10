@@ -23,7 +23,7 @@
  */
 
 
-let TermsOfServiceAndPrivacyPolicyNoticeDirective = function($config) {
+export let TermsOfServiceAndPrivacyPolicyNoticeDirective = function($config) {
     let link = function(scope, el, attrs) {
         scope.privacyPolicyUrl = $config.get("privacyPolicyUrl");
         return scope.termsOfServiceUrl = $config.get("termsOfServiceUrl");
@@ -36,9 +36,3 @@ let TermsOfServiceAndPrivacyPolicyNoticeDirective = function($config) {
         templateUrl: "components/terms-of-service-and-privacy-policy-notice/terms-of-service-and-privacy-policy-notice.html"
     };
 };
-
-angular.module("taigaComponents")
-    .directive("tgTermsOfServiceAndPrivacyPolicyNotice", [
-        "$tgConfig",
-        TermsOfServiceAndPrivacyPolicyNoticeDirective
-    ]);

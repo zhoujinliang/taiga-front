@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class DiscoverHomeController {
+export class DiscoverHomeController {
     location:any
     navUrls:any
     appMetaService:any
@@ -51,5 +51,3 @@ class DiscoverHomeController {
     }
 }
 DiscoverHomeController.initClass();
-
-angular.module("taigaDiscover").controller("DiscoverHome", DiscoverHomeController);

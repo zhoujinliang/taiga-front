@@ -23,7 +23,7 @@
  */
 
 // Used in details descriptions
-let ItemWysiwyg = function($modelTransform, $rootscope, $confirm, attachmentsFullService, $translate) {
+export let ItemWysiwyg = function($modelTransform, $rootscope, $confirm, attachmentsFullService, $translate) {
     let link = function($scope, $el, $attrs) {
         $scope.editableDescription = false;
 
@@ -96,12 +96,3 @@ let ItemWysiwyg = function($modelTransform, $rootscope, $confirm, attachmentsFul
 `
     };
 };
-
-angular.module("taigaComponents")
-    .directive("tgItemWysiwyg", [
-        "$tgQueueModelTransformation",
-        "$rootScope",
-        "$tgConfirm",
-        "tgAttachmentsFullService",
-        "$translate",
-        ItemWysiwyg]);

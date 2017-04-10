@@ -17,7 +17,7 @@
  * File: items.directive.coffee
  */
 
-let FavItemDirective = function() {
+export let FavItemDirective = function() {
     let link = (scope, el, attrs, ctrl) => scope.vm = {item: scope.item};
 
     let templateUrl = function(el, attrs) {
@@ -37,5 +37,3 @@ let FavItemDirective = function() {
     };
 };
 
-
-angular.module("taigaProfile").directive("tgFavItem", FavItemDirective);

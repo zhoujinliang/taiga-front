@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-let FilterSlideDownDirective = function() {
+export let FilterSlideDownDirective = function() {
     let link = function(scope, el, attrs, ctrl) {
         let filter = $('tg-filter');
 
@@ -49,5 +49,3 @@ let FilterSlideDownDirective = function() {
         link
     };
 };
-
-angular.module('taigaComponents').directive("tgFilterSlideDown", [FilterSlideDownDirective]);

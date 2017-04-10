@@ -18,7 +18,7 @@
  */
 
 
-let HistoryEntryDirective = () =>
+export let HistoryEntryDirective = () =>
     ({
         scope: {
             entry: "<"
@@ -26,5 +26,3 @@ let HistoryEntryDirective = () =>
         templateUrl:"history/history-lightbox/history-entry.html",
     })
 ;
-
-angular.module('taigaHistory').directive("tgHistoryEntry", HistoryEntryDirective);

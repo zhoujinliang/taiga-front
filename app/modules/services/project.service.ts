@@ -21,7 +21,7 @@ import {defineImmutableProperty} from "../../ts/utils"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class ProjectService {
+export class ProjectService {
     projectsService:any
     xhrError:any
     userActivityService:any
@@ -127,5 +127,3 @@ class ProjectService {
     }
 }
 ProjectService.initClass();
-
-angular.module("taigaCommon").service("tgProjectService", ProjectService);

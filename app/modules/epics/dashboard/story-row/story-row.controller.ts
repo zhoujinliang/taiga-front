@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module("taigaEpics");
-
-class StoryRowController {
+export class StoryRowController {
     story:any
     percentage:any
 
@@ -48,5 +46,3 @@ class StoryRowController {
     }
 }
 StoryRowController.initClass();
-
-module.controller("StoryRowCtrl", StoryRowController);

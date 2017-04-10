@@ -17,7 +17,7 @@
  * File: discover-search-list-header.directive.coffee
  */
 
-let DiscoverSearchListHeaderDirective = function() {
+export let DiscoverSearchListHeaderDirective = function() {
     let link = function(scope, el, attrs) {};
 
     return {
@@ -34,5 +34,3 @@ let DiscoverSearchListHeaderDirective = function() {
 };
 
 DiscoverSearchListHeaderDirective.$inject = [];
-
-angular.module("taigaDiscover").directive("tgDiscoverSearchListHeader", DiscoverSearchListHeaderDirective);

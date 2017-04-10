@@ -17,7 +17,7 @@
  * File: comment.directive.coffee
  */
 
-let LightboxDisplayHistoricDirective = function(lightboxService) {
+export let LightboxDisplayHistoricDirective = function(lightboxService) {
     let link = function(scope, el, attrs, ctrl) {
         ctrl._loadHistoric();
         return lightboxService.open(el);
@@ -41,4 +41,3 @@ LightboxDisplayHistoricDirective.$inject = [
     "lightboxService"
 ];
 
-angular.module('taigaHistory').directive("tgLbDisplayHistoric", LightboxDisplayHistoricDirective);

@@ -21,7 +21,7 @@ import {unslugify} from "../../../ts/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class UserTimelineItemTitle {
+export class UserTimelineItemTitle {
     _fieldTranslationKey:any
     _params:any
     translate:any
@@ -220,6 +220,3 @@ class UserTimelineItemTitle {
     }
 }
 UserTimelineItemTitle.initClass();
-
-angular.module("taigaUserTimeline")
-    .service("tgUserTimelineItemTitle", UserTimelineItemTitle);

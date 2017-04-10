@@ -22,7 +22,7 @@
  * File: modules/components/wysiwyg/comment-edit-wysiwyg.directive.coffee
  */
 
-let CommentEditWysiwyg = function(attachmentsFullService) {
+export let CommentEditWysiwyg = function(attachmentsFullService) {
     let link = function($scope, $el, $attrs) {
         let types = {
             epics: "epic",
@@ -58,6 +58,3 @@ let CommentEditWysiwyg = function(attachmentsFullService) {
 `
     };
 };
-
-angular.module("taigaComponents")
-    .directive("tgCommentEditWysiwyg", ["tgAttachmentsFullService", CommentEditWysiwyg]);

@@ -22,7 +22,7 @@ import {Service} from "../../../ts/classes"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class FilterRemoteStorageService extends Service {
+export class FilterRemoteStorageService extends Service {
     q:any
     urls:any
     http:any
@@ -78,5 +78,3 @@ class FilterRemoteStorageService extends Service {
     }
 }
 FilterRemoteStorageService.initClass();
-
-angular.module("taigaComponents").service("tgFilterRemoteStorageService", FilterRemoteStorageService);

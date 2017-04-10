@@ -17,7 +17,7 @@
  * File: epics-table.directive.coffee
  */
 
-let EpicRowDirective = () =>
+export let EpicRowDirective = () =>
     ({
         templateUrl:"epics/dashboard/epic-row/epic-row.html",
         controller: "EpicRowCtrl",
@@ -29,5 +29,3 @@ let EpicRowDirective = () =>
         }
     })
 ;
-
-angular.module('taigaEpics').directive("tgEpicRow", EpicRowDirective);

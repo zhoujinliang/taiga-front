@@ -365,9 +365,6 @@ let timelineType = function(timeline, event) {
     return _.find(types, obj => obj.check(timeline, event));
 };
 
-class UserTimelineType {
+export class UserTimelineType {
     getType(timeline, event) { return timelineType(timeline, event); }
 }
-
-angular.module("taigaUserTimeline")
-    .service("tgUserTimelineItemType", UserTimelineType);

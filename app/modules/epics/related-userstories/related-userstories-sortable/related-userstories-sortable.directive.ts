@@ -20,9 +20,7 @@
 import {autoScroll, dragula} from "../../../../ts/global"
 import * as angular from "angular"
 
-let module = angular.module('taigaEpics');
-
-let RelatedUserstoriesSortableDirective = function($parse, projectService) {
+export let RelatedUserstoriesSortableDirective = function($parse, projectService) {
     let link = function(scope, el, attrs) {
         if (!projectService.hasPermission("modify_epic")) { return; }
 
@@ -69,5 +67,3 @@ RelatedUserstoriesSortableDirective.$inject = [
     "$parse",
     "tgProjectService"
 ];
-
-module.directive("tgRelatedUserstoriesSortable", RelatedUserstoriesSortableDirective);

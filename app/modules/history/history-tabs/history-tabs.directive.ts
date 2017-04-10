@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaHistory');
-
-let HistoryTabsDirective = () =>
+export let HistoryTabsDirective = () =>
     ({
         templateUrl:"history/history-tabs/history-tabs.html",
         scope: {
@@ -37,5 +35,3 @@ let HistoryTabsDirective = () =>
         }
     })
 ;
-
-module.directive("tgHistoryTabs", HistoryTabsDirective);

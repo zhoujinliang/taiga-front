@@ -22,10 +22,9 @@
  * File: modules/base/conf.coffee
  */
 
-import * as angular from "angular"
 import * as _ from "lodash"
 
-class ConfigurationService {
+export class ConfigurationService {
     config:any
     constructor() {
         this.config = (<any>window).taigaConfig;
@@ -39,7 +38,3 @@ class ConfigurationService {
         return defaultValue;
     }
 }
-
-
-let module = angular.module("taigaBase");
-module.service("$tgConfig", ConfigurationService);

@@ -17,9 +17,7 @@
  * File: profile-bar.controller.coffee
  */
 
-import * as angular from "angular"
-
-class ProfileBarController {
+export class ProfileBarController {
     userService:any
     stats:any
     user:any
@@ -42,5 +40,3 @@ class ProfileBarController {
     }
 }
 ProfileBarController.initClass();
-
-angular.module("taigaProfile").controller("ProfileBar", ProfileBarController);

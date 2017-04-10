@@ -21,7 +21,7 @@ import {generateHash} from "../../../../ts/app"
 import {defineImmutableProperty} from "../../../../ts/utils"
 import * as angular from "angular"
 
-class EpicsTableController {
+export class EpicsTableController {
     confirm:any
     epicsService:any
     timeout:any
@@ -101,5 +101,3 @@ class EpicsTableController {
     }
 }
 EpicsTableController.initClass();
-
-angular.module("taigaEpics").controller("EpicsTableCtrl", EpicsTableController);

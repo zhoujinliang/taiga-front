@@ -40,8 +40,7 @@ import {UsStatusDirective, RelatedTaskStatusDirective} from "./popovers"
 import {ExceptionHandlerFactory} from "./raven-logger"
 import {TagsDirective, ColorizeTagsBacklogDirective, LbTagLineDirective} from "./tags"
 
-let module = angular.module("taigaCommon", []);
-AnalyticsService.initClass();
+export let module = angular.module("taigaCommon", []);
 // common analytics
 module.service("$tgAnalytics", AnalyticsService);
 

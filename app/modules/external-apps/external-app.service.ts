@@ -20,7 +20,7 @@
 import {Service} from "../../ts/classes"
 import * as angular from "angular"
 
-class ExternalAppsService extends Service {
+export class ExternalAppsService extends Service {
     rs:any
     static initClass() {
         this.$inject = [
@@ -42,5 +42,3 @@ class ExternalAppsService extends Service {
     }
 }
 ExternalAppsService.initClass();
-
-angular.module("taigaExternalApps").service("tgExternalAppsService", ExternalAppsService);

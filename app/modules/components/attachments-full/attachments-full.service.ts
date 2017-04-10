@@ -23,7 +23,7 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
 
-class AttachmentsFullService extends Service {
+export class AttachmentsFullService extends Service {
     attachmentsService:any
     rootScope:any
     _attachments:any
@@ -176,5 +176,3 @@ class AttachmentsFullService extends Service {
     }
 }
 AttachmentsFullService.initClass();
-
-angular.module("taigaComponents").service("tgAttachmentsFullService", AttachmentsFullService);

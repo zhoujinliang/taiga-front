@@ -21,7 +21,7 @@ import {bindMethods} from "../../ts/utils"
 import {Service} from "../../ts/classes"
 import * as angular from "angular"
 
-class UserService extends Service {
+export class UserService extends Service {
     rs:any
 
     static initClass() {
@@ -77,5 +77,3 @@ class UserService extends Service {
     }
 }
 UserService.initClass();
-
-angular.module("taigaCommon").service("tgUserService", UserService);

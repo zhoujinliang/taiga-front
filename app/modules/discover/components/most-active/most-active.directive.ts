@@ -17,7 +17,7 @@
  * File: most-active.directive.coffee
  */
 
-let MostActiveDirective = function() {
+export let MostActiveDirective = function() {
     let link = (scope, el, attrs, ctrl) => ctrl.fetch();
 
     return {
@@ -30,5 +30,3 @@ let MostActiveDirective = function() {
 };
 
 MostActiveDirective.$inject = [];
-
-angular.module("taigaDiscover").directive("tgMostActive", MostActiveDirective);

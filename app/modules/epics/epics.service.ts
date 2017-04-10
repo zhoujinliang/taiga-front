@@ -22,7 +22,7 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
 
-class EpicsService {
+export class EpicsService {
     projectService:any
     attachmentsService:any
     resources:any
@@ -203,5 +203,3 @@ class EpicsService {
     }
 }
 EpicsService.initClass();
-
-angular.module('taigaEpics').service('tgEpicsService', EpicsService);

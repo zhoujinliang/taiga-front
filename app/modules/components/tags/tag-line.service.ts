@@ -21,9 +21,7 @@ import {Service} from "../../../ts/classes"
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let module = angular.module('taigaCommon');
-
-class TagLineService extends Service {
+export class TagLineService extends Service {
     static initClass() {
         this.$inject = [];
     }
@@ -42,4 +40,3 @@ class TagLineService extends Service {
 }
 TagLineService.initClass();
 
-module.service("tgTagLineService", TagLineService);

@@ -17,7 +17,7 @@
  * File: profile-bar.directive.coffee
  */
 
-let ProfileBarDirective = () =>
+export let ProfileBarDirective = () =>
     ({
         templateUrl: "profile/profile-bar/profile-bar.html",
         controller: "ProfileBar",
@@ -30,5 +30,3 @@ let ProfileBarDirective = () =>
     })
 ;
 
-
-angular.module("taigaProfile").directive("tgProfileBar", ProfileBarDirective);

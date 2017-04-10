@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as moment from "moment"
 
-class AttachmentController {
+export class AttachmentController {
     attachmentsService:any
     translate:any
     form:any
@@ -77,5 +77,3 @@ class AttachmentController {
     }
 }
 AttachmentController.initClass();
-
-angular.module('taigaComponents').controller('Attachment', AttachmentController);

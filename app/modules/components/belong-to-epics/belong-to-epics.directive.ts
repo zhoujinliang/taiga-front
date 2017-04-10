@@ -20,9 +20,7 @@
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-let module = angular.module('taigaEpics');
-
-let BelongToEpicsDirective = function() {
+export let BelongToEpicsDirective = function() {
 
     let link = (scope, el, attrs) =>
         scope.$watch('epics', function(epics) {
@@ -49,4 +47,3 @@ let BelongToEpicsDirective = function() {
 };
 
 
-module.directive("tgBelongToEpics", BelongToEpicsDirective);

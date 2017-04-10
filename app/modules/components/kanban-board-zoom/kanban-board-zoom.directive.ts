@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-let KanbanBoardZoomDirective = function(storage, projectService) {
+export let KanbanBoardZoomDirective = function(storage, projectService) {
     let link = function(scope, el, attrs, ctrl) {
         let unwatch;
         scope.zoomIndex = storage.get("kanban_zoom") || 2;
@@ -79,5 +79,3 @@ let KanbanBoardZoomDirective = function(storage, projectService) {
         link
     };
 };
-
-angular.module('taigaComponents').directive("tgKanbanBoardZoom", ["$tgStorage", "tgProjectService", KanbanBoardZoomDirective]);

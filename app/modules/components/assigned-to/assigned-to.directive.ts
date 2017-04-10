@@ -17,8 +17,7 @@
  * File: assigned-to.directive.coffee
  */
 
-let AssignedToDirective = () =>
-
+export let AssignedToDirective = () =>
     ({
         controller: "AssignedToCtrl",
         controllerAs: "vm",
@@ -32,7 +31,4 @@ let AssignedToDirective = () =>
         }
     })
 ;
-
 AssignedToDirective.$inject = [];
-
-angular.module("taigaComponents").directive("tgAssignedToComponent", AssignedToDirective);

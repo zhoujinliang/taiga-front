@@ -23,10 +23,9 @@
  */
 
 import {Service} from "../../../ts/classes"
-import * as angular from "angular"
 import * as _ from "lodash"
 
-class StorageService extends Service {
+export class StorageService extends Service {
     static initClass() {
         this.$inject = ["$rootScope"];
     }
@@ -68,7 +67,3 @@ class StorageService extends Service {
     }
 }
 StorageService.initClass();
-
-
-let module = angular.module("taigaBase");
-module.service("$tgStorage", StorageService);

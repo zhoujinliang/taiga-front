@@ -17,7 +17,7 @@
  * File: epics-table.directive.coffee
  */
 
-let EpicsTableDirective = () =>
+export let EpicsTableDirective = () =>
     ({
         templateUrl:"epics/dashboard/epics-table/epics-table.html",
         controller: "EpicsTableCtrl",
@@ -25,6 +25,3 @@ let EpicsTableDirective = () =>
         scope: {}
     })
 ;
-
-
-angular.module('taigaEpics').directive("tgEpicsTable", EpicsTableDirective);

@@ -20,9 +20,7 @@
 import {trim} from "../../../../ts/utils"
 import * as angular from "angular"
 
-let module = angular.module('taigaCommon');
-
-class TagLineCommonController {
+export class TagLineCommonController {
     tagLineService:any
     disableColorSelection:any
     newTag:any
@@ -80,4 +78,3 @@ class TagLineCommonController {
 }
 TagLineCommonController.initClass();
 
-module.controller("TagLineCommonCtrl", TagLineCommonController);

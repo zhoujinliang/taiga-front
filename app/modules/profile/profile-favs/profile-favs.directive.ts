@@ -37,36 +37,30 @@ let base = {
 //# Liked
 //###################################################
 
-let ProfileLikedDirective = () =>
+export let ProfileLikedDirective = () =>
     _.extend({}, base, {
         controller: "ProfileLiked"
     })
 ;
-
-angular.module("taigaProfile").directive("tgProfileLiked", ProfileLikedDirective);
 
 
 //###################################################
 //# Voted
 //###################################################
 
-let ProfileVotedDirective = () =>
+export let ProfileVotedDirective = () =>
     _.extend({}, base, {
         controller: "ProfileVoted"
     })
 ;
-
-angular.module("taigaProfile").directive("tgProfileVoted", ProfileVotedDirective);
 
 
 //###################################################
 //# Watched
 //###################################################
 
-let ProfileWatchedDirective = () =>
+export let ProfileWatchedDirective = () =>
     _.extend({}, base, {
         controller: "ProfileWatched"
     })
 ;
-
-angular.module("taigaProfile").directive("tgProfileWatched", ProfileWatchedDirective);

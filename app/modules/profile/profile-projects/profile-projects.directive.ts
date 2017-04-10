@@ -17,7 +17,7 @@
  * File: profile-projects.directive.coffee
  */
 
-let ProfileProjectsDirective = function() {
+export let ProfileProjectsDirective = function() {
     let link = (scope, elm, attr, ctrl) => ctrl.loadProjects();
 
     return {
@@ -31,5 +31,3 @@ let ProfileProjectsDirective = function() {
         controller: "ProfileProjects"
     };
 };
-
-angular.module("taigaProfile").directive("tgProfileProjects", ProfileProjectsDirective);

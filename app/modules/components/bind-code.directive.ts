@@ -22,7 +22,7 @@
  * File: modules/components/bind-code.directive.coffee
  */
 
-let BindCode = ($sce, $parse, $compile, wysiwygService, wysiwygCodeHightlighterService) =>
+export let BindCode = ($sce, $parse, $compile, wysiwygService, wysiwygCodeHightlighterService) =>
   ({
     restrict: 'A',
     compile(tElement, tAttrs) {
@@ -46,12 +46,3 @@ let BindCode = ($sce, $parse, $compile, wysiwygService, wysiwygCodeHightlighterS
 
   })
 ;
-
-angular.module("taigaComponents")
-    .directive("tgBindCode", [
-        "$sce",
-        "$parse",
-        "$compile",
-        "tgWysiwygService",
-        "tgWysiwygCodeHightlighterService",
-        BindCode]);

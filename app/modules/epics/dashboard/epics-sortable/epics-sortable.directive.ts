@@ -20,7 +20,7 @@
 import {autoScroll, dragula} from "../../../../ts/global"
 import * as angular from "angular"
 
-let EpicsSortableDirective = function($parse, projectService) {
+export let EpicsSortableDirective = function($parse, projectService) {
     let link = function(scope, el, attrs) {
         if (!projectService.hasPermission("modify_epic")) { return; }
 
@@ -68,5 +68,3 @@ EpicsSortableDirective.$inject = [
     "$parse",
     "tgProjectService"
 ];
-
-angular.module("taigaComponents").directive("tgEpicsSortable", EpicsSortableDirective);

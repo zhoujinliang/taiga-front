@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class CardController {
+export class CardController {
     zoom:any
     item:any
     onToggleFold:any
@@ -114,5 +114,3 @@ class CardController {
     }
 }
 CardController.initClass();
-
-angular.module('taigaComponents').controller('Card', CardController);

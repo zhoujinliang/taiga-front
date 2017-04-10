@@ -19,7 +19,7 @@
 
 import * as angular from "angular"
 
-class EpicRowController {
+export class EpicRowController {
     confirm:any
     projectService:any
     epicsService:any
@@ -112,5 +112,3 @@ class EpicRowController {
     }
 }
 EpicRowController.initClass();
-
-angular.module("taigaEpics").controller("EpicRowCtrl", EpicRowController);

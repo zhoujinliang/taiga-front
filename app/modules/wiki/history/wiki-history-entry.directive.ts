@@ -19,9 +19,7 @@
 
 import * as angular from "angular"
 
-let module = angular.module('taigaWikiHistory');
-
-let WikiHistoryEntryDirective = function() {
+export let WikiHistoryEntryDirective = function() {
     let link = (scope, el, attr) => scope.singleHistoryEntry = scope.historyEntry.toJS();
 
     return {
@@ -32,5 +30,3 @@ let WikiHistoryEntryDirective = function() {
         }
     };
 };
-
-module.directive("tgWikiHistoryEntry", WikiHistoryEntryDirective);

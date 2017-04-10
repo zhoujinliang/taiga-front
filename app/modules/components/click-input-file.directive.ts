@@ -22,7 +22,7 @@
  * File: modules/components/click-input-file.directive.coffee
  */
 
-let ClickInputFile = () =>
+export let ClickInputFile = () =>
   ({
       link(scope, el) {
           el.on('click', function(e) {
@@ -38,6 +38,3 @@ let ClickInputFile = () =>
       }
   })
 ;
-
-angular.module("taigaComponents")
-    .directive("tgClickInputFile", [ClickInputFile]);

@@ -24,7 +24,6 @@
 
 import {Service} from "../../../ts/classes"
 import * as _ from "lodash"
-import * as angular from "angular"
 
 export class Model {
     _attrs:any
@@ -211,7 +210,7 @@ class ModelService extends Service {
 }
 ModelService.initClass();
 
-function provider($q, $http, $gmUrls, $gmStorage) {
+export function modelProvider($q, $http, $gmUrls, $gmStorage) {
     let service:any = {};
     service.make_model = function(name, data, cls, dataTypes) {
         if (cls == null) { cls = Model; }
@@ -232,6 +231,3 @@ function provider($q, $http, $gmUrls, $gmStorage) {
 
     return service;
 };
-
-let module = angular.module("taigaBase");
-module.factory("$tgModel", ["$q", "$http", "$tgUrls", "$tgStorage", provider]);

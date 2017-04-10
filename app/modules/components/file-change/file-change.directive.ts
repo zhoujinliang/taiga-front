@@ -17,7 +17,7 @@
  * File: file-change.directive.coffee
  */
 
-let FileChangeDirective = function($parse) {
+export let FileChangeDirective = function($parse) {
     let link = function(scope, el, attrs, ctrl) {
         let eventAttr = $parse(attrs.tgFileChange);
 
@@ -35,5 +35,3 @@ let FileChangeDirective = function($parse) {
 FileChangeDirective.$inject = [
     "$parse"
 ];
-
-angular.module("taigaComponents").directive("tgFileChange", FileChangeDirective);
