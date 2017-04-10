@@ -38,7 +38,7 @@ import {RelatedUserstoriesSortableDirective} from "./related-userstories/related
 import {RelatedUserstoryRowController} from "./related-userstories/related-userstory-row/related-userstory-row.controller"
 import {RelatedUserstoryRowDirective} from "./related-userstories/related-userstory-row/related-userstory-row.directive"
 
-let module = angular.module("taigaEpics", []);
+export let module = angular.module("taigaEpics", []);
 module.controller("CreateEpicCtrl", CreateEpicController);
 module.directive("tgCreateEpic", CreateEpicDirective);
 module.controller("EpicRowCtrl", EpicRowController);

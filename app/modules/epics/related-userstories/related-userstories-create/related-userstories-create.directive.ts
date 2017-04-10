@@ -20,7 +20,6 @@
 import * as angular from "angular"
 
 export let RelatedUserstoriesCreateDirective = function(lightboxService) {
-    this.lightboxService = lightboxService;
     let link = function(scope, el, attrs, ctrl) {
         let newUserstoryForm = el.find(".new-user-story-form").checksley();
         let existingUserstoryForm = el.find(".existing-user-story-form").checksley();

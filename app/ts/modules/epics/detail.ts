@@ -27,7 +27,7 @@ import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
-let module = angular.module("taigaEpics");
+import {module} from "../../../modules/epics"
 
 //############################################################################
 //# Epic Detail Controller

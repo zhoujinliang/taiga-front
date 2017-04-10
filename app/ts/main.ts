@@ -3,8 +3,11 @@ import * as $  from "jquery"
 import * as _ from "lodash"
 import "l.js"
 import "Flot"
+import "Flot/jquery.flot.time"
 import "jquery.flot.tooltip"
+import "prismjs/plugins/custom-class/prism-custom-class"
 import "pikaday"
+import "markdown-it"
 
 (<any>window).taigaConfig = {
     "api": "http://localhost:8000/api/v1/",
