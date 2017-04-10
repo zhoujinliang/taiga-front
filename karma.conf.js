@@ -13,18 +13,18 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai', 'chai-as-promised', 'sinon-chai'],
+    frameworks: ['mocha', 'chai', 'chai-as-promised', 'sinon-chai', "karma-typescript"],
 
 
     // list of files / patterns to load in the browser
     files: [
+      'node_modules/jquery/dist/jquery.js',
       'karma.app.conf.js',
-      'dist/**/js/libs.js',
-      'node_modules/angular-mocks/angular-mocks.js',
       'node_modules/chai-jquery/chai-jquery.js',
       'test-utils.js',
       'dist/**/js/app.js',
       'dist/**/js/templates.js',
+      'node_modules/angular-mocks/angular-mocks.js',
       'app/**/*spec.ts'
     ],
 
@@ -37,12 +37,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      '**/*.spec.ts': ['webpack'],
+      '**/*.spec.ts': ['karma-typescript'],
       'dist/js/app.js': ['sourcemap']
-    },
-    webpack: {
-      module: webpackConfig.module,
-      resolve: webpackConfig.resolve
     },
 
     coffeePreprocessor: {

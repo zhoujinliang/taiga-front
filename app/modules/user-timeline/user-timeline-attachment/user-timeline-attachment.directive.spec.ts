@@ -17,6 +17,15 @@
  * File: user-timeline-attachment.directive.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("userTimelineAttachmentDirective", function() {
     let compile, provide, scope;
     let element = (scope = (compile = (provide = null)));

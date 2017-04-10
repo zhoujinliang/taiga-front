@@ -17,11 +17,20 @@
  * File: vote-button.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("VoteButton", function() {
     let provide = null;
     let $controller = null;
     let $rootScope = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockCurrentUser = function() {
         mocks.currentUser = {
@@ -44,7 +53,7 @@ describe("VoteButton", function() {
         });
     };
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;
@@ -64,7 +73,7 @@ describe("VoteButton", function() {
     it("upvote", function(done) {
         let $scope = $rootScope.$new();
 
-        mocks.onUpvote = sinon.stub().promise();
+        mocks.onUpvote = (<any>sinon.stub()).promise();
 
         let ctrl = $controller("VoteButton", $scope, {
             item: {is_voter: false},
@@ -89,7 +98,7 @@ describe("VoteButton", function() {
     return it("downvote", function(done) {
         let $scope = $rootScope.$new();
 
-        mocks.onDownvote = sinon.stub().promise();
+        mocks.onDownvote = (<any>sinon.stub()).promise();
 
         let ctrl = $controller("VoteButton", $scope, {
             item: {is_voter: true},

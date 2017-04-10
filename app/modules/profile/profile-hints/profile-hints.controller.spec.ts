@@ -17,11 +17,20 @@
  * File: profile-hints.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("ProfileHints", function() {
     let $controller = null;
     let $provide = null;
 
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockTranslate = function() {
         mocks.translateService = {};

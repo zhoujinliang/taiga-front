@@ -17,11 +17,15 @@
  * File: attchment.controller.spec.coffee
  */
 
-import {expect} from "chai"
-import {describe, it, beforeEach} from "mocha"
-import {module} from "angular"
-import * as sinon from "sinon"
-import * as immutable from "immutable"
+declare var module:any;
+declare var describe:any;
+declare var it:any;
+declare var beforeEach:any;
+declare var inject:any;
+declare var expect:any;
+declare var sinon:any;
+// import * as sinon from "sinon"
+import * as Immutable from "immutable"
 
 describe("AttachmentController", function() {
     let $provide = null;

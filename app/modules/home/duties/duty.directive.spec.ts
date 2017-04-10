@@ -17,6 +17,15 @@
  * File: duty.directive.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("dutyDirective", function() {
     let compile, provide;
     let scope = (compile = (provide = null));

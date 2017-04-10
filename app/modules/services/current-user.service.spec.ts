@@ -17,10 +17,19 @@
  * File: current-user.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("tgCurrentUserService", function() {
     let provide;
     let currentUserService = (provide = null);
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockTgStorage = function() {
         mocks.storageService = {
@@ -51,7 +60,7 @@ describe("tgCurrentUserService", function() {
         return provide.value("tgResources", mocks.resources);
     };
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_tgCurrentUserService_) {
             currentUserService = _tgCurrentUserService_;
             if (callback) { return callback(); }
@@ -122,7 +131,7 @@ describe("tgCurrentUserService", function() {
     });
 
     it("bulkUpdateProjectsOrder and reload projects", function(done) {
-        let fakeData = [{id: 1, id: 2}];
+        let fakeData = [{id: 2}];
 
         currentUserService.loadProjects = sinon.stub();
 

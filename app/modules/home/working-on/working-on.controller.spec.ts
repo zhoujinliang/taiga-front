@@ -17,10 +17,19 @@
  * File: working-on.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("WorkingOn", function() {
     let $controller = null;
     let $provide = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockHomeService = function() {
         mocks.homeService = {

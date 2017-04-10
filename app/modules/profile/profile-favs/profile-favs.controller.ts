@@ -22,7 +22,7 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
 
-export class FavsBaseController {
+class FavsBaseController {
     filterByTextQuery: any
     enableFilterByAll:boolean
     enableFilterByProjects:boolean
@@ -183,7 +183,7 @@ FavsBaseController.initClass();
 //# Liked
 //###################################################
 
-class ProfileLikedController extends FavsBaseController {
+export class ProfileLikedController extends FavsBaseController {
     static initClass() {
         this.$inject = [
             "tgUserService",
@@ -212,7 +212,7 @@ ProfileLikedController.initClass();
 //# Voted
 //###################################################
 
-class ProfileVotedController extends FavsBaseController {
+export class ProfileVotedController extends FavsBaseController {
     static initClass() {
         this.$inject = [
             "tgUserService",
@@ -243,7 +243,7 @@ ProfileVotedController.initClass();
 //# Watched
 //###################################################
 
-class ProfileWatchedController extends FavsBaseController {
+export class ProfileWatchedController extends FavsBaseController {
     static initClass() {
         this.$inject = [
             "tgUserService",

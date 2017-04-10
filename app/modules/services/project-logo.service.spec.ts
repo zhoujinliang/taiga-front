@@ -17,6 +17,15 @@
  * File: project-logo.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("tgProjectLogoService", function() {
     let $provide = null;
     let projectLogoService = null;
@@ -28,7 +37,7 @@ describe("tgProjectLogoService", function() {
     let _setup = () => _inject();
 
     beforeEach(function() {
-        window._version = '123';
+        (<any>window)._version = '123';
         module("taigaCommon");
 
         return _setup();

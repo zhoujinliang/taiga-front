@@ -17,10 +17,20 @@
  * File: like-project-button.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var sinon:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as _ from "lodash"
+
 describe("tgLikeProjectButtonService", function() {
     let likeButtonService = null;
     let provide = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockTgResources = function() {
         mocks.tgResources = {
@@ -68,7 +78,7 @@ describe("tgLikeProjectButtonService", function() {
         return provide.value("tgProjectService", mocks.tgProjectService);
     };
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_tgLikeProjectButtonService_) {
             likeButtonService = _tgLikeProjectButtonService_;
             if (callback) { return callback(); }

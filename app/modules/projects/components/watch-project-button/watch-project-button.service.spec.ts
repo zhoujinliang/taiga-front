@@ -17,10 +17,20 @@
  * File: watch-project-button.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var sinon:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as _ from "lodash"
+
 describe("tgWatchProjectButtonService", function() {
     let watchButtonService = null;
     let provide = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockTgResources = function() {
         mocks.tgResources = {
@@ -76,7 +86,7 @@ describe("tgWatchProjectButtonService", function() {
         return provide.value("tgProjectService", mocks.tgProjectService);
     };
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_tgWatchProjectButtonService_) {
             watchButtonService = _tgWatchProjectButtonService_;
             if (callback) { return callback(); }

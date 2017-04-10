@@ -17,10 +17,19 @@
  * File: check-permissions.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("tgCheckPermissionsService", function() {
     let provide;
     let checkPermissionsService = (provide = null);
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockProjectService = function() {
         mocks.projectService = {

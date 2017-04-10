@@ -17,10 +17,19 @@
  * File: joy-ride.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("tgJoyRideService", function() {
     let provide;
     let joyRideService = (provide = null);
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockTranslate = function() {
         mocks.translate = {
@@ -40,7 +49,7 @@ describe("tgJoyRideService", function() {
         return provide.value("tgCheckPermissionsService", mocks.checkPermissionsService);
     };
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_tgJoyRideService_) {
             joyRideService = _tgJoyRideService_;
             if (callback) { return callback(); }

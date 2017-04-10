@@ -17,13 +17,22 @@
  * File: external-app.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("ExternalAppController", function() {
     let provide = null;
     let $controller = null;
     let $rootScope = null;
-    let mocks = {};
+    let mocks:any = {};
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;

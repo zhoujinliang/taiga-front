@@ -17,6 +17,15 @@
  * File: app-meta.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 angular.module("taigaCommon").provider("$exceptionHandler", angular.mock.$ExceptionHandlerProvider);
 
 describe("UserActivityService", function() {

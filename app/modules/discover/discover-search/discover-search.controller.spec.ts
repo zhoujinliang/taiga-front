@@ -17,10 +17,19 @@
  * File: discover-search.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("DiscoverSearch", function() {
     let $provide = null;
     let $controller = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockTranslate = function() {
         mocks.translate = {};
@@ -129,7 +138,7 @@ describe("DiscoverSearch", function() {
     it("showMore", function(done) {
         let ctrl = $controller('DiscoverSearch');
 
-        ctrl.search = sinon.stub().promise();
+        ctrl.search = (<any>sinon.stub()).promise();
 
         ctrl.showMore().then(function() {
             expect(ctrl.loadingPagination).to.be.false;
@@ -216,7 +225,7 @@ describe("DiscoverSearch", function() {
     it("fetchByGlobalSearch", function(done) {
         let ctrl = $controller('DiscoverSearch');
 
-        ctrl.fetch = sinon.stub().promise();
+        ctrl.fetch = (<any>sinon.stub()).promise();
 
         ctrl.fetchByGlobalSearch().then(function() {
             expect(ctrl.loadingGlobal).to.be.false;
@@ -233,7 +242,7 @@ describe("DiscoverSearch", function() {
     return it("fetchByOrderBy", function(done) {
         let ctrl = $controller('DiscoverSearch');
 
-        ctrl.fetch = sinon.stub().promise();
+        ctrl.fetch = (<any>sinon.stub()).promise();
 
         ctrl.fetchByOrderBy().then(function() {
             expect(ctrl.loadingList).to.be.false;

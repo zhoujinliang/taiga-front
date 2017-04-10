@@ -17,10 +17,19 @@
  * File: xhrError.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("tgXhrErrorService", function() {
     let provide;
     let xhrErrorService = (provide = null);
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockQ = function() {
         mocks.q = {
@@ -40,7 +49,7 @@ describe("tgXhrErrorService", function() {
         return provide.value("tgErrorHandlingService", mocks.errorHandling);
     };
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_tgXhrErrorService_) {
             xhrErrorService = _tgXhrErrorService_;
             if (callback) { return callback(); }

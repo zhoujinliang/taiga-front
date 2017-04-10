@@ -17,11 +17,20 @@
  * File: home.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("DuplicateProjectController", function() {
     let ctrl =  null;
     let provide = null;
     let controller = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockCurrentUserService = function() {
         mocks.currentUserService = {};
@@ -175,7 +184,7 @@ describe("DuplicateProjectController", function() {
         let projectId = ctrl.referenceProject.get('id');
         let data = ctrl.projectForm;
 
-        let newProject = {};
+        let newProject:any = {};
         newProject.data = {
             slug: 'slug'
         };

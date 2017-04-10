@@ -17,11 +17,20 @@
  * File: attachments-preview.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("AttachmentsPreviewController", function() {
     let $provide = null;
     let $controller = null;
     let scope = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockAttachmentsPreviewService = function() {
         mocks.attachmentsPreviewService = {};

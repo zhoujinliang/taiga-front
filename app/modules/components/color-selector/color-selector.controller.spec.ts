@@ -17,11 +17,20 @@
  * File: color-selector.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("ColorSelector", function() {
     let provide = null;
     let controller = null;
     let colorSelectorCtrl = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockTgProjectService = function() {
         mocks.tgProjectService = {

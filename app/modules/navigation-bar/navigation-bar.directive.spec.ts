@@ -17,10 +17,19 @@
  * File: navigation-bar.directive.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("navigationBarDirective", function() {
     let compile, provide;
     let scope = (compile = (provide = null));
-    let mocks = {};
+    let mocks:any = {};
     let template = "<div tg-navigation-bar></div>";
     let projects = Immutable.fromJS({
         recents: [
