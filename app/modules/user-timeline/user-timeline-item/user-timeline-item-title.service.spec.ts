@@ -17,6 +17,15 @@
  * File: user-timeline-item-title.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+declare var sinon:any;
+import * as Immutable from "immutable"
+
 describe("tgUserTimelineItemTitle", function() {
     let event, type;
     let mySvc = null;

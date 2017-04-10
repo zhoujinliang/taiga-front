@@ -17,10 +17,19 @@
  * File: epics.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("tgEpicsService", function() {
     let provide;
     let epicsService = (provide = null);
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockTgProjectService = function() {
         mocks.tgProjectService = {
@@ -65,7 +74,7 @@ describe("tgEpicsService", function() {
         return provide.value("tgXhrErrorService", mocks.tgXhrErrorService);
     };
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_tgEpicsService_) {
             epicsService = _tgEpicsService_;
             if (callback) { return callback(); }
@@ -101,7 +110,7 @@ describe("tgEpicsService", function() {
     });
 
     it("fetch epics success", function() {
-        let result = {};
+        let result:any = {};
         result.list = Immutable.fromJS([
             { id: 111 },
             { id: 112 }
@@ -126,7 +135,7 @@ describe("tgEpicsService", function() {
     });
 
     it("fetch epics success, last page", function() {
-        let result = {};
+        let result:any = {};
         result.list = Immutable.fromJS([
             { id: 111 },
             { id: 112 }

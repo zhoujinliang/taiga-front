@@ -17,6 +17,15 @@
  * File: user-timeline-pagination-sequence.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("tgUserTimelinePaginationSequenceService", function() {
     let userTimelinePaginationSequenceService = null;
 
@@ -30,7 +39,7 @@ describe("tgUserTimelinePaginationSequenceService", function() {
     });
 
     it("get remote items to reach the min", function(done) {
-        let config = {};
+        let config:any = {};
 
         let page1 = Immutable.Map({
             next: true,
@@ -46,9 +55,9 @@ describe("tgUserTimelinePaginationSequenceService", function() {
         });
 
         let promise = sinon.stub();
-        promise.withArgs(1).promise().resolve(page1);
-        promise.withArgs(2).promise().resolve(page2);
-        promise.withArgs(3).promise().resolve(page3);
+        (<any>promise.withArgs(1)).promise().resolve(page1);
+        (<any>promise.withArgs(2)).promise().resolve(page2);
+        (<any>promise.withArgs(3)).promise().resolve(page3);
 
         config.fetch = page => promise(page);
 
@@ -67,7 +76,7 @@ describe("tgUserTimelinePaginationSequenceService", function() {
     });
 
     it("get items until the last page", function(done) {
-        let config = {};
+        let config:any = {};
 
         let page1 = Immutable.Map({
             next: true,
@@ -79,8 +88,8 @@ describe("tgUserTimelinePaginationSequenceService", function() {
         });
 
         let promise = sinon.stub();
-        promise.withArgs(1).promise().resolve(page1);
-        promise.withArgs(2).promise().resolve(page2);
+        (<any>promise.withArgs(1)).promise().resolve(page1);
+        (<any>promise.withArgs(2)).promise().resolve(page2);
 
         config.fetch = page => promise(page);
 
@@ -99,7 +108,7 @@ describe("tgUserTimelinePaginationSequenceService", function() {
     });
 
     it("increase pagination every page call", function(done) {
-        let config = {};
+        let config:any = {};
 
         let page1 = Immutable.Map({
             next: true,
@@ -111,8 +120,8 @@ describe("tgUserTimelinePaginationSequenceService", function() {
         });
 
         let promise = sinon.stub();
-        promise.withArgs(1).promise().resolve(page1);
-        promise.withArgs(2).promise().resolve(page2);
+        (<any>promise.withArgs(1)).promise().resolve(page1);
+        (<any>promise.withArgs(2)).promise().resolve(page2);
 
         config.fetch = page => promise(page);
 
@@ -134,7 +143,7 @@ describe("tgUserTimelinePaginationSequenceService", function() {
 
 
     return it("map items", function(done) {
-        let config = {};
+        let config:any = {};
 
         let page1 = Immutable.Map({
             next: false,
@@ -142,7 +151,7 @@ describe("tgUserTimelinePaginationSequenceService", function() {
         });
 
         let promise = sinon.stub();
-        promise.withArgs(1).promise().resolve(page1);
+        (<any>promise.withArgs(1)).promise().resolve(page1);
 
         config.fetch = page => promise(page);
 

@@ -17,10 +17,19 @@
  * File: home.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("tgHome", function() {
     let provide;
     let homeService = (provide = null);
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockResources = function() {
         mocks.resources = {};
@@ -48,13 +57,13 @@ describe("tgHome", function() {
 
     let _mockProjectsService = function() {
         mocks.projectsService = {
-            getProjectsByUserId: sinon.stub().promise()
+            getProjectsByUserId: (<any>sinon.stub()).promise()
         };
 
         return provide.value("tgProjectsService", mocks.projectsService);
     };
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_tgHomeService_) {
             homeService = _tgHomeService_;
             if (callback) { return callback(); }

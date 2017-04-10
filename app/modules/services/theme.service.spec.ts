@@ -17,6 +17,15 @@
  * File: theme.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("ThemeService", function() {
     let themeService = null;
     let data = {
@@ -33,7 +42,7 @@ describe("ThemeService", function() {
     });
 
     return it("use a test theme", function() {
-        window._version = '123';
+        (<any>window)._version = '123';
         themeService.use(data.theme);
         return expect($("link[rel='stylesheet']")).to.have.attr("href", `/123/styles/theme-${data.theme}.css`);
     });

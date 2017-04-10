@@ -17,12 +17,21 @@
  * File: wiki-history.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("StoryHeaderComponent", function() {
     let headerDetailCtrl =  null;
     let provide = null;
     let controller = null;
     let rootScope = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockRootScope = function() {
         mocks.rootScope = {
@@ -142,7 +151,7 @@ describe("StoryHeaderComponent", function() {
     });
 
     it("save on keydown Enter", function() {
-        let event = {};
+        let event:any = {};
         event.which = 13;
         headerDetailCtrl.saveSubject = sinon.stub();
         headerDetailCtrl.onKeyDown(event);
@@ -150,7 +159,7 @@ describe("StoryHeaderComponent", function() {
     });
 
     return it("don't save on keydown ESC", function() {
-        let event = {};
+        let event:any = {};
         event.which = 27;
         headerDetailCtrl.editSubject = sinon.stub();
         headerDetailCtrl.onKeyDown(event);

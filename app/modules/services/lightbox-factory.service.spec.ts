@@ -17,10 +17,19 @@
  * File: lightbox-factory.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+declare var sinon:any;
+import * as Immutable from "immutable"
+
 describe("tgLightboxFactory", function() {
     let provide;
     let lightboxFactoryService = (provide = null);
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockRootScope = function() {
         mocks.rootScope = sinon.stub();
@@ -34,7 +43,7 @@ describe("tgLightboxFactory", function() {
         return provide.value("$compile", mocks.compile);
     };
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_tgLightboxFactory_) {
             lightboxFactoryService = _tgLightboxFactory_;
             if (callback) { return callback(); }

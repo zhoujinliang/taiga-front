@@ -17,11 +17,20 @@
  * File: user-timeline.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("UserTimelineController", function() {
     let $q, $rootScope, provide, scope;
     let controller = (scope = ($q = (provide = ($rootScope = null))));
 
-    let mocks = {};
+    let mocks:any = {};
 
     let mockUser = Immutable.fromJS({id: 3});
 
@@ -122,7 +131,7 @@ describe("UserTimelineController", function() {
                 next: true
             });
 
-            myCtrl.timeline.next = sinon.stub().promise();
+            myCtrl.timeline.next = (<any>sinon.stub()).promise();
             myCtrl.timeline.next.resolve(response);
 
             expect(myCtrl.scrollDisabled).to.be.false;
@@ -140,7 +149,7 @@ describe("UserTimelineController", function() {
                 next: false
             });
 
-            myCtrl.timeline.next = sinon.stub().promise();
+            myCtrl.timeline.next = (<any>sinon.stub()).promise();
             myCtrl.timeline.next.resolve(response);
 
             expect(myCtrl.scrollDisabled).to.be.false;
@@ -159,7 +168,7 @@ describe("UserTimelineController", function() {
             });
 
             myCtrl.timelineList = Immutable.List([1, 2]);
-            myCtrl.timeline.next = sinon.stub().promise();
+            myCtrl.timeline.next = (<any>sinon.stub()).promise();
             myCtrl.timeline.next.resolve(response);
 
             expect(myCtrl.scrollDisabled).to.be.false;

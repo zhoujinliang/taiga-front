@@ -17,10 +17,19 @@
  * File: like-project-button.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("LikeProjectButton", function() {
     let $provide = null;
     let $controller = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockTgConfirm = function() {
         mocks.tgConfirm = {
@@ -74,7 +83,7 @@ describe("LikeProjectButton", function() {
         let ctrl = $controller("LikeProjectButton");
         ctrl.project = project;
 
-        mocks.tgLikeProjectButton.like = sinon.stub().promise();
+        mocks.tgLikeProjectButton.like = (<any>sinon.stub()).promise();
 
         let promise = ctrl.toggleLike();
 
@@ -115,7 +124,7 @@ describe("LikeProjectButton", function() {
         let ctrl = $controller("LikeProjectButton");
         ctrl.project = project;
 
-        mocks.tgLikeProjectButton.unlike = sinon.stub().promise();
+        mocks.tgLikeProjectButton.unlike = (<any>sinon.stub()).promise();
 
         let promise = ctrl.toggleLike();
 

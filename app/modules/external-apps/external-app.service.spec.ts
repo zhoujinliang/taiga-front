@@ -17,10 +17,19 @@
  * File: external-app.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("tgExternalAppsService", function() {
     let provide;
     let externalAppsService = (provide = null);
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockTgResources = function() {
         mocks.tgResources = {
@@ -33,7 +42,7 @@ describe("tgExternalAppsService", function() {
         return provide.value("tgResources", mocks.tgResources);
     };
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_tgExternalAppsService_) {
             externalAppsService = _tgExternalAppsService_;
             if (callback) { return callback(); }

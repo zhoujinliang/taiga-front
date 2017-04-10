@@ -17,12 +17,21 @@
  * File: transfer-project.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("TransferProject", function() {
     let $controller = null;
     let $q = null;
     let provide = null;
     let $rootScope = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockRouteParams = function() {
         mocks.routeParams = {};
@@ -111,7 +120,7 @@ describe("TransferProject", function() {
         })
     ;
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_$controller_, _$q_, _$rootScope_) {
             $q = _$q_;
             $rootScope = _$rootScope_;

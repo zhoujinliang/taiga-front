@@ -17,10 +17,19 @@
  * File: user-timeline.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("tgUserTimelineService", function() {
     let provide = null;
     let userTimelineService = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockResources = function() {
         mocks.resources = {};
@@ -81,7 +90,7 @@ describe("tgUserTimelineService", function() {
 
     let _setup = () => _mocks();
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_tgUserTimelineService_) {
             userTimelineService = _tgUserTimelineService_;
             if (callback) { return callback(); }

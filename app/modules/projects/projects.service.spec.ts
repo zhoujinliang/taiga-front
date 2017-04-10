@@ -17,11 +17,20 @@
  * File: projects.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("tgProjectsService", function() {
     let $rootScope, provide;
     let projectsService = (provide = ($rootScope = null));
     let $q = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockResources = function() {
         mocks.resources = {};
@@ -50,7 +59,7 @@ describe("tgProjectsService", function() {
     };
 
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_$q_, _$rootScope_, _tgProjectsService_) {
             $q = _$q_;
             $rootScope = _$rootScope_;

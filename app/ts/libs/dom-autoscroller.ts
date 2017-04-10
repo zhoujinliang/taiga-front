@@ -536,7 +536,7 @@ function AutoScroller(elements, options){
     this.scrolling = false;
     this.scrollWhenOutside = options.scrollWhenOutside || false;
 
-    var point = {}, pointCB = createPointCB(point), down = false;
+    var point:any = {}, pointCB = createPointCB(point), down = false;
 
     window.addEventListener('mousemove', pointCB, false);
     window.addEventListener('touchmove', pointCB, false);
@@ -612,12 +612,12 @@ function AutoScroller(elements, options){
         if(!event.target) return;
         var target = event.target, last;
 
-        if(!current || !inside(point, current)){
+        if(!current || !(<any>inside)(point, current)){
             if(!current && target){
                 current = null;
                 while(target = target.parentNode){
                     for(var i=0; i<elements.length; i++){
-                        if(elements[i] === target && inside(point, elements[i])){
+                        if(elements[i] === target && (<any>inside)(point, elements[i])){
                             current = elements[i];
                             break;
                         }
@@ -627,7 +627,7 @@ function AutoScroller(elements, options){
                 last = current;
                 current = null;
                 for(var i=0; i<elements.length; i++){
-                    if(elements[i] !== last && inside(point, elements[i])){
+                    if(elements[i] !== last && (<any>inside)(point, elements[i])){
                         current = elements[i];
                     }
                 }

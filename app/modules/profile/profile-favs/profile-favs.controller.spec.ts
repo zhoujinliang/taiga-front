@@ -17,11 +17,20 @@
  * File: profile-favs.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("ProfileLiked", function() {
     let $controller = null;
     let provide = null;
     let $rootScope = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let user = Immutable.fromJS({id: 2});
 
@@ -42,7 +51,7 @@ describe("ProfileLiked", function() {
         })
     ;
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;
@@ -192,7 +201,7 @@ describe("ProfileVoted", function() {
     let $controller = null;
     let provide = null;
     let $rootScope = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let user = Immutable.fromJS({id: 2});
 
@@ -213,7 +222,7 @@ describe("ProfileVoted", function() {
         })
     ;
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;
@@ -494,7 +503,7 @@ describe("ProfileWatched", function() {
     let $controller = null;
     let provide = null;
     let $rootScope = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let user = Immutable.fromJS({id: 2});
 
@@ -515,7 +524,7 @@ describe("ProfileWatched", function() {
         })
     ;
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;

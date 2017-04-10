@@ -17,6 +17,15 @@
  * File: discover-search-list-header.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("DiscoverSearchListHeader", function() {
     let $provide = null;
     let $controller = null;

@@ -17,10 +17,19 @@
  * File: watch-project-button.controller.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("WatchProjectButton", function() {
     let $provide = null;
     let $controller = null;
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockTgConfirm = function() {
         mocks.tgConfirm = {
@@ -87,7 +96,7 @@ describe("WatchProjectButton", function() {
         ctrl.project = project;
         ctrl.showWatchOptions = true;
 
-        mocks.tgWatchProjectButton.watch = sinon.stub().promise();
+        mocks.tgWatchProjectButton.watch = (<any>sinon.stub()).promise();
 
         let promise = ctrl.watch(notifyLevel);
 
@@ -148,7 +157,7 @@ describe("WatchProjectButton", function() {
         ctrl.project = project;
         ctrl.showWatchOptions = true;
 
-        mocks.tgWatchProjectButton.unwatch = sinon.stub().promise();
+        mocks.tgWatchProjectButton.unwatch = (<any>sinon.stub()).promise();
 
         let promise = ctrl.unwatch();
 

@@ -17,10 +17,19 @@
  * File: feedback.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("tgFeedbackService", function() {
     let provide;
     let feedbackService = (provide = null);
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockTgLightboxFactory = function() {
         mocks.tgLightboxFactory = {
@@ -30,7 +39,7 @@ describe("tgFeedbackService", function() {
         return provide.value("tgLightboxFactory", mocks.tgLightboxFactory);
     };
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_tgFeedbackService_) {
             feedbackService = _tgFeedbackService_;
             if (callback) { return callback(); }

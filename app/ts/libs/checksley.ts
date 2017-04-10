@@ -68,7 +68,7 @@ var validators = {
         // for checkboxes and select multiples. Check there is at least one required value
         if (_.isArray(val)) {
             for (let i of val) {
-                if (validators.required(val[i])) {
+                if (validators.required(val[<string>i])) {
                     return true;
                 }
             }
@@ -255,8 +255,7 @@ class Checksley {
         return _.extend(validators, _validators);
     }
 
-    updateMessages(lang, messages, overwrite) {
-        if (overwrite == null) { overwrite = false; }
+    updateMessages(lang, messages, overwrite=false) {
         if (this.messages[lang] === undefined) {
             this.messages[lang] = {};
         }
@@ -282,9 +281,9 @@ class Checksley {
         return $("html").attr("lang") || "default";
     }
 
-    getMessage(key, lang) {
-        if (lang === undefined) {
-            ({ lang } = this);
+    getMessage(key, lang=null) {
+        if (lang === null) {
+            lang = this.lang
         }
 
         let messages:any = this.messages[lang];
@@ -544,7 +543,7 @@ class Field {
         }
 
         if (constraint.params) {
-            message = formatMessage(message, _.clone(constraint.params, true));
+            message = formatMessage(message, _.cloneDeep(constraint.params));
         }
 
         return this.addError(this.makeErrorElement(name, message));
@@ -807,9 +806,9 @@ class Form {
             }
 
             if (element.is("input[type=radio], input[type=checkbox]")) {
-                field = new checksley.FieldMultiple(fieldElm, this.options);
+                field = new (<any>checksley).FieldMultiple(fieldElm, this.options);
             } else {
-                field = new checksley.Field(fieldElm, this.options);
+                field = new (<any>checksley).Field(fieldElm, this.options);
             }
 
 
@@ -819,7 +818,7 @@ class Form {
         }
 
         return this.element.find('[data-composed]').map((composedField) =>
-            ((field = new checksley.ComposedField(composedField, this.options)),
+            ((field = new (<any>checksley).ComposedField(composedField, this.options)),
 
             field.setForm(this),
             this.fields.push(field)));
@@ -909,11 +908,11 @@ checksley.updateMessages("default", messages);
 checksley.injectPlugin();
 
 // Expose internal clases
-checksley.Checksley = Checksley;
-checksley.Form = Form;
-checksley.Field = Field;
-checksley.FieldMultiple = FieldMultiple;
-checksley.ComposedField = ComposedField;
+(<any>checksley).Checksley = Checksley;
+(<any>checksley).Form = Form;
+(<any>checksley).Field = Field;
+(<any>checksley).FieldMultiple = FieldMultiple;
+(<any>checksley).ComposedField = ComposedField;
 
 // Expose global instance to the world
 export { checksley };

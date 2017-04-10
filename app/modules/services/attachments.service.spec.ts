@@ -17,10 +17,19 @@
  * File: attachments.service.spec.coffee
  */
 
+declare var describe:any;
+declare var module:any;
+declare var inject:any;
+declare var it:any;
+declare var expect:any;
+declare var beforeEach:any;
+import * as Immutable from "immutable"
+import * as sinon from "sinon"
+
 describe("tgAttachmentsService", function() {
     let provide;
     let attachmentsService = (provide = null);
-    let mocks = {};
+    let mocks:any = {};
 
     let _mockTgConfirm = function() {
         mocks.confirm = {
@@ -55,7 +64,7 @@ describe("tgAttachmentsService", function() {
     };
 
 
-    let _inject = callback =>
+    let _inject = (callback=null) =>
         inject(function(_tgAttachmentsService_) {
             attachmentsService = _tgAttachmentsService_;
             if (callback) { return callback(); }
@@ -145,7 +154,7 @@ describe("tgAttachmentsService", function() {
         let type = 'us';
 
         mocks.rs.attachments = {
-            create: sinon.stub().promise()
+            create: (<any>sinon.stub()).promise()
         };
 
         mocks.rs.attachments.create.withArgs('us', type, objId, file).resolve();
@@ -171,7 +180,7 @@ describe("tgAttachmentsService", function() {
         };
 
         mocks.rs.attachments = {
-            patch: sinon.stub().promise()
+            patch: (<any>sinon.stub()).promise()
         };
 
         mocks.rs.attachments.patch.withArgs('us', objId, patch).resolve();
