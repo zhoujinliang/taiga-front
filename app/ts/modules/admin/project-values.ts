@@ -25,8 +25,9 @@
 import {debounce, getDefaulColorList} from "../../utils"
 import {Controller} from "../../classes"
 import {PageMixin} from "../controllerMixins"
-import {autoScroll, dragula} from "../../global"
+import {autoScroll} from "../../libs/dom-autoscroller"
 
+import * as dragula from "dragula"
 import * as angular from "angular"
 import * as _ from "lodash"
 

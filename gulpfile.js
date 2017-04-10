@@ -41,34 +41,6 @@ var gulp = require("gulp"),
     tsify = require("tsify"),
     gutil = require("gulp-util");
 
-
-var BrowserifyApp = browserify({
-    basedir: '.',
-    debug: true,
-    entries: ['app/ts/main.ts'],
-    cache: {},
-    packageCache: {}
-}).plugin(tsify);
-var watchedBrowserifyApp = watchify(BrowserifyApp);
-watchedBrowserifyApp.on("update", bundleApp);
-watchedBrowserifyApp.on("log", gutil.log);
-
-var shimifyConfig = {
-    'jQuery': 'window.jQuery',
-    "angular": {
-      "exports": "angular",
-      "depends": ["jQuery"]
-    }
-};
-
-function bundleApp() {
-    return watchedBrowserifyApp
-        .transform(shimify.configure(shimifyConfig))
-        .bundle().on('error', gutil.log)
-        .pipe(source('js/app.js'))
-        .pipe(gulp.dest("dist"));
-}
-
 var argv = require('minimist')(process.argv.slice(2));
 
 var utils = require("./gulp-utils");
@@ -78,11 +50,12 @@ var themes = utils.themes.sequence();
 if (argv.theme) {
     themes.set(argv.theme);
 }
+var version = "v-" + Date.now();
 
 var paths = {};
 paths.app = "app/";
 paths.dist = "dist/";
-paths.distVersion = paths.dist + "/";
+paths.distVersion = paths.dist + version + "/";
 paths.tmp = "tmp/";
 paths.extras = "extras/";
 paths.modules = "node_modules/";
@@ -150,96 +123,35 @@ paths.css_order = [
     paths.tmp + "custom.css"
 ];
 
-paths.ts = [
-    paths.app + "**/*.ts",
-    "!" + paths.app + "**/*.spec.ts",
-];
-
-paths.ts_order = [
-    paths.app + "modules/compile-modules/**/*.module.ts",
-    paths.app + "modules/compile-modules/**/*.ts",
-    paths.app + "ts/app.ts",
-    paths.app + "ts/*.ts",
-    paths.app + "ts/modules/controllerMixins.ts",
-    paths.app + "ts/modules/*.ts",
-    paths.app + "ts/modules/common/*.ts",
-    paths.app + "ts/modules/backlog/*.ts",
-    paths.app + "ts/modules/taskboard/*.ts",
-    paths.app + "ts/modules/kanban/*.ts",
-    paths.app + "ts/modules/epics/*.ts",
-    paths.app + "ts/modules/issues/*.ts",
-    paths.app + "ts/modules/userstories/*.ts",
-    paths.app + "ts/modules/tasks/*.ts",
-    paths.app + "ts/modules/team/*.ts",
-    paths.app + "ts/modules/wiki/*.ts",
-    paths.app + "ts/modules/admin/*.ts",
-    paths.app + "ts/modules/projects/*.ts",
-    paths.app + "ts/modules/locales/*.ts",
-    paths.app + "ts/modules/profile/*.ts",
-    paths.app + "ts/modules/base/*.ts",
-    paths.app + "ts/modules/resources/*.ts",
-    paths.app + "ts/modules/user-settings/*.ts",
-    paths.app + "ts/modules/integrations/*.ts",
-    paths.app + "modules/**/*.module.ts",
-    paths.app + "modules/**/*.ts"
-];
-
-paths.libs = [
-    paths.modules + "bluebird/js/browser/bluebird.js",
-    paths.modules + "jquery/dist/jquery.js",
-    paths.modules + "lodash/lodash.js",
-    paths.modules + "messageformat/messageformat.js",
-    paths.modules + "angular/angular.js",
-    paths.modules + "angular-route/angular-route.js",
-    paths.modules + "angular-sanitize/angular-sanitize.js",
-    paths.modules + "angular-animate/angular-animate.js",
-    paths.modules + "angular-aria/angular-aria.js",
-    paths.modules + "angular-translate/dist/angular-translate.js",
-    paths.modules + "angular-translate-loader-partial/angular-translate-loader-partial.js",
-    paths.modules + "angular-translate-loader-static-files/angular-translate-loader-static-files.js",
-    paths.modules + "angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.js",
-    paths.modules + "moment/moment.js",
-    paths.modules + "checksley/checksley.js",
-    paths.modules + "pikaday/pikaday.js",
-    paths.modules + "Flot/jquery.flot.js",
-    paths.modules + "Flot/jquery.flot.pie.js",
-    paths.modules + "Flot/jquery.flot.time.js",
-    paths.modules + "flot-axislabels/jquery.flot.axislabels.js",
-    paths.modules + "jquery.flot.tooltip/js/jquery.flot.tooltip.js",
-    paths.modules + "raven-js/dist/raven.js",
-    paths.modules + "l.js/l.js",
-    paths.modules + "ng-infinite-scroll/build/ng-infinite-scroll.js",
-    paths.modules + "immutable/dist/immutable.js",
-    paths.modules + "intro.js/intro.js",
-    paths.modules + "dragula/dist/dragula.js",
-    paths.modules + "awesomplete/awesomplete.js",
-    paths.modules + "medium-editor/dist/js/medium-editor.js",
-    paths.modules + "to-markdown/dist/to-markdown.js",
-    paths.modules + "markdown-it/dist/markdown-it.js",
-    paths.modules + "prismjs/prism.js",
-    paths.modules + "prismjs/plugins/custom-class/prism-custom-class.js",
-    paths.modules + "medium-editor-autolist/dist/autolist.js",
-    paths.modules + "autolinker/dist/Autolinker.js",
-    paths.app + "js/dom-autoscroller.js",
-    paths.app + "js/dragula-drag-multiple.js",
-    paths.app + "js/tg-repeat.js",
-    paths.app + "js/sha1-custom.js",
-    paths.app + "js/murmurhash3_gc.js",
-    paths.app + "js/medium-mention.js",
-    paths.app + "js/markdown-it-lazy-headers.js"
-];
-
-paths.libs.forEach(function(file) {
-    try {
-        // Query the entry
-        stats = fs.lstatSync(file);
-    }
-    catch (e) {
-        console.log(file);
-    }
-});
-
 var isDeploy = argv["_"].indexOf("deploy") !== -1;
+
+var BrowserifyApp = browserify({
+    basedir: '.',
+    debug: true,
+    entries: ['app/ts/main.ts'],
+    cache: {},
+    packageCache: {}
+}).plugin(tsify);
+var watchedBrowserifyApp = watchify(BrowserifyApp);
+watchedBrowserifyApp.on("update", bundleApp);
+watchedBrowserifyApp.on("log", gutil.log);
+
+var shimifyConfig = {
+    'jQuery': 'window.jQuery',
+    "angular": {
+      "exports": "angular",
+      "depends": ["jQuery"]
+    }
+};
+
+function bundleApp() {
+    return watchedBrowserifyApp
+        .transform(shimify.configure(shimifyConfig))
+        .bundle().on('error', gutil.log)
+        .pipe(source('js/app.js'))
+        .pipe(gulp.dest(paths.distVersion));
+}
+
 
 /*
 ############################################################################
@@ -253,7 +165,7 @@ gulp.task("jade", function() {
     return gulp.src(paths.jade)
         .pipe(plumber())
         .pipe(cached("jade"))
-        .pipe(jade({pretty: true}))
+        .pipe(jade({pretty: true, locals:{v:version}}))
         .pipe(gulp.dest(paths.tmp));
 });
 
@@ -262,7 +174,7 @@ gulp.task("jade-inheritance", function() {
         .pipe(plumber())
         .pipe(cached("jade"))
         .pipe(jadeInheritance({basedir: "./app/"}))
-        .pipe(jade({pretty: true}))
+        .pipe(jade({pretty: true, locals:{v:version}}))
         .pipe(gulp.dest(paths.tmp));
 });
 
@@ -545,25 +457,6 @@ gulp.task("moment-locales", function() {
         .pipe(gulp.dest(paths.distVersion + "locales/moment-locales/"));
 });
 
-gulp.task("jslibs-watch", function() {
-    return gulp.src(paths.libs)
-        .pipe(plumber())
-        .pipe(concat("libs.js"))
-        .pipe(gulp.dest(paths.distVersion + "js/"));
-});
-
-gulp.task("jslibs-deploy", function() {
-    return gulp.src(paths.libs)
-        .pipe(plumber())
-        .pipe(sourcemaps.init())
-        .pipe(concat("libs.js"))
-        .pipe(uglify())
-        .pipe(sourcemaps.write("./maps"))
-        .pipe(gulp.dest(paths.distVersion + "js/"));
-});
-
-gulp.task("app-watch", ["ts", "conf", "locales", "moment-locales"]);
-
 gulp.task("app-deploy", ["ts", "conf", "locales", "moment-locales"], function() {
     return gulp.src(paths.distVersion + "js/app.js")
         .pipe(sourcemaps.init())
@@ -673,16 +566,16 @@ gulp.task("express", function() {
 
     app.use(compression()); //gzip
 
-    app.use("/js", express.static(__dirname + "/dist/js"));
-    app.use("/styles", express.static(__dirname + "/dist/styles"));
-    app.use("/images", express.static(__dirname + "/dist/images"));
-    app.use("/emojis", express.static(__dirname + "/dist/emojis"));
-    app.use("/svg", express.static(__dirname + "/dist/svg"));
-    app.use("/partials", express.static(__dirname + "/dist/partials"));
-    app.use("/fonts", express.static(__dirname + "/dist/fonts"));
-    app.use("/locales", express.static(__dirname + "/dist/locales"));
-    app.use("/maps", express.static(__dirname + "/dist/maps"));
-    app.use("/prism", express.static(__dirname + "/dist/prism"));
+    app.use("/" + version + "/js", express.static(__dirname + "/dist/" + version + "/js"));
+    app.use("/" + version + "/styles", express.static(__dirname + "/dist/" + version + "/styles"));
+    app.use("/" + version + "/images", express.static(__dirname + "/dist/" + version + "/images"));
+    app.use("/" + version + "/emojis", express.static(__dirname + "/dist/" + version + "/emojis"));
+    app.use("/" + version + "/svg", express.static(__dirname + "/dist/" + version + "/svg"));
+    app.use("/" + version + "/partials", express.static(__dirname + "/dist/" + version + "/partials"));
+    app.use("/" + version + "/fonts", express.static(__dirname + "/dist/" + version + "/fonts"));
+    app.use("/" + version + "/locales", express.static(__dirname + "/dist/" + version + "/locales"));
+    app.use("/" + version + "/maps", express.static(__dirname + "/dist/" + version + "/maps"));
+    app.use("/" + version + "/prism", express.static(__dirname + "/dist/" + version + "/prism"));
     app.use("/plugins", express.static(__dirname + "/dist/plugins"));
     app.use("/conf.json", express.static(__dirname + "/dist/conf.json"));
     app.use(require('connect-livereload')({
@@ -705,8 +598,6 @@ gulp.task("watch", function() {
     gulp.watch(paths.sass_watch, ["styles-lint"]);
     gulp.watch(paths.styles_dependencies, ["styles-dependencies"]);
     gulp.watch(paths.svg, ["copy-svg"]);
-    gulp.watch(paths.ts, ["app-watch"]);
-    gulp.watch(paths.libs, ["jslibs-watch"]);
     gulp.watch([paths.locales, paths.modulesLocales], ["locales"]);
     gulp.watch(paths.images, ["copy-images"]);
     gulp.watch(paths.fonts, ["copy-fonts"]);
@@ -715,9 +606,12 @@ gulp.task("watch", function() {
 gulp.task("deploy", function(cb) {
     runSequence("clear", "delete-old-version", "delete-tmp", [
         "copy",
+        "ts",
+        "conf",
+        "locales",
+        "moment-locales",
         "jade-deploy",
         "app-deploy",
-        "jslibs-deploy",
         "compile-themes"
     ], cb);
 });
@@ -726,8 +620,10 @@ gulp.task("default", function(cb) {
     runSequence("delete-old-version", "delete-tmp", [
         "copy",
         "styles",
-        "app-watch",
-        "jslibs-watch",
+        "ts",
+        "conf",
+        "locales",
+        "moment-locales",
         "jade-deploy",
         "express",
         "watch"

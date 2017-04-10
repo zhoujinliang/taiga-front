@@ -23,7 +23,8 @@
  */
 
 import * as _ from "lodash"
-import {autoScroll, dragula} from "../../global"
+import {autoScroll} from "../../libs/dom-autoscroller"
+import * as dragula from "dragula"
 
 //############################################################################
 //# Sortable Directive

@@ -30,7 +30,7 @@ export class ThemeService extends Service {
             $("head").append(stylesheetEl);
         }
 
-        return stylesheetEl.attr("href", `/styles/theme-${themeName}.css`);
+        return stylesheetEl.attr("href", `/${(<any>window)._version}/styles/theme-${themeName}.css`);
     }
 }
 

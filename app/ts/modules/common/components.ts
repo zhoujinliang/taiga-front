@@ -23,7 +23,6 @@
  */
 
 import {bindOnce} from "../../utils"
-import {Pikaday} from "../../global"
 import * as angular from "angular"
 import * as moment from "moment"
 import * as _ from "lodash"
@@ -67,7 +66,7 @@ export let DateSelectorDirective = function($rootscope, datePickerConfigService)
                 field: $el[0]
             });
 
-            return $el.picker = new Pikaday(datePickerConfig);
+            return $el.picker = new (<any>window).Pikaday(datePickerConfig);
         };
 
         let unbind = $rootscope.$on("$translateChangeEnd", ctx => {

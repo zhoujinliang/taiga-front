@@ -17,7 +17,9 @@
  * File: epics-sortable.directive.coffee
  */
 
-import {autoScroll, dragula} from "../../../../ts/global"
+import {autoScroll} from "../../../../ts/libs/dom-autoscroller"
+
+import * as dragula from "dragula"
 import * as angular from "angular"
 
 export let EpicsSortableDirective = function($parse, projectService) {

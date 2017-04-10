@@ -26,7 +26,9 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 import {bindOnce} from "../../utils"
-import {autoScroll, dragula} from "../../global"
+import {autoScroll} from "../../libs/dom-autoscroller"
+
+import * as dragula from "dragula"
 
 //############################################################################
 //# Sortable Directive
