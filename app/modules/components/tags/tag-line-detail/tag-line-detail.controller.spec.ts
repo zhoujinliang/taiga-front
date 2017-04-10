@@ -18,7 +18,8 @@
  */
 
 declare var describe:any;
-declare var module:any;
+declare var angular:any;
+let module = angular.mock.module;;
 declare var inject:any;
 declare var it:any;
 declare var expect:any;
