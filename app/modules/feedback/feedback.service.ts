@@ -19,6 +19,7 @@
 
 import {Service} from "../../ts/classes"
 import * as angular from "angular"
+import {module} from "../../ts/modules/feedback"
 
 class FeedbackService extends Service {
     lightboxFactory:any
@@ -39,4 +40,4 @@ class FeedbackService extends Service {
 }
 FeedbackService.initClass();
 
-angular.module("taigaFeedback").service("tgFeedbackService", FeedbackService);
+module.service("tgFeedbackService", FeedbackService);

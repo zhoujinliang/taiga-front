@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 import {cartesianProduct} from "../../ts/utils"
-import {murmurhash3_32_gc} from "../../ts/global"
+import {murmurhash3_32_gc} from "../../ts/libs/murmurhash3_gc"
 
 export class ProjectLogoService {
     logos: any

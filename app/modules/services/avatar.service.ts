@@ -18,7 +18,7 @@
  */
 
 import {sizeFormat, cartesianProduct} from "../../ts/utils"
-import {murmurhash3_32_gc} from "../../ts/global"
+import {murmurhash3_32_gc} from "../../ts/libs/murmurhash3_gc"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"

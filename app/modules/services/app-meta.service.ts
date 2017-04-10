@@ -19,6 +19,7 @@
 
 import {truncate} from "../../ts/utils"
 import * as angular from "angular"
+import * as $ from "jquery"
 
 export class AppMetaService {
     rootScope: angular.IScope

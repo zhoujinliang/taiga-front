@@ -25,7 +25,7 @@
 import {groupBy, bindOnce, debounce, trim} from "../utils"
 import * as angular from "angular"
 
-let module = angular.module("taigaFeedback", []);
+export let module = angular.module("taigaFeedback", []);
 
 let FeedbackDirective = function($lightboxService, $repo, $confirm, $loading, feedbackService){
     let link = function($scope, $el, $attrs) {

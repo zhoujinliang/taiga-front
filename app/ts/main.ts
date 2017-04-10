@@ -1,5 +1,5 @@
 import {run} from "./app"
-import * as $ from "jquery"
+import * as $  from "jquery"
 import * as _ from "lodash"
 import "l.js"
 

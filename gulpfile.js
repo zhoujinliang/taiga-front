@@ -35,6 +35,7 @@ var gulp = require("gulp"),
     jsonminify = require('gulp-jsonminify'),
     classPrefix = require('gulp-class-prefix');
     browserify = require("browserify"),
+    shimify = require('browserify-shimify'),
     source = require('vinyl-source-stream'),
     watchify = require("watchify"),
     tsify = require("tsify"),
@@ -52,8 +53,17 @@ var watchedBrowserifyApp = watchify(BrowserifyApp);
 watchedBrowserifyApp.on("update", bundleApp);
 watchedBrowserifyApp.on("log", gutil.log);
 
+var shimifyConfig = {
+    'jQuery': 'window.jQuery',
+    "angular": {
+      "exports": "angular",
+      "depends": ["jQuery"]
+    }
+};
+
 function bundleApp() {
     return watchedBrowserifyApp
+        .transform(shimify.configure(shimifyConfig))
         .bundle().on('error', gutil.log)
         .pipe(source('js/app.js'))
         .pipe(gulp.dest("dist"));
