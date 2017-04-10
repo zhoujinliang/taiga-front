@@ -17,7 +17,8 @@
  * File: attchment.controller.spec.coffee
  */
 
-declare var module:any;
+declare var angular:any;
+let module = angular.mock.module;;
 declare var describe:any;
 declare var it:any;
 declare var beforeEach:any;
