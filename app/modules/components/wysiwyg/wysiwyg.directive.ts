@@ -23,7 +23,9 @@
  */
 
 import {bindOnce, isImage} from "../../../ts/utils"
-import {MediumEditor, AutoList, MentionExtension} from "../../../ts/global"
+import {MentionExtension} from "../../../ts/libs/medium-mention"
+import * as AutoList from "medium-editor-autolist"
+import * as MediumEditor from "medium-editor"
 import * as angular from "angular"
 import * as _ from "lodash"
 

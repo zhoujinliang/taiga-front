@@ -20,8 +20,6 @@
 import * as angular from "angular"
 
 export let DetailHeaderDirective = function() {
-    this.$inject = [];
-
     let link = function(scope, el, attrs, ctrl) {
         ctrl._checkPermissions();
         return ctrl._checkNav();

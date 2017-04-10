@@ -23,7 +23,9 @@
  */
 
 import {getMatches, slugify} from "../../../ts/utils"
-import {Autolinker} from "../../../ts/global"
+import * as Autolinker from "autolinker"
+import {markdownitLazyHeaders} from "../../../ts/libs/markdown-it-lazy-headers"
+import * as markdownit from "markdown-it"
 import * as angular from "angular"
 import * as _ from "lodash"
 
@@ -276,11 +278,11 @@ export class WysiwygService {
         text = this.pipeLinks(text);
         text = this.linkTitleWithSpaces(text);
 
-        let md = (<any>window).markdownit({
+        let md = markdownit({
             breaks: true
         });
 
-        md.use((<any>window).markdownitLazyHeaders);
+        md.use(markdownitLazyHeaders);
         let result = md.render(text);
         result = this.searchWikiLinks(result);
 

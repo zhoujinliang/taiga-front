@@ -67,7 +67,7 @@ export let momentFromNow = () =>
 ;
 
 export let sizeFormat = () => {
-    return this.taiga.sizeFormat;
+    return utils.sizeFormat;
 };
 
 export let toMutableFilter =  function() {

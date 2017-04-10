@@ -1,4 +1,4 @@
-import {MediumEditor} from "../global"
+import * as MediumEditor from "medium-editor"
 
 export var MentionExtension = MediumEditor.Extension.extend({
     name: 'mediumMention',
