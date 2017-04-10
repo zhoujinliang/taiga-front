@@ -18,7 +18,7 @@
  */
 
 import * as angular from "angular"
-import {introJs} from "../../../ts/global"
+import {introJs} from "intro.js"
 
 export let JoyRideDirective = function($rootScope, currentUserService, joyRideService, $location, $translate) {
     let link = function(scope, el, attrs, ctrl) {

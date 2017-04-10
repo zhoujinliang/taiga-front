@@ -31,6 +31,7 @@
     "babel-register": "^6.7.2",
     "bluebird": "^3.0.2",
     "browserify": "^14.3.0",
+    "browserify-shimify": "0.1.0-0",
     "chai": "^3.3.0",
     "chai-as-promised": "^5.1.0",
     "chai-jquery": "^2.0.0",

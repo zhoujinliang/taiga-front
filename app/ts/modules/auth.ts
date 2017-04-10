@@ -24,7 +24,7 @@
 
 import {debounce} from "../utils"
 import {Service} from "../classes"
-import {checksley} from "../global"
+import {checksley} from "../libs/checksley"
 
 import * as angular from "angular"
 import * as _ from "lodash"

@@ -26,9 +26,10 @@ import * as _ from "lodash"
 import * as angular from "angular"
 import * as moment from "moment"
 import * as Promise from "bluebird"
-import {ljs, checksley} from "./global"
+import {ljs} from "./global"
 import {nl2br} from "./utils"
 import {hex_sha1} from "./libs/sha1-custom"
+import {checksley} from "./libs/checksley"
 import "ng-infinite-scroll"
 import "angular-route"
 import "angular-sanitize"
@@ -74,6 +75,7 @@ import "../modules/wiki/history"
 import "../modules/epics"
 import "../modules/utils"
 import "../modules/services"
+import "../modules/feedback/feedback.service"
 import "./libs/tg-repeat"
 
 export let taigaContribPlugins = this.taigaContribPlugins || (<any>window).taigaContribPlugins || [];
@@ -852,9 +854,9 @@ function init($log, $rootscope, $auth, $events, $analytics, $translate, $locatio
     checksley.updateValidators(validators);
 
     // Taiga Plugins
-    $rootscope.contribPlugins = this.taigaContribPlugins;
-    $rootscope.adminPlugins = _.filter(this.taigaContribPlugins, {"type": "admin"});
-    $rootscope.userSettingsPlugins = _.filter(this.taigaContribPlugins, {"type": "userSettings"});
+    $rootscope.contribPlugins = taigaContribPlugins;
+    $rootscope.adminPlugins = _.filter(taigaContribPlugins, {"type": "admin"});
+    $rootscope.userSettingsPlugins = _.filter(taigaContribPlugins, {"type": "userSettings"});
 
     $rootscope.$on("$translateChangeEnd", function(e, ctx) {
         let lang = ctx.language;
@@ -932,7 +934,7 @@ function init($log, $rootscope, $auth, $events, $analytics, $translate, $locatio
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 500);
 
 // Load modules
-let pluginsWithModule = _.filter(this.taigaContribPlugins, (plugin:any) => plugin.module);
+let pluginsWithModule = _.filter(taigaContribPlugins, (plugin:any) => plugin.module);
 let pluginsModules = _.map(pluginsWithModule, (plugin:any) => plugin.module);
 
 let modules = [
