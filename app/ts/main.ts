@@ -2,6 +2,9 @@ import {run} from "./app"
 import * as $  from "jquery"
 import * as _ from "lodash"
 import "l.js"
+import "Flot"
+import "jquery.flot.tooltip"
+import "pikaday"
 
 (<any>window).taigaConfig = {
     "api": "http://localhost:8000/api/v1/",
@@ -66,7 +69,7 @@ let promise = $.getJSON("/conf.json");
 promise.done(data => (<any>window).taigaConfig = _.assign({}, (<any>window).taigaConfig, data));
 promise.fail(() => console.error("Your conf.json file is not a valid json file, please review it."));
 promise.always(function() {
-    (<any>window).ljs.load("/js/templates.js", function() {
+    (<any>window).ljs.load(`/${(<any>window)._version}/js/templates.js`, function() {
         if ((<any>window).taigaConfig.contribPlugins.length > 0) {
             return loadPlugins((<any>window).taigaConfig.contribPlugins).then(() => {
                 run();

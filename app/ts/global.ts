@@ -8,7 +8,5 @@ export declare var AutoList:any;
 export declare var MentionExtension:any;
 export declare var Autolinker:any;
 export declare var Prism:any;
-export declare var Pikaday:any;
 export declare var Raven:any;
 export declare var Awesomplete:any;
-export declare var dragula:any;

@@ -23,8 +23,9 @@
  */
 
 import {groupBy, bindOnce} from "../../utils"
-import {autoScroll, dragula} from "../../global"
+import {autoScroll} from "../../libs/dom-autoscroller"
 
+import * as dragula from "dragula"
 import * as angular from "angular"
 
 //############################################################################

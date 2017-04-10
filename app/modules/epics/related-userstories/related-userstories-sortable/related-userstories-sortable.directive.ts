@@ -17,8 +17,10 @@
  * File: related-userstories-sortable.directive.coffee
  */
 
-import {autoScroll, dragula} from "../../../../ts/global"
+import {autoScroll} from "../../../../ts/libs/dom-autoscroller"
+
 import * as angular from "angular"
+import * as dragula from "dragula"
 
 export let RelatedUserstoriesSortableDirective = function($parse, projectService) {
     let link = function(scope, el, attrs) {
