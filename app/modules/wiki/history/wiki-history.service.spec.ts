@@ -26,7 +26,7 @@ declare var it:any;
 declare var expect:any;
 declare var beforeEach:any;
 import * as Immutable from "immutable"
-import * as sinon from "sinon"
+declare var sinon:any;
 
 describe("tgWikiHistoryService", function() {
     let $provide = null;

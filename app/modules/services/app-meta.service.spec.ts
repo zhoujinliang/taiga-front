@@ -28,7 +28,7 @@ declare var before:any;
 declare var angular:any;
 declare var angular:any;
 import * as Immutable from "immutable"
-import * as sinon from "sinon"
+declare var sinon:any;
 
 angular.module("taigaCommon").provider("$exceptionHandler", angular.mock.$ExceptionHandlerProvider);
 
