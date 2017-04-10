@@ -25,7 +25,7 @@ declare var beforeEach:any;
 declare var inject:any;
 declare var expect:any;
 declare var sinon:any;
-// import * as sinon from "sinon"
+// declare var sinon:any;
 import * as Immutable from "immutable"
 
 describe("AttachmentController", function() {
