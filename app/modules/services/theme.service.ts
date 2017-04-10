@@ -17,9 +17,10 @@
  * File: theme.service.coffee
  */
 
+declare var $:any;
+
 import {Service} from "../../ts/classes"
 import * as angular from "angular"
-import * as $ from "jquery"
 
 export class ThemeService extends Service {
     use(themeName) {

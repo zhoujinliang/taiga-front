@@ -22,9 +22,10 @@
  * File: modules/auth.coffee
  */
 
+declare var checksley:any;
+
 import {debounce} from "../utils"
 import {Service} from "../classes"
-import {checksley} from "../libs/checksley"
 
 import * as angular from "angular"
 import * as _ from "lodash"

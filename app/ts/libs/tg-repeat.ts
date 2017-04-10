@@ -39,8 +39,9 @@ updateScope(block.scope, index, valueIdentifier, immutable_value, keyIdentifier,
   var uid = 0;
 */
 
+declare var $:any;
+
 import * as angular from "angular"
-import * as $ from "jquery"
 
 var NODE_TYPE_ELEMENT = 1;
 var uid = 0;
