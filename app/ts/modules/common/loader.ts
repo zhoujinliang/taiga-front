@@ -25,9 +25,10 @@
 // FIXME: this code not follows any style and any good practices on coffeescript
 // and it should be rewritten in coffeescript style classes.
 
+declare var $:any;
+
 import {timeout} from "../../utils"
 import * as angular from "angular"
-import * as $ from "jquery"
 
 export let LoaderDirective = function(tgLoader, $rootscope) {
     let link = function($scope, $el, $attrs) {

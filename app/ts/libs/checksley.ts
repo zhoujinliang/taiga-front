@@ -4,8 +4,8 @@
 // Author: Jesús Espino / @jespinog
 // Author: Andrey Antukh / @niwibe
 
+declare var $:any;
 import * as _ from "lodash"
-import * as $ from "jquery"
 
 let defaults = {
     inputs: 'input, textarea, select',

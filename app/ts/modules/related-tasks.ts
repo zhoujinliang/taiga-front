@@ -34,7 +34,7 @@ let RelatedTaskRowDirective = function($repo, $compile, $confirm, $rootscope, $l
     let templateEdit = $template.get("task/related-task-row-edit.html", true);
 
     let link = function($scope, $el, $attrs, $model) {
-        this.childScope = $scope.$new();
+        let childScope = $scope.$new();
 
         let saveTask = debounce(2000, function(task) {
             task.subject = $el.find('input').val();
@@ -58,10 +58,10 @@ let RelatedTaskRowDirective = function($repo, $compile, $confirm, $rootscope, $l
         });
 
         let renderEdit = function(task) {
-            this.childScope.$destroy();
-            this.childScope = $scope.$new();
+            childScope.$destroy();
+            childScope = $scope.$new();
             $el.off();
-            $el.html($compile(templateEdit({task}))(this.childScope));
+            $el.html($compile(templateEdit({task}))(childScope));
 
             $el.find(".task-name input").val(task.subject);
 

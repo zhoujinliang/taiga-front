@@ -22,10 +22,11 @@
  * File: modules/common/lightboxes.coffee
  */
 
+declare var $:any;
+
 import {Service} from "../../../ts/classes"
 import {bindOnce, timeout, debounce, sizeFormat, trim} from "../../../ts/utils"
 import * as _ from "lodash"
-import * as $ from "jquery"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
