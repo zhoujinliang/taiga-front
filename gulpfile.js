@@ -35,7 +35,7 @@ var gulp = require("gulp"),
     jsonminify = require('gulp-jsonminify'),
     classPrefix = require('gulp-class-prefix');
     browserify = require("browserify"),
-    shimify = require('browserify-shimify'),
+    uglifyify = require('uglifyify'),
     source = require('vinyl-source-stream'),
     watchify = require("watchify"),
     tsify = require("tsify"),
@@ -180,21 +180,36 @@ var BrowserifyApp = browserify({
     cache: {},
     packageCache: {}
 }).plugin(tsify);
+
+var DeployBrowserifyApp = browserify({
+    basedir: '.',
+    debug: false,
+    entries: ['app/ts/main.ts'],
+    cache: {},
+    packageCache: {}
+}).plugin(tsify);
+
 var watchedBrowserifyApp = watchify(BrowserifyApp);
 watchedBrowserifyApp.on("update", bundleApp);
 watchedBrowserifyApp.on("log", gutil.log);
 
-var shimifyConfig = {
-    'jQuery': 'window.jQuery',
-    "angular": {
-      "exports": "angular",
-      "depends": ["jQuery"]
-    }
-};
-
 function bundleApp() {
+    return BrowserifyApp
+        .bundle().on('error', gutil.log)
+        .pipe(source('js/app.js'))
+        .pipe(gulp.dest(paths.distVersion));
+}
+
+function watchBundleApp() {
     return watchedBrowserifyApp
-        .transform(shimify.configure(shimifyConfig))
+        .bundle().on('error', gutil.log)
+        .pipe(source('js/app.js'))
+        .pipe(gulp.dest(paths.distVersion));
+}
+
+function deployBundleApp() {
+    return DeployBrowserifyApp
+        .transform({global: true }, 'uglifyify')
         .bundle().on('error', gutil.log)
         .pipe(source('js/app.js'))
         .pipe(gulp.dest(paths.distVersion));
@@ -497,7 +512,9 @@ gulp.task("locales", function() {
             .pipe(gulp.dest(paths.distVersion + "locales"));
 });
 
-gulp.task("ts", bundleApp);
+gulp.task("typescript", bundleApp);
+gulp.task("typescript-deploy", deployBundleApp);
+gulp.task("typescript-watch", watchBundleApp);
 
 gulp.task("moment-locales", function() {
     return gulp.src(paths.modules + "moment/locale/*")
@@ -523,7 +540,7 @@ gulp.task("jslibs-deploy", function() {
 });
 
 
-gulp.task("app-deploy", ["ts", "conf", "locales", "moment-locales"], function() {
+gulp.task("app-deploy", ["typescript-deploy", "conf", "locales", "moment-locales"], function() {
     return gulp.src(paths.distVersion + "js/app.js")
         .pipe(sourcemaps.init())
             .pipe(uglify())
@@ -673,7 +690,6 @@ gulp.task("watch", function() {
 gulp.task("deploy", function(cb) {
     runSequence("clear", "delete-old-version", "delete-tmp", [
         "copy",
-        "ts",
         "conf",
         "locales",
         "moment-locales",
@@ -688,7 +704,7 @@ gulp.task("default", function(cb) {
     runSequence("delete-old-version", "delete-tmp", [
         "copy",
         "styles",
-        "ts",
+        "tytpescript-watch",
         "conf",
         "locales",
         "moment-locales",

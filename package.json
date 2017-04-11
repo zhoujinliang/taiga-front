@@ -103,6 +103,7 @@
     "tsify": "^3.0.1",
     "typescript": "^2.2.2",
     "typings": "^2.1.0",
+    "uglifyify": "^3.0.4",
     "vinyl-fs": "^2.1.1",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.9.0",
