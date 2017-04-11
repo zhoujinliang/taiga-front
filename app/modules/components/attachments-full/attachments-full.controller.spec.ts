@@ -138,7 +138,6 @@ describe("AttachmentsController", function() {
     it("add attachments", function() {
         let ctrl = $controller("AttachmentsFull");
 
-        ctrl.attachments = Immutable.List();
         ctrl.addAttachment = sinon.spy();
 
         let files = [

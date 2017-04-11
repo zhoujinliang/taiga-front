@@ -93,15 +93,6 @@ describe("DuplicateProjectController", function() {
 
         ctrl = controller("DuplicateProjectCtrl");
 
-        ctrl.projects = Immutable.fromJS([
-            {
-                id: 1
-            },
-            {
-                id: 2
-            }
-        ]);
-
         ctrl.user = Immutable.fromJS([
             {
                 id: 1
