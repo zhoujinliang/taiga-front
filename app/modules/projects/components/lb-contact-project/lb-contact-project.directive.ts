@@ -18,9 +18,6 @@
  */
 
 export let ContactProjectLbDirective = function(lightboxService) {
-
-    this.inject = ['lightboxService'];
-
     let link = (scope, el) => lightboxService.open(el);
 
     return {
@@ -33,3 +30,4 @@ export let ContactProjectLbDirective = function(lightboxService) {
         link
     };
 };
+ContactProjectLbDirective.$inject = ['lightboxService'];
