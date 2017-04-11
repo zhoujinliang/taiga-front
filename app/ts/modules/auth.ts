@@ -22,7 +22,7 @@
  * File: modules/auth.coffee
  */
 
-declare var checksley:any;
+import {checksley} from "../libs/checksley"
 
 import {debounce} from "../utils"
 import {Service} from "../classes"

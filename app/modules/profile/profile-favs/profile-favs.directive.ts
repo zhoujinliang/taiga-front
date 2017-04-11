@@ -17,6 +17,8 @@
  * File: profile-favs.directive.coffee
  */
 
+import * as _ from "lodash"
+
 let base = {
     scope: {},
     bindToController: {
