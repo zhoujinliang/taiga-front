@@ -123,6 +123,61 @@ paths.css_order = [
     paths.tmp + "custom.css"
 ];
 
+paths.libs = [
+    paths.modules + "bluebird/js/browser/bluebird.js",
+    paths.modules + "jquery/dist/jquery.js",
+    paths.modules + "lodash/lodash.js",
+    paths.modules + "messageformat/messageformat.js",
+    paths.modules + "angular/angular.js",
+    paths.modules + "angular-route/angular-route.js",
+    paths.modules + "angular-sanitize/angular-sanitize.js",
+    paths.modules + "angular-animate/angular-animate.js",
+    paths.modules + "angular-aria/angular-aria.js",
+    paths.modules + "angular-translate/dist/angular-translate.js",
+    paths.modules + "angular-translate-loader-partial/angular-translate-loader-partial.js",
+    paths.modules + "angular-translate-loader-static-files/angular-translate-loader-static-files.js",
+    paths.modules + "angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.js",
+    paths.modules + "moment/moment.js",
+    paths.modules + "checksley/checksley.js",
+    paths.modules + "pikaday/pikaday.js",
+    paths.modules + "Flot/jquery.flot.js",
+    paths.modules + "Flot/jquery.flot.pie.js",
+    paths.modules + "Flot/jquery.flot.time.js",
+    paths.modules + "flot-axislabels/jquery.flot.axislabels.js",
+    paths.modules + "jquery.flot.tooltip/js/jquery.flot.tooltip.js",
+    paths.modules + "raven-js/dist/raven.js",
+    paths.modules + "l.js/l.js",
+    paths.modules + "ng-infinite-scroll/build/ng-infinite-scroll.js",
+    paths.modules + "immutable/dist/immutable.js",
+    paths.modules + "intro.js/intro.js",
+    paths.modules + "dragula/dist/dragula.js",
+    paths.modules + "awesomplete/awesomplete.js",
+    paths.modules + "medium-editor/dist/js/medium-editor.js",
+    paths.modules + "to-markdown/dist/to-markdown.js",
+    paths.modules + "markdown-it/dist/markdown-it.js",
+    paths.modules + "prismjs/prism.js",
+    paths.modules + "prismjs/plugins/custom-class/prism-custom-class.js",
+    paths.modules + "medium-editor-autolist/dist/autolist.js",
+    paths.modules + "autolinker/dist/Autolinker.js",
+    paths.app + "js/dom-autoscroller.js",
+    paths.app + "js/dragula-drag-multiple.js",
+    paths.app + "js/tg-repeat.js",
+    paths.app + "js/sha1-custom.js",
+    paths.app + "js/murmurhash3_gc.js",
+    paths.app + "js/medium-mention.js",
+    paths.app + "js/markdown-it-lazy-headers.js"
+];
+
+paths.libs.forEach(function(file) {
+    try {
+        // Query the entry
+        stats = fs.lstatSync(file);
+    }
+    catch (e) {
+        console.log(file);
+    }
+});
+
 var isDeploy = argv["_"].indexOf("deploy") !== -1;
 
 var BrowserifyApp = browserify({
@@ -174,7 +229,7 @@ gulp.task("jade-inheritance", function() {
         .pipe(plumber())
         .pipe(cached("jade"))
         .pipe(jadeInheritance({basedir: "./app/"}))
-        .pipe(jade({pretty: true, locals:{v:version}}))
+        .pipe(jade({pretty: true, locals:{v: version}}))
         .pipe(gulp.dest(paths.tmp));
 });
 
@@ -457,6 +512,24 @@ gulp.task("moment-locales", function() {
         .pipe(gulp.dest(paths.distVersion + "locales/moment-locales/"));
 });
 
+gulp.task("jslibs-watch", function() {
+    return gulp.src(paths.libs)
+        .pipe(plumber())
+        .pipe(concat("libs.js"))
+        .pipe(gulp.dest(paths.distVersion + "js/"));
+});
+
+gulp.task("jslibs-deploy", function() {
+    return gulp.src(paths.libs)
+        .pipe(plumber())
+        .pipe(sourcemaps.init())
+        .pipe(concat("libs.js"))
+        .pipe(uglify())
+        .pipe(sourcemaps.write("./maps"))
+        .pipe(gulp.dest(paths.distVersion + "js/"));
+});
+
+
 gulp.task("app-deploy", ["ts", "conf", "locales", "moment-locales"], function() {
     return gulp.src(paths.distVersion + "js/app.js")
         .pipe(sourcemaps.init())
@@ -598,6 +671,7 @@ gulp.task("watch", function() {
     gulp.watch(paths.sass_watch, ["styles-lint"]);
     gulp.watch(paths.styles_dependencies, ["styles-dependencies"]);
     gulp.watch(paths.svg, ["copy-svg"]);
+    gulp.watch(paths.libs, ["jslibs-watch"]);
     gulp.watch([paths.locales, paths.modulesLocales], ["locales"]);
     gulp.watch(paths.images, ["copy-images"]);
     gulp.watch(paths.fonts, ["copy-fonts"]);
@@ -612,6 +686,7 @@ gulp.task("deploy", function(cb) {
         "moment-locales",
         "jade-deploy",
         "app-deploy",
+        "jslibs-deploy",
         "compile-themes"
     ], cb);
 });
@@ -624,6 +699,7 @@ gulp.task("default", function(cb) {
         "conf",
         "locales",
         "moment-locales",
+        "jslibs-watch",
         "jade-deploy",
         "express",
         "watch"
