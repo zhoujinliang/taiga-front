@@ -17,7 +17,7 @@
  * File: working-on.directive.coffee
  */
 
-let WorkingOnDirective = function(homeService, currentUserService) {
+export let WorkingOnDirective = function(homeService, currentUserService) {
     let link = function(scope, el, attrs, ctrl) {
         let user = currentUserService.getUser();
         // If we are not logged in the user will be null
@@ -40,5 +40,3 @@ WorkingOnDirective.$inject = [
     "tgHomeService",
     "tgCurrentUserService"
 ];
-
-angular.module("taigaHome").directive("tgWorkingOn", WorkingOnDirective);

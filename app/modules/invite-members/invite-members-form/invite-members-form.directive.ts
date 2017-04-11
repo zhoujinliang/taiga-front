@@ -17,7 +17,7 @@
  * File: invite-members.directive.coffee
  */
 
-let InviteMembersFormDirective = function() {
+export let InviteMembersFormDirective = function() {
     let link = function(scope, el, attrs, ctrl) {
         ctrl._areRolesValidated();
         return ctrl._checkLimitMemberships();
@@ -39,5 +39,3 @@ let InviteMembersFormDirective = function() {
         link
     };
 };
-
-angular.module("taigaAdmin").directive("tgInviteMembersForm", InviteMembersFormDirective);

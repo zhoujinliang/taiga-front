@@ -41,3 +41,4 @@ export class HomeController {
         }
     }
 }
+HomeController.initClass();

@@ -17,7 +17,7 @@
  * File: add-member.directive.coffee
  */
 
-let LightboxAddMembersDirective = function(lightboxService) {
+export let LightboxAddMembersDirective = function(lightboxService) {
     let link = function(scope, el, attrs, ctrl) {
         lightboxService.open(el);
         return ctrl._getContacts();
@@ -31,5 +31,3 @@ let LightboxAddMembersDirective = function(lightboxService) {
         link
     };
 };
-
-angular.module("taigaAdmin").directive("tgLbAddMembers", ["lightboxService", LightboxAddMembersDirective]);

@@ -20,11 +20,15 @@
 import * as angular from "angular"
 import {HomeController} from "./home.controller"
 import {HomeService} from "./home.service"
+import {DutyDirective} from "./duties/duty.directive"
+import {HomeProjectListDirective} from "./projects/home-project-list.directive"
+import {WorkingOnController} from "./working-on/working-on.controller"
+import {WorkingOnDirective} from "./working-on/working-on.directive"
 
 let module = angular.module("taigaHome", []);
-
-HomeController.initClass();
 module.controller("Home", HomeController);
-
-HomeService.initClass();
-angular.module("taigaHome").service("tgHomeService", HomeService);
+module.service("tgHomeService", HomeService);
+module.directive("tgDuty", DutyDirective);
+module.directive("tgHomeProjectList", HomeProjectListDirective);
+module.controller("WorkingOn", WorkingOnController);
+module.directive("tgWorkingOn", WorkingOnDirective);

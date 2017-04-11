@@ -17,7 +17,7 @@
  * File: suggest-add-member.directive.coffee
  */
 
-let SuggestAddMembersDirective = function(lightboxService) {
+export let SuggestAddMembersDirective = function(lightboxService) {
     let link = (scope, el, attrs, ctrl) =>
         scope.$watch("vm.contacts", contacts => {
             if (contacts) {
@@ -39,5 +39,3 @@ let SuggestAddMembersDirective = function(lightboxService) {
         link
     };
 };
-
-angular.module("taigaAdmin").directive("tgSuggestAddMembers", ["lightboxService", SuggestAddMembersDirective]);

@@ -20,7 +20,7 @@
 import * as angular from "angular"
 import * as _ from "lodash"
 
-class InviteMembersFormController {
+export class InviteMembersFormController {
     projectService:any
     rs:any
     lightboxService:any
@@ -111,6 +111,3 @@ class InviteMembersFormController {
     }
 }
 InviteMembersFormController.initClass();
-
-
-angular.module("taigaAdmin").controller("InviteMembersFormCtrl", InviteMembersFormController);

@@ -18,6 +18,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'node_modules/bluebird/js/browser/bluebird.js',
       'node_modules/jquery/dist/jquery.js',
       'karma.app.conf.js',
       'node_modules/chai-jquery/chai-jquery.js',

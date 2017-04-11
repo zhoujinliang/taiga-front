@@ -17,10 +17,9 @@
  * File: working-on.controller.coffee
  */
 
-import * as angular from "angular"
 import * as Immutable from "immutable"
 
-class WorkingOnController {
+export class WorkingOnController {
     homeService:any
     assignedTo: Immutable.Map<any,any>
     watching: Immutable.Map<any,any>
@@ -69,5 +68,3 @@ class WorkingOnController {
     }
 }
 WorkingOnController.initClass();
-
-angular.module("taigaHome").controller("WorkingOn", WorkingOnController);

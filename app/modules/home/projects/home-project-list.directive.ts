@@ -17,10 +17,9 @@
  * File: home-project-list.directive.coffee
  */
 
-import * as angular from "angular"
 import {defineImmutableProperty} from "../../../ts/utils"
 
-let HomeProjectListDirective = function(currentUserService) {
+export let HomeProjectListDirective = function(currentUserService) {
     let link = function(scope, el, attrs, ctrl) {
         scope.vm = {};
 
@@ -39,5 +38,3 @@ let HomeProjectListDirective = function(currentUserService) {
 HomeProjectListDirective.$inject = [
     "tgCurrentUserService"
 ];
-
-angular.module("taigaHome").directive("tgHomeProjectList", HomeProjectListDirective);
