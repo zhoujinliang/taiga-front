@@ -89,6 +89,7 @@ describe("StoryHeaderComponent", function() {
 
     beforeEach(function() {
         module("taigaUserStories");
+        module("taigaComponents");
 
         _mocks();
 
