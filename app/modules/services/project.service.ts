@@ -20,6 +20,7 @@
 import {defineImmutableProperty} from "../../ts/utils"
 import * as angular from "angular"
 import * as Immutable from "immutable"
+import * as Promise from "bluebird"
 
 export class ProjectService {
     projectsService:any

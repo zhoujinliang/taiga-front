@@ -17,6 +17,8 @@
  * File: user-timeline-attachment.directive.coffee
  */
 
+import * as _ from "lodash"
+
 export let UserTimelineAttachmentDirective = function(template, $compile) {
     let validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
 

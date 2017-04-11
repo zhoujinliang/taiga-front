@@ -32,7 +32,7 @@ import * as projectValues from "./project-values"
 import * as roles from "./roles"
 import * as thirdParties from "./third-parties"
 
-let module = angular.module("taigaAdmin", []);
+export let module = angular.module("taigaAdmin", []);
 module.directive("tgLightboxAddMembersWarningMessage", [lightboxes.LightboxAddMembersWarningMessageDirective]);
 module.directive('tgLbRequestOwnership', ["lightboxService", "tgResources", "$tgConfirm", "$translate", lightboxes.LbRequestOwnershipDirective]);
 module.controller('ChangeOwnerLightbox', lightboxes.ChangeOwnerLightboxController);

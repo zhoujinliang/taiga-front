@@ -20,7 +20,7 @@
 import {isEmail} from "../../../ts/utils"
 import * as angular from "angular"
 
-class SuggestAddMembersController {
+export class SuggestAddMembersController {
     contactQuery:any
     filteredContacts:any
     onInviteSuggested:any
@@ -49,5 +49,3 @@ class SuggestAddMembersController {
     }
 }
 SuggestAddMembersController.initClass();
-
-angular.module("taigaAdmin").controller("SuggestAddMembersCtrl", SuggestAddMembersController);

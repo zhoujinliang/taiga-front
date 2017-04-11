@@ -21,7 +21,7 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
 
-class AddMembersController {
+export class AddMembersController {
     userService:any
     currentUserService:any
     projectService:any
@@ -97,5 +97,3 @@ class AddMembersController {
     }
 }
 AddMembersController.initClass();
-
-angular.module("taigaAdmin").controller("AddMembersCtrl", AddMembersController);

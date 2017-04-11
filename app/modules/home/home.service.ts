@@ -207,3 +207,4 @@ export class HomeService extends Service {
         });
     }
 }
+HomeService.initClass();

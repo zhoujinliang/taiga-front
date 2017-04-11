@@ -17,7 +17,7 @@
  * File: duty.directive.coffee
  */
 
-let DutyDirective = function(navurls, $translate) {
+export let DutyDirective = function(navurls, $translate) {
     let link = function(scope, el, attrs, ctrl) {
         scope.vm = {};
         scope.vm.duty = scope.duty;
@@ -55,5 +55,3 @@ DutyDirective.$inject = [
     "$tgNavUrls",
     "$translate"
 ];
-
-angular.module("taigaHome").directive("tgDuty", DutyDirective);
