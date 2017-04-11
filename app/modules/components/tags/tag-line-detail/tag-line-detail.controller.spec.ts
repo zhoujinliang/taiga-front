@@ -71,6 +71,7 @@ describe("TagLineDetail", function() {
 
     beforeEach(function() {
         module("taigaCommon");
+        module("taigaComponents");
 
         _mocks();
 
