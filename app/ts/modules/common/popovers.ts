@@ -24,7 +24,7 @@
 
 import {bindOnce, debounce} from "../../utils"
 import * as angular from "angular"
-import * as $ from "jquery"
+declare var $:any;
 
 //############################################################################
 //# UserStory status Directive (popover for change status)
