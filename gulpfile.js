@@ -704,7 +704,7 @@ gulp.task("default", function(cb) {
     runSequence("delete-old-version", "delete-tmp", [
         "copy",
         "styles",
-        "tytpescript-watch",
+        "typescript-watch",
         "conf",
         "locales",
         "moment-locales",
