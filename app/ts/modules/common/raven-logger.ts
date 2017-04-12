@@ -23,7 +23,7 @@
  */
 
 import * as angular from "angular"
-import {Raven} from "raven-js"
+import * as Raven from "raven-js"
 
 export let ExceptionHandlerFactory = function($log, config) {
     this.config = config;
