@@ -116,7 +116,7 @@ export class Model {
                     return self[name];
                 }
 
-                if (!_.keys(self._modifiedAttrs).includes(name)) {
+                if (!_.has(self._modifiedAttrs, name)) {
                     return self._attrs[name];
                 }
 

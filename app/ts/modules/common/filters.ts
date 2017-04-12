@@ -86,9 +86,9 @@ export let toMutableFilter =  function() {
 
 export let byRefFilter = $filterFilter=>
     function(userstories, filter) {
-        if (filter != null ? filter.startsWith("#") : undefined) {
-            let cleanRef= filter.substr(1);
-            return _.filter(userstories, (us:any) => String(us.ref).startsWith(cleanRef));
+        if (filter != null ? _.startsWith(filter, "#") : undefined) {
+            let cleanRef = filter.substr(1);
+            return _.filter(userstories, (us:any) => _.startsWith(us.ref, cleanRef));
         }
 
         return $filterFilter(userstories, filter);
