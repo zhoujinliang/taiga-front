@@ -28,6 +28,8 @@ import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"
 
+declare var _version:string;
+
 //############################################################################
 //# User story Detail Controller
 //############################################################################
@@ -308,7 +310,7 @@ export class UserStoryDetailController extends PageMixin {
             let publishTitle = this.translate.instant("US.TRIBE.PUBLISH_MORE_INFO_TITLE");
             let image = $('<img />')
                 .attr({
-                    'src': `/${(<any>window)._version}/images/monster-fight.png`,
+                    'src': `/${_version}/images/monster-fight.png`,
                     'alt': this.translate.instant("US.TRIBE.PUBLISH_MORE_INFO_TITLE")
                 });
             let text = this.translate.instant("US.TRIBE.PUBLISH_MORE_INFO_TEXT");

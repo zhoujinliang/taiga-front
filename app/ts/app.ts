@@ -30,6 +30,8 @@ import {ljs} from "./global"
 import {nl2br} from "./utils"
 import {hex_sha1} from "./libs/sha1-custom"
 import {checksley} from "./libs/checksley"
+declare var _version:string;
+
 import "ng-infinite-scroll"
 import "angular-route"
 import "angular-sanitize"
@@ -777,7 +779,7 @@ function configure($routeProvider, $locationProvider, $httpProvider, $provide, $
     $translatePartialLoaderProvider.addPart('taiga');
     $translateProvider
         .useLoader('$translatePartialLoader', {
-            urlTemplate: `/${(<any>window)._version}/locales/{part}/locale-{lang}.json`
+            urlTemplate: `/${_version}/locales/{part}/locale-{lang}.json`
         })
         .useSanitizeValueStrategy('escapeParameters')
         .addInterpolation('$translateMessageFormatInterpolation')
@@ -797,7 +799,7 @@ let i18nInit = function(lang, $translate) {
     moment.locale(lang);
 
     if (lang !== 'en') { // en is the default, the file doesn't exist
-        ljs.load(`/${(<any>window)._version}/locales/moment-locales/` + lang + ".js");
+        ljs.load(`/${_version}/locales/moment-locales/` + lang + ".js");
     }
 
     // i18n - checksley.js

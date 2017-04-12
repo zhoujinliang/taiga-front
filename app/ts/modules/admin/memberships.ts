@@ -26,6 +26,7 @@ import {bindMethods} from "../../utils"
 import {FiltersMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"
+declare var _version:string;
 
 //############################################################################
 //# Project Memberships Controller
@@ -174,7 +175,7 @@ export class MembershipsController extends FiltersMixin {
         let message = this.translate.instant("ADMIN.MEMBERSHIPS.LIMIT_USERS_WARNING_MESSAGE", {
             members: this.scope.project.max_memberships
         });
-        let icon = `/${(<any>window)._version}/svg/icons/team-question.svg`;
+        let icon = `/${_version}/svg/icons/team-question.svg`;
         return this.confirm.success(title, message, {
             name: icon,
             type: "img"

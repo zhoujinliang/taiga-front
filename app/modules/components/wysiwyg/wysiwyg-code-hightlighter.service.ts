@@ -27,6 +27,7 @@ import * as _ from "lodash"
 import * as Promise from "bluebird"
 import * as Prism from "prismjs"
 import {ljs} from "../../../ts/global"
+declare var _version:string;
 
 export class WysiwygCodeHightlighterService {
     languages: any
@@ -44,10 +45,10 @@ export class WysiwygCodeHightlighterService {
             } else if (this.loadPromise) {
                 return this.loadPromise.then(() => resolve(this.languages));
             } else {
-                return this.loadPromise = $.getJSON(`/${(<any>window)._version}/prism/prism-languages.json`).then(_languages_ => {
+                return this.loadPromise = $.getJSON(`/${_version}/prism/prism-languages.json`).then(_languages_ => {
                     this.loadPromise = null;
                     this.languages = _.map(_languages_, function(it:any) {
-                        it.url = `/${(<any>window)._version}/prism/` + it.file;
+                        it.url = `/${_version}/prism/` + it.file;
 
                         return it;
                     });
@@ -69,7 +70,7 @@ export class WysiwygCodeHightlighterService {
     loadLanguage(lan) {
         return new Promise(function(resolve) {
             if (!Prism.languages[lan]) {
-                return ljs.load(`/${(<any>window)._version}/prism/prism-${lan}.min.js`, resolve);
+                return ljs.load(`/${_version}/prism/prism-${lan}.min.js`, resolve);
             } else {
                 return resolve();
             }

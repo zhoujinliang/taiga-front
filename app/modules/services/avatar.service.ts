@@ -22,6 +22,7 @@ import {murmurhash3_32_gc} from "../../ts/libs/murmurhash3_gc"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
+declare var _version:string;
 
 export class AvatarService {
     config:any
@@ -30,11 +31,11 @@ export class AvatarService {
     constructor(config) {
         this.config = config;
         let IMAGES = [
-            `/${(<any>window)._version}/images/user-avatars/user-avatar-01.png`,
-            `/${(<any>window)._version}/images/user-avatars/user-avatar-02.png`,
-            `/${(<any>window)._version}/images/user-avatars/user-avatar-03.png`,
-            `/${(<any>window)._version}/images/user-avatars/user-avatar-04.png`,
-            `/${(<any>window)._version}/images/user-avatars/user-avatar-05.png`
+            `/${_version}/images/user-avatars/user-avatar-01.png`,
+            `/${_version}/images/user-avatars/user-avatar-02.png`,
+            `/${_version}/images/user-avatars/user-avatar-03.png`,
+            `/${_version}/images/user-avatars/user-avatar-04.png`,
+            `/${_version}/images/user-avatars/user-avatar-05.png`
         ];
 
         let COLORS = [
@@ -57,7 +58,7 @@ export class AvatarService {
 
     getUnnamed() {
         return {
-            url: `/${(<any>window)._version}/images/unnamed.png`
+            url: `/${_version}/images/unnamed.png`
         };
     }
 

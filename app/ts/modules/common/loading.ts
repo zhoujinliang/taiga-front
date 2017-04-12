@@ -23,9 +23,10 @@
  */
 
 import * as angular from "angular"
+declare var _version:string;
 
 export let TgLoadingService = function($compile) {
-    let spinner = `<img class='loading-spinner' src='/${(<any>window)._version}/svg/spinner-circle.svg' alt='loading...' />`;
+    let spinner = `<img class='loading-spinner' src='/${_version}/svg/spinner-circle.svg' alt='loading...' />`;
 
     return function() {
         var service = {

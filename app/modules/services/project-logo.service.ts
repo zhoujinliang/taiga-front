@@ -21,16 +21,17 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import {cartesianProduct} from "../../ts/utils"
 import {murmurhash3_32_gc} from "../../ts/libs/murmurhash3_gc"
+declare var _version:string;
 
 export class ProjectLogoService {
     logos: any
     constructor() {
         let IMAGES = [
-            `/${(<any>window)._version}/images/project-logos/project-logo-01.png`,
-            `/${(<any>window)._version}/images/project-logos/project-logo-02.png`,
-            `/${(<any>window)._version}/images/project-logos/project-logo-03.png`,
-            `/${(<any>window)._version}/images/project-logos/project-logo-04.png`,
-            `/${(<any>window)._version}/images/project-logos/project-logo-05.png`
+            `/${_version}/images/project-logos/project-logo-01.png`,
+            `/${_version}/images/project-logos/project-logo-02.png`,
+            `/${_version}/images/project-logos/project-logo-03.png`,
+            `/${_version}/images/project-logos/project-logo-04.png`,
+            `/${_version}/images/project-logos/project-logo-05.png`
         ];
 
         let COLORS = [

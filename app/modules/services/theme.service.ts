@@ -18,6 +18,7 @@
  */
 
 declare var $:any;
+declare var _version:string;
 
 import {Service} from "../../ts/classes"
 import * as angular from "angular"
@@ -31,7 +32,7 @@ export class ThemeService extends Service {
             $("head").append(stylesheetEl);
         }
 
-        return stylesheetEl.attr("href", `/${(<any>window)._version}/styles/theme-${themeName}.css`);
+        return stylesheetEl.attr("href", `/${_version}/styles/theme-${themeName}.css`);
     }
 }
 

@@ -28,6 +28,7 @@ import {markdownitLazyHeaders} from "../../../ts/libs/markdown-it-lazy-headers"
 import * as markdownit from "markdown-it"
 import * as angular from "angular"
 import * as _ from "lodash"
+declare var _version:string;
 
 export class WysiwygService {
     wysiwygCodeHightlighterService: any
@@ -55,14 +56,14 @@ export class WysiwygService {
 
     setEmojiImagePath(emojis) {
         return this.emojis = _.map(emojis, function(it:any) {
-            it.image = `/${(<any>window)._version}/emojis/` + it.image;
+            it.image = `/${_version}/emojis/` + it.image;
 
             return it;
         });
     }
 
     loadEmojis() {
-        return $.getJSON(`/${(<any>window)._version}/emojis/emojis-data.json`).then(this.setEmojiImagePath.bind(this));
+        return $.getJSON(`/${_version}/emojis/emojis-data.json`).then(this.setEmojiImagePath.bind(this));
     }
 
     getEmojiById(id) {
