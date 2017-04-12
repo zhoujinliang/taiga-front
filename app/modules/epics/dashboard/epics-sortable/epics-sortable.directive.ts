@@ -28,7 +28,7 @@ export let EpicsSortableDirective = function($parse, projectService) {
 
         let callback = $parse(attrs.tgEpicsSortable);
 
-        let drake = dragula([el[0]], {
+        let drake = dragula([el[0]], <dragula.DragulaOptions>{
             copySortSource: false,
             copy: false,
             mirrorContainer: el[0],

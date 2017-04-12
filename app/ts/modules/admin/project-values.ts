@@ -191,7 +191,7 @@ export let ProjectValuesDirective = function($log, $repo, $confirm, $location, a
         let itemEl = null;
         let tdom = $el.find(".sortable");
 
-        let drake = dragula([tdom[0]], {
+        let drake = dragula([tdom[0]], <dragula.DragulaOptions>{
             direction: 'vertical',
             copySortSource: false,
             copy: false,
@@ -626,7 +626,7 @@ export let ProjectCustomAttributesDirective = function($log, $confirm, animation
         // Drag & Drop
         //#################################
         let sortableEl = $el.find(".js-sortable");
-        let drake = dragula([sortableEl[0]], {
+        let drake = dragula([sortableEl[0]], <dragula.DragulaOptions>{
             direction: 'vertical',
             copySortSource: false,
             copy: false,

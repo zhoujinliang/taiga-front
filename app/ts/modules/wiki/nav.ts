@@ -70,7 +70,7 @@ export let WikiNavDirective = function($tgrepo, $log, $location, $confirm, $anal
                 let itemEl = null;
                 let tdom = $el.find(".sortable");
 
-                drake = dragula([tdom[0]], {
+                drake = dragula([tdom[0]], <dragula.DragulaOptions>{
                     direction: 'vertical',
                     copySortSource: false,
                     copy: false,

@@ -61,7 +61,7 @@ export let TaskboardSortableDirective = function($repo, $rs, $rootscope, $transl
 
             let containers = _.map($el.find('.task-column'), item => item);
 
-            let drake = dragula(containers, {
+            let drake = dragula(<any[]>containers, <dragula.DragulaOptions>{
                 copySortSource: false,
                 copy: false,
                 accepts(el, target) { return !$(target).hasClass('taskboard-userstory-box'); },
