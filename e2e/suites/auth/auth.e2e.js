@@ -101,7 +101,7 @@ describe('auth', function() {
 
                 utils.common.takeScreenshot("auth", "register-validation");
 
-                expect($$('.checksley-required').count()).to.be.eventually.equal(4);
+                expect($$('.checksley-error').count()).to.be.eventually.equal(4);
             });
 
             it('register ok', async function() {
