@@ -1,9 +1,9 @@
 declare var $:any;
+declare var ljs:any;
+declare var _version:string;
 
 import {run} from "./app"
 import * as _ from "lodash"
-declare var ljs:any;
-declare var _version:string;
 import * as Promise from "bluebird"
 import "l.js"
 import "Flot"

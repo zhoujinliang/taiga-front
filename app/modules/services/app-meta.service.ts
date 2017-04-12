@@ -18,6 +18,7 @@
  */
 
 declare var $:any;
+declare var _version:string;
 
 import {truncate} from "../../ts/utils"
 import * as angular from "angular"
@@ -84,7 +85,7 @@ export class AppMetaService {
         this._set("twitter:site", "@taigaio");
         this._set("twitter:title", title);
         this._set("twitter:description", truncate(description, 300));
-        return this._set("twitter:image", `${window.location.origin}/${(<any>window)._version}/images/logo-color.png`);
+        return this._set("twitter:image", `${window.location.origin}/${_version}/images/logo-color.png`);
     }
 
     setOpenGraphMetas(title, description) {
@@ -92,7 +93,7 @@ export class AppMetaService {
         this._set("og:site_name", "Taiga - Love your projects");
         this._set("og:title", title);
         this._set("og:description", truncate(description, 300));
-        this._set("og:image", `${window.location.origin}/${(<any>window)._version}/images/logo-color.png`);
+        this._set("og:image", `${window.location.origin}/${_version}/images/logo-color.png`);
         return this._set("og:url", window.location.href);
     }
 

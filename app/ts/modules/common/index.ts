@@ -25,6 +25,7 @@
 import {Service} from "../../classes"
 import * as angular from "angular"
 import * as _ from "lodash"
+declare var _version:string;
 import {AnalyticsService} from "./analytics"
 import {BindScope} from "./bind-scope"
 import {CompileHtmlDirective} from "./compile-html.directive"
@@ -613,7 +614,7 @@ let Autofocus = ($timeout, $parse, animationFrame) =>
 module.directive('tgAutofocus', ['$timeout', '$parse', "animationFrame", Autofocus]);
 
 module.directive('tgPreloadImage', function() {
-    let spinner = `<img class='loading-spinner' src='/${(<any>window)._version}/svg/spinner-circle.svg' alt='loading...' />`;
+    let spinner = `<img class='loading-spinner' src='/${_version}/svg/spinner-circle.svg' alt='loading...' />`;
 
     let template = `\
 <div>

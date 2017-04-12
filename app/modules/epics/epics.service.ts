@@ -21,6 +21,7 @@ import {defineImmutableProperty} from "../../ts/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
+import * as Promise from "bluebird"
 
 export class EpicsService {
     projectService:any

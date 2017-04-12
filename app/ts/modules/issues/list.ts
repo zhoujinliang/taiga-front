@@ -28,6 +28,8 @@ import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
 
+declare var _version:string;
+
 //############################################################################
 //# Issues Controller
 //############################################################################
@@ -721,7 +723,7 @@ export let IssueAssignedToInlineEditionDirective = function($repo, $rootscope, $
         let updateIssue = function(issue) {
             let ctx = {
                 name: $translate.instant("COMMON.ASSIGNED_TO.NOT_ASSIGNED"),
-                imgurl: `/${(<any>window)._version}/images/unnamed.png`,
+                imgurl: `/${_version}/images/unnamed.png`,
                 bg: null
             };
 

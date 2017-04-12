@@ -19,6 +19,7 @@
 
 import {Service} from "../../../../ts/classes"
 import * as Immutable from "immutable"
+import * as Promise from "bluebird"
 
 export class GithubImportService extends Service {
     resources:any

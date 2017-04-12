@@ -236,6 +236,11 @@ let _checksley = function(options) {
 class Checksley {
     messages: any
     lang: any
+    Form: any
+    Field: any
+    FieldMultiple: any
+    ComposedField: any
+    Checksley: any
 
     constructor() {
         this.messages = {
@@ -908,11 +913,11 @@ checksley.updateMessages("default", messages);
 checksley.injectPlugin();
 
 // Expose internal clases
-(<any>checksley).Checksley = Checksley;
-(<any>checksley).Form = Form;
-(<any>checksley).Field = Field;
-(<any>checksley).FieldMultiple = FieldMultiple;
-(<any>checksley).ComposedField = ComposedField;
+checksley.Checksley = Checksley;
+checksley.Form = Form;
+checksley.Field = Field;
+checksley.FieldMultiple = FieldMultiple;
+checksley.ComposedField = ComposedField;
 
 // Expose global instance to the world
 export { checksley };

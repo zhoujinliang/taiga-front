@@ -25,6 +25,7 @@
 import {slugify} from "../../../ts/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
+import * as Promise from "bluebird"
 
 export class WysiwygMentionService {
     projectService:any
