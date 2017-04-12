@@ -26,11 +26,11 @@ import * as _ from "lodash"
 import * as angular from "angular"
 import * as moment from "moment"
 import * as Promise from "bluebird"
-import {ljs} from "./global"
 import {nl2br} from "./utils"
 import {hex_sha1} from "./libs/sha1-custom"
 import {checksley} from "./libs/checksley"
 declare var _version:string;
+declare var ljs:any;
 
 import "ng-infinite-scroll"
 import "angular-route"

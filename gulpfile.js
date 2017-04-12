@@ -246,6 +246,11 @@ gulp.task("copy-index", function() {
         .pipe(gulp.dest(paths.dist));
 });
 
+gulp.task("copy-jquery", function() {
+    return gulp.src(paths.modules + "jquery/dist/jquery.min.js")
+        .pipe(gulp.dest(paths.distVersion + "js/"));
+});
+
 gulp.task("template-cache", function() {
     return gulp.src(paths.htmlPartials)
         .pipe(gulpif(isDeploy, replace(/e2e-([a-z\-]+)/g, '')))
@@ -695,7 +700,7 @@ gulp.task("deploy", function(cb) {
         "moment-locales",
         "jade-deploy",
         "app-deploy",
-        "jslibs-deploy",
+        "copy-jquery",
         "compile-themes"
     ], cb);
 });
@@ -708,7 +713,7 @@ gulp.task("default", function(cb) {
         "conf",
         "locales",
         "moment-locales",
-        "jslibs-watch",
+        "copy-jquery",
         "jade-deploy",
         "express",
         "watch"
