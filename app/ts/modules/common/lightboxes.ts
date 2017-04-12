@@ -140,7 +140,7 @@ export class LightboxService extends Service {
 
     closeAll() {
         let docEl = angular.element(document);
-        return docEl.find(".lightbox.open").map((lightboxEl) =>
+        return docEl.find(".lightbox.open").map((index, lightboxEl) =>
             this.close($(lightboxEl)));
     }
 }
