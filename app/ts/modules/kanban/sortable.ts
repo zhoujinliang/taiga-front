@@ -56,7 +56,7 @@ export let KanbanSortableDirective = function($repo, $rs, $rootscope) {
 
             let containers = _.map($el.find('.task-column'), item => item);
 
-            let drake = dragula(containers, {
+            let drake = dragula(<any[]>containers, <dragula.DragulaOptions>{
                 copySortSource: false,
                 copy: false,
                 moves(item) {

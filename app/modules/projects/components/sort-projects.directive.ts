@@ -26,7 +26,7 @@ export let SortProjectsDirective = function(currentUserService) {
     let link = function(scope, el, attrs, ctrl) {
         let itemEl = null;
 
-        let drake = dragula([el[0]], {
+        let drake = dragula([el[0]], <dragula.DragulaOptions>{
             copySortSource: false,
             copy: false,
             mirrorContainer: el[0],

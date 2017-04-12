@@ -50,7 +50,7 @@ export let BacklogSortableDirective = function() {
 
             let initIsBacklog = false;
 
-            let drake = dragula([$el[0], $('.js-empty-backlog')[0]], {
+            let drake = dragula([$el[0], $('.js-empty-backlog')[0]], <dragula.DragulaOptions>{
                 copySortSource: false,
                 copy: false,
                 isContainer(el) { return el.classList.contains('sprint-table'); },

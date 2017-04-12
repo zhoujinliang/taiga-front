@@ -26,7 +26,7 @@ export let AttachmentSortableDirective = function($parse) {
     let link = function(scope, el, attrs) {
         let callback = $parse(attrs.tgAttachmentsSortable);
 
-        let drake = dragula([el[0]], {
+        let drake = dragula([el[0]], <dragula.DragulaOptions>{
             copySortSource: false,
             copy: false,
             mirrorContainer: el[0],

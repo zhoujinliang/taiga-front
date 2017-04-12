@@ -28,7 +28,7 @@ export let RelatedUserstoriesSortableDirective = function($parse, projectService
 
         let callback = $parse(attrs.tgRelatedUserstoriesSortable);
 
-        let drake = dragula([el[0]], {
+        let drake = dragula([el[0]], <dragula.DragulaOptions>{
             copySortSource: false,
             copy: false,
             mirrorContainer: el[0],
