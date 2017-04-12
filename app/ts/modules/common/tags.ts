@@ -23,7 +23,7 @@
  */
 
 import {bindOnce, trim} from "../../utils"
-import {Awesomplete} from "../../global"
+import {Awesomplete} from "awesomplete"
 import * as angular from "angular"
 import * as _ from "lodash"
 

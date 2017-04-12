@@ -28,6 +28,7 @@ import {markdownitLazyHeaders} from "../../../ts/libs/markdown-it-lazy-headers"
 import * as markdownit from "markdown-it"
 import * as angular from "angular"
 import * as _ from "lodash"
+import * as toMarkdown from "to-markdown"
 declare var _version:string;
 
 export class WysiwygService {
@@ -194,7 +195,7 @@ export class WysiwygService {
         html = this.replaceUrls(html);
         html = this.removeTrailingListBr(html);
 
-        let markdown = (<any>window).toMarkdown(html, {
+        let markdown = toMarkdown(html, {
             gfm: true,
             converters: [cleanIssueConverter, codeLanguageConverter]
         });

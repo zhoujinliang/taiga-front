@@ -26,8 +26,8 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import * as Promise from "bluebird"
 import * as Prism from "prismjs"
-import {ljs} from "../../../ts/global"
 declare var _version:string;
+declare var ljs:any;
 
 export class WysiwygCodeHightlighterService {
     languages: any
