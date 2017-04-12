@@ -2,6 +2,9 @@ declare var $:any;
 
 import {run} from "./app"
 import * as _ from "lodash"
+declare var ljs:any;
+declare var _version:string;
+import * as Promise from "bluebird"
 import "l.js"
 import "Flot"
 import "Flot/jquery.flot.time"
@@ -9,6 +12,7 @@ import "jquery.flot.tooltip"
 import "prismjs/plugins/custom-class/prism-custom-class"
 import "pikaday"
 import "markdown-it"
+import "./export-to-plugins"
 
 (<any>window).taigaConfig = {
     "api": "http://localhost:8000/api/v1/",
@@ -30,20 +34,18 @@ import "markdown-it"
 };
 
 (<any>window).taigaContribPlugins = [];
-
 (<any>window)._decorators = [];
-
 (<any>window).addDecorator = (provider, decorator) => (<any>window)._decorators.push({provider, decorator});
-
 (<any>window).getDecorators = () => (<any>window)._decorators;
 
-let loadStylesheet = path => $('head').append(`<link rel="stylesheet" href="${path}" type="text/css" />`);
+function loadStylesheet(path:string) {
+    $('head').append(`<link rel="stylesheet" href="${path}" type="text/css" />`);
+}
 
-let loadPlugin = pluginPath =>
-    new Promise(function(resolve, reject) {
+function loadPlugin(pluginPath:string) {
+    return new Promise(function(resolve, reject) {
         let success = function(plugin) {
             (<any>window).taigaContribPlugins.push(plugin);
-
             if (plugin.css) {
                 loadStylesheet(plugin.css);
             }
@@ -60,20 +62,18 @@ let loadPlugin = pluginPath =>
 
         return $.getJSON(pluginPath).then(success, fail);
     })
-;
+}
 
-let loadPlugins = function(plugins) {
-    let promises = [];
-    _.map(plugins, pluginPath => promises.push(loadPlugin(pluginPath)));
-
+function loadPlugins (plugins:string[]) {
+    let promises = _.map(plugins, pluginPath => loadPlugin(pluginPath));
     return Promise.all(promises);
-};
+}
 
 let promise = $.getJSON("/conf.json");
 promise.done(data => (<any>window).taigaConfig = _.assign({}, (<any>window).taigaConfig, data));
 promise.fail(() => console.error("Your conf.json file is not a valid json file, please review it."));
 promise.always(function() {
-    (<any>window).ljs.load(`/${(<any>window)._version}/js/templates.js`, function() {
+    ljs.load(`/${_version}/js/templates.js`, function() {
         if ((<any>window).taigaConfig.contribPlugins.length > 0) {
             return loadPlugins((<any>window).taigaConfig.contribPlugins).then(() => {
                 run();

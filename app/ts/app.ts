@@ -80,7 +80,7 @@ import "../modules/feedback/feedback.service"
 import "../modules/invite-members"
 import "./libs/tg-repeat"
 
-export let taigaContribPlugins = this.taigaContribPlugins || (<any>window).taigaContribPlugins || [];
+export let taigaContribPlugins = [];
 
 // Generic function for generate hash from a arbitrary length
 // collection of parameters.
@@ -935,9 +935,6 @@ function init($log, $rootscope, $auth, $events, $analytics, $translate, $locatio
 // Config for infinite scroll
 angular.module('infinite-scroll').value('THROTTLE_MILLISECONDS', 500);
 
-// Load modules
-let pluginsWithModule = _.filter(taigaContribPlugins, (plugin:any) => plugin.module);
-let pluginsModules = _.map(pluginsWithModule, (plugin:any) => plugin.module);
 
 let modules = [
     // Main Global Modules
@@ -992,11 +989,17 @@ let modules = [
     "pascalprecht.translate",
     "infinite-scroll",
     "tgRepeat"
-].concat(pluginsModules);
+]
 
 export function run() {
     // Main module definition
-    let module = angular.module("taiga", modules);
+    taigaContribPlugins = taigaContribPlugins.concat((<any>window).taigaContribPlugins || []);
+
+    // Load modules
+    let pluginsWithModule = _.filter(taigaContribPlugins, (plugin:any) => plugin.module);
+    let pluginsModules = _.map(pluginsWithModule, (plugin:any) => plugin.module);
+
+    let module = angular.module("taiga", modules.concat(pluginsModules));
 
     module.config([
         "$routeProvider",
