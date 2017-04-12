@@ -27,6 +27,7 @@ import * as angular from "angular"
 import * as _ from "lodash"
 import {bindOnce} from "../../utils"
 import {autoScroll} from "../../libs/dom-autoscroller"
+import {dragMultiple} from "../../libs/dragula-drag-multiple"
 
 import * as dragula from "dragula"
 
@@ -72,7 +73,7 @@ export let BacklogSortableDirective = function() {
 
                 let isChecked = $(item).find("input[type='checkbox']").is(":checked");
 
-                return (<any>window).dragMultiple.start(item, container);
+                return dragMultiple.start(item, container);
             });
 
             drake.on('cloned', item => $(item).addClass('backlog-us-mirror'));
@@ -93,7 +94,7 @@ export let BacklogSortableDirective = function() {
                     sameContainer = $(item).scope().sprint.id === parent.scope().sprint.id;
                 }
 
-                let dragMultipleItems = (<any>window).dragMultiple.stop();
+                let dragMultipleItems = dragMultiple.stop();
 
                 $(document.body).removeClass("drag-active");
 
