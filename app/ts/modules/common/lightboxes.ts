@@ -29,6 +29,7 @@ import {bindOnce, timeout, debounce, sizeFormat, trim} from "../../../ts/utils"
 import * as _ from "lodash"
 import * as angular from "angular"
 import * as Immutable from "immutable"
+import * as Promise from "bluebird"
 
 //############################################################################
 //# Common Lightbox Services

@@ -18,6 +18,7 @@
  */
 
 import {slugify} from "../../../ts/utils"
+import * as _ from "lodash"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 
@@ -118,7 +119,7 @@ export class ProjectMenuController {
         }
 
         if  (sectionName  === "backlog-kanban") {
-            if (["backlog", "kanban"].includes(oldSectionName)) {
+            if (_.includes(["backlog", "kanban"], oldSectionName)) {
                 sectionName = oldSectionName;
             } else if (this.project.get("is_backlog_activated") && !this.project.get("is_kanban_activated")) {
                 sectionName = "backlog";
