@@ -66,6 +66,7 @@ export class AvatarService {
 
     getAvatar(user) {
         let gravatar, logo, root, photo;
+
         if (!user) { return this.getUnnamed(); }
 
         if (user instanceof Immutable.Map) {

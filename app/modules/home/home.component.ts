@@ -51,10 +51,6 @@ export class Home implements OnInit {
                                     .concat(state.get('userstories'))
                                     .concat(state.get('tasks'))
                                     .concat(state.get('issues'))
-                                    .map((i:any) => {
-                                        console.log(i);
-                                        return i;
-                                    })
                                     .sortBy((i:any) => i.get('modified_date')));
       this.watching = this.store
                           .select((state) => state.getIn(['home', 'watching']))
@@ -63,10 +59,6 @@ export class Home implements OnInit {
                                   .concat(state.get('userstories'))
                                   .concat(state.get('tasks'))
                                   .concat(state.get('issues'))
-                                  .map((i:any) => {
-                                      console.log(i);
-                                      return i;
-                                  })
                                   .sortBy((i:any) => i.get('modified_date')));
     }
 
