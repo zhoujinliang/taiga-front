@@ -1,4 +1,5 @@
 import {NgModule} from "@angular/core"
+import {RouterModule} from "@angular/router"
 
 import {CommonModule} from "@angular/common"
 import {TranslateModule} from "@ngx-translate/core"
@@ -12,12 +13,14 @@ import { AvatarService } from './avatar/avatar.service';
 import { ProjectLogoSmall } from './project-logo-small/project-logo-small.component';
 import { ProjectLogoBig } from './project-logo-big/project-logo-big.component';
 import { TermsOfServiceAndPrivacyPolicyNotice } from './terms-of-service-and-privacy-policy-notice/terms-of-service-and-privacy-policy-notice.component'
+import { ProjectMenu } from './project-menu/project-menu.component'
 
 @NgModule({
     imports: [
         CommonModule,
         TgCommonModule,
         TgBaseModule,
+        RouterModule.forChild([]),
         TranslateModule.forChild({}),
     ],
     exports: [
@@ -26,6 +29,7 @@ import { TermsOfServiceAndPrivacyPolicyNotice } from './terms-of-service-and-pri
         TermsOfServiceAndPrivacyPolicyNotice,
         ProjectLogoSmall,
         ProjectLogoBig,
+        ProjectMenu,
     ],
     declarations: [
         Avatar,
@@ -33,6 +37,7 @@ import { TermsOfServiceAndPrivacyPolicyNotice } from './terms-of-service-and-pri
         TermsOfServiceAndPrivacyPolicyNotice,
         ProjectLogoSmall,
         ProjectLogoBig,
+        ProjectMenu,
     ],
     providers: [
         AvatarService,

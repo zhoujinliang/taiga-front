@@ -1,5 +1,6 @@
 div.wrapper
-    // tg-project-menu
-    tg-project-info([project]="project | async")
-    tg-project-tags([project]="project | async")
-    // tg-project-data([project]="project | async")
+    tg-project-menu([project]="project | async")
+    div.single-project.centered
+        tg-project-info([project]="project | async")
+        tg-project-tags([project]="project | async")
+        // tg-project-data([project]="project | async")
