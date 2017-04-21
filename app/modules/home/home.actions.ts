@@ -16,11 +16,11 @@ export class FetchWatchingAction implements Action {
 export class SetAssignedToAction implements Action {
   readonly type = 'SET_ASSIGNED_TO';
 
-  constructor(public payload: Immutable.List<any>) { }
+  constructor(public payload: Immutable.Map<string,any>) { }
 }
 
 export class SetWatchingAction implements Action {
   readonly type = 'SET_WATCHING';
 
-  constructor(public payload: Immutable.List<any>) { }
+  constructor(public payload: Immutable.Map<string,any>) { }
 }

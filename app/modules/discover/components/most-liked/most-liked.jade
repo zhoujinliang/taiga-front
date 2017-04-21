@@ -13,13 +13,5 @@
     )
 
 .empty-highlighted-project(*ngIf="!projects.size")
-    .header
-        .title-wrapper
-            tg-svg(svg-icon="icon-like")
-            h1.title(translate="DISCOVER.MOST_LIKED")
-        tg-discover-home-order-by(
-            (order)="orderBy($event)"
-        )
-
     tg-svg(svg-icon="icon-like")
     span(translate="DISCOVER.MOST_LIKED_EMPTY")

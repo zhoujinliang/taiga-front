@@ -1,5 +1,7 @@
+import * as Rx from "rxjs/Rx"
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/switchMap'
+import 'rxjs/add/operator/reduce'
 import { Injectable } from '@angular/core';
 import { Effect, Actions, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
@@ -10,6 +12,21 @@ import { SetAssignedToAction, SetWatchingAction } from "./home.actions";
 import * as Immutable from "immutable";
 import {StorageService} from "./../../ts/modules/base/storage"
 import { ResourcesService } from "../resources/resources.service";
+import { NavigationUrlsService } from "../../ts/modules/base/navurls.service";
+
+function filterAndAddInfoDuties(duties, dutyType, projects) {
+    return duties.filter(duty => projects.get(String(duty.get('project'))))
+                 .map((duty) => {
+                     let project = projects.get(String(duty.get('project')));
+                     let url = this.navurls.resolve(`project-${dutyType}-detail`, {
+                         project: project.get('slug'),
+                         ref: duty.get('ref')
+                     });
+                     return duty.set('url', url)
+                                .set('project', project)
+                                .set('_name', dutyType)
+                 })
+}
 
 @Injectable()
 export class HomeEffects {
@@ -17,21 +34,98 @@ export class HomeEffects {
     fetchAssignedTo$: Observable<Action> = this.actions$
         .ofType('FETCH_ASSIGNED_TO')
         .map(toPayload)
-        .switchMap(userId => {
-          return this.rs.projects.getProjectsByUserId(userId).map((projects) => {
-              return new SetAssignedToAction(projects)
-          })
-        });
+        .filter((payload) => payload.userId && payload.projects)
+        .switchMap(({userId, projects}) => {
+            let projectsById = projects.reduce((byId, project) => {
+                return byId.set(String(project.get('id')), project)
+            }, Immutable.Map())
+
+            let epics = this.rs.epics.listInAllProjects({
+                status__is_closed: false,
+                assigned_to: userId
+            }).map(epics => {
+                return filterAndAddInfoDuties.bind(this)(epics, "epics", projectsById)
+            }).map(epics => ({key: "epics", values: epics}));
+
+            let userstories = this.rs.userstories.listInAllProjects({
+                is_closed: false,
+                assigned_to: userId
+            }).map(userstories => {
+                return filterAndAddInfoDuties.bind(this)(userstories, "userstories", projectsById)
+            }).map(userstories => ({key: "userstories", values: userstories}));
+
+            let tasks = this.rs.tasks.listInAllProjects({
+                status__is_closed: false,
+                assigned_to: userId
+            }).map(tasks => {
+                return filterAndAddInfoDuties.bind(this)(tasks, "tasks", projectsById)
+            }).map(tasks => ({key: "tasks", values: tasks}));
+
+            let issues = this.rs.issues.listInAllProjects({
+                status__is_closed: false,
+                assigned_to: userId
+            }).map(issues => {
+                return filterAndAddInfoDuties.bind(this)(issues, "issues", projectsById)
+            }).map(issues => ({key: "issues", values: issues}));
+
+            return Rx.Observable.concat(epics, userstories, tasks, issues)
+                                .reduce((acc, current:any) => {
+                                    return acc.set(current.key, current.values);
+                                }, Immutable.Map<string, any>());
+        })
+        .map((assigned_to) => {
+            return new SetAssignedToAction(assigned_to)
+        })
 
     @Effect()
     fetchWatching$: Observable<Action> = this.actions$
         .ofType('FETCH_WATCHING')
         .map(toPayload)
-        .switchMap(userId => {
-          return this.rs.projects.getProjectsByUserId(userId).map((projects) => {
-              return new SetWatchingAction(projects)
-          })
-        });
+        .filter((payload) => payload.userId && payload.projects)
+        .switchMap(({userId, projects}) => {
+            let projectsById = projects.reduce((byId, project) => {
+                return byId.set(String(project.get('id')), project)
+            }, Immutable.Map())
 
-    constructor(private actions$: Actions, private storage: StorageService, private rs: ResourcesService) { }
+            let epics = this.rs.epics.listInAllProjects({
+                status__is_closed: false,
+                watchers: userId
+            }).map(epics => {
+                return filterAndAddInfoDuties.bind(this)(epics, "epics", projectsById)
+            }).map(epics => ({key: "epics", values: epics}));
+
+            let userstories = this.rs.userstories.listInAllProjects({
+                is_closed: false,
+                watchers: userId
+            }).map(userstories => {
+                return filterAndAddInfoDuties.bind(this)(userstories, "userstories", projectsById)
+            }).map(userstories => ({key: "userstories", values: userstories}));
+
+            let tasks = this.rs.tasks.listInAllProjects({
+                status__is_closed: false,
+                watchers: userId
+            }).map(tasks => {
+                return filterAndAddInfoDuties.bind(this)(tasks, "tasks", projectsById)
+            }).map(tasks => ({key: "tasks", values: tasks}));
+
+            let issues = this.rs.issues.listInAllProjects({
+                status__is_closed: false,
+                watchers: userId
+            }).map(issues => {
+                return filterAndAddInfoDuties.bind(this)(issues, "issues", projectsById)
+            }).map(issues => ({key: "issues", values: issues}));
+
+            return Rx.Observable.concat(epics, userstories, tasks, issues)
+                                .reduce((acc, current:any) => {
+                                    return acc.set(current.key, current.values);
+                                }, Immutable.Map<string, any>());
+        })
+        .map((watching) => {
+            return new SetWatchingAction(watching)
+        })
+
+    constructor(private actions$: Actions,
+                private storage: StorageService,
+                private rs: ResourcesService,
+                private navurls: NavigationUrlsService) { }
 }

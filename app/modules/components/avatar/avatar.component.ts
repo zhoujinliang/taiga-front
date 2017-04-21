@@ -18,7 +18,7 @@
  */
 
 import {AvatarService} from "./avatar.service"
-import {Component, Input, OnChanges, SimpleChanges} from "@angular/core"
+import {Component, Input, OnInit} from "@angular/core"
 import * as Immutable from "immutable"
 
 @Component({
@@ -29,14 +29,14 @@ import * as Immutable from "immutable"
                     [attr.title]="fullname" />
     `
 })
-export class Avatar implements OnChanges{
+export class Avatar implements OnInit{
     @Input() user: any;
     avatar: any;
     fullname: string;
 
     constructor(private avatarService: AvatarService) {}
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnInit() {
         this.avatar = this.avatarService.getAvatar(this.user);
         if (this.user instanceof Immutable.Map) {
             this.fullname = this.user.get("full_name_display");

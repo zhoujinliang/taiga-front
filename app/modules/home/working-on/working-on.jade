@@ -3,13 +3,13 @@ section.working-on-container
         h1.title-bar.working-on-title(translate="HOME.WORKING_ON_SECTION")
 
     .working-on(*ngIf="assignedTo.size")
-        template(*ngFor="let duty of assignedTo")
-            tg-duty.duty-single(
-                [duty]="duty"
-                type="working-on"
-            )
+        tg-duty.duty-single(
+            *ngFor="let duty of assignedTo",
+            [duty]="duty",
+            type="working-on"
+        )
     .working-on-empty(*ngIf="assignedTo.size === 0")
-        p(translate="HOME.EMPTY_WORKING_ON")
+        p([innerHTML]="'HOME.EMPTY_WORKING_ON' | translate")
         include empty.jade
 
 section.watching-container
@@ -17,13 +17,13 @@ section.watching-container
         h1.title-bar.watching-title(translate="HOME.WATCHING_SECTION")
 
     .watching(*ngIf="watching.size")
-        template(*ngFor="let duty of watching")
-            tg-duty.duty-single(
-                [duty]="duty"
-                type="watching"
-                "[class.blocked]"="duty.is_blocked"
-            )
+        tg-duty.duty-single(
+            *ngFor="let duty of watching",
+            [duty]="duty",
+            type="watching",
+            "[class.blocked]"="duty.is_blocked"
+        )
 
     .watching-empty(*ngIf="watching.size === 0")
-        p(translate="HOME.EMPTY_WATCHING")
+        p([innerHTML]="'HOME.EMPTY_WATCHING' | translate")
         include empty.jade

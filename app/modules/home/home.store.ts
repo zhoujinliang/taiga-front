@@ -3,8 +3,18 @@ import * as Immutable from "immutable"
 export type IHomeState = Immutable.Map<string, any>;
 
 export const homeInitialState = {
-    "assigned-to": [],
-    "watching": [],
+    "assigned-to": {
+        epics:[],
+        userstories:[],
+        tasks:[],
+        issues:[],
+    },
+    "watching": {
+        epics:[],
+        userstories:[],
+        tasks:[],
+        issues:[],
+    },
 }
 
 export const homeReducer = (state, action) => {
