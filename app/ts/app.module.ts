@@ -14,6 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 // TAIGA MODULES
 import { DiscoverModule } from "../modules/discover/discover.module"
 import { HomeModule } from "../modules/home/home.module"
+import { AuthModule } from "../modules/auth/auth.module"
 import { ProjectsModule } from "../modules/projects/projects.module"
 import { TgBaseModule } from './modules/base/base.module';
 import { TgServicesModule } from '../modules/services/services.module';
@@ -54,6 +55,7 @@ export function HttpLoaderFactory(http: Http) {
     TgServicesModule,
     TgComponentsModule,
     NavigationBarModule,
+    AuthModule,
     TranslateModule.forRoot({
         loader: {
             provide: TranslateLoader,
