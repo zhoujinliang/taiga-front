@@ -9,6 +9,8 @@ import { TgCommonModule } from "../../ts/modules/common/common.module";
 import { TgComponentsModule } from "../components/components.module";
 
 import { LoginPage } from './login/login.component';
+import { LoginForm } from './login/login-form.component';
+import { PublicRegisterMessage} from './login/public-register-message.component';
 
 import {AuthEffects} from "./auth.effects"
 
@@ -19,7 +21,7 @@ import {AuthEffects} from "./auth.effects"
         TgComponentsModule,
         TranslateModule.forChild({}),
         RouterModule.forChild([
-            {path: "/login", component: LoginPage},
+            {path: "login", component: LoginPage},
         ]),
         EffectsModule.run(AuthEffects),
     ],
@@ -28,6 +30,8 @@ import {AuthEffects} from "./auth.effects"
     ],
     declarations: [
         LoginPage,
+        LoginForm,
+        PublicRegisterMessage,
     ],
     providers: [
     ],

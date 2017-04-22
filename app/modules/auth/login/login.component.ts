@@ -9,7 +9,7 @@ import { IState } from "../../../ts/app.store"
     selector: "tg-login-page",
     template: require("./login.jade")()
 })
-class LoginPage {
+export class LoginPage {
     nextUrl: string
 
     constructor(private config: ConfigurationService,

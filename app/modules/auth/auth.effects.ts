@@ -8,7 +8,7 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
-import { SetLoginErrorsAction, SetRegisterErrorAction } from "./home.actions";
+import { SetLoginErrorsAction, SetRegisterErrorsAction } from "./auth.actions";
 import * as Immutable from "immutable";
 import {StorageService} from "./../../ts/modules/base/storage"
 import { ResourcesService } from "../resources/resources.service";
@@ -18,20 +18,20 @@ import { ConfigurationService } from "../../ts/modules/base/conf";
 @Injectable()
 export class AuthEffects {
     @Effect()
-    fetchAssignedTo$: Observable<Action> = this.actions$
-        .oftype('LOGIN')
-        .map(topayload)
-        .switchmap((loginInfo) => {
-            // TODO
-        })
+    login$: Observable<Action> = this.actions$
+        .ofType('LOGIN')
+        .map(toPayload)
+        // TODO
+        // .switchMap((loginInfo:any) => {
+        // })
 
     @Effect()
-    fetchAssignedTo$: Observable<Action> = this.actions$
-        .oftype('REGISTER')
-        .map(topayload)
-        .switchmap((loginInfo) => {
-            // TODO
-        })
+    register$: Observable<Action> = this.actions$
+        .ofType('REGISTER')
+        .map(toPayload)
+        // TODO
+        // .switchMap((registerInfo:any) => {
+        // })
 
     constructor(private actions$: Actions,
                 private storage: StorageService,
