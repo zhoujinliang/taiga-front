@@ -17,7 +17,7 @@
  * File: dropdown-project-list.directive.coffee
  */
 
-import {defineImmutableProperty} from "../../../ts/utils"
+import {defineImmutableProperty} from "../../../libs/utils"
 
 export let DropdownProjectListDirective = function(currentUserService, projectsService) {
     let link = function(scope, el, attrs, ctrl) {

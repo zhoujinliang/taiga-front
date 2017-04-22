@@ -17,7 +17,7 @@
  * File: attchments-preview.controller.coffee
  */
 
-import {defineImmutableProperty, isImage} from "../../../ts/utils"
+import {defineImmutableProperty, isImage} from "../../../libs/utils"
 import * as angular from "angular"
 
 export class AttachmentsPreviewController {

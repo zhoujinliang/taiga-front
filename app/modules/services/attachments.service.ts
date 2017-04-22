@@ -17,7 +17,7 @@
  * File: attachments.service.coffee
  */
 
-import {sizeFormat} from "../../ts/utils"
+import {sizeFormat} from "../../libs/utils"
 import * as angular from "angular"
 
 export class AttachmentsService {

@@ -17,7 +17,7 @@
  * File: epics.service.coffee
  */
 
-import {defineImmutableProperty} from "../../ts/utils"
+import {defineImmutableProperty} from "../../libs/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"

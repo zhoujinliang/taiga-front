@@ -17,7 +17,7 @@
  * File: sort-projects.directive.coffee
  */
 
-import {autoScroll} from "../../../ts/libs/dom-autoscroller"
+import {autoScroll} from "../../../libs/dom-autoscroller"
 
 import * as dragula from "dragula"
 import * as _ from "lodash"

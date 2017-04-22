@@ -17,19 +17,19 @@
  * File: projects-resource.service.coffee
  */
 
-import {sizeFormat} from "../../ts/utils"
+import {sizeFormat} from "../../libs/utils"
 import * as _ from "lodash"
 import * as Promise from "bluebird"
 import * as Immutable from "immutable"
 
 import {Injectable} from "@angular/core"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
+import {UrlsService} from "../../libs/modules/base/urls"
+import {HttpService} from "../../libs/modules/base/http"
 import {PaginateResponseService} from "../services/paginate-response.service"
 import {TranslateService} from "@ngx-translate/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
-import {ConfigurationService} from "../../ts/modules/base/conf"
-import {StorageService} from "../../ts/modules/base/storage"
+import {RepositoryService} from "../../libs/modules/base/repository"
+import {ConfigurationService} from "../../libs/modules/base/conf"
+import {StorageService} from "../../libs/modules/base/storage"
 
 @Injectable()
 export class ProjectsResource {

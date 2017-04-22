@@ -17,7 +17,7 @@
  * File: project-menu.controller.coffee
  */
 
-import {slugify} from "../../../ts/utils"
+import {slugify} from "../../../libs/utils"
 import * as _ from "lodash"
 import * as angular from "angular"
 import * as Immutable from "immutable"

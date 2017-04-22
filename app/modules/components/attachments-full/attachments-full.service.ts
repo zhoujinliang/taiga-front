@@ -17,8 +17,8 @@
  * File: attachments-full.service.coffee
  */
 
-import {Service} from "../../../ts/classes"
-import {defineImmutableProperty, patch} from "../../../ts/utils"
+import {Service} from "../../../libs/classes"
+import {defineImmutableProperty, patch} from "../../../libs/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"

@@ -17,8 +17,8 @@
  * File: filter-utils.service.coffee
  */
 
-import {generateHash} from "../../../ts/app"
-import {Service} from "../../../ts/classes"
+import {generateHash} from "../../../app"
+import {Service} from "../../../classes"
 import * as angular from "angular"
 import * as _ from "lodash"
 

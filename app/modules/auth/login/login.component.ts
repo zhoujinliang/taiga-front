@@ -1,9 +1,9 @@
 import { Component } from "@angular/core"
 import { LoginData } from "../auth.model"
 import { ActivatedRoute } from "@angular/router"
-import { ConfigurationService } from "../../../ts/modules/base/conf";
+import { ConfigurationService } from "../../../modules/base/conf";
 import { Store } from "@ngrx/store"
-import { IState } from "../../../ts/app.store"
+import { IState } from "../../../app.store"
 
 @Component({
     selector: "tg-login-page",

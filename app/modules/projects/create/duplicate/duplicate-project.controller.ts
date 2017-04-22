@@ -17,7 +17,7 @@
  * File: project.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../ts/utils"
+import {defineImmutableProperty} from "../../../../libs/utils"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
 

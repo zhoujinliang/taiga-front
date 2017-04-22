@@ -17,7 +17,7 @@
  * File: asana-import.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../ts/utils"
+import {defineImmutableProperty} from "../../../../libs/utils"
 
 export class AsanaImportController {
     asanaImportService:any

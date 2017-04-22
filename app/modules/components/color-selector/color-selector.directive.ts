@@ -17,7 +17,7 @@
  * File: color-selector.directive.coffee
  */
 
-import {bindOnce} from "../../../ts/utils"
+import {bindOnce} from "../../../libs/utils"
 import * as angular from "angular"
 
 export let ColorSelectorDirective = function($timeout) {

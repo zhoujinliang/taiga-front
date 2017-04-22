@@ -17,7 +17,7 @@
  * File: suggest-add-members.controller.coffee
  */
 
-import {isEmail} from "../../../ts/utils"
+import {isEmail} from "../../../libs/utils"
 import * as angular from "angular"
 
 export class SuggestAddMembersController {

@@ -17,7 +17,7 @@
  * File: project.service.coffee
  */
 
-import {defineImmutableProperty} from "../../ts/utils"
+import {defineImmutableProperty} from "../../libs/utils"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as Promise from "bluebird"

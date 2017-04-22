@@ -17,7 +17,7 @@
  * File: related-userstories-sortable.directive.coffee
  */
 
-import {autoScroll} from "../../../../ts/libs/dom-autoscroller"
+import {autoScroll} from "../../../../libs/dom-autoscroller"
 
 import * as angular from "angular"
 import * as dragula from "dragula"

@@ -17,7 +17,7 @@
  * File: discover-search.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../ts/utils"
+import {defineImmutableProperty} from "../../../libs/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 

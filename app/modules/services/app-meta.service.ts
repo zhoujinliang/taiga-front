@@ -20,7 +20,7 @@
 declare var $:any;
 declare var _version:string;
 
-import {truncate} from "../../ts/utils"
+import {truncate} from "../../libs/utils"
 import * as angular from "angular"
 
 import {Injectable} from "@angular/core"

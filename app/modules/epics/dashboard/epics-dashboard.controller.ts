@@ -17,7 +17,7 @@
  * File: epics.dashboard.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../ts/utils"
+import {defineImmutableProperty} from "../../../libs/utils"
 import * as angular from "angular"
 
 export class EpicsDashboardController {

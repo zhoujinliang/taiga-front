@@ -18,7 +18,7 @@
  */
 
 import * as _ from "lodash"
-import {defineImmutableProperty} from "../../../ts/utils"
+import {defineImmutableProperty} from "../../../libs/utils"
 
 export let DropdownUserDirective = function(authService, configService, locationService,
         navUrlsService, feedbackService, $rootScope) {

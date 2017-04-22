@@ -17,7 +17,7 @@
  * File: create-epic.controller.coffee
  */
 
-import {getRandomDefaultColor, trim} from "../../../ts/utils"
+import {getRandomDefaultColor, trim} from "../../../libs/utils"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"

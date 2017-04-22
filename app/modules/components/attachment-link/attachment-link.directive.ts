@@ -18,7 +18,7 @@
  */
 
 import * as angular from "angular"
-import {isImage, isPdf} from "../../../ts/utils"
+import {isImage, isPdf} from "../../../libs/utils"
 
 export let AttachmentLinkDirective = function($parse, attachmentsPreviewService, lightboxService) {
     let link = function(scope, el, attrs) {

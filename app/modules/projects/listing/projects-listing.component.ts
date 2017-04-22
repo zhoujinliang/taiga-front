@@ -21,7 +21,7 @@ import * as _ from "lodash"
 import "rxjs/add/operator/map"
 import {Component} from "@angular/core"
 import {Store} from "@ngrx/store"
-import {IState} from "../../../ts/app.store"
+import {IState} from "../../../app.store"
 
 @Component({
     selector: "tg-project-listing",

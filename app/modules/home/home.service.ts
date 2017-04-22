@@ -17,8 +17,8 @@
  * File: home.service.coffee
  */
 
-import {Service} from "../../ts/classes"
-import {groupBy} from "../../ts/utils"
+import {Service} from "../../libs/classes"
+import {groupBy} from "../../libs/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"

@@ -17,7 +17,7 @@
  * File: current-user.service.coffee
  */
 
-import {groupBy, defineImmutableProperty} from "../../ts/utils"
+import {groupBy, defineImmutableProperty} from "../../libs/utils"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as Promise from "bluebird"
@@ -25,7 +25,7 @@ import * as Rx from "rxjs"
 
 import {Injectable} from "@angular/core"
 import {ProjectsService} from "../projects/projects.service"
-import {StorageService} from "../../ts/modules/base/storage"
+import {StorageService} from "../../libs/modules/base/storage"
 import {ResourcesService} from "../resources/resources.service"
 
 @Injectable()

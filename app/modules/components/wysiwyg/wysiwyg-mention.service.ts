@@ -22,7 +22,7 @@
  * File: modules/components/wysiwyg/wysiwyg-mention.service.coffee
  */
 
-import {slugify} from "../../../ts/utils"
+import {slugify} from "../../../libs/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 import * as Promise from "bluebird"

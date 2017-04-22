@@ -17,8 +17,8 @@
  * File: epics-table.controller.coffee
  */
 
-import {generateHash} from "../../../../ts/app"
-import {defineImmutableProperty} from "../../../../ts/utils"
+import {generateHash} from "../../../../libs/app"
+import {defineImmutableProperty} from "../../../../libs/utils"
 import * as angular from "angular"
 
 export class EpicsTableController {

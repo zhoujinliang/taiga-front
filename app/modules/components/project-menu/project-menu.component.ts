@@ -17,7 +17,7 @@
  * File: project-menu.controller.coffee
  */
 
-import {slugify} from "../../../ts/utils"
+import {slugify} from "../../../libs/utils"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
 import {Component, Input, OnChanges} from "@angular/core"

@@ -17,7 +17,7 @@
  * File: most-active.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../ts/utils"
+import {defineImmutableProperty} from "../../../../libs/utils"
 import {Component, Input, Output, EventEmitter} from "@angular/core"
 
 @Component({

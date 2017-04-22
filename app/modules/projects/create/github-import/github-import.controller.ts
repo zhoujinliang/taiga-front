@@ -17,7 +17,7 @@
  * File: github-import.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../ts/utils"
+import {defineImmutableProperty} from "../../../../libs/utils"
 
 export class GithubImportController {
     githubImportService:any

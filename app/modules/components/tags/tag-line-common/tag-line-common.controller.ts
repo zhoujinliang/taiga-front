@@ -17,7 +17,7 @@
  * File: tag-line.controller.coffee
  */
 
-import {trim} from "../../../../ts/utils"
+import {trim} from "../../../../libs/utils"
 import * as angular from "angular"
 
 export class TagLineCommonController {

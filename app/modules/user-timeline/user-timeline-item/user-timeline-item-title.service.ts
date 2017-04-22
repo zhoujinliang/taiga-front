@@ -17,7 +17,7 @@
  * File: user-timeline-item-title.service.coffee
  */
 
-import {unslugify} from "../../../ts/utils"
+import {unslugify} from "../../../libs/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 

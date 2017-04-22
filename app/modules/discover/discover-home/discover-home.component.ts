@@ -19,12 +19,12 @@
 
 
 import {Router} from "@angular/router"
-import {NavigationUrlsService} from "../../../ts/modules/base/navurls.service"
+import {NavigationUrlsService} from "../../../modules/base/navurls.service"
 import {AppMetaService} from "../../services/app-meta.service"
 import {TranslateService} from "@ngx-translate/core"
 import {Component, OnInit} from "@angular/core"
 import {Store} from "@ngrx/store"
-import {IState} from "../../../ts/app.store"
+import {IState} from "../../../app.store"
 
 @Component({
     selector: "tg-discover-home",

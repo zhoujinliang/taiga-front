@@ -23,9 +23,9 @@ import * as Immutable from "immutable"
 import { CurrentUserService } from "../services/current-user.service";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { IState } from "../../ts/app.store";
+import { IState } from "../../app.store";
 import { IHomeState } from "./home.store";
-import { NavigationUrlsService } from "../../ts/modules/base/navurls.service";
+import { NavigationUrlsService } from "../../modules/base/navurls.service";
 
 import {Component, OnInit, ChangeDetectionStrategy} from "@angular/core"
 

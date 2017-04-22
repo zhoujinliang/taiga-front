@@ -17,7 +17,7 @@
  * File: discover-projects.service.coffee
  */
 
-import {defineImmutableProperty} from "../../../ts/utils"
+import {defineImmutableProperty} from "../../../libs/utils"
 import * as _ from "lodash"
 import * as Immutable from "immutable"
 import { ResourcesService } from "../../resources/resources.service";

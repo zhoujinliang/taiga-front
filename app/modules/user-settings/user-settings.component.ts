@@ -24,8 +24,8 @@
 
 import {Component } from "@angular/core";
 import {Store} from "@ngrx/store";
-import {IState} from "../../ts/app.store"
-import {ConfigurationService} from "../../ts/modules/base/conf"
+import {IState} from "../../app.store"
+import {ConfigurationService} from "../../modules/base/conf"
 import {TranslateService} from "@ngx-translate/core"
 
 @Component({

@@ -22,8 +22,8 @@
  * File: modules/components/wysiwyg/wysiwyg.directive.coffee
  */
 
-import {bindOnce, isImage} from "../../../ts/utils"
-import {MentionExtension} from "../../../ts/libs/medium-mention"
+import {bindOnce, isImage} from "../../../libs/utils"
+import {MentionExtension} from "../../../libs/libs/medium-mention"
 import * as AutoList from "medium-editor-autolist"
 import * as MediumEditor from "medium-editor"
 import * as angular from "angular"

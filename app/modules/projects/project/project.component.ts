@@ -22,7 +22,7 @@ import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { TranslateService } from "@ngx-translate/core"
 import { Store } from "@ngrx/store"
-import { IState } from "../../../ts/app.store"
+import { IState } from "../../../app.store"
 
 @Component({
     selector: "tg-project-detail",

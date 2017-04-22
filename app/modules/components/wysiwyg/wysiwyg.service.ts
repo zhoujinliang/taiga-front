@@ -22,9 +22,9 @@
  * File: modules/components/wysiwyg/wysiwyg.service.coffee
  */
 
-import {getMatches, slugify} from "../../../ts/utils"
+import {getMatches, slugify} from "../../../libs/utils"
 import * as Autolinker from "autolinker"
-import {markdownitLazyHeaders} from "../../../ts/libs/markdown-it-lazy-headers"
+import {markdownitLazyHeaders} from "../../../libs/libs/markdown-it-lazy-headers"
 import * as markdownit from "markdown-it"
 import * as angular from "angular"
 import * as _ from "lodash"

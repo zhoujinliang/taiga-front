@@ -21,7 +21,7 @@ import * as Immutable from "immutable"
 
 import {Component, OnInit, Input, ChangeDetectionStrategy, OnChanges} from "@angular/core"
 
-import {defineImmutableProperty} from "../../../ts/utils"
+import {defineImmutableProperty} from "../../../libs/utils"
 import { CurrentUserService  } from "../../services/current-user.service";
 import { ProjectsService } from "../../projects/projects.service";
 

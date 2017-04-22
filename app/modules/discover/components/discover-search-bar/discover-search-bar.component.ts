@@ -17,12 +17,12 @@
  * File: discover-search-bar.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../ts/utils"
+import {defineImmutableProperty} from "../../../../libs/utils"
 import * as angular from "angular"
 import {Component, OnInit, Output, EventEmitter, Input} from "@angular/core"
 import {DiscoverProjectsService} from "../../services/discover-projects.service"
 import {Store} from "@ngrx/store"
-import {IState} from "../../../../ts/app.store"
+import {IState} from "../../../../libs/app.store"
 
 @Component({
     selector: 'tg-discover-search-bar',

@@ -17,7 +17,7 @@
  * File: navigation-bar.directive.coffee
  */
 
-import {defineImmutableProperty} from "../../ts/utils"
+import {defineImmutableProperty} from "../../libs/utils"
 
 export let NavigationBarDirective = function(currentUserService, navigationBarService, locationService, navUrlsService, config) {
     let link = function(scope, el, attrs, ctrl) {

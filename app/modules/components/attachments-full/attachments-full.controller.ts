@@ -17,7 +17,7 @@
  * File: attchments-full.controller.coffee
  */
 
-import {sizeFormat, defineImmutableProperty} from "../../../ts/utils"
+import {sizeFormat, defineImmutableProperty} from "../../../libs/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 

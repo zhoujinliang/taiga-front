@@ -17,8 +17,8 @@
  * File: external-app.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../ts/utils"
-import {Controller} from "../../ts/classes"
+import {defineImmutableProperty} from "../../libs/utils"
+import {Controller} from "../../libs/classes"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 

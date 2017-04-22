@@ -17,7 +17,7 @@
  * File: trello-import.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../ts/utils"
+import {defineImmutableProperty} from "../../../../libs/utils"
 
 export class TrelloImportController {
     trelloImportService:any

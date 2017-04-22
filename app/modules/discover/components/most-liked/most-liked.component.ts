@@ -17,7 +17,7 @@
  * File: msot-liked.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../ts/utils"
+import {defineImmutableProperty} from "../../../../libs/utils"
 import {Component, Output, Input, EventEmitter} from "@angular/core"
 
 @Component({

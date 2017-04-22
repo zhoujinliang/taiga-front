@@ -17,8 +17,8 @@
  * File: user.service.coffee
  */
 
-import {bindMethods} from "../../ts/utils"
-import {Service} from "../../ts/classes"
+import {bindMethods} from "../../libs/utils"
+import {Service} from "../../libs/classes"
 import * as angular from "angular"
 
 export class UserService extends Service {

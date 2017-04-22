@@ -17,7 +17,7 @@
  * File: color-selector.controller.coffee
  */
 
-import {getDefaulColorList} from "../../../ts/utils"
+import {getDefaulColorList} from "../../../libs/utils"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"

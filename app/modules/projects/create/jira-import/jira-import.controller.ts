@@ -17,7 +17,7 @@
  * File: jira-import.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../ts/utils"
+import {defineImmutableProperty} from "../../../../libs/utils"
 
 export class JiraImportController {
     jiraImportService:any

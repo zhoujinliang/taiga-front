@@ -17,7 +17,7 @@
  * File: profile-favs.controller.coffee
  */
 
-import {debounceLeading} from "../../../ts/utils"
+import {debounceLeading} from "../../../libs/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 import * as Immutable from "immutable"

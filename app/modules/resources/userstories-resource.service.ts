@@ -18,14 +18,14 @@
  */
 
 import * as Immutable from "immutable"
-import {generateHash} from "../../ts/app"
+import {generateHash} from "../../app"
 import * as _ from "lodash"
 
 import {Injectable} from "@angular/core"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
-import {StorageService} from "../../ts/modules/base/storage"
-import {RepositoryService} from "../../ts/modules/base/repository"
+import {UrlsService} from "../../modules/base/urls"
+import {HttpService} from "../../modules/base/http"
+import {StorageService} from "../../modules/base/storage"
+import {RepositoryService} from "../../modules/base/repository"
 
 @Injectable()
 export class UserstoriesResource {
