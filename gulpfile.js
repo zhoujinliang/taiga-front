@@ -177,7 +177,7 @@ var isDeploy = argv["_"].indexOf("deploy") !== -1;
 var BrowserifyApp = browserify({
     basedir: '.',
     debug: true,
-    entries: ['app/ts/main.ts'],
+    entries: ['app/main.ts'],
     cache: {},
     packageCache: {}
 }).plugin(tsify);
@@ -185,7 +185,7 @@ var BrowserifyApp = browserify({
 var DeployBrowserifyApp = browserify({
     basedir: '.',
     debug: false,
-    entries: ['app/ts/main.ts'],
+    entries: ['app/main.ts'],
     cache: {},
     packageCache: {}
 }).plugin(tsify);
@@ -568,7 +568,7 @@ gulp.task("clear", ["clear-sass-cache"], function(done) {
 
 //SVG
 gulp.task("copy-svg", function() {
-    return gulp.src(paths.app + "/svg/**/*")
+    return gulp.src(paths.app + "/assets/svg/**/*")
         .pipe(gulp.dest(paths.distVersion + "/svg/"));
 });
 
@@ -578,7 +578,7 @@ gulp.task("copy-theme-svg", function() {
 });
 
 gulp.task("copy-fonts", function() {
-    return gulp.src(paths.app + "/fonts/*")
+    return gulp.src(paths.app + "/assets/fonts/*")
         .pipe(gulp.dest(paths.distVersion + "/fonts/"));
 });
 
@@ -588,13 +588,13 @@ gulp.task("copy-theme-fonts", function() {
 });
 
 gulp.task("copy-images", function() {
-    return gulp.src([paths.app + "/images/**/*", paths.app + '/modules/compile-modules/**/images/*'])
+    return gulp.src([paths.app + "/assets/images/**/*", paths.app + '/modules/compile-modules/**/images/*'])
         .pipe(gulpif(isDeploy, imagemin({progressive: true})))
         .pipe(gulp.dest(paths.distVersion + "/images/"));
 });
 
 gulp.task("copy-emojis", function() {
-    return gulp.src([__dirname + "/emojis/*"])
+    return gulp.src([__dirname + "/assets/emojis/*"])
         .pipe(gulp.dest(paths.distVersion + "/emojis/"));
 });
 

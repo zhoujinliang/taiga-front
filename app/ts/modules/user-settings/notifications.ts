@@ -22,7 +22,7 @@
  * File: modules/user-settings/notifications.coffee
  */
 
-import {bindOnce} from "../../utils"
+import {bindOnce} from "../../libs/utils"
 import {PageMixin} from "../controllerMixins"
 
 import * as angular from "angular"

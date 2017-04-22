@@ -22,7 +22,7 @@
  * File: modules/issues/lightboxes.coffee
  */
 
-import {debounce, trim} from "../../utils"
+import {debounce, trim} from "../../libs/utils"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"

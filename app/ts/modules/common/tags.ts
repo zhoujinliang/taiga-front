@@ -22,7 +22,7 @@
  * File: modules/common/tags.coffee
  */
 
-import {bindOnce, trim} from "../../utils"
+import {bindOnce, trim} from "../../../libs/utils"
 import {Awesomplete} from "awesomplete"
 import * as angular from "angular"
 import * as _ from "lodash"

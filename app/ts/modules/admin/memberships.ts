@@ -22,7 +22,7 @@
  * File: modules/admin/memberships.coffee
  */
 
-import {bindMethods} from "../../utils"
+import {bindMethods} from "../../libs/utils"
 import {FiltersMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as _ from "lodash"

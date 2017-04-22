@@ -22,7 +22,7 @@
  * File: utils.coffee
  */
 
-import * as utils from "./utils"
+import * as utils from "./libs/utils"
 import * as _ from "lodash"
 
 var taiga = {

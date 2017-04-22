@@ -18,14 +18,14 @@
  */
 
 import {sizeFormat, cartesianProduct} from "../../../libs/utils"
-import {murmurhash3_32_gc} from "../../../libs/libs/murmurhash3_gc"
+import {murmurhash3_32_gc} from "../../../libs/murmurhash3_gc"
 import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as _ from "lodash"
 declare var _version:string;
 
 import {Injectable} from "@angular/core"
-import {ConfigurationService} from "../../../libs/modules/base/conf"
+import {ConfigurationService} from "../../../ts/modules/base/conf"
 
 @Injectable()
 export class AvatarService {

@@ -23,7 +23,7 @@
  */
 
 import * as _ from "lodash";
-import {hex_sha1} from "./libs/sha1-custom"
+import {hex_sha1} from "./sha1-custom"
 
 export function addClass(el, className) {
     if (el.classList) {

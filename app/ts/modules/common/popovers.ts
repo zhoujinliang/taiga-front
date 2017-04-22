@@ -22,7 +22,7 @@
  * File: modules/common/popovers.coffee
  */
 
-import {bindOnce, debounce} from "../../utils"
+import {bindOnce, debounce} from "../../../libs/utils"
 import * as angular from "angular"
 declare var $:any;
 

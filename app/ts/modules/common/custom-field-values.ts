@@ -22,7 +22,7 @@
  * File: modules/common/custom-field-values.coffee
  */
 
-import {bindOnce, debounce, bindMethods} from "../../../ts/utils"
+import {bindOnce, debounce, bindMethods} from "../../../../../libs/utils"
 import {generateHash} from "../../../ts/app"
 import {Controller} from "../../../ts/classes"
 import * as Pikaday from "pikaday"

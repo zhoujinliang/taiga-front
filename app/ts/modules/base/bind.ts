@@ -22,7 +22,7 @@
  * File: modules/base/bind.coffee
  */
 
-import {bindOnce} from "../../utils"
+import {bindOnce} from "../../../libs/utils"
 
 // Escape Html bind once directive
 export let BindOnceBindDirective = function() {

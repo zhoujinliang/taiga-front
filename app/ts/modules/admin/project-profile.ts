@@ -22,7 +22,7 @@
  * File: modules/admin/project-profile.coffee
  */
 
-import {debounce} from "../../utils"
+import {debounce} from "../../libs/utils"
 import {Controller} from "../../classes"
 import {PageMixin} from "../controllerMixins"
 

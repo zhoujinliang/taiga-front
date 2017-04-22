@@ -25,7 +25,7 @@
 
 import * as angular from "angular"
 import * as _ from "lodash"
-import {bindOnce} from "../../utils"
+import {bindOnce} from "../../libs/utils"
 import {autoScroll} from "../../libs/dom-autoscroller"
 import {dragMultiple} from "../../libs/dragula-drag-multiple"
 

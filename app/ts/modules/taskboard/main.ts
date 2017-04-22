@@ -22,7 +22,7 @@
  * File: modules/taskboard.coffee
  */
 
-import {toggleText, groupBy, bindOnce, scopeDefer, timeout, bindMethods, defineImmutableProperty} from "../../utils"
+import {toggleText, groupBy, bindOnce, scopeDefer, timeout, bindMethods, defineImmutableProperty} from "../../libs/utils"
 import {FiltersMixin} from "../controllerMixins"
 
 import * as angular from "angular"

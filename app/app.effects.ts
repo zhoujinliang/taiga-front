@@ -8,8 +8,8 @@ import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
 import { SetUserAction, SetProjectsAction } from "./app.actions";
 import * as Immutable from "immutable";
-import {StorageService} from "./modules/base/storage"
-import { ResourcesService } from "../modules/resources/resources.service";
+import {StorageService} from "./ts/modules/base/storage"
+import { ResourcesService } from "./modules/resources/resources.service";
 
 @Injectable()
 export class GlobalEffects {

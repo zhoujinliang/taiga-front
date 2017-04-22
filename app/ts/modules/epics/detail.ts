@@ -22,7 +22,7 @@
  * File: modules/epics/detail.coffee
  */
 
-import {groupBy, bindMethods} from "../../utils"
+import {groupBy, bindMethods} from "../../libs/utils"
 import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as Immutable from "immutable"

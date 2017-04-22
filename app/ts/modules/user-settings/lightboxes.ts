@@ -22,7 +22,7 @@
  * File: modules/issues/lightboxes.coffee
  */
 
-import {debounce} from "../../utils"
+import {debounce} from "../../libs/utils"
 import * as angular from "angular"
 
 //############################################################################

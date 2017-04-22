@@ -19,7 +19,7 @@
 
 
 import {Router} from "@angular/router"
-import {NavigationUrlsService} from "../../../modules/base/navurls.service"
+import {NavigationUrlsService} from "../../../ts/modules/base/navurls.service"
 import {AppMetaService} from "../../services/app-meta.service"
 import {TranslateService} from "@ngx-translate/core"
 import {Component, OnInit} from "@angular/core"

@@ -19,8 +19,8 @@
 
 import {defineImmutableProperty} from "../../libs/utils"
 import {Component, OnInit, Input} from "@angular/core"
-import { NavigationUrlsService } from "../../libs/modules/base/navurls.service";
-import { ConfigurationService } from "../../libs/modules/base/conf";
+import { NavigationUrlsService } from "../../ts/modules/base/navurls.service";
+import { ConfigurationService } from "../../ts/modules/base/conf";
 import { CurrentUserService } from "../services/current-user.service";
 import { NavigationBarService } from "./navigation-bar.service";
 import { Router } from "@angular/router";

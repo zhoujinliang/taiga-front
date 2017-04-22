@@ -22,7 +22,7 @@
  * File: modules/common/estimation.coffee
  */
 
-import {groupBy} from "../../utils"
+import {groupBy} from "../../../libs/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 

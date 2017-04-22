@@ -22,7 +22,7 @@
  * File: modules/related-tasks.coffee
  */
 
-import {trim, debounce, bindOnce} from "../utils"
+import {trim, debounce, bindOnce} from "../libs/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 

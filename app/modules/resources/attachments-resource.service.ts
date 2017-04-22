@@ -29,10 +29,10 @@ import * as Immutable from "immutable"
 import * as Promise from "bluebird"
 
 import {Injectable} from "@angular/core"
-import {UrlsService} from "../../libs/modules/base/urls"
-import {HttpService} from "../../libs/modules/base/http"
-import {ConfigurationService} from "../../libs/modules/base/conf"
-import {StorageService} from "../../libs/modules/base/storage"
+import {UrlsService} from "../../ts/modules/base/urls"
+import {HttpService} from "../../ts/modules/base/http"
+import {ConfigurationService} from "../../ts/modules/base/conf"
+import {StorageService} from "../../ts/modules/base/storage"
 
 @Injectable()
 export class AttachmentsResource {

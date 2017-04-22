@@ -22,7 +22,7 @@
  * File: modules/events.coffee
  */
 
-import {startswith, bindMethods} from "../utils"
+import {startswith, bindMethods} from "../libs/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 

@@ -22,7 +22,7 @@
  * File: modules/base/navurl.coffee
  */
 
-import {trim} from "../../utils"
+import {trim} from "../../../libs/utils"
 import * as _ from "lodash"
 import {Injectable} from "@angular/core"
 

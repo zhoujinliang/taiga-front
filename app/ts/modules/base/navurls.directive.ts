@@ -22,11 +22,11 @@
  * File: modules/base/navurl.coffee
  */
 
-import {trim, bindOnce} from "../../utils"
+import {trim, bindOnce} from "../../../libs/utils"
 import * as _ from "lodash"
 import {Directive, ElementRef, Input, HostListener} from "@angular/core"
 import {Router} from "@angular/router"
-import {AuthService} from "../auth"
+import {AuthService} from "../../../modules/auth/auth.service"
 import {LightboxService} from "../common/lightboxes"
 import {NavigationUrlsService} from "./navurls.service"
 

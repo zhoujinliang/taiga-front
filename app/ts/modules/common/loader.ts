@@ -27,7 +27,7 @@
 
 declare var $:any;
 
-import {timeout} from "../../utils"
+import {timeout} from "../../../libs/utils"
 import * as angular from "angular"
 
 export let LoaderDirective = function(tgLoader, $rootscope) {

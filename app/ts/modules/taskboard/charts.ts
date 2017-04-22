@@ -22,7 +22,7 @@
  * File: modules/taskboard/charts.coffee
  */
 
-import {timeout} from "../../utils"
+import {timeout} from "../../libs/utils"
 import * as angular from "angular"
 import * as _ from "lodash"
 import * as moment from "moment"

@@ -22,7 +22,7 @@
  * File: modules/wiki/detail.coffee
  */
 
-import {groupBy, bindOnce} from "../../utils"
+import {groupBy, bindOnce} from "../../libs/utils"
 import {autoScroll} from "../../libs/dom-autoscroller"
 
 import * as dragula from "dragula"

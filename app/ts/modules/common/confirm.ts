@@ -22,7 +22,7 @@
  * File: modules/base/confirm.coffee
  */
 
-import {timeout, cancelTimeout, debounce, bindMethods, addClass} from "../../../ts/utils"
+import {timeout, cancelTimeout, debounce, bindMethods, addClass} from "../../../../../libs/utils"
 import {Service} from "../../../ts/classes"
 import * as _ from "lodash"
 import * as angular from "angular"

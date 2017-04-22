@@ -18,7 +18,7 @@
  */
 
 import {cartesianProduct} from "../../libs/utils"
-import {murmurhash3_32_gc} from "../../libs/libs/murmurhash3_gc"
+import {murmurhash3_32_gc} from "../../libs/murmurhash3_gc"
 declare var _version:string;
 import {Injectable} from "@angular/core"
 

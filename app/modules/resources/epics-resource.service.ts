@@ -17,18 +17,18 @@
  * File: epics-resource.service.coffee
  */
 
-import {generateHash} from "../../app"
+import {generateHash} from "../../libs/utils"
 
 import * as angular from "angular"
 import * as Immutable from "immutable"
 import * as Promise from "bluebird"
 
 import {Injectable} from "@angular/core"
-import {UrlsService} from "../../modules/base/urls"
-import {HttpService} from "../../modules/base/http"
-import {StorageService} from "../../modules/base/storage"
+import {UrlsService} from "../../ts/modules/base/urls"
+import {HttpService} from "../../ts/modules/base/http"
+import {StorageService} from "../../ts/modules/base/storage"
 // TODO: Remove repository usage
-import {RepositoryService} from "../../modules/base/repository"
+import {RepositoryService} from "../../ts/modules/base/repository"
 
 @Injectable()
 export class EpicsResource {

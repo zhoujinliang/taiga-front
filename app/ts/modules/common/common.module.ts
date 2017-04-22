@@ -1,7 +1,8 @@
 import { NgModule } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { TranslateModule } from "@ngx-translate/core"
-import { Svg, LightboxClose } from './index';
+import { Svg } from "./svg.component"
+import { LightboxClose } from './lightbox-close.component';
 import { ProjectUrlService } from './project-url.service';
 import { ColorizeBacklogTag, ColorizeBacklogTags } from './tags.component';
 import { DateRange } from './components';

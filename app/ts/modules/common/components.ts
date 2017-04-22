@@ -22,7 +22,7 @@
  * File: modules/common/components.coffee
  */
 
-import {bindOnce} from "../../utils"
+import {bindOnce} from "../../../libs/utils"
 import * as Pikaday from "pikaday"
 import * as angular from "angular"
 import * as moment from "moment"

@@ -23,7 +23,7 @@
  */
 
 import {bindOnce, isImage} from "../../../libs/utils"
-import {MentionExtension} from "../../../libs/libs/medium-mention"
+import {MentionExtension} from "../../../libs/medium-mention"
 import * as AutoList from "medium-editor-autolist"
 import * as MediumEditor from "medium-editor"
 import * as angular from "angular"

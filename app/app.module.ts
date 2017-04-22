@@ -12,25 +12,25 @@ import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 // TAIGA MODULES
-import { DiscoverModule } from "../modules/discover/discover.module"
-import { HomeModule } from "../modules/home/home.module"
-import { AuthModule } from "../modules/auth/auth.module"
-import { ProjectsModule } from "../modules/projects/projects.module"
-import { TgBaseModule } from './modules/base/base.module';
-import { TgServicesModule } from '../modules/services/services.module';
-import { ResourcesModule } from '../modules/resources/resources.module';
-import { TgComponentsModule } from '../modules/components/components.module';
+import { DiscoverModule } from "./modules/discover/discover.module"
+import { HomeModule } from "./modules/home/home.module"
+import { AuthModule } from "./modules/auth/auth.module"
+import { ProjectsModule } from "./modules/projects/projects.module"
+import { TgBaseModule } from './ts/modules/base/base.module';
+import { TgServicesModule } from './modules/services/services.module';
+import { ResourcesModule } from './modules/resources/resources.module';
+import { TgComponentsModule } from './modules/components/components.module';
 
 import { TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { AuthService } from './modules/auth';
+import { AuthService } from './modules/auth/auth.service';
 
-import { ProjectsService } from '../modules/projects/projects.service';
-import { ProjectUrlService } from './modules/common/project-url.service';
-import { DateRange } from './modules/common/components';
-import { TgCommonModule } from './modules/common/common.module';
-import { NavigationBarModule } from '../modules/navigation-bar/navigation-bar.module';
+import { ProjectsService } from './modules/projects/projects.service';
+import { ProjectUrlService } from './ts/modules/common/project-url.service';
+import { DateRange } from './ts/modules/common/components';
+import { TgCommonModule } from './ts/modules/common/common.module';
+import { NavigationBarModule } from './modules/navigation-bar/navigation-bar.module';
 
 import {AppComponent} from "./app.component"
 import {GlobalEffects} from "./app.effects"

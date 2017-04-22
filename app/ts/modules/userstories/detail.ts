@@ -22,7 +22,7 @@
  * File: modules/userstories/detail.coffee
  */
 
-import {groupBy, bindOnce, bindMethods} from "../../utils"
+import {groupBy, bindOnce, bindMethods} from "../../libs/utils"
 import {PageMixin} from "../controllerMixins"
 
 import * as angular from "angular"

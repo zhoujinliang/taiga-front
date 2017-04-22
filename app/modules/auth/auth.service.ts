@@ -3,15 +3,15 @@ import * as Immutable from "immutable"
 
 import {Injectable} from "@angular/core"
 import {downgradeInjectable} from "@angular/upgrade/static"
-import {StorageService} from "./base/storage"
-import {ModelService} from "./base/model"
-import {HttpService} from "./base/http"
-import {UrlsService} from "./base/urls"
-import {ConfigurationService} from "./base/conf"
+import {StorageService} from "../../ts/modules/base/storage"
+import {ModelService} from "../../ts/modules/base/model"
+import {HttpService} from "../../ts/modules/base/http"
+import {UrlsService} from "../../ts/modules/base/urls"
+import {ConfigurationService} from "../../ts/modules/base/conf"
 import {TranslateService} from "@ngx-translate/core"
-import {CurrentUserService} from "../../modules/services/current-user.service"
-import {ThemeService} from "../../modules/services/theme.service"
-import {GlobalDataService} from "../../modules/services/global-data.service"
+import {CurrentUserService} from "../services/current-user.service"
+import {ThemeService} from "../services/theme.service"
+import {GlobalDataService} from "../services/global-data.service"
 
 @Injectable()
 export class AuthService {

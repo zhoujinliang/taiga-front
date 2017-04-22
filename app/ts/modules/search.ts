@@ -22,7 +22,7 @@
  * File: modules/search.coffee
  */
 
-import {groupBy, bindOnce, debounceLeading, trim, debounce} from "../utils"
+import {groupBy, bindOnce, debounceLeading, trim, debounce} from "../libs/utils"
 import {PageMixin} from "./controllerMixins"
 import * as angular from "angular"
 

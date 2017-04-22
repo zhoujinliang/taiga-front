@@ -22,7 +22,7 @@
  * File: modules/issues/list.coffee
  */
 
-import {groupBy, bindMethods, startswith, trim, bindOnce} from "../../utils"
+import {groupBy, bindMethods, startswith, trim, bindOnce} from "../../libs/utils"
 import {FiltersMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as Immutable from "immutable"

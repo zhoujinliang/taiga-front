@@ -25,7 +25,7 @@
 
 import {sizeFormat} from "../../libs/utils"
 import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../libs/modules/base/repository"
+import {RepositoryService} from "../../ts/modules/base/repository"
 
 @Injectable()
 export class CustomAttributesResource {

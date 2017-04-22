@@ -22,7 +22,7 @@
  * File: modules/user-settings/main.coffee
  */
 
-import {debounce} from "../../utils"
+import {debounce} from "../../libs/utils"
 import {checksley} from "../../libs/checksley"
 import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"

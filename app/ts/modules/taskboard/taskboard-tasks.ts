@@ -17,7 +17,7 @@
  * File: home.service.coffee
  */
 
-import {groupBy} from "../../utils"
+import {groupBy} from "../../libs/utils"
 import {Service} from "../../classes"
 import * as Immutable from "immutable"
 import * as _ from "lodash"

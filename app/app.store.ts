@@ -1,7 +1,7 @@
 import * as Immutable from "immutable"
-import {homeInitialState, homeReducer} from "../modules/home/home.store"
-import {discoverInitialState, discoverReducer} from "../modules/discover/discover.store"
-import {currentProjectInitialState, currentProjectReducer} from "../modules/projects/projects.store"
+import {homeInitialState, homeReducer} from "./modules/home/home.store"
+import {discoverInitialState, discoverReducer} from "./modules/discover/discover.store"
+import {currentProjectInitialState, currentProjectReducer} from "./modules/projects/projects.store"
 
 export type IState = Immutable.Map<string, any>;
 

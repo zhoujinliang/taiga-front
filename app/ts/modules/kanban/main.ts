@@ -22,7 +22,7 @@
  * File: modules/kanban/main.coffee
  */
 
-import {toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods, defineImmutableProperty} from "../../utils"
+import {toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods, defineImmutableProperty} from "../../libs/utils"
 import {UsFiltersMixin} from "../controllerMixins"
 
 import * as angular from "angular"

@@ -25,7 +25,7 @@
 import * as _ from "lodash"
 import * as moment from "moment"
 import * as Immutable from "immutable"
-import * as utils from "../../utils"
+import * as utils from "../../../libs/utils"
 
 export let defaultFilter = () =>
     function(value, defaultValue) {

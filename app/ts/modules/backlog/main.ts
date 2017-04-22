@@ -22,7 +22,7 @@
  * File: modules/backlog/main.coffee
  */
 
-import {toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods} from "../../utils"
+import {toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods} from "../../libs/utils"
 import {generateHash} from "../../app"
 import {UsFiltersMixin} from "../controllerMixins"
 import * as _ from "lodash"

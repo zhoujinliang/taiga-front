@@ -22,7 +22,7 @@
  * File: modules/wiki/detail.coffee
  */
 
-import {groupBy, bindOnce, debounce} from "../../utils"
+import {groupBy, bindOnce, debounce} from "../../libs/utils"
 import {PageMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as moment from "moment"

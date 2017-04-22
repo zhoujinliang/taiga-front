@@ -16,10 +16,11 @@ import "reflect-metadata"
 
 import "./export-to-plugins"
 
+import {generateUniqueSessionIdentifier} from "./libs/utils"
+
 export let taigaContribPlugins = [];
 export var sessionId = generateUniqueSessionIdentifier();
 
-import {generateUniqueSessionIdentifier} from "./libs/utils.ts"
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app.module';
 

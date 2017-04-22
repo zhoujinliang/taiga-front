@@ -20,10 +20,10 @@
 import * as _ from "lodash"
 import {defineImmutableProperty} from "../../../libs/utils"
 import { GlobalDataService } from "../../services/global-data.service";
-import { NavigationUrlsService } from "../../../libs/modules/base/navurls.service";
+import { NavigationUrlsService } from "../../../ts/modules/base/navurls.service";
 import { Router } from "@angular/router";
-import { ConfigurationService } from "../../../libs/modules/base/conf";
-import { AuthService } from "../../../libs/modules/auth";
+import { ConfigurationService } from "../../../ts/modules/base/conf";
+import { AuthService } from "../../auth/auth.service";
 import { Component, Input } from "@angular/core"
 // import { FeedbackService } from "../../feedback/feedback.service";
 

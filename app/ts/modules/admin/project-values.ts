@@ -22,7 +22,7 @@
  * File: modules/admin/project-profile.coffee
  */
 
-import {debounce, getDefaulColorList} from "../../utils"
+import {debounce, getDefaulColorList} from "../../libs/utils"
 import {Controller} from "../../classes"
 import {PageMixin} from "../controllerMixins"
 import {autoScroll} from "../../libs/dom-autoscroller"

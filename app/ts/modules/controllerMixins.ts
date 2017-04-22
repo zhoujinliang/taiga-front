@@ -23,7 +23,7 @@
  */
 
 import * as _ from "lodash"
-import {groupBy, joinStr, trim, toString} from "../utils"
+import {groupBy, joinStr, trim, toString} from "../libs/utils"
 import {generateHash} from "../app"
 import {Controller} from "../classes"
 

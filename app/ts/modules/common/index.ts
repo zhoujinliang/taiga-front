@@ -423,44 +423,6 @@ let Capslock = function() {
 
 module.directive("tgCapslock", [Capslock]);
 
-@Component({
-    selector: "tg-lightbox-close",
-    template: `
-        <a class="close" ng-click="close()" href="" title="{{'COMMON.CLOSE' | translate}}">
-            <tg-svg svg-icon="icon-close"></tg-svg>
-        </a>`
-})
-export class LightboxClose {
-    @Output("on-close") onClose = new EventEmitter();
-
-    close() {
-        this.onClose.emit()
-    }
-}
-
-@Component({
-    selector: "tg-svg",
-    template: `
-      <svg [ngClass]="['icon', svgIcon]">
-          <use [attr.xlink:href]="'#' + svgIcon">
-              <title *ngIf="svgTitle">{{svgTitle}}</title>
-              <title *ngIf="svgTitleTranslate" i18n>{{svgTitleTranslate}}</title>
-          </use>
-      </svg>
-    `
-})
-export class Svg {
-    @Input("svg-icon") svgIcon: string = "";
-    @Input("svg-title") svgTitle: string = "";
-    @Input("svg-title-translate") svgTitleTranslate: string = "";
-
-    constructor(elm: ElementRef) {
-        this.svgIcon = elm.nativeElement.getAttribute('svg-icon');
-        this.svgTitle = elm.nativeElement.getAttribute('svg-title');
-        this.svgTitleTranslate = elm.nativeElement.getAttribute('svg-title-translate');
-    }
-};
-
 let Autofocus = ($timeout, $parse, animationFrame) =>
   ({
     restrict: 'A',

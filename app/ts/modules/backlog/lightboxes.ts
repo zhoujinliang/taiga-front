@@ -22,7 +22,7 @@
  * File: modules/backlog/lightboxes.coffee
  */
 
-import { debounce } from "../../utils"
+import { debounce } from "../../libs/utils"
 import * as angular from "angular"
 import * as moment from "moment"
 import * as _ from "lodash"

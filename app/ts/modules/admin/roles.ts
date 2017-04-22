@@ -22,7 +22,7 @@
  * File: modules/admin/memberships.coffee
  */
 
-import {bindOnce, debounce, bindMethods} from "../../utils"
+import {bindOnce, debounce, bindMethods} from "../../libs/utils"
 import {FiltersMixin} from "../controllerMixins"
 
 import * as angular from "angular"

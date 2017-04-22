@@ -25,7 +25,7 @@ import * as Rx from "rxjs"
 
 import {Injectable} from "@angular/core"
 import {ProjectsService} from "../projects/projects.service"
-import {StorageService} from "../../libs/modules/base/storage"
+import {StorageService} from "../../ts/modules/base/storage"
 import {ResourcesService} from "../resources/resources.service"
 
 @Injectable()

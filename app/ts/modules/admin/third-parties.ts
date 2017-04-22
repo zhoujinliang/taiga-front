@@ -22,7 +22,7 @@
  * File: modules/admin/third-parties.coffee
  */
 
-import {bindMethods, debounce, timeout} from "../../utils"
+import {bindMethods, debounce, timeout} from "../../libs/utils"
 import {FiltersMixin} from "../controllerMixins"
 import * as angular from "angular"
 import * as moment from "moment"
