@@ -2,7 +2,6 @@ declare var $:any;
 declare var ljs:any;
 declare var _version:string;
 
-import {run} from "./app"
 import * as _ from "lodash"
 // import * as Promise from "bluebird"
 import "l.js"
@@ -12,7 +11,17 @@ import "jquery.flot.tooltip"
 import "prismjs/plugins/custom-class/prism-custom-class"
 import "pikaday"
 import "markdown-it"
+import "zone.js"
+import "reflect-metadata"
+
 import "./export-to-plugins"
+
+export let taigaContribPlugins = [];
+export var sessionId = generateUniqueSessionIdentifier();
+
+import {generateUniqueSessionIdentifier} from "./libs/utils.ts"
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app.module';
 
 (<any>window).taigaConfig = {
     "api": "http://localhost:8000/api/v1/",
@@ -76,10 +85,10 @@ promise.always(function() {
     // ljs.load(`/${_version}/js/templates.js`, function() {
         if ((<any>window).taigaConfig.contribPlugins.length > 0) {
             return loadPlugins((<any>window).taigaConfig.contribPlugins).then(() => {
-                run();
+                platformBrowserDynamic().bootstrapModule(AppModule);
             });
         } else {
-            run()
+            platformBrowserDynamic().bootstrapModule(AppModule);
         }
     // });
 });

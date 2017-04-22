@@ -23,6 +23,7 @@
  */
 
 import * as _ from "lodash";
+import {hex_sha1} from "./libs/sha1-custom"
 
 export function addClass(el, className) {
     if (el.classList) {
@@ -310,3 +311,16 @@ export function cartesianProduct(...args) {
         args, (a:any,b:any) => _.flatten(_.map(a, x => _.map(b, y => [y].concat(x))), true)
         , [ [] ]);
 }
+
+export function generateHash(components) {
+    if (components == null) { components = []; }
+    components = _.map(components, x => JSON.stringify(x));
+    return hex_sha1(components.join(":"));
+};
+
+
+export function generateUniqueSessionIdentifier() {
+    let date = (new Date()).getTime();
+    let randomNumber = Math.floor(Math.random() * 0x9000000);
+    return generateHash([date, randomNumber]);
+};
