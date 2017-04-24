@@ -25,6 +25,7 @@ import {TranslateService} from "@ngx-translate/core"
 import {Component, OnInit} from "@angular/core"
 import {Store} from "@ngrx/store"
 import {IState} from "../../../app.store"
+import * as actions from "../discover.actions"
 
 @Component({
     selector: "tg-discover-home",
@@ -54,36 +55,18 @@ export class DiscoverHome implements OnInit {
     }
 
     ngOnInit() {
-        this.store.dispatch({
-            type: "FETCH_MOST_ACTIVE",
-            payload: "last_week",
-        });
-        this.store.dispatch({
-            type: "FETCH_MOST_LIKED",
-            payload: "last_week",
-        });
-        this.store.dispatch({
-            type: "FETCH_PROJECTS_STATS",
-            payload: null,
-        })
-        this.store.dispatch({
-            type: "FETCH_FEATURED_PROJECTS",
-            payload: null,
-        })
+        this.store.dispatch(new actions.FetchMostActiveAction("last_week"));
+        this.store.dispatch(new actions.FetchMostLikedAction("last_week"));
+        this.store.dispatch(new actions.FetchProjectsStatsAction());
+        this.store.dispatch(new actions.FetchFeaturedProjectsAction());
     }
 
     onMostActiveOrder(newOrder) {
-        this.store.dispatch({
-            type: "FETCH_MOST_ACTIVE",
-            payload: `last_${newOrder}`,
-        });
+        this.store.dispatch(new actions.FetchMostActiveAction(`last_${newOrder}`));
     }
 
     onMostLikedOrder(newOrder) {
-        this.store.dispatch({
-            type: "FETCH_MOST_LIKED",
-            payload: `last_${newOrder}`,
-        });
+        this.store.dispatch(new actions.FetchMostLikedAction(`last_${newOrder}`));
     }
 
     onSubmit(q) {

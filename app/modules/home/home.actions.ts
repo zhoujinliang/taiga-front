@@ -3,14 +3,20 @@ import { Action } from '@ngrx/store';
 
 export class FetchAssignedToAction implements Action {
   readonly type = 'FETCH_ASSIGNED_TO';
+  payload: any;
 
-  constructor(public payload: number) { }
+  constructor(userId, projects) {
+      this.payload = {userId, projects};
+  }
 }
 
 export class FetchWatchingAction implements Action {
   readonly type = 'FETCH_WATCHING';
+  payload: any;
 
-  constructor(public payload: number) { }
+  constructor(userId, projects) {
+      this.payload = {userId, projects};
+  }
 }
 
 export class SetAssignedToAction implements Action {

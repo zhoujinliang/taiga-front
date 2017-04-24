@@ -32,7 +32,7 @@ export class ProjectsListing {
 
     constructor(private store: Store<IState>) {
         this.projects = this.store
-                            .select((state) => state.getIn(["global", "projects"]))
+                            .select((state) => state.getIn(["projects", "user-projects"]))
                             .map((state) => state.sortBy((i:any) => i.get('order')));
     }
 }

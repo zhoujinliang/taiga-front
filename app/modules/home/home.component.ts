@@ -26,6 +26,7 @@ import { Store } from "@ngrx/store";
 import { IState } from "../../app.store";
 import { IHomeState } from "./home.store";
 import { NavigationUrlsService } from "../../ts/modules/base/navurls.service";
+import { FetchAssignedToAction, FetchWatchingAction } from "./home.actions";
 
 import {Component, OnInit, ChangeDetectionStrategy} from "@angular/core"
 
@@ -42,8 +43,8 @@ export class Home implements OnInit {
     constructor(private router: Router,
                 private store: Store<IState>,
                 private navurls: NavigationUrlsService) {
-      this.user = this.store.select((state) => state.getIn(['global', 'user']));
-      this.projects = this.store.select((state) => state.getIn(['global', 'projects']));
+      this.user = this.store.select((state) => state.getIn(['auth', 'user']));
+      this.projects = this.store.select((state) => state.getIn(['projects', 'user-projects']));
       this.assignedTo = this.store
                             .select((state) => state.getIn(['home', 'assigned-to']))
                             .map((state) =>
@@ -68,17 +69,8 @@ export class Home implements OnInit {
                 this.router.navigate(["/discover"]);
                 return
             }
-            this.store.dispatch({
-                type: "FETCH_ASSIGNED_TO",
-                payload: {userId: user.get('id'), projects: projects},
-            })
-            this.store.dispatch({
-                type: "FETCH_WATCHING",
-                payload: {userId: user.get('id'), projects: projects},
-            })
+            this.store.dispatch(new FetchAssignedToAction(user.get('id'), projects));
+            this.store.dispatch(new FetchWatchingAction(user.get('id'), projects));
         });
-        // if (!this.user) {
-        //     // this.router.navigateByUrl(this.navurls.resolve("discover"));
-        // }
     }
 }

@@ -1,11 +1,16 @@
 import * as Immutable from "immutable"
 
-export const currentProjectInitialState = {}
+export const projectsInitialState = {
+    "user-projects": [],
+    "current-project": {}
+}
 
-export const currentProjectReducer = (state, action) => {
+export const projectsReducer = (state, action) => {
     switch(action.type){
+        case 'SET_USER_PROJECTS':
+            return state.set('user-projects', action.payload);
         case 'SET_CURRENT_PROJECT':
-            return action.payload;
+            return state.set('current-project', action.payload);
         default:
             return state;
     }

@@ -1,7 +1,7 @@
 nav.navbar(*ngIf="isEnabledHeader")
     div.nav-left
         a.logo(
-            *ngIf="!user || user.isEmpty()",
+            *ngIf="!user",
             href="https://taiga.io/",
             title="{{'PROJECT.NAVIGATION.HOMEPAGE' | translate}}"
         )
@@ -9,7 +9,7 @@ nav.navbar(*ngIf="isEnabledHeader")
 
         a.logo(
             routerLink="/",
-            *ngIf="user && !user.isEmpty()",
+            *ngIf="user",
             href="#",
             title="{{'PROJECT.NAVIGATION.HOMEPAGE' | translate}}"
         )
@@ -22,7 +22,7 @@ nav.navbar(*ngIf="isEnabledHeader")
             translate="PROJECT.NAVIGATION.HELP"
         )
 
-    div.nav-right(*ngIf="!user || user.isEmpty()")
+    div.nav-right(*ngIf="!user")
         a.login(
             (click)="onLogin()",
             href="#",
@@ -37,7 +37,7 @@ nav.navbar(*ngIf="isEnabledHeader")
             translate="REGISTER_FORM.ACTION_SIGN_UP"
         )
 
-    div.nav-right(*ngIf="user && !user.isEmpty()")
+    div.nav-right(*ngIf="user")
         a(
             routerLink="/",
             "[class.active]"="active",

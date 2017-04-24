@@ -10,12 +10,18 @@ export class SetUserAction implements Action {
 
 export class StoreUserAction implements Action {
   readonly type = 'STORE_USER';
-  payload = null
+
+  constructor(public payload: Immutable.Map<any, any>) { }
 }
 
 export class RestoreUserAction implements Action {
   readonly type = 'RESTORE_USER';
   payload = null
+}
+
+export class LogoutAction implements Action {
+  readonly type = 'LOGOUT';
+  payload = null;
 }
 
 export class LoginAction implements Action {

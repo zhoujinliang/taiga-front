@@ -1,6 +1,7 @@
 import * as Immutable from "immutable"
 
 export const authInitialState = {
+    "user": {},
     "login-errors": {},
     "register-errors": {},
 }

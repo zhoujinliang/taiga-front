@@ -12,8 +12,7 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { empty } from 'rxjs/observable/empty';
 import { of } from 'rxjs/observable/of';
-import { SetLoginErrorsAction, SetRegisterErrorsAction } from "./auth.actions";
-import { SetUserAction } from "../../app.actions";
+import * as actions from "./auth.actions";
 import { AddNotificationMessageAction } from "../../ts/modules/common/common.actions";
 import {StorageService} from "./../../ts/modules/base/storage"
 import { ResourcesService } from "../resources/resources.service";
@@ -27,14 +26,20 @@ export class AuthEffects {
     storeUser$: Observable<Action> = this.actions$
         .ofType('STORE_USER')
         .map(toPayload)
-        .do((user) => this.storage.set('userInfo', user.toJS()))
-        .map((user) => new SetUserAction(user));
+        .do((user) => {
+            if (user) {
+                this.storage.set('userInfo', user.toJS());
+            } else {
+                this.storage.set('userInfo', null);
+            }
+        })
+        .map((user) => new actions.SetUserAction(user));
 
     @Effect()
     restoreUser$: Observable<Action> = this.actions$
         .ofType('RESTORE_USER')
-        .map(() => this.storage.get('userInfo'))
-        .map((user) => new SetUserAction(user));
+        .map(() => Immutable.fromJS(this.storage.get('userInfo')))
+        .map((user) => new actions.SetUserAction(user));
 
     @Effect()
     login$: Observable<Action> = this.actions$
@@ -43,16 +48,27 @@ export class AuthEffects {
         .switchMap((payload) => {
             return this.rs.user.login(payload.data).flatMap((user:any) => {
                 return [
-                    new SetUserAction(user),
+                    new actions.StoreUserAction(user),
                     go([payload.next])
                 ]
             }).catch( (err) => {
-                let newError = new AddNotificationMessageAction({
-                    type: "error",
-                    message: this.translate.instant("LOGIN_FORM.ERROR_AUTH_INCORRECT"),
-                });
+                let newError = new AddNotificationMessageAction(
+                    "error",
+                    this.translate.instant("LOGIN_FORM.ERROR_AUTH_INCORRECT"),
+                );
                 return Rx.Observable.of(newError);
             })
+        });
+
+    @Effect()
+    logout$: Observable<Action> = this.actions$
+        .ofType('LOGOUT')
+        .map(toPayload)
+        .flatMap(() => {
+            return [
+                new actions.StoreUserAction(null),
+                go(["/discover"])
+            ]
         });
 
     @Effect()

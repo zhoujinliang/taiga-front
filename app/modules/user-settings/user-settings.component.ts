@@ -43,7 +43,7 @@ export class UserSettings {
     constructor(private store: Store<IState>,
                 private config: ConfigurationService,
                 private translate: TranslateService) {
-        this.user = this.store.select((state) => state.getIn(["global", "user"]))
+        this.user = this.store.select((state) => state.getIn(["auth", "user"]))
         this.availableLanguages =  this.store.select((state) => state.getIn(["user-settings", "languages"]))
 
         this.availableThemes = this.config.get("themes", []);

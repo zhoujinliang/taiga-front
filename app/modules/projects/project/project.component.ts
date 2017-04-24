@@ -37,8 +37,8 @@ export class ProjectDetail implements OnInit {
                 private translate: TranslateService,
                 private store: Store<IState>,
                 private route: ActivatedRoute) {
-        this.user = this.store.select((state) => state.getIn(['global', 'user']));
-        this.project = this.store.select((state) => state.get('current-project'));
+        this.user = this.store.select((state) => state.getIn(['auth', 'user']));
+        this.project = this.store.select((state) => state.getIn(['projects', 'current-project']));
 
         this.project.subscribe((project) => {
             let title = this.translate.instant("PROJECT.PAGE_TITLE", {projectName: project.get('name')});

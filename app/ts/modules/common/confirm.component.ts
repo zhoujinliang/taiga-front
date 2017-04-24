@@ -27,6 +27,7 @@ import { Component } from "@angular/core"
 import * as _ from "lodash"
 import { Store } from "@ngrx/store"
 import { IState } from "../../../app.store"
+import { DiscardNotificationMessageAction } from "./common.actions"
 
 @Component({
     selector: "tg-notification-messages",
@@ -67,10 +68,7 @@ export class NotificationMessages {
                     time = (this.msg.type === 'error') || (this.msg.type === 'light-error') ? 3500 : 1500;
                 }
                 timeout(time, () => {
-                    this.store.dispatch({
-                        type: "DISCARD_NOTIFICATION_MESSAGE",
-                        payload: null
-                    });
+                    this.store.dispatch(new DiscardNotificationMessageAction());
                     this.msg = this.getNextMessage(state);
                 });
             }

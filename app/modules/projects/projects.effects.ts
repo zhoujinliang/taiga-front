@@ -9,6 +9,7 @@ import { of } from 'rxjs/observable/of';
 import * as actions from "./projects.actions";
 import * as Immutable from "immutable";
 import { ResourcesService } from "../resources/resources.service";
+import { SetUserProjectsAction } from "./projects.actions"
 
 @Injectable()
 export class CurrentProjectsEffects {
@@ -20,6 +21,13 @@ export class CurrentProjectsEffects {
           return this.rs.projects.getProjectBySlug(projectSlug)
               .map(project => new actions.SetCurrentProjectAction(Immutable.fromJS(project)));
         });
+
+    @Effect()
+    fetchUserProjects$: Observable<Action> = this.actions$
+        .ofType('FETCH_USER_PROJECTS')
+        .map(toPayload)
+        .switchMap(userId => this.rs.projects.getProjectsByUserId(userId))
+        .map((projects) => new SetUserProjectsAction(projects));
 
     constructor(private actions$: Actions, private rs: ResourcesService) { }
 }

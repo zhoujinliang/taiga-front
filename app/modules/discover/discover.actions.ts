@@ -15,14 +15,12 @@ export class FetchMostActiveAction implements Action {
 
 export class FetchProjectsStatsAction implements Action {
   readonly type = 'FETCH_PROJECTS_STATS';
-
-  constructor(public payload: any) { }
+  payload = null
 }
 
 export class FetchFeaturedProjectsAction implements Action {
   readonly type = 'FETCH_FEATURED_PROJECTS';
-
-  constructor(public payload: any) { }
+  payload = null
 }
 
 export class SetMostActiveAction implements Action {
