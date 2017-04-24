@@ -33,6 +33,14 @@ export class AuthEffects {
         // .switchMap((registerInfo:any) => {
         // })
 
+    @Effect()
+    passwordRecover$: Observable<Action> = this.actions$
+        .ofType('PASSWORD_RECOVER')
+        .map(toPayload)
+        // TODO
+        // .switchMap((registerInfo:any) => {
+        // })
+
     constructor(private actions$: Actions,
                 private storage: StorageService,
                 private config: ConfigurationService,

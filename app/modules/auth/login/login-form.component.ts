@@ -1,5 +1,6 @@
 import {Component, OnInit, Output, EventEmitter} from "@angular/core"
 import {ActivatedRoute} from "@angular/router"
+import { FormGroup, FormBuilder, Validators } from "@angular/forms"
 
 import {LoginData} from "../auth.model"
 import { ConfigurationService } from "../../../ts/modules/base/conf";
@@ -10,16 +11,30 @@ import { ConfigurationService } from "../../../ts/modules/base/conf";
 })
 export class LoginForm implements OnInit {
     @Output() submit: EventEmitter<LoginData>;
+    loginForm: FormGroup;
     private queryParams: any;
 
-    constructor(private config: ConfigurationService, private activeRoute: ActivatedRoute) {
-        this.submit = new EventEmitter()
+    constructor(private config: ConfigurationService,
+                private fb: FormBuilder,
+                private activeRoute: ActivatedRoute) {
+        this.submit = new EventEmitter();
+        this.loginForm = this.fb.group({
+            "username": ['', Validators.required],
+            "password": ['', Validators.required],
+            "loginType": "normal",
+        })
+        console.log(this.loginForm);
     }
 
     ngOnInit() {
         this.activeRoute.queryParams.subscribe((params) => {
             this.queryParams = params
         })
+    }
+
+    onSubmit():boolean {
+        this.submit.emit(this.loginForm.value);
+        return false;
     }
 }
 // let LoginDirective = function($auth, $confirm, $location, $config, $routeParams, $navUrls, $events, $translate, $window) {

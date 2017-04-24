@@ -1,41 +1,40 @@
-let ForgotPasswordDirective = function($auth, $confirm, $location, $navUrls, $translate) {
-    let link = function($scope, $el, $attrs) {
-        $scope.data = {};
-        let form = $el.find("form").checksley();
+import { Component } from "@angular/core"
+import { ActivatedRoute } from "@angular/router"
+import { ConfigurationService } from "../../../ts/modules/base/conf";
+import { Store } from "@ngrx/store"
+import { IState } from "../../../app.store"
 
-        let onSuccessSubmit = function(response) {
-            $location.path($navUrls.resolve("login"));
+@Component({
+    selector: "tg-forgot-password-page",
+    template: require("./forgot-password.jade")()
+})
+export class ForgotPasswordPage {
+    nextUrl: string
 
-            let title = $translate.instant("FORGOT_PASSWORD_FORM.SUCCESS_TITLE");
-            let message = $translate.instant("FORGOT_PASSWORD_FORM.SUCCESS_TEXT");
+    constructor(private config: ConfigurationService,
+                private store: Store<IState>,
+                private activeRoute: ActivatedRoute) {
+        this.nextUrl = "/"
+    }
 
-            return $confirm.success(title, message);
-        };
-
-        let onErrorSubmit = function(response) {
-            let text = $translate.instant("FORGOT_PASSWORD_FORM.ERROR");
-
-            return $confirm.notify("light-error", text);
-        };
-
-        let submit = debounce(2000, event => {
-            event.preventDefault();
-
-            if (!form.validate()) {
-                return;
+    ngOnInit() {
+        this.activeRoute.queryParams.subscribe((params) => {
+            if (!params['next'] || params['next'] === "/login") {
+                this.nextUrl = "/"
+            } else {
+                this.nextUrl = params['next']
             }
 
-            let promise = $auth.forgotPassword($scope.data);
-            return promise.then(onSuccessSubmit, onErrorSubmit);
+            if (params['force_next'] && params['force_next'] !== "/login") {
+                this.nextUrl = params['force_next']
+            }
         });
+    }
 
-        $el.on("submit", "form", submit);
-
-        $scope.$on("$destroy", () => $el.off());
-
-        return (<any>window).prerenderReady = true;
-    };
-
-    return {link};
-};
-
+    passwordRecover(email: string) {
+        this.store.dispatch({
+            type: "PASSWORD_RECOVER",
+            payload: email
+        });
+    }
+}

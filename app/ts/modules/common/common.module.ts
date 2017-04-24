@@ -2,6 +2,8 @@ import { NgModule } from "@angular/core"
 import { CommonModule } from "@angular/common"
 import { TranslateModule } from "@ngx-translate/core"
 import { Svg } from "./svg.component"
+import { NotificationMessages } from "./confirm.component"
+import { Capslock } from "./capslock.component"
 import { LightboxClose } from './lightbox-close.component';
 import { ProjectUrlService } from './project-url.service';
 import { ColorizeBacklogTag, ColorizeBacklogTags } from './tags.component';
@@ -21,6 +23,8 @@ import { MessageFormatPipe } from "./message-format.pipe"
         LightboxClose,
         MainTitle,
         MessageFormatPipe,
+        Capslock,
+        NotificationMessages,
     ],
     declarations: [
         ColorizeBacklogTag,
@@ -30,6 +34,8 @@ import { MessageFormatPipe } from "./message-format.pipe"
         LightboxClose,
         MainTitle,
         MessageFormatPipe,
+        Capslock,
+        NotificationMessages,
     ],
     providers: [
         ProjectUrlService

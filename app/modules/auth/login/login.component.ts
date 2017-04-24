@@ -10,12 +10,14 @@ import { IState } from "../../../app.store"
     template: require("./login.jade")()
 })
 export class LoginPage {
-    nextUrl: string
+    nextUrl: string;
+    loginErrors: any;
 
     constructor(private config: ConfigurationService,
                 private store: Store<IState>,
                 private activeRoute: ActivatedRoute) {
-        this.nextUrl = "/"
+        this.nextUrl = "/";
+        this.loginErrors = this.store.select((state) => state.getIn(['auth', 'login-errors']));
         // if (currentUserService.isAuthenticated()) {
         //     if (!$routeParams['force_login']) {
         //         let url = $navUrls.resolve("home");

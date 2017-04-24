@@ -11,6 +11,8 @@ export const authReducer = (state, action) => {
             return state.set('login-errors', action.payload);
         case 'SET_REGISTER_ERRORS':
             return state.set('register-errors', action.payload);
+        case 'SET_PASSWORD_RECOVER_ERRORS':
+            return state.set('password-recover-errors', action.payload);
         default:
             return state;
     }

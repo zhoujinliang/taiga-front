@@ -411,17 +411,6 @@ module.factory("$tgTemplate", ["$templateCache", Template]);
 //# Permission directive, hide elements when necessary
 //############################################################################
 
-let Capslock = function() {
-    let template = `\
-<tg-svg class="capslock" ng-if="capslockIcon && iscapsLockActivated" svg-icon='icon-capslock' svg-title='COMMON.CAPSLOCK_WARNING'></tg-svg>\
-`;
-
-    return {
-        template
-    };
-};
-
-module.directive("tgCapslock", [Capslock]);
 
 let Autofocus = ($timeout, $parse, animationFrame) =>
   ({
