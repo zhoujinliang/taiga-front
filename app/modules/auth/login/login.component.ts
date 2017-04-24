@@ -1,9 +1,10 @@
 import { Component } from "@angular/core"
 import { LoginData } from "../auth.model"
-import { ActivatedRoute } from "@angular/router"
+import { ActivatedRoute, Router } from "@angular/router"
 import { ConfigurationService } from "../../../ts/modules/base/conf";
 import { Store } from "@ngrx/store"
 import { IState } from "../../../app.store"
+import { LoginAction } from "../auth.actions"
 
 @Component({
     selector: "tg-login-page",
@@ -15,7 +16,8 @@ export class LoginPage {
 
     constructor(private config: ConfigurationService,
                 private store: Store<IState>,
-                private activeRoute: ActivatedRoute) {
+                private activeRoute: ActivatedRoute,
+                private router: Router) {
         this.nextUrl = "/";
         this.loginErrors = this.store.select((state) => state.getIn(['auth', 'login-errors']));
         // if (currentUserService.isAuthenticated()) {
@@ -51,9 +53,7 @@ export class LoginPage {
     }
 
     login(loginData: LoginData) {
-        this.store.dispatch({
-            type: "LOGIN",
-            payload: loginData
-        });
+        this.store.dispatch(new LoginAction(loginData, this.nextUrl))
+        return false;
     }
 }

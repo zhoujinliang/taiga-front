@@ -10,20 +10,19 @@ import { ConfigurationService } from "../../../ts/modules/base/conf";
     template: require("./login-form.jade")()
 })
 export class LoginForm implements OnInit {
-    @Output() submit: EventEmitter<LoginData>;
+    @Output() login: EventEmitter<LoginData>;
     loginForm: FormGroup;
     private queryParams: any;
 
     constructor(private config: ConfigurationService,
                 private fb: FormBuilder,
                 private activeRoute: ActivatedRoute) {
-        this.submit = new EventEmitter();
+        this.login = new EventEmitter();
         this.loginForm = this.fb.group({
             "username": ['', Validators.required],
             "password": ['', Validators.required],
-            "loginType": "normal",
+            "type": "normal",
         })
-        console.log(this.loginForm);
     }
 
     ngOnInit() {
@@ -33,7 +32,7 @@ export class LoginForm implements OnInit {
     }
 
     onSubmit():boolean {
-        this.submit.emit(this.loginForm.value);
+        this.login.emit(this.loginForm.value);
         return false;
     }
 }

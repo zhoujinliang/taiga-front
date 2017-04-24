@@ -23,6 +23,7 @@ import { ActivatedRoute } from "@angular/router"
 import { TranslateService } from "@ngx-translate/core"
 import { Store } from "@ngrx/store"
 import { IState } from "../../../app.store"
+import { FetchCurrentProjectAction } from "../projects.actions"
 
 @Component({
     selector: "tg-project-detail",
@@ -48,10 +49,7 @@ export class ProjectDetail implements OnInit {
 
     ngOnInit() {
         this.route.params.subscribe((params) => {
-            this.store.dispatch({
-                type: "FETCH_CURRENT_PROJECT",
-                payload: params['slug'],
-            })
+            this.store.dispatch(new FetchCurrentProjectAction(params.slug));
         })
     }
 }

@@ -66,6 +66,7 @@ export function HttpLoaderFactory(http: Http) {
     StoreModule.provideStore(rootReducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
     EffectsModule.run(GlobalEffects),
+    RouterStoreModule.connectRouter(),
   ],
   declarations: [
     AppComponent,

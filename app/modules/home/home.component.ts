@@ -64,6 +64,10 @@ export class Home implements OnInit {
 
     ngOnInit() {
         Rx.Observable.zip(this.user, this.projects).subscribe(([user, projects]:any) => {
+            if (!this.user || this.user.isEmpty()) {
+                this.router.navigate(["/discover"]);
+                return
+            }
             this.store.dispatch({
                 type: "FETCH_ASSIGNED_TO",
                 payload: {userId: user.get('id'), projects: projects},

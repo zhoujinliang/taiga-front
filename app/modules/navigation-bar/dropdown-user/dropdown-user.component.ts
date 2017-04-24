@@ -24,7 +24,7 @@ import { NavigationUrlsService } from "../../../ts/modules/base/navurls.service"
 import { Router } from "@angular/router";
 import { ConfigurationService } from "../../../ts/modules/base/conf";
 import { AuthService } from "../../auth/auth.service";
-import { Component, Input } from "@angular/core"
+import { Component, Input, Output, EventEmitter } from "@angular/core"
 // import { FeedbackService } from "../../feedback/feedback.service";
 
 @Component({
@@ -33,6 +33,7 @@ import { Component, Input } from "@angular/core"
 })
 export class DropdownUser {
     @Input() user: any;
+    @Output() logout: EventEmitter<any>
     isFeedbackEnabled: boolean;
     // userSettingsPlugins:any;
 
@@ -41,13 +42,14 @@ export class DropdownUser {
                  private navurls: NavigationUrlsService) {
                  // private globalData: GlobalDataService) {
                  // private feedback: FeedbackService) {
+        this.logout = new EventEmitter();
         this.isFeedbackEnabled = this.config.get("feedbackEnabled");
         // this.userSettingsPlugins = _.filter(globalData.get('userSettingsPlugins'), {userMenu: true});
     }
 
-    logout() {
-        // this.auth.logout();
-        // this.router.navigateByUrl(this.navurls.resolve("discover"));
+    onLogoutClick() {
+        this.logout.emit();
+        return false;
     };
 
     sendFeedback() {

@@ -1,4 +1,5 @@
 import * as Immutable from "immutable"
+import {routerReducer} from "@ngrx/router-store"
 import {homeInitialState, homeReducer} from "./modules/home/home.store"
 import {discoverInitialState, discoverReducer} from "./modules/discover/discover.store"
 import {currentProjectInitialState, currentProjectReducer} from "./modules/projects/projects.store"
@@ -21,8 +22,6 @@ const initialState = Immutable.fromJS({
 
 export const globalReducer = (state, action) => {
     switch(action.type){
-        case 'SET_USER':
-            return state.set('user', action.payload);
         case 'SET_PROJECTS':
             return state.set('projects', action.payload);
         default:
@@ -32,6 +31,7 @@ export const globalReducer = (state, action) => {
 
 export const rootReducer = (state=initialState, action) => {
     return state.set('global', globalReducer(state.get('global'), action))
+                .set('router', routerReducer(state.get('router'), action))
                 .set('home', homeReducer(state.get('home'), action))
                 .set('current-project', currentProjectReducer(state.get('current-project'), action))
                 .set('discover', discoverReducer(state.get('discover'), action))

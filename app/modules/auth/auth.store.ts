@@ -7,6 +7,8 @@ export const authInitialState = {
 
 export const authReducer = (state, action) => {
     switch(action.type){
+        case 'SET_USER':
+            return state.set('user', action.payload);
         case 'SET_LOGIN_ERRORS':
             return state.set('login-errors', action.payload);
         case 'SET_REGISTER_ERRORS':

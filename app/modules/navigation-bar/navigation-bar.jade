@@ -1,7 +1,7 @@
 nav.navbar(*ngIf="isEnabledHeader")
     div.nav-left
         a.logo(
-            *ngIf="user.isEmpty()",
+            *ngIf="!user || user.isEmpty()",
             href="https://taiga.io/",
             title="{{'PROJECT.NAVIGATION.HOMEPAGE' | translate}}"
         )
@@ -9,7 +9,7 @@ nav.navbar(*ngIf="isEnabledHeader")
 
         a.logo(
             routerLink="/",
-            *ngIf="!user.isEmpty()",
+            *ngIf="user && !user.isEmpty()",
             href="#",
             title="{{'PROJECT.NAVIGATION.HOMEPAGE' | translate}}"
         )
@@ -22,9 +22,9 @@ nav.navbar(*ngIf="isEnabledHeader")
             translate="PROJECT.NAVIGATION.HELP"
         )
 
-    div.nav-right(*ngIf="user.isEmpty()")
+    div.nav-right(*ngIf="!user || user.isEmpty()")
         a.login(
-            (click)="login()",
+            (click)="onLogin()",
             href="#",
             title="{{ 'LOGIN_COMMON.ACTION_SIGN_IN' | translate }}",
             translate="LOGIN_COMMON.ACTION_SIGN_IN"
@@ -37,7 +37,7 @@ nav.navbar(*ngIf="isEnabledHeader")
             translate="REGISTER_FORM.ACTION_SIGN_UP"
         )
 
-    div.nav-right(*ngIf="!user.isEmpty()")
+    div.nav-right(*ngIf="user && !user.isEmpty()")
         a(
             routerLink="/",
             "[class.active]"="active",
@@ -52,4 +52,4 @@ nav.navbar(*ngIf="isEnabledHeader")
             tg-svg(svg-icon="icon-discover")
 
         tg-dropdown-project-list.topnav-dropdown-wrapper(*ngIf="projects.size", [projects]="projects")
-        tg-dropdown-user.topnav-dropdown-wrapper([user]="user")
+        tg-dropdown-user.topnav-dropdown-wrapper([user]="user", (logout)="onLogout()")

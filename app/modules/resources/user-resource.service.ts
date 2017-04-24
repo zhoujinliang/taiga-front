@@ -18,6 +18,7 @@
  */
 
 import * as Immutable from "immutable"
+import * as Rx from "rxjs/Rx"
 
 import {Injectable} from "@angular/core"
 import {UrlsService} from "../../ts/modules/base/urls"
@@ -60,5 +61,16 @@ export class UserResource {
         };
 
         return this.http.post(url, params);
+    };
+
+    login(loginData) {
+        let url = this.urls.resolve("auth");
+        return this.http.post(url, loginData)
+                        .map((data:any) => {
+                            return Immutable.fromJS(data.data)
+                        })
+                        .catch((err) => {
+                            return Rx.Observable.throw(err);
+                        });
     };
 };

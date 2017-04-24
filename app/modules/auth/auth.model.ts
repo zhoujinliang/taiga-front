@@ -1,7 +1,7 @@
 export class LoginData {
     username: string;
     password: string;
-    loginType: string;
+    type: string;
 }
 
 export class RegisterData {

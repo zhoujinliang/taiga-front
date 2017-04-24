@@ -1,5 +1,5 @@
 .login-form-container()
-    form.login-form((ngSubmit)="onSubmit()", [formGroup]="loginForm", novalidate)
+    form.login-form((submit)="onSubmit()", [formGroup]="loginForm", novalidate)
         fieldset
             input(
                 id="username",

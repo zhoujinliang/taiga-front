@@ -1,5 +1,10 @@
 tg-notification-messages
-tg-navigation-bar(*ngIf="!errorHandling.showingError", [user]="user | async", [projects]="projects | async")
+tg-navigation-bar(*ngIf="!errorHandling.showingError",
+                  [user]="user | async",
+                  [projects]="projects | async",
+                  (login)="onLogin()",
+                  (logout)="onLogout()")
+
 div(*ngIf="!errorHandling.showingError")
     <router-outlet></router-outlet>
 

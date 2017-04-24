@@ -18,6 +18,7 @@ export class GlobalEffects {
         .ofType('FETCH_CURRENT_USER_DATA')
         .switchMap(() => {
           let user = Immutable.fromJS(this.storage.get("userInfo"));
+          console.log(user);
           let userId = null;
           if (user && user.get('id')) {
               userId = user.get('id');
@@ -28,6 +29,19 @@ export class GlobalEffects {
                   new SetProjectsAction(projects)
               ]
           });
+        });
+
+    @Effect()
+    storeUser$: Observable<Action> = this.actions$
+        .ofType('STORE_USER')
+        .map(toPayload)
+        .map((user) => {
+            if(user) {
+                this.storage.set("userInfo", user.toJS());
+            } else {
+                this.storage.set("userInfo", {});
+            }
+            return new SetUserAction(user);
         });
 
     constructor(private storage: StorageService, private rs: ResourcesService, private actions$: Actions) {}

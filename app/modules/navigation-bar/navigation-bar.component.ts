@@ -18,7 +18,7 @@
  */
 
 import {defineImmutableProperty} from "../../libs/utils"
-import {Component, OnInit, Input} from "@angular/core"
+import {Component, OnInit, Input, Output, EventEmitter } from "@angular/core"
 import { NavigationUrlsService } from "../../ts/modules/base/navurls.service";
 import { ConfigurationService } from "../../ts/modules/base/conf";
 import { CurrentUserService } from "../services/current-user.service";
@@ -31,13 +31,18 @@ import { Router } from "@angular/router";
 })
 export class NavigationBar implements OnInit{
     @Input() projects: any;
-    @Input() user:any
+    @Input() user:any;
+    @Output() logout: EventEmitter<any>;
+    @Output() login: EventEmitter<any>;
     isAuthenticated: any = true;
     isEnabledHeader:any = true;
     // publicRegisterEnabled: any;
     // active: boolean;
 
-    constructor() {}
+    constructor() {
+        this.login = new EventEmitter();
+        this.logout = new EventEmitter();
+    }
     // constructor(private navigationBarService: NavigationBarService,
     //             private router: Router,
     //             private navurls: NavigationUrlsService,
@@ -59,8 +64,13 @@ export class NavigationBar implements OnInit{
         // }
     }
 
-    login() {
-        // let nextUrl = encodeURIComponent(this.router.url);
-        // this.router.navigateByUrl(this.navurls.resolve("login"), [{next: nextUrl}]);
+    onLogout() {
+        this.logout.emit();
+        return false;
+    }
+
+    onLogin() {
+        this.login.emit();
+        return false;
     }
 };
