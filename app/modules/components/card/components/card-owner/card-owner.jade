@@ -1,0 +1,27 @@
+.card-owner
+    .card-owner-info(*ngIf="item?.get('assigned_to')")
+        .card-owner-avatar
+            tg-avatar([user]="item?.get('assigned_to')", [class.is-iocaine]="item?.get('is_iocaine')")
+        span.card-owner-name(tg-visible='owner') {{item?.getIn(['assigned_to', 'full_name'])}}
+        div(tg-visible='owner')
+            tg-card-title([item]="item")
+
+    .card-owner-info(*ngIf="!item?.get('assigned_to')")
+        img(ng-src="/#{_version}/images/unnamed.png")
+        span.card-owner-name(
+            tg-visible='owner',
+            translate="COMMON.ASSIGNED_TO.NOT_ASSIGNED"
+        )
+        div(tg-visible='owner')
+            tg-card-title([item]="item")
+
+    //tg-check-permission="{{getPermissionsKey()}}"
+    .card-owner-actions(tg-visible='owner')
+        a.e2e-assign.card-owner-assign((click)="onClickAssignedTo()")
+            tg-svg(svg-icon="icon-add-user")
+            span(translate="COMMON.CARD.ASSIGN_TO")
+
+        // tg-loading="item?.get('loading')"
+        a.e2e-edit.card-edit((click)="onClickEdit()")
+            tg-svg(svg-icon="icon-edit")
+            span(translate="COMMON.CARD.EDIT")

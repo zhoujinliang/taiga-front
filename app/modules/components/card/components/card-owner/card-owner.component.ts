@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Taiga Agile LLC <taiga@taiga.io>
+ * Copyright (C) 2014-2015 Taiga Agile LLC <taiga@taiga.io>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -14,15 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: board-zoom.directive.coffee
+ * File: card.controller.coffee
  */
 
-export let BoardZoomDirective = () =>
-    ({
-        scope: {
-            levels: "=",
-            value: "="
-        },
-        templateUrl: 'components/board-zoom/board-zoom.html'
-    })
-;
+import {Component, Input} from "@angular/core";
+import * as Immutable from "immutable";
+
+@Component({
+    selector: "tg-card-owner",
+    template: require('./card-owner.jade')(),
+})
+export class CardOwner {
+    @Input() item: Immutable.Map<string, any> = null;
+}

@@ -24,6 +24,7 @@
 
 import * as _ from "lodash"
 import * as Promise from "bluebird"
+import * as Immutable from "immutable"
 import {Injectable} from "@angular/core"
 import {UrlsService} from "./urls"
 import {ModelService} from "./model"
@@ -166,7 +167,7 @@ export class RepositoryService {
         }
 
         return this.http.get(url, params, httpOptions).map((data:any) => {
-            let result =  _.map(data.data, x => this.model.make_model(name, x));
+            let result =  Immutable.fromJS(data.data);
 
             if (headers) {
                 return [result, data.headers];
@@ -223,7 +224,7 @@ export class RepositoryService {
         return this.http.get(url, params, httpOptions).map((data:any) => {
             let headers = data.headers();
             let result:any = {};
-            result.models = _.map(data.data, x => this.model.make_model(name, x));
+            result.models = Immutable.fromJS(data.data);
             result.count = parseInt(headers["x-pagination-count"], 10);
             result.current = parseInt(headers["x-pagination-current"] || 1, 10);
             result.paginatedBy = parseInt(headers["x-paginated-by"], 10);

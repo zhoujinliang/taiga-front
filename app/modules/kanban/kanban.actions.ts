@@ -1,6 +1,39 @@
 import * as Immutable from "immutable";
 import { Action } from '@ngrx/store';
 
+export class FetchKanbanUserStoriesAction implements Action {
+  readonly type = 'FETCH_KANBAN_USER_STORIES';
+
+  constructor(public payload: string) { }
+}
+
+export class SetKanbanUserStoriesAction implements Action {
+  readonly type = 'SET_KANBAN_USER_STORIES';
+
+  constructor(public payload: Immutable.List<any>) { }
+}
+
+
+export class ChangeKanbanZoom implements Action {
+  readonly type = 'CHANGE_KANBAN_ZOOM';
+  payload: any
+
+  constructor(level, map) {
+      this.payload.level = level;
+      this.payload.map = map;
+  }
+}
+
+export class SetKanbanZoom implements Action {
+  readonly type = 'SET_KANBAN_ZOOM';
+  payload: any
+
+  constructor(level, map) {
+      this.payload.level = level;
+      this.payload.map = map;
+  }
+}
+
 // export class SearchDiscoverProjects implements Action {
 //   readonly type = 'SEARCH_DISCOVER_PROJECTS';
 //   payload: any;

@@ -1,0 +1,7 @@
+.card-tags(tg-visible='tags')
+    ng-template(*ngFor="let tag of tags")
+        span.card-tag(
+            *ngIf="tag.get('color')",
+            [style.background-color]="tag.get('color')",
+            [title]="tag.get('name')"
+        )

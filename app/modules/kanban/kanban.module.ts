@@ -9,6 +9,9 @@ import {TgCommonModule} from '../../ts/modules/common/common.module';
 import {TgComponentsModule} from '../components/components.module';
 import {KanbanPage} from "./kanban.component";
 import {KanbanTable} from "./components/kanban-table/kanban-table.component";
+import {KanbanTableHeader} from "./components/kanban-table-header/kanban-table-header.component";
+import {KanbanTableBody} from "./components/kanban-table-body/kanban-table-body.component";
+import {KanbanBoardZoom} from "./components/kanban-board-zoom/kanban-board-zoom.component";
 import {KanbanEffects} from "./kanban.effects";
 
 @NgModule({
@@ -28,7 +31,10 @@ import {KanbanEffects} from "./kanban.effects";
     ],
     declarations: [
         KanbanPage,
-        KanbanTable
+        KanbanTable,
+        KanbanTableHeader,
+        KanbanTableBody,
+        KanbanBoardZoom,
     ],
     providers: [
     ],

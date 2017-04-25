@@ -10,6 +10,12 @@ import {TgBaseModule} from '../../ts/modules/base/base.module';
 import {Avatar} from "./avatar/avatar.component"
 import { BelongToEpics } from './belong-to-epics/belong-to-epics.component';
 import { AvatarService } from './avatar/avatar.service';
+import { Card } from './card/card.component';
+import { CardTags } from './card/components/card-tags/card-tags.component';
+import { CardOwner } from './card/components/card-owner/card-owner.component';
+import { CardTitle } from './card/components/card-title/card-title.component';
+import { Visible } from './card/visible.directive';
+import { BoardZoom} from './board-zoom/board-zoom.component';
 import { ProjectLogoSmall } from './project-logo-small/project-logo-small.component';
 import { ProjectLogoBig } from './project-logo-big/project-logo-big.component';
 import { TermsOfServiceAndPrivacyPolicyNotice } from './terms-of-service-and-privacy-policy-notice/terms-of-service-and-privacy-policy-notice.component'
@@ -30,8 +36,16 @@ import { ProjectMenu } from './project-menu/project-menu.component'
         ProjectLogoSmall,
         ProjectLogoBig,
         ProjectMenu,
+        Card,
+        BoardZoom,
     ],
     declarations: [
+        Card,
+        CardTags,
+        CardOwner,
+        CardTitle,
+        Visible,
+        BoardZoom,
         Avatar,
         BelongToEpics,
         TermsOfServiceAndPrivacyPolicyNotice,

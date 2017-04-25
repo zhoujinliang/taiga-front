@@ -18,22 +18,19 @@ div.wrapper
         // )
 
         .kanban-header
-            // include ../includes/components/mainTitle
+            tg-main-title([projectName]="(project | async)?.get('name')", [sectionName]="section")
             .taskboard-actions
-                .zoom-loading(tg-loading="ctrl.zoomLoading")
-                // tg-kanban-board-zoom(
-                //     on-zoom-change="ctrl.setZoom(zoomLevel, zoom)"
-                // )
+                // .zoom-loading(tg-loading="ctrl.zoomLoading")
+                tg-kanban-board-zoom([value]="zoom | async")
 
-                // button.button-filter.e2e-open-filter(
-                //     ng-click="ctrl.openFilter = !ctrl.openFilter"
-                //     title="{{ctrl.selectedFilters.length}} {{'COMMON.FILTERS.APPLIED_FILTERS_NUM' | translate}}"
-                // )
-                //     span.filter-num(ng-if="ctrl.selectedFilters.length") {{ctrl.selectedFilters.length}}
-                //     tg-svg(svg-icon="icon-filters")
+                button.button-filter.e2e-open-filter(
+                    (click)="openFilters()"
+                    title="{{selectedFilters.length}} {{'COMMON.FILTERS.APPLIED_FILTERS_NUM' | translate}}"
+                )
+                    span.filter-num(*ngIf="selectedFilters.length") {{selectedFilters.length}}
+                    tg-svg(svg-icon="icon-filters")
 
-        // include ../includes/modules/kanban-table
-        tg-kanban-table
+        tg-kanban-table([project]="project | async", [userstories]="userstoriesByState | async")
 
     // div.lightbox.lightbox-generic-form.lb-create-edit-userstory(tg-lb-create-edit-userstory)
     //     include ../includes/modules/lightbox-us-create-edit

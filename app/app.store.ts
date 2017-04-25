@@ -1,6 +1,7 @@
 import * as Immutable from "immutable"
 import {routerReducer} from "@ngrx/router-store"
 import {homeInitialState, homeReducer} from "./modules/home/home.store"
+import {kanbanInitialState, kanbanReducer} from "./modules/kanban/kanban.store"
 import {authInitialState, authReducer} from "./modules/auth/auth.store"
 import {discoverInitialState, discoverReducer} from "./modules/discover/discover.store"
 import {projectsInitialState, projectsReducer} from "./modules/projects/projects.store"
@@ -16,6 +17,7 @@ const globalInitialState = {
 const initialState = Immutable.fromJS({
     global: globalInitialState,
     home: homeInitialState,
+    kanban: kanbanInitialState,
     discover: discoverInitialState,
     common: commonInitialState,
     auth: authInitialState,
@@ -34,6 +36,7 @@ export const globalReducer = (state, action) => {
 export const rootReducer = (state=initialState, action) => {
     return state.set('router', routerReducer(state.get('router'), action))
                 .set('home', homeReducer(state.get('home'), action))
+                .set('kanban', kanbanReducer(state.get('kanban'), action))
                 .set('projects', projectsReducer(state.get('projects'), action))
                 .set('discover', discoverReducer(state.get('discover'), action))
                 .set('auth', authReducer(state.get('auth'), action))

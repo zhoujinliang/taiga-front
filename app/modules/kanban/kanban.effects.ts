@@ -10,20 +10,29 @@ import { of } from 'rxjs/observable/of';
 import * as actions from "./kanban.actions";
 import * as Immutable from "immutable";
 import { ResourcesService } from "../resources/resources.service";
+import { StorageService} from "../../ts/modules/base/storage";
 
 @Injectable()
 export class KanbanEffects {
-    // @Effect()
-    // fetchAssignedTo$: Observable<Action> = this.actions$
-    //     .ofType('FETCH_MOST_ACTIVE')
-    //     .map(toPayload)
-    //     .switchMap(period => {
-    //       let orderBy = `-total_activity_${period}`
-    //       return this.rs.projects.getProjects({discover_mode: true, order_by: orderBy}, false).map((result) => {
-    //           let projects = Immutable.fromJS(result.data.slice(0, 5))
-    //           return new actions.SetMostActiveAction(projects)
-    //       })
-    //     });
+    @Effect()
+    fetchKanbanUserStories$: Observable<Action> = this.actions$
+        .ofType('FETCH_KANBAN_USER_STORIES')
+        .map(toPayload)
+        .switchMap(projectId => {
+          return this.rs.userstories.listAll(projectId, {}).map((userstories) => {
+              return new actions.SetKanbanUserStoriesAction(userstories)
+          })
+        });
+
+    @Effect()
+    changeKanbanZoom$: Observable<Action> = this.actions$
+        .ofType('CHANGE_KANBAN_ZOOM')
+        .map(toPayload)
+        .do(payload => {
+            this.storage.set('kanban_zoom', payload.level);
+        }).map(payload => {
+            return new actions.SetKanbanZoom(payload.level, payload.mpa);
+        });
     //
     // @Effect()
     // fetchWatching$: Observable<Action> = this.actions$
@@ -88,5 +97,5 @@ export class KanbanEffects {
     //           });
     //     });
 
-    constructor(private actions$: Actions, private rs: ResourcesService) { }
+    constructor(private actions$: Actions, private rs: ResourcesService, private storage: StorageService) { }
 }
