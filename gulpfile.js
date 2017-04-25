@@ -18,7 +18,6 @@ var gulp = require("gulp"),
     scsslint = require("gulp-scss-lint"),
     cache = require("gulp-cache"),
     cached = require("gulp-cached"),
-    jadeInheritance = require("gulp-jade-inheritance"),
     sourcemaps = require("gulp-sourcemaps"),
     insert = require("gulp-insert"),
     autoprefixer = require("gulp-autoprefixer"),
@@ -60,17 +59,6 @@ paths.distVersion = paths.dist + version + "/";
 paths.tmp = "tmp/";
 paths.extras = "extras/";
 paths.modules = "node_modules/";
-
-paths.jade = [
-    paths.app + "index.jade"
-];
-
-paths.htmlPartials = [
-    paths.tmp + "partials/**/*.html",
-    paths.tmp + "modules/**/*.html",
-    "!" + paths.tmp + "partials/includes/**/*.html",
-    "!" + paths.tmp + "/modules/**/includes/**/*.html"
-];
 
 paths.images = paths.app + "images/**/*";
 paths.svg = paths.app + "svg/**/*";
@@ -124,54 +112,6 @@ paths.css_order = [
     paths.tmp + "custom.css"
 ];
 
-paths.libs = [
-    paths.modules + "bluebird/js/browser/bluebird.js",
-    paths.modules + "jquery/dist/jquery.js",
-    paths.modules + "lodash/lodash.js",
-    paths.modules + "messageformat/messageformat.js",
-    paths.modules + "angular/angular.js",
-    paths.modules + "angular-route/angular-route.js",
-    paths.modules + "angular-sanitize/angular-sanitize.js",
-    paths.modules + "angular-animate/angular-animate.js",
-    paths.modules + "angular-aria/angular-aria.js",
-    paths.modules + "angular-translate/dist/angular-translate.js",
-    paths.modules + "angular-translate-loader-partial/angular-translate-loader-partial.js",
-    paths.modules + "angular-translate-loader-static-files/angular-translate-loader-static-files.js",
-    paths.modules + "angular-translate-interpolation-messageformat/angular-translate-interpolation-messageformat.js",
-    paths.modules + "moment/moment.js",
-    paths.modules + "checksley/checksley.js",
-    paths.modules + "pikaday/pikaday.js",
-    paths.modules + "Flot/jquery.flot.js",
-    paths.modules + "Flot/jquery.flot.pie.js",
-    paths.modules + "Flot/jquery.flot.time.js",
-    paths.modules + "flot-axislabels/jquery.flot.axislabels.js",
-    paths.modules + "jquery.flot.tooltip/js/jquery.flot.tooltip.js",
-    paths.modules + "raven-js/dist/raven.js",
-    paths.modules + "l.js/l.js",
-    paths.modules + "ng-infinite-scroll/build/ng-infinite-scroll.js",
-    paths.modules + "immutable/dist/immutable.js",
-    paths.modules + "intro.js/intro.js",
-    paths.modules + "dragula/dist/dragula.js",
-    paths.modules + "awesomplete/awesomplete.js",
-    paths.modules + "medium-editor/dist/js/medium-editor.js",
-    paths.modules + "to-markdown/dist/to-markdown.js",
-    paths.modules + "markdown-it/dist/markdown-it.js",
-    paths.modules + "prismjs/prism.js",
-    paths.modules + "prismjs/plugins/custom-class/prism-custom-class.js",
-    paths.modules + "medium-editor-autolist/dist/autolist.js",
-    paths.modules + "autolinker/dist/Autolinker.js",
-];
-
-paths.libs.forEach(function(file) {
-    try {
-        // Query the entry
-        stats = fs.lstatSync(file);
-    }
-    catch (e) {
-        console.log(file);
-    }
-});
-
 var isDeploy = argv["_"].indexOf("deploy") !== -1;
 
 var BrowserifyApp = browserify({
@@ -180,7 +120,8 @@ var BrowserifyApp = browserify({
     entries: ['app/main.ts'],
     cache: {},
     packageCache: {}
-}).plugin(tsify);
+}).transform('jadeify')
+  .plugin(tsify);
 
 var DeployBrowserifyApp = browserify({
     basedir: '.',
@@ -188,7 +129,8 @@ var DeployBrowserifyApp = browserify({
     entries: ['app/main.ts'],
     cache: {},
     packageCache: {}
-}).plugin(tsify);
+}).transform('jadeify')
+  .plugin(tsify);
 
 var watchedBrowserifyApp = watchify(BrowserifyApp);
 watchedBrowserifyApp.on("update", bundleApp);
@@ -196,7 +138,6 @@ watchedBrowserifyApp.on("log", gutil.log);
 
 function bundleApp() {
     return BrowserifyApp
-        .transform('jadeify')
         .bundle().on('error', gutil.log)
         .pipe(source('js/app.js'))
         .pipe(gulp.dest(paths.distVersion));
@@ -204,7 +145,6 @@ function bundleApp() {
 
 function watchBundleApp() {
     return watchedBrowserifyApp
-        .transform('jadeify')
         .bundle().on('error', gutil.log)
         .pipe(source('js/app.js'))
         .pipe(gulp.dest(paths.distVersion));
@@ -226,22 +166,10 @@ function deployBundleApp() {
 ##############################################################################
 */
 
-var jadeIncludes = paths.app +'partials/includes/**/*';
-
 gulp.task("jade", function() {
-    return gulp.src(paths.jade)
+    return gulp.src(paths.app + "index.jade")
         .pipe(plumber())
-        // .pipe(cached("jade"))
         .pipe(jade({pretty: true, locals:{v:version}}))
-        .pipe(gulp.dest(paths.tmp));
-});
-
-gulp.task("jade-inheritance", function() {
-    return gulp.src(paths.jade)
-        .pipe(plumber())
-        // .pipe(cached("jade"))
-        .pipe(jadeInheritance({basedir: "./app/"}))
-        .pipe(jade({pretty: true, locals:{v: version}}))
         .pipe(gulp.dest(paths.tmp));
 });
 
@@ -255,21 +183,12 @@ gulp.task("copy-jquery", function() {
         .pipe(gulp.dest(paths.distVersion + "js/"));
 });
 
-gulp.task("template-cache", function() {
-    return gulp.src(paths.htmlPartials)
-        .pipe(gulpif(isDeploy, replace(/e2e-([a-z\-]+)/g, '')))
-        .pipe(templateCache({standalone: true}))
-        .pipe(gulpif(isDeploy, uglify()))
-        .pipe(gulp.dest(paths.distVersion + "js/"))
-        .pipe(gulpif(!isDeploy, livereload()));
-});
-
 gulp.task("jade-deploy", function(cb) {
     return runSequence("jade", "copy-index", cb);
 });
 
 gulp.task("jade-watch", function(cb) {
-    return runSequence("jade-inheritance", "copy-index", cb);
+    return runSequence("jade", "copy-index", cb);
 });
 
 /*
@@ -531,24 +450,6 @@ gulp.task("moment-locales", function() {
         .pipe(gulp.dest(paths.distVersion + "locales/moment-locales/"));
 });
 
-gulp.task("jslibs-watch", function() {
-    return gulp.src(paths.libs)
-        .pipe(plumber())
-        .pipe(concat("libs.js"))
-        .pipe(gulp.dest(paths.distVersion + "js/"));
-});
-
-gulp.task("jslibs-deploy", function() {
-    return gulp.src(paths.libs)
-        .pipe(plumber())
-        .pipe(sourcemaps.init())
-        .pipe(concat("libs.js"))
-        .pipe(uglify())
-        .pipe(sourcemaps.write("./maps"))
-        .pipe(gulp.dest(paths.distVersion + "js/"));
-});
-
-
 gulp.task("app-deploy", ["typescript-deploy", "conf", "locales", "moment-locales"], function() {
     return gulp.src(paths.distVersion + "js/app.js")
         .pipe(sourcemaps.init())
@@ -686,11 +587,9 @@ gulp.task("express", function() {
 gulp.task("watch", function() {
     livereload.listen();
 
-    gulp.watch(paths.jade, ["jade-watch"]);
     gulp.watch(paths.sass_watch, ["styles-lint"]);
     gulp.watch(paths.styles_dependencies, ["styles-dependencies"]);
     gulp.watch(paths.svg, ["copy-svg"]);
-    gulp.watch(paths.libs, ["jslibs-watch"]);
     gulp.watch([paths.locales, paths.modulesLocales], ["locales"]);
     gulp.watch(paths.images, ["copy-images"]);
     gulp.watch(paths.fonts, ["copy-fonts"]);
