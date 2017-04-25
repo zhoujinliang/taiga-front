@@ -15,6 +15,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { DiscoverModule } from "./modules/discover/discover.module"
 import { HomeModule } from "./modules/home/home.module"
 import { AuthModule } from "./modules/auth/auth.module"
+import { KanbanModule } from "./modules/kanban/kanban.module"
 import { ProjectsModule } from "./modules/projects/projects.module"
 import { TgBaseModule } from './ts/modules/base/base.module';
 import { TgServicesModule } from './modules/services/services.module';
@@ -56,6 +57,7 @@ export function HttpLoaderFactory(http: Http) {
     TgComponentsModule,
     NavigationBarModule,
     AuthModule,
+    KanbanModule,
     TranslateModule.forRoot({
         loader: {
             provide: TranslateLoader,

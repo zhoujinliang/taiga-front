@@ -1,7 +1,5 @@
 import * as Immutable from "immutable"
 
-export type IHomeState = Immutable.Map<string, any>;
-
 export const discoverInitialState = {
     "most-active": [],
     "most-liked": [],
