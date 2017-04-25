@@ -32,6 +32,7 @@ import { FetchCurrentProjectAction } from "../projects.actions"
 export class ProjectDetail implements OnInit {
     user:any;
     project:any;
+    members:any;
 
     constructor(private appMeta: AppMetaService,
                 private translate: TranslateService,
@@ -41,9 +42,11 @@ export class ProjectDetail implements OnInit {
         this.project = this.store.select((state) => state.getIn(['projects', 'current-project']));
 
         this.project.subscribe((project) => {
-            let title = this.translate.instant("PROJECT.PAGE_TITLE", {projectName: project.get('name')});
-            this.appMeta.setTitle(title);
-            this.appMeta.setDescription(project.get("description"));
+            if(project) {
+                let title = this.translate.instant("PROJECT.PAGE_TITLE", {projectName: project.get('name')});
+                this.appMeta.setTitle(title);
+                this.appMeta.setDescription(project.get("description"));
+            }
         });
     }
 

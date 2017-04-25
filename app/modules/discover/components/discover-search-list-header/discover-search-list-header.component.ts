@@ -18,18 +18,21 @@
  */
 
 import * as angular from "angular"
-import {Component, OnInit} from "@angular/core"
+import {Component, OnInit, EventEmitter, Input, Output} from "@angular/core"
 
 @Component({
     selector: 'tg-discover-search-list-header',
-    //templateUrl: 'discover/components/discover-search-list-header/discover-search-list-header.html'
-    template: '<p></p>'
+    template: require('./discover-search-list-header.jade')()
 })
 export class DiscoverSearchListHeader implements OnInit {
-    like_is_open:boolean
-    activity_is_open:boolean
-    orderBy:any
-    onChange:any
+    @Input("order-by") orderBy: any;
+    @Output("order-by") orderByChange: EventEmitter<string>;
+    like_is_open:boolean;
+    activity_is_open:boolean;
+
+    constructor() {
+        this.orderByChange = new EventEmitter();
+    }
 
     ngOnInit() {
         this.like_is_open = this.orderBy.indexOf('-total_fans') === 0;
@@ -37,26 +40,29 @@ export class DiscoverSearchListHeader implements OnInit {
     }
 
     openLike() {
-        this.like_is_open = true;
         this.activity_is_open = false;
+        this.like_is_open = true;
 
-        return this.setOrderBy('-total_fans_last_week');
+        this.orderByChange.emit('-total_fans_last_week');
+        return false
     }
 
     openActivity() {
         this.activity_is_open = true;
         this.like_is_open = false;
 
-        return this.setOrderBy('-total_activity_last_week');
+        this.orderByChange.emit('-total_activity_last_week');
+        return false;
     }
 
-    setOrderBy(type) {
-        if (type == null) { type = ''; }
-        if (!type) {
-            this.like_is_open = false;
-            this.activity_is_open = false;
-        }
+    setOrder(order) {
+        this.orderByChange.emit(order);
+    }
 
-        return this.onChange({orderBy: type});
+    clearOrder() {
+        this.activity_is_open = false;
+        this.like_is_open = false;
+
+        this.orderByChange.emit(null);
     }
 }

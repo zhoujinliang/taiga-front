@@ -26,6 +26,7 @@ import {Component, OnInit} from "@angular/core"
 import {Store} from "@ngrx/store"
 import {IState} from "../../../app.store"
 import * as actions from "../discover.actions"
+import {go} from "@ngrx/router-store"
 
 @Component({
     selector: "tg-discover-home",
@@ -69,8 +70,7 @@ export class DiscoverHome implements OnInit {
         this.store.dispatch(new actions.FetchMostLikedAction(`last_${newOrder}`));
     }
 
-    onSubmit(q) {
-        let url = this.navUrls.resolve('discover-search');
-        return this.router.navigateByUrl(url, [{text: q}]);
+    onSearch(searchData) {
+        return this.store.dispatch(go(['/discover', 'search'], {text: searchData.q}));
     }
 }

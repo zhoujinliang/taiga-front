@@ -6,7 +6,7 @@ div.discover-header
         p.project-number(
             *ngIf="projectsCount",
         ) {{ 'DISCOVER.DISCOVER_SUBTITLE' | translate | messageformat:{projects: projectsCount} }}
-        form((ngSubmit)="submitFilter()", #searchForm="ngForm")
+        form((submit)="submitFilter()", #searchForm="ngForm")
             div.searchbox
                 input(
                     name="search",
@@ -20,7 +20,7 @@ div.discover-header
                     svg-title-translate="DISCOVER.SEARCH.ACTION_TITLE"
                 )
 
-            fieldset.searchbox-filters(*ngIf="filter")
+            fieldset.searchbox-filters(*ngIf="withFilters")
                 input(
                     type='radio',
                     id="filter-all",

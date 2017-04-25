@@ -6,6 +6,8 @@ export const discoverInitialState = {
     "most-active": [],
     "most-liked": [],
     "featured": [],
+    "search-results": [],
+    "results-next-page": 0,
     "projects-count": 0,
 }
 
@@ -19,6 +21,15 @@ export const discoverReducer = (state, action) => {
             return state.set('featured', action.payload);
         case 'SET_PROJECTS_STATS':
             return state.set('projects-count', action.payload);
+        case 'APPEND_DISCOVER_SEARCH_RESULTS':
+            return state.update('search-results', (projects) => projects.concat(action.payload));
+        case 'UPDATE_DISCOVER_SEARCH_NEXT_PAGE':
+            return state.update('results-next-page', (value) => {
+                if(action.payload) {
+                    return value + 1;
+                }
+                return null;
+            });
         default:
             return state;
     }

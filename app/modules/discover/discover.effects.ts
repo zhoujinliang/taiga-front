@@ -1,5 +1,6 @@
-import 'rxjs/add/operator/map'
-import 'rxjs/add/operator/switchMap'
+import * as _ from "lodash";
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
 import { Injectable } from '@angular/core';
 import { Effect, Actions, toPayload } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
@@ -57,6 +58,34 @@ export class DiscoverEffects {
                    let projects = Immutable.fromJS(data);
                    return new actions.SetFeaturedProjectsAction(projects);
            });
+        });
+
+    @Effect()
+    searchDiscoverProjects$: Observable<Action> = this.actions$
+        .ofType('SEARCH_DISCOVER_PROJECTS')
+        .map(toPayload)
+        .switchMap((payload) => {
+           let params:any = { discover_mode: true };
+
+           if (payload.filter === 'people') {
+               params.is_looking_for_people = true;
+           } else if (payload.filter === 'scrum') {
+               params.is_backlog_activated = true;
+           } else if (payload.filter === 'kanban') {
+               params.is_kanban_activated = true;
+           }
+           params.q = payload.q
+           params.order_by = payload.orderBy
+
+           return this.rs.projects.getProjects(params)
+              .flatMap(result => {
+                  let hasNextPage = !!result.headers['X-Pagination-Next'];
+                  let projects = Immutable.fromJS(result.data);
+                  return [
+                      new actions.AppendDiscoverSearchResults(projects),
+                      new actions.UpdateDiscoverSearchNextPage(hasNextPage)
+                  ]
+              });
         });
 
     constructor(private actions$: Actions, private rs: ResourcesService) { }

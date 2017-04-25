@@ -1,6 +1,15 @@
 import * as Immutable from "immutable";
 import { Action } from '@ngrx/store';
 
+export class SearchDiscoverProjects implements Action {
+  readonly type = 'SEARCH_DISCOVER_PROJECTS';
+  payload: any;
+
+  constructor(q: string, filter:string, orderBy: string) {
+    this.payload = {q, filter, orderBy}
+  }
+}
+
 export class FetchMostLikedAction implements Action {
   readonly type = 'FETCH_MOST_LIKED';
 
@@ -45,4 +54,16 @@ export class SetFeaturedProjectsAction implements Action {
   readonly type = 'SET_FEATURED_PROJECTS';
 
   constructor(public payload: Immutable.List<any>) { }
+}
+
+export class AppendDiscoverSearchResults implements Action {
+  readonly type = 'APPEND_DISCOVER_SEARCH_RESULTS';
+
+  constructor(public payload: Immutable.List<any>) { }
+}
+
+export class UpdateDiscoverSearchNextPage implements Action {
+  readonly type = 'UPDATE_DISCOVER_SEARCH_NEXT_PAGE';
+
+  constructor(public payload: boolean) {}
 }

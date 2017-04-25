@@ -26,21 +26,27 @@ import {ActivatedRoute, Router} from "@angular/router"
 import {AppMetaService} from "../../services/app-meta.service"
 import {DiscoverProjectsService} from "../services/discover-projects.service"
 import {TranslateService} from "@ngx-translate/core"
+import { Store } from "@ngrx/store"
+import { search } from "@ngrx/router-store"
+import { IState } from "../../../app.store";
+import { SearchDiscoverProjects } from "../discover.actions"
 
 @Component({
     selector: "tg-discover-search",
     template: require("./discover-search.jade")(),
 })
 export class DiscoverSearch implements OnInit {
-    page:number
     q:any
     filter:any
     orderBy:any
     loadingGlobal:boolean
     loadingList:boolean
     loadingPagination:boolean
+    searchResults:any;
+    projectsCount:any;
 
     constructor(private route: ActivatedRoute,
+                private store: Store<IState>,
                 private router: Router,
                 private discoverProjects: DiscoverProjectsService,
                 private appMetaService: AppMetaService,
@@ -48,104 +54,24 @@ export class DiscoverSearch implements OnInit {
     }
 
     ngOnInit() {
-        this.page = 1;
-
         this.route.queryParams.subscribe((params) => {
             this.q = params.text;
             this.filter = params.filter || 'all';
             this.orderBy = params.order_by || '';
+            this.store.dispatch(new SearchDiscoverProjects(this.q, this.filter, this.orderBy));
         });
-        this.loadingGlobal = false;
-        this.loadingList = false;
-        this.loadingPagination = false;
+        this.searchResults = this.store.select((state) => state.getIn(['discover', 'search-results']))
+        this.projectsCount = this.store.select((state) => state.getIn(["discover", "projects-count"]))
+        // this.loadingGlobal = false;
+        // this.loadingList = false;
+        // this.loadingPagination = false;
 
         let title = this.translate.instant("DISCOVER.SEARCH.PAGE_TITLE");
         let description = this.translate.instant("DISCOVER.SEARCH.PAGE_DESCRIPTION");
         this.appMetaService.setAll(title, description);
-
-        defineImmutableProperty(this, "searchResult", () => { return this.discoverProjects.searchResult; });
-        defineImmutableProperty(this, "nextSearchPage", () => { return this.discoverProjects.nextSearchPage; });
     }
 
-    fetch() {
-        this.page = 1;
-
-        this.discoverProjects.resetSearchList();
-
-        return this.search();
-    }
-
-    fetchByGlobalSearch() {
-        if (this.loadingGlobal) { return; }
-
-        this.loadingGlobal = true;
-
-        return this.fetch().subscribe(() => this.loadingGlobal = false);
-    }
-
-    fetchByOrderBy() {
-        if (this.loadingList) { return; }
-
-        this.loadingList = true;
-
-        return this.fetch().subscribe(() => this.loadingList = false);
-    }
-
-    showMore() {
-        if (this.loadingPagination) { return; }
-
-        this.loadingPagination = true;
-
-        this.page++;
-
-        return this.search().subscribe(() => this.loadingPagination = false);
-    }
-
-    search() {
-        let filter = this.getFilter();
-
-        let params = {
-            page: this.page,
-            q: this.q,
-            order_by: this.orderBy
-        };
-
-        _.assign(params, filter);
-
-        return this.discoverProjects.fetchSearch(params);
-    }
-
-    getFilter() {
-        if (this.filter === 'people') {
-            return {is_looking_for_people: true};
-        } else if (this.filter === 'scrum') {
-            return {is_backlog_activated: true};
-        } else if (this.filter === 'kanban') {
-            return {is_kanban_activated: true};
-        }
-
-        return {};
-    }
-
-    onChangeFilter(filter, q) {
-        this.filter = filter;
-        this.q = q;
-
-        this.router.navigate([{
-            filter: this.filter,
-            text: this.q
-        }]);
-
-        return this.fetchByGlobalSearch();
-    }
-
-    onChangeOrder(orderBy) {
-        this.orderBy = orderBy;
-
-        this.router.navigate([{
-            order_by: orderBy
-        }]);
-
-        return this.fetchByOrderBy();
+    onSearchCriteriaChange() {
+        this.store.dispatch(search({filter: this.filter, text: this.q, order_by: this.orderBy}))
     }
 }

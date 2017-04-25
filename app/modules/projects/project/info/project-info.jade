@@ -1,4 +1,4 @@
-section.single-project-intro
+section.single-project-intro(*ngIf="project")
     .project-logo(
         [routerLink]="['/project', project.get('slug')]",
         title="{{project.get('name')}}"

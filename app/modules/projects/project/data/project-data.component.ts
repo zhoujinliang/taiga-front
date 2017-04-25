@@ -17,12 +17,19 @@
  * File: project.controller.coffee
  */
 
-import { Component, Input } from "@angular/core"
+import { Component, Input, OnChanges } from "@angular/core"
 
 @Component({
     selector: "tg-project-data",
     template: require("./project-data.jade")()
 })
-export class ProjectData {
+export class ProjectData implements OnChanges {
     @Input() project:any;
+    members:any;
+
+    ngOnChanges() {
+        if(this.project) {
+            this.members = this.project.get('members').filter((m) => m.get('is_active'));
+        }
+    }
 }

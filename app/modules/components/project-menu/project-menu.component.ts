@@ -35,8 +35,10 @@ export class ProjectMenu implements OnChanges {
     constructor() {}
 
     ngOnChanges() {
-        this._setMenu()
-        this._setVideoConferenceUrl()
+        if(this.project) {
+            this._setMenu();
+            this._setVideoConferenceUrl();
+        }
     }
 
     _setMenu() {

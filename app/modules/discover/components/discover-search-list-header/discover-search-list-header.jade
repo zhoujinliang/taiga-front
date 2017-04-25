@@ -2,88 +2,84 @@
     .discover-results-header-inner
         .title
             tg-svg(svg-icon="icon-search")
-            h2 {{ 'DISCOVER.SEARCH.RESULTS' | translate }}
+            h2(translate='DISCOVER.SEARCH.RESULTS')
 
-        .filter-discover-search(ng-mouseleave="vm.toggleClose()")
+        .filter-discover-search()
             a.discover-search-filter(
-                href="#"
-                ng-click="vm.openLike()"
-                ng-class="{active: vm.like_is_open}"
+                (click)="openLike()",
+                [class.active]="like_is_open"
             )
                 tg-svg(svg-icon="icon-like")
-                span {{ 'DISCOVER.MOST_LIKED' | translate }}
+                span(translate='DISCOVER.MOST_LIKED')
             a.discover-search-filter(
-                href="#"
-                ng-click="vm.openActivity()"
-                ng-class="{active: vm.activity_is_open}"
+                (click)="openActivity()",
+                [class.active]="activity_is_open"
             )
                 tg-svg(svg-icon="icon-activity")
-                span {{ 'DISCOVER.MOST_ACTIVE' | translate }}
+                span(translate='DISCOVER.MOST_ACTIVE')
 
-    .discover-search-subfilter.most-liked-subfilter(ng-if="vm.like_is_open")
+    .discover-search-subfilter.most-liked-subfilter(*ngIf="like_is_open")
         a.results(
-            ng-if="vm.orderBy"
-            title=""
-            href="#",
-            ng-click="vm.setOrderBy()"
-        ) {{ 'DISCOVER.FILTERS.CLEAR' | translate }}
+            [title]="'DISCOVER.FILTERS.CLEAR' | translate",
+            (click)="setOrder()",
+            translate='DISCOVER.FILTERS.CLEAR'
+        )
 
         ul.filter-list
             li
                 a(
-                    ng-class="{active: vm.orderBy == '-total_fans_last_week'}",
-                    href="#",
-                    ng-click="vm.setOrderBy('-total_fans_last_week')"
-                ) {{ 'DISCOVER.FILTERS.WEEK' | translate }}
+                    [class.active]="orderBy == '-total_fans_last_week'",
+                    (click)="setOrder('-total_fans_last_week')",
+                    translate='DISCOVER.FILTERS.WEEK'
+                )
             li
                 a(
-                    ng-class="{active: vm.orderBy == '-total_fans_last_month'}",
-                    href="#",
-                    ng-click="vm.setOrderBy('-total_fans_last_month')"
-                ) {{ 'DISCOVER.FILTERS.MONTH' | translate }}
+                    [class.active]="orderBy == '-total_fans_last_month'",
+                    (click)="setOrder('-total_fans_last_month')",
+                    translate='DISCOVER.FILTERS.MONTH'
+                )
             li
                 a(
-                    ng-class="{active: vm.orderBy == '-total_fans_last_year'}",
-                    href="#",
-                    ng-click="vm.setOrderBy('-total_fans_last_year')"
-                ) {{ 'DISCOVER.FILTERS.YEAR' | translate }}
+                    [class.active]="orderBy == '-total_fans_last_year'",
+                    (click)="setOrder('-total_fans_last_year')",
+                    translate='DISCOVER.FILTERS.YEAR'
+                )
             li
                 a(
-                    ng-class="{active: vm.orderBy == '-total_fans'}",
-                    href="#",
-                    ng-click="vm.setOrderBy('-total_fans')"
-                ) {{ 'DISCOVER.FILTERS.ALL_TIME' | translate }}
+                    [class.active]="orderBy == '-total_fans'",
+                    (click)="setOrder('-total_fans')",
+                    translate='DISCOVER.FILTERS.ALL_TIME'
+                )
 
-    .discover-search-subfilter.most-active-subfilter(ng-if="vm.activity_is_open")
+    .discover-search-subfilter.most-active-subfilter(*ngIf="activity_is_open")
         a.results(
-            ng-if="vm.orderBy"
-            title=""
-            href="#",
-            ng-click="vm.setOrderBy()"
-        ) {{ 'DISCOVER.FILTERS.CLEAR' | translate }}
+            [title]="'DISCOVER.FILTERS.CLEAR' | translate",
+            (click)="clearOrder()",
+            translate='DISCOVER.FILTERS.CLEAR'
+        )
 
         ul.filter-list
             li
                 a(
-                    ng-class="{active: vm.orderBy == '-total_activity_last_week'}",
-                    href="#",
-                    ng-click="vm.setOrderBy('-total_activity_last_week')"
-                ) {{ 'DISCOVER.FILTERS.WEEK' | translate }}
+                    [class.active]="orderBy == '-total_activity_last_week'",
+                    (click)="setOrder('-total_activity_last_week')",
+                    translate='DISCOVER.FILTERS.WEEK'
+                )
             li
                 a(
-                    ng-class="{active: vm.orderBy == '-total_activity_last_month'}",
-                    href="#",
-                    ng-click="vm.setOrderBy('-total_activity_last_month')"
-                ) {{ 'DISCOVER.FILTERS.MONTH' | translate }}
+                    [class.active]="orderBy == '-total_activity_last_month'",
+                    (click)="setOrder('-total_activity_last_month')",
+                    translate='DISCOVER.FILTERS.MONTH'
+                )
             li
                 a(
-                    ng-class="{active: vm.orderBy == '-total_activity_last_year'}",
-                    href="#",
-                    ng-click="vm.setOrderBy('-total_activity_last_year')"
-                ) {{ 'DISCOVER.FILTERS.YEAR' | translate }}
+                    [class.active]="orderBy == '-total_activity_last_year'",
+                    (click)="setOrder('-total_activity_last_year')",
+                    translate='DISCOVER.FILTERS.YEAR'
+                )
             li
                 a(
-                    ng-class="{active: vm.orderBy == '-total_activity'}",
-                    href="#",
-                    ng-click="vm.setOrderBy('-total_activity')"
-                ) {{ 'DISCOVER.FILTERS.ALL_TIME' | translate }}
+                    [class.active]="orderBy == '-total_activity'",
+                    (click)="setOrder('-total_activity')",
+                    translate='DISCOVER.FILTERS.ALL_TIME'
+                )

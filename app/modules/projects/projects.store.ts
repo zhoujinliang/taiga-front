@@ -2,7 +2,7 @@ import * as Immutable from "immutable"
 
 export const projectsInitialState = {
     "user-projects": [],
-    "current-project": {}
+    "current-project": null
 }
 
 export const projectsReducer = (state, action) => {

@@ -1,4 +1,4 @@
-div.project-data
+div.project-data(*ngIf="project")
     section.timeline
         // div(tg-user-timeline, projectId="project.get('id')")
 
@@ -8,7 +8,8 @@ div.project-data
                 src="/#{v}/images/looking-for-people.png"
                 title="{{'PROJECT.LOOKING_FOR_PEOPLE' | translate}}"
             )
-            h3("[class.is-empty]"="!project.get('looking_for_people_note')") {{'PROJECT.LOOKING_FOR_PEOPLE' | translate}}
+            h3([class.is-empty]="!project.get('looking_for_people_note')",
+               translate="PROJECT.LOOKING_FOR_PEOPLE")
             p(*ngIf="project.get('looking_for_people_note')") {{project.get('looking_for_people_note')}}
             // tg-contact-project-button(
             //     *ngIf="project.get('is_contact_activated')"
@@ -17,15 +18,15 @@ div.project-data
             // )
 
         h2.title {{"PROJECT.SECTION.TEAM" | translate}}
-        // ul.involved-team
-        //     li(tg-repeat="member in members")
-        //         a(
-        //             tg-nav="user-profile:username=member.get('username')",
-        //             title="{{member.get('full_name')}}"
-        //         )
-        //             tg-avatar([user]="member")
-        //             tg-svg(
-        //                 ng-if="member.get('id') == project.getIn(['owner', 'id'])",
-        //                 svg-icon="icon-badge",
-        //                 svgTitleTranslate="COMMON.OWNER"
-        //             )
+        ul.involved-team
+            li(*ngFor="let member of members")
+                a(
+                    [routerLink]="['/profile', member.get('username')]",
+                    [title]="member.get('full_name')"
+                )
+                    tg-avatar([user]="member")
+                    tg-svg(
+                        *ngIf="member.get('id') == project.getIn(['owner', 'id'])",
+                        svg-icon="icon-badge",
+                        svgTitleTranslate="COMMON.OWNER"
+                    )
