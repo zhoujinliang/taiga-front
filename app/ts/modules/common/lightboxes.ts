@@ -22,8 +22,6 @@
  * File: modules/common/lightboxes.coffee
  */
 
-declare var $:any;
-
 import {Service} from "../../../ts/classes"
 import {bindOnce, timeout, debounce, sizeFormat, trim} from "../../../../../libs/utils"
 import * as _ from "lodash"

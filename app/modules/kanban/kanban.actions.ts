@@ -13,6 +13,35 @@ export class SetKanbanUserStoriesAction implements Action {
   constructor(public payload: Immutable.List<any>) { }
 }
 
+export class FetchKanbanFiltersDataAction implements Action {
+  readonly type = 'FETCH_KANBAN_FILTERS_DATA';
+  payload: any
+
+  constructor(projectId:number, appliedFilters: any) {
+      this.payload.projectId = projectId;
+      this.payload.appliedFilters = appliedFilters;
+  }
+}
+
+export class SetKanbanFiltersDataAction implements Action {
+  readonly type = 'SET_KANBAN_FILTERS_DATA';
+
+  constructor(public payload: Immutable.Map<string, any>) { }
+}
+
+
+export class FetchKanbanAppliedFiltersAction implements Action {
+  readonly type = 'FETCH_KANBAN_APPLIED_FILTERS';
+
+  constructor(public payload: number) {}
+}
+
+export class SetKanbanAppliedFiltersAction implements Action {
+  readonly type = 'SET_KANBAN_APPLIED_FILTERS';
+
+  constructor(public payload: Immutable.Map<string, any>) { }
+}
+
 
 export class ChangeKanbanZoom implements Action {
   readonly type = 'CHANGE_KANBAN_ZOOM';

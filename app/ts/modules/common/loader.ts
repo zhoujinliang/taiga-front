@@ -25,8 +25,6 @@
 // FIXME: this code not follows any style and any good practices on coffeescript
 // and it should be rewritten in coffeescript style classes.
 
-declare var $:any;
-
 import {timeout} from "../../../libs/utils"
 import * as angular from "angular"
 

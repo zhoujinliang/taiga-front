@@ -17,9 +17,6 @@
  * File: app-meta.service.coffee
  */
 
-declare var $:any;
-declare var _version:string;
-
 import {truncate} from "../../libs/utils"
 import * as angular from "angular"
 

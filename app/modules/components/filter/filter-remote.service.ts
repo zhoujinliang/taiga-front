@@ -17,64 +17,39 @@
  * File: filter-utils.service.coffee
  */
 
-import {generateHash} from "../../../app"
-import {Service} from "../../../classes"
-import * as angular from "angular"
+import {generateHash} from "../../../libs/utils";
+import {Observable} from "rxjs";
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../../ts/modules/base/http";
+import {UrlsService} from "../../../ts/modules/base/urls";
 import * as _ from "lodash"
+import * as Immutable from "immutable"
 
-export class FilterRemoteStorageService extends Service {
-    q:any
-    urls:any
-    http:any
+@Injectable()
+export class FiltersRemoteStorageService {
 
-    static initClass() {
-        this.$inject = [
-            "$q",
-            "$tgUrls",
-            "$tgHttp"
-        ];
-    }
-
-    constructor(q, urls, http) {
-        super()
-        this.q = q;
-        this.urls = urls;
-        this.http = http;
-    }
+    constructor(private urls: UrlsService, private http: HttpService) {}
 
     storeFilters(projectId, myFilters, filtersHashSuffix) {
-        let promise;
-        let deferred = this.q.defer();
         let url = this.urls.resolve("user-storage");
         let ns = `${projectId}:${filtersHashSuffix}`;
         let hash = generateHash([projectId, ns]);
+
         if (_.isEmpty(myFilters)) {
-            promise = this.http.delete(`${url}/${hash}`, {key: hash, value:myFilters});
-            promise.then(() => deferred.resolve());
-            promise.then(null, () => deferred.reject());
-        } else {
-            promise = this.http.put(`${url}/${hash}`, {key: hash, value:myFilters});
-            promise.then(data => deferred.resolve());
-            promise.then(null, data => {
-                let innerPromise = this.http.post(`${url}`, {key: hash, value:myFilters});
-                innerPromise.then(() => deferred.resolve());
-                return innerPromise.then(null, () => deferred.reject());
-            });
+            return this.http.delete(`${url}/${hash}`, {key: hash, value:myFilters});
         }
-        return deferred.promise;
+        return this.http.put(`${url}/${hash}`, {key: hash, value:myFilters}).catch(() => {
+            return this.http.post(`${url}`, {key: hash, value:myFilters});
+        });
     }
 
     getFilters(projectId, filtersHashSuffix) {
-        let deferred = this.q.defer();
         let url = this.urls.resolve("user-storage");
         let ns = `${projectId}:${filtersHashSuffix}`;
         let hash = generateHash([projectId, ns]);
 
-        let promise = this.http.get(`${url}/${hash}`);
-        promise.then(data => deferred.resolve(data.data.value));
-        promise.then(null, data => deferred.resolve({}));
-
-        return deferred.promise;
+        return this.http.get(`${url}/${hash}`)
+                        .map((data:any) => Immutable.fromJS(data.value))
+                        .catch(() => Observable.of({}));
     }
 }
-FilterRemoteStorageService.initClass();

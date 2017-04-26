@@ -4,7 +4,6 @@
 // Author: Jesús Espino / @jespinog
 // Author: Andrey Antukh / @niwibe
 
-declare var $:any;
 import * as _ from "lodash"
 
 let defaults = {

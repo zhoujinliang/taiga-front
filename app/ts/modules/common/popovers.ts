@@ -24,7 +24,6 @@
 
 import {bindOnce, debounce} from "../../../libs/utils"
 import * as angular from "angular"
-declare var $:any;
 
 //############################################################################
 //# UserStory status Directive (popover for change status)

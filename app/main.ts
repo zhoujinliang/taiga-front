@@ -1,7 +1,3 @@
-declare var $:any;
-declare var ljs:any;
-declare var _version:string;
-
 import * as _ from "lodash"
 // import * as Promise from "bluebird"
 import "l.js"

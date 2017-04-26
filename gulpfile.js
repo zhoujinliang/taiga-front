@@ -120,8 +120,10 @@ var BrowserifyApp = browserify({
     entries: ['app/main.ts'],
     cache: {},
     packageCache: {}
-}).transform('jadeify')
-  .plugin(tsify);
+}).transform('jadeify', {
+    compileDebug: true,
+    doctype: 'html',
+}).plugin(tsify);
 
 var DeployBrowserifyApp = browserify({
     basedir: '.',
@@ -129,8 +131,10 @@ var DeployBrowserifyApp = browserify({
     entries: ['app/main.ts'],
     cache: {},
     packageCache: {}
-}).transform('jadeify')
-  .plugin(tsify);
+}).transform('jadeify', {
+    compileDebug: false,
+    doctype: 'html',
+}).plugin(tsify);
 
 var watchedBrowserifyApp = watchify(BrowserifyApp);
 watchedBrowserifyApp.on("update", bundleApp);

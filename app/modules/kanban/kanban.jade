@@ -2,20 +2,23 @@ div.wrapper
     tg-project-menu
 
     section.main.kanban
-        // tg-filter(
-        //   open="{{ctrl.openFilter}}"
-        //   q="ctrl.filterQ"
-        //   filters="ctrl.filters"
-        //   custom-filters="ctrl.customFilters"
-        //   selected-filters="ctrl.selectedFilters"
-        //   customFilters="ctl.customFilters"
-        //   on-save-custom-filter="ctrl.saveCustomFilter(name)"
-        //   on-add-filter="ctrl.addFilter(filter)"
-        //   on-select-custom-filter="ctrl.selectCustomFilter(filter)"
-        //   on-remove-custom-filter="ctrl.removeCustomFilter(filter)"
-        //   on-remove-filter="ctrl.removeFilter(filter)"
-        //   on-change-q="ctrl.changeQ(q)"
-        // )
+        // q="ctrl.filterQ"
+        // filters="ctrl.filters"
+        // custom-filters="ctrl.customFilters"
+        // selected-filters="ctrl.selectedFilters"
+        // customFilters="ctl.customFilters"
+        // on-save-custom-filter="ctrl.saveCustomFilter(name)"
+        // on-add-filter="ctrl.addFilter(filter)"
+        // on-select-custom-filter="ctrl.selectCustomFilter(filter)"
+        // on-remove-custom-filter="ctrl.removeCustomFilter(filter)"
+        // on-remove-filter="ctrl.removeFilter(filter)"
+        // on-change-q="ctrl.changeQ(q)"
+        tg-filter(
+            [class.open]="filtersOpen",
+            section="kanban",
+            [appliedFilters]="appliedFilters|async",
+            [filters]="filters|async",
+        )
 
         .kanban-header
             tg-main-title([projectName]="(project | async)?.get('name')", [sectionName]="section")
@@ -24,10 +27,10 @@ div.wrapper
                 tg-kanban-board-zoom([value]="zoom | async")
 
                 button.button-filter.e2e-open-filter(
-                    (click)="openFilters()"
-                    title="{{selectedFilters.length}} {{'COMMON.FILTERS.APPLIED_FILTERS_NUM' | translate}}"
+                    (click)="toggleFiltersOpen()"
+                    title="{{selectedFiltersCount}} {{'COMMON.FILTERS.APPLIED_FILTERS_NUM' | translate}}"
                 )
-                    span.filter-num(*ngIf="selectedFilters.length") {{selectedFilters.length}}
+                    span.filter-num(*ngIf="selectedFiltersCount") {{selectedFiltersCount}}
                     tg-svg(svg-icon="icon-filters")
 
         tg-kanban-table([project]="project | async", [userstories]="userstoriesByState | async")

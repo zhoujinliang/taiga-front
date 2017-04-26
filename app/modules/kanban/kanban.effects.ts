@@ -11,6 +11,7 @@ import * as actions from "./kanban.actions";
 import * as Immutable from "immutable";
 import { ResourcesService } from "../resources/resources.service";
 import { StorageService} from "../../ts/modules/base/storage";
+import {FiltersRemoteStorageService} from "../components/filter/filter-remote.service";
 
 @Injectable()
 export class KanbanEffects {
@@ -21,6 +22,28 @@ export class KanbanEffects {
         .switchMap(projectId => {
           return this.rs.userstories.listAll(projectId, {}).map((userstories) => {
               return new actions.SetKanbanUserStoriesAction(userstories)
+          })
+        });
+
+    @Effect()
+    fetchKanbanFiltersData$: Observable<Action> = this.actions$
+        .ofType('FETCH_KANBAN_FILTERS_DATA')
+        .map(toPayload)
+        .switchMap(payload => {
+          let data = _.extend({project: payload.projectId}, payload.appliedFilters)
+          return this.rs.userstories.filtersData(data).map((filtersData) => {
+              return new actions.SetKanbanFiltersDataAction(filtersData)
+          })
+        });
+
+    @Effect()
+    fetchKanbanAppliedFilters: Observable<Action> = this.actions$
+        .ofType('FETCH_KANBAN_APPLIED_FILTERS')
+        .map(toPayload)
+        .switchMap(projectId => {
+
+          return this.filtersRemoteStorage.getFilters(projectId, "kanban").map((filtersData) => {
+              return new actions.SetKanbanAppliedFiltersAction(filtersData)
           })
         });
 
@@ -97,5 +120,5 @@ export class KanbanEffects {
     //           });
     //     });
 
-    constructor(private actions$: Actions, private rs: ResourcesService, private storage: StorageService) { }
+    constructor(private actions$: Actions, private rs: ResourcesService, private storage: StorageService, private filtersRemoteStorage: FiltersRemoteStorageService) { }
 }

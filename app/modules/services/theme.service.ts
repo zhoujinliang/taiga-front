@@ -17,9 +17,6 @@
  * File: theme.service.coffee
  */
 
-declare var $:any;
-declare var _version:string;
-
 import {Injectable} from "@angular/core"
 
 @Injectable()

@@ -8,6 +8,8 @@ import {TgCommonModule} from '../../ts/modules/common/common.module';
 import {TgBaseModule} from '../../ts/modules/base/base.module';
 
 import {Avatar} from "./avatar/avatar.component"
+import {Filter} from "./filter/filter.component"
+import {FiltersRemoteStorageService} from "./filter/filter-remote.service"
 import { BelongToEpics } from './belong-to-epics/belong-to-epics.component';
 import { AvatarService } from './avatar/avatar.service';
 import { Card } from './card/card.component';
@@ -38,6 +40,7 @@ import { ProjectMenu } from './project-menu/project-menu.component'
         ProjectMenu,
         Card,
         BoardZoom,
+        Filter,
     ],
     declarations: [
         Card,
@@ -52,9 +55,11 @@ import { ProjectMenu } from './project-menu/project-menu.component'
         ProjectLogoSmall,
         ProjectLogoBig,
         ProjectMenu,
+        Filter,
     ],
     providers: [
         AvatarService,
+        FiltersRemoteStorageService,
     ]
 })
 export class TgComponentsModule {}
