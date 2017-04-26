@@ -20,7 +20,11 @@ export class KanbanEffects {
         .ofType('FETCH_KANBAN_USER_STORIES')
         .map(toPayload)
         .switchMap(payload => {
-          return this.rs.userstories.listAll(payload.projectId, payload.appliedFilters.toJS()).map((userstories) => {
+          let params = _.extend({
+              include_attachments: 1,
+              include_tasks: 1
+          }, payload.appliedFilters.toJS());
+          return this.rs.userstories.listAll(payload.projectId, params).map((userstories) => {
               return new actions.SetKanbanUserStoriesAction(userstories)
           })
         });
@@ -52,9 +56,9 @@ export class KanbanEffects {
         .ofType('CHANGE_KANBAN_ZOOM')
         .map(toPayload)
         .do(payload => {
-            this.storage.set('kanban_zoom', payload.level);
+            this.storage.set('kanban_zoom', payload);
         }).map(payload => {
-            return new actions.SetKanbanZoom(payload.level, payload.mpa);
+            return new actions.SetKanbanZoom(payload);
         });
     //
     // @Effect()

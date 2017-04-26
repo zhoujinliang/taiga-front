@@ -17,6 +17,8 @@ import { Card } from './card/card.component';
 import { CardTags } from './card/components/card-tags/card-tags.component';
 import { CardOwner } from './card/components/card-owner/card-owner.component';
 import { CardTitle } from './card/components/card-title/card-title.component';
+import { CardData } from './card/components/card-data/card-data.component';
+import { CardCompletion } from './card/components/card-completion/card-completion.component';
 import { Visible } from './card/visible.directive';
 import { BoardZoom} from './board-zoom/board-zoom.component';
 import { ProjectLogoSmall } from './project-logo-small/project-logo-small.component';
@@ -48,6 +50,8 @@ import { ProjectMenu } from './project-menu/project-menu.component'
         CardTags,
         CardOwner,
         CardTitle,
+        CardData,
+        CardCompletion,
         Visible,
         BoardZoom,
         Avatar,

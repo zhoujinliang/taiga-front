@@ -50,23 +50,16 @@ export class SetKanbanAppliedFiltersAction implements Action {
   constructor(public payload: Immutable.Map<string, any>) { }
 }
 
-
 export class ChangeKanbanZoom implements Action {
   readonly type = 'CHANGE_KANBAN_ZOOM';
-  payload: any
 
-  constructor(level, map) {
-      this.payload = {level, map };
-  }
+  constructor(public payload:number) {}
 }
 
 export class SetKanbanZoom implements Action {
   readonly type = 'SET_KANBAN_ZOOM';
-  payload: any
 
-  constructor(level, map) {
-      this.payload = {level, map };
-  }
+  constructor(public payload:number) {}
 }
 
 export class AddKanbanFilter implements Action {

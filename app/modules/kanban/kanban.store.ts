@@ -2,7 +2,7 @@ import * as Immutable from "immutable"
 
 export const kanbanInitialState = {
     userstories: [],
-    zoom: 2,
+    zoomLevel: 4,
     AppliedFilters: {},
     filtersData: null,
     folds: {},
@@ -35,7 +35,7 @@ export const kanbanReducer = (state, action) => {
                 return category
             });
         case 'SET_KANBAN_ZOOM':
-            return state.set('zoom', Immutable.fromJS(action.payload));
+            return state.set('zoomLevel', action.payload);
         default:
             return state;
     }

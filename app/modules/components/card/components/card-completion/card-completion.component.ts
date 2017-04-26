@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014-2017 Taiga Agile LLC <taiga@taiga.io>
+ * Copyright (C) 2014-2015 Taiga Agile LLC <taiga@taiga.io>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -14,25 +14,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: board-zoom.directive.coffee
+ * File: card.controller.coffee
  */
 
-import {Component, Input, Output, EventEmitter} from "@angular/core";
+import {Component, Input} from "@angular/core";
+import * as Immutable from "immutable";
 
 @Component({
-    selector: "tg-board-zoom",
-    template: require("./board-zoom.jade")()
+    selector: "tg-card-completion",
+    template: require('./card-completion.jade')(),
 })
-export class BoardZoom {
-    @Input() levels: number;
-    @Input() value: number;
-    @Output() changeZoom: EventEmitter<any>;
+export class CardCompletion {
+    @Input() tasks: Immutable.List<any> = Immutable.List();
 
-    constructor() {
-        this.changeZoom = new EventEmitter();
+    closedTasks() {
+        return this.tasks.filter((task) => task.get('is_closed'));
     }
 
-    onChangeZoom(value) {
-        this.changeZoom.emit(parseInt(value, 10));
+    closedTasksPercent() {
+        let closed = this.closedTasks().size;
+        let total = this.tasks.size;
+        return (closed * 100) / total;
     }
 }

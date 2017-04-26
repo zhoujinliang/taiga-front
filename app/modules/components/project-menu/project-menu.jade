@@ -27,7 +27,7 @@ nav.menu(
 
             li#nav-epics(*ngIf="menu.get('epics')")
                 a(
-                    [routerLink]="['/project', project.get('slug'), '/epics']",
+                    [routerLink]="['/project', project.get('slug'), 'epics']",
                     [class.active]="active == 'epics'",
                     [attr.aria-label]="'EPICS.TITLE' | translate",
                     tabindex="2"
@@ -42,7 +42,7 @@ nav.menu(
                 ng-init="backlogHover = false"
             )
                 a(
-                    [routerLink]="['/project', project.get('slug'), '/backlog']",
+                    [routerLink]="['/project', project.get('slug'), 'backlog']",
                     [class.active]="active == 'backlog'",
                     [attr.aria-label]="'PROJECT.SECTION.BACKLOG' | translate",
                     tabindex="2"
@@ -59,7 +59,7 @@ nav.menu(
 
             li#nav-kanban(*ngIf="menu.get('kanban')")
                 a(
-                    [routerLink]="['/project', project.get('slug'), '/kanban']",
+                    [routerLink]="['/project', project.get('slug'), 'kanban']",
                     [class.active]="active == 'kanban'",
                     [attr.aria-label]="'PROJECT.SECTION.KANBAN' | translate",
                     tabindex="3"

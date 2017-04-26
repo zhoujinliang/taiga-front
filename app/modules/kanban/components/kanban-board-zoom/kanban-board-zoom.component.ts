@@ -19,73 +19,25 @@
 
 import {Component, Input} from "@angular/core"
 import { Store } from "@ngrx/store"
-import { ChangeKanbanZoom } from "../../kanban.actions"
-import { IState } from "../../../../app.store"
+import { ChangeKanbanZoom } from "../../kanban.actions";
+import { ZoomLevelService} from "../../../services/zoom-level.service";
+import { IState } from "../../../../app.store";
 
 @Component({
     selector: "tg-kanban-board-zoom",
     template: `
-        <tg-board-zoom [levels]="levels" [value]="value" (change-zoom)="onChangeZoom($event)">
+        <tg-board-zoom [levels]="levels" [value]="value" (changeZoom)="onChangeZoom($event)">
         </tg-board-zoom>`
 })
 export class KanbanBoardZoom {
     @Input() value;
+    levels: number;
 
-    levels = [{
-        ref: true,
-        subject: false,
-        owner: false,
-        tags: false,
-        extra_info: false,
-        unfold: false,
-        attachments: false,
-        related_tasks: false,
-        empty_extra_info: false,
-    }, {
-        ref: true,
-        subject: true,
-        owner: false,
-        tags: false,
-        extra_info: false,
-        unfold: false,
-        attachments: false,
-        related_tasks: false,
-        empty_extra_info: false,
-    }, {
-        ref: true,
-        subject: true,
-        owner: true,
-        tags: true,
-        extra_info: true,
-        unfold: true,
-        attachments: false,
-        related_tasks: false,
-        empty_extra_info: false,
-    }, {
-        ref: true,
-        subject: true,
-        owner: true,
-        tags: true,
-        extra_info: true,
-        unfold: true,
-        attachments: true,
-        related_tasks: false,
-        empty_extra_info: false,
-    }, {
-        ref: true,
-        subject: true,
-        owner: true,
-        tags: true,
-        extra_info: true,
-        unfold: true,
-        attachments: true,
-        related_tasks: true,
-        empty_extra_info: true,
-    }]
+    constructor(private store: Store<IState>, private zoomLevel: ZoomLevelService) {
+        this.levels = zoomLevel.numOfLevels("kanban");
+    }
 
-    constructor(private store: Store<IState>) {}
-
-    onChangeZoom(data) {
-        this.store.dispatch(new ChangeKanbanZoom(data.level, data.map));
+    onChangeZoom(level) {
+        this.store.dispatch(new ChangeKanbanZoom(level));
     }
 };

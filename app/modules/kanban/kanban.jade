@@ -24,7 +24,7 @@ div.wrapper
             tg-main-title([projectName]="(project | async)?.get('name')", [sectionName]="section")
             .taskboard-actions
                 // .zoom-loading(tg-loading="ctrl.zoomLoading")
-                tg-kanban-board-zoom([value]="zoom | async")
+                tg-kanban-board-zoom([value]="(zoom | async).level")
 
                 button.button-filter.e2e-open-filter(
                     (click)="toggleFiltersOpen()"
@@ -33,7 +33,7 @@ div.wrapper
                     span.filter-num(*ngIf="selectedFiltersCount") {{selectedFiltersCount}}
                     tg-svg(svg-icon="icon-filters")
 
-        tg-kanban-table([project]="project | async", [userstories]="userstoriesByState | async")
+        tg-kanban-table([project]="project | async", [userstories]="userstoriesByState | async", [zoom]="zoom | async")
 
     // div.lightbox.lightbox-generic-form.lb-create-edit-userstory(tg-lb-create-edit-userstory)
     //     include ../includes/modules/lightbox-us-create-edit

@@ -13,7 +13,7 @@ tg-kanban-table {
     height: 100%;
     overflow: hidden;
     width: 100%;
-    &.zoom-0 {
+    .kanban-table.zoom-0 {
         .task-column,
         .task-colum-name {
             max-width: $column-width / 2;
@@ -59,7 +59,7 @@ tg-kanban-table {
 
 }
 
-tg-kanban-table-header {
+.kanban-table-header {
     flex-basis: 2.4rem;
     min-height: 2.4rem;
     position: relative;
@@ -109,7 +109,7 @@ tg-kanban-table-header {
     }
 }
 
-tg-kanban-table-body {
+.kanban-table-body {
     @include font-size(medium);
     display: flex;
     height: 100%;

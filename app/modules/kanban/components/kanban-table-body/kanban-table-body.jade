@@ -21,7 +21,8 @@ div.kanban-table-body
 
             tg-card.card.ng-animate-disabled(
                 *ngFor="let item of userstories.get(status.get('id').toString())",
-                [item]="item"
+                [item]="item",
+                [zoom]="zoom",
             )
 
             div.kanban-column-intro(*ngIf="status.get('is_archived')", tg-kanban-archived-status-intro="s")

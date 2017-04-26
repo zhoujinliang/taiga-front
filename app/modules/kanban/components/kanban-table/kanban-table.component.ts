@@ -8,6 +8,7 @@ import * as Immutable from "immutable";
 export class KanbanTable implements OnChanges {
     @Input() project: Immutable.Map<string, any>;
     @Input() userstories: Immutable.List<any>;
+    @Input() zoom: any;
     statuses: Immutable.List<any> = Immutable.List();
     folds: any = {}
     archivedWatched: any = {}

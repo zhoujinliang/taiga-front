@@ -7,6 +7,7 @@ import {ProjectLogoService} from "./project-logo.service"
 import {GlobalDataService} from "./global-data.service"
 import {ThemeService} from "./theme.service"
 import {xhrError} from "./xhrError.service"
+import {ZoomLevelService} from "./zoom-level.service"
 import { PaginateResponseService } from './paginate-response.service';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { PaginateResponseService } from './paginate-response.service';
         ThemeService,
         xhrError,
         PaginateResponseService,
+        ZoomLevelService,
     ]
 })
 export class TgServicesModule{}

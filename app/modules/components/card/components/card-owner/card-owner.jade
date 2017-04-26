@@ -2,21 +2,21 @@
     .card-owner-info(*ngIf="item?.get('assigned_to')")
         .card-owner-avatar
             tg-avatar([user]="item?.get('assigned_to_extra_info')", [class.is-iocaine]="item?.get('is_iocaine')")
-        span.card-owner-name(tg-visible='owner') {{item.getIn(['assigned_to_extra_info', 'full_name_display'])}}
-        div(tg-visible='owner')
-            tg-card-title([item]="item")
+        span.card-owner-name(*ngIf='zoom.visibility.owner') {{item.getIn(['assigned_to_extra_info', 'full_name_display'])}}
+        div(*ngIf='!zoom.visibility.owner')
+            tg-card-title([item]="item", [zoom]="zoom")
 
     .card-owner-info(*ngIf="!item?.get('assigned_to')")
         img(ng-src="/#{_version}/images/unnamed.png")
         span.card-owner-name(
-            tg-visible='owner',
+            *ngIf='zoom.visibility.owner',
             translate="COMMON.ASSIGNED_TO.NOT_ASSIGNED"
         )
-        div(tg-visible='owner')
-            tg-card-title([item]="item")
+        div(*ngIf='!zoom.visibility.owner')
+            tg-card-title([item]="item", [zoom]="zoom")
 
     //tg-check-permission="{{getPermissionsKey()}}"
-    .card-owner-actions(tg-visible='owner')
+    .card-owner-actions(*ngIf='zoom.visibility.owner')
         a.e2e-assign.card-owner-assign((click)="onClickAssignedTo()")
             tg-svg(svg-icon="icon-add-user")
             span(translate="COMMON.CARD.ASSIGN_TO")

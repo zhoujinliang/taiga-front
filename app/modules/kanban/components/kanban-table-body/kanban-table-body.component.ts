@@ -8,5 +8,6 @@ export class KanbanTableBody {
     @Input() statuses: any;
     @Input() userstories: any;
     @Input() folds: any;
+    @Input() zoom: any;
     @Input() archivedWatched: any;
 }

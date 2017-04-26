@@ -26,9 +26,12 @@ import * as Immutable from "immutable";
     template: require('./card.jade')(),
 })
 export class Card {
-    @Input() zoomLevel: number = 0;
     @Input() item: Immutable.Map<string, any>;
+    @Input() zoom: any;
     archived:boolean = false;
+    visible: string[] = [];
+
+    constructor() {}
 
     // zoom:any
     // item:any

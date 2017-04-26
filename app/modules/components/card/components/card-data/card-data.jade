@@ -1,33 +1,31 @@
 .card-data(
-    tg-visible='extra_info',
+    *ngIf='zoom.visibility.extra_info',
     [class.empty-tasks]="item.get('tasks').size"
 )
     span.card-estimation(
-        tg-visible="empty_extra_info",
-        *ngIf="item.get('total_points') === null",
+        *ngIf="item.get('total_points') === null && zoom.visibility.empty_extra_info",
         translate="US.NOT_ESTIMATED"
     )
-    span.card-estimation(*ngIf="vm.item.get('total_points')"
+    span.card-estimation(*ngIf="item.get('total_points')"
     ) {{"COMMON.FIELDS.POINTS" | translate}} {{item.get('total_points')}}
     .card-statistics
         .statistic.card-iocaine(
-            *ngIf="item.get('is_iocaine')"
+            *ngIf="item.get('is_iocaine')",
             [title]="'COMMON.IOCAINE_TEXT' | translate"
         )
             tg-svg(svg-icon="icon-iocaine")
         .statistic.card-votes(
-            [class.active]="item.get('is_voter')"
-            tg-visible="empty_extra_info",
-            *ngIf="item.get('total_voters')
+            [class.active]="item.get('is_voter')",
+            *ngIf="item.get('total_voters') || zoom.visibility.empty_extra_info",
         )
             tg-svg(svg-icon="icon-upvote")
             span {{item.get('total_voters')}}
-        .statistic.card-watchers(*ngIf="item.get('watchers').size", tg-visible='empty_extra_info')
+        .statistic.card-watchers(*ngIf="item.get('watchers').size || zoom.visibility.empty_extra_info")
             tg-svg(svg-icon="icon-watch")
             span {{item.get('watchers').size}}
-        .statistic.card-comments(*ngIf="item.get('total_comments')", tg-visible='empty_extra_info')
+        .statistic.card-comments(*ngIf="item.get('total_comments') || zoom.visibility.empty_extra_info")
             tg-svg(svg-icon="icon-bubble-empty")
             span {{item.get('total_comments')}}
-        .statistic.card-attachments(*ngIf="item.get('attachments').size", tg-visible('empty_extra_info')
+        .statistic.card-attachments(*ngIf="item.get('attachments').size || zoom.visibility.empty_extra_info")
            tg-svg(svg-icon="icon-attachment")
            span {{item.get('attachments').size}}
