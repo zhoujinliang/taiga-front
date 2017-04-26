@@ -11,4 +11,12 @@ export class KanbanTableBody {
     @Input() zoom: any;
     @Input() archivedWatched: any;
     @Input() project: any;
+
+    trackStatusFn(idx, status) {
+        return status.get('id');
+    }
+
+    trackUSFn(idx, us) {
+        return us.get('id');
+    }
 }

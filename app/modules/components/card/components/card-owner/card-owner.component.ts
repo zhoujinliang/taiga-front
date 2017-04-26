@@ -28,4 +28,5 @@ import * as Immutable from "immutable";
 export class CardOwner {
     @Input() item: Immutable.Map<string, any> = null;
     @Input() zoom: any;
+    @Input() project: any;
 }

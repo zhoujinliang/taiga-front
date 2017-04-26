@@ -3,7 +3,7 @@ div.kanban-table-body
         // tg-kanban-wip-limit="s",
         // tg-kanban-column-height-fixer,
         div.kanban-uses-box.task-column(
-            *ngFor="let status of statuses; let i = index",
+            *ngFor="let status of statuses; let i = index; trackBy: trackStatusFn",
             [class.vfold]="folds[status.get('id')]",
         )
             .card-placeholder(*ngIf="!userstories.size && i == 0")
@@ -20,7 +20,7 @@ div.kanban-table-body
             // archived="ctrl.isUsInArchivedHiddenStatus(us.get('id'))"
 
             tg-card.card.ng-animate-disabled(
-                *ngFor="let item of userstories.get(status.get('id').toString())",
+                *ngFor="let item of userstories.get(status.get('id').toString()); trackBy:trackUSFn",
                 [item]="item",
                 [zoom]="zoom",
                 [project]="project",

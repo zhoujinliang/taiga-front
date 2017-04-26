@@ -4,7 +4,7 @@
             tg-avatar([user]="item?.get('assigned_to_extra_info')", [class.is-iocaine]="item?.get('is_iocaine')")
         span.card-owner-name(*ngIf='zoom.visibility.owner') {{item.getIn(['assigned_to_extra_info', 'full_name_display'])}}
         div(*ngIf='!zoom.visibility.owner')
-            tg-card-title([item]="item", [zoom]="zoom")
+            tg-card-title([item]="item", [zoom]="zoom", [project]="project")
 
     .card-owner-info(*ngIf="!item?.get('assigned_to')")
         img(ng-src="/#{_version}/images/unnamed.png")
@@ -13,7 +13,7 @@
             translate="COMMON.ASSIGNED_TO.NOT_ASSIGNED"
         )
         div(*ngIf='!zoom.visibility.owner')
-            tg-card-title([item]="item", [zoom]="zoom")
+            tg-card-title([item]="item", [zoom]="zoom", [project]="project")
 
     //tg-check-permission="{{getPermissionsKey()}}"
     .card-owner-actions(*ngIf='zoom.visibility.owner')
