@@ -42,13 +42,13 @@ export class KanbanPage implements OnInit, OnDestroy {
             }),
             this.project.subscribe((project) => {
                 if (project) {
-                    this.store.dispatch(new actions.FetchKanbanUserStoriesAction(project.get('id')));
                     this.store.dispatch(new actions.FetchKanbanAppliedFiltersAction(project.get('id')));
                 }
             }),
             Observable.zip(this.project, this.appliedFilters).subscribe(([project, appliedFilters]:any[]) => {
                 if (project && appliedFilters) {
                     this.store.dispatch(new actions.FetchKanbanFiltersDataAction(project.get('id'), appliedFilters));
+                    this.store.dispatch(new actions.FetchKanbanUserStoriesAction(project.get('id'), appliedFilters));
                 }
             })
         ]
@@ -56,6 +56,14 @@ export class KanbanPage implements OnInit, OnDestroy {
 
     toggleFiltersOpen() {
         this.filtersOpen = !this.filtersOpen;
+    }
+
+    addFilter({category, filter}) {
+        this.store.dispatch(new actions.AddKanbanFilter(category.get('dataType'), filter.get('id')));
+    }
+
+    removeFilter({category, filter}) {
+        this.store.dispatch(new actions.RemoveKanbanFilter(category.get('dataType'), filter.get('id')));
     }
 
     filtersDataToFilters(filtersData) {

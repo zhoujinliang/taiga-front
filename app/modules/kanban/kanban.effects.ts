@@ -19,8 +19,8 @@ export class KanbanEffects {
     fetchKanbanUserStories$: Observable<Action> = this.actions$
         .ofType('FETCH_KANBAN_USER_STORIES')
         .map(toPayload)
-        .switchMap(projectId => {
-          return this.rs.userstories.listAll(projectId, {}).map((userstories) => {
+        .switchMap(payload => {
+          return this.rs.userstories.listAll(payload.projectId, payload.appliedFilters.toJS()).map((userstories) => {
               return new actions.SetKanbanUserStoriesAction(userstories)
           })
         });
@@ -30,7 +30,7 @@ export class KanbanEffects {
         .ofType('FETCH_KANBAN_FILTERS_DATA')
         .map(toPayload)
         .switchMap(payload => {
-          let data = _.extend({project: payload.projectId}, payload.appliedFilters)
+          let data = _.extend({project: payload.projectId}, payload.appliedFilters.toJS())
           return this.rs.userstories.filtersData(data).map((filtersData) => {
               return new actions.SetKanbanFiltersDataAction(filtersData)
           })

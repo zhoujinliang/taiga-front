@@ -7,7 +7,7 @@ $column-shrink: 0;
 $column-margin: 0 5px 0 0;
 $column-padding: .5rem 1rem;
 
-.kanban-table {
+tg-kanban-table {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -59,7 +59,7 @@ $column-padding: .5rem 1rem;
 
 }
 
-.kanban-table-header {
+tg-kanban-table-header {
     flex-basis: 2.4rem;
     min-height: 2.4rem;
     position: relative;
@@ -109,7 +109,7 @@ $column-padding: .5rem 1rem;
     }
 }
 
-.kanban-table-body {
+tg-kanban-table-body {
     @include font-size(medium);
     display: flex;
     height: 100%;
