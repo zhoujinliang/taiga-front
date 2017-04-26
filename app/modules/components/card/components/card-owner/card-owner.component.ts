@@ -17,12 +17,13 @@
  * File: card.controller.coffee
  */
 
-import {Component, Input} from "@angular/core";
+import {Component, Input, ChangeDetectionStrategy} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-card-owner",
     template: require('./card-owner.jade')(),
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardOwner {
     @Input() item: Immutable.Map<string, any> = null;

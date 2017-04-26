@@ -17,12 +17,13 @@
  * File: card.controller.coffee
  */
 
-import {Component, Input} from "@angular/core";
+import {Component, Input, ChangeDetectionStrategy} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-card-tasks",
     template: require('./card-tasks.jade')(),
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardTasks {
     @Input() tasks: Immutable.List<any> = Immutable.List();

@@ -17,12 +17,13 @@
  * File: card.controller.coffee
  */
 
-import {Component, Input, Output, EventEmitter} from "@angular/core";
+import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-card-unfold",
     template: require('./card-unfold.jade')(),
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardUnfold {
     @Output() fold: EventEmitter<any> = new EventEmitter();

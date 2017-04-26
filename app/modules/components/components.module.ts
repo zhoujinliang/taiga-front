@@ -22,7 +22,6 @@ import { CardCompletion } from './card/components/card-completion/card-completio
 import { CardTasks } from './card/components/card-tasks/card-tasks.component';
 import { CardSlideshow } from './card/components/card-slideshow/card-slideshow.component';
 import { CardUnfold } from './card/components/card-unfold/card-unfold.component';
-import { Visible } from './card/visible.directive';
 import { BoardZoom} from './board-zoom/board-zoom.component';
 import { ProjectLogoSmall } from './project-logo-small/project-logo-small.component';
 import { ProjectLogoBig } from './project-logo-big/project-logo-big.component';
@@ -58,7 +57,6 @@ import { ProjectMenu } from './project-menu/project-menu.component'
         CardTasks,
         CardSlideshow,
         CardUnfold,
-        Visible,
         BoardZoom,
         Avatar,
         BelongToEpics,
