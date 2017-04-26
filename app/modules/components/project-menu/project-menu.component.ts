@@ -28,6 +28,7 @@ import {Component, Input, OnChanges} from "@angular/core"
 })
 export class ProjectMenu implements OnChanges {
     @Input() project:any;
+    @Input() active:any = "";
     menu:any;
     videoconferenceUrl:string;
 

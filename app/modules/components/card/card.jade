@@ -8,11 +8,10 @@
     div(*ngIf='zoom.visibility.owner')
         tg-card-title([item]="item", [zoom]="zoom")
     tg-card-data([item]="item", [zoom]="zoom")
-    tg-card-completion([tasks]="item.get('tasks')", *ngIf="zoom.visibility.extra_info && item.get('tasks').size")
-    // include card-templates/card-completion
-    // include card-templates/card-tasks
-    // tg-card-slideshow(
-    //     ng-if="vm.isSlideshowVisible()"
-    //     images="vm.item.get('images')"
-    // )
-    // include card-templates/card-unfold
+    tg-card-completion([tasks]="item.get('tasks')", *ngIf="isVisibleCompletion()")
+    tg-card-tasks([project]="project", [tasks]="item.get('tasks')", *ngIf="isVisibleTasks()")
+    tg-card-slideshow(
+        *ngIf="isVisibleSlideshow()",
+        [images]="item.get('images')"
+    )
+    tg-card-unfold(*ngIf="isVisibleFold()", (fold)="toggleFold()")

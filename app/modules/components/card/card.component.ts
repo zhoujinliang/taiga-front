@@ -28,28 +28,40 @@ import * as Immutable from "immutable";
 export class Card {
     @Input() item: Immutable.Map<string, any>;
     @Input() zoom: any;
+    @Input() project: any;
+    folded:boolean = false;
     archived:boolean = false;
     visible: string[] = [];
 
     constructor() {}
 
-    // zoom:any
-    // item:any
-    // onToggleFold:any
-    // type:any
-    //
-    // visible(name) {
-    //     return this.zoom.indexOf(name) !== -1;
-    // }
-    //
+    isVisibleTasks() {
+        return this.zoom.visibility.related_tasks && this.item.get('tasks').size && !this.folded
+    }
+
+    isVisibleFold() {
+        let hasTasks = this.item.get('tasks') && this.item.get('tasks').size > 0;
+        let hasImages = this.item.get('images') && this.item.get('images').size > 0;
+        return this.zoom.visibility.unfold && (hasTasks || hasImages)
+    }
+
+    isVisibleSlideshow() {
+        return this.zoom.visibility.attachments && this.item.get('images') && this.item.get('images').size && !this.folded
+    }
+
+    isVisibleCompletion() {
+        return this.zoom.visibility.extra_info && this.item.get('tasks') && this.item.get('tasks').size;
+    }
+
+    toggleFold() {
+        this.folded = !this.folded;
+    }
+
     // hasTasks() {
     //     let tasks = this.item.getIn(['model', 'tasks']);
     //     return tasks && (tasks.size > 0);
     // }
     //
-    // hasVisibleAttachments() {
-    //     return this.item.get('images').size > 0;
-    // }
     //
     // toggleFold() {
     //     return this.onToggleFold({id: this.item.get('id')});

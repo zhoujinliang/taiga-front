@@ -23,6 +23,7 @@ div.kanban-table-body
                 *ngFor="let item of userstories.get(status.get('id').toString())",
                 [item]="item",
                 [zoom]="zoom",
+                [project]="project",
             )
 
             div.kanban-column-intro(*ngIf="status.get('is_archived')", tg-kanban-archived-status-intro="s")

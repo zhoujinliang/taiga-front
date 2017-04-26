@@ -14,37 +14,17 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: card-slideshow.controller.coffee
+ * File: card.controller.coffee
  */
 
-import * as angular from "angular"
+import {Component, Input} from "@angular/core";
+import * as Immutable from "immutable";
 
-export class CardSlideshowController {
-    index: any
-    images: any
-
-    static initClass() {
-        this.$inject = [];
-    }
-
-    constructor() {
-        this.index = 0;
-    }
-
-    next() {
-        this.index++;
-
-        if (this.index >= this.images.size) {
-            return this.index = 0;
-        }
-    }
-
-    previous() {
-        this.index--;
-
-        if (this.index < 0) {
-            return this.index = this.images.size - 1;
-        }
-    }
+@Component({
+    selector: "tg-card-tasks",
+    template: require('./card-tasks.jade')(),
+})
+export class CardTasks {
+    @Input() tasks: Immutable.List<any> = Immutable.List();
+    @Input() project: any;
 }
-CardSlideshowController.initClass();

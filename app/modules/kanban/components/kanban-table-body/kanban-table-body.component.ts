@@ -10,4 +10,5 @@ export class KanbanTableBody {
     @Input() folds: any;
     @Input() zoom: any;
     @Input() archivedWatched: any;
+    @Input() project: any;
 }
