@@ -50,6 +50,6 @@ export class FiltersRemoteStorageService {
 
         return this.http.get(`${url}/${hash}`)
                         .map((data:any) => Immutable.fromJS(data.value))
-                        .catch(() => Observable.of({}));
+                        .catch(() => Observable.of(Immutable.Map()));
     }
 }

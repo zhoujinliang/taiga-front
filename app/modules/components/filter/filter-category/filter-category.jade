@@ -1,0 +1,32 @@
+li([class.selected]="isOpen")
+    a.filters-cat-single.e2e-category(
+        [class.selected]="isOpen",
+        (click)="selectCategory.emit()",
+        [title]="filter.get('title')"
+    )
+        span.title {{filter.get('title')}}
+        tg-svg.ng-animate-disabled(
+            *ngIf="!isOpen",
+            svg-icon="icon-arrow-right"
+        )
+        tg-svg.ng-animate-disabled(
+            *ngIf="isOpen",
+            svg-icon="icon-arrow-down"
+        )
+
+    .filter-list(
+        *ngIf="isOpen",
+        tg-filter-slide-down
+    )
+        .single-filter.ng-animate-disabled(
+            *ngFor="let it of filter.get('content')",
+            (click)="selectFilter.emit({category: filter, filter: it})"
+        )
+            // *ngIf="!isFilterSelected(filter, it) && !(it.get('count') == 0 && filter.get('hideEmpty'))"
+            span.name([style.border-left]="it.get('color') ? '3px solid ' + it.get('color'): ''") {{it.get('name')}}
+            span.number.e2e-filter-count(*ngIf="!isCustom && it.get('count') > 0") {{it.get('count')}}
+            a.remove-filter.e2e-remove-custom-filter(
+                *ngIf="isCustom",
+                (click)="removeCustomFilter(it)"
+            )
+                tg-svg(svg-icon="icon-trash")

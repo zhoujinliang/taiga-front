@@ -18,8 +18,10 @@ export class FetchKanbanFiltersDataAction implements Action {
   payload: any
 
   constructor(projectId:number, appliedFilters: any) {
-      this.payload.projectId = projectId;
-      this.payload.appliedFilters = appliedFilters;
+      this.payload = {
+          projectId: projectId,
+          appliedFilters: appliedFilters
+      }
   }
 }
 

@@ -15,20 +15,22 @@ form((submit)="false")
             [title]="'COMMON.FILTERS.TITLE_ACTION_SEARCH' | translate"
         )
 
-// .filters-step-cat
-//     tg-filter-applied-filters([filters]="appliedFilters")
-//
-//     .filters-cats
-//         ul
-//             template(*ngFor="let filter of filters")
-//             li(
-//                 [class.selected]="isOpen(filter.dataType)"
-//                 *ngIf="!(filter.hideEmpty && filter.totalTaggedElements === 0)"
-//             )
-//                 tg-filter-category([filter]="filter")
-//
-//             li.custom-filters.e2e-custom-filters(
-//                 [class.selected]="isOpen('custom-filter')"
-//                 *ngIf="customFilter.content.length > 0"
-//             )
-//                 tg-filter-custom-category([customfilters]="customFilters", [isCustom]="true")
+.filters-step-cat
+    // tg-filter-applied-filters([filters]="appliedFilters")
+
+    .filters-cats
+        ul
+            tg-filter-category(
+                *ngFor="let filter of filters",
+                [filter]="filter",
+                [isOpen]="selectedCategory == filter.get('dataType')",
+                (selectCategory)="selectCategory(filter.get('dataType'))")
+                // li()
+                // [class.selected]="isOpen(filter.dataType)"
+                // *ngIf="!(filter.hideEmpty && filter.totalTaggedElements === 0)"
+
+                // li.custom-filters.e2e-custom-filters(
+                //     [class.selected]="isOpen('custom-filter')"
+                //     *ngIf="customFilter.content.length > 0"
+                // )
+                //     tg-filter-custom-category([customfilters]="customFilters", [isCustom]="true")

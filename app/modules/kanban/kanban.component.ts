@@ -1,3 +1,5 @@
+import * as Immutable from "immutable";
+
 import {Component, OnInit, OnDestroy} from "@angular/core";
 import { IState } from "../../app.store";
 import { Store } from "@ngrx/store";
@@ -79,42 +81,42 @@ export class KanbanPage implements OnInit, OnDestroy {
 
         let epics = filtersData.get('epics').map((epic) => {
             if (epic.get('id')) {
-                return epic.update("id", (id) => id.toStriong())
+                return epic.update("id", (id) => id.toString())
                            .update("name", () => `#${epic.get('ref')} ${epic.get('subject')}`);
             }
             return epic.update("id", (id) => "null")
                        .update("name", () => "Not in an epic"); // TODO TRANSLATE IT?
         })
 
-        let filters = [
-            {
-                title: this.translate.instant("COMMON.FILTERS.CATEGORIES.STATUS"),
-                dataType: "status",
-                content: statuses
-            },
-            {
-                title: this.translate.instant("COMMON.FILTERS.CATEGORIES.TAGS"),
-                dataType: "tags",
-                content: tags,
-                hideEmpty: true,
-                totalTaggedElements: tagsWithAtLeastOneElement.size
-            },
-            {
-                title: this.translate.instant("COMMON.FILTERS.CATEGORIES.ASSIGNED_TO"),
-                dataType: "assigned_to",
-                content: assignedTo
-            },
-            {
-                title: this.translate.instant("COMMON.FILTERS.CATEGORIES.CREATED_BY"),
-                dataType: "owner",
-                content: owners
-            },
-            {
-                title: this.translate.instant("COMMON.FILTERS.CATEGORIES.EPIC"),
-                dataType: "epic",
-                content: epics
-            }
-        ];
+        let filters = Immutable.List();
+        filters = filters.push(Immutable.Map({
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.STATUS"),
+            dataType: "status",
+            content: statuses
+        }));
+        filters = filters.push(Immutable.Map({
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.TAGS"),
+            dataType: "tags",
+            content: tags,
+            hideEmpty: true,
+            totalTaggedElements: tagsWithAtLeastOneElement.size
+        }));
+        filters = filters.push(Immutable.Map({
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.ASSIGNED_TO"),
+            dataType: "assigned_to",
+            content: assignedTo
+        }));
+        filters = filters.push(Immutable.Map({
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.CREATED_BY"),
+            dataType: "owner",
+            content: owners
+        }));
+        filters = filters.push(Immutable.Map({
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.EPIC"),
+            dataType: "epic",
+            content: epics
+        }));
+        return filters;
     }
 
     ngOnDestroy() {

@@ -31,6 +31,7 @@ export class Filter {
     @Input() section: string;
     @Input() filters: any;
     @Output() filter: EventEmitter<any>;
+    selectedCategory: string = "";
 
     constructor(private store: Store<IState>) {
         this.filter = new EventEmitter();
@@ -38,6 +39,11 @@ export class Filter {
 
     changeQ(q) {
         console.log(q);
+    }
+
+    selectCategory(category) {
+        console.log(category);
+        this.selectedCategory = category;
     }
 
     // toggleFilterCategory(filterName) {

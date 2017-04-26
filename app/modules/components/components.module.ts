@@ -10,6 +10,7 @@ import {TgBaseModule} from '../../ts/modules/base/base.module';
 import {Avatar} from "./avatar/avatar.component"
 import {Filter} from "./filter/filter.component"
 import {FiltersRemoteStorageService} from "./filter/filter-remote.service"
+import {FilterCategory} from "./filter/filter-category/filter-category.component"
 import { BelongToEpics } from './belong-to-epics/belong-to-epics.component';
 import { AvatarService } from './avatar/avatar.service';
 import { Card } from './card/card.component';
@@ -56,6 +57,7 @@ import { ProjectMenu } from './project-menu/project-menu.component'
         ProjectLogoBig,
         ProjectMenu,
         Filter,
+        FilterCategory,
     ],
     providers: [
         AvatarService,

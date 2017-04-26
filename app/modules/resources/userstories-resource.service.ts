@@ -56,7 +56,8 @@ export class UserstoriesResource {
     };
 
     filtersData(params) {
-        return this.repo.queryOneRaw("userstories-filters", null, params);
+        return this.repo.queryOneRaw("userstories-filters", null, params)
+                        .map((data) => Immutable.fromJS(data));
     }
 
     listUnassigned(projectId, filters, pageSize) {
