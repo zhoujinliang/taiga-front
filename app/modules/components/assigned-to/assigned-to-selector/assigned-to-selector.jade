@@ -3,25 +3,22 @@ tg-lightbox-close
 .assigned-to-container
     h2.title(translate="LIGHTBOX.ASSIGNED_TO.SELECT")
     input.assign-input(
-        type="text"
-        placeholder="{{'LIGHTBOX.ASSIGNED_TO.SEARCH' | translate}}"
+        [placeholder]="'LIGHTBOX.ASSIGNED_TO.SEARCH' | translate",
+        type="text",
+        #textInput,
+        (keyup)="onUserFilter(textInput.value)"
         autofocus
-        ng-model="vm.assignToMember.name"
-        ng-model-options="{debounce: 200}"
     )
     ul.assignable-member-list
-        li.assigned-member(
-            ng-repeat="member in vm.assignedMember"
-            ng-if="vm.assigned"
-        )
-            tg-assigned-item(member="member")
+        li.assigned-member(*ngFor="let member of assignedMembersList")
+            tg-assigned-item([member]="member")
             tg-svg.unassign-epic.e2e-unassign(
-                svg-icon="icon-close"
-                svg-title-translate="COMMON.ASSIGNED_TO.REMOVE_ASSIGNED"
-                ng-click="vm.onRemoveAssigned()"
+                svg-icon="icon-close",
+                svg-title-translate="COMMON.ASSIGNED_TO.REMOVE_ASSIGNED",
+                (click)="onRemoveAssigned()"
             )
-        li.e2e-assigned-to-selector(ng-repeat="member in vm.nonAssignedMembers | filter: vm.assignToMember.name | limitTo:6")
+        li.e2e-assigned-to-selector(*ngFor="let member of nonAssignedMembersList.slice(0,6)")
             tg-assigned-item.assigned-members-option(
-                member="member"
-                ng-click="vm.onAssignTo({'member': member})"
+                [member]="member",
+                (click)="onAssignTo({'member': member})"
             )

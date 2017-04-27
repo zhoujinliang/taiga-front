@@ -17,16 +17,12 @@
  * File: assigned-to-selector.directive.coffee
  */
 
-export let AssignedItemDirective = function() {
+import {Component, Input} from "@angular/core";
 
-    let link = function(scope, el, attrs) {};
-
-    return {
-        templateUrl: "components/assigned-to/assigned-item/assigned-item.html",
-        scope: {
-            member: "="
-        },
-        link
-    };
-};
-AssignedItemDirective.$inject = [];
+@Component({
+    selector: "tg-assigned-item",
+    template: require("./assigned-item.jade")(),
+})
+export class AssignedItem {
+    @Input() member;
+}

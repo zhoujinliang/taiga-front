@@ -19,6 +19,9 @@
 
 import {Component, Input, ChangeDetectionStrategy} from "@angular/core";
 import * as Immutable from "immutable";
+import {Store} from "@ngrx/store";
+import {IState} from "../../../../../app.store";
+import {OpenLightboxAction} from "../../../../../app.actions"
 
 @Component({
     selector: "tg-card-owner",
@@ -29,4 +32,14 @@ export class CardOwner {
     @Input() item: Immutable.Map<string, any> = null;
     @Input() zoom: any;
     @Input() project: any;
+
+    constructor(private store: Store<IState>) {}
+
+    onClickAssignTo() {
+        this.store.dispatch(new OpenLightboxAction("kanban.assign-to"));
+    }
+
+    onClickEdit() {
+        this.store.dispatch(new OpenLightboxAction("kanban.edit"));
+    }
 }

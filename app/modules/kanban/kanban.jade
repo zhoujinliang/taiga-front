@@ -1,3 +1,11 @@
+tg-lightbox(key="kanban.assign-to")
+  tg-lightbox-close
+  tg-assigned-to-selector([members]="members|async", [assigned]="assignedOnAssignedTo|async")
+
+tg-lightbox(key="kanban.edit")
+  tg-lightbox-close
+  pre Edit
+
 div.wrapper
     tg-project-menu([project]="project|async", active="kanban")
 

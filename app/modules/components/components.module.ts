@@ -13,6 +13,10 @@ import {FiltersRemoteStorageService} from "./filter/filter-remote.service"
 import {FilterCategory} from "./filter/filter-category/filter-category.component"
 import { BelongToEpics } from './belong-to-epics/belong-to-epics.component';
 import { AvatarService } from './avatar/avatar.service';
+import { Lightbox } from './lightbox/lightbox.component';
+import { LightboxClose } from './lightbox/lightbox-close.component';
+import { AssignedItem } from './assigned-to/assigned-item/assigned-item.component';
+import { AssignedToSelector } from './assigned-to/assigned-to-selector/assigned-to-selector.component';
 import { Card } from './card/card.component';
 import { CardTags } from './card/components/card-tags/card-tags.component';
 import { CardOwner } from './card/components/card-owner/card-owner.component';
@@ -46,6 +50,10 @@ import { ProjectMenu } from './project-menu/project-menu.component'
         Card,
         BoardZoom,
         Filter,
+        Lightbox,
+        LightboxClose,
+        AssignedToSelector,
+        AssignedItem,
     ],
     declarations: [
         Card,
@@ -66,6 +74,10 @@ import { ProjectMenu } from './project-menu/project-menu.component'
         ProjectMenu,
         Filter,
         FilterCategory,
+        Lightbox,
+        LightboxClose,
+        AssignedToSelector,
+        AssignedItem,
     ],
     providers: [
         AvatarService,

@@ -23,14 +23,17 @@ export class KanbanPage implements OnInit, OnDestroy {
     appliedFilters: Observable<any>;
     selectedFiltersCount: number = 0;
     filters: Observable<any>;
+    members: Observable<any>;
+    assignedOnAssignedTo: Observable<Immutable.List<number>>;
     filtersOpen:boolean = false;
     subscriptions: Subscription[]
 
     constructor(private store: Store<IState>, private route: ActivatedRoute, private translate: TranslateService, private zoomLevel: ZoomLevelService) {
-        this.project = this.store.select((state) => state.getIn(["projects", "current-project"]))
+        this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
+        this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
         this.userstoriesByState = this.store.select((state) => state.getIn(["kanban", "userstories"])).map((userstories) => {
             return userstories.groupBy((us) => us.get('status').toString())
-        })
+        });
         this.zoom = this.store.select((state) => state.getIn(["kanban", "zoomLevel"])).map((zoomLevel) => {
             return {
                 level: zoomLevel,
@@ -39,6 +42,8 @@ export class KanbanPage implements OnInit, OnDestroy {
         });
         this.appliedFilters = this.store.select((state) => state.getIn([this.section, "appliedFilters"]))
         this.filters = this.store.select((state) => state.getIn(["kanban", "filtersData"])).map(this.filtersDataToFilters.bind(this));
+        this.assignedOnAssignedTo = this.store.select((state) => state.getIn(["kanban","current-us", "assigned_to"]))
+                                              .map((id) => Immutable.List(id));
     }
 
     ngOnInit() {

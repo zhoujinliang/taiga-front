@@ -10,8 +10,7 @@ import {commonInitialState, commonReducer} from "./ts/modules/common/common.stor
 export type IState = Immutable.Map<string, any>;
 
 const globalInitialState = {
-    user: {},
-    projects: [],
+    "open-lightbox": "",
 };
 
 const initialState = Immutable.fromJS({
@@ -26,8 +25,10 @@ const initialState = Immutable.fromJS({
 
 export const globalReducer = (state, action) => {
     switch(action.type){
-        case 'SET_PROJECTS':
-            return state.set('projects', action.payload);
+        case 'CLOSE_LIGHTBOX':
+            return state.set('open-lightbox', "");
+        case 'OPEN_LIGHTBOX':
+            return state.set('open-lightbox', action.payload);
         default:
             return state;
     }
@@ -36,6 +37,7 @@ export const globalReducer = (state, action) => {
 export const rootReducer = (state=initialState, action) => {
     return state.set('router', routerReducer(state.get('router'), action))
                 .set('home', homeReducer(state.get('home'), action))
+                .set('global', globalReducer(state.get('global'), action))
                 .set('kanban', kanbanReducer(state.get('kanban'), action))
                 .set('projects', projectsReducer(state.get('projects'), action))
                 .set('discover', discoverReducer(state.get('discover'), action))

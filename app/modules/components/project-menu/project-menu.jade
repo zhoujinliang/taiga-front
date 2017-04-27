@@ -51,7 +51,7 @@ nav.menu(
 
                 span.backlog-sprints-menu(*ngIf="backlogHover")
                   span(translate="PROJECT.SECTION.BACKLOG")
-                  ng-template(*ngFor="let sprint of project.get('milestones')")
+                  ng-container(*ngFor="let sprint of project.get('milestones')")
                       a(
                           *ngIf="!sprint.get('closed')",
                           [routerLink]="['/project', project.get('slug'), '/taskboard', sprint.get('slug')]",

@@ -4,7 +4,6 @@ import { TranslateModule } from "@ngx-translate/core";
 import { Svg } from "./svg.component";
 import { NotificationMessages } from "./confirm.component";
 import { Capslock } from "./capslock.component";
-import { LightboxClose } from './lightbox-close.component';
 import { ProjectUrlService } from './project-url.service';
 import { ColorizeBacklogTag, ColorizeBacklogTags } from './tags.component';
 import { DateRange } from './components';
@@ -21,7 +20,6 @@ import { CheckPermission } from "./check-permissions.directive";
         ColorizeBacklogTags,
         DateRange,
         Svg,
-        LightboxClose,
         MainTitle,
         MessageFormatPipe,
         Capslock,
@@ -33,7 +31,6 @@ import { CheckPermission } from "./check-permissions.directive";
         ColorizeBacklogTags,
         DateRange,
         Svg,
-        LightboxClose,
         MainTitle,
         MessageFormatPipe,
         Capslock,
