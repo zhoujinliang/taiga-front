@@ -1,0 +1,6 @@
+ul.popover.pop-points-open([class.horizontal]="horizontal")
+    li(*ngFor="let point of points")
+        a(class="point",
+          [title]="point.get('name')",
+          [class.active]="point.selected",
+          (click)="onPointClicked($event, point.get('id'))") {{ point.get('name') }}
