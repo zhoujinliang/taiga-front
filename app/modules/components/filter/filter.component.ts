@@ -42,8 +42,11 @@ export class Filter {
     }
 
     selectCategory(category) {
-        console.log(category);
-        this.selectedCategory = category;
+        if (this.selectedCategory === category) {
+            this.selectedCategory = ""
+        } else {
+            this.selectedCategory = category;
+        }
     }
 
     // toggleFilterCategory(filterName) {
