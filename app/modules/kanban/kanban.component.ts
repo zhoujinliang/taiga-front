@@ -148,6 +148,10 @@ export class KanbanPage implements OnInit, OnDestroy {
         return filters;
     }
 
+    onSorted(value) {
+        console.log(value);
+    }
+
     ngOnDestroy() {
         for (let subs of this.subscriptions) {
             subs.unsubscribe();

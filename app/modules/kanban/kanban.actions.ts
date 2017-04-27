@@ -13,6 +13,15 @@ export class FetchKanbanUserStoriesAction implements Action {
   }
 }
 
+export class MoveKanbanUsAction implements Action {
+  readonly type = "MOVE_KANBAN_US";
+  payload: any;
+
+  constructor(usId:number, newStatusId:number, newIndex:number) {
+      this.payload = {usId, newStatusId, newIndex}
+  }
+}
+
 export class SetKanbanUserStoriesAction implements Action {
   readonly type = 'SET_KANBAN_USER_STORIES';
 

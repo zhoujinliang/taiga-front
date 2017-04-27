@@ -5,6 +5,7 @@ div.kanban-table-body
         div.kanban-uses-box.task-column(
             *ngFor="let status of statuses; let i = index; trackBy: trackStatusFn",
             [class.vfold]="folds[status.get('id')]",
+            [attr.data-status-id]="status.get('id')",
         )
             .card-placeholder(*ngIf="!userstories.size && i == 0")
 
@@ -21,6 +22,7 @@ div.kanban-table-body
                 [item]="item",
                 [zoom]="zoom",
                 [project]="project",
+                [attr.data-us-id]="item.get('id')",
             )
 
             // TODO: fill correctly the Has stories to show input

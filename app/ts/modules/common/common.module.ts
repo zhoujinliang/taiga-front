@@ -10,6 +10,7 @@ import { DateRange } from './components';
 import { MainTitle } from "./main-title.component";
 import { MessageFormatPipe } from "./message-format.pipe";
 import { CheckPermission } from "./check-permissions.directive";
+import { BlockingMessageInput } from "./blocking-messsage-input.component";
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import { CheckPermission } from "./check-permissions.directive";
         Capslock,
         NotificationMessages,
         CheckPermission,
+        BlockingMessageInput,
     ],
     declarations: [
         ColorizeBacklogTag,
@@ -36,6 +38,7 @@ import { CheckPermission } from "./check-permissions.directive";
         Capslock,
         NotificationMessages,
         CheckPermission,
+        BlockingMessageInput,
     ],
     providers: [
         ProjectUrlService

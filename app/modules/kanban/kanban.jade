@@ -4,7 +4,7 @@ tg-lightbox(key="kanban.assign-to")
 
 tg-lightbox(key="kanban.edit")
   tg-lightbox-close
-  tg-kanban-us-edit-lightbox([us]="itemToEdit|async")
+  tg-kanban-us-edit-lightbox([us]="itemToEdit|async", [project]="project|async")
 
 div.wrapper
     tg-project-menu([project]="project|async", active="kanban")
@@ -41,7 +41,11 @@ div.wrapper
                     span.filter-num(*ngIf="selectedFiltersCount") {{selectedFiltersCount}}
                     tg-svg(svg-icon="icon-filters")
 
-        tg-kanban-table([project]="project | async", [userstories]="userstoriesByState | async", [zoom]="zoom | async")
+        tg-kanban-table([project]="project | async",
+                        [userstories]="userstoriesByState | async",
+                        [zoom]="zoom | async",
+                        (sorted)="onSorted($event)",
+                        tg-kanban-sortable)
 
     // div.lightbox.lightbox-generic-form.lb-create-edit-userstory(tg-lb-create-edit-userstory)
     //     include ../includes/modules/lightbox-us-create-edit

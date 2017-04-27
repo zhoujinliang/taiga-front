@@ -307,37 +307,6 @@ export let BlockLightboxDirective = function($rootscope, $tgrepo, $confirm, ligh
 };
 
 //############################################################################
-//# Generic Lightbox Blocking-Message Input Directive
-//############################################################################
-
-export let BlockingMessageInputDirective = function($log, $template, $compile) {
-    let template = $template.get("common/lightbox/lightbox-blocking-message-input.html", true);
-
-    let link = function($scope, $el, $attrs, $model) {
-        if (!$attrs.watch) {
-            return $log.error("No watch attribute on tg-blocking-message-input directive");
-        }
-
-        return $scope.$watch($attrs.watch, function(value) {
-            if ((value === !undefined) && (value === true)) {
-                return $el.find(".blocked-note").removeClass("hidden");
-            } else {
-                return $el.find(".blocked-note").addClass("hidden");
-            }
-        });
-    };
-
-    let templateFn = ($el, $attrs) => template({ngmodel: $attrs.ngModel});
-
-    return {
-        template: templateFn,
-        link,
-        require: "ngModel",
-        restrict: "EA"
-    };
-};
-
-//############################################################################
 //# Create/Edit Userstory Lightbox Directive
 //############################################################################
 

@@ -25,8 +25,10 @@ import { IState } from "../../../../app.store";
 
 @Component({
     selector: "tg-kanban-us-edit-lightbox",
-    template: require("./kanban-us-edit-lightbox.jade")()
+    template: require("./kanban-us-edit-lightbox.jade")(),
+    host: {'class': 'lightbox-generic-form'},
 })
 export class KanbanUsEditLightbox {
-    @Input() us;
+    @Input() us: any;
+    @Input() project: any;
 };
