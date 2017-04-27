@@ -14,6 +14,7 @@ import {KanbanTable} from "./components/kanban-table/kanban-table.component";
 import {KanbanTableHeader} from "./components/kanban-table-header/kanban-table-header.component";
 import {KanbanTableBody} from "./components/kanban-table-body/kanban-table-body.component";
 import {KanbanBoardZoom} from "./components/kanban-board-zoom/kanban-board-zoom.component";
+import {KanbanArchivedStatusIntro} from "./components/kanban-archived-status-intro/kanban-archived-status-intro.component";
 import {KanbanEffects} from "./kanban.effects";
 
 @NgModule({
@@ -39,6 +40,7 @@ import {KanbanEffects} from "./kanban.effects";
         KanbanTableHeader,
         KanbanTableBody,
         KanbanBoardZoom,
+        KanbanArchivedStatusIntro,
     ],
     providers: [
     ],
