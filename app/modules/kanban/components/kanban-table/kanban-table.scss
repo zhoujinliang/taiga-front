@@ -13,13 +13,17 @@ tg-kanban-table {
     height: 100%;
     overflow: hidden;
     width: 100%;
-    .kanban-table.zoom-0 {
-        .task-column,
-        .task-colum-name {
-            max-width: $column-width / 2;
-        }
-        .task-colum-name span {
-            padding-right: 1rem;
+    .kanban-table {
+        height: 100%;
+        width: 100%;
+        &.zoom-0 {
+            .task-column,
+            .task-colum-name {
+                max-width: $column-width / 2;
+            }
+            .task-colum-name span {
+                padding-right: 1rem;
+            }
         }
     }
     .vfold {
