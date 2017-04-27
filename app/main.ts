@@ -18,6 +18,7 @@ export let taigaContribPlugins = [];
 export var sessionId = generateUniqueSessionIdentifier();
 
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { enableProdMode } from '@angular/core';
 import { AppModule } from './app.module';
 
 (<any>window).taigaConfig = {
@@ -79,13 +80,15 @@ let promise = $.getJSON("/conf.json");
 promise.done(data => (<any>window).taigaConfig = _.assign({}, (<any>window).taigaConfig, data));
 promise.fail(() => console.error("Your conf.json file is not a valid json file, please review it."));
 promise.always(function() {
-    // ljs.load(`/${_version}/js/templates.js`, function() {
-        if ((<any>window).taigaConfig.contribPlugins.length > 0) {
-            return loadPlugins((<any>window).taigaConfig.contribPlugins).then(() => {
-                platformBrowserDynamic().bootstrapModule(AppModule);
-            });
-        } else {
+    if (!(<any>window).taigaConfig.debug) {
+        enableProdMode();
+    }
+
+    if ((<any>window).taigaConfig.contribPlugins.length > 0) {
+        return loadPlugins((<any>window).taigaConfig.contribPlugins).then(() => {
             platformBrowserDynamic().bootstrapModule(AppModule);
-        }
-    // });
+        });
+    } else {
+        platformBrowserDynamic().bootstrapModule(AppModule);
+    }
 });
