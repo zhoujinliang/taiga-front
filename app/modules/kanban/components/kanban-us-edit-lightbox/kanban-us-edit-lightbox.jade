@@ -10,8 +10,11 @@ form
             required,
         )
 
-    // fieldset.ticket-estimation
-    //     tg-lb-us-estimation(ng-model="us")
+    fieldset.ticket-estimation
+        tg-us-estimation-for-lightbox(
+            [roles]="project?.get('roles')",
+            [points]="project?.get('points')"
+        )
 
     fieldset
         select(name="status")
