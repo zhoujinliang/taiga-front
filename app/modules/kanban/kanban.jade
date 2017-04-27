@@ -4,7 +4,7 @@ tg-lightbox(key="kanban.assign-to")
 
 tg-lightbox(key="kanban.edit")
   tg-lightbox-close
-  pre Edit
+  tg-kanban-us-edit-lightbox([us]="itemToEdit|async")
 
 div.wrapper
     tg-project-menu([project]="project|async", active="kanban")

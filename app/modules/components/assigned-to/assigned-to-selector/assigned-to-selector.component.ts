@@ -19,7 +19,7 @@
 
 import * as Immutable from "immutable";
 
-import {Component, Input, Output, OnChanges} from "@angular/core";
+import {Component, Input, Output, OnChanges, EventEmitter} from "@angular/core";
 
 @Component({
     selector: "tg-assigned-to-selector",
@@ -28,12 +28,14 @@ import {Component, Input, Output, OnChanges} from "@angular/core";
 export class AssignedToSelector implements OnChanges {
     @Input() members: Immutable.List<any>;
     @Input() assigned: Immutable.List<number>;
-    @Output() assign: number[];
+    @Output() assign: EventEmitter<number>;
     assignedMembersList: Immutable.List<any> = Immutable.List();
     nonAssignedMembersList: Immutable.List<any> = Immutable.List();
     filterText: string = "";
 
-    constructor() {}
+    constructor() {
+        this.assign = new EventEmitter()
+    }
 
     ngOnChanges() {
         if (this.members && this.assigned) {
@@ -55,5 +57,13 @@ export class AssignedToSelector implements OnChanges {
         }).filter((member) => {
             return member.get('full_name').toLowerCase().indexOf(this.filterText.toLowerCase()) !== -1;
         }).toList();
+    }
+
+    onRemoveAssigned() {
+        this.assign.emit(null);
+    }
+
+    onAssignTo(memberId) {
+        this.assign.emit(memberId);
     }
 }

@@ -11,6 +11,7 @@ import {Avatar} from "./avatar/avatar.component"
 import {Filter} from "./filter/filter.component"
 import {FiltersRemoteStorageService} from "./filter/filter-remote.service"
 import {FilterCategory} from "./filter/filter-category/filter-category.component"
+import {LoaderFull} from "./loader/loader-full.component"
 import { BelongToEpics } from './belong-to-epics/belong-to-epics.component';
 import { AvatarService } from './avatar/avatar.service';
 import { Lightbox } from './lightbox/lightbox.component';
@@ -54,6 +55,7 @@ import { ProjectMenu } from './project-menu/project-menu.component'
         LightboxClose,
         AssignedToSelector,
         AssignedItem,
+        LoaderFull,
     ],
     declarations: [
         Card,
@@ -78,6 +80,7 @@ import { ProjectMenu } from './project-menu/project-menu.component'
         LightboxClose,
         AssignedToSelector,
         AssignedItem,
+        LoaderFull,
     ],
     providers: [
         AvatarService,

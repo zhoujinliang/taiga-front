@@ -114,7 +114,7 @@ var BrowserifyApp = browserify({
     cache: {},
     packageCache: {}
 }).transform('jadeify', {
-    compileDebug: true,
+    compileDebug: false,
     doctype: 'html',
 }).plugin(tsify);
 

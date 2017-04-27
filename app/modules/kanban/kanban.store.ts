@@ -36,6 +36,8 @@ export const kanbanReducer = (state, action) => {
             });
         case 'SET_KANBAN_ZOOM':
             return state.set('zoomLevel', action.payload);
+        case 'CLEAN_KANBAN_DATA':
+            return Immutable.fromJS(kanbanInitialState);
         default:
             return state;
     }

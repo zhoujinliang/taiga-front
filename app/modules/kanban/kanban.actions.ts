@@ -79,3 +79,8 @@ export class RemoveKanbanFilter implements Action {
       this.payload = {category, filter};
   }
 }
+
+export class CleanKanbanDataAction implements Action {
+  readonly type = 'CLEAN_KANBAN_DATA';
+  payload = null;
+}

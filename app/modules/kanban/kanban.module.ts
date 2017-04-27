@@ -16,6 +16,7 @@ import {KanbanTableBody} from "./components/kanban-table-body/kanban-table-body.
 import {KanbanBoardZoom} from "./components/kanban-board-zoom/kanban-board-zoom.component";
 import {KanbanArchivedStatusIntro} from "./components/kanban-archived-status-intro/kanban-archived-status-intro.component";
 import {KanbanEffects} from "./kanban.effects";
+import {KanbanUsEditLightbox} from "./components/kanban-us-edit-lightbox/kanban-us-edit-lightbox.component";
 
 @NgModule({
     imports: [
@@ -41,6 +42,7 @@ import {KanbanEffects} from "./kanban.effects";
         KanbanTableBody,
         KanbanBoardZoom,
         KanbanArchivedStatusIntro,
+        KanbanUsEditLightbox,
     ],
     providers: [
     ],

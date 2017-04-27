@@ -13,3 +13,17 @@ export class CloseLightboxAction implements Action {
 
   constructor() { }
 }
+
+export class StartLoadingAction implements Action {
+  readonly type = 'START_LOADING';
+  payload = null;
+
+  constructor() { }
+}
+
+export class StopLoadingAction implements Action {
+  readonly type = 'STOP_LOADING';
+  payload = null;
+
+  constructor() { }
+}

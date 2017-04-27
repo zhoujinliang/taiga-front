@@ -11,6 +11,7 @@ export type IState = Immutable.Map<string, any>;
 
 const globalInitialState = {
     "open-lightbox": "",
+    "loading": false,
 };
 
 const initialState = Immutable.fromJS({
@@ -25,6 +26,10 @@ const initialState = Immutable.fromJS({
 
 export const globalReducer = (state, action) => {
     switch(action.type){
+        case 'START_LOADING':
+            return state.set('loading', true);
+        case 'STOP_LOADING':
+            return state.set('loading', false);
         case 'CLOSE_LIGHTBOX':
             return state.set('open-lightbox', "");
         case 'OPEN_LIGHTBOX':

@@ -3,6 +3,7 @@ import * as Immutable from "immutable";
 import {Component, OnInit, OnDestroy} from "@angular/core";
 import { IState } from "../../app.store";
 import { Store } from "@ngrx/store";
+import { StartLoadingAction, StopLoadingAction } from "../../app.actions";
 import { ActivatedRoute } from "@angular/router";
 import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import * as actions from "./kanban.actions";
@@ -28,10 +29,19 @@ export class KanbanPage implements OnInit, OnDestroy {
     filtersOpen:boolean = false;
     subscriptions: Subscription[]
 
-    constructor(private store: Store<IState>, private route: ActivatedRoute, private translate: TranslateService, private zoomLevel: ZoomLevelService) {
+    constructor(private store: Store<IState>,
+                private route: ActivatedRoute,
+                private translate: TranslateService,
+                private zoomLevel: ZoomLevelService) {
+        console.log("Starting loader");
+        this.store.dispatch(new StartLoadingAction());
         this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
         this.userstoriesByState = this.store.select((state) => state.getIn(["kanban", "userstories"])).map((userstories) => {
+            if (userstories.size > 0) {
+                console.log("Stoping loader");
+                this.store.dispatch(new StopLoadingAction());
+            }
             return userstories.groupBy((us) => us.get('status').toString())
         });
         this.zoom = this.store.select((state) => state.getIn(["kanban", "zoomLevel"])).map((zoomLevel) => {
@@ -142,5 +152,6 @@ export class KanbanPage implements OnInit, OnDestroy {
         for (let subs of this.subscriptions) {
             subs.unsubscribe();
         }
+        this.store.dispatch(new actions.CleanKanbanDataAction());
     }
 }
