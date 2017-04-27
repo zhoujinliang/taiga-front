@@ -17,34 +17,34 @@
  * File: doscover-search-bar.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("DiscoverSearchBarController", function() {
     let $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockDiscoverProjectsService = function() {
+    const _mockDiscoverProjectsService = function() {
         mocks.discoverProjectsService = {
-            fetchStats: sinon.spy()
+            fetchStats: sinon.spy(),
         };
 
-        return $provide.value('tgDiscoverProjectsService', mocks.discoverProjectsService);
+        return $provide.value("tgDiscoverProjectsService", mocks.discoverProjectsService);
     };
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -54,7 +54,7 @@ describe("DiscoverSearchBarController", function() {
         })
     ;
 
-    let _setup = () => _inject();
+    const _setup = () => _inject();
 
     beforeEach(function() {
         module("taigaDiscover");
@@ -64,25 +64,25 @@ describe("DiscoverSearchBarController", function() {
     });
 
     it("select filter", function() {
-        let ctrl = $controller("DiscoverSearchBar");
+        const ctrl = $controller("DiscoverSearchBar");
         ctrl.onChange = sinon.spy();
-        ctrl.q = 'query';
+        ctrl.q = "query";
 
-        ctrl.selectFilter('text');
+        ctrl.selectFilter("text");
 
         expect(mocks.discoverProjectsService.fetchStats).to.have.been.called;
-        return expect(ctrl.onChange).to.have.been.calledWith(sinon.match({filter: 'text', q: 'query'}));
+        return expect(ctrl.onChange).to.have.been.calledWith(sinon.match({filter: "text", q: "query"}));
     });
 
     return it("submit filter", function() {
-        let ctrl = $controller("DiscoverSearchBar");
-        ctrl.filter = 'all';
-        ctrl.q = 'query';
+        const ctrl = $controller("DiscoverSearchBar");
+        ctrl.filter = "all";
+        ctrl.q = "query";
         ctrl.onChange = sinon.spy();
 
         ctrl.submitFilter();
 
         expect(mocks.discoverProjectsService.fetchStats).to.have.been.called;
-        return expect(ctrl.onChange).to.have.been.calledWith(sinon.match({filter: 'all', q: 'query'}));
+        return expect(ctrl.onChange).to.have.been.calledWith(sinon.match({filter: "all", q: "query"}));
     });
 });

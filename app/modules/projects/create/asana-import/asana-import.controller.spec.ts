@@ -17,65 +17,65 @@
  * File: asana-import.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("AsanaImportCtrl", function() {
     let $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockCurrentUserService = function() {
+    const _mockCurrentUserService = function() {
         mocks.currentUserService = {
             canAddMembersPrivateProject: sinon.stub(),
-            canAddMembersPublicProject: sinon.stub()
+            canAddMembersPublicProject: sinon.stub(),
         };
 
         return $provide.value("tgCurrentUserService", mocks.currentUserService);
     };
 
-    let _mockAsanaImportService = function() {
+    const _mockAsanaImportService = function() {
         mocks.asanaService = {
             fetchProjects: sinon.stub(),
             fetchUsers: sinon.stub(),
-            importProject: sinon.stub()
+            importProject: sinon.stub(),
         };
 
         return $provide.value("tgAsanaImportService", mocks.asanaService);
     };
 
-    let _mockImportProjectService = function() {
+    const _mockImportProjectService = function() {
         mocks.importProjectService = {
-            importPromise: sinon.stub()
+            importPromise: sinon.stub(),
         };
 
         return $provide.value("tgImportProjectService", mocks.importProjectService);
     };
 
-    let _mockConfirm = function() {
+    const _mockConfirm = function() {
         mocks.confirm = {
-            loader: sinon.stub()
+            loader: sinon.stub(),
         };
 
         return $provide.value("$tgConfirm", mocks.confirm);
     };
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translate = {
-            instant: sinon.stub()
+            instant: sinon.stub(),
         };
 
         return $provide.value("$translate", mocks.translate);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -89,11 +89,11 @@ describe("AsanaImportCtrl", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -105,92 +105,91 @@ describe("AsanaImportCtrl", function() {
     });
 
     it("start project selector", function() {
-        let ctrl = $controller("AsanaImportCtrl");
+        const ctrl = $controller("AsanaImportCtrl");
         ctrl.startProjectSelector();
 
-        expect(ctrl.step).to.be.equal('project-select-asana');
+        expect(ctrl.step).to.be.equal("project-select-asana");
         return expect(mocks.asanaService.fetchProjects).have.been.called;
     });
 
     it("on select project reload projects", function(done) {
-        let project = Immutable.fromJS({
+        const project = Immutable.fromJS({
             id: 1,
-            name: "project-name"
+            name: "project-name",
         });
 
         mocks.asanaService.fetchUsers.promise().resolve();
 
-        let ctrl = $controller("AsanaImportCtrl");
+        const ctrl = $controller("AsanaImportCtrl");
 
-        let promise = ctrl.onSelectProject(project);
+        const promise = ctrl.onSelectProject(project);
 
         expect(ctrl.fetchingUsers).to.be.true;
 
         return promise.then(function() {
             expect(ctrl.fetchingUsers).to.be.false;
-            expect(ctrl.step).to.be.equal('project-form-asana');
+            expect(ctrl.step).to.be.equal("project-form-asana");
             expect(ctrl.project).to.be.equal(project);
             return done();
         });
     });
 
     it("on save project details reload users", function() {
-        let project = Immutable.fromJS({
+        const project = Immutable.fromJS({
             id: 1,
-            name: "project-name"
+            name: "project-name",
         });
 
-        let ctrl = $controller("AsanaImportCtrl");
+        const ctrl = $controller("AsanaImportCtrl");
         ctrl.onSaveProjectDetails(project);
 
-        expect(ctrl.step).to.be.equal('project-members-asana');
+        expect(ctrl.step).to.be.equal("project-members-asana");
         return expect(ctrl.project).to.be.equal(project);
     });
 
     return it("on select user init import", function(done) {
-        let users = Immutable.fromJS([
+        const users = Immutable.fromJS([
             {
-                id: 0
+                id: 0,
             },
             {
-                id: 1
+                id: 1,
             },
             {
-                id: 2
-            }
+                id: 2,
+            },
         ]);
 
-        let loaderObj = {
+        const loaderObj = {
             start: sinon.spy(),
             update: sinon.stub(),
-            stop: sinon.spy()
+            stop: sinon.spy(),
         };
 
-        let projectResult = {
+        const projectResult = {
             id: 3,
-            name: "name"
+            name: "name",
         };
 
         mocks.confirm.loader.returns(loaderObj);
 
         mocks.importProjectService.importPromise.promise().resolve();
 
-        let ctrl = $controller("AsanaImportCtrl");
+        const ctrl = $controller("AsanaImportCtrl");
         ctrl.project = Immutable.fromJS({
             id: 1,
-            name: 'project-name',
-            description: 'project-description',
+            name: "project-name",
+            description: "project-description",
             keepExternalReference: false,
-            is_private: true
+            is_private: true,
         });
-
 
         mocks.asanaService.importProject.promise().resolve(projectResult);
 
         return ctrl.startImport(users).then(function() {
             expect(loaderObj.start).have.been.called;
             expect(loaderObj.stop).have.been.called;
-            expect(mocks.asanaService.importProject).have.been.calledWith('project-name', 'project-description', 1, users, false, true);
+            expect(mocks.asanaService.importProject).have.been.calledWith("project-name", "project-description", 1, users, false, true);
 
             return done();
         });

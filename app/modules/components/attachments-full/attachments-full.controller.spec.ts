@@ -17,67 +17,67 @@
  * File: attchments.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("AttachmentsController", function() {
     let $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockConfirm = function() {
+    const _mockConfirm = function() {
         mocks.confirm = {};
 
         return $provide.value("$tgConfirm", mocks.confirm);
     };
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translate = {
-            instant: sinon.stub()
+            instant: sinon.stub(),
         };
 
         return $provide.value("$translate", mocks.translate);
     };
 
-    let _mockConfig = function() {
+    const _mockConfig = function() {
         mocks.config = {
-            get: sinon.stub()
+            get: sinon.stub(),
         };
 
         return $provide.value("$tgConfig", mocks.config);
     };
 
-    let _mockStorage = function() {
+    const _mockStorage = function() {
         mocks.storage = {
-            get: sinon.stub()
+            get: sinon.stub(),
         };
 
         return $provide.value("$tgStorage", mocks.storage);
     };
 
-    let _mockAttachmetsFullService = function() {
+    const _mockAttachmetsFullService = function() {
         mocks.attachmentsFullService = {};
 
         return $provide.value("tgAttachmentsFullService", mocks.attachmentsFullService);
     };
 
-    let _mockProjectService = function() {
+    const _mockProjectService = function() {
         mocks.projectService = {
             project: sinon.stub(),
-            hasPermission: sinon.stub()
+            hasPermission: sinon.stub(),
         };
 
         return $provide.value("tgProjectService", mocks.projectService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -92,11 +92,11 @@ describe("AttachmentsController", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -111,7 +111,7 @@ describe("AttachmentsController", function() {
 
         mocks.attachmentsFullService.toggleDeprecatedsVisible = sinon.spy();
 
-        let ctrl = $controller("AttachmentsFull");
+        const ctrl = $controller("AttachmentsFull");
 
         ctrl.toggleDeprecatedsVisible();
 
@@ -121,29 +121,29 @@ describe("AttachmentsController", function() {
     it("add attachment", function() {
         mocks.attachmentsFullService.addAttachment = sinon.spy();
 
-        let ctrl = $controller("AttachmentsFull");
+        const ctrl = $controller("AttachmentsFull");
 
-        let file = Immutable.Map();
+        const file = Immutable.Map();
 
         ctrl.projectId = 3;
         ctrl.objId = 30;
-        ctrl.type = 'us';
-        ctrl.mode = 'list';
+        ctrl.type = "us";
+        ctrl.mode = "list";
 
         ctrl.addAttachment(file);
 
-        return expect(mocks.attachmentsFullService.addAttachment).to.have.been.calledWith(3, 30, 'us', file, true);
+        return expect(mocks.attachmentsFullService.addAttachment).to.have.been.calledWith(3, 30, "us", file, true);
     });
 
     it("add attachments", function() {
-        let ctrl = $controller("AttachmentsFull");
+        const ctrl = $controller("AttachmentsFull");
 
         ctrl.addAttachment = sinon.spy();
 
-        let files = [
+        const files = [
             {},
             {},
-            {}
+            {},
         ];
 
         ctrl.addAttachments(files);
@@ -153,24 +153,24 @@ describe("AttachmentsController", function() {
 
     describe("deleteattachments", function() {
         it("success attachment", function(done) {
-            let deleteFile = Immutable.Map();
+            const deleteFile = Immutable.Map();
 
             mocks.attachmentsFullService.deleteAttachment = sinon.stub();
-            mocks.attachmentsFullService.deleteAttachment.withArgs(deleteFile, 'us').promise().resolve();
+            mocks.attachmentsFullService.deleteAttachment.withArgs(deleteFile, "us").promise().resolve();
 
-            let askResponse = {
-                finish: sinon.spy()
+            const askResponse = {
+                finish: sinon.spy(),
             };
 
-            mocks.translate.instant.withArgs('ATTACHMENT.TITLE_LIGHTBOX_DELETE_ATTACHMENT').returns('title');
-            mocks.translate.instant.withArgs('ATTACHMENT.MSG_LIGHTBOX_DELETE_ATTACHMENT').returns('message');
+            mocks.translate.instant.withArgs("ATTACHMENT.TITLE_LIGHTBOX_DELETE_ATTACHMENT").returns("title");
+            mocks.translate.instant.withArgs("ATTACHMENT.MSG_LIGHTBOX_DELETE_ATTACHMENT").returns("message");
 
             mocks.confirm.askOnDelete = sinon.stub();
-            mocks.confirm.askOnDelete.withArgs('title', 'message').promise().resolve(askResponse);
+            mocks.confirm.askOnDelete.withArgs("title", "message").promise().resolve(askResponse);
 
-            let ctrl = $controller("AttachmentsFull");
+            const ctrl = $controller("AttachmentsFull");
 
-            ctrl.type = 'us';
+            ctrl.type = "us";
 
             return ctrl.deleteAttachment(deleteFile).then(function() {
                 expect(askResponse.finish).have.been.calledOnce;
@@ -179,31 +179,31 @@ describe("AttachmentsController", function() {
         });
 
         return it("error attachment", function(done) {
-            let deleteFile = Immutable.Map();
+            const deleteFile = Immutable.Map();
 
             mocks.attachmentsFullService.deleteAttachment = sinon.stub();
-            mocks.attachmentsFullService.deleteAttachment.withArgs(deleteFile, 'us').promise().reject(new Error('error'));
+            mocks.attachmentsFullService.deleteAttachment.withArgs(deleteFile, "us").promise().reject(new Error("error"));
 
-            let askResponse = {
-                finish: sinon.spy()
+            const askResponse = {
+                finish: sinon.spy(),
             };
 
-            mocks.translate.instant.withArgs('ATTACHMENT.TITLE_LIGHTBOX_DELETE_ATTACHMENT').returns('title');
-            mocks.translate.instant.withArgs('ATTACHMENT.MSG_LIGHTBOX_DELETE_ATTACHMENT').returns('message');
-            mocks.translate.instant.withArgs('ATTACHMENT.ERROR_DELETE_ATTACHMENT').returns('error');
+            mocks.translate.instant.withArgs("ATTACHMENT.TITLE_LIGHTBOX_DELETE_ATTACHMENT").returns("title");
+            mocks.translate.instant.withArgs("ATTACHMENT.MSG_LIGHTBOX_DELETE_ATTACHMENT").returns("message");
+            mocks.translate.instant.withArgs("ATTACHMENT.ERROR_DELETE_ATTACHMENT").returns("error");
 
             mocks.confirm.askOnDelete = sinon.stub();
-            mocks.confirm.askOnDelete.withArgs('title', 'message').promise().resolve(askResponse);
+            mocks.confirm.askOnDelete.withArgs("title", "message").promise().resolve(askResponse);
 
             mocks.confirm.notify = sinon.spy();
 
-            let ctrl = $controller("AttachmentsFull");
+            const ctrl = $controller("AttachmentsFull");
 
-            ctrl.type = 'us';
+            ctrl.type = "us";
 
             return ctrl.deleteAttachment(deleteFile).then(function() {
                 expect(askResponse.finish.withArgs(false)).have.been.calledOnce;
-                expect(mocks.confirm.notify.withArgs('error', null, 'error'));
+                expect(mocks.confirm.notify.withArgs("error", null, "error"));
                 return done();
             });
         });
@@ -212,50 +212,50 @@ describe("AttachmentsController", function() {
     it("loadAttachments", function() {
         mocks.attachmentsFullService.loadAttachments = sinon.spy();
 
-        let ctrl = $controller("AttachmentsFull");
+        const ctrl = $controller("AttachmentsFull");
 
         ctrl.projectId = 3;
         ctrl.objId = 30;
-        ctrl.type = 'us';
+        ctrl.type = "us";
 
         ctrl.loadAttachments();
 
-        return expect(mocks.attachmentsFullService.loadAttachments).to.have.been.calledWith('us', 30, 3);
+        return expect(mocks.attachmentsFullService.loadAttachments).to.have.been.calledWith("us", 30, 3);
     });
 
     it("reorder attachments", function() {
         mocks.attachmentsFullService.reorderAttachment = sinon.spy();
 
-        let ctrl = $controller("AttachmentsFull");
+        const ctrl = $controller("AttachmentsFull");
 
-        let file = Immutable.Map();
+        const file = Immutable.Map();
 
         ctrl.projectId = 3;
         ctrl.objId = 30;
-        ctrl.type = 'us';
+        ctrl.type = "us";
 
         ctrl.reorderAttachment(file, 5);
 
-        return expect(mocks.attachmentsFullService.reorderAttachment).to.have.been.calledWith('us', file, 5);
+        return expect(mocks.attachmentsFullService.reorderAttachment).to.have.been.calledWith("us", file, 5);
     });
 
     it("update attachment", function() {
         mocks.attachmentsFullService.updateAttachment = sinon.spy();
 
-        let ctrl = $controller("AttachmentsFull");
+        const ctrl = $controller("AttachmentsFull");
 
-        let file = Immutable.Map();
+        const file = Immutable.Map();
 
-        ctrl.type = 'us';
+        ctrl.type = "us";
 
         ctrl.updateAttachment(file, 5);
 
-        return expect(mocks.attachmentsFullService.updateAttachment).to.have.been.calledWith(file, 'us');
+        return expect(mocks.attachmentsFullService.updateAttachment).to.have.been.calledWith(file, "us");
     });
 
     it("if attachments editable", function() {
         mocks.projectService.project = true;
-        let ctrl = $controller("AttachmentsFull");
+        const ctrl = $controller("AttachmentsFull");
 
         ctrl._isEditable();
 
@@ -264,7 +264,7 @@ describe("AttachmentsController", function() {
 
     return it("if attachments are not editable", function() {
         mocks.projectService.project = false;
-        let ctrl = $controller("AttachmentsFull");
+        const ctrl = $controller("AttachmentsFull");
 
         return expect(ctrl._isEditable()).to.be.false;
     });

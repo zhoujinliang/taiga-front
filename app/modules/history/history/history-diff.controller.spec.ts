@@ -17,39 +17,39 @@
  * File: subscriptions.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ActivitiesDiffController", function() {
-    let provide = null;
+    const provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
     beforeEach(function() {
         module("taigaHistory");
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     return it("Check diff between tags", function() {
-        let activitiesDiffCtrl = controller("ActivitiesDiffCtrl");
+        const activitiesDiffCtrl = controller("ActivitiesDiffCtrl");
 
         activitiesDiffCtrl.type = "tags";
 
         activitiesDiffCtrl.diff = [
             ["architecto", "perspiciatis", "testafo"],
-            ["architecto", "perspiciatis", "testafo", "fasto"]
+            ["architecto", "perspiciatis", "testafo", "fasto"],
         ];
 
         activitiesDiffCtrl.diffTags();
-        expect(activitiesDiffCtrl.diffRemoveTags).to.be.equal('');
-        return expect(activitiesDiffCtrl.diffAddTags).to.be.equal('fasto');
+        expect(activitiesDiffCtrl.diffRemoveTags).to.be.equal("");
+        return expect(activitiesDiffCtrl.diffAddTags).to.be.equal("fasto");
     });
 });

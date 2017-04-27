@@ -17,20 +17,20 @@
  * File: color-selector.directive.coffee
  */
 
-import {bindOnce} from "../../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {bindOnce} from "../../../libs/utils";
 
 export let ColorSelectorDirective = function($timeout) {
-    let link = function(scope, el, attrs, ctrl) {
+    const link = function(scope, el, attrs, ctrl) {
         // Animation
         let _timeout = null;
 
-        let cancel = function() {
+        const cancel = function() {
             $timeout.cancel(_timeout);
             return _timeout = null;
         };
 
-        let close = function() {
+        const close = function() {
             if (_timeout) { return; }
 
             return _timeout = $timeout((function() {
@@ -39,36 +39,35 @@ export let ColorSelectorDirective = function($timeout) {
             }), 400);
         };
 
-        el.find('.color-selector')
+        el.find(".color-selector")
             .mouseenter(cancel)
             .mouseleave(close);
 
-        el.find('.color-selector-dropdown')
+        el.find(".color-selector-dropdown")
             .mouseenter(cancel)
             .mouseleave(close);
 
-        return scope.$watch('vm.initColor', color =>
+        return scope.$watch("vm.initColor", (color) =>
             // We can't just bind once because sometimes the initial color is reset from the outside
-            ctrl.setColor(color)
+            ctrl.setColor(color),
         );
     };
 
     return {
         link,
-        templateUrl:"components/color-selector/color-selector.html",
+        templateUrl: "components/color-selector/color-selector.html",
         controller: "ColorSelectorCtrl",
         controllerAs: "vm",
         bindToController: {
             isColorRequired: "=",
             onSelectColor: "&",
             initColor: "=",
-            requiredPerm: "@"
+            requiredPerm: "@",
         },
         scope: {},
     };
 };
 
-
 ColorSelectorDirective.$inject = [
-    "$timeout"
+    "$timeout",
 ];

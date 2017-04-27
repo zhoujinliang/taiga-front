@@ -17,38 +17,38 @@
  * File: xhrError.service.spec.coffee
  */
 
-declare var describe:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-declare var sinon:any;
-import {xhrError} from "./xhrError.service"
+declare var describe: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+declare var sinon: any;
+import {xhrError} from "./xhrError.service";
 
 describe("tgXhrErrorService", function() {
-    let service: xhrError
-    let errorHandlingMock
+    let service: xhrError;
+    let errorHandlingMock;
 
     beforeEach(function() {
         errorHandlingMock = {
             notfound: sinon.stub(),
-            permissionDenied: sinon.stub()
-        }
-        service = new xhrError(errorHandlingMock)
+            permissionDenied: sinon.stub(),
+        };
+        service = new xhrError(errorHandlingMock);
     });
 
     it("404 status redirect to not-found page", function() {
-        let xhr = { status: 404 };
+        const xhr = { status: 404 };
 
-        let promise = service.response(xhr);
+        const promise = service.response(xhr);
 
         expect(promise).to.be.rejectedWith(xhr);
         return expect(errorHandlingMock.notfound).to.be.calledOnce;
     });
 
     it("403 status redirect to permission-denied page", function() {
-        let xhr = { status: 403 };
+        const xhr = { status: 403 };
 
-        let promise = service.response(xhr);
+        const promise = service.response(xhr);
 
         expect(promise).to.be.rejectedWith(xhr);
         return expect(errorHandlingMock.permissionDenied).to.be.calledOnce;

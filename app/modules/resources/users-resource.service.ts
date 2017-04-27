@@ -17,13 +17,13 @@
  * File: users-resource.service.coffee
  */
 
-import * as Immutable from "immutable"
-import * as Promise from "bluebird"
+import * as Promise from "bluebird";
+import * as Immutable from "immutable";
 
-import {Injectable} from "@angular/core"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
-import {PaginateResponseService} from "../services/paginate-response.service"
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../ts/modules/base/http";
+import {UrlsService} from "../../ts/modules/base/urls";
+import {PaginateResponseService} from "../services/paginate-response.service";
 
 @Injectable()
 export class UsersResource {
@@ -31,68 +31,68 @@ export class UsersResource {
                 private http: HttpService,
                 private paginateResponse: PaginateResponseService) {}
 
-    contacts(userId:number, options:any={}):any {
-        let url = this.urls.resolve("user-contacts", userId);
-        let httpOptions = {headers: {}};
+    contacts(userId: number, options: any= {}): any {
+        const url = this.urls.resolve("user-contacts", userId);
+        const httpOptions = {headers: {}};
 
         if (!options.enablePagination) {
             httpOptions.headers["x-disable-pagination"] =  "1";
         }
 
         return this.http.get(url, {}, httpOptions)
-            .map((result:any) => result.data);
-    };
+            .map((result: any) => result.data);
+    }
 
     getUserByUsername(username) {
-        let url = this.urls.resolve("by_username");
+        const url = this.urls.resolve("by_username");
 
-        let httpOptions = {
+        const httpOptions = {
             headers: {
-                "x-disable-pagination": "1"
-            }
+                "x-disable-pagination": "1",
+            },
         };
 
-        let params = {
-            username
+        const params = {
+            username,
         };
 
         return this.http.get(url, params, httpOptions)
-            .map((result:any) => Immutable.fromJS(result.data));
-    };
+            .map((result: any) => Immutable.fromJS(result.data));
+    }
 
     getStats(userId) {
-        let url = this.urls.resolve("user-stats", userId);
+        const url = this.urls.resolve("user-stats", userId);
 
-        let httpOptions = {
+        const httpOptions = {
             headers: {
-                "x-disable-pagination": "1"
-            }
+                "x-disable-pagination": "1",
+            },
         };
 
         return this.http.get(url, {}, httpOptions)
-            .map((result:any) => Immutable.fromJS(result.data));
-    };
+            .map((result: any) => Immutable.fromJS(result.data));
+    }
 
     getContacts(userId, excludeProjectId) {
-        let url = this.urls.resolve("user-contacts", userId);
+        const url = this.urls.resolve("user-contacts", userId);
 
-        let params:any = {};
+        const params: any = {};
         if (excludeProjectId != null) { params.exclude_project = excludeProjectId; }
 
-        let httpOptions = {
+        const httpOptions = {
             headers: {
-                "x-disable-pagination": "1"
-            }
+                "x-disable-pagination": "1",
+            },
         };
 
         return this.http.get(url, params, httpOptions)
-            .map((result:any) => Immutable.fromJS(result.data));
-    };
+            .map((result: any) => Immutable.fromJS(result.data));
+    }
 
     getLiked(userId, page, type, q) {
-        let url = this.urls.resolve("user-liked", userId);
+        const url = this.urls.resolve("user-liked", userId);
 
-        let params:any = {};
+        const params: any = {};
         if (page != null) { params.page = page; }
         if (type != null) { params.type = type; }
         if (q != null) { params.q = q; }
@@ -101,53 +101,53 @@ export class UsersResource {
 
         return this.http.get(url, params, {
             headers: {
-                'x-lazy-pagination': true
-            }
+                "x-lazy-pagination": true,
+            },
         }).map(function(result) {
             result = Immutable.fromJS(result);
             return this.paginateResponse.paginate(result);
         }.bind(this));
-    };
+    }
 
     getVoted(userId, page, type, q) {
-        let url = this.urls.resolve("user-voted", userId);
+        const url = this.urls.resolve("user-voted", userId);
 
-        let params:any = {};
+        const params: any = {};
         if (page != null) { params.page = page; }
         if (type != null) { params.type = type; }
         if (q != null) { params.q = q; }
 
         return this.http.get(url, params, {
             headers: {
-                'x-lazy-pagination': true
-            }
+                "x-lazy-pagination": true,
+            },
         }).map(function(result) {
             result = Immutable.fromJS(result);
             return this.paginateResponse.paginate(result);
         }.bind(this));
-    };
+    }
 
     getWatched(userId, page, type, q) {
-        let url = this.urls.resolve("user-watched", userId);
+        const url = this.urls.resolve("user-watched", userId);
 
-        let params:any = {};
+        const params: any = {};
         if (page != null) { params.page = page; }
         if (type != null) { params.type = type; }
         if (q != null) { params.q = q; }
 
         return this.http.get(url, params, {
             headers: {
-                'x-lazy-pagination': true
-            }
+                "x-lazy-pagination": true,
+            },
         }).map(function(result) {
             result = Immutable.fromJS(result);
             return this.paginateResponse.paginate(result);
         }.bind(this));
-    };
+    }
 
     getProfileTimeline(userId, page) {
-        let params = {
-            page
+        const params = {
+            page,
         };
 
         let url = this.urls.resolve("timeline-profile");
@@ -155,31 +155,30 @@ export class UsersResource {
 
         return this.http.get(url, params, {
             headers: {
-                'x-lazy-pagination': true
-            }
+                "x-lazy-pagination": true,
+            },
         }).map(function(result) {
             result = Immutable.fromJS(result);
             return this.paginateResponse.paginate(result);
         }.bind(this));
-    };
+    }
 
     getUserTimeline(userId, page) {
-        let params = {
+        const params = {
             page,
-            only_relevant: true
+            only_relevant: true,
         };
 
         let url = this.urls.resolve("timeline-user");
         url = `${url}/${userId}`;
 
-
         return this.http.get(url, params, {
             headers: {
-                'x-lazy-pagination': true
-            }
+                "x-lazy-pagination": true,
+            },
         }).map(function(result) {
             result = Immutable.fromJS(result);
             return this.paginateResponse.paginate(result);
         }.bind(this));
-    };
-};
+    }
+}

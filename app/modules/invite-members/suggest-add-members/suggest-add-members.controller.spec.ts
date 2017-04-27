@@ -17,23 +17,23 @@
  * File: suggest-add-members.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("SuggestAddMembersController", function() {
     let suggestAddMembersCtrl =  null;
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             return null;
@@ -45,22 +45,22 @@ describe("SuggestAddMembersController", function() {
 
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     it("is email - wrong", function() {
         suggestAddMembersCtrl = controller("SuggestAddMembersCtrl");
-        suggestAddMembersCtrl.contactQuery = 'lololo';
+        suggestAddMembersCtrl.contactQuery = "lololo";
 
-        let result = suggestAddMembersCtrl.isEmail();
+        const result = suggestAddMembersCtrl.isEmail();
         return expect(result).to.be.false;
     });
 
     it("is email - true", function() {
         suggestAddMembersCtrl = controller("SuggestAddMembersCtrl");
-        suggestAddMembersCtrl.contactQuery = 'lololo@lolo.com';
+        suggestAddMembersCtrl.contactQuery = "lololo@lolo.com";
 
-        let result = suggestAddMembersCtrl.isEmail();
+        const result = suggestAddMembersCtrl.isEmail();
         return expect(result).to.be.true;
     });
 
@@ -68,16 +68,16 @@ describe("SuggestAddMembersController", function() {
         suggestAddMembersCtrl = controller("SuggestAddMembersCtrl");
         suggestAddMembersCtrl.contacts = Immutable.fromJS([
             {
-                full_name_display: 'Abel Sonofadan',
-                username: 'abel'
+                full_name_display: "Abel Sonofadan",
+                username: "abel",
             },
             {
-                full_name_display: 'Cain Sonofadan',
-                username: 'cain'
-            }
+                full_name_display: "Cain Sonofadan",
+                username: "cain",
+            },
         ]);
 
-        suggestAddMembersCtrl.contactQuery = 'Cain Sonofadan';
+        suggestAddMembersCtrl.contactQuery = "Cain Sonofadan";
 
         suggestAddMembersCtrl.filterContacts();
         return expect(suggestAddMembersCtrl.filteredContacts.size).to.be.equal(1);
@@ -86,11 +86,11 @@ describe("SuggestAddMembersController", function() {
     return it("set invited", function() {
         suggestAddMembersCtrl = controller("SuggestAddMembersCtrl");
 
-        let contact = 'contact';
+        const contact = "contact";
 
         suggestAddMembersCtrl.onInviteSuggested = sinon.stub();
 
         suggestAddMembersCtrl.setInvited(contact);
-        return expect(suggestAddMembersCtrl.onInviteSuggested).has.been.calledWith({'contact': contact});
+        return expect(suggestAddMembersCtrl.onInviteSuggested).has.been.calledWith({contact});
     });
 });

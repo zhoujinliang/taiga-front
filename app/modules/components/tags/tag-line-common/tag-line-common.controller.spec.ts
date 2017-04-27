@@ -17,34 +17,33 @@
  * File:tag-line-common.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("TagLineCommon", function() {
     let provide = null;
     let controller = null;
     let TagLineCommonCtrl = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgTagLineService = function() {
+    const _mockTgTagLineService = function() {
         mocks.tgTagLineService = {
             checkPermissions: sinon.stub(),
             createColorsArray: sinon.stub(),
-            renderTags: sinon.stub()
+            renderTags: sinon.stub(),
         };
 
         return provide.value("tgTagLineService", mocks.tgTagLineService);
     };
 
-
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgTagLineService();
@@ -58,7 +57,7 @@ describe("TagLineCommon", function() {
 
         _mocks();
 
-        inject($controller => controller = $controller);
+        inject(($controller) => controller = $controller);
 
         TagLineCommonCtrl = controller("TagLineCommonCtrl");
         TagLineCommonCtrl.tags = [];
@@ -70,17 +69,17 @@ describe("TagLineCommon", function() {
         TagLineCommonCtrl.project = {
         };
         TagLineCommonCtrl.project.my_permissions = [
-            'permission1',
-            'permission2'
+            "permission1",
+            "permission2",
         ];
-        TagLineCommonCtrl.permissions = 'permissions1';
+        TagLineCommonCtrl.permissions = "permissions1";
 
         TagLineCommonCtrl.checkPermissions();
         return expect(mocks.tgTagLineService.checkPermissions).have.been.calledWith(TagLineCommonCtrl.project.my_permissions, TagLineCommonCtrl.permissions);
     });
 
     it("create Colors Array", function() {
-        let projectTagColors = 'string';
+        const projectTagColors = "string";
         mocks.tgTagLineService.createColorsArray.withArgs(projectTagColors).returns(true);
         TagLineCommonCtrl._createColorsArray(projectTagColors);
         return expect(TagLineCommonCtrl.colorArray).to.be.equal(true);
@@ -94,13 +93,13 @@ describe("TagLineCommon", function() {
 
     return it("on add tag", function() {
         TagLineCommonCtrl.loadingAddTag = true;
-        let tag = 'tag1';
-        let tags = ['tag1', 'tag2'];
-        let color = "CC0000";
+        const tag = "tag1";
+        const tags = ["tag1", "tag2"];
+        const color = "CC0000";
 
         TagLineCommonCtrl.project = {
-            tags: ['tag1', 'tag2'],
-            tags_colors: ["#CC0000", "CCBB00"]
+            tags: ["tag1", "tag2"],
+            tags_colors: ["#CC0000", "CCBB00"],
         };
 
         TagLineCommonCtrl.onAddTag = sinon.spy();

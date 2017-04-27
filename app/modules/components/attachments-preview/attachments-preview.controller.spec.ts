@@ -17,29 +17,29 @@
  * File: attachments-preview.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("AttachmentsPreviewController", function() {
     let $provide = null;
     let $controller = null;
     let scope = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockAttachmentsPreviewService = function() {
+    const _mockAttachmentsPreviewService = function() {
         mocks.attachmentsPreviewService = {};
 
         return $provide.value("tgAttachmentsPreviewService", mocks.attachmentsPreviewService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -49,14 +49,14 @@ describe("AttachmentsPreviewController", function() {
         })
     ;
 
-    let _inject = () =>
+    const _inject = () =>
         inject(function(_$controller_, $rootScope) {
             $controller = _$controller_;
             return scope = $rootScope.$new();
         })
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -68,79 +68,76 @@ describe("AttachmentsPreviewController", function() {
     });
 
     it("get current file", function() {
-        let attachment = Immutable.fromJS({
+        const attachment = Immutable.fromJS({
             file: {
-                description: 'desc',
-                is_deprecated: false
-            }
-        });
-
-        let ctrl = $controller("AttachmentsPreview", {
-            $scope: scope
-        });
-
-
-        ctrl.attachments = Immutable.fromJS([
-            {
-                file: {
-                    id: 1
-                }
+                description: "desc",
+                is_deprecated: false,
             },
-            {
-                file: {
-                    id: 2
-                }
-            },
-            {
-                file: {
-                    id: 3
-                }
-            }
-        ]);
-
-        mocks.attachmentsPreviewService.fileId = 2;
-
-        let current = ctrl.getCurrent();
-
-        expect(current.get('id')).to.be.equal(2);
-        return expect(ctrl.current.get('id')).to.be.equal(2);
-    });
-
-
-    it("has pagination", function() {
-        let attachment = Immutable.fromJS({
-            file: {
-                description: 'desc',
-                is_deprecated: false
-            }
         });
 
-        let ctrl = $controller("AttachmentsPreview", {
-            $scope: scope
+        const ctrl = $controller("AttachmentsPreview", {
+            $scope: scope,
         });
-
-        ctrl.getIndex = sinon.stub().returns(0);
-
 
         ctrl.attachments = Immutable.fromJS([
             {
                 file: {
                     id: 1,
-                    name: "xx"
-                }
+                },
             },
             {
                 file: {
                     id: 2,
-                    name: "xx"
-                }
+                },
             },
             {
                 file: {
                     id: 3,
-                    name: "xx.jpg"
-                }
-            }
+                },
+            },
+        ]);
+
+        mocks.attachmentsPreviewService.fileId = 2;
+
+        const current = ctrl.getCurrent();
+
+        expect(current.get("id")).to.be.equal(2);
+        return expect(ctrl.current.get("id")).to.be.equal(2);
+    });
+
+    it("has pagination", function() {
+        const attachment = Immutable.fromJS({
+            file: {
+                description: "desc",
+                is_deprecated: false,
+            },
+        });
+
+        const ctrl = $controller("AttachmentsPreview", {
+            $scope: scope,
+        });
+
+        ctrl.getIndex = sinon.stub().returns(0);
+
+        ctrl.attachments = Immutable.fromJS([
+            {
+                file: {
+                    id: 1,
+                    name: "xx",
+                },
+            },
+            {
+                file: {
+                    id: 2,
+                    name: "xx",
+                },
+            },
+            {
+                file: {
+                    id: 3,
+                    name: "xx.jpg",
+                },
+            },
         ]);
 
         mocks.attachmentsPreviewService.fileId = 1;
@@ -152,8 +149,8 @@ describe("AttachmentsPreviewController", function() {
         ctrl.attachments = ctrl.attachments.push(Immutable.fromJS({
             file: {
                 id: 4,
-                name: "xx.jpg"
-            }
+                name: "xx.jpg",
+            },
         }));
 
         pagination = ctrl.hasPagination();
@@ -162,96 +159,94 @@ describe("AttachmentsPreviewController", function() {
     });
 
     it("get index", function() {
-        let attachment = Immutable.fromJS({
+        const attachment = Immutable.fromJS({
             file: {
-                description: 'desc',
-                is_deprecated: false
-            }
+                description: "desc",
+                is_deprecated: false,
+            },
         });
 
-        let ctrl = $controller("AttachmentsPreview", {
-            $scope: scope
+        const ctrl = $controller("AttachmentsPreview", {
+            $scope: scope,
         });
-
 
         ctrl.attachments = Immutable.fromJS([
             {
                 file: {
-                    id: 1
-                }
+                    id: 1,
+                },
             },
             {
                 file: {
-                    id: 2
-                }
+                    id: 2,
+                },
             },
             {
                 file: {
-                    id: 3
-                }
-            }
+                    id: 3,
+                },
+            },
         ]);
 
         mocks.attachmentsPreviewService.fileId = 2;
 
-        let currentIndex = ctrl.getIndex();
+        const currentIndex = ctrl.getIndex();
 
         return expect(currentIndex).to.be.equal(1);
     });
 
     it("next", function() {
-        let attachment = Immutable.fromJS({
+        const attachment = Immutable.fromJS({
             file: {
-                description: 'desc',
-                is_deprecated: false
-            }
+                description: "desc",
+                is_deprecated: false,
+            },
         });
 
-        let ctrl = $controller("AttachmentsPreview", {
-            $scope: scope
+        const ctrl = $controller("AttachmentsPreview", {
+            $scope: scope,
         });
 
         ctrl.getIndex = sinon.stub().returns(0);
-
 
         ctrl.attachments = Immutable.fromJS([
             {
                 file: {
                     id: 1,
-                    name: "xx"
-                }
+                    name: "xx",
+                },
             },
             {
                 file: {
                     id: 2,
-                    name: "xx"
-                }
+                    name: "xx",
+                },
             },
             {
                 file: {
                     id: 3,
-                    name: "xx.jpg"
-                }
-            }
+                    name: "xx.jpg",
+                },
+            },
         ]);
 
         mocks.attachmentsPreviewService.fileId = 1;
 
-        let currentIndex = ctrl.next();
+        const currentIndex = ctrl.next();
 
         return expect(mocks.attachmentsPreviewService.fileId).to.be.equal(3);
     });
 
     it("next infinite", function() {
-        let attachment = Immutable.fromJS({
+        const attachment = Immutable.fromJS({
             file: {
-                description: 'desc',
-                is_deprecated: false
-            }
+                description: "desc",
+                is_deprecated: false,
+            },
         });
 
-        let ctrl = $controller("AttachmentsPreview", {
-            $scope: scope
+        const ctrl = $controller("AttachmentsPreview", {
+            $scope: scope,
         });
 
         ctrl.getIndex = sinon.stub().returns(2);
@@ -260,83 +255,82 @@ describe("AttachmentsPreviewController", function() {
             {
                 file: {
                     id: 1,
-                    name: "xx.jpg"
-                }
+                    name: "xx.jpg",
+                },
             },
             {
                 file: {
                     id: 2,
-                    name: "xx"
-                }
+                    name: "xx",
+                },
             },
             {
                 file: {
                     id: 3,
-                    name: "xx.jpg"
-                }
-            }
+                    name: "xx.jpg",
+                },
+            },
         ]);
 
         mocks.attachmentsPreviewService.fileId = 3;
 
-        let currentIndex = ctrl.next();
+        const currentIndex = ctrl.next();
 
         return expect(mocks.attachmentsPreviewService.fileId).to.be.equal(1);
     });
 
     it("previous", function() {
-        let attachment = Immutable.fromJS({
+        const attachment = Immutable.fromJS({
             file: {
-                description: 'desc',
-                is_deprecated: false
-            }
+                description: "desc",
+                is_deprecated: false,
+            },
         });
 
-        let ctrl = $controller("AttachmentsPreview", {
-            $scope: scope
+        const ctrl = $controller("AttachmentsPreview", {
+            $scope: scope,
         });
 
         ctrl.getIndex = sinon.stub().returns(2);
-
 
         ctrl.attachments = Immutable.fromJS([
             {
                 file: {
                     id: 1,
-                    name: "xx.jpg"
-                }
+                    name: "xx.jpg",
+                },
             },
             {
                 file: {
                     id: 2,
-                    name: "xx"
-                }
+                    name: "xx",
+                },
             },
             {
                 file: {
                     id: 3,
-                    name: "xx.jpg"
-                }
-            }
+                    name: "xx.jpg",
+                },
+            },
         ]);
 
         mocks.attachmentsPreviewService.fileId = 3;
 
-        let currentIndex = ctrl.previous();
+        const currentIndex = ctrl.previous();
 
         return expect(mocks.attachmentsPreviewService.fileId).to.be.equal(1);
     });
 
     return it("previous infinite", function() {
-        let attachment = Immutable.fromJS({
+        const attachment = Immutable.fromJS({
             file: {
-                description: 'desc',
-                is_deprecated: false
-            }
+                description: "desc",
+                is_deprecated: false,
+            },
         });
 
-        let ctrl = $controller("AttachmentsPreview", {
-            $scope: scope
+        const ctrl = $controller("AttachmentsPreview", {
+            $scope: scope,
         });
 
         ctrl.getIndex = sinon.stub().returns(0);
@@ -345,26 +339,26 @@ describe("AttachmentsPreviewController", function() {
             {
                 file: {
                     id: 1,
-                    name: "xx.jpg"
-                }
+                    name: "xx.jpg",
+                },
             },
             {
                 file: {
                     id: 2,
-                    name: "xx"
-                }
+                    name: "xx",
+                },
             },
             {
                 file: {
                     id: 3,
-                    name: "xx.jpg"
-                }
-            }
+                    name: "xx.jpg",
+                },
+            },
         ]);
 
         mocks.attachmentsPreviewService.fileId = 1;
 
-        let currentIndex = ctrl.previous();
+        const currentIndex = ctrl.previous();
 
         return expect(mocks.attachmentsPreviewService.fileId).to.be.equal(3);
      });

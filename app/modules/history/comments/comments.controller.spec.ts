@@ -17,22 +17,22 @@
  * File: comments.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("CommentsController", function() {
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             return null;
@@ -43,11 +43,11 @@ describe("CommentsController", function() {
         module("taigaHistory");
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     return it("set can add comment permission", function() {
-        let commentsCtrl = controller("CommentsCtrl");
+        const commentsCtrl = controller("CommentsCtrl");
         commentsCtrl.name = "us";
         commentsCtrl.initializePermissions();
         return expect(commentsCtrl.canAddCommentPermission).to.be.equal("comment_us");

@@ -17,40 +17,39 @@
  * File: wiki-history.service.spec.coffee
  */
 
-
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgWikiHistoryService", function() {
     let $provide = null;
     let wikiHistoryService = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgResources = function() {
+    const _mockTgResources = function() {
         mocks.tgResources = {
             wikiHistory: {
-                getWikiHistory: sinon.stub()
-            }
+                getWikiHistory: sinon.stub(),
+            },
         };
         return $provide.value("tgResources", mocks.tgResources);
     };
 
-    let _mockXhrErrorService = function() {
+    const _mockXhrErrorService = function() {
         mocks.xhrErrorService = {
-            response: sinon.stub()
+            response: sinon.stub(),
         };
 
         return $provide.value("tgXhrErrorService", mocks.xhrErrorService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -61,11 +60,11 @@ describe("tgWikiHistoryService", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_tgWikiHistoryService_ => wikiHistoryService = _tgWikiHistoryService_)
+    const _inject = () =>
+        inject((_tgWikiHistoryService_) => wikiHistoryService = _tgWikiHistoryService_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -77,11 +76,11 @@ describe("tgWikiHistoryService", function() {
     });
 
     it("populate history entries", function(done) {
-        let wikiId = 42;
-        let historyEntries = Immutable.List([
-            {id: 1, name: 'history entrie 1'},
-            {id: 2, name: 'history entrie 2'},
-            {id: 3, name: 'history entrie 3'},
+        const wikiId = 42;
+        const historyEntries = Immutable.List([
+            {id: 1, name: "history entrie 1"},
+            {id: 2, name: "history entrie 2"},
+            {id: 3, name: "history entrie 3"},
         ]);
 
         mocks.tgResources.wikiHistory.getWikiHistory.withArgs(wikiId).promise().resolve(historyEntries);
@@ -97,12 +96,12 @@ describe("tgWikiHistoryService", function() {
     });
 
     return it("reset history entries if wikiId change", function() {
-        let wikiId = 42;
+        const wikiId = 42;
 
         wikiHistoryService._historyEntries = Immutable.List([
-            {id: 1, name: 'history entrie 1'},
-            {id: 2, name: 'history entrie 2'},
-            {id: 3, name: 'history entrie 3'},
+            {id: 1, name: "history entrie 1"},
+            {id: 2, name: "history entrie 2"},
+            {id: 3, name: "history entrie 3"},
         ]);
 
         expect(wikiHistoryService.historyEntries.size).to.be.equal(3);

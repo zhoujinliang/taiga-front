@@ -17,7 +17,7 @@
  * File: card.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let cardDirective = () =>
     ({
@@ -36,8 +36,7 @@ export let cardDirective = () =>
             zoom: "=",
             zoomLevel: "=",
             archived: "=",
-            type: "@"
-        }
+            type: "@",
+        },
     })
 ;
-

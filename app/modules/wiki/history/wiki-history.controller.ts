@@ -17,21 +17,21 @@
  * File: wiki-history.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {defineImmutableProperty} from "../../../libs/utils";
 
 export class WikiHistoryController {
-    wikiHistoryService:any
+    wikiHistoryService: any;
 
     static initClass() {
         this.$inject = [
-            "tgWikiHistoryService"
+            "tgWikiHistoryService",
         ];
     }
 
     constructor(wikiHistoryService) {
         this.wikiHistoryService = wikiHistoryService;
-        defineImmutableProperty(this, 'historyEntries', () => { return this.wikiHistoryService.historyEntries; });
+        defineImmutableProperty(this, "historyEntries", () => this.wikiHistoryService.historyEntries);
     }
 
     initializeHistoryEntries(wikiId) {

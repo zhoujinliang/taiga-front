@@ -17,13 +17,13 @@
  * File: dropdown-user.directive.coffee
  */
 
-import * as _ from "lodash"
-import {defineImmutableProperty} from "../../../libs/utils"
+import * as _ from "lodash";
+import {defineImmutableProperty} from "../../../libs/utils";
 
 export let DropdownUserDirective = function(authService, configService, locationService,
-        navUrlsService, feedbackService, $rootScope) {
+                                            navUrlsService, feedbackService, $rootScope) {
 
-    let link = function(scope, el, attrs, ctrl) {
+    const link = function(scope, el, attrs, ctrl) {
         scope.vm = {};
         scope.vm.isFeedbackEnabled = configService.get("feedbackEnabled");
         defineImmutableProperty(scope.vm, "user", () => authService.userData);
@@ -39,10 +39,10 @@ export let DropdownUserDirective = function(authService, configService, location
         return scope.vm.userSettingsPlugins = _.filter($rootScope.userSettingsPlugins, {userMenu: true});
     };
 
-    let directive = {
+    const directive = {
         templateUrl: "navigation-bar/dropdown-user/dropdown-user.html",
         scope: {},
-        link
+        link,
     };
 
     return directive;
@@ -54,5 +54,5 @@ DropdownUserDirective.$inject = [
     "$tgLocation",
     "$tgNavUrls",
     "tgFeedbackService",
-    "$rootScope"
+    "$rootScope",
 ];

@@ -28,8 +28,8 @@ export let AssignedToSelectorDirective = () =>
             assigned: "=",
             project: "=",
             onRemoveAssigned: "&",
-            onAssignTo: "&"
-        }
+            onAssignTo: "&",
+        },
     })
 ;
 

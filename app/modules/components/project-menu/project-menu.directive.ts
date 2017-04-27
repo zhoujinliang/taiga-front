@@ -17,11 +17,11 @@
  * File: project-menu.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let ProjectMenuDirective = function(projectService, lightboxFactory) {
-    let link = function(scope, el, attrs, ctrl) {
-        let projectChange = function() {
+    const link = function(scope, el, attrs, ctrl) {
+        const projectChange = function() {
             if (projectService.project) {
                 return ctrl.show();
             } else {
@@ -33,7 +33,7 @@ export let ProjectMenuDirective = function(projectService, lightboxFactory) {
 
         scope.vm.fixed = false;
         return $(window).on("scroll", function() {
-            let position = $(window).scrollTop();
+            const position = $(window).scrollTop();
             if ((position > 100) && (scope.vm.fixed === false)) {
                 scope.vm.fixed = true;
                 return scope.$digest();
@@ -49,11 +49,11 @@ export let ProjectMenuDirective = function(projectService, lightboxFactory) {
         controller: "ProjectMenu",
         controllerAs: "vm",
         templateUrl: "components/project-menu/project-menu.html",
-        link
+        link,
     };
 };
 
 ProjectMenuDirective.$inject = [
     "tgProjectService",
-    "tgLightboxFactory"
+    "tgLightboxFactory",
 ];

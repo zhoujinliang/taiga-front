@@ -18,12 +18,12 @@
  */
 
 export class ContactProjectLbController {
-    lightboxService:any
-    rs:any
-    confirm:any
-    contact:any
-    project:any
-    sendingFeedback:boolean
+    lightboxService: any;
+    rs: any;
+    confirm: any;
+    contact: any;
+    project: any;
+    sendingFeedback: boolean;
 
     static initClass() {
         this.$inject = [
@@ -41,10 +41,10 @@ export class ContactProjectLbController {
     }
 
     contactProject() {
-        let project = this.project.get('id');
-        let { message } = this.contact;
+        const project = this.project.get("id");
+        const { message } = this.contact;
 
-        let promise = this.rs.projects.contactProject(project, message);
+        const promise = this.rs.projects.contactProject(project, message);
         this.sendingFeedback = true;
         return promise.then(() => {
             this.lightboxService.closeAll();

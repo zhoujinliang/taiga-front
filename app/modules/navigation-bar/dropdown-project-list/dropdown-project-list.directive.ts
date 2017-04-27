@@ -17,10 +17,10 @@
  * File: dropdown-project-list.directive.coffee
  */
 
-import {defineImmutableProperty} from "../../../libs/utils"
+import {defineImmutableProperty} from "../../../libs/utils";
 
 export let DropdownProjectListDirective = function(currentUserService, projectsService) {
-    let link = function(scope, el, attrs, ctrl) {
+    const link = function(scope, el, attrs, ctrl) {
         scope.vm = {};
 
         defineImmutableProperty(scope.vm, "projects", () => currentUserService.projects.get("recents"));
@@ -28,10 +28,10 @@ export let DropdownProjectListDirective = function(currentUserService, projectsS
         return scope.vm.newProject = () => projectsService.newProject();
     };
 
-    let directive = {
+    const directive = {
         templateUrl: "navigation-bar/dropdown-project-list/dropdown-project-list.html",
         scope: {},
-        link
+        link,
     };
 
     return directive;
@@ -39,5 +39,5 @@ export let DropdownProjectListDirective = function(currentUserService, projectsS
 
 DropdownProjectListDirective.$inject = [
     "tgCurrentUserService",
-    "tgProjectsService"
+    "tgProjectsService",
 ];

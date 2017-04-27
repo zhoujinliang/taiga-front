@@ -1,9 +1,9 @@
-import {Component, Input, Output, EventEmitter} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 
 @Component({
+    host: {class: "lightbox-generic-bulk"},
     selector: "tg-kanban-bulk-create-lightbox",
     template: require("./kanban-bulk-create-lightbox.jade")(),
-    host: {'class': 'lightbox-generic-bulk'},
 })
 export class KanbanBulkCreateLightbox {
     @Input() status: number;

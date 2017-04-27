@@ -18,12 +18,12 @@
  */
 
 export let DiscoverSearchDirective = function() {
-    let link = (scope, element, attrs, ctrl) => ctrl.fetch();
+    const link = (scope, element, attrs, ctrl) => ctrl.fetch();
 
     return {
         controller: "DiscoverSearch",
         controllerAs: "vm",
-        link
+        link,
     };
 };
 

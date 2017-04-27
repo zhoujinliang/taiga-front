@@ -17,26 +17,26 @@
  * File: msot-liked.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {defineImmutableProperty} from "../../../../libs/utils";
 
 export class MostLikedController {
-    discoverProjectsService:any
-    currentOrderBy:any
-    order_by:any
-    loading:boolean
+    discoverProjectsService: any;
+    currentOrderBy: any;
+    order_by: any;
+    loading: boolean;
 
     static initClass() {
         this.$inject = [
-            "tgDiscoverProjectsService"
+            "tgDiscoverProjectsService",
         ];
     }
 
     constructor(discoverProjectsService) {
         this.discoverProjectsService = discoverProjectsService;
-        defineImmutableProperty(this, "highlighted", () => { return this.discoverProjectsService.mostLiked; });
+        defineImmutableProperty(this, "highlighted", () => this.discoverProjectsService.mostLiked);
 
-        this.currentOrderBy = 'week';
+        this.currentOrderBy = "week";
         this.order_by = this.getOrderBy();
     }
 
@@ -56,8 +56,8 @@ export class MostLikedController {
     }
 
     getOrderBy() {
-        if (this.currentOrderBy === 'all') {
-            return '-total_fans';
+        if (this.currentOrderBy === "all") {
+            return "-total_fans";
         } else {
             return `-total_fans_last_${this.currentOrderBy}`;
         }

@@ -17,11 +17,11 @@
  * File: epics-table.controller.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export class StoryRowController {
-    story:any
-    percentage:any
+    story: any;
+    percentage: any;
 
     static initClass() {
         this.$inject = [];
@@ -32,11 +32,11 @@ export class StoryRowController {
     }
 
     _calculateProgressBar() {
-        if (this.story.get('is_closed') === true) {
+        if (this.story.get("is_closed") === true) {
             return this.percentage = "100%";
         } else {
-            let totalTasks = this.story.get('tasks').size;
-            let totalTasksCompleted = this.story.get('tasks').filter(it => it.get("is_closed")).size;
+            const totalTasks = this.story.get("tasks").size;
+            const totalTasksCompleted = this.story.get("tasks").filter((it) => it.get("is_closed")).size;
             if (totalTasks === 0) {
                 return this.percentage = "0%";
             } else {

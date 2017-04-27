@@ -18,7 +18,7 @@
  */
 
 export let LightboxDisplayHistoricDirective = function(lightboxService) {
-    let link = function(scope, el, attrs, ctrl) {
+    const link = function(scope, el, attrs, ctrl) {
         ctrl._loadHistoric();
         return lightboxService.open(el);
     };
@@ -26,18 +26,17 @@ export let LightboxDisplayHistoricDirective = function(lightboxService) {
     return {
         scope: {},
         bindToController: {
-            name: '=',
-            object: '=',
-            comment: '='
+            name: "=",
+            object: "=",
+            comment: "=",
         },
-        templateUrl:"history/history-lightbox/comment-history-lightbox.html",
+        templateUrl: "history/history-lightbox/comment-history-lightbox.html",
         controller: "LightboxDisplayHistoricCtrl",
         controllerAs: "vm",
-        link
+        link,
     };
 };
 
 LightboxDisplayHistoricDirective.$inject = [
-    "lightboxService"
+    "lightboxService",
 ];
-

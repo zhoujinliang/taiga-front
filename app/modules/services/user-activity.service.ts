@@ -17,19 +17,19 @@
  * File: user-activity.service.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export class UserActivityService {
-    timeout: any
-    idleTimeout: any
-    subscriptionsActive: any
-    subscriptionsInactive: any
-    isActive: any
-    timerId: any
+    timeout: any;
+    idleTimeout: any;
+    subscriptionsActive: any;
+    subscriptionsInactive: any;
+    isActive: any;
+    timerId: any;
 
     static initClass() {
-        this.$inject = ['$timeout'];
+        this.$inject = ["$timeout"];
         this.prototype.idleTimeout = 60 * 5 * 1000;
     }
 
@@ -37,11 +37,11 @@ export class UserActivityService {
         this.timeout = timeout;
         if (window.localStorage.e2e) { return null; }
 
-        window.addEventListener('mousemove', this.resetTimer.bind(this), false);
-        window.addEventListener('mousedown', this.resetTimer.bind(this), false);
-        window.addEventListener('keypress', this.resetTimer.bind(this), false);
-        window.addEventListener('mousewheel', this.resetTimer.bind(this), false);
-        window.addEventListener('touchmove', this.resetTimer.bind(this), false);
+        window.addEventListener("mousemove", this.resetTimer.bind(this), false);
+        window.addEventListener("mousedown", this.resetTimer.bind(this), false);
+        window.addEventListener("keypress", this.resetTimer.bind(this), false);
+        window.addEventListener("mousewheel", this.resetTimer.bind(this), false);
+        window.addEventListener("touchmove", this.resetTimer.bind(this), false);
 
         this.subscriptionsActive = [];
         this.subscriptionsInactive = [];
@@ -78,20 +78,20 @@ export class UserActivityService {
     }
 
     _fireActive() {
-        return this.subscriptionsActive.forEach(it => it());
+        return this.subscriptionsActive.forEach((it) => it());
     }
 
     _fireInactive() {
         this.isActive = false;
-        return this.subscriptionsInactive.forEach(it => it());
+        return this.subscriptionsInactive.forEach((it) => it());
     }
 
     _unSubscriptionsActive(cb) {
-        return this.subscriptionsActive = this.subscriptionsActive.filter(fn => fn !== cb);
+        return this.subscriptionsActive = this.subscriptionsActive.filter((fn) => fn !== cb);
     }
 
     _unSubscriptionsInactive(cb) {
-        return this.subscriptionsInactive = this.subscriptionsInactive.filter(fn => fn !== cb);
+        return this.subscriptionsInactive = this.subscriptionsInactive.filter((fn) => fn !== cb);
     }
 }
 UserActivityService.initClass();

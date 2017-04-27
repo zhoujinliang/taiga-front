@@ -17,8 +17,8 @@
  * File: attachments-preview.service.coffee
  */
 
-import {Service} from "../../../ts/classes"
-import * as angular from "angular"
+import * as angular from "angular";
+import {Service} from "../../../ts/classes";
 
 export class AttachmentsPreviewService extends Service {
     static initClass() {
@@ -26,7 +26,7 @@ export class AttachmentsPreviewService extends Service {
     }
 
     constructor() {
-        super()
+        super();
     }
 }
 AttachmentsPreviewService.initClass();

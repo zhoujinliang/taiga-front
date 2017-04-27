@@ -17,46 +17,46 @@
  * File: epic-row.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("EpicRow", function() {
     let createEpicCtrl =  null;
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgConfirm = function() {
+    const _mockTgConfirm = function() {
         mocks.tgConfirm = {
-            notify: sinon.stub()
+            notify: sinon.stub(),
         };
         return provide.value("$tgConfirm", mocks.tgConfirm);
     };
 
-    let _mockTgProjectService = function() {
+    const _mockTgProjectService = function() {
         mocks.tgProjectService = {
             project: {
-                toJS: sinon.stub()
-            }
+                toJS: sinon.stub(),
+            },
         };
         return provide.value("tgProjectService", mocks.tgProjectService);
     };
 
-    let _mockTgEpicsService = function() {
+    const _mockTgEpicsService = function() {
         mocks.tgEpicsService = {
-            createEpic: sinon.stub()
+            createEpic: sinon.stub(),
         };
         return provide.value("tgEpicsService", mocks.tgEpicsService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgConfirm();
@@ -71,18 +71,18 @@ describe("EpicRow", function() {
 
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     it("create Epic with invalid form", function() {
         mocks.tgProjectService.project.toJS.withArgs().returns(
-            {id: 1, default_epic_status: 1}
+            {id: 1, default_epic_status: 1},
         );
 
-        let data = {
+        const data = {
             validateForm: sinon.stub(),
             setFormErrors: sinon.stub(),
-            onCreateEpic: sinon.stub()
+            onCreateEpic: sinon.stub(),
         };
         createEpicCtrl = controller("CreateEpicCtrl", null, data);
         createEpicCtrl.attachments = Immutable.List([{file: "file1"}, {file: "file2"}]);
@@ -97,13 +97,13 @@ describe("EpicRow", function() {
 
     return it("create Epic successfully", function(done) {
         mocks.tgProjectService.project.toJS.withArgs().returns(
-            {id: 1, default_epic_status: 1}
+            {id: 1, default_epic_status: 1},
         );
 
-        let data = {
+        const data = {
             validateForm: sinon.stub(),
             setFormErrors: sinon.stub(),
-            onCreateEpic: sinon.stub()
+            onCreateEpic: sinon.stub(),
         };
         createEpicCtrl = controller("CreateEpicCtrl", null, data);
         createEpicCtrl.attachments = Immutable.List([{file: "file1"}, {file: "file2"}]);
@@ -115,7 +115,7 @@ describe("EpicRow", function() {
                 createEpicCtrl.attachments)
             .promise()
             .resolve(
-                {data: {id: 1, project: 1}}
+                {data: {id: 1, project: 1}},
             );
 
         return createEpicCtrl.createEpic().then(function() {

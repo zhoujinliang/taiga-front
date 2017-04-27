@@ -22,13 +22,13 @@
  * File: modules/resources.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
-import {downgradeInjectable} from "@angular/upgrade/static"
-import {ResourcesService} from "./resources.service"
+import {downgradeInjectable} from "@angular/upgrade/static";
+import * as angular from "angular";
+import * as _ from "lodash";
+import {ResourcesService} from "./resources.service";
 
-let module = angular.module("taigaResources", ["taigaBase"]);
+const module = angular.module("taigaResources", ["taigaBase"]);
 module.service("$tgResources", downgradeInjectable(ResourcesService));
 
-let module2 = angular.module("taigaResources2", ["taigaBase"]);
+const module2 = angular.module("taigaResources2", ["taigaBase"]);
 module2.service("tgResources", downgradeInjectable(ResourcesService));

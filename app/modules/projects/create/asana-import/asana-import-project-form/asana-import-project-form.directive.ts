@@ -20,20 +20,20 @@
 export let AsanaImportProjectFormDirective = () =>
     ({
         link(scope, elm, attr, ctrl) {
-            return scope.$watch('vm.members', ctrl.checkUsersLimit.bind(ctrl));
+            return scope.$watch("vm.members", ctrl.checkUsersLimit.bind(ctrl));
         },
 
-        templateUrl:"projects/create/asana-import/asana-import-project-form/asana-import-project-form.html",
+        templateUrl: "projects/create/asana-import/asana-import-project-form/asana-import-project-form.html",
         controller: "AsanaImportProjectFormCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            members: '<',
-            project: '<',
-            onSaveProjectDetails: '&',
-            onCancelForm: '&',
-            fetchingUsers: '<'
-        }
+            members: "<",
+            project: "<",
+            onSaveProjectDetails: "&",
+            onCancelForm: "&",
+            fetchingUsers: "<",
+        },
     })
 ;
 AsanaImportProjectFormDirective.$inject = [];

@@ -17,22 +17,22 @@
  * File: tag-line.controller.coffee
  */
 
-import {trim} from "../../../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {trim} from "../../../../libs/utils";
 
 export class TagLineCommonController {
-    tagLineService:any
-    disableColorSelection:any
-    newTag:any
-    colorArray:any
-    addTag:any
-    project:any
-    permissions:any
-    onAddTag:any
+    tagLineService: any;
+    disableColorSelection: any;
+    newTag: any;
+    colorArray: any;
+    addTag: any;
+    project: any;
+    permissions: any;
+    onAddTag: any;
 
     static initClass() {
         this.$inject = [
-            "tgTagLineService"
+            "tgTagLineService",
         ];
     }
 
@@ -77,4 +77,3 @@ export class TagLineCommonController {
     }
 }
 TagLineCommonController.initClass();
-

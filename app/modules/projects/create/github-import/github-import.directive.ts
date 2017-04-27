@@ -22,13 +22,13 @@ export let GithubImportDirective = () =>
         link(scope, elm, attrs, ctrl) {
             return ctrl.startProjectSelector();
         },
-        templateUrl:"projects/create/github-import/github-import.html",
+        templateUrl: "projects/create/github-import/github-import.html",
         controller: "GithubImportCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            onCancel: '&'
-        }
+            onCancel: "&",
+        },
     })
 ;
 GithubImportDirective.$inject = [];

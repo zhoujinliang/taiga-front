@@ -17,11 +17,11 @@
  * File: external-apps.module.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
-import {ExternalAppController} from "./external-app.controller"
-import {ExternalAppsService} from "./external-app.service"
+import {ExternalAppController} from "./external-app.controller";
+import {ExternalAppsService} from "./external-app.service";
 
-let module = angular.module("taigaExternalApps", []);
+const module = angular.module("taigaExternalApps", []);
 module.controller("ExternalApp", ExternalAppController);
 module.service("tgExternalAppsService", ExternalAppsService);

@@ -22,8 +22,8 @@
  * File: modules/resources/locales.coffee
  */
 
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
+import {Injectable} from "@angular/core";
+import {RepositoryService} from "../../ts/modules/base/repository";
 
 @Injectable()
 export class LocalesResource {
@@ -32,4 +32,4 @@ export class LocalesResource {
     list() {
         return this.repo.queryMany("locales");
     }
-};
+}

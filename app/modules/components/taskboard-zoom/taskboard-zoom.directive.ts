@@ -17,30 +17,30 @@
  * File: taskboard-zoom.directive.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export let TaskboardZoomDirective = function(storage) {
-    let link = function(scope, el, attrs, ctrl) {
+    const link = function(scope, el, attrs, ctrl) {
         scope.zoomIndex = storage.get("taskboard_zoom") || 2;
 
         scope.levels = 4;
 
-        let zooms = [
+        const zooms = [
             ["ref"],
             ["subject"],
             ["owner", "tags", "extra_info", "unfold"],
             ["attachments", "empty_extra_info"],
-            ["related_tasks"]
+            ["related_tasks"],
         ];
 
-        let getZoomView = function(zoomIndex) {
+        const getZoomView = function(zoomIndex) {
             if (zoomIndex == null) { zoomIndex = 0; }
             if (storage.get("taskboard_zoom") !== zoomIndex) {
                 storage.set("taskboard_zoom", zoomIndex);
             }
 
-            return _.reduce(zooms, function(result:string[], value, key) {
+            return _.reduce(zooms, function(result: string[], value, key) {
                 if (key <= zoomIndex) {
                     result = result.concat(value);
                 }
@@ -49,15 +49,15 @@ export let TaskboardZoomDirective = function(storage) {
             });
         };
 
-        return scope.$watch('zoomIndex', function(zoomLevel) {
-            let zoom = getZoomView(zoomLevel);
+        return scope.$watch("zoomIndex", function(zoomLevel) {
+            const zoom = getZoomView(zoomLevel);
             return scope.onZoomChange({zoomLevel, zoom});
         });
     };
 
     return {
         scope: {
-            onZoomChange: "&"
+            onZoomChange: "&",
         },
         template: `\
 <tg-board-zoom
@@ -66,6 +66,6 @@ export let TaskboardZoomDirective = function(storage) {
     value="zoomIndex"
 ></tg-board-zoom>\
 `,
-        link
+        link,
     };
 };

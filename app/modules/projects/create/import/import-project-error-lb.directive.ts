@@ -1,5 +1,5 @@
 export let LbImportErrorDirective = function(lightboxService) {
-    let link = function(scope, el, attrs) {
+    const link = function(scope, el, attrs) {
         lightboxService.open(el);
 
         return scope.close = function() {
@@ -9,7 +9,7 @@ export let LbImportErrorDirective = function(lightboxService) {
 
     return {
         templateUrl: "projects/create/import/import-project-error-lb.html",
-        link
+        link,
     };
 };
 LbImportErrorDirective.$inject = ["lightboxService"];

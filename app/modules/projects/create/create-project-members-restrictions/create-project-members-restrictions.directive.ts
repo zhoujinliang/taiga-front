@@ -20,11 +20,10 @@
 export let createProjectMembersRestrictionsDirective = () =>
     ({
         scope: {
-            isPrivate: '=',
-            limitMembersPrivateProject: '=',
-            limitMembersPublicProject: '='
+            isPrivate: "=",
+            limitMembersPrivateProject: "=",
+            limitMembersPublicProject: "=",
         },
-        templateUrl: "projects/create/create-project-members-restrictions/create-project-members-restrictions.html"
+        templateUrl: "projects/create/create-project-members-restrictions/create-project-members-restrictions.html",
     })
 ;
-

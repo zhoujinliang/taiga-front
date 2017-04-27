@@ -17,12 +17,12 @@
  * File: user-resource.service.coffee
  */
 
-import * as Immutable from "immutable"
-import * as Rx from "rxjs/Rx"
+import * as Immutable from "immutable";
+import * as Rx from "rxjs/Rx";
 
-import {Injectable} from "@angular/core"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../ts/modules/base/http";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class UserResource {
@@ -36,41 +36,41 @@ export class UserResource {
             url += `/${key}`;
         }
 
-        let httpOptions = {};
+        const httpOptions = {};
 
-        return this.http.get(url, {}).map((response:any) => response.data.value);
-    };
+        return this.http.get(url, {}).map((response: any) => response.data.value);
+    }
 
     setUserStorage(key, value) {
-        let url = this.urls.resolve("user-storage") + '/' + key;
+        const url = this.urls.resolve("user-storage") + "/" + key;
 
-        let params = {
+        const params = {
             key,
-            value
+            value,
         };
 
         return this.http.put(url, params);
-    };
+    }
 
     createUserStorage(key, value) {
-        let url = this.urls.resolve("user-storage");
+        const url = this.urls.resolve("user-storage");
 
-        let params = {
+        const params = {
             key,
-            value
+            value,
         };
 
         return this.http.post(url, params);
-    };
+    }
 
     login(loginData) {
-        let url = this.urls.resolve("auth");
+        const url = this.urls.resolve("auth");
         return this.http.post(url, loginData)
-                        .map((data:any) => {
-                            return Immutable.fromJS(data.data)
+                        .map((data: any) => {
+                            return Immutable.fromJS(data.data);
                         })
                         .catch((err) => {
                             return Rx.Observable.throw(err);
                         });
-    };
-};
+    }
+}

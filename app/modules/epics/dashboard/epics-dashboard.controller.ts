@@ -17,21 +17,21 @@
  * File: epics.dashboard.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {defineImmutableProperty} from "../../../libs/utils";
 
 export class EpicsDashboardController {
-    params:any
-    errorHandlingService:any
-    lightboxFactory:any
-    lightboxService:any
-    confirm:any
-    projectService:any
-    epicsService:any
-    appMetaService:any
-    translate:any
-    sectionName:string
-    project:any
+    params: any;
+    errorHandlingService: any;
+    lightboxFactory: any;
+    lightboxService: any;
+    confirm: any;
+    projectService: any;
+    epicsService: any;
+    appMetaService: any;
+    translate: any;
+    sectionName: string;
+    project: any;
 
     static initClass() {
         this.$inject = [
@@ -43,12 +43,12 @@ export class EpicsDashboardController {
             "tgProjectService",
             "tgEpicsService",
             "tgAppMetaService",
-            "$translate"
+            "$translate",
         ];
     }
 
     constructor(params, errorHandlingService, lightboxFactory, lightboxService,
-                  confirm, projectService, epicsService, appMetaService, translate) {
+                confirm, projectService, epicsService, appMetaService, translate) {
         this.params = params;
         this.errorHandlingService = errorHandlingService;
         this.lightboxFactory = lightboxFactory;
@@ -60,8 +60,8 @@ export class EpicsDashboardController {
         this.translate = translate;
         this.sectionName = "EPICS.SECTION_NAME";
 
-        defineImmutableProperty(this, 'project', () => { return this.projectService.project; });
-        defineImmutableProperty(this, 'epics', () => { return this.epicsService.epics; });
+        defineImmutableProperty(this, "project", () => this.projectService.project);
+        defineImmutableProperty(this, "epics", () => this.epicsService.epics);
 
         this.appMetaService.setfn(this._setMeta.bind(this));
     }
@@ -69,14 +69,14 @@ export class EpicsDashboardController {
     _setMeta() {
         if (!this.project) { return null; }
 
-        let ctx = {
+        const ctx = {
             projectName: this.project.get("name"),
-            projectDescription: this.project.get("description")
+            projectDescription: this.project.get("description"),
         };
 
         return {
             title: this.translate.instant("EPICS.PAGE_TITLE", ctx),
-            description: this.translate.instant("EPICS.PAGE_DESCRIPTION", ctx)
+            description: this.translate.instant("EPICS.PAGE_DESCRIPTION", ctx),
         };
     }
 
@@ -100,17 +100,17 @@ export class EpicsDashboardController {
     }
 
     onCreateEpic() {
-        let onCreateEpic =  () => {
+        const onCreateEpic =  () => {
             this.lightboxService.closeAll();
             this.confirm.notify("success");
              // To prevent error https://docs.angularjs.org/error/$parse/isecdom?p0=onCreateEpic()
         };
 
-        return this.lightboxFactory.create('tg-create-epic', {
+        return this.lightboxFactory.create("tg-create-epic", {
             "class": "lightbox lightbox-create-epic open",
-            "on-create-epic": "onCreateEpic()"
+            "on-create-epic": "onCreateEpic()",
         }, {
-            "onCreateEpic": onCreateEpic.bind(this)
+            onCreateEpic: onCreateEpic.bind(this),
         });
     }
 }

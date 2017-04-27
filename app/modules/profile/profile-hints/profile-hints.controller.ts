@@ -17,35 +17,35 @@
  * File: profile-hints.controller.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export class ProfileHintsController {
-    translate:any
-    HINTS:any
-    hintKey:any
-    hint:any
+    translate: any;
+    HINTS: any;
+    hintKey: any;
+    hint: any;
 
     static initClass() {
         this.prototype.HINTS = [
             { //hint1
-                url: "https://tree.taiga.io/support/admin/import-export-projects/"
+                url: "https://tree.taiga.io/support/admin/import-export-projects/",
             },
             { //hint2
-                url: "https://tree.taiga.io/support/admin/custom-fields/"
+                url: "https://tree.taiga.io/support/admin/custom-fields/",
             },
             { //hint3
             },
             { //hint4
-            }
+            },
         ];
     }
     constructor(translate) {
         this.translate = translate;
-        let hintKey = Math.floor(Math.random() * this.HINTS.length) + 1;
+        const hintKey = Math.floor(Math.random() * this.HINTS.length) + 1;
 
         this.hint = this.HINTS[hintKey - 1];
 
-        this.hint.linkText = this.hint.linkText || 'HINTS.LINK';
+        this.hint.linkText = this.hint.linkText || "HINTS.LINK";
 
         this.hint.title = this.translate.instant(`HINTS.HINT${hintKey}_TITLE`);
 
@@ -55,5 +55,5 @@ export class ProfileHintsController {
 ProfileHintsController.initClass();
 
 ProfileHintsController.$inject = [
-    "$translate"
+    "$translate",
 ];

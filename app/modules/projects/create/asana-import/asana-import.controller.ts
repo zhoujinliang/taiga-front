@@ -17,23 +17,23 @@
  * File: asana-import.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../libs/utils"
+import {defineImmutableProperty} from "../../../../libs/utils";
 
 export class AsanaImportController {
-    asanaImportService:any
-    confirm:any
-    translate:any
-    importProjectService:any
-    step:string
-    project:any
-    fetchingUsers:any
+    asanaImportService: any;
+    confirm: any;
+    translate: any;
+    importProjectService: any;
+    step: string;
+    project: any;
+    fetchingUsers: any;
 
     static initClass() {
         this.$inject = [
-            'tgAsanaImportService',
-            '$tgConfirm',
-            '$translate',
-            'tgImportProjectService',
+            "tgAsanaImportService",
+            "$tgConfirm",
+            "$translate",
+            "tgImportProjectService",
         ];
     }
 
@@ -42,47 +42,47 @@ export class AsanaImportController {
         this.confirm = confirm;
         this.translate = translate;
         this.importProjectService = importProjectService;
-        this.step = 'autorization-asana';
+        this.step = "autorization-asana";
         this.project = null;
-        defineImmutableProperty(this, 'projects', () => { return this.asanaImportService.projects; });
-        defineImmutableProperty(this, 'members', () => { return this.asanaImportService.projectUsers; });
+        defineImmutableProperty(this, "projects", () => this.asanaImportService.projects);
+        defineImmutableProperty(this, "members", () => this.asanaImportService.projectUsers);
     }
 
     startProjectSelector() {
-        this.step = 'project-select-asana';
+        this.step = "project-select-asana";
         return this.asanaImportService.fetchProjects();
     }
 
     onSelectProject(project) {
-        this.step = 'project-form-asana';
+        this.step = "project-form-asana";
         this.project = project;
         this.fetchingUsers = true;
 
-        return this.asanaImportService.fetchUsers(this.project.get('id')).then(() => this.fetchingUsers = false);
+        return this.asanaImportService.fetchUsers(this.project.get("id")).then(() => this.fetchingUsers = false);
     }
 
     onSaveProjectDetails(project) {
         this.project = project;
-        return this.step = 'project-members-asana';
+        return this.step = "project-members-asana";
     }
 
     onCancelMemberSelection() {
-        return this.step = 'project-form-asana';
+        return this.step = "project-form-asana";
     }
 
     startImport(users) {
-        let loader = this.confirm.loader(this.translate.instant('PROJECT.IMPORT.IN_PROGRESS.TITLE'), this.translate.instant('PROJECT.IMPORT.IN_PROGRESS.DESCRIPTION'), true);
+        const loader = this.confirm.loader(this.translate.instant("PROJECT.IMPORT.IN_PROGRESS.TITLE"), this.translate.instant("PROJECT.IMPORT.IN_PROGRESS.DESCRIPTION"), true);
 
         loader.start();
 
-        let promise = this.asanaImportService.importProject(
-            this.project.get('name'),
-            this.project.get('description'),
-            this.project.get('id'),
+        const promise = this.asanaImportService.importProject(
+            this.project.get("name"),
+            this.project.get("description"),
+            this.project.get("id"),
             users,
-            this.project.get('keepExternalReference'),
-            this.project.get('is_private'),
-            this.project.get('project_type')
+            this.project.get("keepExternalReference"),
+            this.project.get("is_private"),
+            this.project.get("project_type"),
         );
 
         return this.importProjectService.importPromise(promise).then(() => loader.stop());

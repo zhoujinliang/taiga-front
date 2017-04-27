@@ -17,30 +17,30 @@
  * File: most-liked.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("MostLiked", function() {
     let $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockDiscoverProjectsService = function() {
+    const _mockDiscoverProjectsService = function() {
         mocks.discoverProjectsService = {
-            fetchMostLiked: sinon.stub()
+            fetchMostLiked: sinon.stub(),
         };
 
         return $provide.value("tgDiscoverProjectsService", mocks.discoverProjectsService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -50,11 +50,11 @@ describe("MostLiked", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -66,13 +66,13 @@ describe("MostLiked", function() {
     });
 
     it("fetch", function(done) {
-        let ctrl = $controller("MostLiked");
+        const ctrl = $controller("MostLiked");
 
-        ctrl.getOrderBy = sinon.stub().returns('week');
+        ctrl.getOrderBy = sinon.stub().returns("week");
 
-        let mockPromise = mocks.discoverProjectsService.fetchMostLiked.withArgs(sinon.match({order_by: 'week'})).promise();
+        const mockPromise = mocks.discoverProjectsService.fetchMostLiked.withArgs(sinon.match({order_by: "week"})).promise();
 
-        let promise = ctrl.fetch();
+        const promise = ctrl.fetch();
 
         expect(ctrl.loading).to.be.true;
 
@@ -84,15 +84,14 @@ describe("MostLiked", function() {
         });
     });
 
-
     return it("order by", function() {
-        let ctrl = $controller("MostLiked");
+        const ctrl = $controller("MostLiked");
 
         ctrl.fetch = sinon.spy();
 
-        ctrl.orderBy('month');
+        ctrl.orderBy("month");
 
         expect(ctrl.fetch).to.have.been.called;
-        return expect(ctrl.currentOrderBy).to.be.equal('month');
+        return expect(ctrl.currentOrderBy).to.be.equal("month");
     });
 });

@@ -22,8 +22,8 @@ export let ContactProjectButtonDirective = () =>
         scope: {},
         controller: "ContactProjectButtonCtrl",
         bindToController: {
-            project: '=',
-            layout: '@'
+            project: "=",
+            layout: "@",
         },
         controllerAs: "vm",
         templateUrl: "projects/components/contact-project-button/contact-project-button.html",

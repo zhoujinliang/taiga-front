@@ -17,23 +17,23 @@
  * File: trello-import.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../libs/utils"
+import {defineImmutableProperty} from "../../../../libs/utils";
 
 export class TrelloImportController {
-    trelloImportService:any
-    confirm:any
-    translate:any
-    importProjectService:any
-    project:any
-    step:any
-    fetchingUsers:any
+    trelloImportService: any;
+    confirm: any;
+    translate: any;
+    importProjectService: any;
+    project: any;
+    step: any;
+    fetchingUsers: any;
 
     static initClass() {
         this.$inject = [
-            'tgTrelloImportService',
-            '$tgConfirm',
-            '$translate',
-            'tgImportProjectService',
+            "tgTrelloImportService",
+            "$tgConfirm",
+            "$translate",
+            "tgImportProjectService",
         ];
     }
 
@@ -43,43 +43,43 @@ export class TrelloImportController {
         this.translate = translate;
         this.importProjectService = importProjectService;
         this.project = null;
-        defineImmutableProperty(this, 'projects', () => { return this.trelloImportService.projects; });
-        defineImmutableProperty(this, 'members', () => { return this.trelloImportService.projectUsers; });
+        defineImmutableProperty(this, "projects", () => this.trelloImportService.projects);
+        defineImmutableProperty(this, "members", () => this.trelloImportService.projectUsers);
     }
 
     startProjectSelector() {
-        return this.trelloImportService.fetchProjects().then(() => this.step = 'project-select-trello');
+        return this.trelloImportService.fetchProjects().then(() => this.step = "project-select-trello");
     }
 
     onSelectProject(project) {
-        this.step = 'project-form-trello';
+        this.step = "project-form-trello";
         this.project = project;
         this.fetchingUsers = true;
 
-        return this.trelloImportService.fetchUsers(this.project.get('id')).then(() => this.fetchingUsers = false);
+        return this.trelloImportService.fetchUsers(this.project.get("id")).then(() => this.fetchingUsers = false);
     }
 
     onSaveProjectDetails(project) {
         this.project = project;
-        return this.step = 'project-members-trello';
+        return this.step = "project-members-trello";
     }
 
     onCancelMemberSelection() {
-        return this.step = 'project-form-trello';
+        return this.step = "project-form-trello";
     }
 
     startImport(users) {
-        let loader = this.confirm.loader(this.translate.instant('PROJECT.IMPORT.IN_PROGRESS.TITLE'), this.translate.instant('PROJECT.IMPORT.IN_PROGRESS.DESCRIPTION'), true);
+        const loader = this.confirm.loader(this.translate.instant("PROJECT.IMPORT.IN_PROGRESS.TITLE"), this.translate.instant("PROJECT.IMPORT.IN_PROGRESS.DESCRIPTION"), true);
 
         loader.start();
 
-        let promise = this.trelloImportService.importProject(
-            this.project.get('name'),
-            this.project.get('description'),
-            this.project.get('id'),
+        const promise = this.trelloImportService.importProject(
+            this.project.get("name"),
+            this.project.get("description"),
+            this.project.get("id"),
             users,
-            this.project.get('keepExternalReference'),
-            this.project.get('is_private')
+            this.project.get("keepExternalReference"),
+            this.project.get("is_private"),
         );
 
         return this.importProjectService.importPromise(promise).then(() => loader.stop());

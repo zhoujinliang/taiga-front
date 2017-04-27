@@ -17,8 +17,8 @@
  * File: belong-to-epics.directive.coffee
  */
 
-import * as Immutable from "immutable"
-import {Component, Input} from "@angular/core"
+import {Component, Input} from "@angular/core";
+import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-belong-to-epics",
@@ -29,6 +29,6 @@ export class BelongToEpics {
     @Input() format: string;
 
     getTitle(epic) {
-        return `#${epic.get('id')} ${epic.get('subject')}`
+        return `#${epic.get("id")} ${epic.get("subject")}`;
     }
 }

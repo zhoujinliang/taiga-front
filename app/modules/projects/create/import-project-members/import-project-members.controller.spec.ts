@@ -17,46 +17,46 @@
  * File: import.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ImportProjectMembersCtrl", function() {
     let $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockCurrentUserService = function() {
+    const _mockCurrentUserService = function() {
         mocks.currentUserService = {
             getUser: sinon.stub().returns(Immutable.fromJS({
-                id: 1
+                id: 1,
             })),
             canAddMembersPrivateProject: sinon.stub(),
-            canAddMembersPublicProject: sinon.stub()
+            canAddMembersPublicProject: sinon.stub(),
         };
 
         return $provide.value("tgCurrentUserService", mocks.currentUserService);
     };
 
-    let _mockUserService = function() {
+    const _mockUserService = function() {
         mocks.userService = {
-            getContacts: sinon.stub()
+            getContacts: sinon.stub(),
         };
 
         return $provide.value("tgUserService", mocks.userService);
     };
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -67,7 +67,7 @@ describe("ImportProjectMembersCtrl", function() {
         })
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -79,25 +79,25 @@ describe("ImportProjectMembersCtrl", function() {
     });
 
     it("fetch user info", function(done) {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
         ctrl.refreshSelectableUsers = sinon.spy();
 
-        mocks.userService.getContacts.withArgs(1).promise().resolve('contacts');
+        mocks.userService.getContacts.withArgs(1).promise().resolve("contacts");
 
         return ctrl.fetchUser().then(function() {
-            expect(ctrl.userContacts).to.be.equal('contacts');
+            expect(ctrl.userContacts).to.be.equal("contacts");
             expect(ctrl.refreshSelectableUsers).have.been.called;
             return done();
         });
     });
 
     it("search user", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
-        let user = {
+        const user = {
             id: 1,
-            name: "username"
+            name: "username",
         };
 
         ctrl.searchUser(user);
@@ -107,20 +107,20 @@ describe("ImportProjectMembersCtrl", function() {
     });
 
     it("prepare submit users, warning if needed", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
-        let user = {
+        const user = {
             id: 1,
-            name: "username"
+            name: "username",
         };
 
         ctrl.selectedUsers = Immutable.fromJS([
             {id: 1},
-            {id: 2}
+            {id: 2},
         ]);
 
         ctrl.members = Immutable.fromJS([
-            {id: 1}
+            {id: 1},
         ]);
 
         ctrl.beforeSubmitUsers();
@@ -129,21 +129,20 @@ describe("ImportProjectMembersCtrl", function() {
     });
 
     it("prepare submit users, submit", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
-        let user = {
+        const user = {
             id: 1,
-            name: "username"
+            name: "username",
         };
 
         ctrl.selectedUsers = Immutable.fromJS([
-            {id: 1}
+            {id: 1},
         ]);
 
         ctrl.members = Immutable.fromJS([
-            {id: 1}
+            {id: 1},
         ]);
-
 
         ctrl.submit = sinon.spy();
         ctrl.beforeSubmitUsers();
@@ -153,95 +152,93 @@ describe("ImportProjectMembersCtrl", function() {
     });
 
     it("confirm user", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
         ctrl.discardSuggestedUser = sinon.spy();
         ctrl.refreshSelectableUsers = sinon.spy();
 
-        ctrl.confirmUser('user', 'taiga-user');
+        ctrl.confirmUser("user", "taiga-user");
 
         expect(ctrl.selectedUsers.size).to.be.equal(1);
 
-        expect(ctrl.selectedUsers.get(0).get('user')).to.be.equal('user');
-        expect(ctrl.selectedUsers.get(0).get('taigaUser')).to.be.equal('taiga-user');
+        expect(ctrl.selectedUsers.get(0).get("user")).to.be.equal("user");
+        expect(ctrl.selectedUsers.get(0).get("taigaUser")).to.be.equal("taiga-user");
         expect(ctrl.discardSuggestedUser).have.been.called;
         return expect(ctrl.refreshSelectableUsers).have.been.called;
     });
 
     it("discard suggested user", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
         ctrl.discardSuggestedUser(Immutable.fromJS({
-            id: 3
+            id: 3,
         }));
 
         return expect(ctrl.cancelledUsers.get(0)).to.be.equal(3);
     });
 
     it("clean member selection", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
         ctrl.refreshSelectableUsers = sinon.spy();
 
         ctrl.selectedUsers = Immutable.fromJS([
             {
                 user: {
-                    id: 1
-                }
+                    id: 1,
+                },
             },
             {
                 user: {
-                    id: 2
-                }
-            }
+                    id: 2,
+                },
+            },
         ]);
 
         ctrl.unselectUser(Immutable.fromJS({
-            id: 2
+            id: 2,
         }));
 
         expect(ctrl.selectedUsers.size).to.be.equal(1);
         return expect(ctrl.refreshSelectableUsers).have.been.called;
     });
 
-
     it("get a selected member", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
-        let member = Immutable.fromJS({
-            id: 3
+        const member = Immutable.fromJS({
+            id: 3,
         });
 
         ctrl.selectedUsers = ctrl.selectedUsers.push(Immutable.fromJS({
             user: {
-                id: 3
-            }
+                id: 3,
+            },
         }));
 
-        let user = ctrl.getSelectedMember(member);
+        const user = ctrl.getSelectedMember(member);
 
-        return expect(user.getIn(['user', 'id'])).to.be.equal(3);
+        return expect(user.getIn(["user", "id"])).to.be.equal(3);
     });
 
     it("submit", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
         ctrl.selectedUsers = ctrl.selectedUsers.push(Immutable.fromJS({
             user: {
-                id: 3
+                id: 3,
             },
             taigaUser: {
-                id: 2
-            }
+                id: 2,
+            },
         }));
 
         ctrl.selectedUsers = ctrl.selectedUsers.push(Immutable.fromJS({
             user: {
-                id: 3
+                id: 3,
             },
-            taigaUser: "xx@yy.com"
+            taigaUser: "xx@yy.com",
         }));
-
 
         ctrl.onSubmit = sinon.stub();
 
@@ -255,94 +252,93 @@ describe("ImportProjectMembersCtrl", function() {
     });
 
     it("show suggested match", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
         ctrl.isMemberSelected = sinon.stub().returns(false);
         ctrl.cancelledUsers = [
-            3
+            3,
         ];
 
-        let member = Immutable.fromJS({
+        const member = Immutable.fromJS({
             id: 1,
             user: {
-                id: 10
-            }
+                id: 10,
+            },
         });
 
         return expect(ctrl.showSuggestedMatch(member)).to.be.true;
     });
 
     it("doesn't show suggested match", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
         ctrl.isMemberSelected = sinon.stub().returns(false);
         ctrl.cancelledUsers = [
-            3
+            3,
         ];
 
-        let member = Immutable.fromJS({
+        const member = Immutable.fromJS({
             id: 3,
             user: {
-                id: 10
-            }
+                id: 10,
+            },
         });
 
         return expect(ctrl.showSuggestedMatch(member)).to.be.false;
     });
 
     it("check users limit", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
         ctrl.members = Immutable.fromJS([
-            1, 2, 3
+            1, 2, 3,
         ]);
 
-        mocks.currentUserService.canAddMembersPrivateProject.withArgs(4).returns('xx');
-        mocks.currentUserService.canAddMembersPublicProject.withArgs(4).returns('yy');
+        mocks.currentUserService.canAddMembersPrivateProject.withArgs(4).returns("xx");
+        mocks.currentUserService.canAddMembersPublicProject.withArgs(4).returns("yy");
 
         ctrl.checkUsersLimit();
 
-        expect(ctrl.limitMembersPrivateProject).to.be.equal('xx');
-        return expect(ctrl.limitMembersPublicProject).to.be.equal('yy');
+        expect(ctrl.limitMembersPrivateProject).to.be.equal("xx");
+        return expect(ctrl.limitMembersPublicProject).to.be.equal("yy");
     });
 
-
     it("get distict select taiga users excluding the current user", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
         ctrl.selectedUsers = Immutable.fromJS([
             {
                 taigaUser: {
-                    id: 1
-                }
+                    id: 1,
+                },
             },
             {
                 taigaUser: {
-                    id: 1
-                }
+                    id: 1,
+                },
             },
             {
                 taigaUser: {
-                    id: 3
-                }
+                    id: 3,
+                },
             },
             {
                 taigaUser: {
-                    id: 5
-                }
-            }
+                    id: 5,
+                },
+            },
         ]);
 
         ctrl.currentUser = Immutable.fromJS({
-            id: 5
+            id: 5,
         });
 
-        let users = ctrl.getDistinctSelectedTaigaUsers();
+        const users = ctrl.getDistinctSelectedTaigaUsers();
 
         return expect(users.size).to.be.equal(2);
      });
 
     it("refresh selectable users array with all users available", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
         ctrl.isImportMoreUsersDisabled = sinon.stub().returns(false);
         ctrl.displayEmailSelector = false;
@@ -356,12 +352,11 @@ describe("ImportProjectMembersCtrl", function() {
         return expect(ctrl.displayEmailSelector).to.be.true;
      });
 
-
     it("refresh selectable users array with the selected ones", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
         ctrl.getDistinctSelectedTaigaUsers = sinon.stub().returns(Immutable.fromJS([
-            {taigaUser: 1}
+            {taigaUser: 1},
         ]));
         ctrl.displayEmailSelector = false;
 
@@ -377,13 +372,13 @@ describe("ImportProjectMembersCtrl", function() {
      });
 
     it("import more user disable in private project", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
         ctrl.project = Immutable.fromJS({
-            is_private: true
+            is_private: true,
         });
 
-        ctrl.getDistinctSelectedTaigaUsers = sinon.stub().returns(Immutable.fromJS([1,2,3]));
+        ctrl.getDistinctSelectedTaigaUsers = sinon.stub().returns(Immutable.fromJS([1, 2, 3]));
 
         mocks.currentUserService.canAddMembersPrivateProject.withArgs(5).returns({valid: true});
 
@@ -391,13 +386,13 @@ describe("ImportProjectMembersCtrl", function() {
     });
 
     return it("import more user disable in public project", function() {
-        let ctrl = $controller("ImportProjectMembersCtrl");
+        const ctrl = $controller("ImportProjectMembersCtrl");
 
         ctrl.project = Immutable.fromJS({
-            is_private: false
+            is_private: false,
         });
 
-        ctrl.getDistinctSelectedTaigaUsers = sinon.stub().returns(Immutable.fromJS([1,2,3]));
+        ctrl.getDistinctSelectedTaigaUsers = sinon.stub().returns(Immutable.fromJS([1, 2, 3]));
 
         mocks.currentUserService.canAddMembersPublicProject.withArgs(5).returns({valid: true});
 

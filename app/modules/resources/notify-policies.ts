@@ -22,12 +22,11 @@
  * File: modules/resources/memberships.coffee
  */
 
-
-import * as _ from "lodash"
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
-import {HttpService} from "../../ts/modules/base/http"
-import {UrlsService} from "../../ts/modules/base/urls"
+import {Injectable} from "@angular/core";
+import * as _ from "lodash";
+import {HttpService} from "../../ts/modules/base/http";
+import {RepositoryService} from "../../ts/modules/base/repository";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class NotifyPoliciesResource {
@@ -39,7 +38,7 @@ export class NotifyPoliciesResource {
     }
 
     list(filters) {
-        var params = _.extend({}, params, filters || {});
+        const params = _.extend({}, params, filters || {});
         return this.repo.queryMany("notify-policies", params);
-    };
-};
+    }
+}

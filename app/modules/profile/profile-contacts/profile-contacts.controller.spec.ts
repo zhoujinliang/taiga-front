@@ -17,39 +17,39 @@
  * File: profile-contacts.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ProfileContacts", function() {
     let $controller = null;
     let provide = null;
     let $rootScope = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockUserService = function() {
+    const _mockUserService = function() {
         mocks.userServices = {
-            getContacts: sinon.stub()
+            getContacts: sinon.stub(),
         };
 
         return provide.value("tgUserService", mocks.userServices);
     };
 
-    let _mockCurrentUserService = function() {
+    const _mockCurrentUserService = function() {
         mocks.currentUserService = {
-            getUser: sinon.stub()
+            getUser: sinon.stub(),
         };
 
         return provide.value("tgCurrentUserService", mocks.currentUserService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockUserService();
@@ -59,7 +59,7 @@ describe("ProfileContacts", function() {
         })
     ;
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;
@@ -73,22 +73,22 @@ describe("ProfileContacts", function() {
     });
 
     it("load current user contacts", function(done) {
-        let user = Immutable.fromJS({id: 2});
+        const user = Immutable.fromJS({id: 2});
 
-        let contacts = [
+        const contacts = [
             {id: 1},
             {id: 2},
-            {id: 3}
+            {id: 3},
         ];
 
         mocks.currentUserService.getUser.returns(user);
 
         mocks.userServices.getContacts.withArgs(user.get("id")).promise().resolve(contacts);
 
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
-        let ctrl = $controller("ProfileContacts", $scope, {
-            user
+        const ctrl = $controller("ProfileContacts", $scope, {
+            user,
         });
 
         return ctrl.loadContacts().then(function() {
@@ -99,23 +99,23 @@ describe("ProfileContacts", function() {
     });
 
     return it("load user contacts", function(done) {
-        let user = Immutable.fromJS({id: 2});
-        let user2 = Immutable.fromJS({id: 3});
+        const user = Immutable.fromJS({id: 2});
+        const user2 = Immutable.fromJS({id: 3});
 
-        let contacts = [
+        const contacts = [
             {id: 1},
             {id: 2},
-            {id: 3}
+            {id: 3},
         ];
 
         mocks.currentUserService.getUser.returns(user2);
 
         mocks.userServices.getContacts.withArgs(user.get("id")).promise().resolve(contacts);
 
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
-        let ctrl = $controller("ProfileContacts", $scope, {
-            user
+        const ctrl = $controller("ProfileContacts", $scope, {
+            user,
         });
 
         return ctrl.loadContacts().then(function() {

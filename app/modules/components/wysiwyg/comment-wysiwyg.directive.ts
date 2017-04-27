@@ -23,34 +23,34 @@
  */
 
 export let CommentWysiwyg = function(attachmentsFullService) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         $scope.editableDescription = false;
 
         $scope.saveComment = function(description, cb) {
-            $scope.content = '';
+            $scope.content = "";
             $scope.vm.type.comment = description;
             return $scope.vm.onAddComment({callback: cb});
         };
 
-        let types = {
+        const types = {
             epics: "epic",
             userstories: "us",
             issues: "issue",
-            tasks: "task"
+            tasks: "task",
         };
 
-        let uploadFile = (file, cb) =>
-            attachmentsFullService.addAttachment($scope.vm.projectId, $scope.vm.type.id, types[$scope.vm.type._name], file, true, true).then(result => cb(result.getIn(['file', 'name']), result.getIn(['file', 'url'])))
+        const uploadFile = (file, cb) =>
+            attachmentsFullService.addAttachment($scope.vm.projectId, $scope.vm.type.id, types[$scope.vm.type._name], file, true, true).then((result) => cb(result.getIn(["file", "name"]), result.getIn(["file", "url"])))
         ;
 
-        $scope.onChange = markdown => $scope.vm.type.comment = markdown;
+        $scope.onChange = (markdown) => $scope.vm.type.comment = markdown;
 
         $scope.uploadFiles = (files, cb) =>
             files.map((file) =>
                 uploadFile(file, cb))
         ;
 
-        $scope.content = '';
+        $scope.content = "";
 
         return $scope.$watch("vm.type", function(value) {
             if (!value) { return; }
@@ -74,6 +74,6 @@ export let CommentWysiwyg = function(attachmentsFullService) {
         on-upload-file='uploadFiles(files, cb)'>
     </tg-wysiwyg>
 </div>\
-`
+`,
     };
 };

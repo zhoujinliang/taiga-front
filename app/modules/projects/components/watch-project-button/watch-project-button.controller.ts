@@ -18,16 +18,16 @@
  */
 
 export class WatchProjectButtonController {
-    confirm:any
-    watchButtonService:any
-    showWatchOptions:boolean
-    loading:boolean
-    project:any
+    confirm: any;
+    watchButtonService: any;
+    showWatchOptions: boolean;
+    loading: boolean;
+    project: any;
 
     static initClass() {
         this.$inject = [
             "$tgConfirm",
-            "tgWatchProjectButtonService"
+            "tgWatchProjectButtonService",
         ];
     }
 
@@ -47,12 +47,12 @@ export class WatchProjectButtonController {
     }
 
     watch(notifyLevel) {
-        if (notifyLevel === this.project.get('notify_level')) { return; }
+        if (notifyLevel === this.project.get("notify_level")) { return; }
 
         this.loading = true;
         this.closeWatcherOptions();
 
-        return this.watchButtonService.watch(this.project.get('id'), notifyLevel)
+        return this.watchButtonService.watch(this.project.get("id"), notifyLevel)
             .catch(() => this.confirm.notify("error"))
             .finally(() => this.loading = false);
     }
@@ -61,7 +61,7 @@ export class WatchProjectButtonController {
         this.loading = true;
         this.closeWatcherOptions();
 
-        return this.watchButtonService.unwatch(this.project.get('id'))
+        return this.watchButtonService.unwatch(this.project.get("id"))
             .catch(() => this.confirm.notify("error"))
             .finally(() => this.loading = false);
     }

@@ -18,19 +18,19 @@
  */
 
 export let AttachmentsDropDirective = function($parse) {
-    let link = function(scope, el, attrs) {
-        let eventAttr = $parse(attrs.tgAttachmentsDrop);
+    const link = function(scope, el, attrs) {
+        const eventAttr = $parse(attrs.tgAttachmentsDrop);
 
-        el.on('dragover', function(e) {
+        el.on("dragover", function(e) {
             e.preventDefault();
             return false;
         });
 
-        el.on('drop', function(e) {
+        el.on("drop", function(e) {
             e.stopPropagation();
             e.preventDefault();
 
-            let dataTransfer = e.dataTransfer || (e.originalEvent && e.originalEvent.dataTransfer);
+            const dataTransfer = e.dataTransfer || (e.originalEvent && e.originalEvent.dataTransfer);
 
             return scope.$apply(() => eventAttr(scope, {files: dataTransfer.files}));
         });
@@ -39,10 +39,10 @@ export let AttachmentsDropDirective = function($parse) {
     };
 
     return {
-        link
+        link,
     };
 };
 
 AttachmentsDropDirective.$inject = [
-    "$parse"
+    "$parse",
 ];

@@ -17,23 +17,23 @@
  * File: related-userstory-row.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let RelatedUserstoryRowDirective = function() {
-    let link = (scope, el, attrs, ctrl) => ctrl.setAvatarData();
+    const link = (scope, el, attrs, ctrl) => ctrl.setAvatarData();
 
     return {
         link,
-        templateUrl:"epics/related-userstories/related-userstory-row/related-userstory-row.html",
+        templateUrl: "epics/related-userstories/related-userstory-row/related-userstory-row.html",
         controller: "RelatedUserstoryRowCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            userstory: '=',
-            epic: '=',
-            project: '=',
-            loadRelatedUserstories:"&"
-        }
+            userstory: "=",
+            epic: "=",
+            project: "=",
+            loadRelatedUserstories: "&",
+        },
     };
 };
 

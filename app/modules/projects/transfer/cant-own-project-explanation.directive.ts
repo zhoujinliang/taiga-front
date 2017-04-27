@@ -19,6 +19,6 @@
 
 export let CantOwnProjectExplanationDirective = () =>
     ({
-        templateUrl: "projects/transfer/cant-own-project-explanation.html"
+        templateUrl: "projects/transfer/cant-own-project-explanation.html",
     })
 ;

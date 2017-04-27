@@ -17,36 +17,36 @@
  * File: project-menu.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ProjectMenu", function() {
     let $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockProjectService = function() {
+    const _mockProjectService = function() {
         mocks.projectService = {};
 
         return $provide.value("tgProjectService", mocks.projectService);
     };
 
-    let _mockLightboxFactory = function() {
+    const _mockLightboxFactory = function() {
         mocks.lightboxFactory = {
-            create: sinon.spy()
+            create: sinon.spy(),
         };
 
         return $provide.value("tgLightboxFactory", mocks.lightboxFactory);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -57,11 +57,11 @@ describe("ProjectMenu", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -73,11 +73,11 @@ describe("ProjectMenu", function() {
     });
 
     it("open search lightbox", function() {
-        let ctrl = $controller("ProjectMenu");
+        const ctrl = $controller("ProjectMenu");
         ctrl.search();
 
-        let expectation = mocks.lightboxFactory.create.calledWithExactly("tg-search-box", {
-            "class": "lightbox lightbox-search"
+        const expectation = mocks.lightboxFactory.create.calledWithExactly("tg-search-box", {
+            class: "lightbox lightbox-search",
         });
 
         return expect(expectation).to.be.true;
@@ -85,12 +85,12 @@ describe("ProjectMenu", function() {
 
     return describe("show menu", function() {
         it("project filled", function() {
-            let project = Immutable.fromJS({});
+            const project = Immutable.fromJS({});
 
             mocks.projectService.project = project;
             mocks.projectService.sectionsBreadcrumb = Immutable.List();
 
-            let ctrl = $controller("ProjectMenu");
+            const ctrl = $controller("ProjectMenu");
 
             ctrl.show();
 
@@ -98,112 +98,112 @@ describe("ProjectMenu", function() {
         });
 
         it("videoconference url", function() {
-            let project = Immutable.fromJS({
-                "videoconferences": "appear-in",
-                "videoconferences_extra_data": "123",
-                "slug": "project-slug"
+            const project = Immutable.fromJS({
+                videoconferences: "appear-in",
+                videoconferences_extra_data: "123",
+                slug: "project-slug",
             });
 
             mocks.projectService.project = project;
             mocks.projectService.sectionsBreadcrumb = Immutable.List();
 
-            let ctrl = $controller("ProjectMenu");
+            const ctrl = $controller("ProjectMenu");
 
             ctrl.show();
 
-            let url = "https://appear.in/project-slug-123";
+            const url = "https://appear.in/project-slug-123";
 
             return expect(ctrl.project.get("videoconferenceUrl")).to.be.equal(url);
         });
 
         describe("menu permissions", function() {
             it("all options disable", function() {
-                let project = Immutable.fromJS({});
+                const project = Immutable.fromJS({});
 
                 mocks.projectService.project = project;
                 mocks.projectService.sectionsBreadcrumb = Immutable.List();
 
-                let ctrl = $controller("ProjectMenu");
+                const ctrl = $controller("ProjectMenu");
 
                 ctrl.show();
 
-                let menu = ctrl.menu.toJS();
+                const menu = ctrl.menu.toJS();
 
                 return expect(menu).to.be.eql({
                     epics: false,
                     backlog: false,
                     kanban: false,
                     issues: false,
-                    wiki: false
+                    wiki: false,
                 });
             });
 
             it("all options enabled", function() {
-                let project = Immutable.fromJS({
+                const project = Immutable.fromJS({
                     is_epics_activated: true,
                     is_backlog_activated: true,
                     is_kanban_activated: true,
                     is_issues_activated: true,
                     is_wiki_activated: true,
-                    my_permissions: ["view_epics", "view_us", "view_issues", "view_wiki_pages"]
+                    my_permissions: ["view_epics", "view_us", "view_issues", "view_wiki_pages"],
                 });
 
                 mocks.projectService.project = project;
                 mocks.projectService.sectionsBreadcrumb = Immutable.List();
 
-                let ctrl = $controller("ProjectMenu");
+                const ctrl = $controller("ProjectMenu");
 
                 ctrl.show();
 
-                let menu = ctrl.menu.toJS();
+                const menu = ctrl.menu.toJS();
 
                 return expect(menu).to.be.eql({
                     epics: true,
                     backlog: true,
                     kanban: true,
                     issues: true,
-                    wiki: true
+                    wiki: true,
                 });
             });
 
             return it("all options disabled because the user doesn't have permissions", function() {
-                let project = Immutable.fromJS({
+                const project = Immutable.fromJS({
                     is_epics_activated: true,
                     is_backlog_activated: true,
                     is_kanban_activated: true,
                     is_issues_activated: true,
                     is_wiki_activated: true,
-                    my_permissions: []
+                    my_permissions: [],
                 });
 
                 mocks.projectService.project = project;
                 mocks.projectService.sectionsBreadcrumb = Immutable.List();
 
-                let ctrl = $controller("ProjectMenu");
+                const ctrl = $controller("ProjectMenu");
 
                 ctrl.show();
 
-                let menu = ctrl.menu.toJS();
+                const menu = ctrl.menu.toJS();
 
                 return expect(menu).to.be.eql({
                     epics: false,
                     backlog: false,
                     kanban: false,
                     issues: false,
-                    wiki: false
+                    wiki: false,
                 });
             });
         });
 
         return describe("menu active", function() {
             it("backlog", function() {
-                let project = Immutable.fromJS({});
+                const project = Immutable.fromJS({});
 
                 mocks.projectService.project = project;
                 mocks.projectService.section = "backlog";
                 mocks.projectService.sectionsBreadcrumb = Immutable.List();
 
-                let ctrl = $controller("ProjectMenu");
+                const ctrl = $controller("ProjectMenu");
 
                 ctrl.show();
 
@@ -211,13 +211,13 @@ describe("ProjectMenu", function() {
             });
 
             it("backlog-kanban without parent", function() {
-                let project = Immutable.fromJS({});
+                const project = Immutable.fromJS({});
 
                 mocks.projectService.project = project;
                 mocks.projectService.section = "backlog-kanban";
                 mocks.projectService.sectionsBreadcrumb = Immutable.List();
 
-                let ctrl = $controller("ProjectMenu");
+                const ctrl = $controller("ProjectMenu");
 
                 ctrl.show();
 
@@ -225,16 +225,16 @@ describe("ProjectMenu", function() {
             });
 
             it("backlog-kanban when only kanban is enabled", function() {
-                let project = Immutable.fromJS({
+                const project = Immutable.fromJS({
                     is_kanban_activated: true,
-                    my_permissions: []
+                    my_permissions: [],
                 });
 
                 mocks.projectService.project = project;
                 mocks.projectService.section = "backlog-kanban";
                 mocks.projectService.sectionsBreadcrumb = Immutable.List();
 
-                let ctrl = $controller("ProjectMenu");
+                const ctrl = $controller("ProjectMenu");
 
                 ctrl.show();
 
@@ -242,16 +242,16 @@ describe("ProjectMenu", function() {
             });
 
             it("backlog-kanban when only backlog is enabled", function() {
-                let project = Immutable.fromJS({
+                const project = Immutable.fromJS({
                     is_backlog_activated: true,
-                    my_permissions: []
+                    my_permissions: [],
                 });
 
                 mocks.projectService.project = project;
                 mocks.projectService.section = "backlog-kanban";
                 mocks.projectService.sectionsBreadcrumb = Immutable.List();
 
-                let ctrl = $controller("ProjectMenu");
+                const ctrl = $controller("ProjectMenu");
 
                 ctrl.show();
 
@@ -259,13 +259,13 @@ describe("ProjectMenu", function() {
             });
 
             it("backlog-kanban when is child of kanban", function() {
-                let project = Immutable.fromJS({});
+                const project = Immutable.fromJS({});
 
                 mocks.projectService.project = project;
                 mocks.projectService.section = "backlog-kanban";
                 mocks.projectService.sectionsBreadcrumb = Immutable.List.of("oo", "backlog", "kanban");
 
-                let ctrl = $controller("ProjectMenu");
+                const ctrl = $controller("ProjectMenu");
 
                 ctrl.show();
 
@@ -273,28 +273,27 @@ describe("ProjectMenu", function() {
             });
 
             it("backlog-kanban when is child of backlog", function() {
-                let project = Immutable.fromJS({});
+                const project = Immutable.fromJS({});
 
                 mocks.projectService.project = project;
                 mocks.projectService.section = "backlog-kanban";
                 mocks.projectService.sectionsBreadcrumb = Immutable.List.of("kanban", "oo", "backlog");
 
-                let ctrl = $controller("ProjectMenu");
+                const ctrl = $controller("ProjectMenu");
 
                 ctrl.show();
 
                 return expect(ctrl.active).to.be.equal("backlog");
             });
 
-
             return it("backlog-kanban when kanban is not in the breadcrumb", function() {
-                let project = Immutable.fromJS({});
+                const project = Immutable.fromJS({});
 
                 mocks.projectService.project = project;
                 mocks.projectService.section = "backlog-kanban";
                 mocks.projectService.sectionsBreadcrumb = Immutable.List.of("oo", "backlog");
 
-                let ctrl = $controller("ProjectMenu");
+                const ctrl = $controller("ProjectMenu");
 
                 ctrl.show();
 

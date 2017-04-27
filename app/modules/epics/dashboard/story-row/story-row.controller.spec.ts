@@ -17,15 +17,15 @@
  * File: story-row.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("StoryRowCtrl", function() {
     let controller = null;
@@ -33,28 +33,11 @@ describe("StoryRowCtrl", function() {
     beforeEach(function() {
         module("taigaEpics");
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     it("calculate percentage for some closed tasks", function() {
-        let data = {
-            story: Immutable.fromJS({
-                tasks: [
-                    {is_closed: true},
-                    {is_closed: true},
-                    {is_closed: true},
-                    {is_closed: false},
-                    {is_closed: false},
-                ]
-            })
-        };
-
-        let ctrl = controller("StoryRowCtrl", null, data);
-        return expect(ctrl.percentage).to.be.equal("60%");
-    });
-
-    it("calculate percentage for closed story", function() {
-        let data = {
+        const data = {
             story: Immutable.fromJS({
                 tasks: [
                     {is_closed: true},
@@ -63,23 +46,39 @@ describe("StoryRowCtrl", function() {
                     {is_closed: false},
                     {is_closed: false},
                 ],
-                is_closed: true
-            })
+            }),
         };
 
-        let ctrl = controller("StoryRowCtrl", null, data);
+        const ctrl = controller("StoryRowCtrl", null, data);
+        return expect(ctrl.percentage).to.be.equal("60%");
+    });
+
+    it("calculate percentage for closed story", function() {
+        const data = {
+            story: Immutable.fromJS({
+                tasks: [
+                    {is_closed: true},
+                    {is_closed: true},
+                    {is_closed: true},
+                    {is_closed: false},
+                    {is_closed: false},
+                ],
+                is_closed: true,
+            }),
+        };
+
+        const ctrl = controller("StoryRowCtrl", null, data);
         return expect(ctrl.percentage).to.be.equal("100%");
     });
 
     return it("calculate percentage for closed story", function() {
-        let data = {
+        const data = {
             story: Immutable.fromJS({
-                tasks: []
-            })
+                tasks: [],
+            }),
         };
 
-        let ctrl = controller("StoryRowCtrl", null, data);
+        const ctrl = controller("StoryRowCtrl", null, data);
         return expect(ctrl.percentage).to.be.equal("0%");
     });
 });
-

@@ -17,32 +17,32 @@
  * File: project.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../libs/utils"
-import * as _ from "lodash"
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {defineImmutableProperty} from "../../../../libs/utils";
 
 export class DuplicateProjectController {
-    currentUserService:any
-    projectsService:any
-    location:any
-    navUrls:any
-    user:any
-    members: Immutable.List<any>
-    canCreatePublicProjects:any
-    canCreatePrivateProjects:any
-    projectForm:any
-    referenceProject:any
-    invitedMembers:any
-    limitMembersPrivateProject:any
-    limitMembersPublicProject:any
-    formSubmitLoading:any
+    currentUserService: any;
+    projectsService: any;
+    location: any;
+    navUrls: any;
+    user: any;
+    members: Immutable.List<any>;
+    canCreatePublicProjects: any;
+    canCreatePrivateProjects: any;
+    projectForm: any;
+    referenceProject: any;
+    invitedMembers: any;
+    limitMembersPrivateProject: any;
+    limitMembersPublicProject: any;
+    formSubmitLoading: any;
 
     static initClass() {
         this.$inject = [
             "tgCurrentUserService",
             "tgProjectsService",
             "$tgLocation",
-            "$tgNavUrls"
+            "$tgNavUrls",
         ];
     }
 
@@ -57,10 +57,10 @@ export class DuplicateProjectController {
         this.canCreatePublicProjects = this.currentUserService.canCreatePublicProjects();
         this.canCreatePrivateProjects = this.currentUserService.canCreatePrivateProjects();
 
-        defineImmutableProperty(this, 'projects', () => this.currentUserService.projects.get("all"));
+        defineImmutableProperty(this, "projects", () => this.currentUserService.projects.get("all"));
 
         this.projectForm = {
-            is_private: false
+            is_private: false,
         };
 
         if (!this.canCreatePublicProjects.valid && this.canCreatePrivateProjects.valid) {
@@ -69,17 +69,17 @@ export class DuplicateProjectController {
     }
 
     refreshReferenceProject(slug) {
-        return this.projectsService.getProjectBySlug(slug).then(project => {
+        return this.projectsService.getProjectBySlug(slug).then((project) => {
             this.referenceProject = project;
-            this.members = project.get('members').filter(it => { return it.get('id') !== this.user.get('id'); });
-            this.invitedMembers = this.members.map(it => it.get('id'));
+            this.members = project.get("members").filter((it) => it.get("id") !== this.user.get("id"));
+            this.invitedMembers = this.members.map((it) => it.get("id"));
             return this.checkUsersLimit();
         });
     }
 
     toggleInvitedMember(member) {
         if (this.invitedMembers.includes(member)) {
-            this.invitedMembers = this.invitedMembers.filter(it => it !== member);
+            this.invitedMembers = this.invitedMembers.filter((it) => it !== member);
         } else {
             this.invitedMembers = this.invitedMembers.push(member);
         }
@@ -93,12 +93,12 @@ export class DuplicateProjectController {
     }
 
     submit() {
-        let projectId = this.referenceProject.get('id');
-        let data = this.projectForm;
+        const projectId = this.referenceProject.get("id");
+        const data = this.projectForm;
         data.users = this.invitedMembers;
 
         this.formSubmitLoading = true;
-        return this.projectsService.duplicate(projectId, data).then(newProject => {
+        return this.projectsService.duplicate(projectId, data).then((newProject) => {
             this.formSubmitLoading = false;
             this.location.path(this.navUrls.resolve("project", {project: newProject.data.slug}));
             return this.currentUserService.loadProjects();

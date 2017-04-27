@@ -17,14 +17,14 @@
  * File: history.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let HistorySectionDirective = function() {
-    let link = (scope, el, attr, ctrl) => scope.$on("object:updated", () => ctrl._loadHistory(scope.type, scope.id));
+    const link = (scope, el, attr, ctrl) => scope.$on("object:updated", () => ctrl._loadHistory(scope.type, scope.id));
 
     return {
         link,
-        templateUrl:"history/history.html",
+        templateUrl: "history/history.html",
         controller: "HistorySection",
         controllerAs: "vm",
         bindToController: true,
@@ -32,8 +32,8 @@ export let HistorySectionDirective = function() {
             type: "=",
             name: "@",
             id: "=",
-            projectId: "="
-        }
+            projectId: "=",
+        },
     };
 };
 

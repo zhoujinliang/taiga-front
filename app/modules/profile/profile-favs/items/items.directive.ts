@@ -18,9 +18,9 @@
  */
 
 export let FavItemDirective = function() {
-    let link = (scope, el, attrs, ctrl) => scope.vm = {item: scope.item};
+    const link = (scope, el, attrs, ctrl) => scope.vm = {item: scope.item};
 
-    let templateUrl = function(el, attrs) {
+    const templateUrl = function(el, attrs) {
         if (attrs.itemType === "project") {
             return "profile/profile-favs/items/project.html";
         } else { // if attr.itemType in ["userstory", "task", "issue"]
@@ -30,10 +30,9 @@ export let FavItemDirective = function() {
 
     return {
         scope: {
-            "item": "=tgFavItem"
+            item: "=tgFavItem",
         },
         link,
-        templateUrl
+        templateUrl,
     };
 };
-

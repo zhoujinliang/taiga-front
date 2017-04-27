@@ -17,50 +17,50 @@
  * File: avatar.service.coffee
  */
 
-import {sizeFormat, cartesianProduct} from "../../../libs/utils"
-import {murmurhash3_32_gc} from "../../../libs/murmurhash3_gc"
-import * as angular from "angular"
-import * as Immutable from "immutable"
-import * as _ from "lodash"
-declare var _version:string;
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {murmurhash3_32_gc} from "../../../libs/murmurhash3_gc";
+import {cartesianProduct, sizeFormat} from "../../../libs/utils";
+declare var _version: string;
 
-import {Injectable} from "@angular/core"
-import {ConfigurationService} from "../../../ts/modules/base/conf"
+import {Injectable} from "@angular/core";
+import {ConfigurationService} from "../../../ts/modules/base/conf";
 
 @Injectable()
 export class AvatarService {
-    private logos:any
+    private logos: any;
 
-    constructor(private config:ConfigurationService) {
-        let IMAGES = [
+    constructor(private config: ConfigurationService) {
+        const IMAGES = [
             `/${_version}/images/user-avatars/user-avatar-01.png`,
             `/${_version}/images/user-avatars/user-avatar-02.png`,
             `/${_version}/images/user-avatars/user-avatar-03.png`,
             `/${_version}/images/user-avatars/user-avatar-04.png`,
-            `/${_version}/images/user-avatars/user-avatar-05.png`
+            `/${_version}/images/user-avatars/user-avatar-05.png`,
         ];
 
-        let COLORS = [
+        const COLORS = [
             "rgba( 178, 176, 204, 1 )",
             "rgba( 183, 203, 131, 1 )",
             "rgba( 210, 198, 139, 1 )",
             "rgba( 214, 161, 212, 1 )",
-            "rgba( 247, 154, 154, 1 )"
+            "rgba( 247, 154, 154, 1 )",
         ];
 
         this.logos = cartesianProduct(IMAGES, COLORS);
     }
 
     getDefault(key) {
-        let idx = __mod__(murmurhash3_32_gc(key, 42), this.logos.length);
-        let logo = this.logos[idx];
+        const idx = __mod__(murmurhash3_32_gc(key, 42), this.logos.length);
+        const logo = this.logos[idx];
 
         return { src: logo[0], color: logo[1] };
     }
 
     getUnnamed() {
         return {
-            url: `/${_version}/images/unnamed.png`
+            url: `/${_version}/images/unnamed.png`,
         };
     }
 
@@ -70,8 +70,8 @@ export class AvatarService {
         if (!user) { return this.getUnnamed(); }
 
         if (user instanceof Immutable.Map) {
-            gravatar = user.get('gravatar_id');
-            photo = user.get('photo');
+            gravatar = user.get("gravatar_id");
+            photo = user.get("photo");
         } else {
             gravatar = user.gravatar_id;
             photo = user.photo;
@@ -81,25 +81,25 @@ export class AvatarService {
 
         if (photo) {
             return {
-                url: photo
+                url: photo,
             };
-        } else if ((location.host.indexOf('localhost') !== -1) || !this.config.get("gravatar", true)) {
-            root = location.protocol + '//' + location.host;
+        } else if ((location.host.indexOf("localhost") !== -1) || !this.config.get("gravatar", true)) {
+            root = location.protocol + "//" + location.host;
             logo = this.getDefault(gravatar);
 
             return {
                 url: root + logo.src,
-                bg: logo.color
+                bg: logo.color,
             };
         } else {
-            root = location.protocol + '//' + location.host;
+            root = location.protocol + "//" + location.host;
             logo = this.getDefault(gravatar);
 
-            let logoUrl = encodeURIComponent(root + logo.src);
+            const logoUrl = encodeURIComponent(root + logo.src);
 
             return {
                 url: `https://www.gravatar.com/avatar/${gravatar}?s=200&d=${logoUrl}`,
-                bg: logo.color
+                bg: logo.color,
             };
         }
     }

@@ -17,21 +17,21 @@
  * File: home-project-list.directive.coffee
  */
 
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
 
-import {Component, OnInit, Input, ChangeDetectionStrategy, OnChanges} from "@angular/core"
+import {ChangeDetectionStrategy, Component, Input, OnChanges, OnInit} from "@angular/core";
 
-import {defineImmutableProperty} from "../../../libs/utils"
-import { CurrentUserService  } from "../../services/current-user.service";
+import {defineImmutableProperty} from "../../../libs/utils";
 import { ProjectsService } from "../../projects/projects.service";
+import { CurrentUserService  } from "../../services/current-user.service";
 
 @Component({
     selector: "tg-home-project-list",
     template: require("./home-project-list.jade")(),
 })
 export class HomeProjectList {
-    @Input() projects:any
-    changed:number = 0;
+    @Input() projects: any;
+    changed: number = 0;
 
     constructor() {}
-};
+}

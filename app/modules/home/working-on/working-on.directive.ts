@@ -18,11 +18,11 @@
  */
 
 export let WorkingOnDirective = function(homeService, currentUserService) {
-    let link = function(scope, el, attrs, ctrl) {
-        let user = currentUserService.getUser();
+    const link = function(scope, el, attrs, ctrl) {
+        const user = currentUserService.getUser();
         // If we are not logged in the user will be null
         if (user) {
-          let userId = user.get("id");
+          const userId = user.get("id");
           return ctrl.getWorkInProgress(userId);
       }
     };
@@ -32,11 +32,11 @@ export let WorkingOnDirective = function(homeService, currentUserService) {
         controllerAs: "vm",
         templateUrl: "home/working-on/working-on.html",
         scope: {},
-        link
+        link,
     };
 };
 
 WorkingOnDirective.$inject = [
     "tgHomeService",
-    "tgCurrentUserService"
+    "tgCurrentUserService",
 ];

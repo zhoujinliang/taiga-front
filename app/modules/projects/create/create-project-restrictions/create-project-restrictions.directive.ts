@@ -20,10 +20,10 @@
 export let createProjectRestrictionsDirective = () =>
     ({
         scope: {
-            isPrivate: '=',
-            canCreatePrivateProjects: '=',
-            canCreatePublicProjects: '='
+            isPrivate: "=",
+            canCreatePrivateProjects: "=",
+            canCreatePublicProjects: "=",
         },
-        templateUrl: "projects/create/create-project-restrictions/create-project-restrictions.html"
+        templateUrl: "projects/create/create-project-restrictions/create-project-restrictions.html",
     })
 ;

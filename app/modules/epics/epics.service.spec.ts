@@ -17,72 +17,72 @@
  * File: epics.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgEpicsService", function() {
     let provide;
     let epicsService = (provide = null);
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgProjectService = function() {
+    const _mockTgProjectService = function() {
         mocks.tgProjectService = {
             project: Immutable.Map({
-                "id": 1
-            })
+                id: 1,
+            }),
         };
 
         return provide.value("tgProjectService", mocks.tgProjectService);
     };
 
-    let _mockTgAttachmentsService = function() {
+    const _mockTgAttachmentsService = function() {
         mocks.tgAttachmentsService = {
-            upload: sinon.stub()
+            upload: sinon.stub(),
         };
 
         return provide.value("tgAttachmentsService", mocks.tgAttachmentsService);
     };
 
-    let _mockTgResources = function() {
+    const _mockTgResources = function() {
         mocks.tgResources = {
             epics: {
                 list: sinon.stub(),
                 post: sinon.stub(),
                 patch: sinon.stub(),
                 reorder: sinon.stub(),
-                reorderRelatedUserstory: sinon.stub()
+                reorderRelatedUserstory: sinon.stub(),
             },
             userstories: {
-                listInEpic: sinon.stub()
-            }
+                listInEpic: sinon.stub(),
+            },
         };
 
         return provide.value("tgResources", mocks.tgResources);
     };
 
-    let _mockTgXhrErrorService = function() {
+    const _mockTgXhrErrorService = function() {
         mocks.tgXhrErrorService = {
-            response: sinon.stub()
+            response: sinon.stub(),
         };
 
         return provide.value("tgXhrErrorService", mocks.tgXhrErrorService);
     };
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_tgEpicsService_) {
             epicsService = _tgEpicsService_;
             if (callback) { return callback(); }
         })
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgProjectService();
@@ -93,7 +93,7 @@ describe("tgEpicsService", function() {
         })
     ;
 
-    let _setup = () => _mocks();
+    const _setup = () => _mocks();
 
     beforeEach(function() {
         module("taigaEpics");
@@ -103,7 +103,7 @@ describe("tgEpicsService", function() {
 
     it("clear epics", function() {
         epicsService._epics = Immutable.List(Immutable.Map({
-            'id': 1
+            id: 1,
         }));
 
         epicsService.clear();
@@ -111,17 +111,17 @@ describe("tgEpicsService", function() {
     });
 
     it("fetch epics success", function() {
-        let result:any = {};
+        const result: any = {};
         result.list = Immutable.fromJS([
             { id: 111 },
-            { id: 112 }
+            { id: 112 },
         ]);
 
         result.headers = () => true;
 
-        let promise = mocks.tgResources.epics.list.withArgs(1).promise();
+        const promise = mocks.tgResources.epics.list.withArgs(1).promise();
 
-        let fetchPromise = epicsService.fetchEpics();
+        const fetchPromise = epicsService.fetchEpics();
 
         expect(epicsService._loadingEpics).to.be.true;
         expect(epicsService._disablePagination).to.be.true;
@@ -136,17 +136,17 @@ describe("tgEpicsService", function() {
     });
 
     it("fetch epics success, last page", function() {
-        let result:any = {};
+        const result: any = {};
         result.list = Immutable.fromJS([
             { id: 111 },
-            { id: 112 }
+            { id: 112 },
         ]);
 
         result.headers = () => false;
 
-        let promise = mocks.tgResources.epics.list.withArgs(1).promise();
+        const promise = mocks.tgResources.epics.list.withArgs(1).promise();
 
-        let fetchPromise = epicsService.fetchEpics();
+        const fetchPromise = epicsService.fetchEpics();
 
         expect(epicsService._loadingEpics).to.be.true;
         expect(epicsService._disablePagination).to.be.true;
@@ -161,25 +161,25 @@ describe("tgEpicsService", function() {
     });
 
     it("fetch epics error", function() {
-        let epics = Immutable.fromJS([
+        const epics = Immutable.fromJS([
             { id: 111 },
-            { id: 112 }
+            { id: 112 },
         ]);
-        let promise = mocks.tgResources.epics.list.withArgs(1).promise().reject(new Error("error"));
+        const promise = mocks.tgResources.epics.list.withArgs(1).promise().reject(new Error("error"));
         return epicsService.fetchEpics().then(() => expect(mocks.tgXhrErrorService.response.withArgs(new Error("error"))).have.been.calledOnce);
     });
 
     it("replace epic", function() {
-        let epics = Immutable.fromJS([
+        const epics = Immutable.fromJS([
             { id: 111 },
-            { id: 112 }
+            { id: 112 },
         ]);
 
         epicsService._epics = epics;
 
-        let epic = Immutable.Map({
+        const epic = Immutable.Map({
             id: 112,
-            title: "title1"
+            title: "title1",
         });
 
         epicsService.replaceEpic(epic);
@@ -188,22 +188,22 @@ describe("tgEpicsService", function() {
     });
 
     it("list related userstories", function() {
-        let epic = Immutable.fromJS({
-            id: 1
+        const epic = Immutable.fromJS({
+            id: 1,
         });
         epicsService.listRelatedUserStories(epic);
-        return expect(mocks.tgResources.userstories.listInEpic.withArgs(epic.get('id'))).have.been.calledOnce;
+        return expect(mocks.tgResources.userstories.listInEpic.withArgs(epic.get("id"))).have.been.calledOnce;
     });
 
     it("createEpic", function() {
-        let epicData = {};
-        let epic = Immutable.fromJS({
+        const epicData = {};
+        const epic = Immutable.fromJS({
             id: 111,
-            project: 1
+            project: 1,
         });
-        let attachments = Immutable.fromJS([
+        const attachments = Immutable.fromJS([
             {file: "f1"},
-            {file: "f2"}
+            {file: "f2"},
         ]);
 
         mocks.tgResources.epics
@@ -226,9 +226,9 @@ describe("tgEpicsService", function() {
     });
 
     it("Update epic status", function() {
-        let epic = Immutable.fromJS({
+        const epic = Immutable.fromJS({
             id: 1,
-            version: 1
+            version: 1,
         });
 
         mocks.tgResources.epics
@@ -242,9 +242,9 @@ describe("tgEpicsService", function() {
     });
 
     it("Update epic assigned to", function() {
-        let epic = Immutable.fromJS({
+        const epic = Immutable.fromJS({
             id: 1,
-            version: 1
+            version: 1,
         });
 
         mocks.tgResources.epics
@@ -262,17 +262,17 @@ describe("tgEpicsService", function() {
           {
               id: 1,
               epics_order: 1,
-              version: 1
+              version: 1,
           },
           {
               id: 2,
               epics_order: 2,
-              version: 1
+              version: 1,
           },
           {
               id: 3,
               epics_order: 3,
-              version: 1
+              version: 1,
           },
       ]);
 
@@ -282,29 +282,29 @@ describe("tgEpicsService", function() {
           .resolve(Immutable.fromJS({
               id: 3,
               epics_order: 3,
-              version: 2
+              version: 2,
           }));
 
       return epicsService.reorderEpic(epicsService._epics.get(2), 1);
     });
 
     return it("reorder related userstory in epic", function() {
-      let epic = Immutable.fromJS({
-          id: 1
+      const epic = Immutable.fromJS({
+          id: 1,
       });
 
-      let epicUserstories = Immutable.fromJS([
+      const epicUserstories = Immutable.fromJS([
           {
               id: 1,
-              epic_order: 1
+              epic_order: 1,
           },
           {
               id: 2,
-              epic_order: 2
+              epic_order: 2,
           },
           {
               id: 3,
-              epic_order: 3
+              epic_order: 3,
           },
       ]);
 

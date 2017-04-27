@@ -17,12 +17,12 @@
  * File: card.controller.coffee
  */
 
-import {Component, Input, ChangeDetectionStrategy} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-card-tags",
-    template: require('./card-tags.jade')(),
+    template: require("./card-tags.jade")(),
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardTags {

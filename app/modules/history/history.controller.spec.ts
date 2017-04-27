@@ -17,58 +17,58 @@
  * File: subscriptions.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("HistorySection", function() {
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgResources = function() {
+    const _mockTgResources = function() {
         mocks.tgResources = {
             history: {
                 get: sinon.stub(),
                 deleteComment: sinon.stub(),
                 undeleteComment: sinon.stub(),
-                editComment: sinon.stub()
-            }
+                editComment: sinon.stub(),
+            },
         };
 
         return provide.value("$tgResources", mocks.tgResources);
     };
 
-    let _mockTgRepo = function() {
+    const _mockTgRepo = function() {
         mocks.tgRepo = {
-            save: sinon.stub()
+            save: sinon.stub(),
         };
 
         return provide.value("$tgRepo", mocks.tgRepo);
     };
 
-    let _mocktgStorage = function() {
+    const _mocktgStorage = function() {
         mocks.tgStorage = {
             get: sinon.stub(),
-            set: sinon.stub()
+            set: sinon.stub(),
         };
         return provide.value("$tgStorage", mocks.tgStorage);
     };
 
-    let _mockTgProjectService = function() {
+    const _mockTgProjectService = function() {
         mocks.tgProjectService = {
-            hasPermission: sinon.stub()
+            hasPermission: sinon.stub(),
         };
         return provide.value("tgProjectService", mocks.tgProjectService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgResources();
@@ -85,20 +85,20 @@ describe("HistorySection", function() {
 
         _mocks();
 
-        inject($controller => controller = $controller);
+        inject(($controller) => controller = $controller);
         return promise = mocks.tgResources.history.get.promise().resolve();
     });
 
     it("load historic", function(done) {
-        let historyCtrl = controller("HistorySection");
+        const historyCtrl = controller("HistorySection");
 
         historyCtrl._getComments = sinon.stub();
         historyCtrl._getActivities = sinon.stub();
 
-        let name = "name";
-        let id = 4;
+        const name = "name";
+        const id = 4;
 
-        let promise = mocks.tgResources.history.get.withArgs(name, id).promise().resolve();
+        const promise = mocks.tgResources.history.get.withArgs(name, id).promise().resolve();
         return historyCtrl._loadHistory().then(function(data) {
             expect(historyCtrl._getComments).have.been.calledWith(data);
             expect(historyCtrl._getActivities).have.been.calledWith(data);
@@ -107,38 +107,38 @@ describe("HistorySection", function() {
     });
 
     it("get Comments older first", function() {
-        let historyCtrl = controller("HistorySection");
+        const historyCtrl = controller("HistorySection");
 
-        let comments = ['comment3', 'comment2', 'comment1'];
+        const comments = ["comment3", "comment2", "comment1"];
         historyCtrl.reverse = false;
 
         historyCtrl._getComments(comments);
-        expect(historyCtrl.comments).to.be.eql(['comment3', 'comment2', 'comment1']);
+        expect(historyCtrl.comments).to.be.eql(["comment3", "comment2", "comment1"]);
         return expect(historyCtrl.commentsNum).to.be.equal(3);
     });
 
     it("get Comments newer first", function() {
-        let historyCtrl = controller("HistorySection");
+        const historyCtrl = controller("HistorySection");
 
-        let comments = ['comment3', 'comment2', 'comment1'];
+        const comments = ["comment3", "comment2", "comment1"];
         historyCtrl.reverse = true;
 
         historyCtrl._getComments(comments);
-        expect(historyCtrl.comments).to.be.eql(['comment1', 'comment2', 'comment3']);
+        expect(historyCtrl.comments).to.be.eql(["comment1", "comment2", "comment3"]);
         return expect(historyCtrl.commentsNum).to.be.equal(3);
     });
 
     it("get activities", function() {
-        let historyCtrl = controller("HistorySection");
-        let activities = {
-            'activity1': {
-                'values_diff': {"k1": [0, 1]}
+        const historyCtrl = controller("HistorySection");
+        const activities = {
+            "activity1": {
+                values_diff: {"k1": [0, 1]},
             },
-            'activity2': {
-                'values_diff': {"k2": [0, 1]}
+            "activity2": {
+                values_diff: {"k2": [0, 1]},
             },
-            'activity3': {
-                'values_diff': {"k3": [0, 1]}
+            "activity3": {
+                values_diff: {"k3": [0, 1]},
             },
         };
 
@@ -149,33 +149,33 @@ describe("HistorySection", function() {
     });
 
     it("on active history tab", function() {
-        let historyCtrl = controller("HistorySection");
-        let active = true;
+        const historyCtrl = controller("HistorySection");
+        const active = true;
         historyCtrl.onActiveHistoryTab(active);
         return expect(historyCtrl.viewComments).to.be.true;
     });
 
     it("on inactive history tab", function() {
-        let historyCtrl = controller("HistorySection");
-        let active = false;
+        const historyCtrl = controller("HistorySection");
+        const active = false;
         historyCtrl.onActiveHistoryTab(active);
         return expect(historyCtrl.viewComments).to.be.false;
     });
 
     it("delete comment", function() {
-        let historyCtrl = controller("HistorySection");
+        const historyCtrl = controller("HistorySection");
         historyCtrl._loadHistory = sinon.stub();
 
         historyCtrl.name = "type";
         historyCtrl.id = 1;
 
-        let type = historyCtrl.name;
-        let objectId = historyCtrl.id;
-        let commentId = 7;
+        const type = historyCtrl.name;
+        const objectId = historyCtrl.id;
+        const commentId = 7;
 
-        let deleteCommentPromise = mocks.tgResources.history.deleteComment.withArgs(type, objectId, commentId).promise();
+        const deleteCommentPromise = mocks.tgResources.history.deleteComment.withArgs(type, objectId, commentId).promise();
 
-        let ctrlPromise = historyCtrl.deleteComment(commentId);
+        const ctrlPromise = historyCtrl.deleteComment(commentId);
         expect(historyCtrl.deleting).to.be.equal(7);
 
         deleteCommentPromise.resolve();
@@ -187,19 +187,19 @@ describe("HistorySection", function() {
     });
 
     it("edit comment", function() {
-        let historyCtrl = controller("HistorySection");
+        const historyCtrl = controller("HistorySection");
         historyCtrl._loadHistory = sinon.stub();
 
         historyCtrl.name = "type";
         historyCtrl.id = 1;
-        let activityId = 7;
-        let comment = "blablabla";
+        const activityId = 7;
+        const comment = "blablabla";
 
-        let type = historyCtrl.name;
-        let objectId = historyCtrl.id;
-        let commentId = activityId;
+        const type = historyCtrl.name;
+        const objectId = historyCtrl.id;
+        const commentId = activityId;
 
-        let promise = mocks.tgResources.history.editComment.withArgs(type, objectId, activityId, comment).promise().resolve();
+        const promise = mocks.tgResources.history.editComment.withArgs(type, objectId, activityId, comment).promise().resolve();
 
         historyCtrl.editing = 7;
         return historyCtrl.editComment(commentId, comment).then(function() {
@@ -209,18 +209,18 @@ describe("HistorySection", function() {
     });
 
     it("restore comment", function() {
-        let historyCtrl = controller("HistorySection");
+        const historyCtrl = controller("HistorySection");
         historyCtrl._loadHistory = sinon.stub();
 
         historyCtrl.name = "type";
         historyCtrl.id = 1;
-        let activityId = 7;
+        const activityId = 7;
 
-        let type = historyCtrl.name;
-        let objectId = historyCtrl.id;
-        let commentId = activityId;
+        const type = historyCtrl.name;
+        const objectId = historyCtrl.id;
+        const commentId = activityId;
 
-        let promise = mocks.tgResources.history.undeleteComment.withArgs(type, objectId, activityId).promise().resolve();
+        const promise = mocks.tgResources.history.undeleteComment.withArgs(type, objectId, activityId).promise().resolve();
 
         historyCtrl.editing = 7;
         return historyCtrl.restoreDeletedComment(commentId).then(function() {
@@ -230,15 +230,15 @@ describe("HistorySection", function() {
     });
 
     it("add comment", function() {
-        let historyCtrl = controller("HistorySection");
+        const historyCtrl = controller("HistorySection");
         historyCtrl._loadHistory = sinon.stub();
 
         historyCtrl.type = "type";
-        let { type } = historyCtrl;
+        const { type } = historyCtrl;
 
-        let cb = sinon.spy();
+        const cb = sinon.spy();
 
-        let promise = mocks.tgRepo.save.withArgs(type).promise().resolve();
+        const promise = mocks.tgRepo.save.withArgs(type).promise().resolve();
 
         return historyCtrl.addComment(cb).then(function() {
             expect(historyCtrl._loadHistory).has.been.called;
@@ -246,9 +246,8 @@ describe("HistorySection", function() {
         });
     });
 
-
     return it("order comments", function() {
-        let historyCtrl = controller("HistorySection");
+        const historyCtrl = controller("HistorySection");
         historyCtrl._loadHistory = sinon.stub();
 
         historyCtrl.reverse = false;

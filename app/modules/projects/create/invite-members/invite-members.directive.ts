@@ -18,19 +18,19 @@
  */
 
 export let InviteMembersDirective = function() {
-    let link = function(scope, el, attr, ctrl) {};
+    const link = function(scope, el, attr, ctrl) {};
 
     return {
         link,
-        templateUrl:"projects/create/invite-members/invite-members.html",
+        templateUrl: "projects/create/invite-members/invite-members.html",
         controller: "InviteMembersCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            invitedMembers: '<',
-            members: '<',
-            onToggleInvitedMember: '&'
-        }
+            invitedMembers: "<",
+            members: "<",
+            onToggleInvitedMember: "&",
+        },
     };
 };
 InviteMembersDirective.$inject = [];

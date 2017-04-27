@@ -17,18 +17,18 @@
  * File: discover-home-order-by.controller.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export class DiscoverHomeOrderByController {
-    translate:any
-    is_open:boolean
-    texts:any
-    currentOrderBy:any
-    onChange:any
+    translate: any;
+    is_open: boolean;
+    texts: any;
+    currentOrderBy: any;
+    onChange: any;
 
     static initClass() {
         this.$inject = [
-            '$translate'
+            "$translate",
         ];
     }
 
@@ -37,10 +37,10 @@ export class DiscoverHomeOrderByController {
         this.is_open = false;
 
         this.texts = {
-            week: this.translate.instant('DISCOVER.FILTERS.WEEK'),
-            month: this.translate.instant('DISCOVER.FILTERS.MONTH'),
-            year: this.translate.instant('DISCOVER.FILTERS.YEAR'),
-            all: this.translate.instant('DISCOVER.FILTERS.ALL_TIME')
+            week: this.translate.instant("DISCOVER.FILTERS.WEEK"),
+            month: this.translate.instant("DISCOVER.FILTERS.MONTH"),
+            year: this.translate.instant("DISCOVER.FILTERS.YEAR"),
+            all: this.translate.instant("DISCOVER.FILTERS.ALL_TIME"),
         };
     }
 

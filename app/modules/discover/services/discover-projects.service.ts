@@ -17,29 +17,29 @@
  * File: discover-projects.service.coffee
  */
 
-import {defineImmutableProperty} from "../../../libs/utils"
-import * as _ from "lodash"
-import * as Immutable from "immutable"
-import { ResourcesService } from "../../resources/resources.service";
-import { ProjectsService } from "../../projects/projects.service";
 import {Injectable} from "@angular/core";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {defineImmutableProperty} from "../../../libs/utils";
+import { ProjectsService } from "../../projects/projects.service";
+import { ResourcesService } from "../../resources/resources.service";
 
 @Injectable()
 export class DiscoverProjectsService {
-    _discoverParams:any = undefined;
-    _mostLiked:any
-    _mostActive:any
-    _featured:any
-    _searchResult:any
-    _projectsCount:any
-    _nextSearchPage:any
-    mostLiked:any
-    mostActive:any
-    featured:any
-    searchResult:any
-    projectsCount:any
-    nextSearchPage:any
-    decorate:any
+    _discoverParams: any = undefined;
+    _mostLiked: any;
+    _mostActive: any;
+    _featured: any;
+    _searchResult: any;
+    _projectsCount: any;
+    _nextSearchPage: any;
+    mostLiked: any;
+    mostActive: any;
+    featured: any;
+    searchResult: any;
+    projectsCount: any;
+    nextSearchPage: any;
+    decorate: any;
 
     constructor(private rs: ResourcesService, private projectsService: ProjectsService) {
         this._discoverParams = { discover_mode: true };
@@ -51,19 +51,19 @@ export class DiscoverProjectsService {
 
         this.decorate = this.projectsService._decorate.bind(this.projectsService);
 
-        defineImmutableProperty(this, "mostLiked", () => { return this._mostLiked; });
-        defineImmutableProperty(this, "mostActive", () => { return this._mostActive; });
-        defineImmutableProperty(this, "featured", () => { return this._featured; });
-        defineImmutableProperty(this, "searchResult", () => { return this._searchResult; });
-        defineImmutableProperty(this, "nextSearchPage", () => { return this._nextSearchPage; });
-        defineImmutableProperty(this, "projectsCount", () => { return this._projectsCount; });
+        defineImmutableProperty(this, "mostLiked", () => this._mostLiked);
+        defineImmutableProperty(this, "mostActive", () => this._mostActive);
+        defineImmutableProperty(this, "featured", () => this._featured);
+        defineImmutableProperty(this, "searchResult", () => this._searchResult);
+        defineImmutableProperty(this, "nextSearchPage", () => this._nextSearchPage);
+        defineImmutableProperty(this, "projectsCount", () => this._projectsCount);
     }
 
     fetchMostLiked(params) {
-        let _params = _.extend({}, this._discoverParams, params);
+        const _params = _.extend({}, this._discoverParams, params);
         return this.rs.projects.getProjects(_params, false)
-            .map(result => {
-                let data = result.data.slice(0, 5);
+            .map((result) => {
+                const data = result.data.slice(0, 5);
 
                 let projects = Immutable.fromJS(data);
                 projects = projects.map(this.decorate);
@@ -73,10 +73,10 @@ export class DiscoverProjectsService {
     }
 
     fetchMostActive(params) {
-        let _params = _.extend({}, this._discoverParams, params);
+        const _params = _.extend({}, this._discoverParams, params);
         return this.rs.projects.getProjects(_params, false)
-            .map(result => {
-                let data = result.data.slice(0, 5);
+            .map((result) => {
+                const data = result.data.slice(0, 5);
 
                 let projects = Immutable.fromJS(data);
                 projects = projects.map(this.decorate);
@@ -86,12 +86,12 @@ export class DiscoverProjectsService {
     }
 
     fetchFeatured() {
-        let _params = _.extend({}, this._discoverParams);
+        const _params = _.extend({}, this._discoverParams);
         _params.is_featured = true;
 
         return this.rs.projects.getProjects(_params, false)
-            .map(result => {
-                let data = result.data.slice(0, 4);
+            .map((result) => {
+                const data = result.data.slice(0, 4);
 
                 let projects = Immutable.fromJS(data);
                 projects = projects.map(this.decorate);
@@ -105,16 +105,16 @@ export class DiscoverProjectsService {
     }
 
     fetchStats() {
-        return this.rs.stats.discover().map(discover => {
-            return this._projectsCount = discover.getIn(['projects', 'total']);
+        return this.rs.stats.discover().map((discover) => {
+            return this._projectsCount = discover.getIn(["projects", "total"]);
         });
     }
 
     fetchSearch(params) {
-        let _params = _.extend({}, this._discoverParams, params);
+        const _params = _.extend({}, this._discoverParams, params);
         return this.rs.projects.getProjects(_params)
-            .map(result => {
-                this._nextSearchPage = !!result.headers['X-Pagination-Next'];
+            .map((result) => {
+                this._nextSearchPage = !!result.headers["X-Pagination-Next"];
 
                 let projects = Immutable.fromJS(result.data);
                 projects = projects.map(this.decorate);

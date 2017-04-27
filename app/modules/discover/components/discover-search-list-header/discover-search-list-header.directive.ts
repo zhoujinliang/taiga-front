@@ -18,7 +18,7 @@
  */
 
 export let DiscoverSearchListHeaderDirective = function() {
-    let link = function(scope, el, attrs) {};
+    const link = function(scope, el, attrs) {};
 
     return {
         controller: "DiscoverSearchListHeader",
@@ -27,9 +27,9 @@ export let DiscoverSearchListHeaderDirective = function() {
         templateUrl: "discover/components/discover-search-list-header/discover-search-list-header.html",
         scope: {
             onChange: "&",
-            orderBy: "="
+            orderBy: "=",
         },
-        link
+        link,
     };
 };
 

@@ -17,41 +17,41 @@
  * File: related-userstories-sortable.directive.coffee
  */
 
-import {autoScroll} from "../../../../libs/dom-autoscroller"
+import {autoScroll} from "../../../../libs/dom-autoscroller";
 
-import * as angular from "angular"
-import * as dragula from "dragula"
+import * as angular from "angular";
+import * as dragula from "dragula";
 
 export let RelatedUserstoriesSortableDirective = function($parse, projectService) {
-    let link = function(scope, el, attrs) {
+    const link = function(scope, el, attrs) {
         if (!projectService.hasPermission("modify_epic")) { return; }
 
-        let callback = $parse(attrs.tgRelatedUserstoriesSortable);
+        const callback = $parse(attrs.tgRelatedUserstoriesSortable);
 
-        let drake = dragula([el[0]], <dragula.DragulaOptions>{
+        const drake = dragula([el[0]], {
             copySortSource: false,
             copy: false,
             mirrorContainer: el[0],
             moves(item) {
-                return $(item).is('tg-related-userstory-row');
-            }
-        });
+                return $(item).is("tg-related-userstory-row");
+            },
+        } as dragula.DragulaOptions);
 
-        drake.on('dragend', function(item) {
-            let itemEl = $(item);
-            let { us } = itemEl.scope();
-            let newIndex = itemEl.index();
+        drake.on("dragend", function(item) {
+            const itemEl = $(item);
+            const { us } = itemEl.scope();
+            const newIndex = itemEl.index();
 
             return scope.$apply(() => callback(scope, {us, newIndex}));
         });
 
-        let scroll = autoScroll(window, {
+        const scroll = autoScroll(window, {
             margin: 20,
             pixels: 30,
             scrollWhenOutside: true,
             autoScroll() {
                 return this.down && drake.dragging;
-            }
+            },
         });
 
         return scope.$on("$destroy", function() {
@@ -61,11 +61,11 @@ export let RelatedUserstoriesSortableDirective = function($parse, projectService
     };
 
     return {
-        link
+        link,
     };
 };
 
 RelatedUserstoriesSortableDirective.$inject = [
     "$parse",
-    "tgProjectService"
+    "tgProjectService",
 ];

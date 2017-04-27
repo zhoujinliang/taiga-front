@@ -17,14 +17,14 @@
  * File: history.controller.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export class ActivitiesDiffController {
-    type:any
-    diffRemoveTags:any
-    diffAddTags:any
-    diff:any
+    type: any;
+    diffRemoveTags: any;
+    diffAddTags: any;
+    diff: any;
 
     static initClass() {
         this.$inject = [
@@ -34,7 +34,7 @@ export class ActivitiesDiffController {
     constructor() {}
 
     diffTags() {
-        if (this.type === 'tags') {
+        if (this.type === "tags") {
             this.diffRemoveTags = _.difference(this.diff[0], this.diff[1]).toString();
             return this.diffAddTags = _.difference(this.diff[1], this.diff[0]).toString();
         }

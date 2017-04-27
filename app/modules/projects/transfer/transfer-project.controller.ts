@@ -18,27 +18,27 @@
  */
 
 export class TransferProject {
-    routeParams:any
-    projectService:any
-    location:any
-    authService:any
-    currentUserService:any
-    navUrls:any
-    translate:any
-    confirmService:any
-    errorHandlingService:any
-    projectId:any
-    token:any
-    showAddComment:any
-    project:any
-    canBeOwnedByUser:any
-    ownerMessage:any
-    maxProjects:any
-    currentProjects:any
-    validNumberOfMemberships:any
-    loadingAccept:any
-    loadingReject:any
-    reason:any
+    routeParams: any;
+    projectService: any;
+    location: any;
+    authService: any;
+    currentUserService: any;
+    navUrls: any;
+    translate: any;
+    confirmService: any;
+    errorHandlingService: any;
+    projectId: any;
+    token: any;
+    showAddComment: any;
+    project: any;
+    canBeOwnedByUser: any;
+    ownerMessage: any;
+    maxProjects: any;
+    currentProjects: any;
+    validNumberOfMemberships: any;
+    loadingAccept: any;
+    loadingReject: any;
+    reason: any;
 
     static initClass() {
         this.$inject = [
@@ -50,7 +50,7 @@ export class TransferProject {
             "$tgNavUrls",
             "$translate",
             "$tgConfirm",
-            "tgErrorHandlingService"
+            "tgErrorHandlingService",
         ];
     }
 
@@ -93,51 +93,51 @@ export class TransferProject {
 
     _checkOwnerData() {
         let maxMemberships;
-        let currentUser = this.currentUserService.getUser();
-        if(this.project.get('is_private')) {
-            this.ownerMessage = 'ADMIN.PROJECT_TRANSFER.OWNER_MESSAGE.PRIVATE';
-            this.maxProjects = currentUser.get('max_private_projects');
+        const currentUser = this.currentUserService.getUser();
+        if (this.project.get("is_private")) {
+            this.ownerMessage = "ADMIN.PROJECT_TRANSFER.OWNER_MESSAGE.PRIVATE";
+            this.maxProjects = currentUser.get("max_private_projects");
             if (this.maxProjects === null) {
-                this.maxProjects = this.translate.instant('ADMIN.PROJECT_TRANSFER.UNLIMITED_PROJECTS');
+                this.maxProjects = this.translate.instant("ADMIN.PROJECT_TRANSFER.UNLIMITED_PROJECTS");
             }
-            this.currentProjects = currentUser.get('total_private_projects');
-            maxMemberships = currentUser.get('max_memberships_private_projects');
+            this.currentProjects = currentUser.get("total_private_projects");
+            maxMemberships = currentUser.get("max_memberships_private_projects");
 
         } else {
-            this.ownerMessage = 'ADMIN.PROJECT_TRANSFER.OWNER_MESSAGE.PUBLIC';
-            this.maxProjects = currentUser.get('max_public_projects');
+            this.ownerMessage = "ADMIN.PROJECT_TRANSFER.OWNER_MESSAGE.PUBLIC";
+            this.maxProjects = currentUser.get("max_public_projects");
             if (this.maxProjects === null) {
-                this.maxProjects = this.translate.instant('ADMIN.PROJECT_TRANSFER.UNLIMITED_PROJECTS');
+                this.maxProjects = this.translate.instant("ADMIN.PROJECT_TRANSFER.UNLIMITED_PROJECTS");
             }
-            this.currentProjects = currentUser.get('total_public_projects');
-            maxMemberships = currentUser.get('max_memberships_public_projects');
+            this.currentProjects = currentUser.get("total_public_projects");
+            maxMemberships = currentUser.get("max_memberships_public_projects");
         }
 
-        return this.validNumberOfMemberships = (maxMemberships === null) || (this.project.get('total_memberships') <= maxMemberships);
+        return this.validNumberOfMemberships = (maxMemberships === null) || (this.project.get("total_memberships") <= maxMemberships);
     }
 
     transferAccept(token, reason) {
         this.loadingAccept = true;
         return this.projectService.transferAccept(this.project.get("id"), token, reason).then(() => {
-            let newUrl = this.navUrls.resolve("project-admin-project-profile-details", {
-                project: this.project.get("slug")
+            const newUrl = this.navUrls.resolve("project-admin-project-profile-details", {
+                project: this.project.get("slug"),
             });
             this.loadingAccept = false;
             this.location.path(newUrl);
 
-            this.confirmService.notify("success", this.translate.instant("ADMIN.PROJECT_TRANSFER.ACCEPTED_PROJECT_OWNERNSHIP"), '', 5000);
+            this.confirmService.notify("success", this.translate.instant("ADMIN.PROJECT_TRANSFER.ACCEPTED_PROJECT_OWNERNSHIP"), "", 5000);
         });
     }
 
     transferReject(token, reason) {
         this.loadingReject = true;
         return this.projectService.transferReject(this.project.get("id"), token, reason).then(() => {
-            let newUrl = this.navUrls.resolve("home", {
-                project: this.project.get("slug")
+            const newUrl = this.navUrls.resolve("home", {
+                project: this.project.get("slug"),
             });
             this.loadingReject = false;
             this.location.path(newUrl);
-            this.confirmService.notify("success", this.translate.instant("ADMIN.PROJECT_TRANSFER.REJECTED_PROJECT_OWNERNSHIP"), '', 5000);
+            this.confirmService.notify("success", this.translate.instant("ADMIN.PROJECT_TRANSFER.REJECTED_PROJECT_OWNERNSHIP"), "", 5000);
 
         });
     }
@@ -148,7 +148,7 @@ export class TransferProject {
 
     hideComment() {
         this.showAddComment = false;
-        return this.reason = '';
+        return this.reason = "";
     }
 }
 TransferProject.initClass();

@@ -17,23 +17,23 @@
  * File: home.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("DuplicateProjectController", function() {
     let ctrl =  null;
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockCurrentUserService = function() {
+    const _mockCurrentUserService = function() {
         mocks.currentUserService = {};
         mocks.currentUserService.getUser = sinon.stub();
         mocks.currentUserService.canCreatePublicProjects = sinon.stub().returns(true);
@@ -50,7 +50,7 @@ describe("DuplicateProjectController", function() {
         return provide.value("tgCurrentUserService", mocks.currentUserService);
     };
 
-    let _mockProjectService = function() {
+    const _mockProjectService = function() {
         mocks.projectsService = {};
         mocks.projectsService.getProjectBySlug = sinon.stub();
         mocks.projectsService.duplicate = sinon.stub();
@@ -58,21 +58,21 @@ describe("DuplicateProjectController", function() {
         return provide.value("tgProjectsService", mocks.projectsService);
     };
 
-    let _mockLocation = function() {
+    const _mockLocation = function() {
         mocks.location = {
-            path: sinon.stub()
+            path: sinon.stub(),
         };
         return provide.value("$tgLocation", mocks.location);
     };
 
-    let _mockTgNav = function() {
+    const _mockTgNav = function() {
         mocks.urlservice = {
-            resolve: sinon.stub()
+            resolve: sinon.stub(),
         };
         return provide.value("$tgNavUrls", mocks.urlservice);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockCurrentUserService();
@@ -89,19 +89,19 @@ describe("DuplicateProjectController", function() {
 
         _mocks();
 
-        inject($controller => controller = $controller);
+        inject(($controller) => controller = $controller);
 
         ctrl = controller("DuplicateProjectCtrl");
 
         ctrl.user = Immutable.fromJS([
             {
-                id: 1
-            }
+                id: 1,
+            },
         ]);
 
         ctrl.canCreatePublicProjects = mocks.currentUserService.canCreatePublicProjects();
         ctrl.canCreatePrivateProjects = mocks.currentUserService.canCreatePublicProjects();
-        return ctrl.projectForm = {};});
+        return ctrl.projectForm = {}; });
 
     it("toggle invited Member", function() {
         ctrl = controller("DuplicateProjectCtrl");
@@ -121,40 +121,40 @@ describe("DuplicateProjectController", function() {
     });
 
     it("get project to duplicate", function() {
-        let project = Immutable.fromJS({
+        const project = Immutable.fromJS({
             members: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
-            ]
+                {id: 3},
+            ],
         });
 
-        let slug = 'slug';
+        const slug = "slug";
         ctrl._getInvitedMembers = sinon.stub();
 
-        let promise = mocks.projectsService.getProjectBySlug.withArgs(slug).promise().resolve(project);
+        const promise = mocks.projectsService.getProjectBySlug.withArgs(slug).promise().resolve(project);
 
         return ctrl.refreshReferenceProject(slug).then(function() {
             expect(ctrl.referenceProject).to.be.equal(project);
-            expect(ctrl.members.toJS()).to.be.eql(project.get('members').toJS());
+            expect(ctrl.members.toJS()).to.be.eql(project.get("members").toJS());
             return expect(ctrl.invitedMembers.toJS()).to.be.eql([1, 2, 3]);
         });
     });
 
-    it('check users limits', function() {
+    it("check users limits", function() {
         mocks.currentUserService.canAddMembersPrivateProject.withArgs(4).returns(1);
         mocks.currentUserService.canAddMembersPublicProject.withArgs(4).returns(2);
 
-        let members = Immutable.fromJS([
+        const members = Immutable.fromJS([
             {id: 1},
             {id: 2},
-            {id: 3}
+            {id: 3},
         ]);
-        let { size } = members; //3
+        const { size } = members; //3
 
         ctrl.user = Immutable.fromJS({
             max_memberships_public_projects: 1,
-            max_memberships_private_projects: 1
+            max_memberships_private_projects: 1,
         });
 
         ctrl.projectForm = {};
@@ -166,24 +166,24 @@ describe("DuplicateProjectController", function() {
         return expect(ctrl.limitMembersPublicProject).to.be.equal(2);
     });
 
-    it('duplicate project', function(done) {
+    it("duplicate project", function(done) {
         ctrl.referenceProject = Immutable.fromJS({
-            id: 1
+            id: 1,
         });
         ctrl.projectForm = Immutable.fromJS({
-            id: 1
+            id: 1,
         });
-        let projectId = ctrl.referenceProject.get('id');
-        let data = ctrl.projectForm;
+        const projectId = ctrl.referenceProject.get("id");
+        const data = ctrl.projectForm;
 
-        let newProject:any = {};
+        const newProject: any = {};
         newProject.data = {
-            slug: 'slug'
+            slug: "slug",
         };
 
         mocks.urlservice.resolve.withArgs("project", {project: newProject.data.slug}).returns("/project/slug/");
 
-        let promise = mocks.projectsService.duplicate.withArgs(projectId, data).promise().resolve(newProject);
+        const promise = mocks.projectsService.duplicate.withArgs(projectId, data).promise().resolve(newProject);
 
         return ctrl.submit().then(function() {
             expect(ctrl.formSubmitLoading).to.be.false;
@@ -193,14 +193,14 @@ describe("DuplicateProjectController", function() {
         });
     });
 
-    it('check if the user can create a private projects', function() {
+    it("check if the user can create a private projects", function() {
         mocks.currentUserService.canCreatePrivateProjects = sinon.stub().returns({valid: true});
 
         ctrl = controller("DuplicateProjectCtrl");
         ctrl.limitMembersPrivateProject = {valid: true};
 
         ctrl.projectForm = {
-            is_private: true
+            is_private: true,
         };
 
         expect(ctrl.canCreateProject()).to.be.true;
@@ -210,20 +210,20 @@ describe("DuplicateProjectController", function() {
         ctrl = controller("DuplicateProjectCtrl");
 
         ctrl.projectForm = {
-            is_private: true
+            is_private: true,
         };
 
         return expect(ctrl.canCreateProject()).to.be.false;
     });
 
-    return it('check if the user can create a public projects', function() {
+    return it("check if the user can create a public projects", function() {
         mocks.currentUserService.canCreatePublicProjects = sinon.stub().returns({valid: true});
 
         ctrl = controller("DuplicateProjectCtrl");
         ctrl.limitMembersPublicProject = {valid: true};
 
         ctrl.projectForm = {
-            is_private: false
+            is_private: false,
         };
 
         expect(ctrl.canCreateProject()).to.be.true;
@@ -233,7 +233,7 @@ describe("DuplicateProjectController", function() {
         ctrl = controller("DuplicateProjectCtrl");
 
         ctrl.projectForm = {
-            is_private: false
+            is_private: false,
         };
 
         return expect(ctrl.canCreateProject()).to.be.false;

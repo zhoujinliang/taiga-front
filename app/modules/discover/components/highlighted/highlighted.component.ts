@@ -17,13 +17,13 @@
  * File: highlighted.directive.coffee
  */
 
-import {Component, Input} from "@angular/core"
+import {Component, Input} from "@angular/core";
 
 @Component({
-    selector: 'tg-highlighted',
-    template: require("./highlighted.jade")()
+    selector: "tg-highlighted",
+    template: require("./highlighted.jade")(),
 })
 export class Highlighted {
-    @Input() loading:any;
-    @Input() highlighted:any;
+    @Input() loading: any;
+    @Input() highlighted: any;
 }

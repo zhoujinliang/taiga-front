@@ -1,20 +1,20 @@
-import {NgModule} from "@angular/core"
-import {RouterModule} from "@angular/router"
-import {CommonModule} from "@angular/common"
-import {TranslateModule} from "@ngx-translate/core"
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
+import {CommonModule} from "@angular/common";
+import {NgModule} from "@angular/core";
+import {RouterModule} from "@angular/router";
+import { EffectsModule } from "@ngrx/effects";
+import { StoreModule } from "@ngrx/store";
+import {TranslateModule} from "@ngx-translate/core";
 
 import { TgCommonModule } from "../../ts/modules/common/common.module";
 import { TgComponentsModule } from "../components/components.module";
 
-import { ProjectsListing } from './listing/projects-listing.component';
-import { ProjectDetail } from './project/project.component';
-import { ProjectInfo } from './project/info/project-info.component';
-import { ProjectData } from './project/data/project-data.component';
-import { ProjectTags } from './project/tags/project-tags.component';
-import { LikeProjectButton } from './components/like-project-button/like-project-button.component';
-import { CurrentProjectsEffects } from './projects.effects';
+import { LikeProjectButton } from "./components/like-project-button/like-project-button.component";
+import { ProjectsListing } from "./listing/projects-listing.component";
+import { ProjectData } from "./project/data/project-data.component";
+import { ProjectInfo } from "./project/info/project-info.component";
+import { ProjectDetail } from "./project/project.component";
+import { ProjectTags } from "./project/tags/project-tags.component";
+import { CurrentProjectsEffects } from "./projects.effects";
 
 @NgModule({
     imports: [

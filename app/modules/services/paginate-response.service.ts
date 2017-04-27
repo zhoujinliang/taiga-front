@@ -17,21 +17,21 @@
  * File: paginate-response.service.coffee
  */
 
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
 
-import {Injectable} from "@angular/core"
+import {Injectable} from "@angular/core";
 
 @Injectable()
 export class PaginateResponseService {
     paginate(result: Immutable.Map<string, any>) {
-        let data = result.get("data");
-        let headers = result.get("headers");
-        let paginateResponse = Immutable.Map({
-            "data": data,
-            "next": !!headers.get("x-pagination-next"),
-            "prev": !!headers.get("x-pagination-prev"),
-            "current": headers.get("x-pagination-current"),
-            "count": headers.get("x-pagination-count")
+        const data = result.get("data");
+        const headers = result.get("headers");
+        const paginateResponse = Immutable.Map({
+            data,
+            next: !!headers.get("x-pagination-next"),
+            prev: !!headers.get("x-pagination-prev"),
+            current: headers.get("x-pagination-current"),
+            count: headers.get("x-pagination-count"),
         });
         return paginateResponse;
     }

@@ -17,25 +17,25 @@
  * File: external-app.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../libs/utils"
-import {Controller} from "../../libs/classes"
-import * as angular from "angular"
-import * as Immutable from "immutable"
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import {Controller} from "../../libs/classes";
+import {defineImmutableProperty} from "../../libs/utils";
 
 export class ExternalAppController extends Controller {
-    routeParams:any
-    externalAppsService:any
-    window:any
-    currentUserService:any
-    location:any
-    navUrls:any
-    xhrError:any
-    loader:any
-    _state:any
-    _applicationId:any
-    _user:any
-    _application:any
-    loginWithAnotherUserUrl:any
+    routeParams: any;
+    externalAppsService: any;
+    window: any;
+    currentUserService: any;
+    location: any;
+    navUrls: any;
+    xhrError: any;
+    loader: any;
+    _state: any;
+    _applicationId: any;
+    _user: any;
+    _application: any;
+    loginWithAnotherUserUrl: any;
 
     static initClass() {
         this.$inject = [
@@ -46,13 +46,13 @@ export class ExternalAppController extends Controller {
             "$location",
             "$tgNavUrls",
             "tgXhrErrorService",
-            "tgLoader"
+            "tgLoader",
         ];
     }
 
     constructor(routeParams, externalAppsService, window, currentUserService, location,
                 navUrls, xhrError, loader) {
-        super()
+        super();
         this._redirect = this._redirect.bind(this);
         this._getApplicationToken = this._getApplicationToken.bind(this);
         this.createApplicationToken = this.createApplicationToken.bind(this);
@@ -70,8 +70,8 @@ export class ExternalAppController extends Controller {
         this._getApplicationToken();
         this._user = this.currentUserService.getUser();
         this._application = null;
-        let nextUrl = encodeURIComponent(this.location.url());
-        let loginUrl = this.navUrls.resolve("login");
+        const nextUrl = encodeURIComponent(this.location.url());
+        const loginUrl = this.navUrls.resolve("login");
         this.loginWithAnotherUserUrl = `${loginUrl}?next=${nextUrl}`;
 
         defineImmutableProperty(this, "user", () => this._user);
@@ -79,20 +79,20 @@ export class ExternalAppController extends Controller {
     }
 
     _redirect(applicationToken) {
-        let nextUrl = applicationToken.get("next_url");
+        const nextUrl = applicationToken.get("next_url");
         return this.window.open(nextUrl, "_self");
     }
 
     _getApplicationToken() {
         return this.externalAppsService.getApplicationToken(this._applicationId, this._state)
-            .then(data => {
+            .then((data) => {
                 this._application = data.get("application");
                 if (data.get("auth_code")) {
                     return this._redirect(data);
                 } else {
                     return this.loader.pageLoaded();
                 }
-        }).catch(xhr => {
+        }).catch((xhr) => {
                 this.loader.pageLoaded();
                 return this.xhrError.response(xhr);
         });
@@ -104,9 +104,9 @@ export class ExternalAppController extends Controller {
 
     createApplicationToken() {
         return this.externalAppsService.authorizeApplicationToken(this._applicationId, this._state)
-            .then(data => {
+            .then((data) => {
                 return this._redirect(data);
-        }).catch(xhr => {
+        }).catch((xhr) => {
                 return this.xhrError.response(xhr);
         });
     }

@@ -18,18 +18,18 @@
  */
 
 export let SelectImportUserLightboxDirective = function(lightboxService, lightboxKeyboardNavigationService) {
-    let link = (scope, el, attrs, ctrl) =>
-        scope.$watch('vm.visible', function(visible) {
-            if (visible && !el.hasClass('open')) {
+    const link = (scope, el, attrs, ctrl) =>
+        scope.$watch("vm.visible", function(visible) {
+            if (visible && !el.hasClass("open")) {
                 ctrl.start();
                 return lightboxService.open(el, null, scope.vm.onClose).then(function() {
-                    el.find('input').focus();
+                    el.find("input").focus();
                     return lightboxKeyboardNavigationService.init(el);
                 });
-            } else if (!visible && el.hasClass('open')) {
+            } else if (!visible && el.hasClass("open")) {
                 return lightboxService.close(el).then(function() {
-                    ctrl.userEmail = '';
-                    return ctrl.usersSearch = '';
+                    ctrl.userEmail = "";
+                    return ctrl.usersSearch = "";
                 });
             }
         })
@@ -40,18 +40,18 @@ export let SelectImportUserLightboxDirective = function(lightboxService, lightbo
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            user: '<',
-            visible: '<',
-            onClose: '&',
-            onSelectUser: '&',
-            selectableUsers: '<',
-            isPrivate: '<',
-            limitMembersPrivateProject: '<',
-            limitMembersPublicProject: '<',
-            displayEmailSelector: '<'
+            user: "<",
+            visible: "<",
+            onClose: "&",
+            onSelectUser: "&",
+            selectableUsers: "<",
+            isPrivate: "<",
+            limitMembersPrivateProject: "<",
+            limitMembersPublicProject: "<",
+            displayEmailSelector: "<",
         },
-        templateUrl: 'projects/create/select-import-user-lightbox/select-import-user-lightbox.html',
-        link
+        templateUrl: "projects/create/select-import-user-lightbox/select-import-user-lightbox.html",
+        link,
     };
 };
-SelectImportUserLightboxDirective.$inject = ['lightboxService', 'lightboxKeyboardNavigationService'];
+SelectImportUserLightboxDirective.$inject = ["lightboxService", "lightboxKeyboardNavigationService"];

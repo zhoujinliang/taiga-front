@@ -22,13 +22,13 @@ export let AsanaImportDirective = () =>
         link(scope, elm, attrs, ctrl) {
             return ctrl.startProjectSelector();
         },
-        templateUrl:"projects/create/asana-import/asana-import.html",
+        templateUrl: "projects/create/asana-import/asana-import.html",
         controller: "AsanaImportCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            onCancel: '&'
-        }
+            onCancel: "&",
+        },
     })
 ;
 AsanaImportDirective.$inject = [];

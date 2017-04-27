@@ -17,23 +17,23 @@
  * File: github-import.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../libs/utils"
+import {defineImmutableProperty} from "../../../../libs/utils";
 
 export class GithubImportController {
-    githubImportService:any
-    confirm:any
-    translate:any
-    importProjectService:any
-    step:string
-    project:any
-    fetchingUsers:any
+    githubImportService: any;
+    confirm: any;
+    translate: any;
+    importProjectService: any;
+    step: string;
+    project: any;
+    fetchingUsers: any;
 
     static initClass() {
         this.$inject = [
-            'tgGithubImportService',
-            '$tgConfirm',
-            '$translate',
-            'tgImportProjectService',
+            "tgGithubImportService",
+            "$tgConfirm",
+            "$translate",
+            "tgImportProjectService",
         ];
     }
 
@@ -42,48 +42,48 @@ export class GithubImportController {
         this.confirm = confirm;
         this.translate = translate;
         this.importProjectService = importProjectService;
-        this.step = 'autorization-github';
+        this.step = "autorization-github";
         this.project = null;
 
-        defineImmutableProperty(this, 'projects', () => { return this.githubImportService.projects; });
-        defineImmutableProperty(this, 'members', () => { return this.githubImportService.projectUsers; });
+        defineImmutableProperty(this, "projects", () => this.githubImportService.projects);
+        defineImmutableProperty(this, "members", () => this.githubImportService.projectUsers);
     }
 
     startProjectSelector() {
-        this.step = 'project-select-github';
+        this.step = "project-select-github";
         return this.githubImportService.fetchProjects();
     }
 
     onSelectProject(project) {
-        this.step = 'project-form-github';
+        this.step = "project-form-github";
         this.project = project;
         this.fetchingUsers = true;
 
-        return this.githubImportService.fetchUsers(this.project.get('id')).then(() => this.fetchingUsers = false);
+        return this.githubImportService.fetchUsers(this.project.get("id")).then(() => this.fetchingUsers = false);
     }
 
     onSaveProjectDetails(project) {
         this.project = project;
-        return this.step = 'project-members-github';
+        return this.step = "project-members-github";
     }
 
     onCancelMemberSelection() {
-        return this.step = 'project-form-github';
+        return this.step = "project-form-github";
     }
 
     startImport(users) {
-        let loader = this.confirm.loader(this.translate.instant('PROJECT.IMPORT.IN_PROGRESS.TITLE'), this.translate.instant('PROJECT.IMPORT.IN_PROGRESS.DESCRIPTION'), true);
+        const loader = this.confirm.loader(this.translate.instant("PROJECT.IMPORT.IN_PROGRESS.TITLE"), this.translate.instant("PROJECT.IMPORT.IN_PROGRESS.DESCRIPTION"), true);
 
         loader.start();
 
-        let promise = this.githubImportService.importProject(
-            this.project.get('name'),
-            this.project.get('description'),
-            this.project.get('id'),
+        const promise = this.githubImportService.importProject(
+            this.project.get("name"),
+            this.project.get("description"),
+            this.project.get("id"),
             users,
-            this.project.get('keepExternalReference'),
-            this.project.get('is_private'),
-            this.project.get('project_type')
+            this.project.get("keepExternalReference"),
+            this.project.get("is_private"),
+            this.project.get("project_type"),
         );
 
         return this.importProjectService.importPromise(promise).then(() => loader.stop());

@@ -22,13 +22,13 @@ export let TrelloImportDirective = () =>
         link(scope, elm, attrs, ctrl) {
             return ctrl.startProjectSelector();
         },
-        templateUrl:"projects/create/trello-import/trello-import.html",
+        templateUrl: "projects/create/trello-import/trello-import.html",
         controller: "TrelloImportCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            onCancel: '&'
-        }
+            onCancel: "&",
+        },
     })
 ;
 TrelloImportDirective.$inject = [];

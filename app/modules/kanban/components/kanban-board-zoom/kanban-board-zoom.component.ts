@@ -17,17 +17,17 @@
  * File: kanban-board-zoom.directive.coffee
  */
 
-import {Component, Input} from "@angular/core"
-import { Store } from "@ngrx/store"
-import { ChangeKanbanZoom } from "../../kanban.actions";
-import { ZoomLevelService} from "../../../services/zoom-level.service";
+import {Component, Input} from "@angular/core";
+import { Store } from "@ngrx/store";
 import { IState } from "../../../../app.store";
+import { ZoomLevelService} from "../../../services/zoom-level.service";
+import { ChangeKanbanZoom } from "../../kanban.actions";
 
 @Component({
     selector: "tg-kanban-board-zoom",
     template: `
         <tg-board-zoom [levels]="levels" [value]="value" (changeZoom)="onChangeZoom($event)">
-        </tg-board-zoom>`
+        </tg-board-zoom>`,
 })
 export class KanbanBoardZoom {
     @Input() value;
@@ -40,4 +40,4 @@ export class KanbanBoardZoom {
     onChangeZoom(level) {
         this.store.dispatch(new ChangeKanbanZoom(level));
     }
-};
+}

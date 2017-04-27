@@ -17,97 +17,97 @@
  * File: epic-row.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("EpicsDashboard", function() {
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgConfirm = function() {
+    const _mockTgConfirm = function() {
         mocks.tgConfirm = {
-            notify: sinon.stub()
+            notify: sinon.stub(),
         };
         return provide.value("$tgConfirm", mocks.tgConfirm);
     };
 
-    let _mockTgProjectService = function() {
+    const _mockTgProjectService = function() {
         mocks.tgProjectService = {
             setProjectBySlug: sinon.stub(),
             hasPermission: sinon.stub(),
             isEpicsDashboardEnabled: sinon.stub(),
             project: Immutable.Map({
-                "name": "testing name",
-                "description": "testing description"
-            })
+                name: "testing name",
+                description: "testing description",
+            }),
         };
         return provide.value("tgProjectService", mocks.tgProjectService);
     };
 
-    let _mockTgEpicsService = function() {
+    const _mockTgEpicsService = function() {
         mocks.tgEpicsService = {
             clear: sinon.stub(),
-            fetchEpics: sinon.stub()
+            fetchEpics: sinon.stub(),
         };
         return provide.value("tgEpicsService", mocks.tgEpicsService);
     };
 
-    let _mockRouteParams = function() {
+    const _mockRouteParams = function() {
         mocks.routeParams = {
-            pslug: sinon.stub()
+            pslug: sinon.stub(),
         };
 
         return provide.value("$routeParams", mocks.routeParams);
     };
 
-    let _mockTgErrorHandlingService = function() {
+    const _mockTgErrorHandlingService = function() {
         mocks.tgErrorHandlingService = {
             permissionDenied: sinon.stub(),
-            notFound: sinon.stub()
+            notFound: sinon.stub(),
         };
 
         return provide.value("tgErrorHandlingService", mocks.tgErrorHandlingService);
     };
 
-    let _mockTgLightboxFactory = function() {
+    const _mockTgLightboxFactory = function() {
         mocks.tgLightboxFactory = {
-            create: sinon.stub()
+            create: sinon.stub(),
         };
 
         return provide.value("tgLightboxFactory", mocks.tgLightboxFactory);
     };
 
-    let _mockLightboxService = function() {
+    const _mockLightboxService = function() {
         mocks.lightboxService = {
-            closeAll: sinon.stub()
+            closeAll: sinon.stub(),
         };
 
         return provide.value("lightboxService", mocks.lightboxService);
     };
 
-    let _mockTgAppMetaService = function() {
+    const _mockTgAppMetaService = function() {
         mocks.tgAppMetaService = {
-            setfn: sinon.stub()
+            setfn: sinon.stub(),
         };
 
         return provide.value("tgAppMetaService", mocks.tgAppMetaService);
     };
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translate = sinon.stub();
 
         return provide.value("$translate", mocks.translate);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgConfirm();
@@ -129,16 +129,16 @@ describe("EpicsDashboard", function() {
 
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     it("metada is set", function() {
-        let ctrl = controller("EpicsDashboardCtrl");
+        const ctrl = controller("EpicsDashboardCtrl");
         return expect(mocks.tgAppMetaService.setfn).have.been.called;
     });
 
     it("load data because epics panel is enabled and user has permissions", function(done) {
-        let ctrl = controller("EpicsDashboardCtrl");
+        const ctrl = controller("EpicsDashboardCtrl");
 
         mocks.tgProjectService.setProjectBySlug
             .promise()
@@ -157,7 +157,7 @@ describe("EpicsDashboard", function() {
     });
 
     it("not load data because epics panel is not enabled", function(done) {
-        let ctrl = controller("EpicsDashboardCtrl");
+        const ctrl = controller("EpicsDashboardCtrl");
 
         mocks.tgProjectService.setProjectBySlug
             .promise()
@@ -176,7 +176,7 @@ describe("EpicsDashboard", function() {
     });
 
     it("not load data because user has not permissions", function(done) {
-        let ctrl = controller("EpicsDashboardCtrl");
+        const ctrl = controller("EpicsDashboardCtrl");
 
         mocks.tgProjectService.setProjectBySlug
             .promise()
@@ -195,7 +195,7 @@ describe("EpicsDashboard", function() {
     });
 
     return it("not load data because epics panel is not enabled and user has not permissions", function(done) {
-        let ctrl = controller("EpicsDashboardCtrl");
+        const ctrl = controller("EpicsDashboardCtrl");
 
         mocks.tgProjectService.setProjectBySlug
             .promise()

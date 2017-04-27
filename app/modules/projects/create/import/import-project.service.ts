@@ -17,31 +17,31 @@
  * File: import-project.service.coffee
  */
 
-import {Service} from "../../../../ts/classes"
+import {Service} from "../../../../ts/classes";
 
 export class ImportProjectService extends Service {
-    currentUserService:any
-    tgAuth:any
-    lightboxFactory:any
-    translate:any
-    confirm:any
-    location:any
-    tgNavUrls:any
+    currentUserService: any;
+    tgAuth: any;
+    lightboxFactory: any;
+    translate: any;
+    confirm: any;
+    location: any;
+    tgNavUrls: any;
 
     static initClass() {
         this.$inject = [
-            'tgCurrentUserService',
-            '$tgAuth',
-            'tgLightboxFactory',
-            '$translate',
-            '$tgConfirm',
-            '$location',
-            '$tgNavUrls'
+            "tgCurrentUserService",
+            "$tgAuth",
+            "tgLightboxFactory",
+            "$translate",
+            "$tgConfirm",
+            "$location",
+            "$tgNavUrls",
         ];
     }
 
     constructor(currentUserService, tgAuth, lightboxFactory, translate, confirm, location, tgNavUrls) {
-        super()
+        super();
         this.currentUserService = currentUserService;
         this.tgAuth = tgAuth;
         this.lightboxFactory = lightboxFactory;
@@ -56,31 +56,31 @@ export class ImportProjectService extends Service {
     }
 
     importSuccess(result) {
-        let promise = this.currentUserService.loadProjects();
+        const promise = this.currentUserService.loadProjects();
         promise.then(() => {
             if (result.status === 202) { // Async mode
-                let title = this.translate.instant('PROJECT.IMPORT.ASYNC_IN_PROGRESS_TITLE');
-                let message = this.translate.instant('PROJECT.IMPORT.ASYNC_IN_PROGRESS_MESSAGE');
-                this.location.path(this.tgNavUrls.resolve('home'));
+                const title = this.translate.instant("PROJECT.IMPORT.ASYNC_IN_PROGRESS_TITLE");
+                const message = this.translate.instant("PROJECT.IMPORT.ASYNC_IN_PROGRESS_MESSAGE");
+                this.location.path(this.tgNavUrls.resolve("home"));
                 return this.confirm.success(title, message);
             } else { // result.status == 201 # Sync mode
-                let ctx = {project: result.data.slug};
-                this.location.path(this.tgNavUrls.resolve('project-admin-project-profile-details', ctx));
-                let msg = this.translate.instant('PROJECT.IMPORT.SYNC_SUCCESS');
-                return this.confirm.notify('success', msg);
+                const ctx = {project: result.data.slug};
+                this.location.path(this.tgNavUrls.resolve("project-admin-project-profile-details", ctx));
+                const msg = this.translate.instant("PROJECT.IMPORT.SYNC_SUCCESS");
+                return this.confirm.notify("success", msg);
             }
         });
         return promise;
     }
 
     importError(result) {
-        let promise = this.tgAuth.refresh();
+        const promise = this.tgAuth.refresh();
         promise.then(() => {
-            let restrictionError = this.getRestrictionError(result);
+            const restrictionError = this.getRestrictionError(result);
 
             if (restrictionError) {
-                return this.lightboxFactory.create('tg-lb-import-error', {
-                    class: 'lightbox lightbox-import-error'
+                return this.lightboxFactory.create("tg-lb-import-error", {
+                    class: "lightbox lightbox-import-error",
                 }, restrictionError);
 
             } else {
@@ -101,47 +101,47 @@ export class ImportProjectService extends Service {
     getRestrictionError(result) {
         if (result.headers) {
             let membersError;
-            let errorKey = '';
+            let errorKey = "";
 
-            let user = this.currentUserService.getUser();
+            const user = this.currentUserService.getUser();
             let maxMemberships = null;
 
             if (result.headers.isPrivate) {
-                let privateError = !this.currentUserService.canCreatePrivateProjects().valid;
+                const privateError = !this.currentUserService.canCreatePrivateProjects().valid;
 
-                if ((user.get('max_memberships_private_projects') !== null) && (result.headers.memberships >= user.get('max_memberships_private_projects'))) {
+                if ((user.get("max_memberships_private_projects") !== null) && (result.headers.memberships >= user.get("max_memberships_private_projects"))) {
                     membersError = true;
                 } else {
                     membersError = false;
                 }
 
                 if (privateError && membersError) {
-                    errorKey = 'private-space-members';
-                    maxMemberships = user.get('max_memberships_private_projects');
+                    errorKey = "private-space-members";
+                    maxMemberships = user.get("max_memberships_private_projects");
                 } else if (privateError) {
-                    errorKey = 'private-space';
+                    errorKey = "private-space";
                 } else if (membersError) {
-                    errorKey = 'private-members';
-                    maxMemberships = user.get('max_memberships_private_projects');
+                    errorKey = "private-members";
+                    maxMemberships = user.get("max_memberships_private_projects");
                 }
 
             } else {
-                let publicError = !this.currentUserService.canCreatePublicProjects().valid;
+                const publicError = !this.currentUserService.canCreatePublicProjects().valid;
 
-                if ((user.get('max_memberships_public_projects') !== null) && (result.headers.memberships >= user.get('max_memberships_public_projects'))) {
+                if ((user.get("max_memberships_public_projects") !== null) && (result.headers.memberships >= user.get("max_memberships_public_projects"))) {
                     membersError = true;
                 } else {
                     membersError = false;
                 }
 
                 if (publicError && membersError) {
-                    errorKey = 'public-space-members';
-                    maxMemberships = user.get('max_memberships_public_projects');
+                    errorKey = "public-space-members";
+                    maxMemberships = user.get("max_memberships_public_projects");
                 } else if (publicError) {
-                    errorKey = 'public-space';
+                    errorKey = "public-space";
                 } else if (membersError) {
-                    errorKey = 'public-members';
-                    maxMemberships = user.get('max_memberships_public_projects');
+                    errorKey = "public-members";
+                    maxMemberships = user.get("max_memberships_public_projects");
                 }
             }
 
@@ -153,8 +153,8 @@ export class ImportProjectService extends Service {
                 key: errorKey,
                 values: {
                     max_memberships: maxMemberships,
-                    members: result.headers.memberships
-                }
+                    members: result.headers.memberships,
+                },
             };
         } else {
             return false;

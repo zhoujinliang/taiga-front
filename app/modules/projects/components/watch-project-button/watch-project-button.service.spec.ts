@@ -17,39 +17,39 @@
  * File: watch-project-button.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var sinon:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-import * as _ from "lodash"
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var sinon: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+import * as _ from "lodash";
 
 describe("tgWatchProjectButtonService", function() {
     let watchButtonService = null;
     let provide = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgResources = function() {
+    const _mockTgResources = function() {
         mocks.tgResources = {
             projects: {
                 watchProject: sinon.stub(),
-                unwatchProject: sinon.stub()
-            }
+                unwatchProject: sinon.stub(),
+            },
         };
 
         return provide.value("tgResources", mocks.tgResources);
     };
 
-    let _mockTgCurrentUserService = function() {
+    const _mockTgCurrentUserService = function() {
         mocks.tgCurrentUserService = {
             setProjects: sinon.stub(),
             getUser() {
                 return Immutable.fromJS({
-                    id: 89
+                    id: 89,
                 });
             },
             projects: Immutable.fromJS({
@@ -58,43 +58,43 @@ describe("tgWatchProjectButtonService", function() {
                         id: 4,
                         total_watchers: 0,
                         is_watcher: false,
-                        notify_level: null
+                        notify_level: null,
                     },
                     {
                         id: 5,
                         total_watchers: 1,
                         is_watcher: true,
-                        notify_level: 3
+                        notify_level: 3,
                     },
                     {
                         id: 6,
                         total_watchers: 0,
                         is_watcher: true,
-                        notify_level: null
-                    }
-                ]
-            })
+                        notify_level: null,
+                    },
+                ],
+            }),
         };
 
         return provide.value("tgCurrentUserService", mocks.tgCurrentUserService);
     };
 
-    let _mockTgProjectService = function() {
+    const _mockTgProjectService = function() {
         mocks.tgProjectService = {
-            setProject: sinon.stub()
+            setProject: sinon.stub(),
         };
 
         return provide.value("tgProjectService", mocks.tgProjectService);
     };
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_tgWatchProjectButtonService_) {
             watchButtonService = _tgWatchProjectButtonService_;
             if (callback) { return callback(); }
         })
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgResources();
@@ -104,7 +104,7 @@ describe("tgWatchProjectButtonService", function() {
         })
     ;
 
-    let _setup = () => _mocks();
+    const _setup = () => _mocks();
 
     beforeEach(function() {
         module("taigaProjects");
@@ -113,32 +113,31 @@ describe("tgWatchProjectButtonService", function() {
     });
 
     it("watch", function(done) {
-        let projectId = 4;
-        let notifyLevel = 3;
+        const projectId = 4;
+        const notifyLevel = 3;
 
         mocks.tgResources.projects.watchProject.withArgs(projectId, notifyLevel).promise().resolve();
 
-        let newProject = {
+        const newProject = {
             id: 4,
             total_watchers: 1,
             is_watcher: true,
-            notify_level: notifyLevel
+            notify_level: notifyLevel,
         };
 
-        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(['all', 0]);
+        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(["all", 0]);
 
-        let userServiceCheckImmutable = sinon.match((function(immutable) {
+        const userServiceCheckImmutable = sinon.match((function(immutable) {
             immutable = immutable.toJS();
 
             return _.isEqual(immutable[0], newProject);
-        }), 'userServiceCheckImmutable');
+        }), "userServiceCheckImmutable");
 
-        let projectServiceCheckImmutable = sinon.match((function(immutable) {
+        const projectServiceCheckImmutable = sinon.match((function(immutable) {
             immutable = immutable.toJS();
 
             return _.isEqual(immutable, newProject);
-        }), 'projectServiceCheckImmutable');
-
+        }), "projectServiceCheckImmutable");
 
         return watchButtonService.watch(projectId, notifyLevel).finally(function() {
             expect(mocks.tgCurrentUserService.setProjects).to.have.been.calledWith(userServiceCheckImmutable);
@@ -149,29 +148,28 @@ describe("tgWatchProjectButtonService", function() {
     });
 
     it("watch, if the user doesn't have the projects", function(done) {
-        let projectId = 4;
-        let notifyLevel = 3;
+        const projectId = 4;
+        const notifyLevel = 3;
 
         mocks.tgResources.projects.watchProject.withArgs(projectId, notifyLevel).promise().resolve();
 
-        let newProject = {
+        const newProject = {
             id: 4,
             total_watchers: 1,
             is_watcher: true,
-            notify_level: notifyLevel
+            notify_level: notifyLevel,
         };
 
-        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(['all', 0]);
+        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(["all", 0]);
         mocks.tgCurrentUserService.projects = Immutable.fromJS({
-            all: []
+            all: [],
         });
 
-        let projectServiceCheckImmutable = sinon.match((function(immutable) {
+        const projectServiceCheckImmutable = sinon.match((function(immutable) {
             immutable = immutable.toJS();
 
             return _.isEqual(immutable, newProject);
-        }), 'projectServiceCheckImmutable');
-
+        }), "projectServiceCheckImmutable");
 
         return watchButtonService.watch(projectId, notifyLevel).finally(function() {
             expect(mocks.tgCurrentUserService.setProjects).to.not.have.been.called;
@@ -182,32 +180,31 @@ describe("tgWatchProjectButtonService", function() {
     });
 
     it("watch another option", function(done) {
-        let projectId = 5;
-        let notifyLevel = 3;
+        const projectId = 5;
+        const notifyLevel = 3;
 
         mocks.tgResources.projects.watchProject.withArgs(projectId, notifyLevel).promise().resolve();
 
-        let newProject = {
+        const newProject = {
             id: 5,
             total_watchers: 1,
             is_watcher: true,
-            notify_level: notifyLevel
+            notify_level: notifyLevel,
         };
 
-        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(['all', 1]);
+        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(["all", 1]);
 
-        let userServiceCheckImmutable = sinon.match((function(immutable) {
+        const userServiceCheckImmutable = sinon.match((function(immutable) {
             immutable = immutable.toJS();
 
             return _.isEqual(immutable[1], newProject);
-        }), 'userServiceCheckImmutable');
+        }), "userServiceCheckImmutable");
 
-        let projectServiceCheckImmutable = sinon.match((function(immutable) {
+        const projectServiceCheckImmutable = sinon.match((function(immutable) {
             immutable = immutable.toJS();
 
             return _.isEqual(immutable, newProject);
-        }), 'projectServiceCheckImmutable');
-
+        }), "projectServiceCheckImmutable");
 
         return watchButtonService.watch(projectId, notifyLevel).finally(function() {
             expect(mocks.tgCurrentUserService.setProjects).to.have.been.calledWith(userServiceCheckImmutable);
@@ -218,31 +215,30 @@ describe("tgWatchProjectButtonService", function() {
     });
 
     return it("unwatch", function(done) {
-        let projectId = 5;
+        const projectId = 5;
 
         mocks.tgResources.projects.unwatchProject.withArgs(projectId).promise().resolve();
 
-        let newProject = {
+        const newProject = {
             id: 5,
             total_watchers: 0,
             is_watcher: false,
-            notify_level: null
+            notify_level: null,
         };
 
-        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(['all', 1]);
+        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(["all", 1]);
 
-        let userServiceCheckImmutable = sinon.match((function(immutable) {
+        const userServiceCheckImmutable = sinon.match((function(immutable) {
             immutable = immutable.toJS();
 
             return _.isEqual(immutable[1], newProject);
-        }), 'userServiceCheckImmutable');
+        }), "userServiceCheckImmutable");
 
-        let projectServiceCheckImmutable = sinon.match((function(immutable) {
+        const projectServiceCheckImmutable = sinon.match((function(immutable) {
             immutable = immutable.toJS();
 
             return _.isEqual(immutable, newProject);
-        }), 'projectServiceCheckImmutable');
-
+        }), "projectServiceCheckImmutable");
 
         return watchButtonService.unwatch(projectId).finally(function() {
             expect(mocks.tgCurrentUserService.setProjects).to.have.been.calledWith(userServiceCheckImmutable);

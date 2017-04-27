@@ -24,7 +24,7 @@ export let VoteButtonDirective = () =>
         bindToController: {
             item: "=",
             onUpvote: "=",
-            onDownvote: "="
+            onDownvote: "=",
         },
         controllerAs: "vm",
         templateUrl: "components/vote-button/vote-button.html",

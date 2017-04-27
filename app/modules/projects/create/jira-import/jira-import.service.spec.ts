@@ -17,49 +17,49 @@
  * File: jira-import.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgJiraImportService", function() {
     let $provide = null;
     let service = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockResources = function() {
+    const _mockResources = function() {
         mocks.resources = {
             jiraImporter: {
                 listProjects: sinon.stub(),
                 listUsers: sinon.stub(),
                 importProject: sinon.stub(),
                 getAuthUrl: sinon.stub(),
-                authorize: sinon.stub()
-            }
+                authorize: sinon.stub(),
+            },
         };
 
         return $provide.value("tgResources", mocks.resources);
     };
 
-    let _mockLocation = function() {
+    const _mockLocation = function() {
         mocks.location = {
-            search: sinon.stub()
+            search: sinon.stub(),
         };
 
         mocks.location.search.returns({
             url: "http://test",
-            token: 123
+            token: 123,
         });
 
         return $provide.value("$location", mocks.location);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -70,11 +70,11 @@ describe("tgJiraImportService", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_tgJiraImportService_ => service = _tgJiraImportService_)
+    const _inject = () =>
+        inject((_tgJiraImportService_) => service = _tgJiraImportService_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -86,8 +86,8 @@ describe("tgJiraImportService", function() {
     });
 
     it("fetch projects", function(done) {
-        service.setToken(123, 'http://test');
-        mocks.resources.jiraImporter.listProjects.withArgs("http://test", 123).promise().resolve('projects');
+        service.setToken(123, "http://test");
+        mocks.resources.jiraImporter.listProjects.withArgs("http://test", 123).promise().resolve("projects");
 
         return service.fetchProjects().then(function() {
             service.projects = "projects";
@@ -96,34 +96,34 @@ describe("tgJiraImportService", function() {
     });
 
     it("fetch user", function(done) {
-        service.setToken(123, 'http://test');
-        let projectId = 3;
-        mocks.resources.jiraImporter.listUsers.withArgs("http://test", 123, projectId).promise().resolve('users');
+        service.setToken(123, "http://test");
+        const projectId = 3;
+        mocks.resources.jiraImporter.listUsers.withArgs("http://test", 123, projectId).promise().resolve("users");
 
         return service.fetchUsers(projectId).then(function() {
-            service.projectUsers = 'users';
+            service.projectUsers = "users";
             return done();
         });
     });
 
     it("import project", function() {
-        service.setToken(123, 'http://test');
-        service.url = 'url';
-        let projectId = 2;
+        service.setToken(123, "http://test");
+        service.url = "url";
+        const projectId = 2;
 
-        service.importProject(projectId, true, true ,true);
+        service.importProject(projectId, true, true , true);
 
-        return expect(mocks.resources.jiraImporter.importProject).to.have.been.calledWith('url', 123, projectId, true, true, true);
+        return expect(mocks.resources.jiraImporter.importProject).to.have.been.calledWith("url", 123, projectId, true, true, true);
     });
 
     it("get auth url", function(done) {
-        service.setToken(123, 'http://test');
-        let projectId = 3;
+        service.setToken(123, "http://test");
+        const projectId = 3;
 
-        let response = {
+        const response = {
             data: {
-                url: "url123"
-            }
+                url: "url123",
+            },
         };
 
         mocks.resources.jiraImporter.getAuthUrl.promise("http://test").resolve(response);
@@ -135,14 +135,14 @@ describe("tgJiraImportService", function() {
     });
 
     return it("authorize", function(done) {
-        service.setToken(123, 'http://test');
-        let projectId = 3;
+        service.setToken(123, "http://test");
+        const projectId = 3;
 
-        let response = {
+        const response = {
             data: {
                 url: "http://test",
-                token: "token123"
-            }
+                token: "token123",
+            },
         };
 
         mocks.resources.jiraImporter.authorize.withArgs().promise().resolve(response);

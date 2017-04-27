@@ -18,34 +18,34 @@
  */
 
 import {Component, Input} from "@angular/core";
-import { NavigationUrlsService } from "../../../ts/modules/base/navurls.service";
 import { TranslateService } from "@ngx-translate/core";
+import { NavigationUrlsService } from "../../../ts/modules/base/navurls.service";
 
 @Component({
     selector: "tg-duty",
     template: require("./duty.jade")(),
 })
 export class Duty {
-    @Input() duty:any;
-    @Input() type:any;
+    @Input() duty: any;
+    @Input() type: any;
 
     constructor(private navurls: NavigationUrlsService,
                 private translate: TranslateService) {}
 
     getDutyType() {
         if (this.duty) {
-            if (this.duty.get('_name') === "epics") {
+            if (this.duty.get("_name") === "epics") {
                 return this.translate.instant("COMMON.EPIC");
             }
-            if (this.duty.get('_name') === "userstories") {
+            if (this.duty.get("_name") === "userstories") {
                 return this.translate.instant("COMMON.USER_STORY");
             }
-            if (this.duty.get('_name') === "tasks") {
+            if (this.duty.get("_name") === "tasks") {
                 return this.translate.instant("COMMON.TASK");
             }
-            if (this.duty.get('_name') === "issues") {
+            if (this.duty.get("_name") === "issues") {
                 return this.translate.instant("COMMON.ISSUE");
             }
         }
     }
-};
+}

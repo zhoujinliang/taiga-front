@@ -18,14 +18,14 @@
  */
 
 export let MostLikedDirective = function() {
-    let link = (scope, el, attrs, ctrl) => ctrl.fetch();
+    const link = (scope, el, attrs, ctrl) => ctrl.fetch();
 
     return {
         controller: "MostLiked",
         controllerAs: "vm",
         templateUrl: "discover/components/most-liked/most-liked.html",
         scope: {},
-        link
+        link,
     };
 };
 

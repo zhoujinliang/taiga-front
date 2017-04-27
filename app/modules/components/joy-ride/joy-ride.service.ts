@@ -17,23 +17,23 @@
  * File: joy-ride.service.coffee
  */
 
-import {Service} from "../../../ts/classes"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {Service} from "../../../ts/classes";
 
 export class JoyRideService extends Service {
-    translate:any
-    checkPermissionsService:any
+    translate: any;
+    checkPermissionsService: any;
 
     static initClass() {
         this.$inject = [
-            '$translate',
-            'tgCheckPermissionsService'
+            "$translate",
+            "tgCheckPermissionsService",
         ];
     }
 
     constructor(translate, checkPermissionsService) {
-        super()
+        super();
         this.translate = translate;
         this.checkPermissionsService = checkPermissionsService;
     }
@@ -44,45 +44,45 @@ export class JoyRideService extends Service {
           dashboard: () => {
               steps = [
                   {
-                      element: '.project-list > section:not(.ng-hide)',
-                      position: 'left',
+                      element: ".project-list > section:not(.ng-hide)",
+                      position: "left",
                       joyride: {
-                          title: this.translate.instant('JOYRIDE.DASHBOARD.STEP1.TITLE'),
-                          text: this.translate.instant('JOYRIDE.DASHBOARD.STEP1.TEXT')
-                      }
+                          title: this.translate.instant("JOYRIDE.DASHBOARD.STEP1.TITLE"),
+                          text: this.translate.instant("JOYRIDE.DASHBOARD.STEP1.TEXT"),
+                      },
                   },
                   {
-                      element: '.working-on-container',
-                      position: 'right',
+                      element: ".working-on-container",
+                      position: "right",
                       joyride: {
-                          title: this.translate.instant('JOYRIDE.DASHBOARD.STEP2.TITLE'),
-                          text: this.translate.instant('JOYRIDE.DASHBOARD.STEP2.TEXT')
-                      }
+                          title: this.translate.instant("JOYRIDE.DASHBOARD.STEP2.TITLE"),
+                          text: this.translate.instant("JOYRIDE.DASHBOARD.STEP2.TEXT"),
+                      },
                   },
                   {
-                      element: '.watching-container',
-                      position: 'right',
+                      element: ".watching-container",
+                      position: "right",
                       joyride: {
-                          title: this.translate.instant('JOYRIDE.DASHBOARD.STEP3.TITLE'),
+                          title: this.translate.instant("JOYRIDE.DASHBOARD.STEP3.TITLE"),
                           text: [
-                              this.translate.instant('JOYRIDE.DASHBOARD.STEP3.TEXT1'),
-                              this.translate.instant('JOYRIDE.DASHBOARD.STEP3.TEXT2')
-                          ]
-                      }
-                  }
+                              this.translate.instant("JOYRIDE.DASHBOARD.STEP3.TEXT1"),
+                              this.translate.instant("JOYRIDE.DASHBOARD.STEP3.TEXT2"),
+                          ],
+                      },
+                  },
               ];
 
-              if (!$('.project-list .create-project-button').is(':hidden')) {
+              if (!$(".project-list .create-project-button").is(":hidden")) {
                   steps.push({
-                      element: '.project-list .create-project-button',
-                      position: 'bottom',
+                      element: ".project-list .create-project-button",
+                      position: "bottom",
                       joyride: {
-                          title: this.translate.instant('JOYRIDE.DASHBOARD.STEP4.TITLE'),
+                          title: this.translate.instant("JOYRIDE.DASHBOARD.STEP4.TITLE"),
                           text: [
-                              this.translate.instant('JOYRIDE.DASHBOARD.STEP4.TEXT1'),
-                              this.translate.instant('JOYRIDE.DASHBOARD.STEP4.TEXT2')
-                          ]
-                      }
+                              this.translate.instant("JOYRIDE.DASHBOARD.STEP4.TEXT1"),
+                              this.translate.instant("JOYRIDE.DASHBOARD.STEP4.TEXT2"),
+                          ],
+                      },
                   });
               }
 
@@ -92,42 +92,42 @@ export class JoyRideService extends Service {
           backlog: () => {
               steps = [
                   {
-                      element: '.summary',
-                      position: 'bottom',
+                      element: ".summary",
+                      position: "bottom",
                       joyride: {
-                          title: this.translate.instant('JOYRIDE.BACKLOG.STEP1.TITLE'),
+                          title: this.translate.instant("JOYRIDE.BACKLOG.STEP1.TITLE"),
                           text: [
-                              this.translate.instant('JOYRIDE.BACKLOG.STEP1.TEXT1'),
-                              this.translate.instant('JOYRIDE.BACKLOG.STEP1.TEXT2')
-                          ]
-                      }
+                              this.translate.instant("JOYRIDE.BACKLOG.STEP1.TEXT1"),
+                              this.translate.instant("JOYRIDE.BACKLOG.STEP1.TEXT2"),
+                          ],
+                      },
                   },
                   {
-                      element: '.backlog-table-empty',
-                      position: 'bottom',
+                      element: ".backlog-table-empty",
+                      position: "bottom",
                       joyride: {
-                          title: this.translate.instant('JOYRIDE.BACKLOG.STEP2.TITLE'),
-                          text: this.translate.instant('JOYRIDE.BACKLOG.STEP2.TEXT')
-                      }
+                          title: this.translate.instant("JOYRIDE.BACKLOG.STEP2.TITLE"),
+                          text: this.translate.instant("JOYRIDE.BACKLOG.STEP2.TEXT"),
+                      },
                   },
                   {
-                      element: '.sprints',
-                      position: 'left',
+                      element: ".sprints",
+                      position: "left",
                       joyride: {
-                          title: this.translate.instant('JOYRIDE.BACKLOG.STEP3.TITLE'),
-                          text: this.translate.instant('JOYRIDE.BACKLOG.STEP3.TEXT')
-                      }
-                  }
+                          title: this.translate.instant("JOYRIDE.BACKLOG.STEP3.TITLE"),
+                          text: this.translate.instant("JOYRIDE.BACKLOG.STEP3.TEXT"),
+                      },
+                  },
               ];
 
-              if (this.checkPermissionsService.check('add_us')) {
+              if (this.checkPermissionsService.check("add_us")) {
                   steps.push({
-                      element: '.new-us',
-                      position: 'rigth',
+                      element: ".new-us",
+                      position: "rigth",
                       joyride: {
-                          title: this.translate.instant('JOYRIDE.BACKLOG.STEP4.TITLE'),
-                          text: this.translate.instant('JOYRIDE.BACKLOG.STEP4.TEXT')
-                      }
+                          title: this.translate.instant("JOYRIDE.BACKLOG.STEP4.TITLE"),
+                          text: this.translate.instant("JOYRIDE.BACKLOG.STEP4.TEXT"),
+                      },
                   });
               }
 
@@ -137,47 +137,47 @@ export class JoyRideService extends Service {
            kanban: () => {
               steps = [
                   {
-                      element: '.kanban-table-inner',
-                      position: 'bottom',
+                      element: ".kanban-table-inner",
+                      position: "bottom",
                       joyride: {
-                          title: this.translate.instant('JOYRIDE.KANBAN.STEP1.TITLE'),
-                          text: this.translate.instant('JOYRIDE.KANBAN.STEP1.TEXT')
-                      }
+                          title: this.translate.instant("JOYRIDE.KANBAN.STEP1.TITLE"),
+                          text: this.translate.instant("JOYRIDE.KANBAN.STEP1.TEXT"),
+                      },
                   },
                   {
-                      element: '.card-placeholder',
-                      position: 'right',
+                      element: ".card-placeholder",
+                      position: "right",
                       joyride: {
-                          title: this.translate.instant('JOYRIDE.KANBAN.STEP2.TITLE'),
-                          text: this.translate.instant('JOYRIDE.KANBAN.STEP2.TEXT')
-                      }
-                  }
+                          title: this.translate.instant("JOYRIDE.KANBAN.STEP2.TITLE"),
+                          text: this.translate.instant("JOYRIDE.KANBAN.STEP2.TEXT"),
+                      },
+                  },
               ];
 
-              if (this.checkPermissionsService.check('add_us')) {
+              if (this.checkPermissionsService.check("add_us")) {
                   steps.push({
-                        element: '.add-action',
-                        position: 'bottom',
+                        element: ".add-action",
+                        position: "bottom",
                         joyride: {
-                            title: this.translate.instant('JOYRIDE.KANBAN.STEP3.TITLE'),
+                            title: this.translate.instant("JOYRIDE.KANBAN.STEP3.TITLE"),
                             text: [
-                                this.translate.instant('JOYRIDE.KANBAN.STEP3.TEXT1'),
-                                this.translate.instant('JOYRIDE.KANBAN.STEP3.TEXT2'),
-                            ]
-                        }
+                                this.translate.instant("JOYRIDE.KANBAN.STEP3.TEXT1"),
+                                this.translate.instant("JOYRIDE.KANBAN.STEP3.TEXT2"),
+                            ],
+                        },
                     });
               }
 
               return steps;
-          }
+          },
       };
   }
 
     get(name) {
-        let joyRides = this.getConfig();
-        let joyRide = joyRides[name].call(this);
+        const joyRides = this.getConfig();
+        const joyRide = joyRides[name].call(this);
 
-        return _.map(joyRide, function(item:any) {
+        return _.map(joyRide, function(item: any) {
             let html = "";
 
             if (item.joyride.title) {
@@ -185,7 +185,7 @@ export class JoyRideService extends Service {
             }
 
             if (_.isArray(item.joyride.text)) {
-                _.forEach(item.joyride.text, text => html += `<p>${text}</p>`);
+                _.forEach(item.joyride.text, (text) => html += `<p>${text}</p>`);
             } else {
                 html += `<p>${item.joyride.text}</p>`;
             }

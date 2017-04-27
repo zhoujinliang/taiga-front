@@ -18,11 +18,11 @@
  */
 
 export class ContactProjectButtonController {
-    lightboxFactory:any
-    project:any
+    lightboxFactory: any;
+    project: any;
 
     static initClass() {
-        this.$inject = ['tgLightboxFactory'];
+        this.$inject = ["tgLightboxFactory"];
     }
 
     constructor(lightboxFactory){
@@ -31,14 +31,14 @@ export class ContactProjectButtonController {
 
     launchContactForm() {
         return this.lightboxFactory.create(
-            'tg-lb-contact-project',
+            "tg-lb-contact-project",
             {
-                "class": "lightbox lightbox-contact-project e2e-lightbox-contact-project",
-                "project": "project"
+                class: "lightbox lightbox-contact-project e2e-lightbox-contact-project",
+                project: "project",
             },
             {
-                "project": this.project
-            }
+                project: this.project,
+            },
         );
     }
 }

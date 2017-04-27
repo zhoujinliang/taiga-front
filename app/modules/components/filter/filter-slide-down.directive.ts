@@ -17,28 +17,28 @@
  * File: filter.-slide-down.controller.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let FilterSlideDownDirective = function() {
-    let link = function(scope, el, attrs, ctrl) {
-        let filter = $('tg-filter');
+    const link = function(scope, el, attrs, ctrl) {
+        const filter = $("tg-filter");
 
         return scope.$watch(attrs.ngIf, function(value) {
             if (value) {
-                filter.find('.filter-list').hide();
+                filter.find(".filter-list").hide();
 
-                let wrapperHeight = filter.height();
+                const wrapperHeight = filter.height();
                 let contentHeight = 0;
 
                 filter.children().each(function(index, elem) {
                     contentHeight += $(this).outerHeight(true);
-                    return true
+                    return true;
                 });
 
                 return $(el.context.nextSibling)
                     .css({
                         "max-height": wrapperHeight - contentHeight,
-                        "display": "block"
+                        "display": "block",
                     });
             }
         });
@@ -46,6 +46,6 @@ export let FilterSlideDownDirective = function() {
 
     return {
         priority: 900,
-        link
+        link,
     };
 };

@@ -17,31 +17,31 @@
  * File: user-timeline-attachment.directive.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("userTimelineAttachmentDirective", function() {
     let compile, provide, scope;
-    let element = (scope = (compile = (provide = null)));
+    const element = (scope = (compile = (provide = null)));
     let mockTgTemplate = null;
-    let template = "<div tg-user-timeline-attachment='attachment'></div>";
+    const template = "<div tg-user-timeline-attachment='attachment'></div>";
 
-    let _mockTgTemplate= function() {
+    const _mockTgTemplate = function() {
         mockTgTemplate = {
-            get: sinon.stub()
+            get: sinon.stub(),
         };
 
         return provide.value("$tgTemplate", mockTgTemplate);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgTemplate();
@@ -50,8 +50,8 @@ describe("userTimelineAttachmentDirective", function() {
         })
     ;
 
-    let createDirective = function() {
-        let elm = compile(template)(scope);
+    const createDirective = function() {
+        const elm = compile(template)(scope);
 
         return elm;
     };
@@ -69,29 +69,29 @@ describe("userTimelineAttachmentDirective", function() {
 
     it("attachment image template", function() {
         scope.attachment =  Immutable.fromJS({
-            url: "path/path/file.jpg"
+            url: "path/path/file.jpg",
         });
 
         mockTgTemplate.get
             .withArgs("user-timeline/user-timeline-attachment/user-timeline-attachment-image.html")
             .returns("<div id='image'></div>");
 
-        let elm = createDirective();
+        const elm = createDirective();
 
-        return expect(elm.find('#image')).to.have.length(1);
+        return expect(elm.find("#image")).to.have.length(1);
     });
 
     return it("attachment file template", function() {
         scope.attachment =  Immutable.fromJS({
-            url: "path/path/file.pdf"
+            url: "path/path/file.pdf",
         });
 
         mockTgTemplate.get
             .withArgs("user-timeline/user-timeline-attachment/user-timeline-attachment.html")
             .returns("<div id='file'></div>");
 
-        let elm = createDirective();
+        const elm = createDirective();
 
-        return expect(elm.find('#file')).to.have.length(1);
+        return expect(elm.find("#file")).to.have.length(1);
     });
 });

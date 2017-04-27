@@ -17,12 +17,11 @@
  * File: comment.directive.coffee
  */
 
-
 export let HistoryEntryDirective = () =>
     ({
         scope: {
-            entry: "<"
+            entry: "<",
         },
-        templateUrl:"history/history-lightbox/history-entry.html",
+        templateUrl: "history/history-lightbox/history-entry.html",
     })
 ;

@@ -17,50 +17,49 @@
  * File: projects.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgProjectsService", function() {
     let $rootScope, provide;
     let projectsService = (provide = ($rootScope = null));
     let $q = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockResources = function() {
+    const _mockResources = function() {
         mocks.resources = {};
 
         mocks.resources.projects = {};
 
         mocks.resources.projects.getProjectsByUserId = () =>
-            $q(resolve => resolve(Immutable.fromJS([])))
+            $q((resolve) => resolve(Immutable.fromJS([])))
         ;
 
         return provide.value("tgResources", mocks.resources);
     };
 
-    let _mockAuthService = function() {
+    const _mockAuthService = function() {
         mocks.auth = {userData: Immutable.fromJS({id: 10})};
 
         return provide.value("$tgAuth", mocks.auth);
     };
 
-    let _mockProjectUrl = function() {
+    const _mockProjectUrl = function() {
         mocks.projectUrl = {get: sinon.stub()};
 
-        mocks.projectUrl.get = project => `url-${project.id}`;
+        mocks.projectUrl.get = (project) => `url-${project.id}`;
 
         return provide.value("$projectUrl", mocks.projectUrl);
     };
 
-
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_$q_, _$rootScope_, _tgProjectsService_) {
             $q = _$q_;
             $rootScope = _$rootScope_;
@@ -69,7 +68,7 @@ describe("tgProjectsService", function() {
         })
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockResources();
@@ -87,32 +86,32 @@ describe("tgProjectsService", function() {
     });
 
     it("bulkUpdateProjectsOrder and then fetch projects again", function() {
-        let projects_order = [
-            {"id": 8},
-            {"id": 2},
-            {"id": 3},
-            {"id": 9},
-            {"id": 1},
-            {"id": 4},
-            {"id": 10},
-            {"id": 5},
-            {"id": 6},
-            {"id": 7},
-            {"id": 11},
-            {"id": 12},
+        const projects_order = [
+            {id: 8},
+            {id: 2},
+            {id: 3},
+            {id: 9},
+            {id: 1},
+            {id: 4},
+            {id: 10},
+            {id: 5},
+            {id: 6},
+            {id: 7},
+            {id: 11},
+            {id: 12},
         ];
 
         mocks.resources.projects = {};
         mocks.resources.projects.bulkUpdateOrder = sinon.stub();
         mocks.resources.projects.bulkUpdateOrder.withArgs(projects_order).returns(true);
 
-        let result = projectsService.bulkUpdateProjectsOrder(projects_order);
+        const result = projectsService.bulkUpdateProjectsOrder(projects_order);
 
         return expect(result).to.be.true;
     });
 
     it("getProjectStats", function() {
-        let projectId = 3;
+        const projectId = 3;
 
         mocks.resources.projects = {};
         mocks.resources.projects.getProjectStats = sinon.stub();
@@ -122,8 +121,8 @@ describe("tgProjectsService", function() {
     });
 
     it("getProjectBySlug", function(done) {
-        let projectSlug = "project-slug";
-        let project = Immutable.fromJS({id: 2, url: 'url-2', tags: ['xx', 'yy', 'aa'], tags_colors: {xx: "red", yy: "blue", aa: "white"}});
+        const projectSlug = "project-slug";
+        const project = Immutable.fromJS({id: 2, url: "url-2", tags: ["xx", "yy", "aa"], tags_colors: {xx: "red", yy: "blue", aa: "white"}});
 
         mocks.resources.projects = {};
         mocks.resources.projects.getProjectBySlug = sinon.stub();
@@ -133,10 +132,10 @@ describe("tgProjectsService", function() {
             expect(project.toJS()).to.be.eql(
                 {
                     id: 2,
-                    url: 'url-2',
-                    tags: ['xx', 'yy', 'aa'],
-                    tags_colors: {xx: "red", yy: "blue", aa: "white"}
-                }
+                    url: "url-2",
+                    tags: ["xx", "yy", "aa"],
+                    tags_colors: {xx: "red", yy: "blue", aa: "white"},
+                },
             );
 
             return done();
@@ -144,11 +143,11 @@ describe("tgProjectsService", function() {
     });
 
     it("getProjectsByUserId", function(done) {
-        let projectId = 3;
+        const projectId = 3;
 
-        let projects = Immutable.fromJS([
-            {id: 1, url: 'url-1'},
-            {id: 2, url: 'url-2', tags: ['xx', 'yy', 'aa'], tags_colors: {xx: "red", yy: "blue", aa: "white"}}
+        const projects = Immutable.fromJS([
+            {id: 1, url: "url-1"},
+            {id: 2, url: "url-2", tags: ["xx", "yy", "aa"], tags_colors: {xx: "red", yy: "blue", aa: "white"}},
         ]);
 
         mocks.resources.projects = {};
@@ -158,14 +157,14 @@ describe("tgProjectsService", function() {
         return projectsService.getProjectsByUserId(projectId).then(function(projects) {
             expect(projects.toJS()).to.be.eql([{
                     id: 1,
-                    url: 'url-1'
+                    url: "url-1",
                 },
                 {
                     id: 2,
-                    url: 'url-2',
-                    tags: ['xx', 'yy', 'aa'],
-                    tags_colors: {xx: "red", yy: "blue", aa: "white"}
-                }
+                    url: "url-2",
+                    tags: ["xx", "yy", "aa"],
+                    tags_colors: {xx: "red", yy: "blue", aa: "white"},
+                },
             ]);
 
             return done();
@@ -173,9 +172,9 @@ describe("tgProjectsService", function() {
     });
 
     return it("validateTransferToken", function(done) {
-        let projectId = 3;
+        const projectId = 3;
 
-        let tokenValidation = Immutable.fromJS({});
+        const tokenValidation = Immutable.fromJS({});
 
         mocks.resources.projects = {};
         mocks.resources.projects.transferValidateToken = sinon.stub();

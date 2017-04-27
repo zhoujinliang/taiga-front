@@ -18,7 +18,7 @@
  */
 
 export class InviteMembersController {
-    invitedMembers:any
+    invitedMembers: any;
 
     static initClass() {
         this.$inject = [];

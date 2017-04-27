@@ -19,11 +19,11 @@
 
 import * as Immutable from "immutable";
 
-import {Component, Input, Output, OnChanges, EventEmitter} from "@angular/core";
+import {Component, EventEmitter, Input, OnChanges, Output} from "@angular/core";
 
 @Component({
     selector: "tg-assigned-to-selector",
-    template: require("./assigned-to-selector.jade")()
+    template: require("./assigned-to-selector.jade")(),
 })
 export class AssignedToSelector implements OnChanges {
     @Input() members: Immutable.List<any>;
@@ -34,18 +34,18 @@ export class AssignedToSelector implements OnChanges {
     filterText: string = "";
 
     constructor() {
-        this.assign = new EventEmitter()
+        this.assign = new EventEmitter();
     }
 
     ngOnChanges() {
         if (this.members && this.assigned) {
             this.assignedMembersList = this.members.filter((member) => {
-                return this.assigned.contains(member.get('id'));
+                return this.assigned.contains(member.get("id"));
             }).toList();
             this.nonAssignedMembersList = this.members.filter((member) => {
-                return !this.assigned.contains(member.get('id'));
+                return !this.assigned.contains(member.get("id"));
             }).filter((member) => {
-                return member.get('full_name').toLowerCase().indexOf(this.filterText.toLowerCase()) !== -1;
+                return member.get("full_name").toLowerCase().indexOf(this.filterText.toLowerCase()) !== -1;
             }).toList();
         }
     }
@@ -53,9 +53,9 @@ export class AssignedToSelector implements OnChanges {
     onUserFilter(text) {
         this.filterText = text;
         this.nonAssignedMembersList = this.members.filter((member) => {
-            return !this.assigned.contains(member.get('id'));
+            return !this.assigned.contains(member.get("id"));
         }).filter((member) => {
-            return member.get('full_name').toLowerCase().indexOf(this.filterText.toLowerCase()) !== -1;
+            return member.get("full_name").toLowerCase().indexOf(this.filterText.toLowerCase()) !== -1;
         }).toList();
     }
 

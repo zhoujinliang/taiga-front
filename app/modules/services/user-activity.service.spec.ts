@@ -17,15 +17,15 @@
  * File: app-meta.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 angular.module("taigaCommon").provider("$exceptionHandler", angular.mock.$ExceptionHandlerProvider);
 
@@ -33,7 +33,7 @@ describe("UserActivityService", function() {
     let userActivityService = null;
     let $timeout = null;
 
-    let _inject = () =>
+    const _inject = () =>
         inject(function(_tgUserActivityService_, _$timeout_) {
             userActivityService = _tgUserActivityService_;
             return $timeout = _$timeout_;
@@ -46,7 +46,7 @@ describe("UserActivityService", function() {
     });
 
     it("inactive", function(done) {
-        let active = sinon.spy();
+        const active = sinon.spy();
         userActivityService.onInactive(function() {
             expect(active).not.to.have.been.called;
             return done();
@@ -58,7 +58,7 @@ describe("UserActivityService", function() {
     });
 
     it("unsubscribe inactive", function(done) {
-        var unsubscribe = userActivityService.onInactive(function() {
+        const unsubscribe = userActivityService.onInactive(function() {
             unsubscribe();
 
             expect(userActivityService.subscriptionsInactive).to.have.length(0);
@@ -72,7 +72,7 @@ describe("UserActivityService", function() {
     });
 
     it("active", function(done) {
-        let inactive = sinon.spy();
+        const inactive = sinon.spy();
         userActivityService.onInactive(inactive);
 
         userActivityService.onActive(function() {
@@ -85,7 +85,7 @@ describe("UserActivityService", function() {
     });
 
     return it("unsubscribe active", function(done) {
-        var unsubscribe = userActivityService.onActive(function() {
+        const unsubscribe = userActivityService.onActive(function() {
             unsubscribe();
 
             expect(userActivityService.subscriptionsActive).to.have.length(0);

@@ -17,16 +17,16 @@
  * File: history.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let HistoryDirective = function() {
-    let link = function(scope, el, attrs) {};
+    const link = function(scope, el, attrs) {};
 
     return {
         scope: {
-            activities: "<"
+            activities: "<",
         },
-        templateUrl:"history/history/history.html",
-        link
+        templateUrl: "history/history/history.html",
+        link,
     };
 };

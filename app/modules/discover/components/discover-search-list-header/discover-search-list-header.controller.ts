@@ -17,39 +17,39 @@
  * File: discover-search-list-header.controller.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export class DiscoverSearchListHeaderController {
-    like_is_open:boolean
-    activity_is_open:boolean
-    orderBy:any
-    onChange:any
+    like_is_open: boolean;
+    activity_is_open: boolean;
+    orderBy: any;
+    onChange: any;
 
     static initClass() {
         this.$inject = [];
     }
 
     constructor() {
-        this.like_is_open = this.orderBy.indexOf('-total_fans') === 0;
-        this.activity_is_open = this.orderBy.indexOf('-total_activity') === 0;
+        this.like_is_open = this.orderBy.indexOf("-total_fans") === 0;
+        this.activity_is_open = this.orderBy.indexOf("-total_activity") === 0;
     }
 
     openLike() {
         this.like_is_open = true;
         this.activity_is_open = false;
 
-        return this.setOrderBy('-total_fans_last_week');
+        return this.setOrderBy("-total_fans_last_week");
     }
 
     openActivity() {
         this.activity_is_open = true;
         this.like_is_open = false;
 
-        return this.setOrderBy('-total_activity_last_week');
+        return this.setOrderBy("-total_activity_last_week");
     }
 
     setOrderBy(type) {
-        if (type == null) { type = ''; }
+        if (type == null) { type = ""; }
         if (!type) {
             this.like_is_open = false;
             this.activity_is_open = false;

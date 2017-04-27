@@ -17,19 +17,19 @@
  * File: attchments-simple.controller.coffee
  */
 
-import * as angular from "angular"
-import * as Immutable from "immutable"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
 
 export class AttachmentsSimpleController {
-    attachmentsService:any
-    attachments:any
-    onAdd:any
-    onDelete:any
+    attachmentsService: any;
+    attachments: any;
+    onAdd: any;
+    onDelete: any;
 
     static initClass() {
         this.$inject = [
-            "tgAttachmentsService"
+            "tgAttachmentsService",
         ];
     }
 
@@ -38,10 +38,10 @@ export class AttachmentsSimpleController {
     }
 
     addAttachment(file) {
-        let attachment = Immutable.fromJS({
+        const attachment = Immutable.fromJS({
             file,
             name: file.name,
-            size: file.size
+            size: file.size,
         });
 
         if (this.attachmentsService.validate(file)) {
@@ -56,7 +56,7 @@ export class AttachmentsSimpleController {
     }
 
     deleteAttachment(toDeleteAttachment) {
-        this.attachments = this.attachments.filter(attachment => attachment !== toDeleteAttachment);
+        this.attachments = this.attachments.filter((attachment) => attachment !== toDeleteAttachment);
 
         if (this.onDelete) { return this.onDelete({attachment: toDeleteAttachment}); }
     }

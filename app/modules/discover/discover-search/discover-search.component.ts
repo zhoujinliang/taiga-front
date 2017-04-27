@@ -17,33 +17,33 @@
  * File: discover-search.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {defineImmutableProperty} from "../../../libs/utils";
 
-import {Component, OnInit} from "@angular/core"
-import {ActivatedRoute, Router} from "@angular/router"
-import {AppMetaService} from "../../services/app-meta.service"
-import {DiscoverProjectsService} from "../services/discover-projects.service"
-import {TranslateService} from "@ngx-translate/core"
-import { Store } from "@ngrx/store"
-import { search } from "@ngrx/router-store"
+import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
+import { search } from "@ngrx/router-store";
+import { Store } from "@ngrx/store";
+import {TranslateService} from "@ngx-translate/core";
 import { IState } from "../../../app.store";
-import { SearchDiscoverProjects } from "../discover.actions"
+import {AppMetaService} from "../../services/app-meta.service";
+import { SearchDiscoverProjects } from "../discover.actions";
+import {DiscoverProjectsService} from "../services/discover-projects.service";
 
 @Component({
     selector: "tg-discover-search",
     template: require("./discover-search.jade")(),
 })
 export class DiscoverSearch implements OnInit {
-    q:any
-    filter:any
-    orderBy:any
-    loadingGlobal:boolean
-    loadingList:boolean
-    loadingPagination:boolean
-    searchResults:any;
-    projectsCount:any;
+    q: any;
+    filter: any;
+    orderBy: any;
+    loadingGlobal: boolean;
+    loadingList: boolean;
+    loadingPagination: boolean;
+    searchResults: any;
+    projectsCount: any;
 
     constructor(private route: ActivatedRoute,
                 private store: Store<IState>,
@@ -56,22 +56,22 @@ export class DiscoverSearch implements OnInit {
     ngOnInit() {
         this.route.queryParams.subscribe((params) => {
             this.q = params.text;
-            this.filter = params.filter || 'all';
-            this.orderBy = params.order_by || '';
+            this.filter = params.filter || "all";
+            this.orderBy = params.order_by || "";
             this.store.dispatch(new SearchDiscoverProjects(this.q, this.filter, this.orderBy));
         });
-        this.searchResults = this.store.select((state) => state.getIn(['discover', 'search-results']))
-        this.projectsCount = this.store.select((state) => state.getIn(["discover", "projects-count"]))
+        this.searchResults = this.store.select((state) => state.getIn(["discover", "search-results"]));
+        this.projectsCount = this.store.select((state) => state.getIn(["discover", "projects-count"]));
         // this.loadingGlobal = false;
         // this.loadingList = false;
         // this.loadingPagination = false;
 
-        let title = this.translate.instant("DISCOVER.SEARCH.PAGE_TITLE");
-        let description = this.translate.instant("DISCOVER.SEARCH.PAGE_DESCRIPTION");
+        const title = this.translate.instant("DISCOVER.SEARCH.PAGE_TITLE");
+        const description = this.translate.instant("DISCOVER.SEARCH.PAGE_DESCRIPTION");
         this.appMetaService.setAll(title, description);
     }
 
     onSearchCriteriaChange() {
-        this.store.dispatch(search({filter: this.filter, text: this.q, order_by: this.orderBy}))
+        this.store.dispatch(search({filter: this.filter, text: this.q, order_by: this.orderBy}));
     }
 }

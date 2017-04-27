@@ -22,19 +22,19 @@
  * File: modules/components/wysiwyg/wysiwyg-code-hightlighter.service.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
-import * as Promise from "bluebird"
-import * as Prism from "prismjs"
-declare var _version:string;
-declare var ljs:any;
+import * as angular from "angular";
+import * as Promise from "bluebird";
+import * as _ from "lodash";
+import * as Prism from "prismjs";
+declare var _version: string;
+declare var ljs: any;
 
 export class WysiwygCodeHightlighterService {
-    languages: any
-    loadPromise:any
+    languages: any;
+    loadPromise: any;
 
     constructor() {
-        Prism.plugins.customClass.prefix('prism-');
+        Prism.plugins.customClass.prefix("prism-");
         Prism.plugins.customClass.map({});
     }
 
@@ -45,9 +45,9 @@ export class WysiwygCodeHightlighterService {
             } else if (this.loadPromise) {
                 return this.loadPromise.then(() => resolve(this.languages));
             } else {
-                return this.loadPromise = $.getJSON(`/${_version}/prism/prism-languages.json`).then(_languages_ => {
+                return this.loadPromise = $.getJSON(`/${_version}/prism/prism-languages.json`).then((_languages_) => {
                     this.loadPromise = null;
-                    this.languages = _.map(_languages_, function(it:any) {
+                    this.languages = _.map(_languages_, function(it: any) {
                         it.url = `/${_version}/prism/` + it.file;
 
                         return it;
@@ -60,8 +60,8 @@ export class WysiwygCodeHightlighterService {
     }
 
     getLanguageInClassList(classes) {
-        let lan = _.find(this.languages, (it:any) =>
-            !!_.find(classes, className => (`language-${it.name}`) === className)
+        const lan = _.find(this.languages, (it: any) =>
+            !!_.find(classes, (className) => (`language-${it.name}`) === className),
         );
 
         return lan ? lan.name : null;
@@ -79,13 +79,13 @@ export class WysiwygCodeHightlighterService {
 
     // firefox adds br instead of new lines inside <code>
     replaceCodeBrToNl(code) {
-        return $(code).find('br').replaceWith('\n');
+        return $(code).find("br").replaceWith("\n");
     }
 
     hightlightCode(code) {
         this.replaceCodeBrToNl(code);
 
-        let lan = this.getLanguageInClassList(code.classList);
+        const lan = this.getLanguageInClassList(code.classList);
 
         if (lan) {
             return this.loadLanguage(lan).then(() => Prism.highlightElement(code));
@@ -93,7 +93,7 @@ export class WysiwygCodeHightlighterService {
     }
 
     addHightlighter(element) {
-        let codes = $(element).find('code');
+        const codes = $(element).find("code");
 
         return codes.each((index, code) => {
             this.hightlightCode(code);

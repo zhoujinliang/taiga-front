@@ -17,14 +17,14 @@
  * File: navigation-bar.module.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
-import {DropdownProjectListDirective} from "./dropdown-project-list/dropdown-project-list.directive"
-import {DropdownUserDirective} from "./dropdown-user/dropdown-user.directive"
-import {NavigationBarDirective} from "./navigation-bar.directive"
-import {NavigationBarService} from "./navigation-bar.service"
+import {DropdownProjectListDirective} from "./dropdown-project-list/dropdown-project-list.directive";
+import {DropdownUserDirective} from "./dropdown-user/dropdown-user.directive";
+import {NavigationBarDirective} from "./navigation-bar.directive";
+import {NavigationBarService} from "./navigation-bar.service";
 
-let module = angular.module("taigaNavigationBar", []);
+const module = angular.module("taigaNavigationBar", []);
 module.directive("tgDropdownProjectList", DropdownProjectListDirective);
 module.directive("tgDropdownUser", DropdownUserDirective);
 module.directive("tgNavigationBar", NavigationBarDirective);

@@ -17,30 +17,30 @@
  * File: profile-hints.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ProfileHints", function() {
     let $controller = null;
     let $provide = null;
 
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translateService = {};
         mocks.translateService.instant = sinon.stub();
 
         return $provide.value("$translate", mocks.translateService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
             _mockTranslate();
@@ -53,20 +53,20 @@ describe("ProfileHints", function() {
         module("taigaProfile");
         _mocks();
 
-        return inject(_$controller_ => $controller = _$controller_);
+        return inject((_$controller_) => $controller = _$controller_);
     });
 
     return it("random hint generator", function(done) {
         mocks.translateService.instant.returns("fill");
 
-        let ctrl = $controller("ProfileHints");
+        const ctrl = $controller("ProfileHints");
 
         return setTimeout(( function() {
                 expect(ctrl.hint.title).to.be.equal("fill");
                 expect(ctrl.hint.text).to.be.equal("fill");
                 expect(ctrl.hint.linkText).to.have.length.above(1);
                 return done();
-        })
+        }),
         );
     });
 });

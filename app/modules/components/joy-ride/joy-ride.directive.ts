@@ -17,19 +17,19 @@
  * File: joy-ride.directive.coffee
  */
 
-import * as angular from "angular"
-import {introJs} from "intro.js"
+import * as angular from "angular";
+import {introJs} from "intro.js";
 
 export let JoyRideDirective = function($rootScope, currentUserService, joyRideService, $location, $translate) {
-    let link = function(scope, el, attrs, ctrl) {
+    const link = function(scope, el, attrs, ctrl) {
         let unsuscribe = null;
-        let intro = introJs();
+        const intro = introJs();
 
-        intro.oncomplete(() => $('html,body').scrollTop(0));
+        intro.oncomplete(() => $("html,body").scrollTop(0));
 
         intro.onexit(() => currentUserService.disableJoyRide());
 
-        let initJoyrRide = function(next, config) {
+        const initJoyrRide = function(next, config) {
             if (!config[next.joyride]) {
                 return;
             }
@@ -38,44 +38,43 @@ export let JoyRideDirective = function($rootScope, currentUserService, joyRideSe
                 exitOnEsc: false,
                 exitOnOverlayClick: false,
                 showStepNumbers: false,
-                nextLabel: $translate.instant('JOYRIDE.NAV.NEXT') + ' &rarr;',
-                prevLabel: `&larr; ${$translate.instant('JOYRIDE.NAV.BACK')}`,
-                skipLabel: $translate.instant('JOYRIDE.NAV.SKIP'),
-                doneLabel: $translate.instant('JOYRIDE.NAV.DONE'),
-                disableInteraction: true
+                nextLabel: $translate.instant("JOYRIDE.NAV.NEXT") + " &rarr;",
+                prevLabel: `&larr; ${$translate.instant("JOYRIDE.NAV.BACK")}`,
+                skipLabel: $translate.instant("JOYRIDE.NAV.SKIP"),
+                doneLabel: $translate.instant("JOYRIDE.NAV.DONE"),
+                disableInteraction: true,
             });
 
-            intro.setOption('steps', joyRideService.get(next.joyride));
+            intro.setOption("steps", joyRideService.get(next.joyride));
             return intro.start();
         };
 
-        return $rootScope.$on('$routeChangeSuccess',  function(event, next) {
+        return $rootScope.$on("$routeChangeSuccess",  function(event, next) {
             if (!next.joyride || !currentUserService.isAuthenticated()) {
                 intro.exit();
                 if (unsuscribe) { unsuscribe(); }
                 return;
             }
 
-
             intro.oncomplete(() => currentUserService.disableJoyRide(next.joyride));
 
             if (next.loader) {
-                return unsuscribe = $rootScope.$on('loader:end',  function() {
+                return unsuscribe = $rootScope.$on("loader:end",  function() {
                     currentUserService.loadJoyRideConfig()
-                        .then(config => initJoyrRide(next, config));
+                        .then((config) => initJoyrRide(next, config));
 
                     return unsuscribe();
                 });
             } else {
                 return currentUserService.loadJoyRideConfig()
-                    .then(config => initJoyrRide(next, config));
+                    .then((config) => initJoyrRide(next, config));
             }
         });
     };
 
     return {
         scope: {},
-        link
+        link,
     };
 };
 
@@ -84,5 +83,5 @@ JoyRideDirective.$inject = [
     "tgCurrentUserService",
     "tgJoyRideService",
     "$location",
-    "$translate"
+    "$translate",
 ];

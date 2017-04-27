@@ -19,17 +19,17 @@
 
 export let ImportProjectSelectorDirective = () =>
     ({
-        templateUrl:"projects/create/import-project-selector/import-project-selector.html",
+        templateUrl: "projects/create/import-project-selector/import-project-selector.html",
         controller: "ImportProjectSelectorCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            projects: '<',
-            onCancel: '&',
-            onSelectProject: '&',
-            logo: '@',
-            noProjectsMsg: '@',
-            search: '@'
-        }
+            projects: "<",
+            onCancel: "&",
+            onSelectProject: "&",
+            logo: "@",
+            noProjectsMsg: "@",
+            search: "@",
+        },
     })
 ;

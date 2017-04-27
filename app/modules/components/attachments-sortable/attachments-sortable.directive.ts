@@ -17,40 +17,39 @@
  * File: attachments-sortable.directive.coffee
  */
 
-import {autoScroll} from "../../../libs/dom-autoscroller"
+import {autoScroll} from "../../../libs/dom-autoscroller";
 
-import * as dragula from "dragula"
-import * as angular from "angular"
+import * as angular from "angular";
+import * as dragula from "dragula";
 
 export let AttachmentSortableDirective = function($parse) {
-    let link = function(scope, el, attrs) {
-        let callback = $parse(attrs.tgAttachmentsSortable);
+    const link = function(scope, el, attrs) {
+        const callback = $parse(attrs.tgAttachmentsSortable);
 
-        let drake = dragula([el[0]], <dragula.DragulaOptions>{
+        const drake = dragula([el[0]], {
             copySortSource: false,
             copy: false,
             mirrorContainer: el[0],
-            moves(item) { return $(item).is('div[tg-bind-scope]'); }
-        });
+            moves(item) { return $(item).is("div[tg-bind-scope]"); },
+        } as dragula.DragulaOptions);
 
-        drake.on('dragend', function(item) {
+        drake.on("dragend", function(item) {
             item = $(item);
 
-            let { attachment } = item.scope();
-            let newIndex = item.index();
+            const { attachment } = item.scope();
+            const newIndex = item.index();
 
             return scope.$apply(() => callback(scope, {attachment, index: newIndex}));
         });
 
-        let scroll = autoScroll(window, {
+        const scroll = autoScroll(window, {
             margin: 20,
             pixels: 30,
             scrollWhenOutside: true,
             autoScroll() {
                 return this.down && drake.dragging;
-            }
+            },
         });
-
 
         return scope.$on("$destroy", function() {
             el.off();
@@ -59,10 +58,10 @@ export let AttachmentSortableDirective = function($parse) {
     };
 
     return {
-        link
+        link,
     };
 };
 
 AttachmentSortableDirective.$inject = [
-    "$parse"
+    "$parse",
 ];

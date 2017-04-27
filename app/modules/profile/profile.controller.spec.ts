@@ -17,75 +17,75 @@
  * File: profile.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ProfileController", function() {
     let provide = null;
     let $controller = null;
     let $rootScope = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let projects = Immutable.fromJS([
+    const projects = Immutable.fromJS([
         {id: 1},
         {id: 2},
-        {id: 3}
+        {id: 3},
     ]);
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translate = {};
         mocks.translate.instant = sinon.stub();
 
         return provide.value("$translate", mocks.translate);
     };
 
-    let _mockAppMetaService = function() {
+    const _mockAppMetaService = function() {
         mocks.appMetaService = {
-            setAll: sinon.spy()
+            setAll: sinon.spy(),
         };
 
         return provide.value("tgAppMetaService", mocks.appMetaService);
     };
 
-    let _mockCurrentUser = function() {
+    const _mockCurrentUser = function() {
         mocks.currentUser = {
-            getUser: sinon.stub()
+            getUser: sinon.stub(),
         };
 
         return provide.value("tgCurrentUserService", mocks.currentUser);
     };
 
-    let _mockUserService = function() {
+    const _mockUserService = function() {
         mocks.userService = {
-            getUserByUserName: sinon.stub()
+            getUserByUserName: sinon.stub(),
         };
 
         return provide.value("tgUserService", mocks.userService);
     };
 
-    let _mockRouteParams = function() {
+    const _mockRouteParams = function() {
         mocks.routeParams = {};
 
         return provide.value("$routeParams", mocks.routeParams);
     };
 
-    let _mockXhrErrorService = function() {
+    const _mockXhrErrorService = function() {
         mocks.xhrErrorService = {
             response: sinon.spy(),
-            notFound: sinon.spy()
+            notFound: sinon.spy(),
         };
 
         return provide.value("tgXhrErrorService", mocks.xhrErrorService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTranslate();
@@ -98,7 +98,7 @@ describe("ProfileController", function() {
         })
     ;
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;
@@ -113,105 +113,105 @@ describe("ProfileController", function() {
     });
 
     it("define external user", function(done) {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
         mocks.routeParams.slug = "user-slug";
 
-        let user = Immutable.fromJS({
+        const user = Immutable.fromJS({
             username: "username",
             full_name_display: "full-name-display",
             bio: "bio",
-            is_active: true
+            is_active: true,
         });
 
         mocks.translate.instant
-            .withArgs('USER.PROFILE.PAGE_TITLE', {
+            .withArgs("USER.PROFILE.PAGE_TITLE", {
                 userFullName: user.get("full_name_display"),
-                userUsername: user.get("username")
+                userUsername: user.get("username"),
             })
-            .returns('user-profile-page-title');
+            .returns("user-profile-page-title");
 
         mocks.userService.getUserByUserName.withArgs(mocks.routeParams.slug).promise().resolve(user);
 
-        let ctrl = $controller("Profile");
+        const ctrl = $controller("Profile");
 
         return setTimeout(( function() {
             expect(ctrl.user).to.be.equal(user);
             expect(ctrl.isCurrentUser).to.be.false;
             expect(mocks.appMetaService.setAll.calledWithExactly("user-profile-page-title", "bio")).to.be.true;
             return done();
-        })
+        }),
         );
     });
 
     it("non-existent user", function(done) {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
         mocks.routeParams.slug = "user-slug";
 
-        let error = new Error('404');
+        const error = new Error("404");
 
         mocks.userService.getUserByUserName.withArgs(mocks.routeParams.slug).promise().reject(error);
 
-        let ctrl = $controller("Profile");
+        const ctrl = $controller("Profile");
 
         return setTimeout(( function() {
             expect(mocks.xhrErrorService.response.withArgs(error)).to.be.calledOnce;
             return done();
-        })
+        }),
         );
     });
 
     it("define current user", function(done) {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
-        let user = Immutable.fromJS({
+        const user = Immutable.fromJS({
             username: "username",
             full_name_display: "full-name-display",
             bio: "bio",
-            is_active: true
+            is_active: true,
         });
 
         mocks.translate.instant
-            .withArgs('USER.PROFILE.PAGE_TITLE', {
+            .withArgs("USER.PROFILE.PAGE_TITLE", {
                 userFullName: user.get("full_name_display"),
-                userUsername: user.get("username")
+                userUsername: user.get("username"),
             })
-            .returns('user-profile-page-title');
+            .returns("user-profile-page-title");
 
         mocks.currentUser.getUser.returns(user);
 
-        let ctrl = $controller("Profile");
+        const ctrl = $controller("Profile");
 
         return setTimeout(( function() {
             expect(ctrl.user).to.be.equal(user);
             expect(ctrl.isCurrentUser).to.be.true;
             expect(mocks.appMetaService.setAll.withArgs("user-profile-page-title", "bio")).to.be.calledOnce;
             return done();
-        })
+        }),
         );
     });
 
     return it("non-active user", function(done) {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
         mocks.routeParams.slug = "user-slug";
 
-        let user = Immutable.fromJS({
+        const user = Immutable.fromJS({
             username: "username",
             full_name_display: "full-name-display",
             bio: "bio",
-            is_active: false
+            is_active: false,
         });
 
         mocks.userService.getUserByUserName.withArgs(mocks.routeParams.slug).promise().resolve(user);
 
-        let ctrl = $controller("Profile");
+        const ctrl = $controller("Profile");
 
         return setTimeout(( function() {
             expect(mocks.xhrErrorService.notFound).to.be.calledOnce;
             return done();
-        })
+        }),
         );
     });
 });

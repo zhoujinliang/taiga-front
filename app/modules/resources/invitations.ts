@@ -22,8 +22,8 @@
  * File: modules/resources/projects.coffee
  */
 
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
+import {Injectable} from "@angular/core";
+import {RepositoryService} from "../../ts/modules/base/repository";
 
 @Injectable()
 export class InvitationsResource {
@@ -32,4 +32,4 @@ export class InvitationsResource {
     get(token) {
         return this.repo.queryOne("invitations", token);
     }
-};
+}

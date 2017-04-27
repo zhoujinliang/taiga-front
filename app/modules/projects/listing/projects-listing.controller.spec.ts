@@ -17,47 +17,47 @@
  * File: projects-listing.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ProjectsListingController", function() {
     let pageCtrl =  null;
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let projects = Immutable.fromJS({
+    const projects = Immutable.fromJS({
         all: [
             {id: 1},
             {id: 2},
-            {id: 3}
-        ]
+            {id: 3},
+        ],
     });
 
-    let _mockCurrentUserService = function() {
-        let stub = sinon.stub();
+    const _mockCurrentUserService = function() {
+        const stub = sinon.stub();
 
         mocks.currentUserService = {
-            projects
+            projects,
         };
 
         return provide.value("tgCurrentUserService", mocks.currentUserService);
     };
 
-    let _mockProjectsService = function() {
-        let stub = sinon.stub();
+    const _mockProjectsService = function() {
+        const stub = sinon.stub();
 
         return provide.value("tgProjectsService", mocks.projectsService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockCurrentUserService();
@@ -71,13 +71,13 @@ describe("ProjectsListingController", function() {
 
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     return it("define projects", function() {
         pageCtrl = controller("ProjectsListing",
             {$scope: {}});
 
-        return expect(pageCtrl.projects).to.be.equal(projects.get('all'));
+        return expect(pageCtrl.projects).to.be.equal(projects.get("all"));
     });
 });

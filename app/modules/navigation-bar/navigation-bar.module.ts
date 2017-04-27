@@ -17,18 +17,18 @@
  * File: navigation-bar.module.coffee
  */
 
-import {NgModule} from "@angular/core"
-import {RouterModule} from "@angular/router"
-import {CommonModule} from "@angular/common"
-import {TranslateModule} from "@ngx-translate/core"
+import {CommonModule} from "@angular/common";
+import {NgModule} from "@angular/core";
+import {RouterModule} from "@angular/router";
+import {TranslateModule} from "@ngx-translate/core";
 
-import {TgCommonModule} from '../../ts/modules/common/common.module';
-import {TgBaseModule} from '../../ts/modules/base/base.module';
-import {TgComponentsModule} from '../components/components.module';
+import {TgBaseModule} from "../../ts/modules/base/base.module";
+import {TgCommonModule} from "../../ts/modules/common/common.module";
+import {TgComponentsModule} from "../components/components.module";
 
-import {DropdownProjectList} from "./dropdown-project-list/dropdown-project-list.component"
-import {DropdownUser} from "./dropdown-user/dropdown-user.component"
-import {NavigationBar} from "./navigation-bar.component"
+import {DropdownProjectList} from "./dropdown-project-list/dropdown-project-list.component";
+import {DropdownUser} from "./dropdown-user/dropdown-user.component";
+import {NavigationBar} from "./navigation-bar.component";
 
 @NgModule({
     imports: [
@@ -40,7 +40,7 @@ import {NavigationBar} from "./navigation-bar.component"
         TranslateModule.forChild({}),
     ],
     exports: [
-        NavigationBar
+        NavigationBar,
     ],
     declarations: [
         NavigationBar,
@@ -48,6 +48,6 @@ import {NavigationBar} from "./navigation-bar.component"
         DropdownUser,
     ],
     providers: [
-    ]
+    ],
 })
 export class NavigationBarModule {}

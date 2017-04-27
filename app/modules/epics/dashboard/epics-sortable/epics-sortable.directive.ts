@@ -17,42 +17,42 @@
  * File: epics-sortable.directive.coffee
  */
 
-import {autoScroll} from "../../../../libs/dom-autoscroller"
+import {autoScroll} from "../../../../libs/dom-autoscroller";
 
-import * as dragula from "dragula"
-import * as angular from "angular"
+import * as angular from "angular";
+import * as dragula from "dragula";
 
 export let EpicsSortableDirective = function($parse, projectService) {
-    let link = function(scope, el, attrs) {
+    const link = function(scope, el, attrs) {
         if (!projectService.hasPermission("modify_epic")) { return; }
 
-        let callback = $parse(attrs.tgEpicsSortable);
+        const callback = $parse(attrs.tgEpicsSortable);
 
-        let drake = dragula([el[0]], <dragula.DragulaOptions>{
+        const drake = dragula([el[0]], {
             copySortSource: false,
             copy: false,
             mirrorContainer: el[0],
             moves(item) {
-                return $(item).is('div.epics-table-body-row');
-            }
-        });
+                return $(item).is("div.epics-table-body-row");
+            },
+        } as dragula.DragulaOptions);
 
-        drake.on('dragend', function(item) {
-            let itemEl = $(item);
+        drake.on("dragend", function(item) {
+            const itemEl = $(item);
 
-            let { epic } = itemEl.scope();
-            let newIndex = itemEl.index();
+            const { epic } = itemEl.scope();
+            const newIndex = itemEl.index();
 
             return scope.$apply(() => callback(scope, {epic, newIndex}));
         });
 
-        let scroll = autoScroll(window, {
+        const scroll = autoScroll(window, {
             margin: 20,
             pixels: 30,
             scrollWhenOutside: true,
             autoScroll() {
                 return this.down && drake.dragging;
-            }
+            },
         });
 
         return scope.$on("$destroy", function() {
@@ -62,11 +62,11 @@ export let EpicsSortableDirective = function($parse, projectService) {
     };
 
     return {
-        link
+        link,
     };
 };
 
 EpicsSortableDirective.$inject = [
     "$parse",
-    "tgProjectService"
+    "tgProjectService",
 ];

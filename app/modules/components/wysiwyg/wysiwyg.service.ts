@@ -22,27 +22,27 @@
  * File: modules/components/wysiwyg/wysiwyg.service.coffee
  */
 
-import {getMatches, slugify} from "../../../libs/utils"
-import * as Autolinker from "autolinker"
-import {markdownitLazyHeaders} from "../../../libs/markdown-it-lazy-headers"
-import * as markdownit from "markdown-it"
-import * as angular from "angular"
-import * as _ from "lodash"
-import * as toMarkdown from "to-markdown"
-declare var _version:string;
+import * as angular from "angular";
+import * as Autolinker from "autolinker";
+import * as _ from "lodash";
+import * as markdownit from "markdown-it";
+import * as toMarkdown from "to-markdown";
+import {markdownitLazyHeaders} from "../../../libs/markdown-it-lazy-headers";
+import {getMatches, slugify} from "../../../libs/utils";
+declare var _version: string;
 
 export class WysiwygService {
-    wysiwygCodeHightlighterService: any
-    projectService:any
-    navurls:any
-    emojis:any
-    tagBuilder: any
+    wysiwygCodeHightlighterService: any;
+    projectService: any;
+    navurls: any;
+    emojis: any;
+    tagBuilder: any;
 
     static initClass() {
         this.$inject = [
             "tgWysiwygCodeHightlighterService",
             "tgProjectService",
-            "$tgNavUrls"
+            "$tgNavUrls",
         ];
     }
     constructor(wysiwygCodeHightlighterService, projectService, navurls) {
@@ -52,11 +52,11 @@ export class WysiwygService {
     }
 
     searchEmojiByName(name) {
-        return _.filter(this.emojis, (it:any) => it.name.indexOf(name) !== -1);
+        return _.filter(this.emojis, (it: any) => it.name.indexOf(name) !== -1);
     }
 
     setEmojiImagePath(emojis) {
-        return this.emojis = _.map(emojis, function(it:any) {
+        return this.emojis = _.map(emojis, function(it: any) {
             it.image = `/${_version}/emojis/` + it.image;
 
             return it;
@@ -68,19 +68,19 @@ export class WysiwygService {
     }
 
     getEmojiById(id) {
-        return _.find(this.emojis, (it:any) => it.id === id);
+        return _.find(this.emojis, (it: any) => it.id === id);
     }
 
     getEmojiByName(name) {
-        return _.find(this.emojis, (it:any) => it.name === name);
+        return _.find(this.emojis, (it: any) => it.name === name);
     }
 
     replaceImgsByEmojiName(html) {
-        let emojiIds = getMatches(html, /emojis\/([^"]+).png"/gi);
+        const emojiIds = getMatches(html, /emojis\/([^"]+).png"/gi);
 
-        for (let emojiId of emojiIds) {
-            let regexImgs = new RegExp(`<img(.*)${emojiId}[^>]+\>`, 'g');
-            let emoji = this.getEmojiById(emojiId);
+        for (const emojiId of emojiIds) {
+            const regexImgs = new RegExp(`<img(.*)${emojiId}[^>]+\>`, "g");
+            const emoji = this.getEmojiById(emojiId);
             html = html.replace(regexImgs, `:${emoji.name}:`);
         }
 
@@ -88,11 +88,11 @@ export class WysiwygService {
     }
 
     replaceEmojiNameByImgs(text) {
-        let emojiIds = getMatches(text, /:([\w ]*):/g);
+        const emojiIds = getMatches(text, /:([\w ]*):/g);
 
-        for (let emojiId of emojiIds) {
-            let regexImgs = new RegExp(`:${emojiId}:`, 'g');
-            let emoji = this.getEmojiByName(emojiId);
+        for (const emojiId of emojiIds) {
+            const regexImgs = new RegExp(`:${emojiId}:`, "g");
+            const emoji = this.getEmojiByName(emojiId);
 
             if (emoji) {
                 text = text.replace(regexImgs, `![alt](${emoji.image})`);
@@ -104,21 +104,20 @@ export class WysiwygService {
 
     pipeLinks(text) {
         return text.replace(/\[\[(.*?)\]\]/g, function(match, p1, offset, str) {
-            let linkParams = p1.split('|');
+            const linkParams = p1.split("|");
 
-            let link = linkParams[0];
-            let title = linkParams[1] || linkParams[0];
+            const link = linkParams[0];
+            const title = linkParams[1] || linkParams[0];
 
             return `[${title}](${link})`;
         });
     }
 
-
     linkTitleWithSpaces(text) {
-        let link = /\[[^\]]*\]\(([^\)]*)\)/g; // [Title-with-spaces](Title with spaces)
+        const link = /\[[^\]]*\]\(([^\)]*)\)/g; // [Title-with-spaces](Title with spaces)
 
         return text.replace(link, function(match, p1, offset, str) {
-            if (p1.indexOf(' ') >= 0) {
+            if (p1.indexOf(" ") >= 0) {
                 return match.replace(/\(.*\)/, `(${slugify(p1)})`);
             } else {
                 return match;
@@ -127,15 +126,15 @@ export class WysiwygService {
     }
 
     replaceUrls(html) {
-        let el = document.createElement( 'html' );
+        const el = document.createElement( "html" );
         el.innerHTML = html;
 
-        let links = el.querySelectorAll('a');
+        const links = el.querySelectorAll("a");
 
-        for (let link of [].slice.call(links)) {
-            if (link.getAttribute('href').indexOf('/profile/') !== -1) {
+        for (const link of [].slice.call(links)) {
+            if (link.getAttribute("href").indexOf("/profile/") !== -1) {
                 link.parentNode.replaceChild(document.createTextNode(link.innerText), link);
-            } else if (link.getAttribute('href').indexOf('/t/') !== -1) {
+            } else if (link.getAttribute("href").indexOf("/t/") !== -1) {
                 link.parentNode.replaceChild(document.createTextNode(link.innerText), link);
             }
         }
@@ -144,19 +143,19 @@ export class WysiwygService {
     }
 
     searchWikiLinks(html) {
-        let el = document.createElement( 'html' );
+        const el = document.createElement( "html" );
         el.innerHTML = html;
 
-        let links = el.querySelectorAll('a');
+        const links = el.querySelectorAll("a");
 
-        for (let link of [].slice.call(links)) {
-            if (link.getAttribute('href').indexOf('/') === -1) {
-                let url = this.navurls.resolve('project-wiki-page', {
-                    project: this.projectService.project.get('slug'),
-                    slug: link.getAttribute('href')
+        for (const link of [].slice.call(links)) {
+            if (link.getAttribute("href").indexOf("/") === -1) {
+                const url = this.navurls.resolve("project-wiki-page", {
+                    project: this.projectService.project.get("slug"),
+                    slug: link.getAttribute("href"),
                 });
 
-                link.setAttribute('href', url);
+                link.setAttribute("href", url);
             }
         }
 
@@ -164,30 +163,30 @@ export class WysiwygService {
     }
 
     removeTrailingListBr(text) {
-        return text.replace(/<li>(.*?)<br><\/li>/g, '<li>$1</li>');
+        return text.replace(/<li>(.*?)<br><\/li>/g, "<li>$1</li>");
     }
 
     getMarkdown(html) {
         // https://github.com/yabwe/medium-editor/issues/543
-        let cleanIssueConverter = {
-            filter: ['html', 'body', 'span', 'div'],
+        const cleanIssueConverter = {
+            filter: ["html", "body", "span", "div"],
             replacement(innerHTML) {
                 return innerHTML;
-            }
+            },
         };
 
-        let codeLanguageConverter = {
-            filter:  node => {
-                return (node.nodeName === 'PRE') &&
+        const codeLanguageConverter = {
+            filter:  (node) => {
+                return (node.nodeName === "PRE") &&
                   node.firstChild &&
-                  (node.firstChild.nodeName === 'CODE');
+                  (node.firstChild.nodeName === "CODE");
             },
             replacement: (content, node) => {
                 let lan = this.wysiwygCodeHightlighterService.getLanguageInClassList(node.firstChild.classList);
-                if (!lan) { lan = ''; }
+                if (!lan) { lan = ""; }
 
                 return `\n\n\`\`\`${lan}\n${_.trim(node.firstChild.textContent)}\n\`\`\`\n\n`;
-            }
+            },
          };
 
         html = html.replace(/&nbsp;(<\/.*>)/g, "$1");
@@ -195,25 +194,25 @@ export class WysiwygService {
         html = this.replaceUrls(html);
         html = this.removeTrailingListBr(html);
 
-        let markdown = toMarkdown(html, {
+        const markdown = toMarkdown(html, {
             gfm: true,
-            converters: [cleanIssueConverter, codeLanguageConverter]
+            converters: [cleanIssueConverter, codeLanguageConverter],
         });
 
         return markdown;
     }
 
     parseMentionMatches(text) {
-        let serviceName = 'twitter';
-        let { tagBuilder } = this;
-        let matches = [];
+        const serviceName = "twitter";
+        const { tagBuilder } = this;
+        const matches = [];
 
-        let regex = /@[^\s]{1,50}[^.\s]/g;
+        const regex = /@[^\s]{1,50}[^.\s]/g;
         let m = regex.exec(text);
 
         while (m !== null) {
-            var offset = m.index;
-            let prevChar = text.charAt( offset - 1 );
+            const offset = m.index;
+            const prevChar = text.charAt( offset - 1 );
 
             if (m.index === regex.lastIndex) {
                 regex.lastIndex++;
@@ -225,8 +224,8 @@ export class WysiwygService {
                     matchedText   : match,
                     offset,
                     serviceName,
-                    mention       : match.slice(1)
-                }))
+                    mention       : match.slice(1),
+                })),
             );
 
             m = regex.exec(text);
@@ -238,30 +237,30 @@ export class WysiwygService {
     autoLinkHTML(html) {
         // override Autolink parser
         let matchRegexStr = String(Autolinker.matcher.Mention.prototype.matcherRegexes.twitter);
-        if (matchRegexStr.indexOf('.') === -1) {
-            matchRegexStr = '@[^\s]{1,50}[^.\s]';
+        if (matchRegexStr.indexOf(".") === -1) {
+            matchRegexStr = "@[^\s]{1,50}[^.\s]";
         }
 
-        let autolinker = new Autolinker({
-            mention: 'twitter',
-            hashtag: 'twitter',
-            replaceFn: match => {
-                if  (match.getType() === 'mention') {
-                    let profileUrl = this.navurls.resolve('user-profile', {
-                        project: this.projectService.project.get('slug'),
-                        username: match.getMention()
+        const autolinker = new Autolinker({
+            mention: "twitter",
+            hashtag: "twitter",
+            replaceFn: (match) => {
+                if  (match.getType() === "mention") {
+                    const profileUrl = this.navurls.resolve("user-profile", {
+                        project: this.projectService.project.get("slug"),
+                        username: match.getMention(),
                     });
 
                     return `<a class="autolink" href="${profileUrl}">@${match.getMention()}</a>`;
-                } else if (match.getType() === 'hashtag') {
-                    let url = this.navurls.resolve('project-detail-ref', {
-                        project: this.projectService.project.get('slug'),
-                        ref: match.getHashtag()
+                } else if (match.getType() === "hashtag") {
+                    const url = this.navurls.resolve("project-detail-ref", {
+                        project: this.projectService.project.get("slug"),
+                        ref: match.getHashtag(),
                     });
 
                     return `<a class="autolink" href="${url}">#${match.getHashtag()}</a>`;
                 }
-            }
+            },
         });
 
         Autolinker.matcher.Mention.prototype.parseMatches = this.parseMentionMatches.bind(autolinker);
@@ -272,16 +271,16 @@ export class WysiwygService {
     getHTML(text) {
         if (!text || !text.length) { return ""; }
 
-        let options = {
-            breaks: true
+        const options = {
+            breaks: true,
         };
 
         text = this.replaceEmojiNameByImgs(text);
         text = this.pipeLinks(text);
         text = this.linkTitleWithSpaces(text);
 
-        let md = markdownit({
-            breaks: true
+        const md = markdownit({
+            breaks: true,
         });
 
         md.use(markdownitLazyHeaders);

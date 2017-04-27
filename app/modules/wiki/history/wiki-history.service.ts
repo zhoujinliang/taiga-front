@@ -17,34 +17,34 @@
  * File: wiki-history.service.coffee
  */
 
-import {Service} from "../../../libs/classes"
-import {defineImmutableProperty} from "../../../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
-import * as Immutable from "immutable"
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {Service} from "../../../libs/classes";
+import {defineImmutableProperty} from "../../../libs/utils";
 
 export class WikiHistoryService extends Service {
-    rs:any
-    xhrError:any
-    _wikiId:any
-    _historyEntries:any
+    rs: any;
+    xhrError: any;
+    _wikiId: any;
+    _historyEntries: any;
     static initClass() {
         this.$inject = [
             "tgResources",
-            "tgXhrErrorService"
+            "tgXhrErrorService",
         ];
         _;
     }
 
     constructor(rs, xhrError) {
-        super()
+        super();
         this.rs = rs;
         this.xhrError = xhrError;
         this._wikiId = null;
         this._historyEntries = Immutable.List();
 
-        defineImmutableProperty(this, "wikiId", () => { return this._wikiId; });
-        defineImmutableProperty(this, "historyEntries", () => { return this._historyEntries; });
+        defineImmutableProperty(this, "wikiId", () => this._wikiId);
+        defineImmutableProperty(this, "historyEntries", () => this._historyEntries);
     }
 
     setWikiId(wikiId) {
@@ -56,11 +56,11 @@ export class WikiHistoryService extends Service {
         if (!this._wikiId) { return; }
 
         return this.rs.wikiHistory.getWikiHistory(this._wikiId)
-            .then(historyEntries => {
+            .then((historyEntries) => {
                 if (historyEntries.size) {
                     return this._historyEntries = historyEntries.reverse();
                 }
-        }).catch(xhr => {
+        }).catch((xhr) => {
                 return this.xhrError.response(xhr);
         });
     }

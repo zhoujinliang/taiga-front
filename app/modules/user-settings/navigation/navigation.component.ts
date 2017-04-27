@@ -22,12 +22,12 @@
  * File: modules/user-settings/nav.coffee
  */
 
-import {Component, Input} from "@angular/core"
+import {Component, Input} from "@angular/core";
 
 @Component({
     selector: "tg-user-settings-navigation",
-    template: require("./navigation.jade")()
+    template: require("./navigation.jade")(),
 })
 export class UserSettingsNavigation {
-    @Input() active
-};
+    @Input() active;
+}

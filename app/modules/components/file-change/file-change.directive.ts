@@ -18,20 +18,20 @@
  */
 
 export let FileChangeDirective = function($parse) {
-    let link = function(scope, el, attrs, ctrl) {
-        let eventAttr = $parse(attrs.tgFileChange);
+    const link = function(scope, el, attrs, ctrl) {
+        const eventAttr = $parse(attrs.tgFileChange);
 
-        el.on('change', event => scope.$apply(() => eventAttr(scope, {files: event.currentTarget.files})));
+        el.on("change", (event) => scope.$apply(() => eventAttr(scope, {files: event.currentTarget.files})));
 
         return scope.$on("$destroy", () => el.off());
     };
 
     return {
         restrict: "A",
-        link
+        link,
     };
 };
 
 FileChangeDirective.$inject = [
-    "$parse"
+    "$parse",
 ];

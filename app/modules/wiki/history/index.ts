@@ -17,15 +17,15 @@
  * File: wiki-history.module.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
-import {WikiHistoryController} from "./wiki-history.controller"
-import {WikiHistoryDiffDirective} from "./wiki-history-diff.directive"
-import {WikiHistoryDirective} from "./wiki-history.directive"
-import {WikiHistoryEntryDirective} from "./wiki-history-entry.directive"
-import {WikiHistoryService} from "./wiki-history.service"
+import {WikiHistoryDiffDirective} from "./wiki-history-diff.directive";
+import {WikiHistoryEntryDirective} from "./wiki-history-entry.directive";
+import {WikiHistoryController} from "./wiki-history.controller";
+import {WikiHistoryDirective} from "./wiki-history.directive";
+import {WikiHistoryService} from "./wiki-history.service";
 
-let module = angular.module("taigaWikiHistory", []);
+const module = angular.module("taigaWikiHistory", []);
 module.controller("WikiHistoryCtrl", WikiHistoryController);
 module.directive("tgWikiHistoryDiff", WikiHistoryDiffDirective);
 module.directive("tgWikiHistory", WikiHistoryDirective);

@@ -17,15 +17,15 @@
  * File: profile-tabs.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ProfileTabsController", function() {
     let scope;
@@ -44,7 +44,7 @@ describe("ProfileTabsController", function() {
     it("tabs should be an array", () => expect(myCtrl.tabs).is.an("array"));
 
     it("add new tab", function() {
-        let tab = {"fakeTab": true};
+        const tab = {fakeTab: true};
 
         myCtrl.addTab(tab);
 
@@ -52,10 +52,10 @@ describe("ProfileTabsController", function() {
     });
 
     return it("toggleTab, mark the tab passed as parameter to active", function() {
-        let fakeTabs = [
+        const fakeTabs = [
             {id: 1},
             {id: 2},
-            {id: 3}
+            {id: 3},
         ];
 
         myCtrl.tabs = fakeTabs;

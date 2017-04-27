@@ -17,32 +17,31 @@
  * File: profile-favs.controller.coffee
  */
 
-import {debounceLeading} from "../../../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
-import * as Immutable from "immutable"
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {debounceLeading} from "../../../libs/utils";
 
 class FavsBaseController {
-    filterByTextQuery: any
-    enableFilterByAll:boolean
-    enableFilterByProjects:boolean
-    enableFilterByEpics:boolean
-    enableFilterByUserStories:boolean
-    enableFilterByTasks:boolean
-    enableFilterByIssues:boolean
-    enableFilterByTextQuery:boolean
-    q:any
-    _page:any
-    isLoading:any
-    items:any
-    type:any
-    scrollDisabled:any
-    hasNoResults:any
-    user:any
-    userService:any
-    tabName:string
-    _getItems:any
-
+    filterByTextQuery: any;
+    enableFilterByAll: boolean;
+    enableFilterByProjects: boolean;
+    enableFilterByEpics: boolean;
+    enableFilterByUserStories: boolean;
+    enableFilterByTasks: boolean;
+    enableFilterByIssues: boolean;
+    enableFilterByTextQuery: boolean;
+    q: any;
+    _page: any;
+    isLoading: any;
+    items: any;
+    type: any;
+    scrollDisabled: any;
+    hasNoResults: any;
+    user: any;
+    userService: any;
+    tabName: string;
+    _getItems: any;
 
     static initClass() {
         //###############################################
@@ -113,7 +112,7 @@ class FavsBaseController {
         this._disableScroll();
 
         return this._getItems(this.user.get("id"), this._page, this.type, this.q)
-            .then(response => {
+            .then((response) => {
                 this.items = this.items.concat(response.get("data"));
 
                 this._checkIfHasMorePages(response.get("next"));
@@ -178,7 +177,6 @@ class FavsBaseController {
 }
 FavsBaseController.initClass();
 
-
 //###################################################
 //# Liked
 //###################################################
@@ -193,7 +191,7 @@ export class ProfileLikedController extends FavsBaseController {
     constructor(userService) {
         super();
         this.userService = userService;
-        this.tabName = 'likes';
+        this.tabName = "likes";
         this.enableFilterByAll = false;
         this.enableFilterByProjects = false;
         this.enableFilterByEpics = false;
@@ -205,8 +203,6 @@ export class ProfileLikedController extends FavsBaseController {
     }
 }
 ProfileLikedController.initClass();
-
-
 
 //###################################################
 //# Voted
@@ -222,7 +218,7 @@ export class ProfileVotedController extends FavsBaseController {
     constructor(userService) {
         super();
         this.userService = userService;
-        this.tabName = 'upvotes';
+        this.tabName = "upvotes";
         this.enableFilterByAll = true;
         this.enableFilterByProjects = false;
         this.enableFilterByEpics = true;
@@ -234,10 +230,6 @@ export class ProfileVotedController extends FavsBaseController {
     }
 }
 ProfileVotedController.initClass();
-
-
-
-
 
 //###################################################
 //# Watched
@@ -253,7 +245,7 @@ export class ProfileWatchedController extends FavsBaseController {
     constructor(userService) {
         super();
         this.userService = userService;
-        this.tabName = 'watchers';
+        this.tabName = "watchers";
         this._getItems = this.userService.getWatched;
     }
 }

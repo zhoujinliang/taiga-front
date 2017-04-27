@@ -17,58 +17,58 @@
  * File: related-userstory-row.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("RelatedUserstoryRow", function() {
     let RelatedUserstoryRowCtrl =  null;
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgConfirm = function() {
+    const _mockTgConfirm = function() {
         mocks.tgConfirm = {
             askOnDelete: sinon.stub(),
-            notify: sinon.stub()
+            notify: sinon.stub(),
         };
 
         return provide.value("$tgConfirm", mocks.tgConfirm);
     };
 
-    let _mockTgAvatarService = function() {
+    const _mockTgAvatarService = function() {
         mocks.tgAvatarService = {
-            getAvatar: sinon.stub()
+            getAvatar: sinon.stub(),
         };
 
         return provide.value("tgAvatarService", mocks.tgAvatarService);
     };
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translate = {
-            instant: sinon.stub()
+            instant: sinon.stub(),
         };
 
         return provide.value("$translate", mocks.translate);
     };
 
-    let _mockTgResources = function() {
+    const _mockTgResources = function() {
         mocks.tgResources = {
             epics: {
-                deleteRelatedUserstory: sinon.stub()
-            }
+                deleteRelatedUserstory: sinon.stub(),
+            },
         };
 
         return provide.value("tgResources", mocks.tgResources);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgConfirm();
@@ -85,7 +85,7 @@ describe("RelatedUserstoryRow", function() {
 
         _mocks();
 
-        inject($controller => controller = $controller);
+        inject(($controller) => controller = $controller);
 
         return RelatedUserstoryRowCtrl = controller("RelatedUserstoryRowCtrl");
     });
@@ -93,13 +93,13 @@ describe("RelatedUserstoryRow", function() {
     it("set avatar data", function(done) {
         RelatedUserstoryRowCtrl.userstory = Immutable.fromJS({
             assigned_to_extra_info: {
-                id: 3
-            }
+                id: 3,
+            },
         });
-        let member = RelatedUserstoryRowCtrl.userstory.get("assigned_to_extra_info");
-        let avatar = {
+        const member = RelatedUserstoryRowCtrl.userstory.get("assigned_to_extra_info");
+        const avatar = {
             url: "http://taiga.io",
-            bg: "#AAAAAA"
+            bg: "#AAAAAA",
         };
         mocks.tgAvatarService.getAvatar.withArgs(member).returns(avatar);
         RelatedUserstoryRowCtrl.setAvatarData();
@@ -112,8 +112,8 @@ describe("RelatedUserstoryRow", function() {
         RelatedUserstoryRowCtrl.userstory = Immutable.fromJS({
             assigned_to: 1,
             assigned_to_extra_info: {
-              full_name_display: "Beta tester"
-            }
+              full_name_display: "Beta tester",
+            },
         });
 
         expect(RelatedUserstoryRowCtrl.getAssignedToFullNameDisplay()).is.equal("Beta tester");
@@ -122,7 +122,7 @@ describe("RelatedUserstoryRow", function() {
 
     it("get assigned to full name display for unassigned user story", function(done) {
         RelatedUserstoryRowCtrl.userstory = Immutable.fromJS({
-            assigned_to: null
+            assigned_to: null,
         });
         mocks.translate.instant.withArgs("COMMON.ASSIGNED_TO.NOT_ASSIGNED").returns("Unassigned");
         expect(RelatedUserstoryRowCtrl.getAssignedToFullNameDisplay()).is.equal("Unassigned");
@@ -131,17 +131,17 @@ describe("RelatedUserstoryRow", function() {
 
     it("delete related userstory success", function(done) {
         RelatedUserstoryRowCtrl.epic = Immutable.fromJS({
-            id: 123
+            id: 123,
         });
         RelatedUserstoryRowCtrl.userstory = Immutable.fromJS({
             subject: "Deleting",
-            id: 124
+            id: 124,
         });
 
         RelatedUserstoryRowCtrl.loadRelatedUserstories = sinon.stub();
 
-        let askResponse = {
-            finish: sinon.spy()
+        const askResponse = {
+            finish: sinon.spy(),
         };
 
         mocks.translate.instant.withArgs("EPIC.TITLE_LIGHTBOX_UNLINK_RELATED_USERSTORY").returns("title");
@@ -150,7 +150,7 @@ describe("RelatedUserstoryRow", function() {
         mocks.tgConfirm.askOnDelete = sinon.stub();
         mocks.tgConfirm.askOnDelete.withArgs("title", "message").promise().resolve(askResponse);
 
-        let promise = mocks.tgResources.epics.deleteRelatedUserstory.withArgs(123, 124).promise().resolve(true);
+        const promise = mocks.tgResources.epics.deleteRelatedUserstory.withArgs(123, 124).promise().resolve(true);
         return RelatedUserstoryRowCtrl.onDeleteRelatedUserstory().then(function() {
             expect(RelatedUserstoryRowCtrl.loadRelatedUserstories).have.been.calledOnce;
             expect(askResponse.finish).have.been.calledOnce;
@@ -160,17 +160,17 @@ describe("RelatedUserstoryRow", function() {
 
     return it("delete related userstory error", function(done) {
         RelatedUserstoryRowCtrl.epic = Immutable.fromJS({
-            id: 123
+            id: 123,
         });
         RelatedUserstoryRowCtrl.userstory = Immutable.fromJS({
             subject: "Deleting",
-            id: 124
+            id: 124,
         });
 
         RelatedUserstoryRowCtrl.loadRelatedUserstories = sinon.stub();
 
-        let askResponse = {
-            finish: sinon.spy()
+        const askResponse = {
+            finish: sinon.spy(),
         };
 
         mocks.translate.instant.withArgs("EPIC.TITLE_LIGHTBOX_UNLINK_RELATED_USERSTORY").returns("title");
@@ -180,7 +180,7 @@ describe("RelatedUserstoryRow", function() {
         mocks.tgConfirm.askOnDelete = sinon.stub();
         mocks.tgConfirm.askOnDelete.withArgs("title", "message").promise().resolve(askResponse);
 
-        let promise = mocks.tgResources.epics.deleteRelatedUserstory.withArgs(123, 124).promise().reject(new Error("error"));
+        const promise = mocks.tgResources.epics.deleteRelatedUserstory.withArgs(123, 124).promise().reject(new Error("error"));
         return RelatedUserstoryRowCtrl.onDeleteRelatedUserstory().then(function() {
             expect(RelatedUserstoryRowCtrl.loadRelatedUserstories).to.not.have.been.called;
             expect(askResponse.finish).have.been.calledWith(false);

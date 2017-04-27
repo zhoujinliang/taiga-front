@@ -17,15 +17,15 @@
  * File: user-timeline-item-title.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-declare var sinon:any;
-import * as Immutable from "immutable"
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+declare var sinon: any;
+import * as Immutable from "immutable";
 
 describe("tgUserTimelineItemTitle", function() {
     let event, type;
@@ -33,30 +33,30 @@ describe("tgUserTimelineItemTitle", function() {
     let mockTranslate = null;
     let timeline = (event = (type = null));
 
-    let _mockTranslate = () =>
+    const _mockTranslate = () =>
         _provide(function(provide) {
             mockTranslate = {
-                instant: sinon.stub()
+                instant: sinon.stub(),
             };
 
             return provide.value("$translate", mockTranslate);
         })
     ;
 
-    var _provide = callback =>
+    const _provide = (callback) =>
         module(function($provide) {
             callback($provide);
             return null;
         })
     ;
 
-    let _mocks = () => _mockTranslate();
+    const _mocks = () => _mockTranslate();
 
-    let _inject = () =>
-        inject(_tgUserTimelineItemTitle_ => mySvc = _tgUserTimelineItemTitle_)
+    const _inject = () =>
+        inject((_tgUserTimelineItemTitle_) => mySvc = _tgUserTimelineItemTitle_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -70,29 +70,29 @@ describe("tgUserTimelineItemTitle", function() {
         timeline = Immutable.fromJS({
             data: {
                 user: {
-                    username: 'xx',
-                    name: 'oo',
-                    is_profile_visible: true
-                }
-            }
+                    username: "xx",
+                    name: "oo",
+                    is_profile_visible: true,
+                },
+            },
         });
 
         event = {};
 
         type = {
-            key: 'TITLE_USER_NAME',
-            translate_params: ['username']
+            key: "TITLE_USER_NAME",
+            translate_params: ["username"],
         };
 
         mockTranslate.instant
-            .withArgs('COMMON.SEE_USER_PROFILE', {username: timeline.getIn(['data', 'user', 'username'])})
-            .returns('user-param');
+            .withArgs("COMMON.SEE_USER_PROFILE", {username: timeline.getIn(["data", "user", "username"])})
+            .returns("user-param");
 
         mockTranslate.instant
-            .withArgs('TITLE_USER_NAME', {username: '{{username}}'})
-            .returns('title_ok');
+            .withArgs("TITLE_USER_NAME", {username: "{{username}}"})
+            .returns("title_ok");
 
-        let title = mySvc.getTitle(timeline, event, type);
+        const title = mySvc.getTitle(timeline, event, type);
 
         return expect(title).to.be.equal("title_ok");
     });
@@ -101,29 +101,29 @@ describe("tgUserTimelineItemTitle", function() {
         timeline = Immutable.fromJS({
             data: {
                 user: {
-                    username: 'xx',
-                    name: 'oo',
-                    is_profile_visible: false
-                }
-            }
+                    username: "xx",
+                    name: "oo",
+                    is_profile_visible: false,
+                },
+            },
         });
 
         event = {};
 
         type = {
-            key: 'TITLE_USER_NAME',
-            translate_params: ['username']
+            key: "TITLE_USER_NAME",
+            translate_params: ["username"],
         };
 
         mockTranslate.instant
-            .withArgs('COMMON.SEE_USER_PROFILE', {username: timeline.getIn(['data', 'user', 'username'])})
-            .returns('user-param');
+            .withArgs("COMMON.SEE_USER_PROFILE", {username: timeline.getIn(["data", "user", "username"])})
+            .returns("user-param");
 
         mockTranslate.instant
-            .withArgs('TITLE_USER_NAME', {username: '{{username}}'})
-            .returns('title_ok');
+            .withArgs("TITLE_USER_NAME", {username: "{{username}}"})
+            .returns("title_ok");
 
-        let title = mySvc.getTitle(timeline, event, type);
+        const title = mySvc.getTitle(timeline, event, type);
 
         return expect(title).to.be.equal("title_ok");
     });
@@ -132,27 +132,27 @@ describe("tgUserTimelineItemTitle", function() {
         timeline = Immutable.fromJS({
             data: {
                 value_diff: {
-                    key: 'status'
-                }
-            }
+                    key: "status",
+                },
+            },
         });
 
         event = {};
 
         type = {
-            key: 'TITLE_FIELD',
-            translate_params: ['field_name']
+            key: "TITLE_FIELD",
+            translate_params: ["field_name"],
         };
 
         mockTranslate.instant
-            .withArgs('COMMON.FIELDS.STATUS')
-            .returns('field-params');
+            .withArgs("COMMON.FIELDS.STATUS")
+            .returns("field-params");
 
         mockTranslate.instant
-            .withArgs('TITLE_FIELD', {field_name: '{{field_name}}'})
-            .returns('title_ok');
+            .withArgs("TITLE_FIELD", {field_name: "{{field_name}}"})
+            .returns("title_ok");
 
-        let title = mySvc.getTitle(timeline, event, type);
+        const title = mySvc.getTitle(timeline, event, type);
 
         return expect(title).to.be.equal("title_ok");
     });
@@ -161,24 +161,24 @@ describe("tgUserTimelineItemTitle", function() {
         timeline = Immutable.fromJS({
             data: {
                 value_diff: {
-                    key: 'status',
-                    value: ['old', 'new']
-                }
-            }
+                    key: "status",
+                    value: ["old", "new"],
+                },
+            },
         });
 
         event = {};
 
         type = {
-            key: 'NEW_VALUE',
-            translate_params: ['new_value']
+            key: "NEW_VALUE",
+            translate_params: ["new_value"],
         };
 
         mockTranslate.instant
-            .withArgs('NEW_VALUE', {new_value: '{{new_value}}'})
-            .returns('new_value_ok');
+            .withArgs("NEW_VALUE", {new_value: "{{new_value}}"})
+            .returns("new_value_ok");
 
-        let title = mySvc.getTitle(timeline, event, type);
+        const title = mySvc.getTitle(timeline, event, type);
 
         return expect(title).to.be.equal("new_value_ok");
     });
@@ -187,23 +187,23 @@ describe("tgUserTimelineItemTitle", function() {
         timeline = Immutable.fromJS({
             data: {
                 project: {
-                    name: "project_name"
-                }
-            }
+                    name: "project_name",
+                },
+            },
         });
 
         event = {};
 
         type = {
-            key: 'TITLE_PROJECT',
-            translate_params: ['project_name']
+            key: "TITLE_PROJECT",
+            translate_params: ["project_name"],
         };
 
         mockTranslate.instant
-            .withArgs('TITLE_PROJECT', {project_name: '{{project_name}}'})
-            .returns('title_ok');
+            .withArgs("TITLE_PROJECT", {project_name: "{{project_name}}"})
+            .returns("title_ok");
 
-        let title = mySvc.getTitle(timeline, event, type);
+        const title = mySvc.getTitle(timeline, event, type);
 
         return expect(title).to.be.equal("title_ok");
     });
@@ -212,25 +212,25 @@ describe("tgUserTimelineItemTitle", function() {
         timeline = Immutable.fromJS({
             data: {
                 milestone: {
-                    name: "milestone_name"
-                }
-            }
+                    name: "milestone_name",
+                },
+            },
         });
 
         event = {};
 
         type = {
-            key: 'TITLE_MILESTONE',
-            translate_params: ['sprint_name']
+            key: "TITLE_MILESTONE",
+            translate_params: ["sprint_name"],
         };
 
-        let milestoneparam = sinon.match((value => value.sprint_name === '<a tg-nav="project-taskboard:project=timeline.getIn([\'data\', \'project\', \'slug\']),sprint=timeline.getIn([\'data\', \'milestone\', \'slug\'])" title="milestone_name">milestone_name</a>'), "milestoneparam");
+        const milestoneparam = sinon.match(((value) => value.sprint_name === '<a tg-nav="project-taskboard:project=timeline.getIn([\'data\', \'project\', \'slug\']),sprint=timeline.getIn([\'data\', \'milestone\', \'slug\'])" title="milestone_name">milestone_name</a>'), "milestoneparam");
 
         mockTranslate.instant
-            .withArgs('TITLE_MILESTONE', {sprint_name: '{{sprint_name}}'})
-            .returns('title_ok');
+            .withArgs("TITLE_MILESTONE", {sprint_name: "{{sprint_name}}"})
+            .returns("title_ok");
 
-        let title = mySvc.getTitle(timeline, event, type);
+        const title = mySvc.getTitle(timeline, event, type);
 
         return expect(title).to.be.equal("title_ok");
     });
@@ -239,26 +239,26 @@ describe("tgUserTimelineItemTitle", function() {
         timeline = Immutable.fromJS({
             data: {
                 issue: {
-                    ref: '123',
-                    subject: 'subject'
-                }
-            }
+                    ref: "123",
+                    subject: "subject",
+                },
+            },
         });
 
         event = {
-            obj: 'issue',
+            obj: "issue",
         };
 
         type = {
-            key: 'TITLE_OBJ',
-            translate_params: ['obj_name']
+            key: "TITLE_OBJ",
+            translate_params: ["obj_name"],
         };
 
         mockTranslate.instant
-            .withArgs('TITLE_OBJ', {obj_name: '{{obj_name}}'})
-            .returns('title_ok');
+            .withArgs("TITLE_OBJ", {obj_name: "{{obj_name}}"})
+            .returns("title_ok");
 
-        let title = mySvc.getTitle(timeline, event, type);
+        const title = mySvc.getTitle(timeline, event, type);
 
         return expect(title).to.be.equal("title_ok");
     });
@@ -267,25 +267,25 @@ describe("tgUserTimelineItemTitle", function() {
         timeline = Immutable.fromJS({
             data: {
                 wikipage: {
-                    slug: 'slug-wiki',
-                }
-            }
+                    slug: "slug-wiki",
+                },
+            },
         });
 
         event = {
-            obj: 'wikipage',
+            obj: "wikipage",
         };
 
         type = {
-            key: 'TITLE_OBJ',
-            translate_params: ['obj_name']
+            key: "TITLE_OBJ",
+            translate_params: ["obj_name"],
         };
 
         mockTranslate.instant
-            .withArgs('TITLE_OBJ', {obj_name: '{{obj_name}}'})
-            .returns('title_ok');
+            .withArgs("TITLE_OBJ", {obj_name: "{{obj_name}}"})
+            .returns("title_ok");
 
-        let title = mySvc.getTitle(timeline, event, type);
+        const title = mySvc.getTitle(timeline, event, type);
 
         return expect(title).to.be.equal("title_ok");
     });
@@ -294,27 +294,27 @@ describe("tgUserTimelineItemTitle", function() {
         timeline = Immutable.fromJS({
             data: {
                 milestone: {
-                    name: 'milestone_name',
-                }
-            }
+                    name: "milestone_name",
+                },
+            },
         });
 
         event = {
-            obj: 'milestone',
+            obj: "milestone",
         };
 
         type = {
-            key: 'TITLE_OBJ',
-            translate_params: ['obj_name']
+            key: "TITLE_OBJ",
+            translate_params: ["obj_name"],
         };
 
-        let objparam = sinon.match((value => value.obj_name === '<a tg-nav="project-taskboard:project=timeline.getIn([\'data\', \'project\', \'slug\']),sprint=timeline.getIn([\'obj\', \'slug\'])" title="milestone_name">milestone_name</a>'), "objparam");
+        const objparam = sinon.match(((value) => value.obj_name === '<a tg-nav="project-taskboard:project=timeline.getIn([\'data\', \'project\', \'slug\']),sprint=timeline.getIn([\'obj\', \'slug\'])" title="milestone_name">milestone_name</a>'), "objparam");
 
         mockTranslate.instant
-            .withArgs('TITLE_OBJ', {obj_name: '{{obj_name}}'})
-            .returns('title_ok');
+            .withArgs("TITLE_OBJ", {obj_name: "{{obj_name}}"})
+            .returns("title_ok");
 
-        let title = mySvc.getTitle(timeline, event, type);
+        const title = mySvc.getTitle(timeline, event, type);
 
         return expect(title).to.be.equal("title_ok");
     });
@@ -323,31 +323,31 @@ describe("tgUserTimelineItemTitle", function() {
         timeline = Immutable.fromJS({
             data: {
                 task: {
-                    name: 'task_name',
+                    name: "task_name",
                     userstory: {
                         ref: 2,
-                        subject: 'subject'
-                    }
-                }
-            }
+                        subject: "subject",
+                    },
+                },
+            },
         });
 
         event = {
-            obj: 'task',
+            obj: "task",
         };
 
         type = {
-            key: 'TITLE_OBJ',
-            translate_params: ['us_name']
+            key: "TITLE_OBJ",
+            translate_params: ["us_name"],
         };
 
-        let objparam = sinon.match((value => value.us_name === '<a tg-nav="project-userstories-detail:project=timeline.getIn([\'data\', \'project\', \'slug\']),ref=timeline.getIn([\'obj\', \'userstory\', \'ref\'])" title="#2 subject">#2 subject</a>'), "objparam");
+        const objparam = sinon.match(((value) => value.us_name === '<a tg-nav="project-userstories-detail:project=timeline.getIn([\'data\', \'project\', \'slug\']),ref=timeline.getIn([\'obj\', \'userstory\', \'ref\'])" title="#2 subject">#2 subject</a>'), "objparam");
 
         mockTranslate.instant
-            .withArgs('TITLE_OBJ', {us_name: '{{us_name}}'})
-            .returns('title_ok');
+            .withArgs("TITLE_OBJ", {us_name: "{{us_name}}"})
+            .returns("title_ok");
 
-        let title = mySvc.getTitle(timeline, event, type);
+        const title = mySvc.getTitle(timeline, event, type);
 
         return expect(title).to.be.equal("title_ok");
     });

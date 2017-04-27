@@ -17,22 +17,22 @@
  * File: attchment.controller.coffee
  */
 
-import * as angular from "angular"
-import * as moment from "moment"
+import * as angular from "angular";
+import * as moment from "moment";
 
 export class AttachmentController {
-    attachmentsService:any
-    translate:any
-    form:any
-    attachment:any
-    title:any
-    onUpdate:any
-    onDelete:any
+    attachmentsService: any;
+    translate: any;
+    form: any;
+    attachment: any;
+    title: any;
+    onUpdate: any;
+    onDelete: any;
 
     static initClass() {
         this.$inject = [
-            'tgAttachmentsService',
-            '$translate'
+            "tgAttachmentsService",
+            "$translate",
         ];
     }
 
@@ -40,17 +40,17 @@ export class AttachmentController {
         this.attachmentsService = attachmentsService;
         this.translate = translate;
         this.form = {};
-        this.form.description = this.attachment.getIn(['file', 'description']);
-        this.form.is_deprecated = this.attachment.get(['file', 'is_deprecated']);
+        this.form.description = this.attachment.getIn(["file", "description"]);
+        this.form.is_deprecated = this.attachment.get(["file", "is_deprecated"]);
 
         this.title = this.translate.instant("ATTACHMENT.TITLE", {
-            fileName: this.attachment.get('name'),
-            date: moment(this.attachment.get('created_date')).format(this.translate.instant("ATTACHMENT.DATE"))
+            fileName: this.attachment.get("name"),
+            date: moment(this.attachment.get("created_date")).format(this.translate.instant("ATTACHMENT.DATE")),
         });
     }
 
     editMode(mode) {
-        let attachment = this.attachment.set('editable', mode);
+        const attachment = this.attachment.set("editable", mode);
         return this.onUpdate({attachment});
     }
 
@@ -59,18 +59,18 @@ export class AttachmentController {
     }
 
     save() {
-        let attachment = this.attachment.set('loading', true);
+        let attachment = this.attachment.set("loading", true);
 
         this.onUpdate({attachment});
 
         attachment = this.attachment.merge({
             editable: false,
-            loading: false
+            loading: false,
         });
 
-        attachment = attachment.mergeIn(['file'], {
+        attachment = attachment.mergeIn(["file"], {
             description: this.form.description,
-            is_deprecated: !!this.form.is_deprecated
+            is_deprecated: !!this.form.is_deprecated,
         });
 
         return this.onUpdate({attachment});

@@ -17,48 +17,48 @@
  * File: home-project-list-directive.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("homeProjectListDirective", function() {
     let compile, provide;
     let scope = (compile = (provide = null));
-    let mocks:any = {};
-    let template = "<div tg-home-project-list></div>";
-    let projects = Immutable.fromJS({
+    const mocks: any = {};
+    const template = "<div tg-home-project-list></div>";
+    const projects = Immutable.fromJS({
         recents: [
             {id: 1},
             {id: 2},
-            {id: 3}
-        ]
+            {id: 3},
+        ],
     });
 
-    let createDirective = function() {
-        let elm = compile(template)(scope);
+    const createDirective = function() {
+        const elm = compile(template)(scope);
         return elm;
     };
 
-    let _mockTgCurrentUserService = function() {
+    const _mockTgCurrentUserService = function() {
         mocks.currentUserService = {
-            projects
+            projects,
         };
 
         return provide.value("tgCurrentUserService", mocks.currentUserService);
     };
 
-    let _mockTranslateFilter = function() {
-        let mockTranslateFilter = value => value;
+    const _mockTranslateFilter = function() {
+        const mockTranslateFilter = (value) => value;
         return provide.value("translateFilter", mockTranslateFilter);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgCurrentUserService();
@@ -81,16 +81,16 @@ describe("homeProjectListDirective", function() {
 
         return recents = Immutable.fromJS([
             {
-                id:1
+                id: 1,
             },
             {
-                id: 2
-            }
+                id: 2,
+            },
         ]);
     });
 
     return it("home project list directive scope content", function() {
-        let elm = createDirective();
+        const elm = createDirective();
         scope.$apply();
         return expect(elm.isolateScope().vm.projects.size).to.be.equal(3);
     });

@@ -17,32 +17,32 @@
  * File: discover-home-order-by.controller.coffee
  */
 
-import {TranslateService} from "@ngx-translate/core"
-import {Component, OnInit, Output, Input, EventEmitter} from "@angular/core"
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
-    selector: 'tg-discover-home-order-by',
-    template: require('./discover-home-order-by.jade')()
+    selector: "tg-discover-home-order-by",
+    template: require("./discover-home-order-by.jade")(),
 })
 export class DiscoverHomeOrderBy implements OnInit{
     @Output() order: EventEmitter<any>;
     currentOrderBy: any;
-    isOpen:boolean;
-    texts:any
+    isOpen: boolean;
+    texts: any;
 
     constructor(private translate: TranslateService) {
         this.order = new EventEmitter();
         this.texts = {
-            week: this.translate.instant('DISCOVER.FILTERS.WEEK'),
-            month: this.translate.instant('DISCOVER.FILTERS.MONTH'),
-            year: this.translate.instant('DISCOVER.FILTERS.YEAR'),
-            all: this.translate.instant('DISCOVER.FILTERS.ALL_TIME')
+            week: this.translate.instant("DISCOVER.FILTERS.WEEK"),
+            month: this.translate.instant("DISCOVER.FILTERS.MONTH"),
+            year: this.translate.instant("DISCOVER.FILTERS.YEAR"),
+            all: this.translate.instant("DISCOVER.FILTERS.ALL_TIME"),
         };
     }
 
     ngOnInit() {
         this.isOpen = false;
-        this.currentOrderBy = "week"
+        this.currentOrderBy = "week";
     }
 
     currentText() {

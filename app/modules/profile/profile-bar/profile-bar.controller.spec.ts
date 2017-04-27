@@ -17,32 +17,31 @@
  * File: profile-bar.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ProfileBar", function() {
     let $controller = null;
     let provide = null;
     let $rootScope = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockUserService = function() {
+    const _mockUserService = function() {
         mocks.userService = {
-            getStats:  sinon.stub()
+            getStats:  sinon.stub(),
         };
 
         return provide.value("tgUserService", mocks.userService);
     };
 
-
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockUserService();
@@ -51,7 +50,7 @@ describe("ProfileBar", function() {
         })
     ;
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;
@@ -65,25 +64,25 @@ describe("ProfileBar", function() {
     });
 
     return it("user stats filled", function(done) {
-        let userId = 2;
-        let stats = Immutable.fromJS([
+        const userId = 2;
+        const stats = Immutable.fromJS([
             {id: 1},
             {id: 2},
-            {id: 3}
+            {id: 3},
         ]);
 
         mocks.userService.getStats.withArgs(userId).promise().resolve(stats);
 
-        let $scope = $rootScope.$new;
+        const $scope = $rootScope.$new;
 
-        let ctrl = $controller("ProfileBar", $scope, {
-            user: Immutable.fromJS({id: userId})
+        const ctrl = $controller("ProfileBar", $scope, {
+            user: Immutable.fromJS({id: userId}),
         });
 
         return setTimeout(( function() {
             expect(ctrl.stats.toJS()).to.be.eql(stats.toJS());
             return done();
-        })
+        }),
         );
     });
 });

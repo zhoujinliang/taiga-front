@@ -17,15 +17,15 @@
  * File: home.module.coffee
  */
 
-import * as angular from "angular"
-import {module} from "../../ts/modules/admin"
+import * as angular from "angular";
+import {module} from "../../ts/modules/admin";
 
-import {InviteMembersFormController} from "./invite-members-form/invite-members-form.controller"
-import {InviteMembersFormDirective} from "./invite-members-form/invite-members-form.directive"
-import {AddMembersController} from "./lightbox-add-members.controller"
-import {LightboxAddMembersDirective} from "./lightbox-add-members.directive"
-import {SuggestAddMembersController} from "./suggest-add-members/suggest-add-members.controller"
-import {SuggestAddMembersDirective} from "./suggest-add-members/suggest-add-members.directive"
+import {InviteMembersFormController} from "./invite-members-form/invite-members-form.controller";
+import {InviteMembersFormDirective} from "./invite-members-form/invite-members-form.directive";
+import {AddMembersController} from "./lightbox-add-members.controller";
+import {LightboxAddMembersDirective} from "./lightbox-add-members.directive";
+import {SuggestAddMembersController} from "./suggest-add-members/suggest-add-members.controller";
+import {SuggestAddMembersDirective} from "./suggest-add-members/suggest-add-members.directive";
 
 module.controller("InviteMembersFormCtrl", InviteMembersFormController);
 module.directive("tgInviteMembersForm", InviteMembersFormDirective);

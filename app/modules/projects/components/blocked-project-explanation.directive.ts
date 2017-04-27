@@ -19,6 +19,6 @@
 
 export let BlockedProjectExplanationDirective = () =>
     ({
-        templateUrl: "projects/project/blocked-project-explanation.html"
+        templateUrl: "projects/project/blocked-project-explanation.html",
     })
 ;

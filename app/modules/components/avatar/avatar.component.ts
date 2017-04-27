@@ -17,9 +17,9 @@
  * File: avatar.directive.coffee
  */
 
-import {AvatarService} from "./avatar.service"
-import {Component, Input, OnInit} from "@angular/core"
-import * as Immutable from "immutable"
+import {Component, Input, OnInit} from "@angular/core";
+import * as Immutable from "immutable";
+import {AvatarService} from "./avatar.service";
 
 @Component({
     selector: "tg-avatar",
@@ -27,7 +27,7 @@ import * as Immutable from "immutable"
                     [style.background]="avatar.bg"
                     [attr.alt]="fullname"
                     [attr.title]="fullname" />
-    `
+    `,
 })
 export class Avatar implements OnInit{
     @Input() user: any;
@@ -43,7 +43,7 @@ export class Avatar implements OnInit{
         } else if (this.user) {
             this.fullname = this.user.full_name_display;
         } else {
-            this.fullname = ""
+            this.fullname = "";
         }
     }
 }

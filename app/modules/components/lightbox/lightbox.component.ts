@@ -1,13 +1,13 @@
 import {Component, Input} from "@angular/core";
-import {Observable, Subscription} from "rxjs";
 import { Store } from "@ngrx/store";
+import {Observable, Subscription} from "rxjs";
 import { IState } from "../../../app.store";
 
 @Component({
     selector: "tg-lightbox",
     template: `<div class="lightbox" [class.open]="isOpen|async">
                  <ng-content></ng-content>
-               </div>`
+               </div>`,
 })
 export class Lightbox {
     @Input() key: string;

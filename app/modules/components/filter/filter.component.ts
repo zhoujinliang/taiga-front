@@ -17,9 +17,9 @@
  * File: filter.controller.coffee
  */
 
-import * as _ from "lodash";
-import {Component, Output, EventEmitter, Input} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {Store} from "@ngrx/store";
+import * as _ from "lodash";
 import {IState} from "../../../app.store";
 
 @Component({
@@ -43,7 +43,7 @@ export class Filter {
 
     selectCategory(category) {
         if (this.selectedCategory === category) {
-            this.selectedCategory = ""
+            this.selectedCategory = "";
         } else {
             this.selectedCategory = category;
         }

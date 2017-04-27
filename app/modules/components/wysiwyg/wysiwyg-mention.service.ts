@@ -22,24 +22,24 @@
  * File: modules/components/wysiwyg/wysiwyg-mention.service.coffee
  */
 
-import {slugify} from "../../../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
-import * as Promise from "bluebird"
+import * as angular from "angular";
+import * as Promise from "bluebird";
+import * as _ from "lodash";
+import {slugify} from "../../../libs/utils";
 
 export class WysiwygMentionService {
-    projectService:any
-    wysiwygService:any
-    navurls:any
-    rs:any
-    cancelablePromise:any
+    projectService: any;
+    wysiwygService: any;
+    navurls: any;
+    rs: any;
+    cancelablePromise: any;
 
     static initClass() {
         this.$inject = [
             "tgProjectService",
             "tgWysiwygService",
             "$tgNavUrls",
-            "$tgResources"
+            "$tgResources",
         ];
     }
 
@@ -59,10 +59,10 @@ export class WysiwygMentionService {
     }
 
     searchUser(term, cb) {
-        let searchProps = ['username', 'full_name', 'full_name_display'];
+        const searchProps = ["username", "full_name", "full_name_display"];
 
-        let users = this.projectService.project.toJS().members.filter(user => {
-            for (let prop of searchProps) {
+        let users = this.projectService.project.toJS().members.filter((user) => {
+            for (const prop of searchProps) {
                 if (slugify(user[prop]).indexOf(term) >= 0) {
                     return true;
                 } else if (user[prop].indexOf(term) >= 0) {
@@ -73,10 +73,10 @@ export class WysiwygMentionService {
             return false;
         });
 
-        users = users.slice(0, 10).map(it => {
-            it.url = this.navurls.resolve('user-profile', {
-                project: this.projectService.project.get('slug'),
-                username: it.username
+        users = users.slice(0, 10).map((it) => {
+            it.url = this.navurls.resolve("user-profile", {
+                project: this.projectService.project.get("slug"),
+                username: it.username,
             });
 
             return it;
@@ -89,18 +89,18 @@ export class WysiwygMentionService {
         return new Promise((function(resolve, reject) {
             term = slugify(term);
 
-            let searchTypes = ['issues', 'tasks', 'userstories'];
+            const searchTypes = ["issues", "tasks", "userstories"];
 
-            let urls = {
+            const urls = {
                 issues: "project-issues-detail",
                 tasks: "project-tasks-detail",
-                userstories: "project-userstories-detail"
+                userstories: "project-userstories-detail",
             };
 
-            let searchProps = ['ref', 'subject'];
+            const searchProps = ["ref", "subject"];
 
-            let filter = item => {
-                for (let prop of searchProps) {
+            const filter = (item) => {
+                for (const prop of searchProps) {
                     if (slugify(item[prop]).indexOf(term) >= 0) {
                         return true;
                     }
@@ -110,21 +110,21 @@ export class WysiwygMentionService {
 
             if (this.cancelablePromise) { this.cancelablePromise.abort(); }
 
-            this.cancelablePromise = this.rs.search.do(this.projectService.project.get('id'), term);
+            this.cancelablePromise = this.rs.search.do(this.projectService.project.get("id"), term);
 
-            return this.cancelablePromise.then(res => {
+            return this.cancelablePromise.then((res) => {
                 // ignore wikipages if they're the only results. can't exclude them in search
                 if ((res.count < 1) || (res.count === res.wikipages.length)) {
                     return resolve([]);
                 } else {
                     let result = [];
-                    for (var type of searchTypes) {
+                    for (const type of searchTypes) {
                         if (res[type] && (res[type].length > 0)) {
                             let items = res[type].filter(filter);
-                            items = items.map(it => {
+                            items = items.map((it) => {
                                 it.url = this.navurls.resolve(urls[type], {
-                                    project: this.projectService.project.get('slug'),
-                                    ref: it.ref
+                                    project: this.projectService.project.get("slug"),
+                                    ref: it.ref,
                                 });
 
                                 return it;
@@ -142,15 +142,14 @@ export class WysiwygMentionService {
         }.bind(this)));
     }
 
-
     search(mention) {
         return new Promise((function(resolve) {
-            if ('#'.indexOf(mention[0]) !== -1) {
-                return this.searchItem(mention.replace('#', '')).then(resolve);
-            } else if ('@'.indexOf(mention[0]) !== -1) {
-                return this.searchUser(mention.replace('@', ''), resolve);
-            } else if (':'.indexOf(mention[0]) !== -1) {
-                return this.searchEmoji(mention.replace(':', ''), resolve);
+            if ("#".indexOf(mention[0]) !== -1) {
+                return this.searchItem(mention.replace("#", "")).then(resolve);
+            } else if ("@".indexOf(mention[0]) !== -1) {
+                return this.searchUser(mention.replace("@", ""), resolve);
+            } else if (":".indexOf(mention[0]) !== -1) {
+                return this.searchEmoji(mention.replace(":", ""), resolve);
             }
         }.bind(this)));
     }

@@ -17,34 +17,34 @@
  * File: watch-button.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("WatchButton", function() {
     let provide = null;
     let $controller = null;
     let $rootScope = null;
-    let mocks:any = {};
+    let mocks: any = {};
 
-    let _mockCurrentUser = function() {
+    const _mockCurrentUser = function() {
         mocks.currentUser = {
-            getUser: sinon.stub()
+            getUser: sinon.stub(),
         };
 
         return provide.value("tgCurrentUserService", mocks.currentUser);
     };
 
-    let _mocks = function() {
+    const _mocks = function() {
         mocks = {
             onWatch: sinon.stub(),
-            onUnwatch: sinon.stub()
+            onUnwatch: sinon.stub(),
         };
 
         return module(function($provide) {
@@ -54,14 +54,14 @@ describe("WatchButton", function() {
         });
     };
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;
         })
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -72,18 +72,17 @@ describe("WatchButton", function() {
     });
 
     it("watch", function(done) {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
-        mocks.onWatch = (<any>sinon.stub()).promise();
+        mocks.onWatch = (sinon.stub() as any).promise();
 
-        let ctrl = $controller("WatchButton", $scope, {
+        const ctrl = $controller("WatchButton", $scope, {
             item: {is_watcher: false},
             onWatch: mocks.onWatch,
-            onUnwatch: mocks.onUnwatch
+            onUnwatch: mocks.onUnwatch,
         });
 
-
-        let promise = ctrl.toggleWatch();
+        const promise = ctrl.toggleWatch();
 
         expect(ctrl.loading).to.be.true;
 
@@ -98,17 +97,17 @@ describe("WatchButton", function() {
     });
 
     it("unwatch", function(done) {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
-        mocks.onUnwatch = (<any>sinon.stub()).promise();
+        mocks.onUnwatch = (sinon.stub() as any).promise();
 
-        let ctrl = $controller("WatchButton", $scope, {
+        const ctrl = $controller("WatchButton", $scope, {
             item: {is_watcher: true},
             onWatch: mocks.onWatch,
-            onUnwatch: mocks.onUnwatch
+            onUnwatch: mocks.onUnwatch,
         });
 
-        let promise = ctrl.toggleWatch();
+        const promise = ctrl.toggleWatch();
 
         expect(ctrl.loading).to.be.true;
 
@@ -122,25 +121,24 @@ describe("WatchButton", function() {
         });
     });
 
-
     return it("get permissions", function() {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
-        let ctrl = $controller("WatchButton", $scope, {
-            item: {_name: 'tasks'}
+        const ctrl = $controller("WatchButton", $scope, {
+            item: {_name: "tasks"},
         });
 
         let perm = ctrl.getPerms();
-        expect(perm).to.be.equal('modify_task');
+        expect(perm).to.be.equal("modify_task");
 
-        ctrl.item = {_name: 'issues'};
-
-        perm = ctrl.getPerms();
-        expect(perm).to.be.equal('modify_issue');
-
-        ctrl.item = {_name: 'userstories'};
+        ctrl.item = {_name: "issues"};
 
         perm = ctrl.getPerms();
-        return expect(perm).to.be.equal('modify_us');
+        expect(perm).to.be.equal("modify_issue");
+
+        ctrl.item = {_name: "userstories"};
+
+        perm = ctrl.getPerms();
+        return expect(perm).to.be.equal("modify_us");
     });
 });

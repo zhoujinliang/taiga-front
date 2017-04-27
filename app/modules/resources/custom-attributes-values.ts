@@ -22,20 +22,20 @@
  * File: modules/resources/custom-field-values.coffee
  */
 
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
+import {Injectable} from "@angular/core";
+import {RepositoryService} from "../../ts/modules/base/repository";
 
 @Injectable()
 export class CustomAttributesValuesResource {
     constructor(private repo: RepositoryService) {}
 
-    _get(objectId:number, resource:string) {
+    _get(objectId: number, resource: string) {
         return this.repo.queryOne(resource, objectId);
     }
 
     get_epic(objectId) {
         return this._get(objectId, "custom-attributes-values/epic");
-    };
+    }
 
     get_userstory(objectId) {
         return this._get(objectId, "custom-attributes-values/userstory");
@@ -48,4 +48,4 @@ export class CustomAttributesValuesResource {
     get_issue(objectId) {
         return this._get(objectId, "custom-attributes-values/issue");
     }
-};
+}

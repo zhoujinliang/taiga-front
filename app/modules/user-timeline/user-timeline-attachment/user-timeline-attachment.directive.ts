@@ -17,20 +17,20 @@
  * File: user-timeline-attachment.directive.coffee
  */
 
-import * as _ from "lodash"
+import * as _ from "lodash";
 
 export let UserTimelineAttachmentDirective = function(template, $compile) {
-    let validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
+    const validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
 
-    let isImage = function(url) {
+    const isImage = function(url) {
         url = url.toLowerCase();
 
-        return _.some(validFileExtensions, extension => url.indexOf(extension, url - extension.length) !== -1);
+        return _.some(validFileExtensions, (extension) => url.indexOf(extension, url - extension.length) !== -1);
     };
 
-    let link = function(scope, el) {
+    const link = function(scope, el) {
         let templateHtml;
-        let is_image = isImage(scope.attachment.get('url'));
+        const is_image = isImage(scope.attachment.get("url"));
 
         if (is_image) {
             templateHtml = template.get("user-timeline/user-timeline-attachment/user-timeline-attachment-image.html");
@@ -47,12 +47,12 @@ export let UserTimelineAttachmentDirective = function(template, $compile) {
     return {
         link,
         scope: {
-            attachment: "=tgUserTimelineAttachment"
-        }
+            attachment: "=tgUserTimelineAttachment",
+        },
     };
 };
 
 UserTimelineAttachmentDirective.$inject = [
     "$tgTemplate",
-    "$compile"
+    "$compile",
 ];

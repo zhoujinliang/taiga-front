@@ -1,13 +1,13 @@
-import {Component, OnInit, Output, EventEmitter} from "@angular/core"
-import {ActivatedRoute} from "@angular/router"
-import { FormGroup, FormBuilder, Validators } from "@angular/forms"
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {ActivatedRoute} from "@angular/router";
 
-import {LoginData} from "../auth.model"
 import { ConfigurationService } from "../../../ts/modules/base/conf";
+import {LoginData} from "../auth.model";
 
 @Component({
     selector: "tg-forgot-password-form",
-    template: require("./forgot-password-form.jade")()
+    template: require("./forgot-password-form.jade")(),
 })
 export class ForgotPasswordForm implements OnInit {
     @Output() submit: EventEmitter<LoginData>;
@@ -19,18 +19,18 @@ export class ForgotPasswordForm implements OnInit {
                 private activeRoute: ActivatedRoute) {
         this.submit = new EventEmitter();
         this.forgotPasswordForm = this.fb.group({
-            "username": ['', Validators.required],
-        })
+            username: ["", Validators.required],
+        });
         console.log(this.forgotPasswordForm);
     }
 
     ngOnInit() {
         this.activeRoute.queryParams.subscribe((params) => {
-            this.queryParams = params
-        })
+            this.queryParams = params;
+        });
     }
 
-    onSubmit():boolean {
+    onSubmit(): boolean {
         this.submit.emit(this.forgotPasswordForm.value.username);
         return false;
     }

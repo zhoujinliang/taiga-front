@@ -17,25 +17,25 @@
  * File: profile.module.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
-import {ProfileBarController} from "./profile-bar/profile-bar.controller"
-import {ProfileBarDirective} from "./profile-bar/profile-bar.directive"
-import {ProfileContactsController} from "./profile-contacts/profile-contacts.controller"
-import {ProfileContactsDirective } from "./profile-contacts/profile-contacts.directive"
-import {ProfileController} from "./profile.controller"
-import {FavItemDirective} from "./profile-favs/items/items.directive"
-import {ProfileLikedController, ProfileVotedController, ProfileWatchedController} from "./profile-favs/profile-favs.controller"
-import {ProfileVotedDirective, ProfileLikedDirective, ProfileWatchedDirective} from "./profile-favs/profile-favs.directive"
-import {ProfileHintsController} from "./profile-hints/profile-hints.controller"
-import {ProfileHintsDirective} from "./profile-hints/profile-hints.directive"
-import {ProfileProjectsController} from "./profile-projects/profile-projects.controller"
-import {ProfileProjectsDirective } from "./profile-projects/profile-projects.directive"
-import {ProfileTabDirective} from "./profile-tab/profile-tab.directive"
-import {ProfileTabsController} from "./profile-tabs/profile-tabs.controller"
-import {ProfileTabsDirective} from "./profile-tabs/profile-tabs.directive"
+import {ProfileBarController} from "./profile-bar/profile-bar.controller";
+import {ProfileBarDirective} from "./profile-bar/profile-bar.directive";
+import {ProfileContactsController} from "./profile-contacts/profile-contacts.controller";
+import {ProfileContactsDirective } from "./profile-contacts/profile-contacts.directive";
+import {FavItemDirective} from "./profile-favs/items/items.directive";
+import {ProfileLikedController, ProfileVotedController, ProfileWatchedController} from "./profile-favs/profile-favs.controller";
+import {ProfileLikedDirective, ProfileVotedDirective, ProfileWatchedDirective} from "./profile-favs/profile-favs.directive";
+import {ProfileHintsController} from "./profile-hints/profile-hints.controller";
+import {ProfileHintsDirective} from "./profile-hints/profile-hints.directive";
+import {ProfileProjectsController} from "./profile-projects/profile-projects.controller";
+import {ProfileProjectsDirective } from "./profile-projects/profile-projects.directive";
+import {ProfileTabDirective} from "./profile-tab/profile-tab.directive";
+import {ProfileTabsController} from "./profile-tabs/profile-tabs.controller";
+import {ProfileTabsDirective} from "./profile-tabs/profile-tabs.directive";
+import {ProfileController} from "./profile.controller";
 
-let module = angular.module("taigaProfile", []);
+const module = angular.module("taigaProfile", []);
 module.controller("ProfileBar", ProfileBarController);
 module.directive("tgProfileBar", ProfileBarDirective);
 module.controller("ProfileContacts", ProfileContactsController);

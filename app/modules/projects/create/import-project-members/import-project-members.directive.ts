@@ -22,21 +22,21 @@ export let ImportProjectMembersDirective = () =>
         link(scope, elm, attr, ctrl) {
             ctrl.fetchUser();
 
-            return scope.$watch('vm.members', ctrl.checkUsersLimit.bind(ctrl));
+            return scope.$watch("vm.members", ctrl.checkUsersLimit.bind(ctrl));
         },
 
-        templateUrl:"projects/create/import-project-members/import-project-members.html",
+        templateUrl: "projects/create/import-project-members/import-project-members.html",
         controller: "ImportProjectMembersCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            members: '<',
-            project: '<',
-            onSubmit: '&',
-            platform: '@',
-            logo: '@',
-            onCancel: '&'
-        }
+            members: "<",
+            project: "<",
+            onSubmit: "&",
+            platform: "@",
+            logo: "@",
+            onCancel: "&",
+        },
     })
 ;
 ImportProjectMembersDirective.$inject = [];

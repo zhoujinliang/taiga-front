@@ -15,11 +15,11 @@
  * File: comments.controller.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export class CommentsController {
-    canAddCommentPermission:any
-    name:any
+    canAddCommentPermission: any;
+    name: any;
 
     static initClass() {
         this.$inject = [];

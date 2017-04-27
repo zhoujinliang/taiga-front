@@ -17,25 +17,25 @@
  * File: github-import.service.coffee
  */
 
-import {Service} from "../../../../ts/classes"
-import * as Immutable from "immutable"
-import * as Promise from "bluebird"
+import * as Promise from "bluebird";
+import * as Immutable from "immutable";
+import {Service} from "../../../../ts/classes";
 
 export class GithubImportService extends Service {
-    resources:any
-    location:any
-    projects:Immutable.List<any>
-    projectUsers:Immutable.List<any>
-    token:any
+    resources: any;
+    location: any;
+    projects: Immutable.List<any>;
+    projectUsers: Immutable.List<any>;
+    token: any;
 
     static initClass() {
         this.$inject = [
-            'tgResources'
+            "tgResources",
         ];
     }
 
     constructor(resources, location) {
-        super()
+        super();
         this.resources = resources;
         this.location = location;
         this.projects = Immutable.List();
@@ -47,11 +47,11 @@ export class GithubImportService extends Service {
     }
 
     fetchProjects() {
-        return this.resources.githubImporter.listProjects(this.token).then(projects => this.projects = projects);
+        return this.resources.githubImporter.listProjects(this.token).then((projects) => this.projects = projects);
     }
 
     fetchUsers(projectId) {
-        return this.resources.githubImporter.listUsers(this.token, projectId).then(users => this.projectUsers = users);
+        return this.resources.githubImporter.listUsers(this.token, projectId).then((users) => this.projectUsers = users);
     }
 
     importProject(name, description, projectId, userBindings, keepExternalReference, isPrivate, projectType) {
@@ -60,7 +60,7 @@ export class GithubImportService extends Service {
 
     getAuthUrl(callbackUri) {
         return new Promise((function(resolve) {
-            return this.resources.githubImporter.getAuthUrl(callbackUri).then(response => {
+            return this.resources.githubImporter.getAuthUrl(callbackUri).then((response) => {
                 this.authUrl = response.data.url;
                 return resolve(this.authUrl);
             });
@@ -69,7 +69,7 @@ export class GithubImportService extends Service {
 
     authorize(code) {
         return new Promise((function(resolve, reject) {
-            return this.resources.githubImporter.authorize(code).then((response => {
+            return this.resources.githubImporter.authorize(code).then(((response) => {
                 this.token = response.data.token;
                 return resolve(this.token);
             }

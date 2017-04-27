@@ -1,12 +1,12 @@
 let ChangeEmailDirective = function($repo, $model, $auth, $confirm, $location, $params, $navUrls, $translate) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         $scope.data = {};
         $scope.data.email_token = $params.email_token;
-        let form = $el.find("form").checksley();
+        const form = $el.find("form").checksley();
 
-        let onSuccessSubmit = function(response) {
+        const onSuccessSubmit = function(response) {
             if ($auth.isAuthenticated()) {
-                $repo.queryOne("users", $auth.getUser().id).then(data => {
+                $repo.queryOne("users", $auth.getUser().id).then((data) => {
                     $auth.setUser(data);
                     $location.path($navUrls.resolve("home"));
                     return $location.replace();
@@ -16,22 +16,22 @@ let ChangeEmailDirective = function($repo, $model, $auth, $confirm, $location, $
                 $location.replace();
             }
 
-            let text = $translate.instant("CHANGE_EMAIL_FORM.SUCCESS");
+            const text = $translate.instant("CHANGE_EMAIL_FORM.SUCCESS");
             return $confirm.success(text);
         };
 
-        let onErrorSubmit = function(response) {
-            let text = $translate.instant("COMMON.GENERIC_ERROR", {error: response.data._error_message});
+        const onErrorSubmit = function(response) {
+            const text = $translate.instant("COMMON.GENERIC_ERROR", {error: response.data._error_message});
 
             return $confirm.notify("light-error", text);
         };
 
-        let submit = function() {
+        const submit = function() {
             if (!form.validate()) {
                 return;
             }
 
-            let promise = $auth.changeEmail($scope.data);
+            const promise = $auth.changeEmail($scope.data);
             return promise.then(onSuccessSubmit, onErrorSubmit);
         };
 
@@ -50,5 +50,3 @@ let ChangeEmailDirective = function($repo, $model, $auth, $confirm, $location, $
 
     return {link};
 };
-
-

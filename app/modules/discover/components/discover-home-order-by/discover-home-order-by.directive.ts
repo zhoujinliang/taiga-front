@@ -18,7 +18,7 @@
  */
 
 export let DiscoverHomeOrderByDirective = function() {
-    let link = function(scope, el, attrs) {};
+    const link = function(scope, el, attrs) {};
 
     return {
         controller: "DiscoverHomeOrderBy",
@@ -27,9 +27,9 @@ export let DiscoverHomeOrderByDirective = function() {
         templateUrl: "discover/components/discover-home-order-by/discover-home-order-by.html",
         scope: {
             currentOrderBy: "=orderBy",
-            onChange: "&"
+            onChange: "&",
         },
-        link
+        link,
     };
 };
 

@@ -17,16 +17,15 @@
  * File: discover-home.controller.coffee
  */
 
-
-import {Router} from "@angular/router"
-import {NavigationUrlsService} from "../../../ts/modules/base/navurls.service"
-import {AppMetaService} from "../../services/app-meta.service"
-import {TranslateService} from "@ngx-translate/core"
-import {Component, OnInit} from "@angular/core"
-import {Store} from "@ngrx/store"
-import {IState} from "../../../app.store"
-import * as actions from "../discover.actions"
-import {go} from "@ngrx/router-store"
+import {Component, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
+import {go} from "@ngrx/router-store";
+import {Store} from "@ngrx/store";
+import {TranslateService} from "@ngx-translate/core";
+import {IState} from "../../../app.store";
+import {NavigationUrlsService} from "../../../ts/modules/base/navurls.service";
+import {AppMetaService} from "../../services/app-meta.service";
+import * as actions from "../discover.actions";
 
 @Component({
     selector: "tg-discover-home",
@@ -38,21 +37,21 @@ export class DiscoverHome implements OnInit {
     mostLikedProjects: any;
     mostActiveProjects: any;
     featuredProjects: any;
-    projectsCount:any;
+    projectsCount: any;
 
     constructor(private store: Store<IState>,
                 private router: Router,
                 private navUrls: NavigationUrlsService,
                 private appMetaService: AppMetaService,
                 private translate: TranslateService) {
-        let title = this.translate.instant("DISCOVER.PAGE_TITLE");
-        let description = this.translate.instant("DISCOVER.PAGE_DESCRIPTION");
+        const title = this.translate.instant("DISCOVER.PAGE_TITLE");
+        const description = this.translate.instant("DISCOVER.PAGE_DESCRIPTION");
         this.appMetaService.setAll(title, description);
 
-        this.mostLikedProjects = this.store.select((state) => state.getIn(['discover', 'most-liked']));
-        this.mostActiveProjects = this.store.select((state) => state.getIn(['discover', 'most-active']));
-        this.featuredProjects = this.store.select((state) => state.getIn(['discover', 'featured']));
-        this.projectsCount = this.store.select((state) => state.getIn(["discover", "projects-count"]))
+        this.mostLikedProjects = this.store.select((state) => state.getIn(["discover", "most-liked"]));
+        this.mostActiveProjects = this.store.select((state) => state.getIn(["discover", "most-active"]));
+        this.featuredProjects = this.store.select((state) => state.getIn(["discover", "featured"]));
+        this.projectsCount = this.store.select((state) => state.getIn(["discover", "projects-count"]));
     }
 
     ngOnInit() {
@@ -71,6 +70,6 @@ export class DiscoverHome implements OnInit {
     }
 
     onSearch(searchData) {
-        return this.store.dispatch(go(['/discover', 'search'], {text: searchData.q}));
+        return this.store.dispatch(go(["/discover", "search"], {text: searchData.q}));
     }
 }

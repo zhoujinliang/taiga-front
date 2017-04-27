@@ -17,20 +17,20 @@
  * File: related-userstories.controller.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export class RelatedUserStoriesController {
-    projectService:any
-    epicsService:any
-    sectionName:any
-    showCreateRelatedUserstoriesLightbox:any
-    userstories:any
-    epic:any
+    projectService: any;
+    epicsService: any;
+    sectionName: any;
+    showCreateRelatedUserstoriesLightbox: any;
+    userstories: any;
+    epic: any;
 
     static initClass() {
         this.$inject = [
             "tgProjectService",
-            "tgEpicsService"
+            "tgEpicsService",
         ];
     }
 
@@ -51,14 +51,14 @@ export class RelatedUserStoriesController {
 
     loadRelatedUserstories() {
         return this.epicsService.listRelatedUserStories(this.epic)
-            .then(userstories => {
+            .then((userstories) => {
                 return this.userstories = userstories;
         });
     }
 
     reorderRelatedUserstory(us, newIndex) {
         return this.epicsService.reorderRelatedUserstory(this.epic, this.userstories, us, newIndex)
-            .then(userstories => {
+            .then((userstories) => {
                 return this.userstories = userstories;
         });
     }

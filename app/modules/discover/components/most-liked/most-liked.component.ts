@@ -17,22 +17,22 @@
  * File: msot-liked.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../libs/utils"
-import {Component, Output, Input, EventEmitter} from "@angular/core"
+import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {defineImmutableProperty} from "../../../../libs/utils";
 
 @Component({
-    selector: 'tg-most-liked',
-    template: require("./most-liked.jade")()
+    selector: "tg-most-liked",
+    template: require("./most-liked.jade")(),
 })
 export class MostLiked {
-    @Input() projects
+    @Input() projects;
     @Output() order: EventEmitter<string>;
 
     constructor() {
-        this.order = new EventEmitter()
+        this.order = new EventEmitter();
     }
 
     orderBy(type) {
-        this.order.emit(type)
+        this.order.emit(type);
     }
 }

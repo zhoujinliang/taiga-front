@@ -1,36 +1,36 @@
-import { Injectable } from "@angular/core"
+import { Injectable } from "@angular/core";
 
-import {UrlsService} from "../../ts/modules/base/urls"
+import {UrlsService} from "../../ts/modules/base/urls";
 
-import {CustomAttributesResource} from "./custom-attributes"
-import {CustomAttributesValuesResource} from "./custom-attributes-values"
-import {HistoryResource} from "./history"
-import {InvitationsResource} from "./invitations"
-import {KanbanResource} from "./kanban"
-import {LocalesResource} from "./locales"
-import {MembershipsResource} from "./memberships"
-import {ModulesResource} from "./modules"
-import {NotifyPoliciesResource} from "./notify-policies"
-import {RolesResource} from "./roles"
-import {SearchResource} from "./search"
-import {SprintsResource} from "./sprints"
-import {UserSettingsResource} from "./user-settings"
-import {WebhookLogsResource} from "./webhooklogs"
-import {WebhooksResource} from "./webhooks"
-import {WikiResource} from "./wiki"
+import {CustomAttributesResource} from "./custom-attributes";
+import {CustomAttributesValuesResource} from "./custom-attributes-values";
+import {HistoryResource} from "./history";
+import {InvitationsResource} from "./invitations";
+import {KanbanResource} from "./kanban";
+import {LocalesResource} from "./locales";
+import {MembershipsResource} from "./memberships";
+import {ModulesResource} from "./modules";
+import {NotifyPoliciesResource} from "./notify-policies";
+import {RolesResource} from "./roles";
+import {SearchResource} from "./search";
+import {SprintsResource} from "./sprints";
+import {UserSettingsResource} from "./user-settings";
+import {WebhookLogsResource} from "./webhooklogs";
+import {WebhooksResource} from "./webhooks";
+import {WikiResource} from "./wiki";
 
-import {AttachmentsResource} from "./attachments-resource.service"
-import {EpicsResource} from "./epics-resource.service"
-import {ExternalAppsResource} from "./external-apps-resource.service"
-import {TrelloResource, JiraResource, GithubResource, AsanaResource} from "./importers-resource.service"
-import {IssuesResource} from "./issues-resource.service"
-import {ProjectsResource} from "./projects-resource.service"
-import {StatsResource} from "./stats-resource.service"
-import {TasksResource} from "./tasks-resource.service"
-import {UserResource} from "./user-resource.service"
-import {UsersResource} from "./users-resource.service"
-import {UserstoriesResource} from "./userstories-resource.service"
-import {WikiHistoryResource} from "./wiki-history-resource.service"
+import {AttachmentsResource} from "./attachments-resource.service";
+import {EpicsResource} from "./epics-resource.service";
+import {ExternalAppsResource} from "./external-apps-resource.service";
+import {AsanaResource, GithubResource, JiraResource, TrelloResource} from "./importers-resource.service";
+import {IssuesResource} from "./issues-resource.service";
+import {ProjectsResource} from "./projects-resource.service";
+import {StatsResource} from "./stats-resource.service";
+import {TasksResource} from "./tasks-resource.service";
+import {UserResource} from "./user-resource.service";
+import {UsersResource} from "./users-resource.service";
+import {UserstoriesResource} from "./userstories-resource.service";
+import {WikiHistoryResource} from "./wiki-history-resource.service";
 
 const api_urls = {
     // Auth
@@ -231,27 +231,27 @@ const api_urls = {
     "importers-asana-authorize": "/importers/asana/authorize",
     "importers-asana-list-projects": "/importers/asana/list_projects",
     "importers-asana-list-users": "/importers/asana/list_users",
-    "importers-asana-import-project": "/importers/asana/import_project"
+    "importers-asana-import-project": "/importers/asana/import_project",
 };
 
 @Injectable()
 export class ResourcesService {
-    constructor(public customAttributes:CustomAttributesResource,
-                public customAttributesValues:CustomAttributesValuesResource,
-                public history:HistoryResource,
-                public invitations:InvitationsResource,
-                public kanban:KanbanResource,
-                public locales:LocalesResource,
-                public memberships:MembershipsResource,
-                public modules:ModulesResource,
-                public notifyPolicies:NotifyPoliciesResource,
-                public roles:RolesResource,
-                public search:SearchResource,
-                public sprints:SprintsResource,
-                public userSettings:UserSettingsResource,
-                public webhookLogs:WebhookLogsResource,
-                public webhooks:WebhooksResource,
-                public wiki:WikiResource,
+    constructor(public customAttributes: CustomAttributesResource,
+                public customAttributesValues: CustomAttributesValuesResource,
+                public history: HistoryResource,
+                public invitations: InvitationsResource,
+                public kanban: KanbanResource,
+                public locales: LocalesResource,
+                public memberships: MembershipsResource,
+                public modules: ModulesResource,
+                public notifyPolicies: NotifyPoliciesResource,
+                public roles: RolesResource,
+                public search: SearchResource,
+                public sprints: SprintsResource,
+                public userSettings: UserSettingsResource,
+                public webhookLogs: WebhookLogsResource,
+                public webhooks: WebhooksResource,
+                public wiki: WikiResource,
                 public attachments: AttachmentsResource,
                 public epics: EpicsResource,
                 public externalApps: ExternalAppsResource,
@@ -267,7 +267,7 @@ export class ResourcesService {
                 public users: UsersResource,
                 public userstories: UserstoriesResource,
                 public wikiHistory: WikiHistoryResource,
-                private urls:UrlsService) {
+                private urls: UrlsService) {
         this.urls.update(api_urls);
     }
 }

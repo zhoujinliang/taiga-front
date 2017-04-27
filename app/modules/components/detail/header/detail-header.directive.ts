@@ -17,10 +17,10 @@
  * File: story-header.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let DetailHeaderDirective = function() {
-    let link = function(scope, el, attrs, ctrl) {
+    const link = function(scope, el, attrs, ctrl) {
         ctrl._checkPermissions();
         return ctrl._checkNav();
     };
@@ -32,11 +32,9 @@ export let DetailHeaderDirective = function() {
         scope: {
             item: "=",
             project: "=",
-            requiredPerm: "@"
+            requiredPerm: "@",
         },
         controllerAs: "vm",
-        templateUrl:"components/detail/header/detail-header.html"
+        templateUrl: "components/detail/header/detail-header.html",
     };
 };
-
-

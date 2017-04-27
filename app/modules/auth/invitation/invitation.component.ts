@@ -1,7 +1,7 @@
 let InvitationDirective = function($auth, $rs, $confirm, $location, $config, $params, $navUrls, $analytics, $translate, config) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         let data;
-        let { token } = $params;
+        const { token } = $params;
 
         let promise = $rs.invitations.get(token);
         promise.then(function(invitation) {
@@ -12,40 +12,40 @@ let InvitationDirective = function($auth, $rs, $confirm, $location, $config, $pa
         promise.then(null, function(response) {
             $location.path($navUrls.resolve("login"));
 
-            let text = $translate.instant("INVITATION_LOGIN_FORM.NOT_FOUND");
+            const text = $translate.instant("INVITATION_LOGIN_FORM.NOT_FOUND");
             return $confirm.notify("light-error", text);
         });
 
         // Login form
         $scope.dataLogin = {token};
-        let loginForm = $el.find("form.login-form").checksley({onlyOneErrorElement: true});
+        const loginForm = $el.find("form.login-form").checksley({onlyOneErrorElement: true});
 
-        let onSuccessSubmitLogin = function(response) {
+        const onSuccessSubmitLogin = function(response) {
             $analytics.trackEvent("auth", "invitationAccept", "invitation accept with existing user", 1);
             $location.path($navUrls.resolve("project", {project: $scope.invitation.project_slug}));
-            let text = $translate.instant("INVITATION_LOGIN_FORM.SUCCESS", {
-                "project_name": $scope.invitation.project_name
+            const text = $translate.instant("INVITATION_LOGIN_FORM.SUCCESS", {
+                project_name: $scope.invitation.project_name,
             });
 
             return $confirm.notify("success", text);
         };
 
-        let onErrorSubmitLogin = response => $confirm.notify("light-error", response.data._error_message);
+        const onErrorSubmitLogin = (response) => $confirm.notify("light-error", response.data._error_message);
 
-        let submitLogin = debounce(2000, event => {
+        const submitLogin = debounce(2000, (event) => {
             event.preventDefault();
 
             if (!loginForm.validate()) {
                 return;
             }
 
-            let loginFormType = $config.get("loginFormType", "normal");
+            const loginFormType = $config.get("loginFormType", "normal");
             data = $scope.dataLogin;
 
             promise = $auth.login({
                 username: data.username,
                 password: data.password,
-                invitation_token: data.token
+                invitation_token: data.token,
             }, loginFormType);
             return promise.then(onSuccessSubmitLogin, onErrorSubmitLogin);
         });
@@ -55,25 +55,25 @@ let InvitationDirective = function($auth, $rs, $confirm, $location, $config, $pa
 
         // Register form
         $scope.dataRegister = {token};
-        let registerForm = $el.find("form.register-form").checksley({onlyOneErrorElement: true});
+        const registerForm = $el.find("form.register-form").checksley({onlyOneErrorElement: true});
 
-        let onSuccessSubmitRegister = function(response) {
+        const onSuccessSubmitRegister = function(response) {
             $analytics.trackEvent("auth", "invitationAccept", "invitation accept with new user", 1);
             $location.path($navUrls.resolve("project", {project: $scope.invitation.project_slug}));
             return $confirm.notify("success", "You've successfully joined this project",
                                        `Welcome to ${_.escape($scope.invitation.project_name)}`);
         };
 
-        let onErrorSubmitRegister = function(response) {
+        const onErrorSubmitRegister = function(response) {
             if (response.data._error_message) {
-                let text = $translate.instant("COMMON.GENERIC_ERROR", {error: response.data._error_message});
+                const text = $translate.instant("COMMON.GENERIC_ERROR", {error: response.data._error_message});
                 $confirm.notify("light-error", text);
             }
 
             return registerForm.setErrors(response.data);
         };
 
-        let submitRegister = debounce(2000, event => {
+        const submitRegister = debounce(2000, (event) => {
             event.preventDefault();
 
             if (!registerForm.validate()) {
@@ -92,4 +92,3 @@ let InvitationDirective = function($auth, $rs, $confirm, $location, $config, $pa
 
     return {link};
 };
-

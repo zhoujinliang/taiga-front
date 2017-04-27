@@ -17,19 +17,19 @@
  * File: like-project-button.controller.coffee
  */
 
-import {Component, Input, Output, EventEmitter} from "@angular/core"
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 
 @Component({
     selector: "tg-like-project-button",
     template: require("./like-project-button.jade")(),
 })
 export class LikeProjectButton {
-    @Input() project:any
-    @Output() click: EventEmitter<number>
-    isMouseOver: boolean
+    @Input() project: any;
+    @Output() click: EventEmitter<number>;
+    isMouseOver: boolean;
 
     constructor() {
-        this.click = new EventEmitter()
+        this.click = new EventEmitter();
     }
 
     showTextWhenMouseIsOver() {
@@ -41,6 +41,6 @@ export class LikeProjectButton {
     }
 
     onClick() {
-        this.click.emit(this.project.get('id'))
+        this.click.emit(this.project.get("id"));
     }
 }

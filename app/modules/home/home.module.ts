@@ -1,20 +1,20 @@
-import {NgModule} from "@angular/core"
-import {RouterModule} from "@angular/router"
-import {CommonModule} from "@angular/common"
-import {TranslateModule} from "@ngx-translate/core"
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
+import {CommonModule} from "@angular/common";
+import {NgModule} from "@angular/core";
+import {RouterModule} from "@angular/router";
+import { EffectsModule } from "@ngrx/effects";
+import { StoreModule } from "@ngrx/store";
+import {TranslateModule} from "@ngx-translate/core";
 
-import {Home} from './home.component';
 import { TgCommonModule } from "../../ts/modules/common/common.module";
 import { TgComponentsModule } from "../components/components.module";
-import { HomeProjectList } from "./projects/home-project-list.component"
 import { CurrentUserService } from "../services/current-user.service";
-import { WorkingOn } from "./working-on/working-on.component";
 import { Duty } from "./duties/duty.component";
+import {Home} from "./home.component";
+import { HomeProjectList } from "./projects/home-project-list.component";
+import { WorkingOn } from "./working-on/working-on.component";
 
-import {homeReducer} from "./home.store"
-import {HomeEffects} from "./home.effects"
+import {HomeEffects} from "./home.effects";
+import {homeReducer} from "./home.store";
 
 @NgModule({
     imports: [
@@ -34,7 +34,7 @@ import {HomeEffects} from "./home.effects"
         Home,
         HomeProjectList,
         WorkingOn,
-        Duty
+        Duty,
     ],
     providers: [
         CurrentUserService,

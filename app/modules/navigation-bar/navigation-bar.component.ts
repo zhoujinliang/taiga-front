@@ -17,13 +17,13 @@
  * File: navigation-bar.directive.coffee
  */
 
-import {defineImmutableProperty} from "../../libs/utils"
-import {Component, OnInit, Input, Output, EventEmitter } from "@angular/core"
-import { NavigationUrlsService } from "../../ts/modules/base/navurls.service";
+import {Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Router } from "@angular/router";
+import {defineImmutableProperty} from "../../libs/utils";
 import { ConfigurationService } from "../../ts/modules/base/conf";
+import { NavigationUrlsService } from "../../ts/modules/base/navurls.service";
 import { CurrentUserService } from "../services/current-user.service";
 import { NavigationBarService } from "./navigation-bar.service";
-import { Router } from "@angular/router";
 
 @Component({
     selector: "tg-navigation-bar",
@@ -31,11 +31,11 @@ import { Router } from "@angular/router";
 })
 export class NavigationBar implements OnInit{
     @Input() projects: any;
-    @Input() user:any;
+    @Input() user: any;
     @Output() logout: EventEmitter<any>;
     @Output() login: EventEmitter<any>;
     isAuthenticated: any = true;
-    isEnabledHeader:any = true;
+    isEnabledHeader: any = true;
     // publicRegisterEnabled: any;
     // active: boolean;
 
@@ -73,4 +73,4 @@ export class NavigationBar implements OnInit{
         this.login.emit();
         return false;
     }
-};
+}

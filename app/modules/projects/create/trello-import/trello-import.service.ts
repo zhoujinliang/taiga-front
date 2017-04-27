@@ -17,24 +17,24 @@
  * File: trello-import.service.coffee
  */
 
-import {Service} from "../../../../ts/classes"
-import * as Immutable from "immutable"
-import * as Promise from "bluebird"
+import * as Promise from "bluebird";
+import * as Immutable from "immutable";
+import {Service} from "../../../../ts/classes";
 
 export class TrelloImportService extends Service {
-    resources:any
-    projects:Immutable.List<any>
-    projectUsers:Immutable.List<any>
-    token:any
+    resources: any;
+    projects: Immutable.List<any>;
+    projectUsers: Immutable.List<any>;
+    token: any;
 
     static initClass() {
         this.$inject = [
-            'tgResources'
+            "tgResources",
         ];
     }
 
     constructor(resources) {
-        super()
+        super();
         this.resources = resources;
         this.projects = Immutable.List();
         this.projectUsers = Immutable.List();
@@ -46,11 +46,11 @@ export class TrelloImportService extends Service {
     }
 
     fetchProjects() {
-        return this.resources.trelloImporter.listProjects(this.token).then(projects => this.projects = projects);
+        return this.resources.trelloImporter.listProjects(this.token).then((projects) => this.projects = projects);
     }
 
     fetchUsers(projectId) {
-        return this.resources.trelloImporter.listUsers(this.token, projectId).then(users => this.projectUsers = users);
+        return this.resources.trelloImporter.listUsers(this.token, projectId).then((users) => this.projectUsers = users);
     }
 
     importProject(name, description, projectId, userBindings, keepExternalReference, isPrivate) {
@@ -59,7 +59,7 @@ export class TrelloImportService extends Service {
 
     getAuthUrl() {
         return new Promise((function(resolve) {
-            return this.resources.trelloImporter.getAuthUrl().then(response => {
+            return this.resources.trelloImporter.getAuthUrl().then((response) => {
                 this.authUrl = response.data.url;
                 return resolve(this.authUrl);
             });
@@ -68,7 +68,7 @@ export class TrelloImportService extends Service {
 
     authorize(verifyCode) {
         return new Promise((function(resolve, reject) {
-            return this.resources.trelloImporter.authorize(verifyCode).then((response => {
+            return this.resources.trelloImporter.authorize(verifyCode).then(((response) => {
                 this.token = response.data.token;
                 return resolve(this.token);
             }

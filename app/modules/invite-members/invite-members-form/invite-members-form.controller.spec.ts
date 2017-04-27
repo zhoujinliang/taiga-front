@@ -17,66 +17,66 @@
  * File: invite-members-form.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("InviteMembersFormController", function() {
     let inviteMembersFormCtrl =  null;
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockProjectService = function() {
+    const _mockProjectService = function() {
         mocks.projectService = {
             project: sinon.stub(),
-            fetchProject: sinon.stub()
+            fetchProject: sinon.stub(),
         };
 
         return provide.value("tgProjectService", mocks.projectService);
     };
 
-    let _mockTgResources = function() {
+    const _mockTgResources = function() {
         mocks.tgResources = {
             memberships: {
-                bulkCreateMemberships: sinon.stub()
-            }
+                bulkCreateMemberships: sinon.stub(),
+            },
         };
 
         return provide.value("$tgResources", mocks.tgResources);
     };
 
-    let _mockLightboxService = function() {
+    const _mockLightboxService = function() {
         mocks.lightboxService = {
-            closeAll: sinon.stub()
+            closeAll: sinon.stub(),
         };
 
         return provide.value("lightboxService", mocks.lightboxService);
     };
 
-    let _mockTgConfirm = function() {
+    const _mockTgConfirm = function() {
         mocks.tgConfirm = {
-            notify: sinon.stub()
+            notify: sinon.stub(),
         };
 
         return provide.value("$tgConfirm", mocks.tgConfirm);
     };
 
-    let _mockRootScope = function() {
+    const _mockRootScope = function() {
         mocks.rootScope = {
-            $broadcast: sinon.stub()
+            $broadcast: sinon.stub(),
         };
 
         return provide.value("$rootScope", mocks.rootScope);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockProjectService();
@@ -93,10 +93,10 @@ describe("InviteMembersFormController", function() {
 
         _mocks();
 
-        inject($controller => controller = $controller);
+        inject(($controller) => controller = $controller);
 
         return mocks.projectService.project = Immutable.fromJS([{
-            'roles': 'role1'
+            roles: "role1",
         }]);
     });
 
@@ -104,7 +104,7 @@ describe("InviteMembersFormController", function() {
         inviteMembersFormCtrl = controller("InviteMembersFormCtrl");
 
         inviteMembersFormCtrl.project = Immutable.fromJS({
-            'max_memberships': null,
+            max_memberships: null,
         });
 
         inviteMembersFormCtrl.defaultMaxInvites = 4;
@@ -118,8 +118,8 @@ describe("InviteMembersFormController", function() {
         inviteMembersFormCtrl = controller("InviteMembersFormCtrl");
 
         inviteMembersFormCtrl.project = Immutable.fromJS({
-            'max_memberships': 15,
-            'total_memberships': 13
+            max_memberships: 15,
+            total_memberships: 13,
         });
         inviteMembersFormCtrl.defaultMaxInvites = 4;
 
@@ -128,23 +128,22 @@ describe("InviteMembersFormController", function() {
         return expect(inviteMembersFormCtrl.showWarningMessage).to.be.true;
     });
 
-
     return it("send invites", function(done) {
         inviteMembersFormCtrl = controller("InviteMembersFormCtrl");
         inviteMembersFormCtrl.project = Immutable.fromJS(
-            {'id': 1}
+            {id: 1},
         );
-        inviteMembersFormCtrl.rolesValues = {'user1': 1};
-        inviteMembersFormCtrl.inviteContactsMessage = 'Message';
+        inviteMembersFormCtrl.rolesValues = {"user1": 1};
+        inviteMembersFormCtrl.inviteContactsMessage = "Message";
         inviteMembersFormCtrl.loading = true;
 
         mocks.tgResources.memberships.bulkCreateMemberships.withArgs(
             1,
             [{
-                'role_id': 1,
-                'username': 'user1'
+                role_id: 1,
+                username: "user1",
             }],
-            'Message'
+            "Message",
         ).promise().resolve();
 
         mocks.projectService.fetchProject.withArgs().promise().resolve();

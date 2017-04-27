@@ -20,20 +20,20 @@
 export let TrelloImportProjectFormDirective = () =>
     ({
         link(scope, elm, attr, ctrl) {
-            return scope.$watch('vm.members', ctrl.checkUsersLimit.bind(ctrl));
+            return scope.$watch("vm.members", ctrl.checkUsersLimit.bind(ctrl));
         },
 
-        templateUrl:"projects/create/trello-import/trello-import-project-form/trello-import-project-form.html",
+        templateUrl: "projects/create/trello-import/trello-import-project-form/trello-import-project-form.html",
         controller: "TrelloImportProjectFormCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            members: '<',
-            project: '<',
-            onSaveProjectDetails: '&',
-            onCancelForm: '&',
-            fetchingUsers: '<'
-        }
+            members: "<",
+            project: "<",
+            onSaveProjectDetails: "&",
+            onCancelForm: "&",
+            fetchingUsers: "<",
+        },
     })
 ;
 TrelloImportProjectFormDirective.$inject = [];

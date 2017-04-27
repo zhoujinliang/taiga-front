@@ -20,20 +20,20 @@
 export let JiraImportProjectFormDirective = () =>
     ({
         link(scope, elm, attr, ctrl) {
-            return scope.$watch('vm.members', ctrl.checkUsersLimit.bind(ctrl));
+            return scope.$watch("vm.members", ctrl.checkUsersLimit.bind(ctrl));
         },
 
-        templateUrl:"projects/create/jira-import/jira-import-project-form/jira-import-project-form.html",
+        templateUrl: "projects/create/jira-import/jira-import-project-form/jira-import-project-form.html",
         controller: "JiraImportProjectFormCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            members: '<',
-            project: '<',
-            onSaveProjectDetails: '&',
-            onCancelForm: '&',
-            fetchingUsers: '<'
-        }
+            members: "<",
+            project: "<",
+            onSaveProjectDetails: "&",
+            onCancelForm: "&",
+            fetchingUsers: "<",
+        },
     })
 ;
 JiraImportProjectFormDirective.$inject = [];

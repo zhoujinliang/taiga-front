@@ -17,10 +17,10 @@
  * File: comments.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let CommentsDirective = function() {
-    let link = (scope, el, attrs, ctrl) => ctrl.initializePermissions();
+    const link = (scope, el, attrs, ctrl) => ctrl.initializePermissions();
 
     return {
         scope: {
@@ -37,12 +37,12 @@ export let CommentsDirective = function() {
             loading: "<",
             deleting: "<",
             editing: "<",
-            projectId: "="
+            projectId: "=",
         },
-        templateUrl:"history/comments/comments.html",
+        templateUrl: "history/comments/comments.html",
         bindToController: true,
-        controller: 'CommentsCtrl',
+        controller: "CommentsCtrl",
         controllerAs: "vm",
-        link
+        link,
     };
 };

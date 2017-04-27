@@ -17,19 +17,19 @@
  * File: related-userstories.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let RelatedUserStoriesDirective = () =>
     ({
-        templateUrl:"epics/related-userstories/related-userstories.html",
+        templateUrl: "epics/related-userstories/related-userstories.html",
         controller: "RelatedUserStoriesCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            userstories: '=',
-            project: '=',
-            epic: '='
-        }
+            userstories: "=",
+            project: "=",
+            epic: "=",
+        },
     })
 ;
 

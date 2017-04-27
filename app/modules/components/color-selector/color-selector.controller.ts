@@ -17,21 +17,21 @@
  * File: color-selector.controller.coffee
  */
 
-import {getDefaulColorList} from "../../../libs/utils"
-import * as angular from "angular"
-import * as Immutable from "immutable"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {getDefaulColorList} from "../../../libs/utils";
 
 export class ColorSelectorController {
-    projectService:any
-    colorList:any
-    displayColorList:any
-    requiredPerm:any
-    isColorRequired:any
-    color:any
-    customColor:any
-    initColor:any
-    onSelectColor:any
+    projectService: any;
+    colorList: any;
+    displayColorList: any;
+    requiredPerm: any;
+    isColorRequired: any;
+    color: any;
+    customColor: any;
+    initColor: any;
+    onSelectColor: any;
 
     static initClass() {
         this.$inject = [

@@ -17,15 +17,15 @@
  * File: dropdown-project-list.directive.coffee
  */
 
-import {defineImmutableProperty} from "../../../libs/utils"
-import { CurrentUserService } from "../../services/current-user.service";
-import { ProjectsService } from "../../projects/projects.service";
 import { Component, Input} from "@angular/core";
+import {defineImmutableProperty} from "../../../libs/utils";
+import { ProjectsService } from "../../projects/projects.service";
+import { CurrentUserService } from "../../services/current-user.service";
 
 @Component({
     selector: "tg-dropdown-project-list",
     template: require("./dropdown-project-list.jade")(),
 })
 export class DropdownProjectList {
-    @Input() projects: any
-};
+    @Input() projects: any;
+}

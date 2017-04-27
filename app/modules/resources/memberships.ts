@@ -22,12 +22,12 @@
  * File: modules/resources/memberships.coffee
  */
 
-import * as _ from "lodash"
+import * as _ from "lodash";
 
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
-import {HttpService} from "../../ts/modules/base/http"
-import {UrlsService} from "../../ts/modules/base/urls"
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../ts/modules/base/http";
+import {RepositoryService} from "../../ts/modules/base/repository";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class MembershipsResource {
@@ -39,7 +39,7 @@ export class MembershipsResource {
         return this.repo.queryOne("memberships", id);
     }
 
-    list(projectId, filters, enablePagination=true) {
+    list(projectId, filters, enablePagination= true) {
         let options;
         let params = {project: projectId};
         params = _.extend({}, params, filters || {});
@@ -47,23 +47,23 @@ export class MembershipsResource {
             return this.repo.queryPaginated("memberships", params);
         }
 
-        return this.repo.queryMany("memberships", params, (options={enablePagination}));
-    };
+        return this.repo.queryMany("memberships", params, (options = {enablePagination}));
+    }
 
     listByUser(userId, filters) {
         let params = {user: userId};
         params = _.extend({}, params, filters || {});
         return this.repo.queryPaginated("memberships", params);
-    };
+    }
 
     resendInvitation(id) {
-        let url = this.urls.resolve("memberships");
+        const url = this.urls.resolve("memberships");
         return this.http.post(`${url}/${id}/resend_invitation`, {});
-    };
+    }
 
     bulkCreateMemberships(projectId, data, invitation_extra_text) {
-        let url = this.urls.resolve("bulk-create-memberships");
-        let params = {project_id: projectId, bulk_memberships: data, invitation_extra_text};
+        const url = this.urls.resolve("bulk-create-memberships");
+        const params = {project_id: projectId, bulk_memberships: data, invitation_extra_text};
         return this.http.post(url, params);
-    };
-};
+    }
+}

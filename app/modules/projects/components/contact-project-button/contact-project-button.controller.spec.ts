@@ -17,30 +17,30 @@
  * File: contact-project-button.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ContactProjectButton", function() {
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgLightboxFactory = function() {
+    const _mockTgLightboxFactory = function() {
         mocks.tgLightboxFactory = {
-            create: sinon.stub()
+            create: sinon.stub(),
         };
 
         return provide.value("tgLightboxFactory", mocks.tgLightboxFactory);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgLightboxFactory();
@@ -54,11 +54,11 @@ describe("ContactProjectButton", function() {
 
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     return it("Launch Contact Form", function() {
-        let ctrl = controller("ContactProjectButtonCtrl");
+        const ctrl = controller("ContactProjectButtonCtrl");
         ctrl.launchContactForm();
         return expect(mocks.tgLightboxFactory.create).have.been.called;
     });

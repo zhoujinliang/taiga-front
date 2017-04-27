@@ -17,31 +17,31 @@
  * File: user-timeline-item-type.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgUserTimelineItemType", function() {
     let mySvc = null;
 
-    let _provide = callback =>
+    const _provide = (callback) =>
         module(function($provide) {
             callback($provide);
             return null;
         })
     ;
 
-    let _inject = () =>
-        inject(_tgUserTimelineItemType_ => mySvc = _tgUserTimelineItemType_)
+    const _inject = () =>
+        inject((_tgUserTimelineItemType_) => mySvc = _tgUserTimelineItemType_)
     ;
 
-    let _setup = () => _inject();
+    const _setup = () => _inject();
 
     beforeEach(function() {
         module("taigaUserTimeline");
@@ -49,15 +49,15 @@ describe("tgUserTimelineItemType", function() {
     });
 
     return it("get the timeline type", function() {
-        let timeline = {
-            data: {}
+        const timeline = {
+            data: {},
         };
 
-        let event = {
-            obj: 'membership'
+        const event = {
+            obj: "membership",
         };
 
-        let type = mySvc.getType(timeline, event);
+        const type = mySvc.getType(timeline, event);
 
         return expect(type.key).to.be.equal("TIMELINE.NEW_MEMBER");
     });

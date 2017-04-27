@@ -1,11 +1,11 @@
 import {Component, Input} from "@angular/core";
-import {Observable} from "rxjs";
 import { Store } from "@ngrx/store";
+import {Observable} from "rxjs";
 import { IState } from "../../../app.store";
 
 @Component({
     selector: "tg-loader-full",
-    template: require("./loader-full.jade")()
+    template: require("./loader-full.jade")(),
 })
 export class LoaderFull {
     public isOpen: Observable<boolean>;

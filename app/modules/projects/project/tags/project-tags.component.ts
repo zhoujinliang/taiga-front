@@ -17,12 +17,12 @@
  * File: project.controller.coffee
  */
 
-import { Component, Input } from "@angular/core"
+import { Component, Input } from "@angular/core";
 
 @Component({
     selector: "tg-project-tags",
-    template: require("./project-tags.jade")()
+    template: require("./project-tags.jade")(),
 })
 export class ProjectTags {
-    @Input() project:any;
+    @Input() project: any;
 }

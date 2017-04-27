@@ -17,26 +17,26 @@
  * File: history.controller.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export class HistorySectionController {
-    rs:any
-    repo:any
-    storage:any
-    projectService:any
-    editing:any
-    deleting:any
-    editMode:any
-    viewComments:any
-    reverse:any
-    name:any
-    id:any
-    type:any
-    comments:any
-    commentsNum:any
-    activities:any
-    activitiesNum:any
+    rs: any;
+    repo: any;
+    storage: any;
+    projectService: any;
+    editing: any;
+    deleting: any;
+    editMode: any;
+    viewComments: any;
+    reverse: any;
+    name: any;
+    id: any;
+    type: any;
+    comments: any;
+    commentsNum: any;
+    activities: any;
+    activitiesNum: any;
 
     static initClass() {
         this.$inject = [
@@ -61,14 +61,14 @@ export class HistorySectionController {
     }
 
     _loadHistory() {
-        return this.rs.history.get(this.name, this.id).then(history => {
+        return this.rs.history.get(this.name, this.id).then((history) => {
             this._getComments(history);
             return this._getActivities(history);
         });
     }
 
     _getComments(comments) {
-        this.comments = _.filter(comments, (item:any) => item.comment !== "");
+        this.comments = _.filter(comments, (item: any) => item.comment !== "");
         if (this.reverse) {
             this.comments = _.reverse(this.comments);
         }
@@ -76,7 +76,7 @@ export class HistorySectionController {
     }
 
     _getActivities(activities) {
-        this.activities =  _.filter(activities, (item:any) => Object.keys(item.values_diff).length > 0);
+        this.activities =  _.filter(activities, (item: any) => Object.keys(item.values_diff).length > 0);
         return this.activitiesNum = this.activities.length;
     }
 
@@ -101,9 +101,9 @@ export class HistorySectionController {
     }
 
     deleteComment(commentId) {
-        let type = this.name;
-        let objectId = this.id;
-        let activityId = commentId;
+        const type = this.name;
+        const objectId = this.id;
+        const activityId = commentId;
         this.deleting = commentId;
         return this.rs.history.deleteComment(type, objectId, activityId).then(() => {
             this._loadHistory();
@@ -112,9 +112,9 @@ export class HistorySectionController {
     }
 
     editComment(commentId, comment) {
-        let type = this.name;
-        let objectId = this.id;
-        let activityId = commentId;
+        const type = this.name;
+        const objectId = this.id;
+        const activityId = commentId;
         this.editing = commentId;
         return this.rs.history.editComment(type, objectId, activityId, comment).then(() => {
             this._loadHistory();
@@ -124,9 +124,9 @@ export class HistorySectionController {
     }
 
     restoreDeletedComment(commentId) {
-        let type = this.name;
-        let objectId = this.id;
-        let activityId = commentId;
+        const type = this.name;
+        const objectId = this.id;
+        const activityId = commentId;
         this.editing = commentId;
         return this.rs.history.undeleteComment(type, objectId, activityId).then(() => {
             this._loadHistory();

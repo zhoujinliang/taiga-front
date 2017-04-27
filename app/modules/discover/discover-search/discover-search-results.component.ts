@@ -17,22 +17,22 @@
  * File: discover-search.controller.coffee
  */
 
-import * as _ from "lodash"
+import * as _ from "lodash";
 
-import {Component, Input} from "@angular/core"
-import {ActivatedRoute, Router} from "@angular/router"
-import {AppMetaService} from "../../services/app-meta.service"
-import {DiscoverProjectsService} from "../services/discover-projects.service"
-import {TranslateService} from "@ngx-translate/core"
-import { Store } from "@ngrx/store"
-import { search } from "@ngrx/router-store"
+import {Component, Input} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
+import { search } from "@ngrx/router-store";
+import { Store } from "@ngrx/store";
+import {TranslateService} from "@ngx-translate/core";
 import { IState } from "../../../app.store";
-import { SearchDiscoverProjects } from "../discover.actions"
+import {AppMetaService} from "../../services/app-meta.service";
+import { SearchDiscoverProjects } from "../discover.actions";
+import {DiscoverProjectsService} from "../services/discover-projects.service";
 
 @Component({
     selector: "tg-discover-search-results",
     template: require("./discover-search-results.jade")(),
 })
 export class DiscoverSearchResults {
-    @Input() projects
+    @Input() projects;
 }

@@ -24,10 +24,10 @@
 
 export let BindCode = ($sce, $parse, $compile, wysiwygService, wysiwygCodeHightlighterService) =>
   ({
-    restrict: 'A',
+    restrict: "A",
     compile(tElement, tAttrs) {
-        let tgBindCodeGetter = $parse(tAttrs.tgBindCode);
-        let tgBindCodeWatch = $parse(tAttrs.tgBindCode, value => (value || '').toString());
+        const tgBindCodeGetter = $parse(tAttrs.tgBindCode);
+        const tgBindCodeWatch = $parse(tAttrs.tgBindCode, (value) => (value || "").toString());
 
         $compile.$$addBindingClass(tElement);
 
@@ -35,14 +35,14 @@ export let BindCode = ($sce, $parse, $compile, wysiwygService, wysiwygCodeHightl
             $compile.$$addBindingInfo(element, attr.tgBindCode);
 
             return scope.$watch(tgBindCodeWatch, function() {
-                let html = wysiwygService.getHTML(tgBindCodeGetter(scope));
+                const html = wysiwygService.getHTML(tgBindCodeGetter(scope));
 
-                element.html($sce.getTrustedHtml(html) || '');
+                element.html($sce.getTrustedHtml(html) || "");
 
                 return wysiwygCodeHightlighterService.addHightlighter(element);
             });
         };
-    }
+    },
 
   })
 ;

@@ -17,15 +17,15 @@
  * File: duty.directive.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("dutyDirective", function() {
     let compile, provide;
@@ -33,42 +33,42 @@ describe("dutyDirective", function() {
     let mockTgProjectsService = null;
     let mockTgNavUrls = null;
     let mockTranslate = null;
-    let template = "<div tg-duty='duty'></div>";
+    const template = "<div tg-duty='duty'></div>";
 
-    let createDirective = function() {
-        let elm = compile(template)(scope);
+    const createDirective = function() {
+        const elm = compile(template)(scope);
         return elm;
     };
 
-    let _mockTgNavUrls = function() {
+    const _mockTgNavUrls = function() {
         mockTgNavUrls = {
-            resolve: sinon.stub()
+            resolve: sinon.stub(),
         };
         return provide.value("$tgNavUrls", mockTgNavUrls);
     };
 
-    let _mockTranslateFilter = function() {
-        let mockTranslateFilter = value => value;
+    const _mockTranslateFilter = function() {
+        const mockTranslateFilter = (value) => value;
         return provide.value("translateFilter", mockTranslateFilter);
     };
 
-    let _mockTgProjectsService = function() {
+    const _mockTgProjectsService = function() {
         mockTgProjectsService = {
             projectsById: {
-                get: sinon.stub()
-            }
+                get: sinon.stub(),
+            },
         };
         return provide.value("tgProjectsService", mockTgProjectsService);
     };
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mockTranslate = {
-            instant: sinon.stub()
+            instant: sinon.stub(),
         };
         return provide.value("$translate", mockTranslate);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgNavUrls();
@@ -98,13 +98,13 @@ describe("dutyDirective", function() {
             _name: "userstories",
             assigned_to_extra_info: {
                 photo: "http://jstesting.taiga.io/photo",
-                full_name_display: "Taiga testing js"
-            }
+                full_name_display: "Taiga testing js",
+            },
         });
 
         mockTgProjectsService.projectsById.get
             .withArgs("1")
-            .returns({slug: "project-slug", "name": "testing js project"});
+            .returns({slug: "project-slug", name: "testing js project"});
 
         mockTgNavUrls.resolve
             .withArgs("project-userstories-detail", {project: "project-slug", ref: 1})
@@ -114,7 +114,7 @@ describe("dutyDirective", function() {
             .withArgs("COMMON.USER_STORY")
             .returns("User story translated");
 
-        let elm = createDirective();
+        const elm = createDirective();
         scope.$apply();
 
         return expect(elm.isolateScope().vm.getDutyType()).to.be.equal("User story translated");

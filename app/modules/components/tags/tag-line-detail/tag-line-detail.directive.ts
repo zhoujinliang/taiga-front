@@ -17,19 +17,18 @@
  * File: tag-line.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let TagLineDirective = () =>
     ({
         scope: {
             item: "=",
             permissions: "@",
-            project: "="
+            project: "=",
         },
-        templateUrl:"components/tags/tag-line-detail/tag-line-detail.html",
+        templateUrl: "components/tags/tag-line-detail/tag-line-detail.html",
         controller: "TagLineCtrl",
         controllerAs: "vm",
-        bindToController: true
+        bindToController: true,
     })
 ;
-

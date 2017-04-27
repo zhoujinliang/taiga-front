@@ -17,18 +17,18 @@
  * File: user-timeline.module.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
-import {UserTimelineAttachmentDirective} from "./user-timeline-attachment/user-timeline-attachment.directive"
-import {UserTimelineItemDirective} from "./user-timeline-item/user-timeline-item.directive"
-import {UserTimelineItemTitle} from "./user-timeline-item/user-timeline-item-title.service"
-import {UserTimelineType} from "./user-timeline-item/user-timeline-item-type.service"
-import {UserTimelinePaginationSequence} from "./user-timeline-pagination-sequence/user-timeline-pagination-sequence.service"
-import {UserTimelineController} from "./user-timeline/user-timeline.controller"
-import {UserTimelineDirective} from "./user-timeline/user-timeline.directive"
-import {UserTimelineService} from "./user-timeline/user-timeline.service"
+import {UserTimelineAttachmentDirective} from "./user-timeline-attachment/user-timeline-attachment.directive";
+import {UserTimelineItemTitle} from "./user-timeline-item/user-timeline-item-title.service";
+import {UserTimelineType} from "./user-timeline-item/user-timeline-item-type.service";
+import {UserTimelineItemDirective} from "./user-timeline-item/user-timeline-item.directive";
+import {UserTimelinePaginationSequence} from "./user-timeline-pagination-sequence/user-timeline-pagination-sequence.service";
+import {UserTimelineController} from "./user-timeline/user-timeline.controller";
+import {UserTimelineDirective} from "./user-timeline/user-timeline.directive";
+import {UserTimelineService} from "./user-timeline/user-timeline.service";
 
-let module = angular.module("taigaUserTimeline", []);
+const module = angular.module("taigaUserTimeline", []);
 module.directive("tgUserTimelineAttachment", UserTimelineAttachmentDirective);
 module.directive("tgUserTimelineItem", UserTimelineItemDirective);
 module.service("tgUserTimelineItemTitle", UserTimelineItemTitle);

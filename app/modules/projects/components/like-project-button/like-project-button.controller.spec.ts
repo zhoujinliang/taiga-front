@@ -17,39 +17,39 @@
  * File: like-project-button.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("LikeProjectButton", function() {
     let $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgConfirm = function() {
+    const _mockTgConfirm = function() {
         mocks.tgConfirm = {
-            notify: sinon.stub()
+            notify: sinon.stub(),
         };
 
         return $provide.value("$tgConfirm", mocks.tgConfirm);
     };
 
-    let _mockTgLikeProjectButton = function() {
+    const _mockTgLikeProjectButton = function() {
         mocks.tgLikeProjectButton = {
             like: sinon.stub(),
-            unlike: sinon.stub()
+            unlike: sinon.stub(),
         };
 
         return $provide.value("tgLikeProjectButtonService", mocks.tgLikeProjectButton);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -60,11 +60,11 @@ describe("LikeProjectButton", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -76,21 +76,21 @@ describe("LikeProjectButton", function() {
     });
 
     it("toggleLike false -> true", function(done) {
-        let project = Immutable.fromJS({
+        const project = Immutable.fromJS({
             id: 3,
-            is_fan: false
+            is_fan: false,
         });
 
-        let ctrl = $controller("LikeProjectButton");
+        const ctrl = $controller("LikeProjectButton");
         ctrl.project = project;
 
-        mocks.tgLikeProjectButton.like = (<any>sinon.stub()).promise();
+        mocks.tgLikeProjectButton.like = (sinon.stub() as any).promise();
 
-        let promise = ctrl.toggleLike();
+        const promise = ctrl.toggleLike();
 
         expect(ctrl.loading).to.be.true;
 
-        mocks.tgLikeProjectButton.like.withArgs(project.get('id')).resolve();
+        mocks.tgLikeProjectButton.like.withArgs(project.get("id")).resolve();
 
         return promise.finally(function() {
             expect(mocks.tgLikeProjectButton.like).to.be.calledOnce;
@@ -101,15 +101,15 @@ describe("LikeProjectButton", function() {
     });
 
     it("toggleLike false -> true, notify error", function(done) {
-        let project = Immutable.fromJS({
+        const project = Immutable.fromJS({
             id: 3,
-            is_fan: false
+            is_fan: false,
         });
 
-        let ctrl = $controller("LikeProjectButton");
+        const ctrl = $controller("LikeProjectButton");
         ctrl.project = project;
 
-        mocks.tgLikeProjectButton.like.withArgs(project.get('id')).promise().reject(new Error('error'));
+        mocks.tgLikeProjectButton.like.withArgs(project.get("id")).promise().reject(new Error("error"));
 
         return ctrl.toggleLike().finally(function() {
             expect(mocks.tgConfirm.notify.withArgs("error")).to.be.calledOnce;
@@ -118,20 +118,20 @@ describe("LikeProjectButton", function() {
     });
 
     it("toggleLike true -> false", function(done) {
-        let project = Immutable.fromJS({
-            is_fan: true
+        const project = Immutable.fromJS({
+            is_fan: true,
         });
 
-        let ctrl = $controller("LikeProjectButton");
+        const ctrl = $controller("LikeProjectButton");
         ctrl.project = project;
 
-        mocks.tgLikeProjectButton.unlike = (<any>sinon.stub()).promise();
+        mocks.tgLikeProjectButton.unlike = (sinon.stub() as any).promise();
 
-        let promise = ctrl.toggleLike();
+        const promise = ctrl.toggleLike();
 
         expect(ctrl.loading).to.be.true;
 
-        mocks.tgLikeProjectButton.unlike.withArgs(project.get('id')).resolve();
+        mocks.tgLikeProjectButton.unlike.withArgs(project.get("id")).resolve();
 
         return promise.finally(function() {
             expect(mocks.tgLikeProjectButton.unlike).to.be.calledOnce;
@@ -142,14 +142,14 @@ describe("LikeProjectButton", function() {
     });
 
     return it("toggleLike true -> false, notify error", function(done) {
-        let project = Immutable.fromJS({
-            is_fan: true
+        const project = Immutable.fromJS({
+            is_fan: true,
         });
 
-        let ctrl = $controller("LikeProjectButton");
+        const ctrl = $controller("LikeProjectButton");
         ctrl.project = project;
 
-        mocks.tgLikeProjectButton.unlike.withArgs(project.get('id')).promise().reject(new Error('error'));
+        mocks.tgLikeProjectButton.unlike.withArgs(project.get("id")).promise().reject(new Error("error"));
 
         return ctrl.toggleLike().finally(function() {
             expect(mocks.tgConfirm.notify.withArgs("error")).to.be.calledOnce;

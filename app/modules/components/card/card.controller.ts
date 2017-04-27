@@ -17,14 +17,14 @@
  * File: card.controller.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export class CardController {
-    zoom:any
-    item:any
-    onToggleFold:any
-    type:any
+    zoom: any;
+    item: any;
+    onToggleFold: any;
+    type: any;
 
     static initClass() {
         this.$inject = [];
@@ -35,58 +35,58 @@ export class CardController {
     }
 
     hasTasks() {
-        let tasks = this.item.getIn(['model', 'tasks']);
+        const tasks = this.item.getIn(["model", "tasks"]);
         return tasks && (tasks.size > 0);
     }
 
     hasVisibleAttachments() {
-        return this.item.get('images').size > 0;
+        return this.item.get("images").size > 0;
     }
 
     toggleFold() {
-        return this.onToggleFold({id: this.item.get('id')});
+        return this.onToggleFold({id: this.item.get("id")});
     }
 
     getClosedTasks() {
-        return this.item.getIn(['model', 'tasks']).filter(task => task.get('is_closed'));
+        return this.item.getIn(["model", "tasks"]).filter((task) => task.get("is_closed"));
     }
 
     closedTasksPercent() {
-        return (this.getClosedTasks().size * 100) / this.item.getIn(['model', 'tasks']).size;
+        return (this.getClosedTasks().size * 100) / this.item.getIn(["model", "tasks"]).size;
     }
 
     getPermissionsKey() {
-        if (this.type === 'task') {
-            return 'modify_task';
+        if (this.type === "task") {
+            return "modify_task";
         } else {
-            return 'modify_us';
+            return "modify_us";
         }
     }
 
     _setVisibility() {
-        let visibility = {
-            related: this.visible('related_tasks'),
-            slides: this.visible('attachments')
+        const visibility = {
+            related: this.visible("related_tasks"),
+            slides: this.visible("attachments"),
         };
 
-        if(!_.isUndefined(this.item.get('foldStatusChanged'))) {
-            if (this.visible('related_tasks') && this.visible('attachments')) {
-                visibility.related = !this.item.get('foldStatusChanged');
-                visibility.slides = !this.item.get('foldStatusChanged');
-            } else if (this.visible('attachments')) {
-                visibility.related = this.item.get('foldStatusChanged');
-                visibility.slides = this.item.get('foldStatusChanged');
-            } else if (!this.visible('related_tasks') && !this.visible('attachments')) {
-                visibility.related = this.item.get('foldStatusChanged');
-                visibility.slides = this.item.get('foldStatusChanged');
+        if (!_.isUndefined(this.item.get("foldStatusChanged"))) {
+            if (this.visible("related_tasks") && this.visible("attachments")) {
+                visibility.related = !this.item.get("foldStatusChanged");
+                visibility.slides = !this.item.get("foldStatusChanged");
+            } else if (this.visible("attachments")) {
+                visibility.related = this.item.get("foldStatusChanged");
+                visibility.slides = this.item.get("foldStatusChanged");
+            } else if (!this.visible("related_tasks") && !this.visible("attachments")) {
+                visibility.related = this.item.get("foldStatusChanged");
+                visibility.slides = this.item.get("foldStatusChanged");
             }
         }
 
-        if (!this.item.getIn(['model', 'tasks']) || !this.item.getIn(['model', 'tasks']).size) {
+        if (!this.item.getIn(["model", "tasks"]) || !this.item.getIn(["model", "tasks"]).size) {
             visibility.related = false;
         }
 
-        if (!this.item.get('images') || !this.item.get('images').size) {
+        if (!this.item.get("images") || !this.item.get("images").size) {
             visibility.slides = false;
         }
 
@@ -94,22 +94,22 @@ export class CardController {
     }
 
     isRelatedTasksVisible() {
-        let visibility = this._setVisibility();
+        const visibility = this._setVisibility();
 
         return visibility.related;
     }
 
     isSlideshowVisible() {
-        let visibility = this._setVisibility();
+        const visibility = this._setVisibility();
 
         return visibility.slides;
     }
 
     getNavKey() {
-        if (this.type === 'task') {
-            return 'project-tasks-detail';
+        if (this.type === "task") {
+            return "project-tasks-detail";
         } else {
-            return 'project-userstories-detail';
+            return "project-userstories-detail";
         }
     }
 }

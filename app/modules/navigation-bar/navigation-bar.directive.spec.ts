@@ -17,77 +17,77 @@
  * File: navigation-bar.directive.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("navigationBarDirective", function() {
     let compile, provide;
     let scope = (compile = (provide = null));
-    let mocks:any = {};
-    let template = "<div tg-navigation-bar></div>";
-    let projects = Immutable.fromJS({
+    const mocks: any = {};
+    const template = "<div tg-navigation-bar></div>";
+    const projects = Immutable.fromJS({
         recents: [
             {id: 1},
             {id: 2},
-            {id: 3}
-        ]
+            {id: 3},
+        ],
     });
 
-    let createDirective = function() {
-        let elm = compile(template)(scope);
+    const createDirective = function() {
+        const elm = compile(template)(scope);
         return elm;
     };
 
-    let _mocksCurrentUserService = function() {
+    const _mocksCurrentUserService = function() {
         mocks.currentUserService = {
             projects,
-            isAuthenticated: sinon.stub()
+            isAuthenticated: sinon.stub(),
         };
 
         return provide.value("tgCurrentUserService", mocks.currentUserService);
     };
 
-    let _mocksLocationService = function() {
+    const _mocksLocationService = function() {
         mocks.locationService = {
             url: sinon.stub(),
-            search: sinon.stub()
+            search: sinon.stub(),
         };
 
         return provide.value("$tgLocation", mocks.locationService);
     };
 
-    let _mocksConfig = function() {
+    const _mocksConfig = function() {
         mocks.config =  Immutable.fromJS({
-            publicRegisterEnabled: true
+            publicRegisterEnabled: true,
         });
 
         return provide.value("$tgConfig", mocks.config);
     };
 
-    let _mockTgNavUrls = function() {
+    const _mockTgNavUrls = function() {
         mocks.navUrls = {
-            resolve: sinon.stub()
+            resolve: sinon.stub(),
         };
         return provide.value("$tgNavUrls", mocks.navUrls);
     };
 
-    let _mockTranslateFilter = function() {
-        let mockTranslateFilter = value => value;
+    const _mockTranslateFilter = function() {
+        const mockTranslateFilter = (value) => value;
         return provide.value("translateFilter", mockTranslateFilter);
     };
 
-    let _mockTgDropdownProjectListDirective = () => provide.factory('tgDropdownProjectListDirective', () => ({}));
+    const _mockTgDropdownProjectListDirective = () => provide.factory("tgDropdownProjectListDirective", () => ({}));
 
-    let _mockTgDropdownUserDirective = () => provide.factory('tgDropdownUserDirective', () => ({}));
+    const _mockTgDropdownUserDirective = () => provide.factory("tgDropdownUserDirective", () => ({}));
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
 
@@ -117,16 +117,16 @@ describe("navigationBarDirective", function() {
 
         return recents = Immutable.fromJS([
             {
-                id:1
+                id: 1,
             },
             {
-                id: 2
-            }
+                id: 2,
+            },
         ]);
     });
 
     it("navigation bar directive scope content", function() {
-        let elm = createDirective();
+        const elm = createDirective();
         scope.$apply();
         expect(elm.isolateScope().vm.projects.size).to.be.equal(3);
 
@@ -137,11 +137,11 @@ describe("navigationBarDirective", function() {
 
     return it("navigation bar login", function() {
         mocks.navUrls.resolve.withArgs("login").returns("/login");
-        let nextUrl = "/discover/search?order_by=-total_activity_last_month";
+        const nextUrl = "/discover/search?order_by=-total_activity_last_month";
         mocks.locationService.url.returns(nextUrl);
-        let elm = createDirective();
+        const elm = createDirective();
         scope.$apply();
-        let { vm } = elm.isolateScope();
+        const { vm } = elm.isolateScope();
         expect(mocks.locationService.url.callCount).to.be.equal(0);
         expect(mocks.locationService.search.callCount).to.be.equal(0);
         vm.login();

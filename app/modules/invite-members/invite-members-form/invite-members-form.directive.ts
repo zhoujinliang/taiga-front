@@ -18,24 +18,24 @@
  */
 
 export let InviteMembersFormDirective = function() {
-    let link = function(scope, el, attrs, ctrl) {
+    const link = function(scope, el, attrs, ctrl) {
         ctrl._areRolesValidated();
         return ctrl._checkLimitMemberships();
     };
 
     return {
         scope: {},
-        templateUrl:"invite-members/invite-members-form/invite-members-form.html",
+        templateUrl: "invite-members/invite-members-form/invite-members-form.html",
         controller: "InviteMembersFormCtrl",
         controllerAs: "vm",
         bindToController: {
-            contactsToInvite: '<',
-            emailsToInvite: '=',
-            onDisplayContactList: '&',
-            onRemoveInvitedContact: '&',
-            onRemoveInvitedEmail: '&',
-            onSendInvites: '&'
+            contactsToInvite: "<",
+            emailsToInvite: "=",
+            onDisplayContactList: "&",
+            onRemoveInvitedContact: "&",
+            onRemoveInvitedEmail: "&",
+            onSendInvites: "&",
         },
-        link
+        link,
     };
 };

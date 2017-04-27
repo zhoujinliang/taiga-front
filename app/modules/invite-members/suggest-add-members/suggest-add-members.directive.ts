@@ -18,8 +18,8 @@
  */
 
 export let SuggestAddMembersDirective = function(lightboxService) {
-    let link = (scope, el, attrs, ctrl) =>
-        scope.$watch("vm.contacts", contacts => {
+    const link = (scope, el, attrs, ctrl) =>
+        scope.$watch("vm.contacts", (contacts) => {
             if (contacts) {
                 return ctrl.filterContacts();
             }
@@ -28,14 +28,14 @@ export let SuggestAddMembersDirective = function(lightboxService) {
 
     return {
         scope: {},
-        templateUrl:"invite-members/suggest-add-members/suggest-add-members.html",
+        templateUrl: "invite-members/suggest-add-members/suggest-add-members.html",
         controller: "SuggestAddMembersCtrl",
         controllerAs: "vm",
         bindToController: {
-            contacts: '=',
-            onInviteSuggested: '&',
-            onInviteEmail: '&'
+            contacts: "=",
+            onInviteSuggested: "&",
+            onInviteEmail: "&",
         },
-        link
+        link,
     };
 };

@@ -1,13 +1,13 @@
-import {Component, OnInit, Output, EventEmitter} from "@angular/core"
-import {ActivatedRoute} from "@angular/router"
-import { FormGroup, FormBuilder, Validators } from "@angular/forms"
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {ActivatedRoute} from "@angular/router";
 
-import {LoginData} from "../auth.model"
 import { ConfigurationService } from "../../../ts/modules/base/conf";
+import {LoginData} from "../auth.model";
 
 @Component({
     selector: "tg-login-form",
-    template: require("./login-form.jade")()
+    template: require("./login-form.jade")(),
 })
 export class LoginForm implements OnInit {
     @Output() login: EventEmitter<LoginData>;
@@ -19,19 +19,19 @@ export class LoginForm implements OnInit {
                 private activeRoute: ActivatedRoute) {
         this.login = new EventEmitter();
         this.loginForm = this.fb.group({
-            "username": ['', Validators.required],
-            "password": ['', Validators.required],
-            "type": "normal",
-        })
+            username: ["", Validators.required],
+            password: ["", Validators.required],
+            type: "normal",
+        });
     }
 
     ngOnInit() {
         this.activeRoute.queryParams.subscribe((params) => {
-            this.queryParams = params
-        })
+            this.queryParams = params;
+        });
     }
 
-    onSubmit():boolean {
+    onSubmit(): boolean {
         this.login.emit(this.loginForm.value);
         return false;
     }

@@ -17,12 +17,12 @@
  * File: featured-projects.controller.coffee
  */
 
-import {Component, Input} from "@angular/core"
+import {Component, Input} from "@angular/core";
 
 @Component({
-    selector: 'tg-featured-projects',
-    template: require('./featured-projects.jade')(),
+    selector: "tg-featured-projects",
+    template: require("./featured-projects.jade")(),
 })
 export class FeaturedProjects {
-    @Input() projects:any = []
+    @Input() projects: any = [];
 }

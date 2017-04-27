@@ -17,47 +17,47 @@
  * File: lightbox-add-members.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("AddMembersController", function() {
     let addMembersCtrl =  null;
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockUserService = function() {
+    const _mockUserService = function() {
         mocks.userService = {
-            getContacts: sinon.stub()
+            getContacts: sinon.stub(),
         };
 
         return provide.value("tgUserService", mocks.userService);
     };
 
-    let _mockCurrentUser = function() {
+    const _mockCurrentUser = function() {
         mocks.currentUser = {
-            getUser: sinon.stub()
+            getUser: sinon.stub(),
         };
 
         return provide.value("tgCurrentUserService", mocks.currentUser);
     };
 
-    let _mockProjectService = function() {
+    const _mockProjectService = function() {
         mocks.projectService = {
-            project: sinon.stub()
+            project: sinon.stub(),
         };
 
         return provide.value("tgProjectService", mocks.projectService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockCurrentUser();
@@ -72,26 +72,25 @@ describe("AddMembersController", function() {
 
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
-
 
     it("get user contacts", function(done) {
 
-        let userId = 1;
-        let excludeProjectId = 1;
+        const userId = 1;
+        const excludeProjectId = 1;
 
         mocks.currentUser.getUser.returns(Immutable.fromJS({
-            id: userId
+            id: userId,
         }));
         mocks.projectService.project = Immutable.fromJS({
-            id: excludeProjectId
+            id: excludeProjectId,
         });
 
-        let contacts = Immutable.fromJS({
+        const contacts = Immutable.fromJS({
             username: "username",
             full_name_display: "full-name-display",
-            bio: "bio"
+            bio: "bio",
         });
 
         mocks.userService.getContacts.withArgs(userId, excludeProjectId).promise().resolve(contacts);
@@ -109,9 +108,9 @@ describe("AddMembersController", function() {
         addMembersCtrl = controller("AddMembersCtrl");
         addMembersCtrl.contacts = Immutable.fromJS([
             {id: 1},
-            {id: 2}
+            {id: 2},
         ]);
-        let invited = Immutable.fromJS({id: 1});
+        const invited = Immutable.fromJS({id: 1});
 
         addMembersCtrl._filterContacts(invited);
 
@@ -123,7 +122,7 @@ describe("AddMembersController", function() {
         addMembersCtrl.contactsToInvite = Immutable.List();
         addMembersCtrl.displayContactList = false;
 
-        let contact = Immutable.fromJS({id: 1});
+        const contact = Immutable.fromJS({id: 1});
 
         addMembersCtrl._filterContacts = sinon.stub();
 
@@ -137,9 +136,9 @@ describe("AddMembersController", function() {
         addMembersCtrl = controller("AddMembersCtrl");
         addMembersCtrl.contactsToInvite = Immutable.fromJS([
             {id: 1},
-            {id: 2}
+            {id: 2},
         ]);
-        let invited = {id: 1};
+        const invited = {id: 1};
         addMembersCtrl.contacts = Immutable.fromJS([]);
 
         addMembersCtrl.testEmptyContacts = sinon.stub();
@@ -152,24 +151,24 @@ describe("AddMembersController", function() {
 
     it("invite email", function() {
         addMembersCtrl = controller("AddMembersCtrl");
-        let email = 'email@example.com';
-        let emailData = Immutable.Map({'email': email});
+        const email = "email@example.com";
+        const emailData = Immutable.Map({email});
         addMembersCtrl.displayContactList = false;
 
         addMembersCtrl.emailsToInvite = Immutable.fromJS([]);
 
         addMembersCtrl.inviteEmail(email);
-        expect(emailData.get('email')).to.be.equal(email);
+        expect(emailData.get("email")).to.be.equal(email);
         expect(addMembersCtrl.emailsToInvite.size).to.be.equal(1);
         return expect(addMembersCtrl.displayContactList).to.be.true;
     });
 
     it("remove email", function() {
         addMembersCtrl = controller("AddMembersCtrl");
-        let invited = {email: 'email@example.com'};
+        const invited = {email: "email@example.com"};
         addMembersCtrl.emailsToInvite = Immutable.fromJS([
-            {'email': 'email@example.com'},
-            {'email': 'email@example2.com'}
+            {email: "email@example.com"},
+            {email: "email@example2.com"},
         ]);
 
         addMembersCtrl.testEmptyContacts = sinon.stub();
@@ -183,12 +182,12 @@ describe("AddMembersController", function() {
         addMembersCtrl = controller("AddMembersCtrl");
         addMembersCtrl.displayContactList = true;
         addMembersCtrl.emailsToInvite = Immutable.fromJS([
-            {'email': 'email@example.com'},
-            {'email': 'email@example2.com'}
+            {email: "email@example.com"},
+            {email: "email@example2.com"},
         ]);
         addMembersCtrl.contactsToInvite = Immutable.fromJS([
-            {'id': 1},
-            {'id': 1}
+            {id: 1},
+            {id: 1},
         ]);
         addMembersCtrl.testEmptyContacts();
         return expect(addMembersCtrl.displayContactList).to.be.true;

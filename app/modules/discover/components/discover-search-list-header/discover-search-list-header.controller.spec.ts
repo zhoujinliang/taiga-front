@@ -17,29 +17,29 @@
  * File: discover-search-list-header.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("DiscoverSearchListHeader", function() {
-    let $provide = null;
+    const $provide = null;
     let $controller = null;
     let scope = null;
 
-    let _inject = () =>
+    const _inject = () =>
         inject(function(_$controller_, $rootScope) {
             $controller = _$controller_;
             return scope = $rootScope.$new();
         })
     ;
 
-    let _setup = () => _inject();
+    const _setup = () => _inject();
 
     beforeEach(function() {
         module("taigaDiscover");
@@ -48,8 +48,8 @@ describe("DiscoverSearchListHeader", function() {
     });
 
     it("openLike", function() {
-        let ctrl = $controller("DiscoverSearchListHeader", scope, {
-            orderBy: ''
+        const ctrl = $controller("DiscoverSearchListHeader", scope, {
+            orderBy: "",
         });
 
         ctrl.like_is_open = false;
@@ -60,12 +60,12 @@ describe("DiscoverSearchListHeader", function() {
 
         expect(ctrl.like_is_open).to.be.true;
         expect(ctrl.activity_is_open).to.be.false;
-        return expect(ctrl.setOrderBy).have.been.calledWith('-total_fans_last_week');
+        return expect(ctrl.setOrderBy).have.been.calledWith("-total_fans_last_week");
     });
 
     it("openActivity", function() {
-        let ctrl = $controller("DiscoverSearchListHeader", scope, {
-            orderBy: ''
+        const ctrl = $controller("DiscoverSearchListHeader", scope, {
+            orderBy: "",
         });
 
         ctrl.activity_is_open = false;
@@ -76,12 +76,12 @@ describe("DiscoverSearchListHeader", function() {
 
         expect(ctrl.activity_is_open).to.be.true;
         expect(ctrl.like_is_open).to.be.false;
-        return expect(ctrl.setOrderBy).have.been.calledWith('-total_activity_last_week');
+        return expect(ctrl.setOrderBy).have.been.calledWith("-total_activity_last_week");
     });
 
     it("setOrderBy", function() {
-        let ctrl = $controller("DiscoverSearchListHeader", scope, {
-            orderBy: ''
+        const ctrl = $controller("DiscoverSearchListHeader", scope, {
+            orderBy: "",
         });
 
         ctrl.onChange = sinon.spy();
@@ -92,8 +92,8 @@ describe("DiscoverSearchListHeader", function() {
     });
 
     it("setOrderBy falsy close the like or activity layer", function() {
-        let ctrl = $controller("DiscoverSearchListHeader", scope, {
-            orderBy: ''
+        const ctrl = $controller("DiscoverSearchListHeader", scope, {
+            orderBy: "",
         });
 
         ctrl.like_is_open = true;
@@ -103,14 +103,14 @@ describe("DiscoverSearchListHeader", function() {
 
         ctrl.setOrderBy();
 
-        expect(ctrl.onChange).to.have.been.calledWith(sinon.match({orderBy: ''}));
+        expect(ctrl.onChange).to.have.been.calledWith(sinon.match({orderBy: ""}));
         expect(ctrl.like_is_open).to.be.false;
         return expect(ctrl.activity_is_open).to.be.false;
     });
 
     it("closed like & activity", function() {
-        let ctrl = $controller("DiscoverSearchListHeader", scope, {
-            orderBy: ''
+        const ctrl = $controller("DiscoverSearchListHeader", scope, {
+            orderBy: "",
         });
 
         expect(ctrl.like_is_open).to.be.false;
@@ -118,8 +118,8 @@ describe("DiscoverSearchListHeader", function() {
     });
 
     it("open like", function() {
-        let ctrl = $controller("DiscoverSearchListHeader", scope, {
-            orderBy: '-total_fans'
+        const ctrl = $controller("DiscoverSearchListHeader", scope, {
+            orderBy: "-total_fans",
         });
 
         expect(ctrl.like_is_open).to.be.true;
@@ -127,8 +127,8 @@ describe("DiscoverSearchListHeader", function() {
     });
 
     return it("open activity", function() {
-        let ctrl = $controller("DiscoverSearchListHeader", scope, {
-            orderBy: '-total_activity'
+        const ctrl = $controller("DiscoverSearchListHeader", scope, {
+            orderBy: "-total_activity",
         });
 
         expect(ctrl.like_is_open).to.be.false;

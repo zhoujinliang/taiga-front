@@ -17,9 +17,9 @@
  * File: tag-line.service.coffee
  */
 
-import {Service} from "../../../ts/classes"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {Service} from "../../../ts/classes";
 
 export class TagLineService extends Service {
     static initClass() {
@@ -27,7 +27,7 @@ export class TagLineService extends Service {
     }
 
     constructor() {
-        super()
+        super();
     }
 
     checkPermissions(myPermissions, projectPermissions) {
@@ -39,4 +39,3 @@ export class TagLineService extends Service {
     }
 }
 TagLineService.initClass();
-

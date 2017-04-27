@@ -10,12 +10,12 @@ export class KanbanTable implements OnChanges {
     @Input() userstories: Immutable.List<any>;
     @Input() zoom: any;
     statuses: Immutable.List<any> = Immutable.List();
-    folds: any = {}
-    archivedWatched: any = {}
+    folds: any = {};
+    archivedWatched: any = {};
 
     ngOnChanges() {
         if (this.project) {
-            this.statuses = this.project.get('us_statuses').sortBy((data) => data.get('order'));
+            this.statuses = this.project.get("us_statuses").sortBy((data) => data.get("order"));
         }
     }
 }

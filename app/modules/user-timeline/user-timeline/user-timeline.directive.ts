@@ -25,8 +25,8 @@ export let UserTimelineDirective = () =>
         scope: {
             projectId: "=projectid",
             user: "=",
-            currentUser: "="
+            currentUser: "=",
         },
-        bindToController: true
+        bindToController: true,
     })
 ;

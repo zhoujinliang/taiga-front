@@ -17,26 +17,25 @@
  * File: project-menu.controller.coffee
  */
 
-import {slugify} from "../../../libs/utils"
-import * as _ from "lodash"
-import * as Immutable from "immutable"
-import {Component, Input, OnChanges} from "@angular/core"
+import {Component, Input, OnChanges} from "@angular/core";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {slugify} from "../../../libs/utils";
 
 @Component({
     selector: "tg-project-menu",
-    template: require("./project-menu.jade")()
+    template: require("./project-menu.jade")(),
 })
 export class ProjectMenu implements OnChanges {
-    @Input() project:any;
-    @Input() active:any = "";
-    menu:any;
-    videoconferenceUrl:string;
-
+    @Input() project: any;
+    @Input() active: any = "";
+    menu: any;
+    videoconferenceUrl: string;
 
     constructor() {}
 
     ngOnChanges() {
-        if(this.project) {
+        if (this.project) {
             this._setMenu();
             this._setVideoConferenceUrl();
         }
@@ -48,7 +47,7 @@ export class ProjectMenu implements OnChanges {
             backlog: false,
             kanban: false,
             issues: false,
-            wiki: false
+            wiki: false,
         });
         if (this.project.get("is_epics_activated") && (this.project.get("my_permissions").indexOf("view_epics") !== -1)) {
             this.menu = this.menu.set("epics", true);
@@ -73,7 +72,7 @@ export class ProjectMenu implements OnChanges {
 
     search() {
         // TODO
-        console.log("SEARCH")
+        console.log("SEARCH");
     }
 
     _setVideoConferenceUrl() {

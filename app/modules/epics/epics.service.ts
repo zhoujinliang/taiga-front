@@ -17,29 +17,29 @@
  * File: epics.service.coffee
  */
 
-import {defineImmutableProperty} from "../../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
-import * as Immutable from "immutable"
-import * as Promise from "bluebird"
+import * as angular from "angular";
+import * as Promise from "bluebird";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {defineImmutableProperty} from "../../libs/utils";
 
 export class EpicsService {
-    projectService:any
-    attachmentsService:any
-    resources:any
-    xhrError:any
-    _page:number
-    _loadingEpics:boolean
-    _disablePagination:boolean
-    _epics:any
-    epics:any
+    projectService: any;
+    attachmentsService: any;
+    resources: any;
+    xhrError: any;
+    _page: number;
+    _loadingEpics: boolean;
+    _disablePagination: boolean;
+    _epics: any;
+    epics: any;
 
     static initClass() {
         this.$inject = [
-            'tgProjectService',
-            'tgAttachmentsService',
-            'tgResources',
-            'tgXhrErrorService'
+            "tgProjectService",
+            "tgAttachmentsService",
+            "tgResources",
+            "tgXhrErrorService",
         ];
     }
 
@@ -50,7 +50,7 @@ export class EpicsService {
         this.xhrError = xhrError;
         this.clear();
 
-        defineImmutableProperty(this, 'epics', () => { return this._epics; });
+        defineImmutableProperty(this, "epics", () => this._epics);
     }
 
     clear() {
@@ -60,12 +60,12 @@ export class EpicsService {
         return this._epics = Immutable.List();
     }
 
-    fetchEpics(reset=false) {
+    fetchEpics(reset= false) {
         this._loadingEpics = true;
         this._disablePagination = true;
 
-        return this.resources.epics.list(this.projectService.project.get('id'), this._page)
-            .then(result => {
+        return this.resources.epics.list(this.projectService.project.get("id"), this._page)
+            .then((result) => {
                 if (reset) {
                     this.clear();
                     this._epics = result.list;
@@ -75,8 +75,8 @@ export class EpicsService {
 
                 this._loadingEpics = false;
 
-                return this._disablePagination = !result.headers['x-pagination-next'];
-        }).catch(xhr => {
+                return this._disablePagination = !result.headers["x-pagination-next"];
+        }).catch((xhr) => {
                 return this.xhrError.response(xhr);
         });
     }
@@ -88,16 +88,16 @@ export class EpicsService {
     }
 
     listRelatedUserStories(epic) {
-        return this.resources.userstories.listInEpic(epic.get('id'));
+        return this.resources.userstories.listInEpic(epic.get("id"));
     }
 
     createEpic(epicData, attachments) {
-        epicData.project = this.projectService.project.get('id');
+        epicData.project = this.projectService.project.get("id");
 
         return this.resources.epics.post(epicData)
-            .then(epic => {
-                let promises = _.map(attachments.toJS(), (attachment:any) => {
-                    return this.attachmentsService.upload(attachment.file, epic.get('id'), epic.get('project'), 'epic');
+            .then((epic) => {
+                const promises = _.map(attachments.toJS(), (attachment: any) => {
+                    return this.attachmentsService.upload(attachment.file, epic.get("id"), epic.get("project"), "epic");
                 });
 
                 return Promise.all(promises).then(this.fetchEpics.bind(this, true));
@@ -105,40 +105,40 @@ export class EpicsService {
     }
 
     reorderEpic(epic, newIndex) {
-        let orderList = {};
-        this._epics.forEach(it => orderList[it.get('id')] = it.get('epics_order'));
+        const orderList = {};
+        this._epics.forEach((it) => orderList[it.get("id")] = it.get("epics_order"));
 
-        let withoutMoved = this.epics.filter(it => it.get('id') !== epic.get('id'));
-        let beforeDestination = withoutMoved.slice(0, newIndex);
-        let afterDestination = withoutMoved.slice(newIndex);
+        const withoutMoved = this.epics.filter((it) => it.get("id") !== epic.get("id"));
+        const beforeDestination = withoutMoved.slice(0, newIndex);
+        const afterDestination = withoutMoved.slice(newIndex);
 
-        let previous = beforeDestination.last();
-        let newOrder = !previous ? 0 : previous.get('epics_order') + 1;
+        const previous = beforeDestination.last();
+        const newOrder = !previous ? 0 : previous.get("epics_order") + 1;
 
-        orderList[epic.get('id')] = newOrder;
+        orderList[epic.get("id")] = newOrder;
 
-        let previousWithTheSameOrder = beforeDestination.filter(it => {
-            return it.get('epics_order') === previous.get('epics_order');
+        const previousWithTheSameOrder = beforeDestination.filter((it) => {
+            return it.get("epics_order") === previous.get("epics_order");
         });
 
-        let setOrders = _.fromPairs(previousWithTheSameOrder.map(it => {
-            return [it.get('id'), it.get('epics_order')];
-        }).toJS()
+        const setOrders = _.fromPairs(previousWithTheSameOrder.map((it) => {
+            return [it.get("id"), it.get("epics_order")];
+        }).toJS(),
         );
 
-        afterDestination.forEach(it => orderList[it.get('id')] = it.get('epics_order') + 1);
+        afterDestination.forEach((it) => orderList[it.get("id")] = it.get("epics_order") + 1);
 
-        this._epics = this._epics.map(it => it.set('epics_order', orderList[it.get('id')]));
-        this._epics = this._epics.sortBy(it => it.get('epics_order'));
+        this._epics = this._epics.map((it) => it.set("epics_order", orderList[it.get("id")]));
+        this._epics = this._epics.sortBy((it) => it.get("epics_order"));
 
-        let data = {
+        const data = {
             epics_order: newOrder,
-            version: epic.get('version')
+            version: epic.get("version"),
         };
 
-        return this.resources.epics.reorder(epic.get('id'), data, setOrders).then(newEpic => {
+        return this.resources.epics.reorder(epic.get("id"), data, setOrders).then((newEpic) => {
             return this._epics = this._epics.map(function(it) {
-                if (it.get('id') === newEpic.get('id')) {
+                if (it.get("id") === newEpic.get("id")) {
                     return newEpic;
                 }
 
@@ -148,25 +148,25 @@ export class EpicsService {
     }
 
     reorderRelatedUserstory(epic, epicUserstories, userstory, newIndex) {
-        let withoutMoved = epicUserstories.filter(it => it.get('id') !== userstory.get('id'));
-        let beforeDestination = withoutMoved.slice(0, newIndex);
+        const withoutMoved = epicUserstories.filter((it) => it.get("id") !== userstory.get("id"));
+        const beforeDestination = withoutMoved.slice(0, newIndex);
 
-        let previous = beforeDestination.last();
-        let newOrder = !previous ? 0 : previous.get('epic_order') + 1;
+        const previous = beforeDestination.last();
+        const newOrder = !previous ? 0 : previous.get("epic_order") + 1;
 
-        let previousWithTheSameOrder = beforeDestination.filter(it => {
-            return it.get('epic_order') === previous.get('epic_order');
+        const previousWithTheSameOrder = beforeDestination.filter((it) => {
+            return it.get("epic_order") === previous.get("epic_order");
         });
-        let setOrders = _.fromPairs(previousWithTheSameOrder.map(it => {
-            return [it.get('id'), it.get('epic_order')];
-        }).toJS()
+        const setOrders = _.fromPairs(previousWithTheSameOrder.map((it) => {
+            return [it.get("id"), it.get("epic_order")];
+        }).toJS(),
         );
 
-        let data = {
-            order: newOrder
+        const data = {
+            order: newOrder,
         };
-        let epicId = epic.get('id');
-        let userstoryId = userstory.get('id');
+        const epicId = epic.get("id");
+        const userstoryId = userstory.get("id");
         return this.resources.epics.reorderRelatedUserstory(epicId, userstoryId, data, setOrders)
             .then(() => {
                 return this.listRelatedUserStories(epic);
@@ -175,7 +175,7 @@ export class EpicsService {
 
     replaceEpic(epic) {
         return this._epics = this._epics.map(function(it) {
-            if (it.get('id') === epic.get('id')) {
+            if (it.get("id") === epic.get("id")) {
                 return epic;
             }
 
@@ -184,22 +184,22 @@ export class EpicsService {
     }
 
     updateEpicStatus(epic, statusId) {
-        let data = {
+        const data = {
             status: statusId,
-            version: epic.get('version')
+            version: epic.get("version"),
         };
 
-        return this.resources.epics.patch(epic.get('id'), data)
+        return this.resources.epics.patch(epic.get("id"), data)
             .then(this.replaceEpic.bind(this));
     }
 
     updateEpicAssignedTo(epic, userId) {
-        let data = {
+        const data = {
             assigned_to: userId,
-            version: epic.get('version')
+            version: epic.get("version"),
         };
 
-        return this.resources.epics.patch(epic.get('id'), data)
+        return this.resources.epics.patch(epic.get("id"), data)
             .then(this.replaceEpic.bind(this));
     }
 }

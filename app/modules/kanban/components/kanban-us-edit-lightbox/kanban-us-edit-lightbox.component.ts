@@ -17,19 +17,19 @@
  * File: kanban-board-zoom.directive.coffee
  */
 
-import {Component, Input} from "@angular/core"
-import { Store } from "@ngrx/store"
-import { ChangeKanbanZoom } from "../../kanban.actions";
-import { ZoomLevelService} from "../../../services/zoom-level.service";
+import {Component, Input} from "@angular/core";
+import { Store } from "@ngrx/store";
 import { IState } from "../../../../app.store";
+import { ZoomLevelService} from "../../../services/zoom-level.service";
+import { ChangeKanbanZoom } from "../../kanban.actions";
 
 @Component({
+    host: {class: "lightbox-generic-form"},
     selector: "tg-kanban-us-edit-lightbox",
     template: require("./kanban-us-edit-lightbox.jade")(),
-    host: {'class': 'lightbox-generic-form'},
 })
 export class KanbanUsEditLightbox {
     @Input() us: any;
-    @Input() currentState:any;
+    @Input() currentState: any;
     @Input() project: any;
-};
+}

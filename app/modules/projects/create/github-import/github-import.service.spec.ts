@@ -17,48 +17,48 @@
  * File: github-import.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgGithubImportService", function() {
     let $provide = null;
     let service = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockResources = function() {
+    const _mockResources = function() {
         mocks.resources = {
             githubImporter: {
                 listProjects: sinon.stub(),
                 listUsers: sinon.stub(),
                 importProject: sinon.stub(),
                 getAuthUrl: sinon.stub(),
-                authorize: sinon.stub()
-            }
+                authorize: sinon.stub(),
+            },
         };
 
         return $provide.value("tgResources", mocks.resources);
     };
 
-    let _mockLocation = function() {
+    const _mockLocation = function() {
         mocks.location = {
-            search: sinon.stub()
+            search: sinon.stub(),
         };
 
         mocks.location.search.returns({
-            token: 123
+            token: 123,
         });
 
         return $provide.value("$location", mocks.location);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -69,11 +69,11 @@ describe("tgGithubImportService", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_tgGithubImportService_ => service = _tgGithubImportService_)
+    const _inject = () =>
+        inject((_tgGithubImportService_) => service = _tgGithubImportService_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -87,7 +87,7 @@ describe("tgGithubImportService", function() {
     it("fetch projects", function(done) {
         service.setToken(123);
 
-        mocks.resources.githubImporter.listProjects.withArgs(123).promise().resolve('projects');
+        mocks.resources.githubImporter.listProjects.withArgs(123).promise().resolve("projects");
 
         return service.fetchProjects().then(function() {
             service.projects = "projects";
@@ -98,32 +98,32 @@ describe("tgGithubImportService", function() {
     it("fetch user", function(done) {
         service.setToken(123);
 
-        let projectId = 3;
-        mocks.resources.githubImporter.listUsers.withArgs(123, projectId).promise().resolve('users');
+        const projectId = 3;
+        mocks.resources.githubImporter.listUsers.withArgs(123, projectId).promise().resolve("users");
 
         return service.fetchUsers(projectId).then(function() {
-            service.projectUsers = 'users';
+            service.projectUsers = "users";
             return done();
         });
     });
 
     it("import project", function() {
         service.setToken(123);
-        let projectId = 2;
+        const projectId = 2;
 
-        service.importProject(projectId, true, true ,true);
+        service.importProject(projectId, true, true , true);
 
         return expect(mocks.resources.githubImporter.importProject).to.have.been.calledWith(123, projectId, true, true, true);
     });
 
     it("get auth url", function(done) {
         service.setToken(123);
-        let projectId = 3;
+        const projectId = 3;
 
-        let response = {
+        const response = {
             data: {
-                url: "url123"
-            }
+                url: "url123",
+            },
         };
 
         mocks.resources.githubImporter.getAuthUrl.promise().resolve(response);
@@ -136,13 +136,13 @@ describe("tgGithubImportService", function() {
 
     return it("authorize", function(done) {
         service.setToken(123);
-        let projectId = 3;
-        let verifyCode = 12345;
+        const projectId = 3;
+        const verifyCode = 12345;
 
-        let response = {
+        const response = {
             data: {
-                token: "token123"
-            }
+                token: "token123",
+            },
         };
 
         mocks.resources.githubImporter.authorize.withArgs(verifyCode).promise().resolve(response);

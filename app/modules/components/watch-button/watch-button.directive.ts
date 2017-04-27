@@ -24,11 +24,11 @@ export let WatchButtonDirective = () =>
         bindToController: {
             item: "=",
             onWatch: "=",
-            onUnwatch: "="
+            onUnwatch: "=",
         },
         controllerAs: "vm",
         templateUrl(item, attributes) {
             return `components/watch-button/watch-button-${attributes.environment}.html`;
-        }
+        },
     })
 ;

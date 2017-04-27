@@ -17,16 +17,16 @@
  * File: wiki-history.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let WikiHistoryEntryDirective = function() {
-    let link = (scope, el, attr) => scope.singleHistoryEntry = scope.historyEntry.toJS();
+    const link = (scope, el, attr) => scope.singleHistoryEntry = scope.historyEntry.toJS();
 
     return {
         link,
-        templateUrl:"wiki/history/wiki-history-entry.html",
+        templateUrl: "wiki/history/wiki-history-entry.html",
         scope: {
-            historyEntry: "<"
-        }
+            historyEntry: "<",
+        },
     };
 };

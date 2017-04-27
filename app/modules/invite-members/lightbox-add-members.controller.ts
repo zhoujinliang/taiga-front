@@ -17,18 +17,18 @@
  * File: add-members.controller.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
-import * as Immutable from "immutable"
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
 
 export class AddMembersController {
-    userService:any
-    currentUserService:any
-    projectService:any
-    contactsToInvite: Immutable.List<any>
-    emailsToInvite: Immutable.List<any>
-    displayContactList:boolean
-    contacts:any
+    userService: any;
+    currentUserService: any;
+    projectService: any;
+    contactsToInvite: Immutable.List<any>;
+    emailsToInvite: Immutable.List<any>;
+    displayContactList: boolean;
+    contacts: any;
 
     static initClass() {
         this.$inject = [
@@ -48,17 +48,17 @@ export class AddMembersController {
     }
 
     _getContacts() {
-        let userId = this.currentUserService.getUser().get("id");
-        let excludeProjectId = this.projectService.project.get("id");
+        const userId = this.currentUserService.getUser().get("id");
+        const excludeProjectId = this.projectService.project.get("id");
 
-        return this.userService.getContacts(userId, excludeProjectId).then(contacts => {
+        return this.userService.getContacts(userId, excludeProjectId).then((contacts) => {
             return this.contacts = contacts;
         });
     }
 
     _filterContacts(invited) {
-        return this.contacts = this.contacts.filter( contact => {
-            return contact.get('id') !== invited.get('id');
+        return this.contacts = this.contacts.filter( (contact) => {
+            return contact.get("id") !== invited.get("id");
         });
     }
 
@@ -69,24 +69,24 @@ export class AddMembersController {
     }
 
     removeContact(invited) {
-        this.contactsToInvite = <Immutable.List<any>>this.contactsToInvite.filter( contact => {
-            return contact.get('id') !== invited.id;
-        });
+        this.contactsToInvite = this.contactsToInvite.filter( (contact) => {
+            return contact.get("id") !== invited.id;
+        }) as Immutable.List<any>;
         invited = Immutable.fromJS(invited);
         this.contacts = this.contacts.push(invited);
         return this.testEmptyContacts();
     }
 
     inviteEmail(email) {
-        let emailData = Immutable.Map({'email': email});
+        const emailData = Immutable.Map({email});
         this.emailsToInvite = this.emailsToInvite.push(emailData);
         return this.displayContactList = true;
     }
 
     removeEmail(invited) {
-        this.emailsToInvite = <Immutable.List<any>>this.emailsToInvite.filter( email => {
-            return email.get('email') !== invited.email;
-        });
+        this.emailsToInvite = this.emailsToInvite.filter( (email) => {
+            return email.get("email") !== invited.email;
+        }) as Immutable.List<any>;
         return this.testEmptyContacts();
     }
 

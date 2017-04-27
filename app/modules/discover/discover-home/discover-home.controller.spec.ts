@@ -17,53 +17,53 @@
  * File: doscover-home.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("DiscoverHomeController", function() {
     let $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translate = {};
         mocks.translate.instant = sinon.stub();
 
         return $provide.value("$translate", mocks.translate);
     };
 
-    let _mockAppMetaService = function() {
+    const _mockAppMetaService = function() {
         mocks.appMetaService = {
-            setAll: sinon.spy()
+            setAll: sinon.spy(),
         };
 
         return $provide.value("tgAppMetaService", mocks.appMetaService);
     };
 
-    let _mockLocation = function() {
+    const _mockLocation = function() {
         mocks.location = {};
 
-        return $provide.value('$tgLocation', mocks.location);
+        return $provide.value("$tgLocation", mocks.location);
     };
 
-    let _mockNavUrls = function() {
+    const _mockNavUrls = function() {
         mocks.navUrls = {};
 
-        return $provide.value('$tgNavUrls', mocks.navUrls);
+        return $provide.value("$tgNavUrls", mocks.navUrls);
     };
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -76,7 +76,7 @@ describe("DiscoverHomeController", function() {
         })
     ;
 
-    let _setup = () => _inject();
+    const _setup = () => _inject();
 
     beforeEach(function() {
         module("taigaDiscover");
@@ -87,31 +87,31 @@ describe("DiscoverHomeController", function() {
 
     it("initialize meta data", function() {
         mocks.translate.instant
-            .withArgs('DISCOVER.PAGE_TITLE')
-            .returns('meta-title');
+            .withArgs("DISCOVER.PAGE_TITLE")
+            .returns("meta-title");
         mocks.translate.instant
-            .withArgs('DISCOVER.PAGE_DESCRIPTION')
-            .returns('meta-description');
+            .withArgs("DISCOVER.PAGE_DESCRIPTION")
+            .returns("meta-description");
 
-        let ctrl = $controller('DiscoverHome');
+        const ctrl = $controller("DiscoverHome");
 
         return expect(mocks.appMetaService.setAll.calledWithExactly("meta-title", "meta-description")).to.be.true;
     });
 
     return it("onSubmit redirect to discover search", function() {
-        mocks.navUrls.resolve = sinon.stub().withArgs('discover-search').returns('url');
+        mocks.navUrls.resolve = sinon.stub().withArgs("discover-search").returns("url");
 
-        let pathSpy = sinon.spy();
-        let searchStub = {
-            path: pathSpy
+        const pathSpy = sinon.spy();
+        const searchStub = {
+            path: pathSpy,
         };
 
-        mocks.location.search = sinon.stub().withArgs('text', 'query').returns(searchStub);
+        mocks.location.search = sinon.stub().withArgs("text", "query").returns(searchStub);
 
-        let ctrl = $controller("DiscoverHome");
+        const ctrl = $controller("DiscoverHome");
 
-        ctrl.onSubmit('query');
+        ctrl.onSubmit("query");
 
-        return expect(pathSpy).to.have.been.calledWith('url');
+        return expect(pathSpy).to.have.been.calledWith("url");
     });
 });

@@ -17,41 +17,41 @@
  * File: lightbox-factory.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-declare var sinon:any;
-import * as Immutable from "immutable"
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+declare var sinon: any;
+import * as Immutable from "immutable";
 
 describe("tgLightboxFactory", function() {
     let provide;
     let lightboxFactoryService = (provide = null);
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockRootScope = function() {
+    const _mockRootScope = function() {
         mocks.rootScope = sinon.stub();
         return provide.value("$rootScope", {$new: mocks.rootScope});
     };
 
-    let _mockCompile = function() {
+    const _mockCompile = function() {
         mocks.compile = sinon.stub();
-        let fn = () => "<p id='fake'>fake</p>";
+        const fn = () => "<p id='fake'>fake</p>";
         mocks.compile.returns(fn);
         return provide.value("$compile", mocks.compile);
     };
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_tgLightboxFactory_) {
             lightboxFactoryService = _tgLightboxFactory_;
             if (callback) { return callback(); }
         })
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockRootScope();
@@ -61,7 +61,7 @@ describe("tgLightboxFactory", function() {
         })
     ;
 
-    let _setup = () => _mocks();
+    const _setup = () => _mocks();
 
     beforeEach(function() {
         module("taigaCommon");
@@ -78,20 +78,20 @@ describe("tgLightboxFactory", function() {
     it("directive must have the tg-bind-scope directive", function() {
         lightboxFactoryService.create("fake-directive");
 
-        let checkDirective = sinon.match(( value => value.attr("tg-bind-scope")), "checkDirective");
+        const checkDirective = sinon.match(( (value) => value.attr("tg-bind-scope")), "checkDirective");
 
         return expect(mocks.compile.withArgs(checkDirective)).to.have.been.calledOnce;
     });
 
     it("custom attributes", function() {
-        let attrs = {
-            "class": "x1",
-            "id": "x2"
+        const attrs = {
+            class: "x1",
+            id: "x2",
         };
 
         lightboxFactoryService.create("fake-directive", attrs);
 
-        let checkAttributes = sinon.match(( value => value.hasClass("x1") && (value.attr("id") === "x2") && value.hasClass("remove-on-close")), "checkAttributes");
+        const checkAttributes = sinon.match(( (value) => value.hasClass("x1") && (value.attr("id") === "x2") && value.hasClass("remove-on-close")), "checkAttributes");
 
         return expect(mocks.compile.withArgs(checkAttributes)).to.have.been.calledOnce;
     });
@@ -99,7 +99,7 @@ describe("tgLightboxFactory", function() {
     return it("directive has class remove-on-close", function() {
         lightboxFactoryService.create("fake-directive");
 
-        let checkClass = sinon.match(( value => value.hasClass("remove-on-close")), "checkClass");
+        const checkClass = sinon.match(( (value) => value.hasClass("remove-on-close")), "checkClass");
 
         return expect(mocks.compile.withArgs(checkClass)).to.have.been.calledOnce;
     });

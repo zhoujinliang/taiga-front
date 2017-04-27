@@ -22,12 +22,11 @@
  * File: modules/resources/search.coffee
  */
 
-
-import * as _ from "lodash"
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
-import {HttpService} from "../../ts/modules/base/http"
-import {UrlsService} from "../../ts/modules/base/urls"
+import {Injectable} from "@angular/core";
+import * as _ from "lodash";
+import {HttpService} from "../../ts/modules/base/http";
+import {RepositoryService} from "../../ts/modules/base/repository";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class SearchResource {
@@ -36,17 +35,17 @@ export class SearchResource {
                 private http: HttpService) {}
 
     do(projectId, term) {
-        let url = this.urls.resolve("search");
-        let params = {
+        const url = this.urls.resolve("search");
+        const params = {
             url,
             method: "GET",
             params: {
                 project: projectId,
                 text: term,
                 get_all: false,
-            }
+            },
         };
 
-        return this.http.request(params).map((data:any) => data.data);
-    };
-};
+        return this.http.request(params).map((data: any) => data.data);
+    }
+}

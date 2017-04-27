@@ -22,11 +22,11 @@
  * File: modules/resources/importers.coffee
  */
 
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
 
-import {Injectable} from "@angular/core"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../ts/modules/base/http";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class TrelloResource {
@@ -36,26 +36,26 @@ export class TrelloResource {
     getAuthUrl(url) {
         url = this.urls.resolve("importers-trello-auth-url");
         return this.http.get(url);
-    };
+    }
 
     authorize(verifyCode) {
-        let url = this.urls.resolve("importers-trello-authorize");
+        const url = this.urls.resolve("importers-trello-authorize");
         return this.http.post(url, {code: verifyCode});
-    };
+    }
 
     listProjects(token) {
-        let url = this.urls.resolve("importers-trello-list-projects");
-        return this.http.post(url, {token}).map((response:any) => Immutable.fromJS(response.data));
-    };
+        const url = this.urls.resolve("importers-trello-list-projects");
+        return this.http.post(url, {token}).map((response: any) => Immutable.fromJS(response.data));
+    }
 
     listUsers(token, projectId) {
-        let url = this.urls.resolve("importers-trello-list-users");
-        return this.http.post(url, {token, project: projectId}).map((response:any) => Immutable.fromJS(response.data));
-    };
+        const url = this.urls.resolve("importers-trello-list-users");
+        return this.http.post(url, {token, project: projectId}).map((response: any) => Immutable.fromJS(response.data));
+    }
 
     importProject(token, name, description, projectId, userBindings, keepExternalReference, isPrivate) {
-        let url = this.urls.resolve("importers-trello-import-project");
-        let data = {
+        const url = this.urls.resolve("importers-trello-import-project");
+        const data = {
             token,
             name,
             description,
@@ -66,8 +66,8 @@ export class TrelloResource {
             template: "kanban",
         };
         return this.http.post(url, data);
-    };
-};
+    }
+}
 
 @Injectable()
 export class JiraResource {
@@ -75,33 +75,33 @@ export class JiraResource {
                 private http: HttpService) {}
 
     getAuthUrl(jira_url) {
-        let url = this.urls.resolve("importers-jira-auth-url") + "?url=" + jira_url;
+        const url = this.urls.resolve("importers-jira-auth-url") + "?url=" + jira_url;
         return this.http.get(url);
-    };
+    }
 
     authorize(oauth_verifier) {
-        let url = this.urls.resolve("importers-jira-authorize");
+        const url = this.urls.resolve("importers-jira-authorize");
         return this.http.post(url, {oauth_verifier});
-    };
+    }
 
     listProjects(jira_url, token) {
-        let url = this.urls.resolve("importers-jira-list-projects");
-        return this.http.post(url, {url: jira_url, token}).map((response:any) => Immutable.fromJS(response.data));
-    };
+        const url = this.urls.resolve("importers-jira-list-projects");
+        return this.http.post(url, {url: jira_url, token}).map((response: any) => Immutable.fromJS(response.data));
+    }
 
     listUsers(jira_url, token, projectId) {
-        let url = this.urls.resolve("importers-jira-list-users");
-        return this.http.post(url, {url: jira_url, token, project: projectId}).map((response:any) => Immutable.fromJS(response.data));
-    };
+        const url = this.urls.resolve("importers-jira-list-users");
+        return this.http.post(url, {url: jira_url, token, project: projectId}).map((response: any) => Immutable.fromJS(response.data));
+    }
 
     importProject(jira_url, token, name, description, projectId, userBindings, keepExternalReference, isPrivate, projectType, importerType) {
-        let url = this.urls.resolve("importers-jira-import-project");
+        const url = this.urls.resolve("importers-jira-import-project");
         let projectTemplate = "kanban";
         if (projectType !== "kanban") {
             projectTemplate = "scrum";
         }
 
-        let data = {
+        const data = {
             url: jira_url,
             token,
             name,
@@ -115,8 +115,8 @@ export class JiraResource {
             template: projectTemplate,
         };
         return this.http.post(url, data);
-    };
-};
+    }
+}
 
 @Injectable()
 export class GithubResource {
@@ -124,29 +124,29 @@ export class GithubResource {
                 private http: HttpService) {}
 
     getAuthUrl(callbackUri) {
-        let url = this.urls.resolve("importers-github-auth-url") + "?uri=" + callbackUri;
+        const url = this.urls.resolve("importers-github-auth-url") + "?uri=" + callbackUri;
         return this.http.get(url);
-    };
+    }
 
     authorize(code) {
-        let url = this.urls.resolve("importers-github-authorize");
+        const url = this.urls.resolve("importers-github-authorize");
         return this.http.post(url, {code});
-    };
+    }
 
     listProjects(token) {
-        let url = this.urls.resolve("importers-github-list-projects");
-        return this.http.post(url, {token}).map((response:any) => Immutable.fromJS(response.data));
-    };
+        const url = this.urls.resolve("importers-github-list-projects");
+        return this.http.post(url, {token}).map((response: any) => Immutable.fromJS(response.data));
+    }
 
     listUsers(token, projectId) {
-        let url = this.urls.resolve("importers-github-list-users");
-        return this.http.post(url, {token, project: projectId}).map((response:any) => Immutable.fromJS(response.data));
-    };
+        const url = this.urls.resolve("importers-github-list-users");
+        return this.http.post(url, {token, project: projectId}).map((response: any) => Immutable.fromJS(response.data));
+    }
 
     importProject(token, name, description, projectId, userBindings, keepExternalReference, isPrivate, projectType) {
-        let url = this.urls.resolve("importers-github-import-project");
+        const url = this.urls.resolve("importers-github-import-project");
 
-        let data = {
+        const data = {
             token,
             name,
             description,
@@ -157,8 +157,8 @@ export class GithubResource {
             template: projectType,
         };
         return this.http.post(url, data);
-    };
-};
+    }
+}
 
 @Injectable()
 export class AsanaResource {
@@ -166,29 +166,29 @@ export class AsanaResource {
                 private http: HttpService) {}
 
     getAuthUrl() {
-        let url = this.urls.resolve("importers-asana-auth-url");
+        const url = this.urls.resolve("importers-asana-auth-url");
         return this.http.get(url);
-    };
+    }
 
     authorize(code) {
-        let url = this.urls.resolve("importers-asana-authorize");
+        const url = this.urls.resolve("importers-asana-authorize");
         return this.http.post(url, {code});
-    };
+    }
 
     listProjects(token) {
-        let url = this.urls.resolve("importers-asana-list-projects");
-        return this.http.post(url, {token}).map((response:any) => Immutable.fromJS(response.data));
-    };
+        const url = this.urls.resolve("importers-asana-list-projects");
+        return this.http.post(url, {token}).map((response: any) => Immutable.fromJS(response.data));
+    }
 
     listUsers(token, projectId) {
-        let url = this.urls.resolve("importers-asana-list-users");
-        return this.http.post(url, {token, project: projectId}).map((response:any) => Immutable.fromJS(response.data));
-    };
+        const url = this.urls.resolve("importers-asana-list-users");
+        return this.http.post(url, {token, project: projectId}).map((response: any) => Immutable.fromJS(response.data));
+    }
 
     importProject(token, name, description, projectId, userBindings, keepExternalReference, isPrivate, projectType) {
-        let url = this.urls.resolve("importers-asana-import-project");
+        const url = this.urls.resolve("importers-asana-import-project");
 
-        let data = {
+        const data = {
             token,
             name,
             description,
@@ -199,5 +199,5 @@ export class AsanaResource {
             template: projectType,
         };
         return this.http.post(url, data);
-    };
-};
+    }
+}

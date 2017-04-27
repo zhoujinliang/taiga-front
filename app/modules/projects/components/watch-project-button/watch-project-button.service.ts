@@ -17,23 +17,23 @@
  * File: watch-project-button.service.coffee
  */
 
-import {Service} from "../../../../ts/classes"
+import {Service} from "../../../../ts/classes";
 
 export class WatchProjectButtonService extends Service {
-    rs:any
-    currentUserService:any
-    projectService:any
+    rs: any;
+    currentUserService: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
             "tgResources",
             "tgCurrentUserService",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(rs, currentUserService, projectService) {
-        super()
+        super();
         this.rs = rs;
         this.currentUserService = currentUserService;
         this.projectService = projectService;
@@ -41,32 +41,30 @@ export class WatchProjectButtonService extends Service {
 
     _getProjectIndex(projectId) {
         return this.currentUserService.projects
-                .get('all')
-                .findIndex(project => project.get('id') === projectId);
+                .get("all")
+                .findIndex((project) => project.get("id") === projectId);
     }
 
-
     _updateProjects(projectId, notifyLevel, isWatcher) {
-        let projectIndex = this._getProjectIndex(projectId);
+        const projectIndex = this._getProjectIndex(projectId);
 
         if (projectIndex === -1) { return; }
 
-        let projects = this.currentUserService.projects
-            .get('all')
-            .update(projectIndex, project => {
-                let totalWatchers = project.get('total_watchers');
+        const projects = this.currentUserService.projects
+            .get("all")
+            .update(projectIndex, (project) => {
+                let totalWatchers = project.get("total_watchers");
 
-
-                if (!this.projectService.project.get('is_watcher')  && isWatcher) {
+                if (!this.projectService.project.get("is_watcher")  && isWatcher) {
                     totalWatchers++;
-                } else if (this.projectService.project.get('is_watcher') && !isWatcher) {
+                } else if (this.projectService.project.get("is_watcher") && !isWatcher) {
                     totalWatchers--;
                 }
 
                 return project.merge({
                     is_watcher: isWatcher,
                     total_watchers: totalWatchers,
-                    notify_level: notifyLevel
+                    notify_level: notifyLevel,
                 });
         });
 
@@ -76,16 +74,16 @@ export class WatchProjectButtonService extends Service {
     _updateCurrentProject(notifyLevel, isWatcher) {
         let totalWatchers = this.projectService.project.get("total_watchers");
 
-        if (!this.projectService.project.get('is_watcher')  && isWatcher) {
+        if (!this.projectService.project.get("is_watcher")  && isWatcher) {
             totalWatchers++;
-        } else if (this.projectService.project.get('is_watcher') && !isWatcher) {
+        } else if (this.projectService.project.get("is_watcher") && !isWatcher) {
             totalWatchers--;
         }
 
-        let project = this.projectService.project.merge({
+        const project = this.projectService.project.merge({
             is_watcher: isWatcher,
             notify_level: notifyLevel,
-            total_watchers: totalWatchers
+            total_watchers: totalWatchers,
         });
 
         return this.projectService.setProject(project);

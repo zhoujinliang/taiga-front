@@ -17,48 +17,47 @@
  * File:tag-line-detail.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("TagLineDetail", function() {
     let provide = null;
     let controller = null;
     let TagLineController = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockRootScope = function() {
+    const _mockRootScope = function() {
         mocks.rootScope = {
-            $broadcast: sinon.stub()
+            $broadcast: sinon.stub(),
         };
 
         return provide.value("$rootScope", mocks.rootScope);
     };
 
-    let _mockTgConfirm = function() {
+    const _mockTgConfirm = function() {
         mocks.tgConfirm = {
-            notify: sinon.stub()
+            notify: sinon.stub(),
         };
 
         return provide.value("$tgConfirm", mocks.tgConfirm);
     };
 
-    let _mockTgQueueModelTransformation = function() {
+    const _mockTgQueueModelTransformation = function() {
         mocks.tgQueueModelTransformation = {
-            save: sinon.stub()
+            save: sinon.stub(),
         };
 
         return provide.value("$tgQueueModelTransformation", mocks.tgQueueModelTransformation);
     };
 
-
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockRootScope();
@@ -75,32 +74,32 @@ describe("TagLineDetail", function() {
 
         _mocks();
 
-        inject($controller => controller = $controller);
+        inject(($controller) => controller = $controller);
 
         return TagLineController = controller("TagLineCtrl");
     });
 
     it("on delete tag success", function(done) {
-        let tag = {
-            name: 'tag1'
+        const tag = {
+            name: "tag1",
         };
-        let tagName = tag.name;
+        const tagName = tag.name;
 
-        let item = {
+        const item = {
             tags: [
-                ['tag1'],
-                ['tag2'],
-                ['tag3']
-            ]
+                ["tag1"],
+                ["tag2"],
+                ["tag3"],
+            ],
         };
 
         mocks.tgQueueModelTransformation.save.callsArgWith(0, item);
         mocks.tgQueueModelTransformation.save.promise().resolve(item);
 
-        return TagLineController.onDeleteTag(['tag1', '#000']).then(function(item) {
+        return TagLineController.onDeleteTag(["tag1", "#000"]).then(function(item) {
             expect(item.tags).to.be.eql([
-                ['tag2'],
-                ['tag3']
+                ["tag2"],
+                ["tag3"],
             ]);
             expect(TagLineController.loadingRemoveTag).to.be.false;
             expect(mocks.rootScope.$broadcast).to.be.calledWith("object:updated");
@@ -109,9 +108,9 @@ describe("TagLineDetail", function() {
     });
 
     it("on delete tag error", function(done) {
-        mocks.tgQueueModelTransformation.save.promise().reject(new Error('error'));
+        mocks.tgQueueModelTransformation.save.promise().reject(new Error("error"));
 
-        return TagLineController.onDeleteTag(['tag1']).finally(function() {
+        return TagLineController.onDeleteTag(["tag1"]).finally(function() {
             expect(TagLineController.loadingRemoveTag).to.be.false;
             expect(mocks.tgConfirm.notify).to.be.calledWith("error");
             return done();
@@ -119,20 +118,20 @@ describe("TagLineDetail", function() {
     });
 
     it("on add tag success", function(done) {
-        let tag = 'tag1';
-        let tagColor = '#eee';
+        const tag = "tag1";
+        const tagColor = "#eee";
 
-        let item = {
+        const item = {
             tags: [
-                ['tag2'],
-                ['tag3']
-            ]
+                ["tag2"],
+                ["tag3"],
+            ],
         };
 
-        let mockPromise = mocks.tgQueueModelTransformation.save.promise();
+        const mockPromise = mocks.tgQueueModelTransformation.save.promise();
 
         mocks.tgQueueModelTransformation.save.callsArgWith(0, item);
-        let promise = TagLineController.onAddTag(tag, tagColor);
+        const promise = TagLineController.onAddTag(tag, tagColor);
 
         expect(TagLineController.loadingAddTag).to.be.true;
 
@@ -140,9 +139,9 @@ describe("TagLineDetail", function() {
 
         return promise.then(function(item) {
             expect(item.tags).to.be.eql([
-                ['tag2'],
-                ['tag3'],
-                ['tag1', '#eee']
+                ["tag2"],
+                ["tag3"],
+                ["tag1", "#eee"],
             ]);
 
             expect(mocks.rootScope.$broadcast).to.be.calledWith("object:updated");
@@ -154,24 +153,24 @@ describe("TagLineDetail", function() {
     });
 
     return it("on add tag error", function(done) {
-        let tag = 'tag1';
-        let tagColor = '#eee';
+        const tag = "tag1";
+        const tagColor = "#eee";
 
-        let item = {
+        const item = {
             tags: [
-                ['tag2'],
-                ['tag3']
-            ]
+                ["tag2"],
+                ["tag3"],
+            ],
         };
 
-        let mockPromise = mocks.tgQueueModelTransformation.save.promise();
+        const mockPromise = mocks.tgQueueModelTransformation.save.promise();
 
         mocks.tgQueueModelTransformation.save.callsArgWith(0, item);
-        let promise = TagLineController.onAddTag(tag, tagColor);
+        const promise = TagLineController.onAddTag(tag, tagColor);
 
         expect(TagLineController.loadingAddTag).to.be.true;
 
-        mockPromise.reject(new Error('error'));
+        mockPromise.reject(new Error("error"));
 
         return promise.then(function(item) {
             expect(TagLineController.loadingAddTag).to.be.false;

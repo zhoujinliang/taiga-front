@@ -17,17 +17,17 @@
  * File: profile.controller.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export class ProfileController {
-    appMetaService:any
-    currentUserService:any
-    routeParams:any
-    userService:any
-    xhrError:any
-    translate:any
-    isCurrentUser:boolean
-    user:any
+    appMetaService: any;
+    currentUserService: any;
+    routeParams: any;
+    userService: any;
+    xhrError: any;
+    translate: any;
+    isCurrentUser: boolean;
+    user: any;
 
     static initClass() {
         this.$inject = [
@@ -36,7 +36,7 @@ export class ProfileController {
             "$routeParams",
             "tgUserService",
             "tgXhrErrorService",
-            "$translate"
+            "$translate",
         ];
     }
 
@@ -52,8 +52,8 @@ export class ProfileController {
         if (this.routeParams.slug) {
             this.userService
                 .getUserByUserName(this.routeParams.slug)
-                .then(user => {
-                    if (!user.get('is_active')) {
+                .then((user) => {
+                    if (!user.get("is_active")) {
                         return this.xhrError.notFound();
                     } else {
                         this.user = user;
@@ -62,7 +62,7 @@ export class ProfileController {
 
                         return user;
                     }
-            }).catch(xhr => {
+            }).catch((xhr) => {
                     return this.xhrError.response(xhr);
             });
 
@@ -74,14 +74,14 @@ export class ProfileController {
     }
 
     _setMeta(user) {
-        let ctx = {
+        const ctx = {
             userFullName: user.get("full_name_display"),
-            userUsername: user.get("username")
+            userUsername: user.get("username"),
         };
 
-        let title = this.translate.instant("USER.PROFILE.PAGE_TITLE", ctx);
+        const title = this.translate.instant("USER.PROFILE.PAGE_TITLE", ctx);
 
-        let description = user.get("bio");
+        const description = user.get("bio");
         return this.appMetaService.setAll(title, description);
     }
 }

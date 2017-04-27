@@ -17,37 +17,37 @@
  * File: current-user.service.coffee
  */
 
-import {groupBy, defineImmutableProperty} from "../../libs/utils"
-import * as angular from "angular"
-import * as Immutable from "immutable"
-import * as Promise from "bluebird"
-import * as Rx from "rxjs"
+import * as angular from "angular";
+import * as Promise from "bluebird";
+import * as Immutable from "immutable";
+import * as Rx from "rxjs";
+import {defineImmutableProperty, groupBy} from "../../libs/utils";
 
-import {Injectable} from "@angular/core"
-import {ProjectsService} from "../projects/projects.service"
-import {StorageService} from "../../ts/modules/base/storage"
-import {ResourcesService} from "../resources/resources.service"
+import {Injectable} from "@angular/core";
+import {StorageService} from "../../ts/modules/base/storage";
+import {ProjectsService} from "../projects/projects.service";
+import {ResourcesService} from "../resources/resources.service";
 
 @Injectable()
 export class CurrentUserService {
-    _user:any
+    _user: any;
     _projects: Immutable.Map<any, any>;
     _projectsById: Immutable.Map<any, any>;
-    _joyride:any
-    projects:any
-    projectsById:any
-    projectsStream:any
+    _joyride: any;
+    projects: any;
+    projectsById: any;
+    projectsStream: any;
 
     constructor(private projectsService: ProjectsService,
                 private storage: StorageService,
                 private rs: ResourcesService) {
         this._user = null;
-        this._projects = Immutable.fromJS({'all': [], 'recents': []});
+        this._projects = Immutable.fromJS({all: [], recents: []});
         this._projectsById = Immutable.Map();
         this._joyride = null;
         this.projectsStream = new Rx.BehaviorSubject(this._projects);
-        defineImmutableProperty(this, "projects", () => { return this._projects});
-        defineImmutableProperty(this, "projectsById", () => { return this._projectsById; });
+        defineImmutableProperty(this, "projects", () => this._projects);
+        defineImmutableProperty(this, "projectsById", () => this._projectsById);
     }
 
     isAuthenticated() {
@@ -91,7 +91,7 @@ export class CurrentUserService {
 
     loadProjects() {
         return this.projectsService.getProjectsByUserId(this.getUser().get("id"))
-            .subscribe(projects => this.setProjects(projects));
+            .subscribe((projects) => this.setProjects(projects));
     }
 
     disableJoyRide(section) {
@@ -105,11 +105,11 @@ export class CurrentUserService {
             this._joyride = {
                 backlog: false,
                 kanban: false,
-                dashboard: false
+                dashboard: false,
             };
         }
 
-        return this.rs.user.setUserStorage('joyride', this._joyride);
+        return this.rs.user.setUserStorage("joyride", this._joyride);
     }
 
     loadJoyRideConfig() {
@@ -119,8 +119,8 @@ export class CurrentUserService {
                 return;
             }
 
-            return this.rs.user.getUserStorage('joyride')
-                .then(config => {
+            return this.rs.user.getUserStorage("joyride")
+                .then((config) => {
                     this._joyride = config;
                     return resolve(this._joyride);
             }).catch(() => {
@@ -128,10 +128,10 @@ export class CurrentUserService {
                     this._joyride = {
                         backlog: true,
                         kanban: true,
-                        dashboard: true
+                        dashboard: true,
                     };
 
-                    this.rs.user.createUserStorage('joyride', this._joyride);
+                    this.rs.user.createUserStorage("joyride", this._joyride);
 
                     return resolve(this._joyride);
             });
@@ -140,7 +140,7 @@ export class CurrentUserService {
 
     _loadUserInfo() {
         return Promise.all([
-            this.loadProjects()
+            this.loadProjects(),
         ]);
     }
 
@@ -148,21 +148,21 @@ export class CurrentUserService {
         this._projects = this._projects.set("all", projects);
         this._projects = this._projects.set("recents", projects.slice(0, 10));
 
-        this._projectsById = Immutable.fromJS(groupBy(projects.toJS(), p => p.id));
+        this._projectsById = Immutable.fromJS(groupBy(projects.toJS(), (p) => p.id));
 
         this.projectsStream.next(this._projects);
         return this.projects;
     }
 
     canCreatePrivateProjects() {
-        let user = this.getUser();
-        if ((user.get('max_private_projects') !== null) && (user.get('total_private_projects') >= user.get('max_private_projects'))) {
+        const user = this.getUser();
+        if ((user.get("max_private_projects") !== null) && (user.get("total_private_projects") >= user.get("max_private_projects"))) {
             return {
                 valid: false,
-                reason: 'max_private_projects',
-                type: 'private_project',
-                current: user.get('total_private_projects'),
-                max: user.get('max_private_projects')
+                reason: "max_private_projects",
+                type: "private_project",
+                current: user.get("total_private_projects"),
+                max: user.get("max_private_projects"),
             };
         }
 
@@ -170,15 +170,15 @@ export class CurrentUserService {
     }
 
     canCreatePublicProjects() {
-        let user = this.getUser();
+        const user = this.getUser();
 
-        if ((user.get('max_public_projects') !== null) && (user.get('total_public_projects') >= user.get('max_public_projects'))) {
+        if ((user.get("max_public_projects") !== null) && (user.get("total_public_projects") >= user.get("max_public_projects"))) {
             return {
                 valid: false,
-                reason: 'max_public_projects',
-                type: 'public_project',
-                current: user.get('total_public_projects'),
-                max: user.get('max_public_projects')
+                reason: "max_public_projects",
+                type: "public_project",
+                current: user.get("total_public_projects"),
+                max: user.get("max_public_projects"),
             };
         }
 
@@ -186,15 +186,15 @@ export class CurrentUserService {
     }
 
     canAddMembersPublicProject(totalMembers) {
-        let user = this.getUser();
+        const user = this.getUser();
 
-        if ((user.get('max_memberships_public_projects') !== null) && (totalMembers > user.get('max_memberships_public_projects'))) {
+        if ((user.get("max_memberships_public_projects") !== null) && (totalMembers > user.get("max_memberships_public_projects"))) {
             return {
                 valid: false,
-                reason: 'max_members_public_projects',
-                type: 'public_project',
+                reason: "max_members_public_projects",
+                type: "public_project",
                 current: totalMembers,
-                max: user.get('max_memberships_public_projects')
+                max: user.get("max_memberships_public_projects"),
             };
         }
 
@@ -202,15 +202,15 @@ export class CurrentUserService {
     }
 
     canAddMembersPrivateProject(totalMembers) {
-        let user = this.getUser();
+        const user = this.getUser();
 
-        if ((user.get('max_memberships_private_projects') !== null) && (totalMembers > user.get('max_memberships_private_projects'))) {
+        if ((user.get("max_memberships_private_projects") !== null) && (totalMembers > user.get("max_memberships_private_projects"))) {
             return {
                 valid: false,
-                reason: 'max_members_private_projects',
-                type: 'private_project',
+                reason: "max_members_private_projects",
+                type: "private_project",
                 current: totalMembers,
-                max: user.get('max_memberships_private_projects')
+                max: user.get("max_memberships_private_projects"),
             };
         }
 
@@ -219,18 +219,18 @@ export class CurrentUserService {
 
     canOwnProject(project) {
         let membersResult, result;
-        let user = this.getUser();
-        if (project.get('is_private')) {
+        const user = this.getUser();
+        if (project.get("is_private")) {
             result = this.canCreatePrivateProjects();
             if (!result.valid) { return result; }
 
-            membersResult = this.canAddMembersPrivateProject(project.get('total_memberships'));
+            membersResult = this.canAddMembersPrivateProject(project.get("total_memberships"));
             if (!membersResult.valid) { return membersResult; }
         } else {
             result = this.canCreatePublicProjects();
             if (!result.valid) { return result; }
 
-            membersResult = this.canAddMembersPublicProject(project.get('total_memberships'));
+            membersResult = this.canAddMembersPublicProject(project.get("total_memberships"));
             if (!membersResult.valid) { return membersResult; }
         }
 

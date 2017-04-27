@@ -17,34 +17,34 @@
  * File: check-permissions.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgCheckPermissionsService", function() {
     let provide;
     let checkPermissionsService = (provide = null);
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockProjectService = function() {
+    const _mockProjectService = function() {
         mocks.projectService = {
-            project: sinon.stub()
+            project: sinon.stub(),
         };
 
         return provide.value("tgProjectService", mocks.projectService);
     };
 
-    let _inject = () =>
-        inject(_tgCheckPermissionsService_ => checkPermissionsService = _tgCheckPermissionsService_)
+    const _inject = () =>
+        inject((_tgCheckPermissionsService_) => checkPermissionsService = _tgCheckPermissionsService_)
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockProjectService();
@@ -61,20 +61,20 @@ describe("tgCheckPermissionsService", function() {
 
     it("the user has perms", function() {
         mocks.projectService.project = Immutable.fromJS({
-            my_permissions: ['add_us']
+            my_permissions: ["add_us"],
         });
 
-        let perm = checkPermissionsService.check('add_us');
+        const perm = checkPermissionsService.check("add_us");
 
         return expect(perm).to.be.true;
     });
 
     return it("the user hasn't perms", function() {
         mocks.projectService.project = Immutable.fromJS({
-            my_permissions: []
+            my_permissions: [],
         });
 
-        let perm = checkPermissionsService.check('add_us');
+        const perm = checkPermissionsService.check("add_us");
 
         return expect(perm).to.be.false;
     });

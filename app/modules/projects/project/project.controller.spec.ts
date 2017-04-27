@@ -17,59 +17,59 @@
  * File: project.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ProjectController", function() {
     let $controller = null;
     let $q = null;
     let provide = null;
     let $rootScope = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockProjectService = function() {
+    const _mockProjectService = function() {
         mocks.projectService = {};
 
         return provide.value("tgProjectService", mocks.projectService);
     };
 
-    let _mockAppMetaService = function() {
+    const _mockAppMetaService = function() {
         mocks.appMetaService = {
-            setfn: sinon.stub()
+            setfn: sinon.stub(),
         };
 
         return provide.value("tgAppMetaService", mocks.appMetaService);
     };
 
-    let _mockAuth = function() {
+    const _mockAuth = function() {
         mocks.auth = {
-            userData: Immutable.fromJS({username: "UserName"})
+            userData: Immutable.fromJS({username: "UserName"}),
         };
 
         return provide.value("$tgAuth", mocks.auth);
     };
 
-    let _mockRouteParams = () =>
+    const _mockRouteParams = () =>
         provide.value("$routeParams", {
-            pslug: "project-slug"
+            pslug: "project-slug",
         })
     ;
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translate = {};
         mocks.translate.instant = sinon.stub();
 
         return provide.value("$translate", mocks.translate);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockProjectService();
@@ -81,7 +81,7 @@ describe("ProjectController", function() {
         })
     ;
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_$controller_, _$q_, _$rootScope_) {
             $q = _$q_;
             $rootScope = _$rootScope_;
@@ -96,57 +96,57 @@ describe("ProjectController", function() {
     });
 
     it("set local user", function() {
-        let project = Immutable.fromJS({
+        const project = Immutable.fromJS({
             name: "projectName",
-            members: []
+            members: [],
         });
 
-        let ctrl = $controller("Project",
+        const ctrl = $controller("Project",
             {$scope: {}});
 
         return expect(ctrl.user).to.be.equal(mocks.auth.userData);
     });
 
     it("set page title", function() {
-        let $scope = $rootScope.$new();
-        let project = Immutable.fromJS({
+        const $scope = $rootScope.$new();
+        const project = Immutable.fromJS({
             name: "projectName",
             description: "projectDescription",
-            members: []
+            members: [],
         });
 
         mocks.translate.instant
-            .withArgs('PROJECT.PAGE_TITLE', {
-                projectName: project.get("name")
+            .withArgs("PROJECT.PAGE_TITLE", {
+                projectName: project.get("name"),
             })
-            .returns('projectTitle');
+            .returns("projectTitle");
 
         mocks.projectService.project = project;
 
-        let ctrl = $controller("Project");
+        const ctrl = $controller("Project");
 
-        let metas = ctrl._setMeta(project);
+        const metas = ctrl._setMeta(project);
 
-        expect(metas.title).to.be.equal('projectTitle');
-        expect(metas.description).to.be.equal('projectDescription');
+        expect(metas.title).to.be.equal("projectTitle");
+        expect(metas.description).to.be.equal("projectDescription");
         return expect(mocks.appMetaService.setfn).to.be.calledOnce;
     });
 
     return it("set local project variable and members", function() {
-        let project = Immutable.fromJS({
-            name: "projectName"
+        const project = Immutable.fromJS({
+            name: "projectName",
         });
 
-        let members = Immutable.fromJS([
+        const members = Immutable.fromJS([
             {is_active: true},
             {is_active: true},
-            {is_active: true}
+            {is_active: true},
         ]);
 
         mocks.projectService.project = project;
         mocks.projectService.activeMembers = members;
 
-        let ctrl = $controller("Project");
+        const ctrl = $controller("Project");
 
         expect(ctrl.project).to.be.equal(project);
         return expect(ctrl.members).to.be.equal(members);

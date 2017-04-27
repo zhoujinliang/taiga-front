@@ -17,30 +17,30 @@
  * File: discover-home-order-by.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("DiscoverHomeOrderBy", function() {
     let $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translate = {
-            instant: sinon.stub()
+            instant: sinon.stub(),
         };
 
         return $provide.value("$translate", mocks.translate);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -50,11 +50,11 @@ describe("DiscoverHomeOrderBy", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -66,24 +66,24 @@ describe("DiscoverHomeOrderBy", function() {
     });
 
     it("get current search text", function() {
-        mocks.translate.instant.withArgs('DISCOVER.FILTERS.WEEK').returns('week');
-        mocks.translate.instant.withArgs('DISCOVER.FILTERS.MONTH').returns('month');
+        mocks.translate.instant.withArgs("DISCOVER.FILTERS.WEEK").returns("week");
+        mocks.translate.instant.withArgs("DISCOVER.FILTERS.MONTH").returns("month");
 
-        let ctrl = $controller("DiscoverHomeOrderBy");
+        const ctrl = $controller("DiscoverHomeOrderBy");
 
-        ctrl.currentOrderBy = 'week';
+        ctrl.currentOrderBy = "week";
         let text = ctrl.currentText();
 
-        expect(text).to.be.equal('week');
+        expect(text).to.be.equal("week");
 
-        ctrl.currentOrderBy = 'month';
+        ctrl.currentOrderBy = "month";
         text = ctrl.currentText();
 
-        return expect(text).to.be.equal('month');
+        return expect(text).to.be.equal("month");
     });
 
     it("open", function() {
-        let ctrl = $controller("DiscoverHomeOrderBy");
+        const ctrl = $controller("DiscoverHomeOrderBy");
 
         ctrl.is_open = false;
 
@@ -93,7 +93,7 @@ describe("DiscoverHomeOrderBy", function() {
     });
 
     it("close", function() {
-        let ctrl = $controller("DiscoverHomeOrderBy");
+        const ctrl = $controller("DiscoverHomeOrderBy");
 
         ctrl.is_open = true;
 
@@ -103,14 +103,13 @@ describe("DiscoverHomeOrderBy", function() {
     });
 
     return it("order by", function() {
-        let ctrl = $controller("DiscoverHomeOrderBy");
+        const ctrl = $controller("DiscoverHomeOrderBy");
         ctrl.onChange = sinon.spy();
 
-        ctrl.orderBy('week');
+        ctrl.orderBy("week");
 
-
-        expect(ctrl.currentOrderBy).to.be.equal('week');
+        expect(ctrl.currentOrderBy).to.be.equal("week");
         expect(ctrl.is_open).to.be.false;
-        return expect(ctrl.onChange).to.have.been.calledWith({orderBy: 'week'});
+        return expect(ctrl.onChange).to.have.been.calledWith({orderBy: "week"});
     });
 });

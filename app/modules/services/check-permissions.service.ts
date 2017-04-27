@@ -17,14 +17,14 @@
  * File: check-permissions.service.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export class CheckPermissionsService {
-    projectService:any
+    projectService: any;
 
     static initClass() {
         this.$inject = [
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
@@ -35,7 +35,7 @@ export class CheckPermissionsService {
     check(permission) {
         if (!this.projectService.project) { return false; }
 
-        return this.projectService.project.get('my_permissions').indexOf(permission) !== -1;
+        return this.projectService.project.get("my_permissions").indexOf(permission) !== -1;
     }
 }
 CheckPermissionsService.initClass();

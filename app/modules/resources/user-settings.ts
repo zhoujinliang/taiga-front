@@ -22,15 +22,14 @@
  * File: modules/resources/memberships.coffee
  */
 
-
-import {sizeFormat} from "../../libs/utils"
-import * as angular from "angular"
-import * as Promise from "bluebird"
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
-import {ConfigurationService} from "../../ts/modules/base/conf"
+import {Injectable} from "@angular/core";
+import * as angular from "angular";
+import * as Promise from "bluebird";
+import {sizeFormat} from "../../libs/utils";
+import {ConfigurationService} from "../../ts/modules/base/conf";
+import {HttpService} from "../../ts/modules/base/http";
+import {RepositoryService} from "../../ts/modules/base/repository";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class UserSettingsResource {
@@ -40,38 +39,38 @@ export class UserSettingsResource {
                 private urls: UrlsService) {}
 
     changeAvatar(file) {
-        let maxFileSize = this.config.get("maxUploadFileSize", null);
+        const maxFileSize = this.config.get("maxUploadFileSize", null);
         if (maxFileSize && (file.size > maxFileSize)) {
-            let response = {
+            const response = {
                 status: 413,
                 data: { _error_message: `'${file.name}' (${sizeFormat(file.size)}) is too heavy for our oompa \
-loompas, try it with a smaller than (${sizeFormat(maxFileSize)})`
-            }
+loompas, try it with a smaller than (${sizeFormat(maxFileSize)})`,
+            },
             };
-            return Promise.reject(response)
+            return Promise.reject(response);
         }
 
-        let data = new FormData();
-        data.append('avatar', file);
-        let options = {
+        const data = new FormData();
+        data.append("avatar", file);
+        const options = {
             transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
+            headers: {"Content-Type": undefined},
         };
-        let url = `${this.urls.resolve("users")}/change_avatar`;
+        const url = `${this.urls.resolve("users")}/change_avatar`;
         return this.http.post(url, data, {}, options);
-    };
+    }
 
     removeAvatar() {
-        let url = `${this.urls.resolve("users")}/remove_avatar`;
+        const url = `${this.urls.resolve("users")}/remove_avatar`;
         return this.http.post(url);
-    };
+    }
 
     changePassword(currentPassword, newPassword) {
-        let url = `${this.urls.resolve("users")}/change_password`;
-        let data = {
+        const url = `${this.urls.resolve("users")}/change_password`;
+        const data = {
             current_password: currentPassword,
-            password: newPassword
+            password: newPassword,
         };
         return this.http.post(url, data);
-    };
-};
+    }
+}

@@ -17,30 +17,30 @@
  * File: kanban-board-zoom.directive.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export let KanbanBoardZoomDirective = function(storage, projectService) {
-    let link = function(scope, el, attrs, ctrl) {
+    const link = function(scope, el, attrs, ctrl) {
         let unwatch;
         scope.zoomIndex = storage.get("kanban_zoom") || 2;
         scope.levels = 5;
 
-        let zooms = [
+        const zooms = [
             ["ref"],
             ["subject"],
             ["owner", "tags", "extra_info", "unfold"],
             ["attachments"],
-            ["related_tasks", "empty_extra_info"]
+            ["related_tasks", "empty_extra_info"],
         ];
 
-        let getZoomView = function(zoomIndex) {
+        const getZoomView = function(zoomIndex) {
             if (zoomIndex == null) { zoomIndex = 0; }
             if (storage.get("kanban_zoom") !== zoomIndex) {
                 storage.set("kanban_zoom", zoomIndex);
             }
 
-            return _.reduce(zooms, function(result:string[], value, key) {
+            return _.reduce(zooms, function(result: string[], value, key) {
                 if (key <= zoomIndex) {
                     result = result.concat(value);
                 }
@@ -49,15 +49,15 @@ export let KanbanBoardZoomDirective = function(storage, projectService) {
             });
         };
 
-        scope.$watch('zoomIndex', function(zoomLevel) {
-            let zoom = getZoomView(zoomLevel);
+        scope.$watch("zoomIndex", function(zoomLevel) {
+            const zoom = getZoomView(zoomLevel);
             return scope.onZoomChange({zoomLevel, zoom});
         });
 
         return unwatch = scope.$watch(() => projectService.project
         , function(project) {
             if (project) {
-                if (project.get('my_permissions').indexOf("view_tasks") === -1) {
+                if (project.get("my_permissions").indexOf("view_tasks") === -1) {
                     scope.levels = 4;
                 }
                 return unwatch();
@@ -67,7 +67,7 @@ export let KanbanBoardZoomDirective = function(storage, projectService) {
 
     return {
         scope: {
-            onZoomChange: "&"
+            onZoomChange: "&",
         },
         template: `\
 <tg-board-zoom
@@ -76,6 +76,6 @@ export let KanbanBoardZoomDirective = function(storage, projectService) {
     levels="levels"
 ></tg-board-zoom>\
 `,
-        link
+        link,
     };
 };

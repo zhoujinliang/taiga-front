@@ -17,32 +17,32 @@
  * File: attachments-full.service.coffee
  */
 
-import {Service} from "../../../libs/classes"
-import {defineImmutableProperty, patch} from "../../../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
-import * as Immutable from "immutable"
-import * as Promise from "bluebird"
+import * as angular from "angular";
+import * as Promise from "bluebird";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {Service} from "../../../libs/classes";
+import {defineImmutableProperty, patch} from "../../../libs/utils";
 
 export class AttachmentsFullService extends Service {
-    attachmentsService:any
-    rootScope:any
-    _attachments:any
-    _deprecatedsCount:any
-    _attachmentsVisible:any
-    _deprecatedsVisible:any
-    uploadingAttachments:any
-    attachments:any
+    attachmentsService: any;
+    rootScope: any;
+    _attachments: any;
+    _deprecatedsCount: any;
+    _attachmentsVisible: any;
+    _deprecatedsVisible: any;
+    uploadingAttachments: any;
+    attachments: any;
 
     static initClass() {
         this.$inject = [
             "tgAttachmentsService",
-            "$rootScope"
+            "$rootScope",
         ];
     }
 
     constructor(attachmentsService, rootScope) {
-        super()
+        super();
         this.attachmentsService = attachmentsService;
         this.rootScope = rootScope;
         this._attachments = Immutable.List();
@@ -51,10 +51,10 @@ export class AttachmentsFullService extends Service {
         this._deprecatedsVisible = false;
         this.uploadingAttachments = [];
 
-        defineImmutableProperty(this, 'attachments', () => { return this._attachments; });
-        defineImmutableProperty(this, 'deprecatedsCount', () => { return this._deprecatedsCount; });
-        defineImmutableProperty(this, 'attachmentsVisible', () => { return this._attachmentsVisible; });
-        defineImmutableProperty(this, 'deprecatedsVisible', () => { return this._deprecatedsVisible; });
+        defineImmutableProperty(this, "attachments", () => this._attachments);
+        defineImmutableProperty(this, "deprecatedsCount", () => this._deprecatedsCount);
+        defineImmutableProperty(this, "attachmentsVisible", () => this._attachmentsVisible);
+        defineImmutableProperty(this, "deprecatedsVisible", () => this._deprecatedsVisible);
     }
 
     toggleDeprecatedsVisible() {
@@ -63,12 +63,12 @@ export class AttachmentsFullService extends Service {
     }
 
     regenerate() {
-        this._deprecatedsCount = this._attachments.count(it => it.getIn(['file', 'is_deprecated']));
+        this._deprecatedsCount = this._attachments.count((it) => it.getIn(["file", "is_deprecated"]));
 
         if (this._deprecatedsVisible) {
             return this._attachmentsVisible = this._attachments;
         } else {
-            return this._attachmentsVisible = this._attachments.filter(it => !it.getIn(['file', 'is_deprecated']));
+            return this._attachmentsVisible = this._attachments.filter((it) => !it.getIn(["file", "is_deprecated"]));
         }
     }
 
@@ -79,10 +79,10 @@ export class AttachmentsFullService extends Service {
             if (this.attachmentsService.validate(file)) {
                 this.uploadingAttachments.push(file);
 
-                let promise = this.attachmentsService.upload(file, objId, projectId, type, comment);
-                return promise.then(file => {
+                const promise = this.attachmentsService.upload(file, objId, projectId, type, comment);
+                return promise.then((file) => {
                     this.uploadingAttachments = this.uploadingAttachments.filter(function(uploading) {
-                        return uploading.name !== file.get('name');
+                        return uploading.name !== file.get("name");
                     });
 
                     let attachment = Immutable.Map();
@@ -91,7 +91,7 @@ export class AttachmentsFullService extends Service {
                         file,
                         editable,
                         loading: false,
-                        from_comment: comment
+                        from_comment: comment,
                     });
 
                     this._attachments = this._attachments.push(attachment);
@@ -109,14 +109,14 @@ export class AttachmentsFullService extends Service {
     }
 
     loadAttachments(type, objId, projectId){
-        return this.attachmentsService.list(type, objId, projectId).then(files => {
+        return this.attachmentsService.list(type, objId, projectId).then((files) => {
             this._attachments = files.map(function(file) {
-                let attachment = Immutable.Map();
+                const attachment = Immutable.Map();
 
                 return attachment.merge({
                     loading: false,
                     editable: false,
-                    file
+                    file,
                 });
             });
 
@@ -125,28 +125,28 @@ export class AttachmentsFullService extends Service {
     }
 
     deleteAttachment(toDeleteAttachment, type) {
-        let onSuccess = () => {
-            this._attachments = this._attachments.filter(attachment => attachment !== toDeleteAttachment);
+        const onSuccess = () => {
+            this._attachments = this._attachments.filter((attachment) => attachment !== toDeleteAttachment);
 
             return this.regenerate();
         };
 
-        return this.attachmentsService.delete(type, toDeleteAttachment.getIn(['file', 'id'])).then(onSuccess);
+        return this.attachmentsService.delete(type, toDeleteAttachment.getIn(["file", "id"])).then(onSuccess);
     }
 
     reorderAttachment(type, attachment, newIndex) {
-        let oldIndex = this.attachments.findIndex(it => it === attachment);
+        const oldIndex = this.attachments.findIndex((it) => it === attachment);
         if (oldIndex === newIndex) { return; }
 
         let attachments = this.attachments.remove(oldIndex);
         attachments = attachments.splice(newIndex, 0, attachment);
-        attachments = attachments.map((x, i) => x.setIn(['file', 'order'], i + 1));
+        attachments = attachments.map((x, i) => x.setIn(["file", "order"], i + 1));
 
-        let promises = [];
-        attachments.forEach(attachment => {
-            let patch = {order: attachment.getIn(['file', 'order'])};
+        const promises = [];
+        attachments.forEach((attachment) => {
+            const patch = {order: attachment.getIn(["file", "order"])};
 
-            return promises.push(this.attachmentsService.patch(attachment.getIn(['file', 'id']), type, patch));
+            return promises.push(this.attachmentsService.patch(attachment.getIn(["file", "id"]), type, patch));
         });
 
         return Promise.all(promises).then(() => {
@@ -157,18 +157,18 @@ export class AttachmentsFullService extends Service {
     }
 
     updateAttachment(toUpdateAttachment, type) {
-        let index = this._attachments.findIndex(attachment => attachment.getIn(['file', 'id']) === toUpdateAttachment.getIn(['file', 'id']));
+        const index = this._attachments.findIndex((attachment) => attachment.getIn(["file", "id"]) === toUpdateAttachment.getIn(["file", "id"]));
 
-        let oldAttachment = this._attachments.get(index);
+        const oldAttachment = this._attachments.get(index);
 
-        let patchData = patch(oldAttachment.get('file'), toUpdateAttachment.get('file'));
+        const patchData = patch(oldAttachment.get("file"), toUpdateAttachment.get("file"));
 
-        if (toUpdateAttachment.get('loading')) {
+        if (toUpdateAttachment.get("loading")) {
             this._attachments = this._attachments.set(index, toUpdateAttachment);
 
             return this.regenerate();
         } else {
-            return this.attachmentsService.patch(toUpdateAttachment.getIn(['file', 'id']), type, patchData).then(() => {
+            return this.attachmentsService.patch(toUpdateAttachment.getIn(["file", "id"]), type, patchData).then(() => {
                 this._attachments = this._attachments.set(index, toUpdateAttachment);
 
                 return this.regenerate();

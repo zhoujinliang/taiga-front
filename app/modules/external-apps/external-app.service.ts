@@ -17,19 +17,19 @@
  * File: external-app.service.coffee
  */
 
-import {Service} from "../../ts/classes"
-import * as angular from "angular"
+import * as angular from "angular";
+import {Service} from "../../ts/classes";
 
 export class ExternalAppsService extends Service {
-    rs:any
+    rs: any;
     static initClass() {
         this.$inject = [
-            "tgResources"
+            "tgResources",
         ];
     }
 
     constructor(rs) {
-        super()
+        super();
         this.rs = rs;
     }
 

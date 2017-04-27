@@ -17,48 +17,48 @@
  * File: lb/contact-project-button.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("LbContactProject", function() {
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgLightboxSercice = function() {
+    const _mockTgLightboxSercice = function() {
         mocks.tglightboxService = {
-            closeAll: sinon.stub()
+            closeAll: sinon.stub(),
         };
 
         return provide.value("lightboxService", mocks.tglightboxService);
     };
 
-    let _mockTgResources = function() {
+    const _mockTgResources = function() {
         mocks.tgResources = {
             projects: {
-                contactProject: sinon.stub()
-            }
+                contactProject: sinon.stub(),
+            },
         };
 
         return provide.value("tgResources", mocks.tgResources);
     };
 
-    let _mockTgConfirm = function() {
+    const _mockTgConfirm = function() {
         mocks.tgConfirm = {
-            notify: sinon.stub()
+            notify: sinon.stub(),
         };
 
         return provide.value("$tgConfirm", mocks.tgConfirm);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgLightboxSercice();
@@ -74,22 +74,22 @@ describe("LbContactProject", function() {
 
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     return it("Contact Project", function(done) {
-        let ctrl = controller("ContactProjectLbCtrl");
+        const ctrl = controller("ContactProjectLbCtrl");
         ctrl.contact = {
-            message: 'abcde'
+            message: "abcde",
         };
         ctrl.project = Immutable.fromJS({
-            id: 1
+            id: 1,
         });
 
-        let project = ctrl.project.get('id');
-        let { message } = ctrl.contact;
+        const project = ctrl.project.get("id");
+        const { message } = ctrl.contact;
 
-        let promise = mocks.tgResources.projects.contactProject.withArgs(project, message).promise().resolve();
+        const promise = mocks.tgResources.projects.contactProject.withArgs(project, message).promise().resolve();
 
         ctrl.sendingFeedback = true;
 

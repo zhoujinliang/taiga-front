@@ -17,41 +17,41 @@
  * File: discover-search-list-header.controller.coffee
  */
 
-import * as angular from "angular"
-import {Component, OnInit, EventEmitter, Input, Output} from "@angular/core"
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import * as angular from "angular";
 
 @Component({
-    selector: 'tg-discover-search-list-header',
-    template: require('./discover-search-list-header.jade')()
+    selector: "tg-discover-search-list-header",
+    template: require("./discover-search-list-header.jade")(),
 })
 export class DiscoverSearchListHeader implements OnInit {
     @Input("order-by") orderBy: any;
     @Output("order-by") orderByChange: EventEmitter<string>;
-    like_is_open:boolean;
-    activity_is_open:boolean;
+    like_is_open: boolean;
+    activity_is_open: boolean;
 
     constructor() {
         this.orderByChange = new EventEmitter();
     }
 
     ngOnInit() {
-        this.like_is_open = this.orderBy.indexOf('-total_fans') === 0;
-        this.activity_is_open = this.orderBy.indexOf('-total_activity') === 0;
+        this.like_is_open = this.orderBy.indexOf("-total_fans") === 0;
+        this.activity_is_open = this.orderBy.indexOf("-total_activity") === 0;
     }
 
     openLike() {
         this.activity_is_open = false;
         this.like_is_open = true;
 
-        this.orderByChange.emit('-total_fans_last_week');
-        return false
+        this.orderByChange.emit("-total_fans_last_week");
+        return false;
     }
 
     openActivity() {
         this.activity_is_open = true;
         this.like_is_open = false;
 
-        this.orderByChange.emit('-total_activity_last_week');
+        this.orderByChange.emit("-total_activity_last_week");
         return false;
     }
 

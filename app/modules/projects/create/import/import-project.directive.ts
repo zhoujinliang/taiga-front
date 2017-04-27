@@ -19,17 +19,17 @@
 
 export let ImportProjectDirective = function() {
 
-    let link = (scope, el, attr, ctrl) => ctrl.start();
+    const link = (scope, el, attr, ctrl) => ctrl.start();
 
     return {
         link,
-        templateUrl:"projects/create/import/import-project.html",
+        templateUrl: "projects/create/import/import-project.html",
         controller: "ImportProjectCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            onCancelImport: '&'
-        }
+            onCancelImport: "&",
+        },
     };
 };
 ImportProjectDirective.$inject = [];

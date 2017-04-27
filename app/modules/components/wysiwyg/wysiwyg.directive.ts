@@ -22,15 +22,15 @@
  * File: modules/components/wysiwyg/wysiwyg.directive.coffee
  */
 
-import {bindOnce, isImage} from "../../../libs/utils"
-import {MentionExtension} from "../../../libs/medium-mention"
-import * as AutoList from "medium-editor-autolist"
-import * as MediumEditor from "medium-editor"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import * as MediumEditor from "medium-editor";
+import * as AutoList from "medium-editor-autolist";
+import {MentionExtension} from "../../../libs/medium-mention";
+import {bindOnce, isImage} from "../../../libs/utils";
 
 export let Medium = function($translate, $confirm, $storage, wysiwygService, animationFrame, tgLoader, wysiwygCodeHightlighterService, wysiwygMentionService, analytics, $location) {
-    let removeSelections = function() {
+    const removeSelections = function() {
         if (window.getSelection) {
             if (window.getSelection().empty) {
                 return window.getSelection().empty();
@@ -38,43 +38,43 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
         } else if (window.getSelection().removeAllRanges) {
             return window.getSelection().removeAllRanges();
 
-        } else if ((<any>document).selection) {
-            return (<any>document).selection.empty();
+        } else if ((document as any).selection) {
+            return (document as any).selection.empty();
         }
     };
 
-    let getRangeCodeBlock = range => $(range.endContainer).parentsUntil('.editor', 'code');
+    const getRangeCodeBlock = (range) => $(range.endContainer).parentsUntil(".editor", "code");
 
-    let isCodeBlockSelected = range => !!getRangeCodeBlock(range).length;
+    const isCodeBlockSelected = (range) => !!getRangeCodeBlock(range).length;
 
-    let removeCodeBlockAndHightlight = function(selection, mediumInstance) {
+    const removeCodeBlockAndHightlight = function(selection, mediumInstance) {
         let code;
-        if ($(selection).is('code')) {
+        if ($(selection).is("code")) {
             code = selection;
         } else {
-            code = $(selection).closest('code')[0];
+            code = $(selection).closest("code")[0];
         }
 
-        let pre = code.parentNode;
+        const pre = code.parentNode;
 
-        let p = document.createElement('p');
+        const p = document.createElement("p");
         p.innerText = code.innerText;
 
         pre.parentNode.replaceChild(p, pre);
         return mediumInstance.checkContentChanged(mediumInstance.elements[0]);
     };
 
-    let addCodeBlockAndHightlight = function(range, mediumInstance) {
-        let pre = document.createElement('pre');
-        let code = document.createElement('code');
+    const addCodeBlockAndHightlight = function(range, mediumInstance) {
+        const pre = document.createElement("pre");
+        const code = document.createElement("code");
 
         if (!range.startContainer.parentNode.nextSibling) {
-            $('<br/>').insertAfter(range.startContainer.parentNode);
+            $("<br/>").insertAfter(range.startContainer.parentNode);
         }
 
-        let start = range.endContainer.parentNode.nextSibling;
+        const start = range.endContainer.parentNode.nextSibling;
 
-        let extract = range.extractContents();
+        const extract = range.extractContents();
 
         code.appendChild(extract);
 
@@ -86,37 +86,37 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
         return mediumInstance.checkContentChanged(mediumInstance.elements[0]);
     };
 
-    var refreshCodeBlocks = function(mediumInstance) {
+    const refreshCodeBlocks = function(mediumInstance) {
         if (!mediumInstance) { return; }
 
         // clean empty <p> content editable adds it when range.extractContents has been execute it
-        for (let mainChildren of mediumInstance.elements[0].children) {
-            if (mainChildren && (mainChildren.tagName.toLowerCase() === 'p') && !mainChildren.innerHTML.trim().length) {
+        for (const mainChildren of mediumInstance.elements[0].children) {
+            if (mainChildren && (mainChildren.tagName.toLowerCase() === "p") && !mainChildren.innerHTML.trim().length) {
                 mainChildren.parentNode.removeChild(mainChildren);
             }
         }
 
-        let preList = mediumInstance.elements[0].querySelectorAll('pre');
+        const preList = mediumInstance.elements[0].querySelectorAll("pre");
 
         return (() => {
-            let result = [];
-            for (let pre of preList) {
+            const result = [];
+            for (const pre of preList) {
             // prevent edit a pre
                 let item;
-                pre.setAttribute('contenteditable', false);
+                pre.setAttribute("contenteditable", false);
 
-                pre.setAttribute('title', $translate.instant("COMMON.WYSIWYG.DB_CLICK"));
+                pre.setAttribute("title", $translate.instant("COMMON.WYSIWYG.DB_CLICK"));
 
                 // prevent text selection in firefox
-                pre.addEventListener('mousedown', e => e.preventDefault());
+                pre.addEventListener("mousedown", (e) => e.preventDefault());
 
-                if (pre.nextElementSibling && (pre.nextElementSibling.nodeName.toLowerCase() === 'p') && !pre.nextElementSibling.children.length) {
-                    item = pre.nextElementSibling.appendChild(document.createElement('br'));
+                if (pre.nextElementSibling && (pre.nextElementSibling.nodeName.toLowerCase() === "p") && !pre.nextElementSibling.children.length) {
+                    item = pre.nextElementSibling.appendChild(document.createElement("br"));
 
                 // add p after every pre
-                } else if (!pre.nextElementSibling || (['p', 'ul', 'h1', 'h2', 'h3'].indexOf(pre.nextElementSibling.nodeName.toLowerCase()) === -1)) {
-                    let p = document.createElement('p');
-                    p.appendChild(document.createElement('br'));
+                } else if (!pre.nextElementSibling || (["p", "ul", "h1", "h2", "h3"].indexOf(pre.nextElementSibling.nodeName.toLowerCase()) === -1)) {
+                    const p = document.createElement("p");
+                    p.appendChild(document.createElement("br"));
 
                     item = pre.parentNode.insertBefore(p, pre.nextSibling);
                 }
@@ -126,59 +126,59 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
         })();
     };
 
-    let AlignRightButton = MediumEditor.extensions.button.extend({
-        name: 'rtl',
+    const AlignRightButton = MediumEditor.extensions.button.extend({
+        name: "rtl",
         init() {
-            let option = _.find(this.base.options.toolbar.buttons, (it:any) => it.name === 'rtl');
+            const option = _.find(this.base.options.toolbar.buttons, (it: any) => it.name === "rtl");
 
-            this.button = this.document.createElement('button');
-            this.button.classList.add('medium-editor-action');
-            this.button.innerHTML = option.contentDefault || '<b>RTL</b>';
-            this.button.title = 'RTL';
-            return this.on(this.button, 'click', this.handleClick.bind(this));
+            this.button = this.document.createElement("button");
+            this.button.classList.add("medium-editor-action");
+            this.button.innerHTML = option.contentDefault || "<b>RTL</b>";
+            this.button.title = "RTL";
+            return this.on(this.button, "click", this.handleClick.bind(this));
         },
 
         getButton() {
             return this.button;
         },
         handleClick(event) {
-            let range = MediumEditor.selection.getSelectionRange(document);
-            if (range.commonAncestorContainer.parentNode.style.textAlign === 'right') {
-                return document.execCommand('justifyLeft', false);
+            const range = MediumEditor.selection.getSelectionRange(document);
+            if (range.commonAncestorContainer.parentNode.style.textAlign === "right") {
+                return document.execCommand("justifyLeft", false);
             } else {
-                return document.execCommand('justifyRight', false);
+                return document.execCommand("justifyRight", false);
             }
-        }
+        },
 
     });
 
-    let getIcon = icon =>
+    const getIcon = (icon) =>
         `<svg class="icon icon-${icon}">
     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#${icon}"></use>
 </svg>`
     ;
 
     // MediumEditor extension to add <code>
-    let CodeButton = MediumEditor.extensions.button.extend({
-        name: 'code',
+    const CodeButton = MediumEditor.extensions.button.extend({
+        name: "code",
         init() {
-            let option = _.find(this.base.options.toolbar.buttons, (it:any) => it.name === 'code');
+            const option = _.find(this.base.options.toolbar.buttons, (it: any) => it.name === "code");
 
-            this.button = this.document.createElement('button');
-            this.button.classList.add('medium-editor-action');
-            this.button.innerHTML = option.contentDefault || '<b>Code</b>';
-            this.button.title = 'Code';
-            return this.on(this.button, 'click', this.handleClick.bind(this));
+            this.button = this.document.createElement("button");
+            this.button.classList.add("medium-editor-action");
+            this.button.innerHTML = option.contentDefault || "<b>Code</b>";
+            this.button.title = "Code";
+            return this.on(this.button, "click", this.handleClick.bind(this));
         },
 
         getButton() {
             return this.button;
         },
 
-        tagNames: ['code'],
+        tagNames: ["code"],
 
         handleClick(event) {
-            let range = MediumEditor.selection.getSelectionRange(self.document);
+            const range = MediumEditor.selection.getSelectionRange(self.document);
 
             if (isCodeBlockSelected(range)) {
                 removeCodeBlockAndHightlight(range.endContainer, this.base);
@@ -187,25 +187,25 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
                 removeSelections();
             }
 
-            let toolbar = this.base.getExtensionByName('toolbar');
+            const toolbar = this.base.getExtensionByName("toolbar");
 
             if (toolbar) {
                 return toolbar.hideToolbar();
             }
-        }
+        },
 
     });
 
-    let CustomPasteHandler = MediumEditor.extensions.paste.extend({
+    const CustomPasteHandler = MediumEditor.extensions.paste.extend({
         doPaste(pastedHTML, pastedPlain, editable) {
-            let html = MediumEditor.util.htmlEntities(pastedPlain);
+            const html = MediumEditor.util.htmlEntities(pastedPlain);
             return MediumEditor.util.insertHTMLCommand(this.document, html);
-        }
+        },
     });
 
     // bug
     // <pre><code></code></pre> the enter key press doesn't work
-    let oldIsBlockContainer = MediumEditor.util.isBlockContainer;
+    const oldIsBlockContainer = MediumEditor.util.isBlockContainer;
 
     MediumEditor.util.isBlockContainer = function(element) {
         let tagName;
@@ -219,37 +219,37 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
             ({ tagName } = element.parentNode);
         }
 
-        if (tagName.toLowerCase() === 'code') {
+        if (tagName.toLowerCase() === "code") {
             return true;
         }
 
         return oldIsBlockContainer(element);
     };
 
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         let mediumInstance = null;
-        let editorMedium = $el.find('.medium');
-        let editorMarkdown = $el.find('.markdown');
+        const editorMedium = $el.find(".medium");
+        const editorMarkdown = $el.find(".markdown");
         let codeBlockSelected = null;
 
-        let isEditOnly = !!$attrs.$attr.editonly;
-        let notPersist = !!$attrs.$attr.notPersist;
+        const isEditOnly = !!$attrs.$attr.editonly;
+        const notPersist = !!$attrs.$attr.notPersist;
 
         $scope.required = !!$attrs.$attr.required;
         $scope.editMode = isEditOnly || false;
-        $scope.mode = $storage.get('editor-mode', 'html');
-        $scope.markdown = '';
+        $scope.mode = $storage.get("editor-mode", "html");
+        $scope.markdown = "";
         $scope.codeEditorVisible = false;
         $scope.codeLans = [];
 
         wysiwygService.loadEmojis();
 
-        wysiwygCodeHightlighterService.getLanguages().then(codeLans => $scope.codeLans = codeLans);
+        wysiwygCodeHightlighterService.getLanguages().then((codeLans) => $scope.codeLans = codeLans);
 
-        let setEditMode = editMode => $scope.editMode = editMode;
+        const setEditMode = (editMode) => $scope.editMode = editMode;
 
-        let setHtmlMedium = function(markdown) {
-            let html = wysiwygService.getHTML(markdown);
+        const setHtmlMedium = function(markdown) {
+            const html = wysiwygService.getHTML(markdown);
             editorMedium.html(html);
             wysiwygCodeHightlighterService.addHightlighter(mediumInstance.elements[0]);
 
@@ -261,11 +261,11 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
         $scope.saveSnippet = function(lan, code) {
             $scope.codeEditorVisible = false;
             codeBlockSelected.innerText = code;
-            let codePre = codeBlockSelected.parentNode;
+            const codePre = codeBlockSelected.parentNode;
 
-            if (lan === 'remove-formating') {
-                    codeBlockSelected.className = '';
-                    codePre.className = '';
+            if (lan === "remove-formating") {
+                    codeBlockSelected.className = "";
+                    codePre.className = "";
 
                     removeCodeBlockAndHightlight(codeBlockSelected, mediumInstance);
             } else if (_.trim(code).length) {
@@ -273,8 +273,8 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
                     codeBlockSelected.className = `language-${lan}`;
                     codePre.className = `language-${lan}`;
                 } else {
-                    codeBlockSelected.className = '';
-                    codePre.className = '';
+                    codeBlockSelected.className = "";
+                    codePre.className = "";
                 }
 
                 wysiwygCodeHightlighterService.hightlightCode(codeBlockSelected);
@@ -290,22 +290,22 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
         };
 
         $scope.setMode = function(mode) {
-            $storage.set('editor-mode', mode);
+            $storage.set("editor-mode", mode);
 
-            if (mode === 'markdown') {
+            if (mode === "markdown") {
                 updateMarkdownWithCurrentHtml();
             } else {
                 setHtmlMedium($scope.markdown);
             }
 
             $scope.mode = mode;
-            return mediumInstance.trigger('editableBlur', {}, editorMedium[0]);
+            return mediumInstance.trigger("editableBlur", {}, editorMedium[0]);
         };
 
         $scope.save = function(e) {
             if (e) { e.preventDefault(); }
 
-            if ($scope.mode === 'html') {
+            if ($scope.mode === "html") {
                 updateMarkdownWithCurrentHtml();
             }
 
@@ -329,14 +329,14 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
 
             if (notPersist) {
                 clean();
-            } else if ($scope.mode === 'html') {
+            } else if ($scope.mode === "html") {
                 setHtmlMedium($scope.content || null);
             }
 
             $scope.markdown = $scope.content;
 
             discardLocalStorage();
-            mediumInstance.trigger('blur', {}, editorMedium[0]);
+            mediumInstance.trigger("blur", {}, editorMedium[0]);
             $scope.outdated = false;
             refreshCodeBlocks(mediumInstance);
 
@@ -344,12 +344,12 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
 
         };
 
-        var clean = function() {
-            $scope.markdown = '';
-            return editorMedium.html('');
+        const clean = function() {
+            $scope.markdown = "";
+            return editorMedium.html("");
         };
 
-        var saveEnd = function() {
+        const saveEnd = function() {
             $scope.saving  = false;
 
             if (!isEditOnly) {
@@ -361,22 +361,22 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
             }
 
             discardLocalStorage();
-            mediumInstance.trigger('blur', {}, editorMedium[0]);
+            mediumInstance.trigger("blur", {}, editorMedium[0]);
 
-            return analytics.trackEvent('develop', 'save wysiwyg', $scope.mode, 1);
+            return analytics.trackEvent("develop", "save wysiwyg", $scope.mode, 1);
         };
 
-        let uploadEnd = function(name, url) {
+        const uploadEnd = function(name, url) {
             if (isImage(name)) {
                 return mediumInstance.pasteHTML(`<img src='${url}' /><br/>`);
             } else {
-                name = $('<div/>').text(name).html();
+                name = $("<div/>").text(name).html();
                 return mediumInstance.pasteHTML(`<a target='_blank' href='${url}'>${name}</a><br/>`);
             }
         };
 
-        let isOutdated = function() {
-            let store = $storage.get($scope.storageKey);
+        const isOutdated = function() {
+            const store = $storage.get($scope.storageKey);
 
             if (store && store.version && (store.version !== $scope.version)) {
                 return true;
@@ -385,8 +385,8 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
             return false;
         };
 
-        let isDraft = function() {
-            let store = $storage.get($scope.storageKey);
+        const isDraft = function() {
+            const store = $storage.get($scope.storageKey);
 
             if (store) {
                 return true;
@@ -395,8 +395,8 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
             return false;
         };
 
-        let getCurrentContent = function() {
-            let store = $storage.get($scope.storageKey);
+        const getCurrentContent = function() {
+            const store = $storage.get($scope.storageKey);
 
             if (store) {
                 return store.text;
@@ -405,20 +405,20 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
             return $scope.content;
         };
 
-        var discardLocalStorage = () => $storage.remove($scope.storageKey);
+        const discardLocalStorage = () => $storage.remove($scope.storageKey);
 
-        let cancelWithConfirmation = function() {
+        const cancelWithConfirmation = function() {
             if ($scope.content === $scope.markdown) {
                 $scope.cancel();
 
-                (<HTMLElement>document.activeElement).blur();
+                (document.activeElement as HTMLElement).blur();
                 document.body.click();
 
                 return null;
             }
 
-            let title = $translate.instant("COMMON.CONFIRM_CLOSE_EDIT_MODE_TITLE");
-            let message = $translate.instant("COMMON.CONFIRM_CLOSE_EDIT_MODE_MESSAGE");
+            const title = $translate.instant("COMMON.CONFIRM_CLOSE_EDIT_MODE_TITLE");
+            const message = $translate.instant("COMMON.CONFIRM_CLOSE_EDIT_MODE_MESSAGE");
 
             return $confirm.ask(title, null, message).then(function(askResponse) {
                 $scope.cancel();
@@ -427,29 +427,29 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
         };
 
         // firefox adds br instead of new lines inside <code>, taiga must replace the br by \n before sending to the server
-        let replaceCodeBrToNl = function() {
-            let html = $('<div></div>').html(editorMedium.html());
-            html.find('code br').replaceWith('\n');
+        const replaceCodeBrToNl = function() {
+            const html = $("<div></div>").html(editorMedium.html());
+            html.find("code br").replaceWith("\n");
 
             return html.html();
         };
 
-        var updateMarkdownWithCurrentHtml = function() {
-            let html = replaceCodeBrToNl();
+        const updateMarkdownWithCurrentHtml = function() {
+            const html = replaceCodeBrToNl();
             return $scope.markdown = wysiwygService.getMarkdown(html);
         };
 
-        let localSave = function(markdown) {
+        const localSave = function(markdown) {
             if ($scope.storageKey) {
-                let store:any = {};
+                const store: any = {};
                 store.version = $scope.version || 0;
                 store.text = markdown;
                 return $storage.set($scope.storageKey, store);
             }
         };
 
-        let change = function() {
-            if ($scope.mode === 'html') {
+        const change = function() {
+            if ($scope.mode === "html") {
                 updateMarkdownWithCurrentHtml();
             }
 
@@ -458,79 +458,79 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
             return $scope.onChange({markdown: $scope.markdown});
         };
 
-        var throttleChange = _.throttle(change, 200);
+        const throttleChange = _.throttle(change, 200);
 
-        let create = function(text, editMode) {
+        const create = function(text, editMode) {
             if (editMode == null) { editMode = false; }
             if (text.length) {
-                let html = wysiwygService.getHTML(text);
+                const html = wysiwygService.getHTML(text);
                 editorMedium.html(html);
             }
 
             mediumInstance = new MediumEditor(editorMedium[0], {
                 imageDragging: false,
                 placeholder: {
-                    text: $scope.placeholder
+                    text: $scope.placeholder,
                 },
                 toolbar: {
                     buttons: [
                         {
-                            name: 'bold',
-                            contentDefault: getIcon('editor-bold')
+                            name: "bold",
+                            contentDefault: getIcon("editor-bold"),
                         },
                         {
-                            name: 'italic',
-                            contentDefault: getIcon('editor-italic')
+                            name: "italic",
+                            contentDefault: getIcon("editor-italic"),
                         },
                         {
-                            name: 'strikethrough',
-                            contentDefault: getIcon('editor-cross-out')
+                            name: "strikethrough",
+                            contentDefault: getIcon("editor-cross-out"),
                         },
                         {
-                            name: 'anchor',
-                            contentDefault: getIcon('editor-link')
+                            name: "anchor",
+                            contentDefault: getIcon("editor-link"),
                         },
                         {
-                            name: 'image',
-                            contentDefault: getIcon('editor-image')
+                            name: "image",
+                            contentDefault: getIcon("editor-image"),
                         },
                         {
-                            name: 'orderedlist',
-                            contentDefault: getIcon('editor-list-n')
+                            name: "orderedlist",
+                            contentDefault: getIcon("editor-list-n"),
                         },
                         {
-                            name: 'unorderedlist',
-                            contentDefault: getIcon('editor-list-o')
+                            name: "unorderedlist",
+                            contentDefault: getIcon("editor-list-o"),
                         },
                         {
-                            name: 'h1',
-                            contentDefault: getIcon('editor-h1')
+                            name: "h1",
+                            contentDefault: getIcon("editor-h1"),
                         },
                         {
-                            name: 'h2',
-                            contentDefault: getIcon('editor-h2')
+                            name: "h2",
+                            contentDefault: getIcon("editor-h2"),
                         },
                         {
-                            name: 'h3',
-                            contentDefault: getIcon('editor-h3')
+                            name: "h3",
+                            contentDefault: getIcon("editor-h3"),
                         },
                         {
-                            name: 'quote',
-                            contentDefault: getIcon('editor-quote')
+                            name: "quote",
+                            contentDefault: getIcon("editor-quote"),
                         },
                         {
-                            name: 'removeFormat',
-                            contentDefault: getIcon('editor-no-format')
+                            name: "removeFormat",
+                            contentDefault: getIcon("editor-no-format"),
                         },
                         {
-                            name: 'rtl',
-                            contentDefault: getIcon('editor-rtl')
+                            name: "rtl",
+                            contentDefault: getIcon("editor-rtl"),
                         },
                         {
-                            name: 'code',
-                            contentDefault: getIcon('editor-code')
-                        }
-                    ]
+                            name: "code",
+                            contentDefault: getIcon("editor-code"),
+                        },
+                    ],
                 },
                 extensions: {
                     paste: new CustomPasteHandler(),
@@ -540,20 +540,20 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
                     mediumMention: new MentionExtension({
                         getItems(mention, mentionCb) {
                             return wysiwygMentionService.search(mention).then(mentionCb);
-                        }
-                    })
-                }
+                        },
+                    }),
+                },
             });
 
             $scope.changeMarkdown = throttleChange;
 
-            mediumInstance.subscribe('editableInput', e => $scope.$applyAsync(throttleChange));
+            mediumInstance.subscribe("editableInput", (e) => $scope.$applyAsync(throttleChange));
 
             mediumInstance.subscribe("editableClick", function(e) {
-                let r = new RegExp('^(?:[a-z]+:)?//', 'i');
+                const r = new RegExp("^(?:[a-z]+:)?//", "i");
 
                 if (e.target.href) {
-                    if (r.test(e.target.getAttribute('href')) || (e.target.getAttribute('target') === '_blank')) {
+                    if (r.test(e.target.getAttribute("href")) || (e.target.getAttribute("target") === "_blank")) {
                         e.stopPropagation();
                         return window.open(e.target.href);
                     } else {
@@ -562,12 +562,12 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
                 }
             });
 
-            mediumInstance.subscribe('editableDrop', event => $scope.onUploadFile({files: event.dataTransfer.files, cb: uploadEnd}));
+            mediumInstance.subscribe("editableDrop", (event) => $scope.onUploadFile({files: event.dataTransfer.files, cb: uploadEnd}));
 
-            mediumInstance.subscribe('editableKeydown', function(e) {
-                let code = e.keyCode ? e.keyCode : e.which;
+            mediumInstance.subscribe("editableKeydown", function(e) {
+                const code = e.keyCode ? e.keyCode : e.which;
 
-                let mention = $('.medium-mention');
+                const mention = $(".medium-mention");
 
                 if (((code === 40) || (code === 38)) && mention.length) {
                     e.stopPropagation();
@@ -592,7 +592,7 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
             });
         };
 
-        $(editorMedium[0]).on('mousedown', function(e) {
+        $(editorMedium[0]).on("mousedown", function(e) {
             if (e.target.getAttribute("href")) {
                 e.preventDefault();
                 return e.stopPropagation();
@@ -606,18 +606,18 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
             }
         });
 
-        $(editorMedium[0]).on('dblclick', 'pre', e =>
+        $(editorMedium[0]).on("dblclick", "pre", (e) =>
             $scope.$applyAsync(function() {
                 $scope.codeEditorVisible = true;
 
-                codeBlockSelected = e.currentTarget.querySelector('code');
+                codeBlockSelected = e.currentTarget.querySelector("code");
 
                 $scope.currentCodeLanguage = wysiwygCodeHightlighterService.getLanguageInClassList(codeBlockSelected.classList);
                 return $scope.code = codeBlockSelected.innerText;
-            })
+            }),
         );
 
-        var unwatch = $scope.$watch('content', function(content) {
+        const unwatch = $scope.$watch("content", function(content) {
             if (!_.isUndefined(content)) {
                 $scope.outdated = isOutdated();
 
@@ -638,7 +638,7 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
                 }
 
                 if (tgLoader.open()) {
-                    var unwatchLoader = tgLoader.onEnd(function() {
+                    const unwatchLoader = tgLoader.onEnd(function() {
                         create(content, $scope.editMode);
                         return unwatchLoader();
                     });
@@ -661,15 +661,15 @@ export let Medium = function($translate, $confirm, $storage, wysiwygService, ani
     return {
         templateUrl: "common/components/wysiwyg-toolbar.html",
         scope: {
-            placeholder: '@',
-            version: '<',
-            storageKey: '<',
-            content: '<',
-            onCancel: '&',
-            onSave: '&',
-            onUploadFile: '&',
-            onChange: '&'
+            placeholder: "@",
+            version: "<",
+            storageKey: "<",
+            content: "<",
+            onCancel: "&",
+            onSave: "&",
+            onUploadFile: "&",
+            onChange: "&",
         },
-        link
+        link,
     };
 };

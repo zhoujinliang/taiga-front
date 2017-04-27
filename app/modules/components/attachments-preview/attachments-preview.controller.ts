@@ -17,16 +17,16 @@
  * File: attchments-preview.controller.coffee
  */
 
-import {defineImmutableProperty, isImage} from "../../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {defineImmutableProperty, isImage} from "../../../libs/utils";
 
 export class AttachmentsPreviewController {
-    attachmentsPreviewService:any
-    attachments:any
+    attachmentsPreviewService: any;
+    attachments: any;
 
     static initClass() {
         this.$inject = [
-            "tgAttachmentsPreviewService"
+            "tgAttachmentsPreviewService",
         ];
     }
 
@@ -42,52 +42,51 @@ export class AttachmentsPreviewController {
     }
 
     hasPagination() {
-        let images = this.attachments.filter(attachment => {
-            return isImage(attachment.getIn(['file', 'name']));
+        const images = this.attachments.filter((attachment) => {
+            return isImage(attachment.getIn(["file", "name"]));
         });
 
         return images.size > 1;
     }
 
     getCurrent() {
-        let attachment = this.attachments.find(attachment => {
-            return this.attachmentsPreviewService.fileId === attachment.getIn(['file', 'id']);
+        const attachment = this.attachments.find((attachment) => {
+            return this.attachmentsPreviewService.fileId === attachment.getIn(["file", "id"]);
         });
 
-        let file = attachment.get('file');
+        const file = attachment.get("file");
 
         return file;
     }
 
     getIndex() {
-        return this.attachments.findIndex(attachment => {
-            return this.attachmentsPreviewService.fileId === attachment.getIn(['file', 'id']);
+        return this.attachments.findIndex((attachment) => {
+            return this.attachmentsPreviewService.fileId === attachment.getIn(["file", "id"]);
         });
     }
 
     next() {
-        let attachmentIndex = this.getIndex();
+        const attachmentIndex = this.getIndex();
 
-        let image = this.attachments.slice(attachmentIndex + 1).find(attachment => isImage(attachment.getIn(['file', 'name'])));
+        let image = this.attachments.slice(attachmentIndex + 1).find((attachment) => isImage(attachment.getIn(["file", "name"])));
 
         if (!image) {
-            image = this.attachments.find(attachment => isImage(attachment.getIn(['file', 'name'])));
+            image = this.attachments.find((attachment) => isImage(attachment.getIn(["file", "name"])));
         }
 
-
-        return this.attachmentsPreviewService.fileId = image.getIn(['file', 'id']);
+        return this.attachmentsPreviewService.fileId = image.getIn(["file", "id"]);
     }
 
     previous() {
-        let attachmentIndex = this.getIndex();
+        const attachmentIndex = this.getIndex();
 
-        let image = this.attachments.slice(0, attachmentIndex).findLast(attachment => isImage(attachment.getIn(['file', 'name'])));
+        let image = this.attachments.slice(0, attachmentIndex).findLast((attachment) => isImage(attachment.getIn(["file", "name"])));
 
         if (!image) {
-            image = this.attachments.findLast(attachment => isImage(attachment.getIn(['file', 'name'])));
+            image = this.attachments.findLast((attachment) => isImage(attachment.getIn(["file", "name"])));
         }
 
-        return this.attachmentsPreviewService.fileId = image.getIn(['file', 'id']);
+        return this.attachmentsPreviewService.fileId = image.getIn(["file", "id"]);
     }
 }
 AttachmentsPreviewController.initClass();

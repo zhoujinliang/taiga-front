@@ -17,20 +17,20 @@
  * File: history.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let HistoryDiffDirective = function() {
-    let link = (scope, el, attrs, ctrl) => ctrl.diffTags();
+    const link = (scope, el, attrs, ctrl) => ctrl.diffTags();
 
     return {
         scope: {
             type: "<",
-            diff: "<"
+            diff: "<",
         },
-        templateUrl:"history/history/history-diff.html",
+        templateUrl: "history/history/history-diff.html",
         controller: "ActivitiesDiffCtrl",
-        controllerAs: 'vm',
+        controllerAs: "vm",
         bindToController: true,
-        link
+        link,
     };
 };

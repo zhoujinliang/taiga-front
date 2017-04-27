@@ -17,31 +17,31 @@
  * File: related-userstory-create.controller.coffee
  */
 
-import * as angular from "angular"
-import * as Immutable from "immutable"
+import * as angular from "angular";
+import * as Immutable from "immutable";
 
 export class RelatedUserstoriesCreateController {
-    currentUserService:any
-    rs:any
-    confirm:any
-    analytics:any
-    projects:any
-    projectUserstories: Immutable.List<any>
-    loading:boolean
-    epicUserstories:any
-    epic:any
-    validateExistingUserstoryForm:any
-    setExistingUserstoryFormErrors:any
-    loadRelatedUserstories:any
-    validateNewUserstoryForm:any
-    setNewUserstoryFormErrors:any
+    currentUserService: any;
+    rs: any;
+    confirm: any;
+    analytics: any;
+    projects: any;
+    projectUserstories: Immutable.List<any>;
+    loading: boolean;
+    epicUserstories: any;
+    epic: any;
+    validateExistingUserstoryForm: any;
+    setExistingUserstoryFormErrors: any;
+    loadRelatedUserstories: any;
+    validateNewUserstoryForm: any;
+    setNewUserstoryFormErrors: any;
 
     static initClass() {
         this.$inject = [
             "tgCurrentUserService",
             "tgResources",
             "$tgConfirm",
-            "$tgAnalytics"
+            "$tgAnalytics",
         ];
     }
 
@@ -56,9 +56,9 @@ export class RelatedUserstoriesCreateController {
     }
 
     selectProject(selectedProjectId, onSelectedProject) {
-        return this.rs.userstories.listAllInProject(selectedProjectId).then(data => {
-            let excludeIds = this.epicUserstories.map(us => us.get('id'));
-            let filteredData = data.filter(us => excludeIds.indexOf(us.get('id')) === -1);
+        return this.rs.userstories.listAllInProject(selectedProjectId).then((data) => {
+            const excludeIds = this.epicUserstories.map((us) => us.get("id"));
+            const filteredData = data.filter((us) => excludeIds.indexOf(us.get("id")) === -1);
             this.projectUserstories = filteredData;
             if (onSelectedProject) {
                 return onSelectedProject();
@@ -75,13 +75,13 @@ export class RelatedUserstoriesCreateController {
 
         this.loading = true;
 
-        let onError = data => {
+        const onError = (data) => {
             this.loading = false;
             this.confirm.notify("error");
             return this.setExistingUserstoryFormErrors(data);
         };
 
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.analytics.trackEvent("epic related user story", "create", "create related user story on epic", 1);
             this.loading = false;
             if (onSavedRelatedUserstory) {
@@ -90,7 +90,7 @@ export class RelatedUserstoriesCreateController {
             return this.loadRelatedUserstories();
         };
 
-        let epicId = this.epic.get('id');
+        const epicId = this.epic.get("id");
         return this.rs.epics.addRelatedUserstory(epicId, selectedUserstoryId).then(onSuccess, onError);
     }
 
@@ -103,13 +103,13 @@ export class RelatedUserstoriesCreateController {
 
         this.loading = true;
 
-        let onError = data => {
+        const onError = (data) => {
             this.loading = false;
             this.confirm.notify("error");
             return this.setNewUserstoryFormErrors(data);
         };
 
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.analytics.trackEvent("epic related user story", "create", "create related user story on epic", 1);
             this.loading = false;
             if (onCreatedRelatedUserstory) {
@@ -118,7 +118,7 @@ export class RelatedUserstoriesCreateController {
             return this.loadRelatedUserstories();
         };
 
-        let epicId = this.epic.get('id');
+        const epicId = this.epic.get("id");
         return this.rs.epics.bulkCreateRelatedUserStories(epicId, selectedProjectId, userstoriesText).then(onSuccess, onError);
     }
 }

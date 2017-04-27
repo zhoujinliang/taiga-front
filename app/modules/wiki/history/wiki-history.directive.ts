@@ -17,22 +17,22 @@
  * File: wiki-history.directive.coffee
  */
 
-import {bindOnce} from "../../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {bindOnce} from "../../../libs/utils";
 
 export let WikiHistoryDirective = function() {
-    let link = (scope, el, attrs, ctrl) =>
-        bindOnce(scope, 'vm.wikiId', value => ctrl.initializeHistoryEntries(value))
+    const link = (scope, el, attrs, ctrl) =>
+        bindOnce(scope, "vm.wikiId", (value) => ctrl.initializeHistoryEntries(value))
     ;
 
     return {
         scope: {},
         bindToController: {
-            wikiId: "<"
+            wikiId: "<",
         },
         controller: "WikiHistoryCtrl",
         controllerAs: "vm",
-        templateUrl:"wiki/history/wiki-history.html",
-        link
+        templateUrl: "wiki/history/wiki-history.html",
+        link,
     };
 };

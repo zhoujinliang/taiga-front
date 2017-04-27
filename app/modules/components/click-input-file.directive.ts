@@ -25,16 +25,16 @@
 export let ClickInputFile = () =>
   ({
       link(scope, el) {
-          el.on('click', function(e) {
-              if (!$(e.target).is('input')) {
+          el.on("click", function(e) {
+              if (!$(e.target).is("input")) {
                   e.preventDefault();
-                  let inputFile = el.find('input[type="file"]');
-                  inputFile.val('');
-                  return inputFile.trigger('click');
+                  const inputFile = el.find('input[type="file"]');
+                  inputFile.val("");
+                  return inputFile.trigger("click");
               }
           });
 
           return scope.$on("$destroy", () => el.off());
-      }
+      },
   })
 ;

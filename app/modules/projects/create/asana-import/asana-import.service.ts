@@ -17,26 +17,26 @@
  * File: asana-import.service.coffee
  */
 
-import {Service} from "../../../../ts/classes"
-import * as Immutable from "immutable"
-import * as Promise from "bluebird"
+import * as Promise from "bluebird";
+import * as Immutable from "immutable";
+import {Service} from "../../../../ts/classes";
 
 export class AsanaImportService extends Service {
-    resources:any
-    location:any
-    projects:Immutable.List<any>
-    projectUsers:Immutable.List<any>
-    token:any
+    resources: any;
+    location: any;
+    projects: Immutable.List<any>;
+    projectUsers: Immutable.List<any>;
+    token: any;
 
     static initClass() {
         this.$inject = [
-            'tgResources',
-            '$location'
+            "tgResources",
+            "$location",
         ];
     }
 
     constructor(resources, location) {
-        super()
+        super();
         this.resources = resources;
         this.location = location;
         this.projects = Immutable.List();
@@ -49,11 +49,11 @@ export class AsanaImportService extends Service {
     }
 
     fetchProjects() {
-        return this.resources.asanaImporter.listProjects(this.token).then(projects => this.projects = projects);
+        return this.resources.asanaImporter.listProjects(this.token).then((projects) => this.projects = projects);
     }
 
     fetchUsers(projectId) {
-        return this.resources.asanaImporter.listUsers(this.token, projectId).then(users => this.projectUsers = users);
+        return this.resources.asanaImporter.listUsers(this.token, projectId).then((users) => this.projectUsers = users);
     }
 
     importProject(name, description, projectId, userBindings, keepExternalReference, isPrivate, projectType) {
@@ -62,7 +62,7 @@ export class AsanaImportService extends Service {
 
     getAuthUrl() {
         return new Promise((function(resolve) {
-            return this.resources.asanaImporter.getAuthUrl().then(response => {
+            return this.resources.asanaImporter.getAuthUrl().then((response) => {
                 this.authUrl = response.data.url;
                 return resolve(this.authUrl);
             });
@@ -71,7 +71,7 @@ export class AsanaImportService extends Service {
 
     authorize(code) {
         return new Promise((function(resolve, reject) {
-            return this.resources.asanaImporter.authorize(code).then((response => {
+            return this.resources.asanaImporter.authorize(code).then(((response) => {
                 this.token = response.data.token;
                 return resolve(this.token);
             }

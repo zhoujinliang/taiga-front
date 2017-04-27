@@ -19,13 +19,13 @@
 
 export let EpicRowDirective = () =>
     ({
-        templateUrl:"epics/dashboard/epic-row/epic-row.html",
+        templateUrl: "epics/dashboard/epic-row/epic-row.html",
         controller: "EpicRowCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            epic: '=',
-            column: '='
-        }
+            epic: "=",
+            column: "=",
+        },
     })
 ;

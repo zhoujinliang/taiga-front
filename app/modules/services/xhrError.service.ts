@@ -17,13 +17,13 @@
  * File: xhrError.service.coffee
  */
 
-import * as Promise from "bluebird"
-import {ErrorHandlingService} from "./error-handling.service"
-import {Injectable} from "@angular/core"
+import {Injectable} from "@angular/core";
+import * as Promise from "bluebird";
+import {ErrorHandlingService} from "./error-handling.service";
 
 @Injectable()
 export class xhrError {
-    constructor(private errorHandling:ErrorHandlingService) { }
+    constructor(private errorHandling: ErrorHandlingService) { }
 
     notFound() {
         return this.errorHandling.notfound();

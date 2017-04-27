@@ -18,16 +18,16 @@
  */
 
 export let ContactProjectLbDirective = function(lightboxService) {
-    let link = (scope, el) => lightboxService.open(el);
+    const link = (scope, el) => lightboxService.open(el);
 
     return {
         controller: "ContactProjectLbCtrl",
         bindToController: {
-            project: '='
+            project: "=",
         },
         controllerAs: "vm",
         templateUrl: "projects/components/lb-contact-project/lb-contact-project.html",
-        link
+        link,
     };
 };
-ContactProjectLbDirective.$inject = ['lightboxService'];
+ContactProjectLbDirective.$inject = ["lightboxService"];

@@ -17,10 +17,10 @@
  * File: navigation-bar.directive.coffee
  */
 
-import {defineImmutableProperty} from "../../libs/utils"
+import {defineImmutableProperty} from "../../libs/utils";
 
 export let NavigationBarDirective = function(currentUserService, navigationBarService, locationService, navUrlsService, config) {
-    let link = function(scope, el, attrs, ctrl) {
+    const link = function(scope, el, attrs, ctrl) {
         scope.vm = {};
 
         defineImmutableProperty(scope.vm, "projects", () => currentUserService.projects.get("recents"));
@@ -30,7 +30,7 @@ export let NavigationBarDirective = function(currentUserService, navigationBarSe
         scope.vm.publicRegisterEnabled = config.get("publicRegisterEnabled");
 
         scope.vm.login = function() {
-            let nextUrl = encodeURIComponent(locationService.url());
+            const nextUrl = encodeURIComponent(locationService.url());
             locationService.url(navUrlsService.resolve("login"));
             return locationService.search({next: nextUrl});
         };
@@ -44,10 +44,10 @@ export let NavigationBarDirective = function(currentUserService, navigationBarSe
         });
     };
 
-    let directive = {
+    const directive = {
         templateUrl: "navigation-bar/navigation-bar.html",
         scope: {},
-        link
+        link,
     };
 
     return directive;
@@ -58,5 +58,5 @@ NavigationBarDirective.$inject = [
     "tgNavigationBarService",
     "$tgLocation",
     "$tgNavUrls",
-    "$tgConfig"
+    "$tgConfig",
 ];

@@ -17,14 +17,14 @@
  * File: dropdown-user.directive.coffee
  */
 
-import * as _ from "lodash"
-import {defineImmutableProperty} from "../../../libs/utils"
-import { GlobalDataService } from "../../services/global-data.service";
-import { NavigationUrlsService } from "../../../ts/modules/base/navurls.service";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Router } from "@angular/router";
+import * as _ from "lodash";
+import {defineImmutableProperty} from "../../../libs/utils";
 import { ConfigurationService } from "../../../ts/modules/base/conf";
+import { NavigationUrlsService } from "../../../ts/modules/base/navurls.service";
 import { AuthService } from "../../auth/auth.service";
-import { Component, Input, Output, EventEmitter } from "@angular/core"
+import { GlobalDataService } from "../../services/global-data.service";
 // import { FeedbackService } from "../../feedback/feedback.service";
 
 @Component({
@@ -33,11 +33,11 @@ import { Component, Input, Output, EventEmitter } from "@angular/core"
 })
 export class DropdownUser {
     @Input() user: any;
-    @Output() logout: EventEmitter<any>
+    @Output() logout: EventEmitter<any>;
     isFeedbackEnabled: boolean;
     // userSettingsPlugins:any;
 
-    constructor (private config: ConfigurationService,
+    constructor(private config: ConfigurationService,
                  private router: Router,
                  private navurls: NavigationUrlsService) {
                  // private globalData: GlobalDataService) {
@@ -50,10 +50,10 @@ export class DropdownUser {
     onLogoutClick() {
         this.logout.emit();
         return false;
-    };
+    }
 
     sendFeedback() {
         // TODO: Implement feedback service that depends on lightbox factory
         // this.feedback.sendFeedback();
     }
-};
+}

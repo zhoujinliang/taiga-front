@@ -20,24 +20,24 @@
 export let WarningUserImportDirective = (lightboxService, lightboxKeyboardNavigationService) =>
     ({
         link(scope, el, attr) {
-            return scope.$watch('visible', function(visible) {
-                if (visible && !el.hasClass('open')) {
+            return scope.$watch("visible", function(visible) {
+                if (visible && !el.hasClass("open")) {
                     return lightboxService.open(el, scope.onClose).then(function() {
-                        el.find('input').focus();
+                        el.find("input").focus();
                         return lightboxKeyboardNavigationService.init(el);
                     });
-                } else if (!visible && el.hasClass('open')) {
+                } else if (!visible && el.hasClass("open")) {
                     return lightboxService.close(el);
                 }
             });
         },
 
-        templateUrl:"projects/create/warning-user-import-lightbox/warning-user-import-lightbox.html",
+        templateUrl: "projects/create/warning-user-import-lightbox/warning-user-import-lightbox.html",
         scope: {
-            visible: '<',
-            onClose: '&',
-            onConfirm: '&'
-        }
+            visible: "<",
+            onClose: "&",
+            onConfirm: "&",
+        },
     })
 ;
-WarningUserImportDirective.$inject = ['lightboxService', 'lightboxKeyboardNavigationService'];
+WarningUserImportDirective.$inject = ["lightboxService", "lightboxKeyboardNavigationService"];

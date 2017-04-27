@@ -17,12 +17,12 @@
  * File: working-on.controller.coffee
  */
 
-import * as Immutable from "immutable"
-import {Component, Input} from "@angular/core"
+import {Component, Input} from "@angular/core";
+import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-working-on",
-    template: require("./working-on.jade")()
+    template: require("./working-on.jade")(),
 })
 export class WorkingOn {
     @Input() assignedTo;

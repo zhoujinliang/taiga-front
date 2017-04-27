@@ -17,23 +17,23 @@
  * File: jira-import.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../libs/utils"
+import {defineImmutableProperty} from "../../../../libs/utils";
 
 export class JiraImportController {
-    jiraImportService:any
-    confirm:any
-    translate:any
-    importProjectService:any
-    step:any
-    project:any
-    fetchingUsers:any
+    jiraImportService: any;
+    confirm: any;
+    translate: any;
+    importProjectService: any;
+    step: any;
+    project: any;
+    fetchingUsers: any;
 
     static initClass() {
         this.$inject = [
-            'tgJiraImportService',
-            '$tgConfirm',
-            '$translate',
-            'tgImportProjectService',
+            "tgJiraImportService",
+            "$tgConfirm",
+            "$translate",
+            "tgImportProjectService",
         ];
     }
 
@@ -42,53 +42,53 @@ export class JiraImportController {
         this.confirm = confirm;
         this.translate = translate;
         this.importProjectService = importProjectService;
-        this.step = 'autorization-jira';
+        this.step = "autorization-jira";
         this.project = null;
-        defineImmutableProperty(this, 'projects', () => { return this.jiraImportService.projects; });
-        defineImmutableProperty(this, 'members', () => { return this.jiraImportService.projectUsers; });
+        defineImmutableProperty(this, "projects", () => this.jiraImportService.projects);
+        defineImmutableProperty(this, "members", () => this.jiraImportService.projectUsers);
     }
 
     startProjectSelector() {
-        this.step = 'project-select-jira';
+        this.step = "project-select-jira";
         return this.jiraImportService.fetchProjects();
     }
 
     onSelectProject(project) {
-        this.step = 'project-form-jira';
+        this.step = "project-form-jira";
         this.project = project;
         this.fetchingUsers = true;
 
-        return this.jiraImportService.fetchUsers(this.project.get('id')).then(() => this.fetchingUsers = false);
+        return this.jiraImportService.fetchUsers(this.project.get("id")).then(() => this.fetchingUsers = false);
     }
 
     onSaveProjectDetails(project) {
         this.project = project;
-        return this.step = 'project-members-jira';
+        return this.step = "project-members-jira";
     }
 
     onCancelMemberSelection() {
-        return this.step = 'project-form-jira';
+        return this.step = "project-form-jira";
     }
 
     startImport(users) {
-        let loader = this.confirm.loader(this.translate.instant('PROJECT.IMPORT.IN_PROGRESS.TITLE'), this.translate.instant('PROJECT.IMPORT.IN_PROGRESS.DESCRIPTION'), true);
+        const loader = this.confirm.loader(this.translate.instant("PROJECT.IMPORT.IN_PROGRESS.TITLE"), this.translate.instant("PROJECT.IMPORT.IN_PROGRESS.DESCRIPTION"), true);
 
         loader.start();
 
-        let projectType = this.project.get('project_type');
-        if ((projectType === "issues") && this.project.get('create_subissues')) {
+        let projectType = this.project.get("project_type");
+        if ((projectType === "issues") && this.project.get("create_subissues")) {
             projectType = "issues-with-subissues";
         }
 
-        let promise = this.jiraImportService.importProject(
-            this.project.get('name'),
-            this.project.get('description'),
-            this.project.get('id'),
+        const promise = this.jiraImportService.importProject(
+            this.project.get("name"),
+            this.project.get("description"),
+            this.project.get("id"),
             users,
-            this.project.get('keepExternalReference'),
-            this.project.get('is_private'),
+            this.project.get("keepExternalReference"),
+            this.project.get("is_private"),
             projectType,
-            this.project.get('importer_type')
+            this.project.get("importer_type"),
         );
 
         return this.importProjectService.importPromise(promise).then(() => loader.stop());

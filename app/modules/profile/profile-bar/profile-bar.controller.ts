@@ -18,13 +18,13 @@
  */
 
 export class ProfileBarController {
-    userService:any
-    stats:any
-    user:any
+    userService: any;
+    stats: any;
+    user: any;
 
     static initClass() {
         this.$inject = [
-            "tgUserService"
+            "tgUserService",
         ];
     }
 
@@ -34,7 +34,7 @@ export class ProfileBarController {
     }
 
     loadStats() {
-        return this.userService.getStats(this.user.get("id")).then(stats => {
+        return this.userService.getStats(this.user.get("id")).then((stats) => {
             return this.stats = stats;
         });
     }

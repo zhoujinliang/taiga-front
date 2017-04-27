@@ -17,25 +17,25 @@
  * File: reñated-userstory-row.controller.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export class RelatedUserstoryRowController {
-    avatarService:any
-    translate:any
-    confirm:any
-    rs:any
-    userstory:any
-    avatar:any
-    epic:any
-    loadRelatedUserstories:any
+    avatarService: any;
+    translate: any;
+    confirm: any;
+    rs: any;
+    userstory: any;
+    avatar: any;
+    epic: any;
+    loadRelatedUserstories: any;
 
     static initClass() {
         this.$inject = [
             "tgAvatarService",
             "$translate",
             "$tgConfirm",
-            "tgResources"
+            "tgResources",
         ];
     }
 
@@ -47,38 +47,38 @@ export class RelatedUserstoryRowController {
     }
 
     setAvatarData() {
-        let member = this.userstory.get('assigned_to_extra_info');
+        const member = this.userstory.get("assigned_to_extra_info");
         return this.avatar = this.avatarService.getAvatar(member);
     }
 
     getAssignedToFullNameDisplay() {
-        if (this.userstory.get('assigned_to')) {
-            return this.userstory.getIn(['assigned_to_extra_info', 'full_name_display']);
+        if (this.userstory.get("assigned_to")) {
+            return this.userstory.getIn(["assigned_to_extra_info", "full_name_display"]);
         }
 
         return this.translate.instant("COMMON.ASSIGNED_TO.NOT_ASSIGNED");
     }
 
     onDeleteRelatedUserstory() {
-        let title = this.translate.instant('EPIC.TITLE_LIGHTBOX_UNLINK_RELATED_USERSTORY');
-        let message = this.translate.instant('EPIC.MSG_LIGHTBOX_UNLINK_RELATED_USERSTORY', {
-            subject: this.userstory.get('subject')
+        const title = this.translate.instant("EPIC.TITLE_LIGHTBOX_UNLINK_RELATED_USERSTORY");
+        let message = this.translate.instant("EPIC.MSG_LIGHTBOX_UNLINK_RELATED_USERSTORY", {
+            subject: this.userstory.get("subject"),
         });
         return this.confirm.askOnDelete(title, message)
-            .then(askResponse => {
-                let onError = () => {
-                    message = this.translate.instant('EPIC.ERROR_UNLINK_RELATED_USERSTORY', {errorMessage: message});
+            .then((askResponse) => {
+                const onError = () => {
+                    message = this.translate.instant("EPIC.ERROR_UNLINK_RELATED_USERSTORY", {errorMessage: message});
                     this.confirm.notify("error", null, message);
                     return askResponse.finish(false);
                 };
 
-                let onSuccess = () => {
+                const onSuccess = () => {
                     this.loadRelatedUserstories();
                     return askResponse.finish();
                 };
 
-                let epicId = this.epic.get('id');
-                let userstoryId = this.userstory.get('id');
+                const epicId = this.epic.get("id");
+                const userstoryId = this.userstory.get("id");
                 return this.rs.epics.deleteRelatedUserstory(epicId, userstoryId).then(onSuccess, onError);
         });
     }

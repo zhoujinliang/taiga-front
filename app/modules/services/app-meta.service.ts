@@ -17,10 +17,10 @@
  * File: app-meta.service.coffee
  */
 
-import {truncate} from "../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {truncate} from "../../libs/utils";
 
-import {Injectable} from "@angular/core"
+import {Injectable} from "@angular/core";
 
 @Injectable()
 export class AppMetaService {
@@ -63,7 +63,7 @@ export class AppMetaService {
     }
 
     setTitle(title) {
-        return this._set('title', title);
+        return this._set("title", title);
     }
 
     setDescription(description) {
@@ -97,7 +97,7 @@ export class AppMetaService {
     addMobileViewport() {
         return $("head").append(
             `<meta name=\"viewport\" \
-content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0\">`
+content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0\">`,
         );
     }
 

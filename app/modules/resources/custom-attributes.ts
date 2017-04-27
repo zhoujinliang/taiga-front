@@ -22,16 +22,15 @@
  * File: modules/resources/projects.coffee
  */
 
-
-import {sizeFormat} from "../../libs/utils"
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
+import {Injectable} from "@angular/core";
+import {sizeFormat} from "../../libs/utils";
+import {RepositoryService} from "../../ts/modules/base/repository";
 
 @Injectable()
 export class CustomAttributesResource {
     constructor(private repo: RepositoryService) {}
 
-    private _list(projectId:number, resource:string) {
+    private _list(projectId: number, resource: string) {
         return this.repo.queryMany(resource, {project: projectId});
     }
 
@@ -39,5 +38,4 @@ export class CustomAttributesResource {
     userstory = { list(projectId) { return this._list(projectId, "custom-attributes/userstory"); } };
     task = { list(projectId) { return this._list(projectId, "custom-attributes/task"); } };
     issue = { list(projectId) { return this._list(projectId, "custom-attributes/issue"); } };
-};
-
+}

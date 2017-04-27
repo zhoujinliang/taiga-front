@@ -17,15 +17,15 @@
  * File: card.controller.coffee
  */
 
-import {Component, Input, ChangeDetectionStrategy} from "@angular/core";
-import * as Immutable from "immutable";
+import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
 import {Store} from "@ngrx/store";
+import * as Immutable from "immutable";
+import {OpenLightboxAction} from "../../../../../app.actions";
 import {IState} from "../../../../../app.store";
-import {OpenLightboxAction} from "../../../../../app.actions"
 
 @Component({
     selector: "tg-card-owner",
-    template: require('./card-owner.jade')(),
+    template: require("./card-owner.jade")(),
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardOwner {

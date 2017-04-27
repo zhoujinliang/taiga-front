@@ -17,23 +17,23 @@
  * File: github-import-project-form.controller.coffee
  */
 
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
 
 export class GithubImportProjectFormController {
-    currentUserService:any
-    canCreatePublicProjects:any
-    canCreatePrivateProjects:any
-    projectForm:any
-    platformName:string
-    project:any
-    limitMembersPrivateProject:any
-    limitMembersPublicProject:any
-    members:any
-    onSaveProjectDetails:any
+    currentUserService: any;
+    canCreatePublicProjects: any;
+    canCreatePrivateProjects: any;
+    projectForm: any;
+    platformName: string;
+    project: any;
+    limitMembersPrivateProject: any;
+    limitMembersPublicProject: any;
+    members: any;
+    onSaveProjectDetails: any;
 
     static initClass() {
         this.$inject = [
-            "tgCurrentUserService"
+            "tgCurrentUserService",
         ];
     }
 

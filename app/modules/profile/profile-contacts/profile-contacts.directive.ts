@@ -18,16 +18,16 @@
  */
 
 export let ProfileContactsDirective = function() {
-    let link = (scope, elm, attrs, ctrl) => ctrl.loadContacts();
+    const link = (scope, elm, attrs, ctrl) => ctrl.loadContacts();
 
     return {
         templateUrl: "profile/profile-contacts/profile-contacts.html",
         scope: {
-            user: "="
+            user: "=",
         },
         controllerAs: "vm",
         controller: "ProfileContacts",
         link,
-        bindToController: true
+        bindToController: true,
     };
 };

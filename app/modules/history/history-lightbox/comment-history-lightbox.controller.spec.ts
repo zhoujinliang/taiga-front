@@ -17,32 +17,32 @@
  * File: subscriptions.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("LightboxDisplayHistoricController", function() {
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgResources = function() {
+    const _mockTgResources = function() {
         mocks.tgResources = {
             history: {
-                getCommentHistory: sinon.stub()
-            }
+                getCommentHistory: sinon.stub(),
+            },
         };
 
         return provide.value("$tgResources", mocks.tgResources);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgResources();
@@ -54,22 +54,22 @@ describe("LightboxDisplayHistoricController", function() {
         module("taigaHistory");
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     return it("load historic", function(done) {
-        let historicLbCtrl = controller("LightboxDisplayHistoricCtrl");
+        const historicLbCtrl = controller("LightboxDisplayHistoricCtrl");
 
         historicLbCtrl.name = "type";
         historicLbCtrl.object = 1;
         historicLbCtrl.comment = {};
         historicLbCtrl.comment.id = 1;
 
-        let type = historicLbCtrl.name;
-        let objectId = historicLbCtrl.object;
-        let activityId = historicLbCtrl.comment.id;
+        const type = historicLbCtrl.name;
+        const objectId = historicLbCtrl.object;
+        const activityId = historicLbCtrl.comment.id;
 
-        let promise = mocks.tgResources.history.getCommentHistory.withArgs(type, objectId, activityId).promise().resolve();
+        const promise = mocks.tgResources.history.getCommentHistory.withArgs(type, objectId, activityId).promise().resolve();
 
         return historicLbCtrl._loadHistoric().then(function(data) {
             expect(historicLbCtrl.commentHistoryEntries).is.equal(data);

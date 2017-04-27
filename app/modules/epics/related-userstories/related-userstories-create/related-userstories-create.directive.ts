@@ -17,18 +17,18 @@
  * File: related-userstory-create.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let RelatedUserstoriesCreateDirective = function(lightboxService) {
-    let link = function(scope, el, attrs, ctrl) {
-        let newUserstoryForm = el.find(".new-user-story-form").checksley();
-        let existingUserstoryForm = el.find(".existing-user-story-form").checksley();
+    const link = function(scope, el, attrs, ctrl) {
+        const newUserstoryForm = el.find(".new-user-story-form").checksley();
+        const existingUserstoryForm = el.find(".existing-user-story-form").checksley();
 
         ctrl.validateNewUserstoryForm = () => {
             return newUserstoryForm.validate();
         };
 
-        ctrl.setNewUserstoryFormErrors = errors => {
+        ctrl.setNewUserstoryFormErrors = (errors) => {
             return newUserstoryForm.setErrors(errors);
         };
 
@@ -36,11 +36,11 @@ export let RelatedUserstoriesCreateDirective = function(lightboxService) {
             return existingUserstoryForm.validate();
         };
 
-        ctrl.setExistingUserstoryFormErrors = errors => {
+        ctrl.setExistingUserstoryFormErrors = (errors) => {
             return existingUserstoryForm.setErrors(errors);
         };
 
-        scope.showLightbox = selectedProjectId =>
+        scope.showLightbox = (selectedProjectId) =>
             scope.selectProject(selectedProjectId).then(() => {
                 return lightboxService.open(el.find(".lightbox-create-related-user-stories"));
             })
@@ -53,9 +53,9 @@ export let RelatedUserstoriesCreateDirective = function(lightboxService) {
             return lightboxService.close(el.find(".lightbox-create-related-user-stories"));
         };
 
-        scope.$watch('vm.project', function(project) {
+        scope.$watch("vm.project", function(project) {
             if (project != null) {
-              return scope.selectedProject = project.get('id');
+              return scope.selectedProject = project.get("id");
           }
         });
 
@@ -70,7 +70,7 @@ export let RelatedUserstoriesCreateDirective = function(lightboxService) {
 
     return {
         link,
-        templateUrl:"epics/related-userstories/related-userstories-create/related-userstories-create.html",
+        templateUrl: "epics/related-userstories/related-userstories-create/related-userstories-create.html",
         controller: "RelatedUserstoriesCreateCtrl",
         controllerAs: "vm",
         bindToController: true,
@@ -79,10 +79,10 @@ export let RelatedUserstoriesCreateDirective = function(lightboxService) {
               project: "=",
               epic: "=",
               epicUserstories: "=",
-              loadRelatedUserstories:"&"
-        }
+              loadRelatedUserstories: "&",
+        },
 
     };
 };
 
-RelatedUserstoriesCreateDirective.$inject = ["lightboxService",];
+RelatedUserstoriesCreateDirective.$inject = ["lightboxService"];

@@ -17,39 +17,39 @@
  * File: project-logo.service.coffee
  */
 
-import {cartesianProduct} from "../../libs/utils"
-import {murmurhash3_32_gc} from "../../libs/murmurhash3_gc"
-declare var _version:string;
-import {Injectable} from "@angular/core"
+import {murmurhash3_32_gc} from "../../libs/murmurhash3_gc";
+import {cartesianProduct} from "../../libs/utils";
+declare var _version: string;
+import {Injectable} from "@angular/core";
 
 @Injectable()
 export class ProjectLogoService {
-    logos: any
+    logos: any;
 
     constructor() {
-        let IMAGES = [
+        const IMAGES = [
             `/${_version}/images/project-logos/project-logo-01.png`,
             `/${_version}/images/project-logos/project-logo-02.png`,
             `/${_version}/images/project-logos/project-logo-03.png`,
             `/${_version}/images/project-logos/project-logo-04.png`,
-            `/${_version}/images/project-logos/project-logo-05.png`
+            `/${_version}/images/project-logos/project-logo-05.png`,
         ];
 
-        let COLORS = [
+        const COLORS = [
             "rgba( 153,  214, 220, 1 )",
             "rgba( 213,  156,  156, 1 )",
             "rgba( 214, 161, 212,  1 )",
             "rgba( 164, 162, 219, 1 )",
-            "rgba( 152, 224, 168,  1 )"
+            "rgba( 152, 224, 168,  1 )",
         ];
 
         this.logos = cartesianProduct(IMAGES, COLORS);
     }
 
     getDefaultProjectLogo(slug, id) {
-        let key = `${slug}-${id}`;
-        let idx = __mod__(murmurhash3_32_gc(key, 42), this.logos.length);
-        let logo = this.logos[idx];
+        const key = `${slug}-${id}`;
+        const idx = __mod__(murmurhash3_32_gc(key, 42), this.logos.length);
+        const logo = this.logos[idx];
 
         return { src: logo[0], color: logo[1] };
     }

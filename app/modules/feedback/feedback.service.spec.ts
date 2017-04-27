@@ -17,37 +17,37 @@
  * File: feedback.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgFeedbackService", function() {
     let provide;
     let feedbackService = (provide = null);
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgLightboxFactory = function() {
+    const _mockTgLightboxFactory = function() {
         mocks.tgLightboxFactory = {
-            create: sinon.stub()
+            create: sinon.stub(),
         };
 
         return provide.value("tgLightboxFactory", mocks.tgLightboxFactory);
     };
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_tgFeedbackService_) {
             feedbackService = _tgFeedbackService_;
             if (callback) { return callback(); }
         })
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgLightboxFactory();
@@ -55,7 +55,7 @@ describe("tgFeedbackService", function() {
         })
     ;
 
-    let _setup = () => _mocks();
+    const _setup = () => _mocks();
 
     beforeEach(function() {
         module("taigaFeedback");
@@ -67,8 +67,8 @@ describe("tgFeedbackService", function() {
         expect(mocks.tgLightboxFactory.create.callCount).to.be.equal(0);
         feedbackService.sendFeedback();
         expect(mocks.tgLightboxFactory.create.callCount).to.be.equal(1);
-        let params = {
-            "class": "lightbox lightbox-feedback lightbox-generic-form"
+        const params = {
+            class: "lightbox lightbox-feedback lightbox-generic-form",
         };
         return expect(mocks.tgLightboxFactory.create.calledWith("tg-lb-feedback", params)).to.be.true;
     });

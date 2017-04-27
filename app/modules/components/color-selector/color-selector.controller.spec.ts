@@ -17,30 +17,30 @@
  * File: color-selector.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ColorSelector", function() {
     let provide = null;
     let controller = null;
     let colorSelectorCtrl = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgProjectService = function() {
+    const _mockTgProjectService = function() {
         mocks.tgProjectService = {
-            hasPermission: sinon.stub()
+            hasPermission: sinon.stub(),
         };
         return provide.value("tgProjectService", mocks.tgProjectService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgProjectService();
@@ -54,7 +54,7 @@ describe("ColorSelector", function() {
 
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     it("require Color on Selector", function() {
@@ -75,7 +75,7 @@ describe("ColorSelector", function() {
         colorSelectorCtrl = controller("ColorSelectorCtrl");
         colorSelectorCtrl.toggleColorList = sinon.stub();
 
-        let color = '#FFFFFF';
+        const color = "#FFFFFF";
 
         colorSelectorCtrl.onSelectColor = sinon.spy();
 
@@ -88,8 +88,8 @@ describe("ColorSelector", function() {
         colorSelectorCtrl = controller("ColorSelectorCtrl");
         colorSelectorCtrl.onSelectDropdownColor = sinon.stub();
 
-        let event = {which: 13, preventDefault: sinon.stub()};
-        let customColor = "#fabada";
+        const event = {which: 13, preventDefault: sinon.stub()};
+        const customColor = "#fabada";
 
         colorSelectorCtrl.customColor = customColor;
 

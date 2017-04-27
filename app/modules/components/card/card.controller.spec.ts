@@ -17,26 +17,26 @@
  * File: card.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("Card", function() {
-    let $provide = null;
+    const $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _setup = () => _inject();
+    const _setup = () => _inject();
 
     beforeEach(function() {
         module("taigaComponents");
@@ -45,7 +45,7 @@ describe("Card", function() {
     });
 
     it("toggle fold callback", function() {
-        let ctrl = $controller("Card");
+        const ctrl = $controller("Card");
 
         ctrl.item = Immutable.fromJS({id: 2});
         ctrl.onToggleFold = sinon.spy();
@@ -56,7 +56,7 @@ describe("Card", function() {
     });
 
     it("get closed tasks", function() {
-        let ctrl = $controller("Card");
+        const ctrl = $controller("Card");
 
         ctrl.item = Immutable.fromJS({
             id: 2,
@@ -64,17 +64,17 @@ describe("Card", function() {
                 tasks: [
                     {is_closed: true},
                     {is_closed: false},
-                    {is_closed: true}
-                ]
-            }
+                    {is_closed: true},
+                ],
+            },
         });
 
-        let tasks = ctrl.getClosedTasks();
+        const tasks = ctrl.getClosedTasks();
         return expect(tasks.size).to.be.equal(2);
     });
 
     it("get closed percent", function() {
-        let ctrl = $controller("Card");
+        const ctrl = $controller("Card");
 
         ctrl.item = Immutable.fromJS({
             id: 2,
@@ -83,77 +83,77 @@ describe("Card", function() {
                     {is_closed: true},
                     {is_closed: false},
                     {is_closed: false},
-                    {is_closed: true}
-                ]
-            }
+                    {is_closed: true},
+                ],
+            },
         });
 
-        let percent = ctrl.closedTasksPercent();
+        const percent = ctrl.closedTasksPercent();
         return expect(percent).to.be.equal(50);
     });
 
     return describe("check if related task and slides visibility", function() {
         it("no content", function() {
-            let ctrl = $controller("Card");
+            const ctrl = $controller("Card");
 
             ctrl.item = Immutable.fromJS({
                 id: 2,
                 images: [],
                 model: {
-                    tasks: []
-                }
+                    tasks: [],
+                },
             });
 
-            ctrl.visible = () => { return true; };
+            ctrl.visible = () => true;
 
-            let visibility = ctrl._setVisibility();
+            const visibility = ctrl._setVisibility();
 
             return expect(visibility).to.be.eql({
                 related: false,
-                slides: false
+                slides: false,
             });
         });
 
         it("with content", function() {
-            let ctrl = $controller("Card");
+            const ctrl = $controller("Card");
 
             ctrl.item = Immutable.fromJS({
                 id: 2,
-                images: [3,4],
+                images: [3, 4],
                 model: {
-                    tasks: [1,2]
-                }
+                    tasks: [1, 2],
+                },
             });
 
-            ctrl.visible = () => { return true; };
+            ctrl.visible = () => true;
 
-            let visibility = ctrl._setVisibility();
+            const visibility = ctrl._setVisibility();
 
             return expect(visibility).to.be.eql({
                 related: true,
-                slides: true
+                slides: true,
             });
         });
 
         return it("fold", function() {
-            let ctrl = $controller("Card");
+            const ctrl = $controller("Card");
 
             ctrl.item = Immutable.fromJS({
                 foldStatusChanged: true,
                 id: 2,
-                images: [3,4],
+                images: [3, 4],
                 model: {
-                    tasks: [1,2]
-                }
+                    tasks: [1, 2],
+                },
             });
 
-            ctrl.visible = () => { return true; };
+            ctrl.visible = () => true;
 
-            let visibility = ctrl._setVisibility();
+            const visibility = ctrl._setVisibility();
 
             return expect(visibility).to.be.eql({
                 related: false,
-                slides: false
+                slides: false,
             });
         });
     });

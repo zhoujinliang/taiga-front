@@ -17,24 +17,24 @@
  * File: user-timeline-pagination-sequence.service.coffee
  */
 
-import * as angular from "angular"
-import * as Immutable from "immutable"
+import * as angular from "angular";
+import * as Immutable from "immutable";
 
 export let UserTimelinePaginationSequence = function() {
-    let obj:any = {};
+    const obj: any = {};
 
     obj.generate = function(config) {
         let page = 1;
-        let items:any = Immutable.List();
+        let items: any = Immutable.List();
 
         config.minItems = config.minItems || 20;
 
-        let next = function() {
+        const next = function() {
             items = Immutable.List();
             return getContent();
         };
 
-        var getContent = () =>
+        const getContent = () =>
             config.fetch(page).then(function(response) {
                 page++;
 
@@ -56,13 +56,13 @@ export let UserTimelinePaginationSequence = function() {
 
                 return Immutable.Map({
                     items,
-                    next: response.get("next")
+                    next: response.get("next"),
                 });
             })
         ;
 
         return {
-            next() { return next(); }
+            next() { return next(); },
         };
     };
 

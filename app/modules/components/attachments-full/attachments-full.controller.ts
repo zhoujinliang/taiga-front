@@ -17,25 +17,25 @@
  * File: attchments-full.controller.coffee
  */
 
-import {sizeFormat, defineImmutableProperty} from "../../../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {defineImmutableProperty, sizeFormat} from "../../../libs/utils";
 
 export class AttachmentsFullController {
-    translate:any
-    confirm:any
-    config:any
-    storage:any
-    attachmentsFullService:any
-    projectService:any
-    attachmentsPreviewService:any
-    mode:any
-    maxFileSize:any
-    maxFileSizeMsg:any
-    projectId:any
-    objId:any
-    type:any
-    editPermission:any
+    translate: any;
+    confirm: any;
+    config: any;
+    storage: any;
+    attachmentsFullService: any;
+    projectService: any;
+    attachmentsPreviewService: any;
+    mode: any;
+    maxFileSize: any;
+    maxFileSizeMsg: any;
+    projectId: any;
+    objId: any;
+    type: any;
+    editPermission: any;
 
     static initClass() {
         this.$inject = [
@@ -45,7 +45,7 @@ export class AttachmentsFullController {
             "$tgStorage",
             "tgAttachmentsFullService",
             "tgProjectService",
-            "tgAttachmentsPreviewService"
+            "tgAttachmentsPreviewService",
         ];
     }
 
@@ -57,16 +57,16 @@ export class AttachmentsFullController {
         this.attachmentsFullService = attachmentsFullService;
         this.projectService = projectService;
         this.attachmentsPreviewService = attachmentsPreviewService;
-        this.mode = this.storage.get('attachment-mode', 'list');
+        this.mode = this.storage.get("attachment-mode", "list");
 
         this.maxFileSize = this.config.get("maxUploadFileSize", null);
         if (this.maxFileSize) { this.maxFileSize = sizeFormat(this.maxFileSize); }
         this.maxFileSizeMsg = this.maxFileSize ? this.translate.instant("ATTACHMENT.MAX_UPLOAD_SIZE", {maxFileSize: this.maxFileSize}) : "";
 
-        defineImmutableProperty(this, 'attachments', () => { return this.attachmentsFullService.attachments; });
-        defineImmutableProperty(this, 'deprecatedsCount', () => { return this.attachmentsFullService.deprecatedsCount; });
-        defineImmutableProperty(this, 'attachmentsVisible', () => { return this.attachmentsFullService.attachmentsVisible; });
-        defineImmutableProperty(this, 'deprecatedsVisible', () => { return this.attachmentsFullService.deprecatedsVisible; });
+        defineImmutableProperty(this, "attachments", () => this.attachmentsFullService.attachments);
+        defineImmutableProperty(this, "deprecatedsCount", () => this.attachmentsFullService.deprecatedsCount);
+        defineImmutableProperty(this, "attachmentsVisible", () => this.attachmentsFullService.attachmentsVisible);
+        defineImmutableProperty(this, "deprecatedsVisible", () => this.attachmentsFullService.deprecatedsVisible);
     }
 
     uploadingAttachments() {
@@ -74,7 +74,7 @@ export class AttachmentsFullController {
     }
 
     addAttachment(file) {
-        let editable = (this.mode === 'list');
+        const editable = (this.mode === "list");
 
         return this.attachmentsFullService.addAttachment(this.projectId, this.objId, this.type, file, editable);
     }
@@ -82,7 +82,7 @@ export class AttachmentsFullController {
     setMode(mode) {
         this.mode = mode;
 
-        return this.storage.set('attachment-mode', mode);
+        return this.storage.set("attachment-mode", mode);
     }
 
     toggleDeprecatedsVisible() {
@@ -90,7 +90,7 @@ export class AttachmentsFullController {
     }
 
     addAttachments(files) {
-        return _.forEach(files, file => this.addAttachment(file));
+        return _.forEach(files, (file) => this.addAttachment(file));
     }
 
     loadAttachments() {
@@ -100,20 +100,20 @@ export class AttachmentsFullController {
     deleteAttachment(toDeleteAttachment) {
         this.attachmentsPreviewService.fileId = null;
 
-        let title = this.translate.instant("ATTACHMENT.TITLE_LIGHTBOX_DELETE_ATTACHMENT");
+        const title = this.translate.instant("ATTACHMENT.TITLE_LIGHTBOX_DELETE_ATTACHMENT");
         let message = this.translate.instant("ATTACHMENT.MSG_LIGHTBOX_DELETE_ATTACHMENT", {
-            fileName: toDeleteAttachment.getIn(['file', 'name'])
+            fileName: toDeleteAttachment.getIn(["file", "name"]),
         });
 
         return this.confirm.askOnDelete(title, message)
-            .then(askResponse => {
-                let onError = () => {
+            .then((askResponse) => {
+                const onError = () => {
                     message = this.translate.instant("ATTACHMENT.ERROR_DELETE_ATTACHMENT", {errorMessage: message});
                     this.confirm.notify("error", null, message);
                     return askResponse.finish(false);
                 };
 
-                let onSuccess = () => askResponse.finish();
+                const onSuccess = () => askResponse.finish();
 
                 return this.attachmentsFullService.deleteAttachment(toDeleteAttachment, this.type).then(onSuccess, onError);
         });

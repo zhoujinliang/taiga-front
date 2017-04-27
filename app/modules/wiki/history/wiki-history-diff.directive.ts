@@ -17,14 +17,14 @@
  * File: wiki-history.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let WikiHistoryDiffDirective = () =>
     ({
-        templateUrl:"wiki/history/wiki-history-diff.html",
+        templateUrl: "wiki/history/wiki-history-diff.html",
         scope: {
             key: "<",
-            diff: "<"
-        }
+            diff: "<",
+        },
     })
 ;

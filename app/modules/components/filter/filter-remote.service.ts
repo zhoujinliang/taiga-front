@@ -17,13 +17,13 @@
  * File: filter-utils.service.coffee
  */
 
-import {generateHash} from "../../../libs/utils";
-import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {Observable} from "rxjs";
+import {generateHash} from "../../../libs/utils";
 import {HttpService} from "../../../ts/modules/base/http";
 import {UrlsService} from "../../../ts/modules/base/urls";
-import * as _ from "lodash"
-import * as Immutable from "immutable"
 
 @Injectable()
 export class FiltersRemoteStorageService {
@@ -31,25 +31,25 @@ export class FiltersRemoteStorageService {
     constructor(private urls: UrlsService, private http: HttpService) {}
 
     storeFilters(projectId, myFilters, filtersHashSuffix) {
-        let url = this.urls.resolve("user-storage");
-        let ns = `${projectId}:${filtersHashSuffix}`;
-        let hash = generateHash([projectId, ns]);
+        const url = this.urls.resolve("user-storage");
+        const ns = `${projectId}:${filtersHashSuffix}`;
+        const hash = generateHash([projectId, ns]);
 
         if (_.isEmpty(myFilters)) {
-            return this.http.delete(`${url}/${hash}`, {key: hash, value:myFilters});
+            return this.http.delete(`${url}/${hash}`, {key: hash, value: myFilters});
         }
-        return this.http.put(`${url}/${hash}`, {key: hash, value:myFilters}).catch(() => {
-            return this.http.post(`${url}`, {key: hash, value:myFilters});
+        return this.http.put(`${url}/${hash}`, {key: hash, value: myFilters}).catch(() => {
+            return this.http.post(`${url}`, {key: hash, value: myFilters});
         });
     }
 
     getFilters(projectId, filtersHashSuffix) {
-        let url = this.urls.resolve("user-storage");
-        let ns = `${projectId}:${filtersHashSuffix}`;
-        let hash = generateHash([projectId, ns]);
+        const url = this.urls.resolve("user-storage");
+        const ns = `${projectId}:${filtersHashSuffix}`;
+        const hash = generateHash([projectId, ns]);
 
         return this.http.get(`${url}/${hash}`)
-                        .map((data:any) => Immutable.fromJS(data.value))
+                        .map((data: any) => Immutable.fromJS(data.value))
                         .catch(() => Observable.of(Immutable.Map()));
     }
 }

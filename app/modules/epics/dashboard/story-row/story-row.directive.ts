@@ -17,17 +17,17 @@
  * File: epics-table.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let StoryRowDirective = () =>
     ({
-        templateUrl:"epics/dashboard/story-row/story-row.html",
+        templateUrl: "epics/dashboard/story-row/story-row.html",
         controller: "StoryRowCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            story: '=',
-            column: '='
-        }
+            story: "=",
+            column: "=",
+        },
     })
 ;

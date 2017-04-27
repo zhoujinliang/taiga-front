@@ -17,32 +17,32 @@
  * File: joy-ride.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgJoyRideService", function() {
     let provide;
     let joyRideService = (provide = null);
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translate = {
-            instant: sinon.stub()
+            instant: sinon.stub(),
         };
 
         return provide.value("$translate", mocks.translate);
     };
 
-    let _mockCheckPermissionsService = function() {
+    const _mockCheckPermissionsService = function() {
         mocks.checkPermissionsService = {
-            check: sinon.stub()
+            check: sinon.stub(),
         };
 
         mocks.checkPermissionsService.check.returns(true);
@@ -50,14 +50,14 @@ describe("tgJoyRideService", function() {
         return provide.value("tgCheckPermissionsService", mocks.checkPermissionsService);
     };
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_tgJoyRideService_) {
             joyRideService = _tgJoyRideService_;
             if (callback) { return callback(); }
         })
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTranslate();
@@ -66,7 +66,7 @@ describe("tgJoyRideService", function() {
         })
     ;
 
-    let _setup = () => _mocks();
+    const _setup = () => _mocks();
 
     beforeEach(function() {
         module("taigaComponents");
@@ -75,19 +75,19 @@ describe("tgJoyRideService", function() {
     });
 
     return it("get joyride by category", function() {
-        let example = {
-            element: '.project-list > section:not(.ng-hide)',
-            position: 'left',
+        const example = {
+            element: ".project-list > section:not(.ng-hide)",
+            position: "left",
             joyride: {
-                title: 'test',
-                text: 'test'
+                title: "test",
+                text: "test",
             },
-            intro: '<h3>test</h3><p>test</p>'
+            intro: "<h3>test</h3><p>test</p>",
         };
 
-        mocks.translate.instant.returns('test');
+        mocks.translate.instant.returns("test");
 
-        let joyRide = joyRideService.get('dashboard');
+        const joyRide = joyRideService.get("dashboard");
 
         expect(joyRide).to.have.length(4);
         return expect(joyRide[0]).to.be.eql(example);

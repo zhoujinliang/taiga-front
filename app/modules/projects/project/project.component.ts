@@ -17,33 +17,33 @@
  * File: project.controller.coffee
  */
 
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { TranslateService } from "@ngx-translate/core";
+import { IState } from "../../../app.store";
 import { AppMetaService } from "../../services/app-meta.service";
-import { Component, OnInit } from "@angular/core"
-import { ActivatedRoute } from "@angular/router"
-import { TranslateService } from "@ngx-translate/core"
-import { Store } from "@ngrx/store"
-import { IState } from "../../../app.store"
-import { FetchCurrentProjectAction } from "../projects.actions"
+import { FetchCurrentProjectAction } from "../projects.actions";
 
 @Component({
     selector: "tg-project-detail",
-    template: require("./project.jade")()
+    template: require("./project.jade")(),
 })
 export class ProjectDetail implements OnInit {
-    user:any;
-    project:any;
-    members:any;
+    user: any;
+    project: any;
+    members: any;
 
     constructor(private appMeta: AppMetaService,
                 private translate: TranslateService,
                 private store: Store<IState>,
                 private route: ActivatedRoute) {
-        this.user = this.store.select((state) => state.getIn(['auth', 'user']));
-        this.project = this.store.select((state) => state.getIn(['projects', 'current-project']));
+        this.user = this.store.select((state) => state.getIn(["auth", "user"]));
+        this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
 
         this.project.subscribe((project) => {
-            if(project) {
-                let title = this.translate.instant("PROJECT.PAGE_TITLE", {projectName: project.get('name')});
+            if (project) {
+                const title = this.translate.instant("PROJECT.PAGE_TITLE", {projectName: project.get("name")});
                 this.appMeta.setTitle(title);
                 this.appMeta.setDescription(project.get("description"));
             }
@@ -53,6 +53,6 @@ export class ProjectDetail implements OnInit {
     ngOnInit() {
         this.route.params.subscribe((params) => {
             this.store.dispatch(new FetchCurrentProjectAction(params.slug));
-        })
+        });
     }
 }

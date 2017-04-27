@@ -17,14 +17,14 @@
  * File: navigation-bar.service.coffee
  */
 
-import {Service} from "../../ts/classes"
-import * as _ from "lodash"
+import * as _ from "lodash";
+import {Service} from "../../ts/classes";
 
 export class NavigationBarService extends Service {
-    enabledHeader:boolean
+    enabledHeader: boolean;
 
     constructor() {
-        super()
+        super();
         this.disableHeader();
     }
 
@@ -36,7 +36,7 @@ export class NavigationBarService extends Service {
         return this.enabledHeader = false;
     }
 
-    isEnabledHeader():boolean {
+    isEnabledHeader(): boolean {
         return this.enabledHeader;
     }
 }

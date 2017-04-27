@@ -17,34 +17,34 @@
  * File: user-timeline.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("UserTimelineController", function() {
     let $q, $rootScope, provide, scope;
     let controller = (scope = ($q = (provide = ($rootScope = null))));
 
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let mockUser = Immutable.fromJS({id: 3});
+    const mockUser = Immutable.fromJS({id: 3});
 
-    let _mockUserTimeline = function() {
+    const _mockUserTimeline = function() {
         mocks.userTimelineService = {
             getProfileTimeline: sinon.stub(),
-            getProjectTimeline: sinon.stub()
+            getProjectTimeline: sinon.stub(),
         };
 
         return provide.value("tgUserTimelineService", mocks.userTimelineService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockUserTimeline();
@@ -65,12 +65,12 @@ describe("UserTimelineController", function() {
     });
 
     it("timelineList should be an array", function() {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
         mocks.userTimelineService.getUserTimeline = sinon.stub().returns(true);
 
-        let myCtrl = controller("UserTimeline", $scope, {
-            user: Immutable.Map({id: 2})
+        const myCtrl = controller("UserTimeline", $scope, {
+            user: Immutable.Map({id: 2}),
         });
 
         return expect(myCtrl.timelineList.toJS()).is.an("array");
@@ -80,10 +80,10 @@ describe("UserTimelineController", function() {
         it("project timeline sequence", function() {
             mocks.userTimelineService.getProjectTimeline = sinon.stub().withArgs(4).returns(true);
 
-            let $scope = $rootScope.$new();
+            const $scope = $rootScope.$new();
 
-            let myCtrl = controller("UserTimeline", $scope, {
-                projectId: 4
+            const myCtrl = controller("UserTimeline", $scope, {
+                projectId: 4,
             });
 
             return expect(myCtrl.timeline).to.be.true;
@@ -92,11 +92,11 @@ describe("UserTimelineController", function() {
         it("currentUser timeline sequence", function() {
             mocks.userTimelineService.getProfileTimeline = sinon.stub().withArgs(2).returns(true);
 
-            let $scope = $rootScope.$new();
+            const $scope = $rootScope.$new();
 
-            let myCtrl = controller("UserTimeline", $scope, {
+            const myCtrl = controller("UserTimeline", $scope, {
                 currentUser: true,
-                user: Immutable.Map({id: 2})
+                user: Immutable.Map({id: 2}),
             });
 
             return expect(myCtrl.timeline).to.be.true;
@@ -105,10 +105,10 @@ describe("UserTimelineController", function() {
         return it("currentUser timeline sequence", function() {
             mocks.userTimelineService.getUserTimeline = sinon.stub().withArgs(2).returns(true);
 
-            let $scope = $rootScope.$new();
+            const $scope = $rootScope.$new();
 
-            let myCtrl = controller("UserTimeline", $scope, {
-                user: Immutable.Map({id: 2})
+            const myCtrl = controller("UserTimeline", $scope, {
+                user: Immutable.Map({id: 2}),
             });
 
             return expect(myCtrl.timeline).to.be.true;
@@ -120,19 +120,19 @@ describe("UserTimelineController", function() {
 
         beforeEach(function() {
             mocks.userTimelineService.getUserTimeline = sinon.stub().returns({});
-            let $scope = $rootScope.$new();
+            const $scope = $rootScope.$new();
             return myCtrl = controller("UserTimeline", $scope, {
-                user: Immutable.Map({id: 2})
+                user: Immutable.Map({id: 2}),
             });
         });
 
         it("enable scroll on loadTimeline if there are more pages", function(done) {
-            let response = Immutable.Map({
+            const response = Immutable.Map({
                 items: [1, 2, 3],
-                next: true
+                next: true,
             });
 
-            myCtrl.timeline.next = (<any>sinon.stub()).promise();
+            myCtrl.timeline.next = (sinon.stub() as any).promise();
             myCtrl.timeline.next.resolve(response);
 
             expect(myCtrl.scrollDisabled).to.be.false;
@@ -145,12 +145,12 @@ describe("UserTimelineController", function() {
         });
 
         it("disable scroll on loadTimeline if there are more pages", function(done) {
-            let response = Immutable.Map({
+            const response = Immutable.Map({
                 items: [1, 2, 3],
-                next: false
+                next: false,
             });
 
-            myCtrl.timeline.next = (<any>sinon.stub()).promise();
+            myCtrl.timeline.next = (sinon.stub() as any).promise();
             myCtrl.timeline.next.resolve(response);
 
             expect(myCtrl.scrollDisabled).to.be.false;
@@ -163,13 +163,13 @@ describe("UserTimelineController", function() {
         });
 
         return it("concat response data", function(done) {
-            let response = Immutable.Map({
+            const response = Immutable.Map({
                 items: [1, 2, 3],
-                next: false
+                next: false,
             });
 
             myCtrl.timelineList = Immutable.List([1, 2]);
-            myCtrl.timeline.next = (<any>sinon.stub()).promise();
+            myCtrl.timeline.next = (sinon.stub() as any).promise();
             myCtrl.timeline.next.resolve(response);
 
             expect(myCtrl.scrollDisabled).to.be.false;

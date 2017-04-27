@@ -17,40 +17,40 @@
  * File: external-app.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgExternalAppsService", function() {
     let provide;
     let externalAppsService = (provide = null);
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgResources = function() {
+    const _mockTgResources = function() {
         mocks.tgResources = {
             externalapps: {
                 getApplicationToken: sinon.stub(),
-                authorizeApplicationToken: sinon.stub()
-            }
+                authorizeApplicationToken: sinon.stub(),
+            },
         };
 
         return provide.value("tgResources", mocks.tgResources);
     };
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_tgExternalAppsService_) {
             externalAppsService = _tgExternalAppsService_;
             if (callback) { return callback(); }
         })
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgResources();
@@ -58,7 +58,7 @@ describe("tgExternalAppsService", function() {
         })
     ;
 
-    let _setup = () => _mocks();
+    const _setup = () => _mocks();
 
     beforeEach(function() {
         module("taigaExternalApps");

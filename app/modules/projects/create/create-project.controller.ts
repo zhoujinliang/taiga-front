@@ -17,17 +17,17 @@
  * File: project.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../libs/utils"
+import {defineImmutableProperty} from "../../../libs/utils";
 
 export class CreateProjectController {
-    appMetaService:any
-    translate:any
-    projectService:any
-    location:any
-    authService:any
-    displayScrumDesc:boolean
-    displayKanbanDesc:boolean
-    project:any
+    appMetaService: any;
+    translate: any;
+    projectService: any;
+    location: any;
+    authService: any;
+    displayScrumDesc: boolean;
+    displayKanbanDesc: boolean;
+    project: any;
 
     static initClass() {
         this.$inject = [
@@ -35,7 +35,7 @@ export class CreateProjectController {
             "$translate",
             "tgProjectService",
             "$location",
-            "$tgAuth"
+            "$tgAuth",
         ];
     }
 
@@ -45,7 +45,7 @@ export class CreateProjectController {
         this.projectService = projectService;
         this.location = location;
         this.authService = authService;
-        defineImmutableProperty(this, "project", () => { return this.projectService.project; });
+        defineImmutableProperty(this, "project", () => this.projectService.project);
 
         this.appMetaService.setfn(this._setMeta.bind(this));
 
@@ -58,11 +58,11 @@ export class CreateProjectController {
     _setMeta() {
         if (!this.project) { return null; }
 
-        let ctx = {projectName: this.project.get("name")};
+        const ctx = {projectName: this.project.get("name")};
 
         return {
             title: this.translate.instant("PROJECT.PAGE_TITLE", ctx),
-            description: this.project.get("description")
+            description: this.project.get("description"),
         };
     }
 
@@ -70,10 +70,10 @@ export class CreateProjectController {
         $event.stopPropagation();
         $event.preventDefault();
 
-        if (type === 'scrum') {
+        if (type === "scrum") {
             this.displayScrumDesc = !this.displayScrumDesc;
         }
-        if (type === 'kanban') {
+        if (type === "kanban") {
             return this.displayKanbanDesc = !this.displayKanbanDesc;
         }
     }

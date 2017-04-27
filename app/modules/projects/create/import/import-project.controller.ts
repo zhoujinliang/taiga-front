@@ -18,33 +18,33 @@
  */
 
 export class ImportProjectController {
-    trelloService:any
-    jiraService:any
-    githubService:any
-    asanaService:any
-    location:any
-    window:any
-    routeParams:any
-    tgNavUrls:any
-    config:any
-    confirm:any
-    token:any
-    from:any
-    jiraUrl:any
-    unfoldedOptions:any
+    trelloService: any;
+    jiraService: any;
+    githubService: any;
+    asanaService: any;
+    location: any;
+    window: any;
+    routeParams: any;
+    tgNavUrls: any;
+    config: any;
+    confirm: any;
+    token: any;
+    from: any;
+    jiraUrl: any;
+    unfoldedOptions: any;
 
     static initClass() {
         this.$inject = [
-            'tgTrelloImportService',
-            'tgJiraImportService',
-            'tgGithubImportService',
-            'tgAsanaImportService',
-            '$location',
-            '$window',
-            '$routeParams',
-            '$tgNavUrls',
-            '$tgConfig',
-            '$tgConfirm',
+            "tgTrelloImportService",
+            "tgJiraImportService",
+            "tgGithubImportService",
+            "tgAsanaImportService",
+            "$location",
+            "$window",
+            "$routeParams",
+            "$tgNavUrls",
+            "$tgConfig",
+            "$tgConfirm",
         ];
     }
 
@@ -65,14 +65,14 @@ export class ImportProjectController {
         this.token = null;
         this.from = this.routeParams.platform;
 
-        let locationSearch = this.location.search();
+        const locationSearch = this.location.search();
 
         if (this.from === "asana") {
             let asanaOauthToken = locationSearch.code;
             if (locationSearch.code) {
                 asanaOauthToken = locationSearch.code;
 
-                return this.asanaService.authorize(asanaOauthToken).then((token => {
+                return this.asanaService.authorize(asanaOauthToken).then(((token) => {
                     return this.location.search({token: encodeURIComponent(JSON.stringify(token))});
                 }
                 ), this.cancelCurrentImport.bind(this));
@@ -82,10 +82,10 @@ export class ImportProjectController {
             }
         }
 
-        if (this.from  === 'trello') {
+        if (this.from  === "trello") {
             if (locationSearch.oauth_verifier) {
-                let trelloOauthToken = locationSearch.oauth_verifier;
-                return this.trelloService.authorize(trelloOauthToken).then((token => {
+                const trelloOauthToken = locationSearch.oauth_verifier;
+                return this.trelloService.authorize(trelloOauthToken).then(((token) => {
                     return this.location.search({token});
                 }
                 ), this.cancelCurrentImport.bind(this));
@@ -97,9 +97,9 @@ export class ImportProjectController {
 
         if (this.from === "github") {
             if (locationSearch.code) {
-                let githubOauthToken = locationSearch.code;
+                const githubOauthToken = locationSearch.code;
 
-                return this.githubService.authorize(githubOauthToken).then((token => {
+                return this.githubService.authorize(githubOauthToken).then(((token) => {
                     return this.location.search({token});
                 }
                 ), this.cancelCurrentImport.bind(this));
@@ -110,11 +110,11 @@ export class ImportProjectController {
         }
 
         if (this.from === "jira") {
-            let jiraOauthToken = locationSearch.oauth_token;
+            const jiraOauthToken = locationSearch.oauth_token;
 
             if (jiraOauthToken) {
-                let jiraOauthVerifier = locationSearch.oauth_verifier;
-                return this.jiraService.authorize(jiraOauthVerifier).then((data => {
+                const jiraOauthVerifier = locationSearch.oauth_verifier;
+                return this.jiraService.authorize(jiraOauthVerifier).then(((data) => {
                     return this.location.search({token: data.token, url: data.url});
                 }
                 ), this.cancelCurrentImport.bind(this));
@@ -127,23 +127,23 @@ export class ImportProjectController {
 
     select(from) {
         if (from === "trello") {
-            return this.trelloService.getAuthUrl().then(url => {
+            return this.trelloService.getAuthUrl().then((url) => {
                 return this.window.open(url, "_self");
             });
         } else if (from === "jira") {
-            return this.jiraService.getAuthUrl(this.jiraUrl).then(url => {
+            return this.jiraService.getAuthUrl(this.jiraUrl).then((url) => {
                 return this.window.open(url, "_self");
             }
-            , err => {
-                return this.confirm.notify('error', err);
+            , (err) => {
+                return this.confirm.notify("error", err);
             });
         } else if (from === "github") {
-            let callbackUri = this.location.absUrl() + "/github";
-            return this.githubService.getAuthUrl(callbackUri).then(url => {
+            const callbackUri = this.location.absUrl() + "/github";
+            return this.githubService.getAuthUrl(callbackUri).then((url) => {
                 return this.window.open(url, "_self");
             });
         } else if (from === "asana") {
-            return this.asanaService.getAuthUrl().then(url => {
+            return this.asanaService.getAuthUrl().then((url) => {
                 return this.window.open(url, "_self");
             });
         } else {
@@ -156,18 +156,18 @@ export class ImportProjectController {
     }
 
     isActiveImporter(importer) {
-        if (this.config.get('importers').indexOf(importer) === -1) {
+        if (this.config.get("importers").indexOf(importer) === -1) {
             return false;
         }
         return true;
     }
 
     cancelCurrentImport() {
-        return this.location.url(this.tgNavUrls.resolve('create-project-import'));
+        return this.location.url(this.tgNavUrls.resolve("create-project-import"));
     }
 
     backToCreate() {
-        return this.location.url(this.tgNavUrls.resolve('create-project'));
+        return this.location.url(this.tgNavUrls.resolve("create-project"));
     }
 }
 ImportProjectController.initClass();

@@ -17,12 +17,12 @@
  * File: attchments-full.directive.coffee
  */
 
-import {bindOnce} from "../../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {bindOnce} from "../../../libs/utils";
 
 export let AttachmentsFullDirective = function() {
-    let link = (scope, el, attrs, ctrl) =>
-        bindOnce(scope, 'vm.objId', value => ctrl.loadAttachments())
+    const link = (scope, el, attrs, ctrl) =>
+        bindOnce(scope, "vm.objId", (value) => ctrl.loadAttachments())
     ;
 
     return {
@@ -31,12 +31,12 @@ export let AttachmentsFullDirective = function() {
             type: "@",
             objId: "=",
             projectId: "=",
-            editPermission: "@"
+            editPermission: "@",
         },
         controller: "AttachmentsFull",
         controllerAs: "vm",
         templateUrl: "components/attachments-full/attachments-full.html",
-        link
+        link,
     };
 };
 

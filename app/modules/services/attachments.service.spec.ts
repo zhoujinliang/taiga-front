@@ -17,62 +17,61 @@
  * File: attachments.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgAttachmentsService", function() {
     let provide;
     let attachmentsService = (provide = null);
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgConfirm = function() {
+    const _mockTgConfirm = function() {
         mocks.confirm = {
-            notify: sinon.stub()
+            notify: sinon.stub(),
         };
 
         return provide.value("$tgConfirm", mocks.confirm);
     };
 
-    let _mockTgConfig = function() {
+    const _mockTgConfig = function() {
         mocks.config = {
-            get: sinon.stub()
+            get: sinon.stub(),
         };
 
-        mocks.config.get.withArgs('maxUploadFileSize', null).returns(3000);
+        mocks.config.get.withArgs("maxUploadFileSize", null).returns(3000);
 
         return provide.value("$tgConfig", mocks.config);
     };
 
-    let _mockRs = function() {
+    const _mockRs = function() {
         mocks.rs = {};
 
         return provide.value("tgResources", mocks.rs);
     };
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translate = {
-            instant: sinon.stub()
+            instant: sinon.stub(),
         };
 
         return provide.value("$translate", mocks.translate);
     };
 
-
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_tgAttachmentsService_) {
             attachmentsService = _tgAttachmentsService_;
             if (callback) { return callback(); }
         })
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgConfirm();
@@ -84,7 +83,7 @@ describe("tgAttachmentsService", function() {
         })
     ;
 
-    let _setup = () => _mocks();
+    const _setup = () => _mocks();
 
     beforeEach(function() {
         module("taigaCommon");
@@ -95,100 +94,100 @@ describe("tgAttachmentsService", function() {
     it("maxFileSize formated", () => expect(attachmentsService.maxFileSizeFormated).to.be.equal("2.9 KB"));
 
     it("sizeError, send notification", function() {
-        let file = {
-            name: 'test',
-            size: 3000
+        const file = {
+            name: "test",
+            size: 3000,
         };
 
-        mocks.translate.instant.withArgs('ATTACHMENT.ERROR_MAX_SIZE_EXCEEDED').returns('message');
+        mocks.translate.instant.withArgs("ATTACHMENT.ERROR_MAX_SIZE_EXCEEDED").returns("message");
 
         attachmentsService.sizeError(file);
 
-        return expect(mocks.confirm.notify).to.have.been.calledWith('error', 'message');
+        return expect(mocks.confirm.notify).to.have.been.calledWith("error", "message");
     });
 
     it("invalid, validate", function() {
-        let file = {
-            name: 'test',
-            size: 4000
+        const file = {
+            name: "test",
+            size: 4000,
         };
 
-        let result = attachmentsService.validate(file);
+        const result = attachmentsService.validate(file);
 
         return expect(result).to.be.false;
     });
 
     it("valid, validate", function() {
-        let file = {
-            name: 'test',
-            size: 1000
+        const file = {
+            name: "test",
+            size: 1000,
         };
 
-        let result = attachmentsService.validate(file);
+        const result = attachmentsService.validate(file);
 
         return expect(result).to.be.true;
     });
 
     it("get max file size", function() {
-        let result = attachmentsService.getMaxFileSize();
+        const result = attachmentsService.getMaxFileSize();
 
         return expect(result).to.be.equal(3000);
     });
 
     it("delete", function() {
         mocks.rs.attachments = {
-            delete: sinon.stub()
+            delete: sinon.stub(),
         };
 
-        attachmentsService.delete('us', 2);
+        attachmentsService.delete("us", 2);
 
-        return expect(mocks.rs.attachments.delete).to.have.been.calledWith('us', 2);
+        return expect(mocks.rs.attachments.delete).to.have.been.calledWith("us", 2);
     });
 
     it("upload", function(done) {
-        let file = {
-            id: 1
+        const file = {
+            id: 1,
         };
 
-        let objId = 2;
-        let projectId = 2;
-        let type = 'us';
+        const objId = 2;
+        const projectId = 2;
+        const type = "us";
 
         mocks.rs.attachments = {
-            create: (<any>sinon.stub()).promise()
+            create: (sinon.stub() as any).promise(),
         };
 
-        mocks.rs.attachments.create.withArgs('us', type, objId, file).resolve();
+        mocks.rs.attachments.create.withArgs("us", type, objId, file).resolve();
 
         attachmentsService.sizeError = sinon.spy();
 
-        return attachmentsService.upload(file, objId, projectId, 'us').then(function() {
+        return attachmentsService.upload(file, objId, projectId, "us").then(function() {
             expect(mocks.rs.attachments.create).to.have.been.calledOnce;
             return done();
         });
      });
 
     it("patch", function(done) {
-        let file = {
-            id: 1
+        const file = {
+            id: 1,
         };
 
-        let objId = 2;
-        let type = 'us';
+        const objId = 2;
+        const type = "us";
 
-        let patch = {
-            id: 2
+        const patch = {
+            id: 2,
         };
 
         mocks.rs.attachments = {
-            patch: (<any>sinon.stub()).promise()
+            patch: (sinon.stub() as any).promise(),
         };
 
-        mocks.rs.attachments.patch.withArgs('us', objId, patch).resolve();
+        mocks.rs.attachments.patch.withArgs("us", objId, patch).resolve();
 
         attachmentsService.sizeError = sinon.spy();
 
-        return attachmentsService.patch(objId, 'us', patch).then(function() {
+        return attachmentsService.patch(objId, "us", patch).then(function() {
             expect(mocks.rs.attachments.patch).to.have.been.calledOnce;
             return done();
         });
@@ -198,10 +197,10 @@ describe("tgAttachmentsService", function() {
         mocks.translate.instant.withArgs("ATTACHMENT.ERROR_MAX_SIZE_EXCEEDED").returns("msg");
 
         attachmentsService.sizeError({
-            name: 'name',
-            size: 123
+            name: "name",
+            size: 123,
         });
 
-        return expect(mocks.confirm.notify).to.have.been.calledWith('error', 'msg');
+        return expect(mocks.confirm.notify).to.have.been.calledWith("error", "msg");
     });
 });

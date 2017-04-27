@@ -23,16 +23,16 @@
  * File: attachments-resource.service.coffee
  */
 
-import {sizeFormat} from "../../libs/utils"
-import * as angular from "angular"
-import * as Immutable from "immutable"
-import * as Promise from "bluebird"
+import * as angular from "angular";
+import * as Promise from "bluebird";
+import * as Immutable from "immutable";
+import {sizeFormat} from "../../libs/utils";
 
-import {Injectable} from "@angular/core"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
-import {ConfigurationService} from "../../ts/modules/base/conf"
-import {StorageService} from "../../ts/modules/base/storage"
+import {Injectable} from "@angular/core";
+import {ConfigurationService} from "../../ts/modules/base/conf";
+import {HttpService} from "../../ts/modules/base/http";
+import {StorageService} from "../../ts/modules/base/storage";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class AttachmentsResource {
@@ -42,42 +42,42 @@ export class AttachmentsResource {
                 private storage: StorageService) {}
 
     list(type, objectId, projectId) {
-        let urlname = `attachments/${type}`;
+        const urlname = `attachments/${type}`;
 
-        let params = {object_id: objectId, project: projectId};
-        let httpOptions = {
+        const params = {object_id: objectId, project: projectId};
+        const httpOptions = {
             headers: {
-                "x-disable-pagination": "1"
-            }
+                "x-disable-pagination": "1",
+            },
         };
 
-        let url = this.urls.resolve(urlname);
+        const url = this.urls.resolve(urlname);
 
         return this.http.get(url, params, httpOptions)
-            .map((result:any) => Immutable.fromJS(result.data));
-    };
+            .map((result: any) => Immutable.fromJS(result.data));
+    }
 
     delete(type, id) {
-        let urlname = `attachments/${type}`;
+        const urlname = `attachments/${type}`;
 
-        let url = this.urls.resolve(urlname) + `/${id}`;
+        const url = this.urls.resolve(urlname) + `/${id}`;
 
         return this.http.delete(url);
-    };
+    }
 
     patch(type, id, patch) {
-        let urlname = `attachments/${type}`;
+        const urlname = `attachments/${type}`;
 
-        let url = this.urls.resolve(urlname) + `/${id}`;
+        const url = this.urls.resolve(urlname) + `/${id}`;
 
         return this.http.patch(url, patch);
-    };
+    }
 
     create(type, projectId, objectId, file, from_comment) {
         let response;
-        let urlname = `attachments/${type}`;
+        const urlname = `attachments/${type}`;
 
-        let url = this.urls.resolve(urlname);
+        const url = this.urls.resolve(urlname);
 
         return new Promise(function(resolve, reject) {
             function uploadProgress(evt) {
@@ -91,7 +91,7 @@ export class AttachmentsResource {
                 let attachment;
                 file.status = "done";
 
-                let { status } = evt.target;
+                const { status } = evt.target;
                 try {
                     attachment = JSON.parse(evt.target.responseText);
                 } catch (error) {
@@ -104,50 +104,50 @@ export class AttachmentsResource {
                 } else {
                     response = {
                         status,
-                        data: {_error_message: (data['attached_file'] != null ? data['attached_file'][0] : undefined)}
+                        data: {_error_message: (data["attached_file"] != null ? data["attached_file"][0] : undefined)},
                     };
                     return reject(response);
                 }
-            };
+            }
 
             function uploadFailed(evt) {
                 file.status = "error";
                 return reject("fail");
-            };
+            }
 
             if (file === undefined) {
                 return reject(null);
             }
 
-            let maxFileSize = this.config.get("maxUploadFileSize", null);
+            const maxFileSize = this.config.get("maxUploadFileSize", null);
 
             if (maxFileSize && (file.size > maxFileSize)) {
                 response = {
                     status: 413,
                     data: { _error_message: `'${file.name}' (${sizeFormat(file.size)}) is too heavy for our oompa \
-    loompas, try it with a smaller than (${sizeFormat(maxFileSize)})`
-                }
+    loompas, try it with a smaller than (${sizeFormat(maxFileSize)})`,
+                },
                 };
                 return reject(response);
             }
 
-            var data = new FormData();
+            const data = new FormData();
             data.append("project", projectId);
             data.append("object_id", objectId);
             data.append("attached_file", file);
             data.append("from_comment", from_comment);
 
-            let xhr = new XMLHttpRequest();
+            const xhr = new XMLHttpRequest();
             xhr.upload.addEventListener("progress", uploadProgress, false);
             xhr.addEventListener("load", uploadComplete, false);
             xhr.addEventListener("error", uploadFailed, false);
 
-            let token = this.storage.get('token');
+            const token = this.storage.get("token");
 
             xhr.open("POST", url);
             xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader("Accept", "application/json");
             xhr.send(data);
         });
-    };
-};
+    }
+}

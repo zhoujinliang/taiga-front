@@ -17,38 +17,38 @@
  * File: attchment.controller.spec.coffee
  */
 
-declare var angular:any;
-let module = angular.mock.module;;
-declare var describe:any;
-declare var it:any;
-declare var beforeEach:any;
-declare var inject:any;
-declare var expect:any;
-declare var sinon:any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var describe: any;
+declare var it: any;
+declare var beforeEach: any;
+declare var inject: any;
+declare var expect: any;
+declare var sinon: any;
 // declare var sinon:any;
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
 
 describe("AttachmentController", function() {
     let $provide = null;
     let $controller = null;
     let scope = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockAttachmentsService = function() {
+    const _mockAttachmentsService = function() {
         mocks.attachmentsService = {};
 
         return $provide.value("tgAttachmentsService", mocks.attachmentsService);
     };
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translate = {
-            instant: sinon.stub()
+            instant: sinon.stub(),
         };
 
         return $provide.value("$translate", mocks.translate);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -59,14 +59,14 @@ describe("AttachmentController", function() {
         })
     ;
 
-    let _inject = () =>
+    const _inject = () =>
         inject(function(_$controller_, $rootScope) {
             $controller = _$controller_;
             return scope = $rootScope.$new();
         })
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -78,22 +78,22 @@ describe("AttachmentController", function() {
     });
 
     it("change edit mode", function() {
-        let attachment = Immutable.fromJS({
+        const attachment = Immutable.fromJS({
             file: {
-                description: 'desc',
-                is_deprecated: false
-            }
+                description: "desc",
+                is_deprecated: false,
+            },
         });
 
-        let ctrl = $controller("Attachment", {
-            $scope: scope
+        const ctrl = $controller("Attachment", {
+            $scope: scope,
         }, {
-            attachment
+            attachment,
         });
 
         ctrl.onUpdate = sinon.spy();
 
-        let onUpdate = sinon.match(function(value) {
+        const onUpdate = sinon.match(function(value) {
             value = value.attachment.toJS();
 
             return value.editable;
@@ -107,22 +107,22 @@ describe("AttachmentController", function() {
     });
 
     it("delete", function() {
-        let attachment = Immutable.fromJS({
+        const attachment = Immutable.fromJS({
             file: {
-                description: 'desc',
-                is_deprecated: false
-            }
+                description: "desc",
+                is_deprecated: false,
+            },
         });
 
-        let ctrl = $controller("Attachment", {
-            $scope: scope
+        const ctrl = $controller("Attachment", {
+            $scope: scope,
         }, {
-            attachment
+            attachment,
         });
 
         ctrl.onDelete = sinon.spy();
 
-        let onDelete = sinon.match(value => value.attachment === attachment
+        const onDelete = sinon.match((value) => value.attachment === attachment
         , "onDelete");
 
         ctrl.delete();
@@ -133,29 +133,29 @@ describe("AttachmentController", function() {
     return it("save", function() {
         let attachment = Immutable.fromJS({
             file: {
-                description: 'desc',
-                is_deprecated: false
+                description: "desc",
+                is_deprecated: false,
             },
             loading: false,
-            editable: false
+            editable: false,
         });
 
-        let ctrl = $controller("Attachment", {
-            $scope: scope
+        const ctrl = $controller("Attachment", {
+            $scope: scope,
         }, {
-            attachment
+            attachment,
         });
 
         ctrl.onUpdate = sinon.spy();
 
-        let onUpdateLoading = sinon.match(function(value) {
+        const onUpdateLoading = sinon.match(function(value) {
             value = value.attachment.toJS();
 
             return value.loading;
         }
         , "onUpdateLoading");
 
-        let onUpdate = sinon.match(function(value) {
+        const onUpdate = sinon.match(function(value) {
             value = value.attachment.toJS();
 
             return (
@@ -167,7 +167,7 @@ describe("AttachmentController", function() {
 
         ctrl.form = {
             description: "ok",
-            is_deprecated: true
+            is_deprecated: true,
         };
 
         ctrl.save();

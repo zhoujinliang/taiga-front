@@ -17,22 +17,22 @@
  * File: discover-search-bar.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../libs/utils"
-import * as angular from "angular"
-import {Component, Output, EventEmitter, Input} from "@angular/core"
-import {Store} from "@ngrx/store"
-import {IState} from "../../../../app.store"
+import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Store} from "@ngrx/store";
+import * as angular from "angular";
+import {IState} from "../../../../app.store";
+import {defineImmutableProperty} from "../../../../libs/utils";
 
 @Component({
-    selector: 'tg-discover-search-bar',
-    template: require("./discover-search-bar.jade")()
+    selector: "tg-discover-search-bar",
+    template: require("./discover-search-bar.jade")(),
 })
 export class DiscoverSearchBar {
-    @Output() search: EventEmitter<any>
-    @Input() projectsCount: number = 0;;
+    @Output() search: EventEmitter<any>;
+    @Input() projectsCount: number = 0;
     @Input() withFilters: boolean = false;
-    q:any
-    filter:any
+    q: any;
+    filter: any;
 
     constructor(private store: Store<IState>) {
         this.search = new EventEmitter();
@@ -40,11 +40,11 @@ export class DiscoverSearchBar {
 
     selectFilter(filter) {
         this.search.emit({filter, q: this.q});
-        return false
+        return false;
     }
 
     submitFilter(test) {
         this.search.emit({filter: this.filter, q: this.q});
-        return false
+        return false;
     }
 }

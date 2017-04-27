@@ -17,14 +17,14 @@
  * File: trello-import-project-members.controller.coffee
  */
 
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
 
 export class SelectImportUserLightboxCtrl {
-    mode: string
-    invalid: boolean
-    onSelectUser:any
-    user: any
-    userEmail:any
+    mode: string;
+    invalid: boolean;
+    onSelectUser: any;
+    user: any;
+    userEmail: any;
 
     static initClass() {
         this.$inject = [];
@@ -33,7 +33,7 @@ export class SelectImportUserLightboxCtrl {
     constructor() {}
 
     start() {
-        this.mode = 'search';
+        this.mode = "search";
         return this.invalid = false;
     }
 

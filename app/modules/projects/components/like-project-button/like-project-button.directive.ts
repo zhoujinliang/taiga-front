@@ -22,7 +22,7 @@ export let LikeProjectButtonDirective = () =>
         scope: {},
         controller: "LikeProjectButton",
         bindToController: {
-            project: '='
+            project: "=",
         },
         controllerAs: "vm",
         templateUrl: "projects/components/like-project-button/like-project-button.html",

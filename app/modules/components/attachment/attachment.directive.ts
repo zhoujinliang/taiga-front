@@ -18,7 +18,7 @@
  */
 
 export let AttachmentDirective = function() {
-    let link = function(scope, el, attrs, ctrl) {};
+    const link = function(scope, el, attrs, ctrl) {};
 
     return {
         scope: {},
@@ -26,12 +26,12 @@ export let AttachmentDirective = function() {
             attachment: "=",
             onDelete: "&",
             onUpdate: "&",
-            type: "="
+            type: "=",
         },
         controller: "Attachment",
         controllerAs: "vm",
         templateUrl: "components/attachment/attachment.html",
-        link
+        link,
     };
 };
 

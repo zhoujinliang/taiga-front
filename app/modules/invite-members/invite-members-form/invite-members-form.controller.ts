@@ -17,26 +17,26 @@
  * File: add-members.controller.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export class InviteMembersFormController {
-    projectService:any
-    rs:any
-    lightboxService:any
-    confirm:any
-    rootScope: angular.IScope
-    project:any
-    roles:any
-    rolesValues:any
-    loading:boolean
-    defaultMaxInvites:any
-    contactsToInvite:any
-    emailsToInvite:any
-    membersLimit:any
-    showWarningMessage:boolean
-    setInvitedContacts:any
-    inviteContactsMessage:any
+    projectService: any;
+    rs: any;
+    lightboxService: any;
+    confirm: any;
+    rootScope: angular.IScope;
+    project: any;
+    roles: any;
+    rolesValues: any;
+    loading: boolean;
+    defaultMaxInvites: any;
+    contactsToInvite: any;
+    emailsToInvite: any;
+    membersLimit: any;
+    showWarningMessage: boolean;
+    setInvitedContacts: any;
+    inviteContactsMessage: any;
 
     static initClass() {
         this.$inject = [
@@ -44,7 +44,7 @@ export class InviteMembersFormController {
             "$tgResources",
             "lightboxService",
             "$tgConfirm",
-            "$rootScope"
+            "$rootScope",
         ];
     }
 
@@ -55,26 +55,26 @@ export class InviteMembersFormController {
         this.confirm = confirm;
         this.rootScope = rootScope;
         this.project = this.projectService.project;
-        this.roles = this.projectService.project.get('roles');
+        this.roles = this.projectService.project.get("roles");
         this.rolesValues = {};
         this.loading = false;
         this.defaultMaxInvites = 4;
     }
 
     _areRolesValidated() {
-        return Object.defineProperty(this, 'areRolesValidated', {
+        return Object.defineProperty(this, "areRolesValidated", {
             get: () => {
-                let roleIds = _.filter(this.rolesValues.values(), it => it);
+                const roleIds = _.filter(this.rolesValues.values(), (it) => it);
                 return roleIds.length === (this.contactsToInvite.size + this.emailsToInvite.size);
-            }
+            },
         });
     }
 
     _checkLimitMemberships() {
-        if (this.project.get('max_memberships') === null) {
+        if (this.project.get("max_memberships") === null) {
             this.membersLimit = this.defaultMaxInvites;
         } else {
-            let pendingMembersCount = Math.max(this.project.get('max_memberships') - this.project.get('total_memberships'), 0);
+            const pendingMembersCount = Math.max(this.project.get("max_memberships") - this.project.get("total_memberships"), 0);
             this.membersLimit = Math.min(pendingMembersCount, this.defaultMaxInvites);
         }
 
@@ -85,24 +85,24 @@ export class InviteMembersFormController {
         this.setInvitedContacts = [];
         _.forEach(this.rolesValues, (key, value) => {
             return this.setInvitedContacts.push({
-                'role_id': key,
-                'username': value
+                role_id: key,
+                username: value,
             });
         });
         this.loading = true;
         return this.rs.memberships.bulkCreateMemberships(
-            this.project.get('id'),
+            this.project.get("id"),
             this.setInvitedContacts,
-            this.inviteContactsMessage
+            this.inviteContactsMessage,
         )
-            .then(response => { // On success
+            .then((response) => { // On success
                 return this.projectService.fetchProject().then(() => {
                     this.loading = false;
                     this.lightboxService.closeAll();
                     this.rootScope.$broadcast("membersform:new:success");
-                    return this.confirm.notify('success');
+                    return this.confirm.notify("success");
                 });
-        }).catch(response => { // On error
+        }).catch((response) => { // On error
                 this.loading = false;
                 if (response.data._error_message) {
                     return this.confirm.notify("error", response.data._error_message);

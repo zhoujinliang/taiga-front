@@ -17,33 +17,33 @@
  * File: profile-favs.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ProfileLiked", function() {
     let $controller = null;
     let provide = null;
     let $rootScope = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let user = Immutable.fromJS({id: 2});
+    const user = Immutable.fromJS({id: 2});
 
-    let _mockUserService = function() {
+    const _mockUserService = function() {
         mocks.userServices = {
-            getLiked: sinon.stub()
+            getLiked: sinon.stub(),
         };
 
         return provide.value("tgUserService", mocks.userServices);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockUserService();
@@ -52,7 +52,7 @@ describe("ProfileLiked", function() {
         })
     ;
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;
@@ -66,23 +66,23 @@ describe("ProfileLiked", function() {
     });
 
     it("load paginated items", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileLiked", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileLiked", $scope, {user});
 
-        let items1 = Immutable.fromJS({
+        const items1 = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
-        let items2 = Immutable.fromJS({
+        const items2 = Immutable.fromJS({
             data: [
                 {id: 4},
                 {id: 5},
             ],
-            next: false
+            next: false,
         });
 
         mocks.userServices.getLiked.withArgs(user.get("id"), 1, null, null).promise().resolve(items1);
@@ -114,18 +114,18 @@ describe("ProfileLiked", function() {
     });
 
     it("filter items by text query", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileLiked", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileLiked", $scope, {user});
 
-        let textQuery = "_test_";
+        const textQuery = "_test_";
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
         mocks.userServices.getLiked.withArgs(user.get("id"), 1, null, textQuery).promise().resolve(items);
@@ -138,7 +138,7 @@ describe("ProfileLiked", function() {
         ctrl.q = textQuery;
 
         return ctrl.loadItems().then(() => {
-            let expectItems = items.get("data");
+            const expectItems = items.get("data");
 
             expect(ctrl.items.equals(expectItems)).to.be.true;
             expect(ctrl.scrollDisabled).to.be.false;
@@ -149,23 +149,23 @@ describe("ProfileLiked", function() {
     });
 
     it("show loading spinner during the call to the api", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileLiked", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileLiked", $scope, {user});
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
-        let mockPromise = mocks.userServices.getLiked.withArgs(user.get("id"), 1, null, null).promise();
+        const mockPromise = mocks.userServices.getLiked.withArgs(user.get("id"), 1, null, null).promise();
 
         expect(ctrl.isLoading).to.be.undefined;
 
-        let promise = ctrl.loadItems();
+        const promise = ctrl.loadItems();
 
         expect(ctrl.isLoading).to.be.true;
 
@@ -178,12 +178,12 @@ describe("ProfileLiked", function() {
     });
 
     return it("show no results placeholder", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileLiked", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileLiked", $scope, {user});
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [],
-            next: false
+            next: false,
         });
 
         mocks.userServices.getLiked.withArgs(user.get("id"), 1, null, null).promise().resolve(items);
@@ -197,24 +197,23 @@ describe("ProfileLiked", function() {
     });
 });
 
-
 describe("ProfileVoted", function() {
     let $controller = null;
     let provide = null;
     let $rootScope = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let user = Immutable.fromJS({id: 2});
+    const user = Immutable.fromJS({id: 2});
 
-    let _mockUserService = function() {
+    const _mockUserService = function() {
         mocks.userServices = {
-            getVoted: sinon.stub()
+            getVoted: sinon.stub(),
         };
 
         return provide.value("tgUserService", mocks.userServices);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockUserService();
@@ -223,7 +222,7 @@ describe("ProfileVoted", function() {
         })
     ;
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;
@@ -237,23 +236,23 @@ describe("ProfileVoted", function() {
     });
 
     it("load paginated items", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileVoted", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileVoted", $scope, {user});
 
-        let items1 = Immutable.fromJS({
+        const items1 = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
-        let items2 = Immutable.fromJS({
+        const items2 = Immutable.fromJS({
             data: [
                 {id: 4},
                 {id: 5},
             ],
-            next: false
+            next: false,
         });
 
         mocks.userServices.getVoted.withArgs(user.get("id"), 1, null, null).promise().resolve(items1);
@@ -285,18 +284,18 @@ describe("ProfileVoted", function() {
     });
 
     it("filter items by text query", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileVoted", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileVoted", $scope, {user});
 
-        let textQuery = "_test_";
+        const textQuery = "_test_";
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
         mocks.userServices.getVoted.withArgs(user.get("id"), 1, null, textQuery).promise().resolve(items);
@@ -309,7 +308,7 @@ describe("ProfileVoted", function() {
         ctrl.q = textQuery;
 
         return ctrl.loadItems().then(() => {
-            let expectItems = items.get("data");
+            const expectItems = items.get("data");
 
             expect(ctrl.items.equals(expectItems)).to.be.true;
             expect(ctrl.scrollDisabled).to.be.false;
@@ -320,18 +319,18 @@ describe("ProfileVoted", function() {
     });
 
     it("show only items of epics", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileVoted", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileVoted", $scope, {user});
 
-        let type = "epic";
+        const type = "epic";
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
         mocks.userServices.getVoted.withArgs(user.get("id"), 1, type, null).promise().resolve(items);
@@ -342,7 +341,7 @@ describe("ProfileVoted", function() {
         expect(ctrl.q).to.be.null;
 
         return ctrl.showEpicsOnly().then(() => {
-            let expectItems = items.get("data");
+            const expectItems = items.get("data");
 
             expect(ctrl.items.equals(expectItems)).to.be.true;
             expect(ctrl.scrollDisabled).to.be.false;
@@ -353,18 +352,18 @@ describe("ProfileVoted", function() {
     });
 
     it("show only items of user stories", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileVoted", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileVoted", $scope, {user});
 
-        let type = "userstory";
+        const type = "userstory";
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
         mocks.userServices.getVoted.withArgs(user.get("id"), 1, type, null).promise().resolve(items);
@@ -375,7 +374,7 @@ describe("ProfileVoted", function() {
         expect(ctrl.q).to.be.null;
 
         return ctrl.showUserStoriesOnly().then(() => {
-            let expectItems = items.get("data");
+            const expectItems = items.get("data");
 
             expect(ctrl.items.equals(expectItems)).to.be.true;
             expect(ctrl.scrollDisabled).to.be.false;
@@ -386,18 +385,18 @@ describe("ProfileVoted", function() {
     });
 
     it("show only items of tasks", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileVoted", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileVoted", $scope, {user});
 
-        let type = "task";
+        const type = "task";
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
         mocks.userServices.getVoted.withArgs(user.get("id"), 1, type, null).promise().resolve(items);
@@ -408,7 +407,7 @@ describe("ProfileVoted", function() {
         expect(ctrl.q).to.be.null;
 
         return ctrl.showTasksOnly().then(() => {
-            let expectItems = items.get("data");
+            const expectItems = items.get("data");
 
             expect(ctrl.items.equals(expectItems)).to.be.true;
             expect(ctrl.scrollDisabled).to.be.false;
@@ -419,18 +418,18 @@ describe("ProfileVoted", function() {
     });
 
     it("show only items of issues", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileVoted", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileVoted", $scope, {user});
 
-        let type = "issue";
+        const type = "issue";
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
         mocks.userServices.getVoted.withArgs(user.get("id"), 1, type, null).promise().resolve(items);
@@ -441,7 +440,7 @@ describe("ProfileVoted", function() {
         expect(ctrl.q).to.be.null;
 
         return ctrl.showIssuesOnly().then(() => {
-            let expectItems = items.get("data");
+            const expectItems = items.get("data");
 
             expect(ctrl.items.equals(expectItems)).to.be.true;
             expect(ctrl.scrollDisabled).to.be.false;
@@ -452,23 +451,23 @@ describe("ProfileVoted", function() {
     });
 
     it("show loading spinner during the call to the api", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileVoted", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileVoted", $scope, {user});
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
-        let mockPromise = mocks.userServices.getVoted.withArgs(user.get("id"), 1, null, null).promise();
+        const mockPromise = mocks.userServices.getVoted.withArgs(user.get("id"), 1, null, null).promise();
 
         expect(ctrl.isLoading).to.be.undefined;
 
-        let promise = ctrl.loadItems();
+        const promise = ctrl.loadItems();
 
         expect(ctrl.isLoading).to.be.true;
 
@@ -481,12 +480,12 @@ describe("ProfileVoted", function() {
     });
 
     return it("show no results placeholder", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileVoted", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileVoted", $scope, {user});
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [],
-            next: false
+            next: false,
         });
 
         mocks.userServices.getVoted.withArgs(user.get("id"), 1, null, null).promise().resolve(items);
@@ -504,19 +503,19 @@ describe("ProfileWatched", function() {
     let $controller = null;
     let provide = null;
     let $rootScope = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let user = Immutable.fromJS({id: 2});
+    const user = Immutable.fromJS({id: 2});
 
-    let _mockUserService = function() {
+    const _mockUserService = function() {
         mocks.userServices = {
-            getWatched: sinon.stub()
+            getWatched: sinon.stub(),
         };
 
         return provide.value("tgUserService", mocks.userServices);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockUserService();
@@ -525,7 +524,7 @@ describe("ProfileWatched", function() {
         })
     ;
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;
@@ -539,23 +538,23 @@ describe("ProfileWatched", function() {
     });
 
     it("load paginated items", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileWatched", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileWatched", $scope, {user});
 
-        let items1 = Immutable.fromJS({
+        const items1 = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
-        let items2 = Immutable.fromJS({
+        const items2 = Immutable.fromJS({
             data: [
                 {id: 4},
                 {id: 5},
             ],
-            next: false
+            next: false,
         });
 
         mocks.userServices.getWatched.withArgs(user.get("id"), 1, null, null).promise().resolve(items1);
@@ -587,18 +586,18 @@ describe("ProfileWatched", function() {
     });
 
     it("filter items by text query", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileWatched", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileWatched", $scope, {user});
 
-        let textQuery = "_test_";
+        const textQuery = "_test_";
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
         mocks.userServices.getWatched.withArgs(user.get("id"), 1, null, textQuery).promise().resolve(items);
@@ -611,7 +610,7 @@ describe("ProfileWatched", function() {
         ctrl.q = textQuery;
 
         return ctrl.loadItems().then(() => {
-            let expectItems = items.get("data");
+            const expectItems = items.get("data");
 
             expect(ctrl.items.equals(expectItems)).to.be.true;
             expect(ctrl.scrollDisabled).to.be.false;
@@ -622,18 +621,18 @@ describe("ProfileWatched", function() {
     });
 
     it("show only items of projects", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileWatched", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileWatched", $scope, {user});
 
-        let type = "project";
+        const type = "project";
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
         mocks.userServices.getWatched.withArgs(user.get("id"), 1, type, null).promise().resolve(items);
@@ -644,7 +643,7 @@ describe("ProfileWatched", function() {
         expect(ctrl.q).to.be.null;
 
         return ctrl.showProjectsOnly().then(() => {
-            let expectItems = items.get("data");
+            const expectItems = items.get("data");
 
             expect(ctrl.items.equals(expectItems)).to.be.true;
             expect(ctrl.scrollDisabled).to.be.false;
@@ -655,18 +654,18 @@ describe("ProfileWatched", function() {
     });
 
     it("show only items of epics", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileWatched", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileWatched", $scope, {user});
 
-        let type = "epic";
+        const type = "epic";
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
         mocks.userServices.getWatched.withArgs(user.get("id"), 1, type, null).promise().resolve(items);
@@ -677,7 +676,7 @@ describe("ProfileWatched", function() {
         expect(ctrl.q).to.be.null;
 
         return ctrl.showEpicsOnly().then(() => {
-            let expectItems = items.get("data");
+            const expectItems = items.get("data");
 
             expect(ctrl.items.equals(expectItems)).to.be.true;
             expect(ctrl.scrollDisabled).to.be.false;
@@ -688,18 +687,18 @@ describe("ProfileWatched", function() {
     });
 
     it("show only items of user stories", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileWatched", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileWatched", $scope, {user});
 
-        let type = "userstory";
+        const type = "userstory";
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
         mocks.userServices.getWatched.withArgs(user.get("id"), 1, type, null).promise().resolve(items);
@@ -710,7 +709,7 @@ describe("ProfileWatched", function() {
         expect(ctrl.q).to.be.null;
 
         return ctrl.showUserStoriesOnly().then(() => {
-            let expectItems = items.get("data");
+            const expectItems = items.get("data");
 
             expect(ctrl.items.equals(expectItems)).to.be.true;
             expect(ctrl.scrollDisabled).to.be.false;
@@ -721,18 +720,18 @@ describe("ProfileWatched", function() {
     });
 
     it("show only items of tasks", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileWatched", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileWatched", $scope, {user});
 
-        let type = "task";
+        const type = "task";
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
         mocks.userServices.getWatched.withArgs(user.get("id"), 1, type, null).promise().resolve(items);
@@ -743,7 +742,7 @@ describe("ProfileWatched", function() {
         expect(ctrl.q).to.be.null;
 
         return ctrl.showTasksOnly().then(() => {
-            let expectItems = items.get("data");
+            const expectItems = items.get("data");
 
             expect(ctrl.items.equals(expectItems)).to.be.true;
             expect(ctrl.scrollDisabled).to.be.false;
@@ -754,18 +753,18 @@ describe("ProfileWatched", function() {
     });
 
     it("show only items of issues", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileWatched", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileWatched", $scope, {user});
 
-        let type = "issue";
+        const type = "issue";
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
         mocks.userServices.getWatched.withArgs(user.get("id"), 1, type, null).promise().resolve(items);
@@ -776,7 +775,7 @@ describe("ProfileWatched", function() {
         expect(ctrl.q).to.be.null;
 
         return ctrl.showIssuesOnly().then(() => {
-            let expectItems = items.get("data");
+            const expectItems = items.get("data");
 
             expect(ctrl.items.equals(expectItems)).to.be.true;
             expect(ctrl.scrollDisabled).to.be.false;
@@ -787,23 +786,23 @@ describe("ProfileWatched", function() {
     });
 
     it("show loading spinner during the call to the api", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileWatched", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileWatched", $scope, {user});
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
+                {id: 3},
             ],
-            next: true
+            next: true,
         });
 
-        let mockPromise = mocks.userServices.getWatched.withArgs(user.get("id"), 1, null, null).promise();
+        const mockPromise = mocks.userServices.getWatched.withArgs(user.get("id"), 1, null, null).promise();
 
         expect(ctrl.isLoading).to.be.undefined;
 
-        let promise = ctrl.loadItems();
+        const promise = ctrl.loadItems();
 
         expect(ctrl.isLoading).to.be.true;
 
@@ -816,12 +815,12 @@ describe("ProfileWatched", function() {
     });
 
     return it("show no results placeholder", function(done) {
-        let $scope = $rootScope.$new();
-        let ctrl = $controller("ProfileWatched", $scope, {user});
+        const $scope = $rootScope.$new();
+        const ctrl = $controller("ProfileWatched", $scope, {user});
 
-        let items = Immutable.fromJS({
+        const items = Immutable.fromJS({
             data: [],
-            next: false
+            next: false,
         });
 
         mocks.userServices.getWatched.withArgs(user.get("id"), 1, null, null).promise().resolve(items);

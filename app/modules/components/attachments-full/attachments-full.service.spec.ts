@@ -17,36 +17,36 @@
  * File: attchments-full.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgAttachmentsFullService", function() {
     let $provide = null;
     let attachmentsFullService = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockAttachmentsService = function() {
+    const _mockAttachmentsService = function() {
         mocks.attachmentsService = {
-            upload: sinon.stub()
+            upload: sinon.stub(),
         };
 
         return $provide.value("tgAttachmentsService", mocks.attachmentsService);
     };
 
-    let _mockRootScope = function() {
+    const _mockRootScope = function() {
         mocks.rootScope = {};
 
         return $provide.value("$rootScope", mocks.rootScope);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -57,11 +57,11 @@ describe("tgAttachmentsFullService", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_tgAttachmentsFullService_ => attachmentsFullService = _tgAttachmentsFullService_)
+    const _inject = () =>
+        inject((_tgAttachmentsFullService_) => attachmentsFullService = _tgAttachmentsFullService_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -73,32 +73,32 @@ describe("tgAttachmentsFullService", function() {
     });
 
     it("generate, refresh deprecated counter", function() {
-        let attachments = Immutable.fromJS([
+        const attachments = Immutable.fromJS([
             {
                 file: {
-                    is_deprecated: false
-                }
+                    is_deprecated: false,
+                },
             },
             {
                 file: {
-                    is_deprecated: true
-                }
+                    is_deprecated: true,
+                },
             },
             {
                 file: {
-                    is_deprecated: true
-                }
+                    is_deprecated: true,
+                },
             },
             {
                 file: {
-                    is_deprecated: false
-                }
+                    is_deprecated: false,
+                },
             },
             {
                 file: {
-                    is_deprecated: true
-                }
-            }
+                    is_deprecated: true,
+                },
+            },
         ]);
 
         attachmentsFullService._attachments = attachments;
@@ -121,14 +121,14 @@ describe("tgAttachmentsFullService", function() {
 
     describe("add attachments", function() {
         it("valid attachment", function(done) {
-            let projectId = 1;
-            let objId = 2;
-            let type = "issue";
+            const projectId = 1;
+            const objId = 2;
+            const type = "issue";
 
-            let file = Immutable.fromJS({
+            const file = Immutable.fromJS({
                 file: {},
-                name: 'test',
-                size: 3000
+                name: "test",
+                size: 3000,
             });
 
             mocks.attachmentsService.validate = sinon.stub();
@@ -142,17 +142,17 @@ describe("tgAttachmentsFullService", function() {
             attachmentsFullService._attachments = Immutable.List();
 
             return attachmentsFullService.addAttachment(projectId, objId, type, file).then(function() {
-                expect(mocks.rootScope.$broadcast).have.been.calledWith('attachment:create');
+                expect(mocks.rootScope.$broadcast).have.been.calledWith("attachment:create");
                 expect(attachmentsFullService.attachments.count()).to.be.equal(1);
                 return done();
             });
         });
 
         return it("invalid attachment", function() {
-            let file = Immutable.fromJS({
+            const file = Immutable.fromJS({
                 file: {},
-                name: 'test',
-                size: 3000
+                name: "test",
+                size: 3000,
             });
 
             mocks.attachmentsService.validate = sinon.stub();
@@ -172,41 +172,41 @@ describe("tgAttachmentsFullService", function() {
     describe("deleteattachments", () =>
         it("success attachment", function(done) {
             mocks.attachmentsService.delete = sinon.stub();
-            mocks.attachmentsService.delete.withArgs('us', 2).promise().resolve();
+            mocks.attachmentsService.delete.withArgs("us", 2).promise().resolve();
 
             attachmentsFullService.regenerate = sinon.spy();
             attachmentsFullService._attachments = Immutable.fromJS([
                 {
-                    file: {id: 1}
+                    file: {id: 1},
                 },
                 {
-                    file: {id: 2}
+                    file: {id: 2},
                 },
                 {
-                    file: {id: 3}
+                    file: {id: 3},
                 },
                 {
-                    file: {id: 4}
-                }
+                    file: {id: 4},
+                },
             ]);
 
-            let deleteFile = attachmentsFullService._attachments.get(1);
+            const deleteFile = attachmentsFullService._attachments.get(1);
 
-            return attachmentsFullService.deleteAttachment(deleteFile, 'us').then(function() {
+            return attachmentsFullService.deleteAttachment(deleteFile, "us").then(function() {
                 expect(attachmentsFullService.regenerate).have.been.calledOnce;
                 expect(attachmentsFullService.attachments.size).to.be.equal(3);
                 return done();
             });
-        })
+        }),
     );
 
     it("reorder attachments", function(done) {
-        let attachments = Immutable.fromJS([
+        const attachments = Immutable.fromJS([
             {file: {id: 0, is_deprecated: false, order: 0}},
             {file: {id: 1, is_deprecated: true, order: 1}},
             {file: {id: 2, is_deprecated: true, order: 2}},
             {file: {id: 3, is_deprecated: false, order: 3}},
-            {file: {id: 4, is_deprecated: true, order: 4}}
+            {file: {id: 4, is_deprecated: true, order: 4}},
         ]);
 
         mocks.attachmentsService.patch = sinon.stub();
@@ -214,50 +214,50 @@ describe("tgAttachmentsFullService", function() {
 
         attachmentsFullService._attachments = attachments;
 
-        return attachmentsFullService.reorderAttachment('us', attachments.get(1), 0).then(function() {
+        return attachmentsFullService.reorderAttachment("us", attachments.get(1), 0).then(function() {
             expect(attachmentsFullService.attachments.get(0)).to.be.equal(attachments.get(1));
             return done();
         });
     });
 
     it("update attachment", function() {
-        let attachments = Immutable.fromJS([
+        const attachments = Immutable.fromJS([
             {file: {id: 0, is_deprecated: false, order: 0}},
             {file: {id: 1, is_deprecated: true, order: 1}},
             {file: {id: 2, is_deprecated: true, order: 2}},
             {file: {id: 3, is_deprecated: false, order: 3}},
-            {file: {id: 4, is_deprecated: true, order: 4}}
+            {file: {id: 4, is_deprecated: true, order: 4}},
         ]);
 
         let attachment = attachments.get(1);
-        attachment = attachment.setIn(['file', 'is_deprecated'], false);
+        attachment = attachment.setIn(["file", "is_deprecated"], false);
 
         mocks.attachmentsService.patch = sinon.stub();
-        mocks.attachmentsService.patch.withArgs(1, 'us', {is_deprecated: false}).promise().resolve();
+        mocks.attachmentsService.patch.withArgs(1, "us", {is_deprecated: false}).promise().resolve();
 
         attachmentsFullService._attachments = attachments;
 
-        return attachmentsFullService.updateAttachment(attachment, 'us').then(() => expect(attachmentsFullService.attachments.get(1).toJS()).to.be.eql(attachment.toJS()));
+        return attachmentsFullService.updateAttachment(attachment, "us").then(() => expect(attachmentsFullService.attachments.get(1).toJS()).to.be.eql(attachment.toJS()));
     });
 
     return it("update loading attachment", function() {
-        let attachments = Immutable.fromJS([
+        const attachments = Immutable.fromJS([
             {file: {id: 0, is_deprecated: false, order: 0}},
             {loading: true, file: {id: 1, is_deprecated: true, order: 1}},
             {file: {id: 2, is_deprecated: true, order: 2}},
             {file: {id: 3, is_deprecated: false, order: 3}},
-            {file: {id: 4, is_deprecated: true, order: 4}}
+            {file: {id: 4, is_deprecated: true, order: 4}},
         ]);
 
         let attachment = attachments.get(1);
-        attachment = attachment.setIn(['file', 'is_deprecated'], false);
+        attachment = attachment.setIn(["file", "is_deprecated"], false);
 
         mocks.attachmentsService.patch = sinon.stub();
-        mocks.attachmentsService.patch.withArgs(1, 'us', {is_deprecated: false}).promise().resolve();
+        mocks.attachmentsService.patch.withArgs(1, "us", {is_deprecated: false}).promise().resolve();
 
         attachmentsFullService._attachments = attachments;
 
-        attachmentsFullService.updateAttachment(attachment, 'us');
+        attachmentsFullService.updateAttachment(attachment, "us");
 
         return expect(attachmentsFullService.attachments.get(1).toJS()).to.be.eql(attachment.toJS());
     });

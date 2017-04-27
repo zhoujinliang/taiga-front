@@ -17,58 +17,58 @@
  * File: current-user.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgCurrentUserService", function() {
     let provide;
     let currentUserService = (provide = null);
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgStorage = function() {
+    const _mockTgStorage = function() {
         mocks.storageService = {
-            get: sinon.stub()
+            get: sinon.stub(),
         };
 
         return provide.value("$tgStorage", mocks.storageService);
     };
 
-    let _mockProjectsService = function() {
+    const _mockProjectsService = function() {
         mocks.projectsService = {
             getProjectsByUserId: sinon.stub(),
-            bulkUpdateProjectsOrder: sinon.stub()
+            bulkUpdateProjectsOrder: sinon.stub(),
         };
 
         return provide.value("tgProjectsService", mocks.projectsService);
     };
 
-    let _mockResources = function() {
+    const _mockResources = function() {
         mocks.resources = {
             user: {
                 setUserStorage: sinon.stub(),
                 getUserStorage: sinon.stub(),
-                createUserStorage: sinon.stub()
-            }
+                createUserStorage: sinon.stub(),
+            },
         };
 
         return provide.value("tgResources", mocks.resources);
     };
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_tgCurrentUserService_) {
             currentUserService = _tgCurrentUserService_;
             if (callback) { return callback(); }
         })
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgStorage();
@@ -79,7 +79,7 @@ describe("tgCurrentUserService", function() {
         })
     ;
 
-    let _setup = () => _mocks();
+    const _setup = () => _mocks();
 
     beforeEach(function() {
         module("taigaCommon");
@@ -95,26 +95,26 @@ describe("tgCurrentUserService", function() {
         });
 
         return it("get user form storage if it is not defined", function() {
-            let user = {id: 1, name: "fake1"};
+            const user = {id: 1, name: "fake1"};
 
             currentUserService.setUser = sinon.spy();
             mocks.storageService.get.withArgs("userInfo").returns(user);
 
-            let _user = currentUserService.getUser();
+            const _user = currentUserService.getUser();
 
             return expect(currentUserService.setUser).to.be.calledOnce;
         });
     });
 
     it("set user and load user info", function(done) {
-        let user = Immutable.fromJS({id: 1, name: "fake1"});
+        const user = Immutable.fromJS({id: 1, name: "fake1"});
 
-        let projects = Immutable.fromJS([
+        const projects = Immutable.fromJS([
             {id: 1, name: "fake1"},
             {id: 2, name: "fake2"},
             {id: 3, name: "fake3"},
             {id: 4, name: "fake4"},
-            {id: 5, name: "fake5"}
+            {id: 5, name: "fake5"},
         ]);
 
         mocks.projectsService.getProjectsByUserId = sinon.stub();
@@ -132,7 +132,7 @@ describe("tgCurrentUserService", function() {
     });
 
     it("bulkUpdateProjectsOrder and reload projects", function(done) {
-        let fakeData = [{id: 2}];
+        const fakeData = [{id: 2}];
 
         currentUserService.loadProjects = sinon.stub();
 
@@ -146,8 +146,8 @@ describe("tgCurrentUserService", function() {
     });
 
     it("loadProject and set it", function(done) {
-        let user = Immutable.fromJS({id: 1, name: "fake1"});
-        let project = Immutable.fromJS({id: 2, name: "fake2"});
+        const user = Immutable.fromJS({id: 1, name: "fake1"});
+        const project = Immutable.fromJS({id: 2, name: "fake2"});
 
         currentUserService._user = user;
         currentUserService.setProjects = sinon.stub();
@@ -162,24 +162,24 @@ describe("tgCurrentUserService", function() {
     });
 
     it("setProject", function() {
-        let projectsRaw = [
+        const projectsRaw = [
             {id: 1, name: "fake1"},
             {id: 2, name: "fake2"},
             {id: 3, name: "fake3"},
-            {id: 4, name: "fake4"}
+            {id: 4, name: "fake4"},
         ];
-        let projectsRawById = {
+        const projectsRawById = {
             [1]: {id: 1, name: "fake1"},
             [2]: {id: 2, name: "fake2"},
             [3]: {id: 3, name: "fake3"},
-            [4]: {id: 4, name: "fake4"}
+            [4]: {id: 4, name: "fake4"},
         };
-        let projects = Immutable.fromJS(projectsRaw);
+        const projects = Immutable.fromJS(projectsRaw);
 
         currentUserService.setProjects(projects);
 
-        expect(currentUserService.projects.get('all').toJS()).to.be.eql(projectsRaw);
-        expect(currentUserService.projects.get('recents').toJS()).to.be.eql(projectsRaw);
+        expect(currentUserService.projects.get("all").toJS()).to.be.eql(projectsRaw);
+        expect(currentUserService.projects.get("recents").toJS()).to.be.eql(projectsRaw);
         return expect(currentUserService.projectsById.toJS()).to.be.eql(projectsRawById);
     });
 
@@ -215,15 +215,15 @@ describe("tgCurrentUserService", function() {
         currentUserService.isAuthenticated.returns(true);
         currentUserService.disableJoyRide();
 
-        return expect(mocks.resources.user.setUserStorage).to.have.been.calledWith('joyride', {
+        return expect(mocks.resources.user.setUserStorage).to.have.been.calledWith("joyride", {
             backlog: false,
             kanban: false,
-            dashboard: false
+            dashboard: false,
         });
     });
 
     it("load joyride config", function(done) {
-        mocks.resources.user.getUserStorage.withArgs('joyride').promise().resolve(true);
+        mocks.resources.user.getUserStorage.withArgs("joyride").promise().resolve(true);
 
         return currentUserService.loadJoyRideConfig().then(function(config) {
             expect(config).to.be.true;
@@ -233,16 +233,16 @@ describe("tgCurrentUserService", function() {
     });
 
     it("create default joyride config", function(done) {
-        mocks.resources.user.getUserStorage.withArgs('joyride').promise().reject(new Error('error'));
+        mocks.resources.user.getUserStorage.withArgs("joyride").promise().reject(new Error("error"));
 
         return currentUserService.loadJoyRideConfig().then(function(config) {
-            let joyride = {
+            const joyride = {
                 backlog: true,
                 kanban: true,
-                dashboard: true
+                dashboard: true,
             };
 
-            expect(mocks.resources.user.createUserStorage).to.have.been.calledWith('joyride', joyride);
+            expect(mocks.resources.user.createUserStorage).to.have.been.calledWith("joyride", joyride);
             expect(config).to.be.eql(joyride);
 
             return done();
@@ -250,248 +250,246 @@ describe("tgCurrentUserService", function() {
     });
 
     it("the user can't create private projects if they reach the maximum number of private projects", function() {
-        let user = Immutable.fromJS({
+        const user = Immutable.fromJS({
             id: 1,
             name: "fake1",
             max_private_projects: 1,
-            total_private_projects: 1
+            total_private_projects: 1,
         });
 
         currentUserService._user = user;
 
-        let result = currentUserService.canCreatePrivateProjects();
+        const result = currentUserService.canCreatePrivateProjects();
 
         return expect(result).to.be.eql({
             valid: false,
-            reason: 'max_private_projects',
-            type: 'private_project',
+            reason: "max_private_projects",
+            type: "private_project",
             current: 1,
-            max: 1
+            max: 1,
         });
     });
 
     it("the user can create private projects", function() {
-        let user = Immutable.fromJS({
+        const user = Immutable.fromJS({
             id: 1,
             name: "fake1",
             max_private_projects: 10,
             total_private_projects: 1,
-            max_memberships_private_projects: 20
+            max_memberships_private_projects: 20,
         });
 
         currentUserService._user = user;
 
-        let result = currentUserService.canCreatePrivateProjects(10);
+        const result = currentUserService.canCreatePrivateProjects(10);
 
         return expect(result).to.be.eql({
-            valid: true
+            valid: true,
         });
     });
 
     it("the user can't create public projects if they reach the maximum number of private projects", function() {
-        let user = Immutable.fromJS({
+        const user = Immutable.fromJS({
             id: 1,
             name: "fake1",
             max_public_projects: 1,
-            total_public_projects: 1
+            total_public_projects: 1,
         });
 
         currentUserService._user = user;
 
-        let result = currentUserService.canCreatePublicProjects(0);
+        const result = currentUserService.canCreatePublicProjects(0);
 
         return expect(result).to.be.eql({
             valid: false,
-            reason: 'max_public_projects',
-            type: 'public_project',
+            reason: "max_public_projects",
+            type: "public_project",
             current: 1,
-            max: 1
+            max: 1,
         });
     });
 
     it("the user can create public projects", function() {
-        let user = Immutable.fromJS({
+        const user = Immutable.fromJS({
             id: 1,
             name: "fake1",
             max_public_projects: 10,
             total_public_projects: 1,
-            max_memberships_public_projects: 20
+            max_memberships_public_projects: 20,
         });
 
         currentUserService._user = user;
 
-        let result = currentUserService.canCreatePublicProjects(10);
+        const result = currentUserService.canCreatePublicProjects(10);
 
         return expect(result).to.be.eql({
-            valid: true
+            valid: true,
         });
     });
 
     it("the user can own public project", function() {
-        let user = Immutable.fromJS({
+        const user = Immutable.fromJS({
             id: 1,
             name: "fake1",
             max_public_projects: 10,
             total_public_projects: 1,
-            max_memberships_public_projects: 20
+            max_memberships_public_projects: 20,
         });
 
         currentUserService._user = user;
 
-        let project = Immutable.fromJS({
+        const project = Immutable.fromJS({
                 id: 2,
                 name: "fake2",
                 total_memberships: 5,
-                is_private: false
+                is_private: false,
         });
 
-        let result = currentUserService.canOwnProject(project);
+        const result = currentUserService.canOwnProject(project);
 
         return expect(result).to.be.eql({
-            valid: true
+            valid: true,
         });
     });
 
     it("the user can't own public project because of max projects", function() {
-        let user = Immutable.fromJS({
+        const user = Immutable.fromJS({
             id: 1,
             name: "fake1",
             max_public_projects: 1,
             total_public_projects: 1,
-            max_memberships_public_projects: 20
+            max_memberships_public_projects: 20,
         });
 
         currentUserService._user = user;
 
-        let project = Immutable.fromJS({
+        const project = Immutable.fromJS({
                 id: 2,
                 name: "fake2",
                 total_memberships: 5,
-                is_private: false
+                is_private: false,
         });
 
-        let result = currentUserService.canOwnProject(project);
+        const result = currentUserService.canOwnProject(project);
 
         return expect(result).to.be.eql({
             valid: false,
-            reason: 'max_public_projects',
-            type: 'public_project',
+            reason: "max_public_projects",
+            type: "public_project",
             current: 1,
-            max: 1
+            max: 1,
         });
     });
 
-
     it("the user can't own public project because of max memberships", function() {
-        let user = Immutable.fromJS({
+        const user = Immutable.fromJS({
             id: 1,
             name: "fake1",
             max_public_projects: 5,
             total_public_projects: 1,
-            max_memberships_public_projects: 4
+            max_memberships_public_projects: 4,
         });
 
         currentUserService._user = user;
 
-        let project = Immutable.fromJS({
+        const project = Immutable.fromJS({
                 id: 2,
                 name: "fake2",
                 total_memberships: 5,
-                is_private: false
+                is_private: false,
         });
 
-        let result = currentUserService.canOwnProject(project);
+        const result = currentUserService.canOwnProject(project);
 
         return expect(result).to.be.eql({
             valid: false,
-            reason: 'max_members_public_projects',
-            type: 'public_project',
+            reason: "max_members_public_projects",
+            type: "public_project",
             current: 5,
-            max: 4
+            max: 4,
         });
     });
 
     it("the user can own private project", function() {
-        let user = Immutable.fromJS({
+        const user = Immutable.fromJS({
             id: 1,
             name: "fake1",
             max_private_projects: 10,
             total_private_projects: 1,
-            max_memberships_private_projects: 20
+            max_memberships_private_projects: 20,
         });
 
         currentUserService._user = user;
 
-        let project = Immutable.fromJS({
+        const project = Immutable.fromJS({
                 id: 2,
                 name: "fake2",
                 total_memberships: 5,
-                is_private: true
+                is_private: true,
         });
 
-        let result = currentUserService.canOwnProject(project);
+        const result = currentUserService.canOwnProject(project);
 
         return expect(result).to.be.eql({
-            valid: true
+            valid: true,
         });
     });
 
     it("the user can't own private project because of max projects", function() {
-        let user = Immutable.fromJS({
+        const user = Immutable.fromJS({
             id: 1,
             name: "fake1",
             max_private_projects: 1,
             total_private_projects: 1,
-            max_memberships_private_projects: 20
+            max_memberships_private_projects: 20,
         });
 
         currentUserService._user = user;
 
-        let project = Immutable.fromJS({
+        const project = Immutable.fromJS({
                 id: 2,
                 name: "fake2",
                 total_memberships: 5,
-                is_private: true
+                is_private: true,
         });
 
-        let result = currentUserService.canOwnProject(project);
+        const result = currentUserService.canOwnProject(project);
 
         return expect(result).to.be.eql({
             valid: false,
-            reason: 'max_private_projects',
-            type: 'private_project',
+            reason: "max_private_projects",
+            type: "private_project",
             current: 1,
-            max: 1
+            max: 1,
         });
     });
 
-
     return it("the user can't own private project because of max memberships", function() {
-        let user = Immutable.fromJS({
+        const user = Immutable.fromJS({
             id: 1,
             name: "fake1",
             max_private_projects: 10,
             total_private_projects: 1,
-            max_memberships_private_projects: 4
+            max_memberships_private_projects: 4,
         });
 
         currentUserService._user = user;
 
-        let project = Immutable.fromJS({
+        const project = Immutable.fromJS({
                 id: 2,
                 name: "fake2",
                 total_memberships: 5,
-                is_private: true
+                is_private: true,
         });
 
-        let result = currentUserService.canOwnProject(project);
+        const result = currentUserService.canOwnProject(project);
 
         return expect(result).to.be.eql({
             valid: false,
-            reason: 'max_members_private_projects',
-            type: 'private_project',
+            reason: "max_members_private_projects",
+            type: "private_project",
             current: 5,
-            max: 4
+            max: 4,
         });
     });
 });

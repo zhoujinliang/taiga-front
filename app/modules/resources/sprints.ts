@@ -22,11 +22,11 @@
  * File: modules/resources/sprints.coffee
  */
 
-import * as _ from "lodash"
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
-import {ModelService} from "../../ts/modules/base/model"
-import {StorageService} from "../../ts/modules/base/storage"
+import {Injectable} from "@angular/core";
+import * as _ from "lodash";
+import {ModelService} from "../../ts/modules/base/model";
+import {RepositoryService} from "../../ts/modules/base/repository";
+import {StorageService} from "../../ts/modules/base/storage";
 
 @Injectable()
 export class SprintsResource {
@@ -35,12 +35,12 @@ export class SprintsResource {
                 private storage: StorageService) {}
 
     get(projectId, sprintId) {
-        return this.repo.queryOne("milestones", sprintId).map((sprint:any) => {
+        return this.repo.queryOne("milestones", sprintId).map((sprint: any) => {
             let uses = sprint.user_stories;
-            uses = _.map(uses, u => this.model.make_model("userstories", u));
+            uses = _.map(uses, (u) => this.model.make_model("userstories", u));
             sprint._attrs.user_stories = uses;
             return sprint;
-        })
+        });
     }
 
     stats(projectId, sprintId) {
@@ -48,23 +48,23 @@ export class SprintsResource {
     }
 
     list(projectId, filters) {
-        let params = {"project": projectId};
+        let params = {project: projectId};
         params = _.extend({}, params, filters || {});
-        return this.repo.queryMany("milestones", params, {}, true).map(result => {
-            let milestones = result[0];
-            let headers = result[1];
+        return this.repo.queryMany("milestones", params, {}, true).map((result) => {
+            const milestones = result[0];
+            const headers = result[1];
 
-            for (let m of milestones) {
+            for (const m of milestones) {
                 let uses = m.user_stories;
-                uses = _.map(uses, u => this.model.make_model("userstories", u));
+                uses = _.map(uses, (u) => this.model.make_model("userstories", u));
                 m._attrs.user_stories = uses;
             }
 
             return {
                 milestones,
                 closed: parseInt(headers["Taiga-Info-Total-Closed-Milestones"], 10),
-                open: parseInt(headers["Taiga-Info-Total-Opened-Milestones"], 10)
+                open: parseInt(headers["Taiga-Info-Total-Opened-Milestones"], 10),
             };
         });
-    };
-};
+    }
+}

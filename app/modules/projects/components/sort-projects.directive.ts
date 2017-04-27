@@ -17,48 +17,48 @@
  * File: sort-projects.directive.coffee
  */
 
-import {autoScroll} from "../../../libs/dom-autoscroller"
+import {autoScroll} from "../../../libs/dom-autoscroller";
 
-import * as dragula from "dragula"
-import * as _ from "lodash"
+import * as dragula from "dragula";
+import * as _ from "lodash";
 
 export let SortProjectsDirective = function(currentUserService) {
-    let link = function(scope, el, attrs, ctrl) {
+    const link = function(scope, el, attrs, ctrl) {
         let itemEl = null;
 
-        let drake = dragula([el[0]], <dragula.DragulaOptions>{
+        const drake = dragula([el[0]], {
             copySortSource: false,
             copy: false,
             mirrorContainer: el[0],
-            moves(item) { return $(item).hasClass('list-itemtype-project'); }
-        });
+            moves(item) { return $(item).hasClass("list-itemtype-project"); },
+        } as dragula.DragulaOptions);
 
-        drake.on('dragend', function(item) {
+        drake.on("dragend", function(item) {
             itemEl = $(item);
-            let { project } = itemEl.scope();
+            const { project } = itemEl.scope();
             let index = itemEl.index();
 
-            let sorted_project_ids = _.map(scope.projects.toJS(), (p:any) => p.id);
+            let sorted_project_ids = _.map(scope.projects.toJS(), (p: any) => p.id);
             sorted_project_ids = _.without(sorted_project_ids, project.get("id"));
-            sorted_project_ids.splice(index, 0, project.get('id'));
+            sorted_project_ids.splice(index, 0, project.get("id"));
 
-            let sortData = [];
+            const sortData = [];
 
             for (index = 0; index < sorted_project_ids.length; index++) {
-                let value = sorted_project_ids[index];
-                sortData.push({"project_id": value, "order":index});
+                const value = sorted_project_ids[index];
+                sortData.push({project_id: value, order: index});
             }
 
             return currentUserService.bulkUpdateProjectsOrder(sortData);
         });
 
-        let scroll = autoScroll(window, {
+        const scroll = autoScroll(window, {
             margin: 20,
             pixels: 30,
             scrollWhenOutside: true,
             autoScroll() {
                 return this.down && drake.dragging;
-            }
+            },
         });
 
         return scope.$on("$destroy", function() {
@@ -67,11 +67,11 @@ export let SortProjectsDirective = function(currentUserService) {
         });
     };
 
-    let directive = {
+    const directive = {
         scope: {
-            projects: "=tgSortProjects"
+            projects: "=tgSortProjects",
         },
-        link
+        link,
     };
 
     return directive;

@@ -17,57 +17,57 @@
  * File: epic-row.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("EpicTable", function() {
     let epicTableCtrl =  null;
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgConfirm = function() {
+    const _mockTgConfirm = function() {
         mocks.tgConfirm = {
-            notify: sinon.stub()
+            notify: sinon.stub(),
         };
         return provide.value("$tgConfirm", mocks.tgConfirm);
     };
 
-    let _mockTgEpicsService = function() {
+    const _mockTgEpicsService = function() {
         mocks.tgEpicsService = {
             createEpic: sinon.stub(),
-            nextPage: sinon.stub()
+            nextPage: sinon.stub(),
         };
         return provide.value("tgEpicsService", mocks.tgEpicsService);
     };
 
-    let _mockTgProjectService = function() {
+    const _mockTgProjectService = function() {
         mocks.tgProjectService = {
             project: Immutable.fromJS({
-                'id': 3
-            })
+                id: 3,
+            }),
         };
         return provide.value("tgProjectService", mocks.tgProjectService);
     };
 
-    let _mockTgStorageService = function() {
+    const _mockTgStorageService = function() {
         mocks.tgStorage = {
             get: sinon.stub(),
-            set: sinon.spy()
+            set: sinon.spy(),
         };
 
         mocks.tgStorage.get.returns({col1: true});
         return provide.value("$tgStorage", mocks.tgStorage);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgConfirm();
@@ -83,7 +83,7 @@ describe("EpicTable", function() {
 
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     it("toggle table options", function() {

@@ -17,24 +17,24 @@
  * File: story-header.controller.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export class StoryHeaderController {
-    rootScope: angular.IScope
-    confirm:any
-    modelTransform:any
-    navUrls:any
-    window:any
-    editMode:any
-    loadingSubject:any
-    originalSubject:any
-    item:any
-    project:any
-    previousUrl:any
-    nextUrl:any
-    permissions:any
-    requiredPerm:any
+    rootScope: angular.IScope;
+    confirm: any;
+    modelTransform: any;
+    navUrls: any;
+    window: any;
+    editMode: any;
+    loadingSubject: any;
+    originalSubject: any;
+    item: any;
+    project: any;
+    previousUrl: any;
+    nextUrl: any;
+    permissions: any;
+    requiredPerm: any;
 
     static initClass() {
         this.$inject = [
@@ -42,7 +42,7 @@ export class StoryHeaderController {
             "$tgConfirm",
             "$tgQueueModelTransformation",
             "$tgNavUrls",
-            "$window"
+            "$window",
         ];
     }
 
@@ -62,7 +62,7 @@ export class StoryHeaderController {
         if ((this.item.neighbors.previous != null ? this.item.neighbors.previous.ref : undefined) != null) {
             ctx = {
                 project: this.project.slug,
-                ref: this.item.neighbors.previous.ref
+                ref: this.item.neighbors.previous.ref,
             };
             this.previousUrl = this.navUrls.resolve(`project-${this.item._name}-detail`, ctx);
         }
@@ -70,7 +70,7 @@ export class StoryHeaderController {
         if ((this.item.neighbors.next != null ? this.item.neighbors.next.ref : undefined) != null) {
             ctx = {
                 project: this.project.slug,
-                ref: this.item.neighbors.next.ref
+                ref: this.item.neighbors.next.ref,
             };
             return this.nextUrl = this.navUrls.resolve(`project-${this.item._name}-detail`, ctx);
         }
@@ -78,12 +78,12 @@ export class StoryHeaderController {
 
     _checkPermissions() {
         return this.permissions = {
-            canEdit: _.includes(this.project.my_permissions, this.requiredPerm)
+            canEdit: _.includes(this.project.my_permissions, this.requiredPerm),
         };
     }
 
     editSubject(value) {
-        let selection = this.window.getSelection();
+        const selection = this.window.getSelection();
         if (selection.type !== "Range") {
             if (value) {
                 this.editMode = true;
@@ -106,24 +106,23 @@ export class StoryHeaderController {
     }
 
     saveSubject() {
-        let onEditSubjectSuccess = () => {
+        const onEditSubjectSuccess = () => {
             this.loadingSubject = false;
             this.rootScope.$broadcast("object:updated");
-            this.confirm.notify('success');
+            this.confirm.notify("success");
             return this.originalSubject = this.item.subject;
         };
 
-        let onEditSubjectError = () => {
+        const onEditSubjectError = () => {
             this.loadingSubject = false;
-            return this.confirm.notify('error');
+            return this.confirm.notify("error");
         };
 
         this.editMode = false;
         this.loadingSubject = true;
-        let { item } = this;
-        let transform = this.modelTransform.save(item => item);
+        const { item } = this;
+        const transform = this.modelTransform.save((item) => item);
         return transform.then(onEditSubjectSuccess, onEditSubjectError);
     }
 }
 StoryHeaderController.initClass();
-

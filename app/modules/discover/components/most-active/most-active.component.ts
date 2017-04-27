@@ -17,22 +17,22 @@
  * File: most-active.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../../libs/utils"
-import {Component, Input, Output, EventEmitter} from "@angular/core"
+import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {defineImmutableProperty} from "../../../../libs/utils";
 
 @Component({
-    selector: 'tg-most-active',
-    template: require("./most-active.jade")()
+    selector: "tg-most-active",
+    template: require("./most-active.jade")(),
 })
 export class MostActive {
-    @Input() projects
+    @Input() projects;
     @Output() order: EventEmitter<string>;
 
     constructor() {
-        this.order = new EventEmitter()
+        this.order = new EventEmitter();
     }
 
     orderBy(type) {
-        this.order.emit(type)
+        this.order.emit(type);
     }
 }

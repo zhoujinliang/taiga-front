@@ -18,12 +18,12 @@
  */
 
 export let ProfileTabDirective = function() {
-    let link = function(scope, element, attrs, ctrl, transclude) {
+    const link = function(scope, element, attrs, ctrl, transclude) {
         scope.tab = {};
 
-        attrs.$observe("tgProfileTab", name => scope.tab.name = name);
+        attrs.$observe("tgProfileTab", (name) => scope.tab.name = name);
 
-        attrs.$observe("tabTitle", title => scope.tab.title = title);
+        attrs.$observe("tabTitle", (title) => scope.tab.title = title);
 
         scope.tab.icon = attrs.tabIcon;
         scope.tab.active = !!attrs.tabActive;
@@ -38,6 +38,6 @@ export let ProfileTabDirective = function() {
         scope: {},
         require: "^tgProfileTabs",
         link,
-        transclude: true
+        transclude: true,
     };
 };

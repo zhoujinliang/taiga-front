@@ -17,46 +17,46 @@
  * File: home.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("HomeController", function() {
     let homeCtrl =  null;
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockCurrentUserService = function() {
+    const _mockCurrentUserService = function() {
         mocks.currentUserService = {
-            getUser: sinon.stub()
+            getUser: sinon.stub(),
         };
 
         return provide.value("tgCurrentUserService", mocks.currentUserService);
     };
 
-    let _mockLocation = function() {
+    const _mockLocation = function() {
         mocks.location = {
-            path: sinon.stub()
+            path: sinon.stub(),
         };
         return provide.value("$location", mocks.location);
     };
 
-    let _mockTgNavUrls = function() {
+    const _mockTgNavUrls = function() {
         mocks.tgNavUrls = {
-            resolve: sinon.stub()
+            resolve: sinon.stub(),
         };
 
         return provide.value("$tgNavUrls", mocks.tgNavUrls);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockCurrentUserService();
@@ -72,7 +72,7 @@ describe("HomeController", function() {
 
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     it("anonymous home", function() {
@@ -86,8 +86,8 @@ describe("HomeController", function() {
     return it("non anonymous home", function() {
         mocks.currentUserService = {
             getUser: Immutable.fromJS({
-                id: 1
-            })
+                id: 1,
+            }),
         };
 
         expect(mocks.tgNavUrls.resolve).to.be.notCalled;

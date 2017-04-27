@@ -18,8 +18,8 @@
  */
 
 export let IsolateClickDirective = function() {
-    let link = (scope, el, attrs) =>
-        el.on('click', e => {
+    const link = (scope, el, attrs) =>
+        el.on("click", (e) => {
             return e.stopPropagation();
         })
     ;

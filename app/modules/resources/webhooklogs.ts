@@ -17,10 +17,10 @@
  * File: webhooklogs.coffee
  */
 
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../ts/modules/base/http";
+import {RepositoryService} from "../../ts/modules/base/repository";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class WebhookLogsResource {
@@ -29,12 +29,12 @@ export class WebhookLogsResource {
                 private http: HttpService) {}
 
     list(webhookId) {
-        let params = {webhook: webhookId};
+        const params = {webhook: webhookId};
         return this.repo.queryMany("webhooklogs", params);
-    };
+    }
 
     resend(webhooklogId) {
-        let url = this.urls.resolve("webhooklogs-resend", webhooklogId);
+        const url = this.urls.resolve("webhooklogs-resend", webhooklogId);
         return this.http.post(url);
-    };
-};
+    }
+}

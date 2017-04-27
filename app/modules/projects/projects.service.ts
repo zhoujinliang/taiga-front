@@ -17,12 +17,12 @@
  * File: projects.service.coffee
  */
 
-import {Service} from "../../libs/classes"
-import {groupBy} from "../../libs/utils"
+import {Service} from "../../libs/classes";
+import {groupBy} from "../../libs/utils";
 
-import {Injectable} from "@angular/core"
-import {ResourcesService} from "../resources/resources.service"
-import {ProjectUrlService} from "../../ts/modules/common/project-url.service"
+import {Injectable} from "@angular/core";
+import {ProjectUrlService} from "../../ts/modules/common/project-url.service";
+import {ResourcesService} from "../resources/resources.service";
 
 @Injectable()
 export class ProjectsService {
@@ -39,7 +39,7 @@ export class ProjectsService {
 
     getProjectBySlug(projectSlug) {
         return this.rs.projects.getProjectBySlug(projectSlug)
-            .map(project => {
+            .map((project) => {
                 return this._decorate(project);
         });
     }
@@ -48,15 +48,15 @@ export class ProjectsService {
         return this.rs.projects.getProjectStats(projectId);
     }
 
-    getProjectsByUserId(userId, paginate=false) {
+    getProjectsByUserId(userId, paginate= false) {
         return this.rs.projects.getProjectsByUserId(userId, paginate)
-            .map(projects => {
+            .map((projects) => {
                 return projects.map(this._decorate.bind(this));
         });
     }
 
     _decorate(project) {
-        let url = this.projectUrl.get(project.toJS());
+        const url = this.projectUrl.get(project.toJS());
 
         project = project.set("url", url);
 

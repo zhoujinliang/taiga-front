@@ -17,82 +17,82 @@
  * File: import-project.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgImportProjectService", function() {
     let $provide = null;
     let importProjectService = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockCurrentUserService = function() {
+    const _mockCurrentUserService = function() {
         mocks.currentUserService = {
             loadProjects: sinon.stub(),
             getUser: sinon.stub(),
             canCreatePrivateProjects: sinon.stub(),
-            canCreatePublicProjects: sinon.stub()
+            canCreatePublicProjects: sinon.stub(),
         };
 
         return $provide.value("tgCurrentUserService", mocks.currentUserService);
     };
 
-    let _mockAuth = function() {
+    const _mockAuth = function() {
         mocks.auth = {
-            refresh: sinon.stub()
+            refresh: sinon.stub(),
         };
 
         return $provide.value("$tgAuth", mocks.auth);
     };
 
-    let _mockLightboxFactory = function() {
+    const _mockLightboxFactory = function() {
         mocks.lightboxFactory = {
-            create: sinon.stub()
+            create: sinon.stub(),
         };
 
         return $provide.value("tgLightboxFactory", mocks.lightboxFactory);
     };
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translate = {
-            instant: sinon.stub()
+            instant: sinon.stub(),
         };
 
         return $provide.value("$translate", mocks.translate);
     };
 
-    let _mockConfirm = function() {
+    const _mockConfirm = function() {
         mocks.confirm = {
             success: sinon.stub(),
-            notify: sinon.stub()
+            notify: sinon.stub(),
         };
 
         return $provide.value("$tgConfirm", mocks.confirm);
     };
 
-    let _mockLocation = function() {
+    const _mockLocation = function() {
         mocks.location = {
-            path: sinon.stub()
+            path: sinon.stub(),
         };
 
         return $provide.value("$location", mocks.location);
     };
 
-    let _mockNavUrls = function() {
+    const _mockNavUrls = function() {
         mocks.navUrls = {
-            resolve: sinon.stub()
+            resolve: sinon.stub(),
         };
 
         return $provide.value("$tgNavUrls", mocks.navUrls);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -108,11 +108,11 @@ describe("tgImportProjectService", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_tgImportProjectService_ => importProjectService = _tgImportProjectService_)
+    const _inject = () =>
+        inject((_tgImportProjectService_) => importProjectService = _tgImportProjectService_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -124,14 +124,14 @@ describe("tgImportProjectService", function() {
     });
 
     it("import success async mode", function(done) {
-        let result = {
+        const result = {
             status: 202,
             data: {
-                slug: 'project-slug'
-            }
+                slug: "project-slug",
+            },
         };
 
-        mocks.translate.instant.returns('xxx');
+        mocks.translate.instant.returns("xxx");
 
         mocks.currentUserService.loadProjects.promise().resolve();
 
@@ -142,185 +142,185 @@ describe("tgImportProjectService", function() {
     });
 
     it("import success sync mode", function(done) {
-        let result = {
+        const result = {
             status: 201,
             data: {
-                slug: 'project-slug'
-            }
+                slug: "project-slug",
+            },
         };
 
-        mocks.translate.instant.returns('msg');
+        mocks.translate.instant.returns("msg");
 
-        mocks.navUrls.resolve.withArgs('project-admin-project-profile-details', {project: 'project-slug'}).returns('url');
+        mocks.navUrls.resolve.withArgs("project-admin-project-profile-details", {project: "project-slug"}).returns("url");
 
         mocks.currentUserService.loadProjects.promise().resolve();
 
         return importProjectService.importSuccess(result).then(function() {
-            expect(mocks.location.path).have.been.calledWith('url');
-            expect(mocks.confirm.notify).have.been.calledWith('success', 'msg');
+            expect(mocks.location.path).have.been.calledWith("url");
+            expect(mocks.confirm.notify).have.been.calledWith("success", "msg");
             return done();
         });
     });
 
     it("private get restriction errors, private & member error", function() {
-        let result = {
+        const result = {
             headers: {
                 isPrivate: true,
-                memberships: 10
-            }
+                memberships: 10,
+            },
         };
 
         mocks.currentUserService.getUser.returns(Immutable.fromJS({
-            max_memberships_private_projects: 1
+            max_memberships_private_projects: 1,
         }));
 
         mocks.currentUserService.canCreatePrivateProjects.returns({
-            valid: false
+            valid: false,
         });
 
-        let error = importProjectService.getRestrictionError(result);
+        const error = importProjectService.getRestrictionError(result);
 
         return expect(error).to.be.eql({
-            key: 'private-space-members',
+            key: "private-space-members",
             values: {
                 max_memberships: 1,
-                members: 10
-            }
+                members: 10,
+            },
         });
     });
 
     it("private get restriction errors, private limit error", function() {
-        let result = {
+        const result = {
             headers: {
                 isPrivate: true,
-                memberships: 10
-            }
+                memberships: 10,
+            },
         };
 
         mocks.currentUserService.getUser.returns(Immutable.fromJS({
-            max_memberships_private_projects: 20
+            max_memberships_private_projects: 20,
         }));
 
         mocks.currentUserService.canCreatePrivateProjects.returns({
-            valid: false
+            valid: false,
         });
 
-        let error = importProjectService.getRestrictionError(result);
+        const error = importProjectService.getRestrictionError(result);
 
         return expect(error).to.be.eql({
-            key: 'private-space',
+            key: "private-space",
             values: {
                 max_memberships: null,
-                members: 10
-            }
+                members: 10,
+            },
         });
     });
 
     it("private get restriction errors, members error", function() {
-        let result = {
+        const result = {
             headers: {
                 isPrivate: true,
-                memberships: 10
-            }
+                memberships: 10,
+            },
         };
 
         mocks.currentUserService.getUser.returns(Immutable.fromJS({
-            max_memberships_private_projects: 1
+            max_memberships_private_projects: 1,
         }));
 
         mocks.currentUserService.canCreatePrivateProjects.returns({
-            valid: true
+            valid: true,
         });
 
-        let error = importProjectService.getRestrictionError(result);
+        const error = importProjectService.getRestrictionError(result);
 
         return expect(error).to.be.eql({
-            key: 'private-members',
+            key: "private-members",
             values: {
                 max_memberships: 1,
-                members: 10
-            }
+                members: 10,
+            },
         });
     });
 
     it("public get restriction errors, public & member error", function() {
-        let result = {
+        const result = {
             headers: {
                 isPrivate: false,
-                memberships: 10
-            }
+                memberships: 10,
+            },
         };
 
         mocks.currentUserService.getUser.returns(Immutable.fromJS({
-            max_memberships_public_projects: 1
+            max_memberships_public_projects: 1,
         }));
 
         mocks.currentUserService.canCreatePublicProjects.returns({
-            valid: false
+            valid: false,
         });
 
-        let error = importProjectService.getRestrictionError(result);
+        const error = importProjectService.getRestrictionError(result);
 
         return expect(error).to.be.eql({
-            key: 'public-space-members',
+            key: "public-space-members",
             values: {
                 max_memberships: 1,
-                members: 10
-            }
+                members: 10,
+            },
         });
     });
 
     it("public get restriction errors, public limit error", function() {
-        let result = {
+        const result = {
             headers: {
                 isPrivate: false,
-                memberships: 10
-            }
+                memberships: 10,
+            },
         };
 
         mocks.currentUserService.getUser.returns(Immutable.fromJS({
-            max_memberships_public_projects: 20
+            max_memberships_public_projects: 20,
         }));
 
         mocks.currentUserService.canCreatePublicProjects.returns({
-            valid: false
+            valid: false,
         });
 
-        let error = importProjectService.getRestrictionError(result);
+        const error = importProjectService.getRestrictionError(result);
 
         return expect(error).to.be.eql({
-            key: 'public-space',
+            key: "public-space",
             values: {
                 max_memberships: null,
-                members: 10
-            }
+                members: 10,
+            },
         });
     });
 
     return it("public get restriction errors, members error", function() {
-        let result = {
+        const result = {
             headers: {
                 isPrivate: false,
-                memberships: 10
-            }
+                memberships: 10,
+            },
         };
 
         mocks.currentUserService.getUser.returns(Immutable.fromJS({
-            max_memberships_public_projects: 1
+            max_memberships_public_projects: 1,
         }));
 
         mocks.currentUserService.canCreatePublicProjects.returns({
-            valid: true
+            valid: true,
         });
 
-        let error = importProjectService.getRestrictionError(result);
+        const error = importProjectService.getRestrictionError(result);
 
         return expect(error).to.be.eql({
-            key: 'public-members',
+            key: "public-members",
             values: {
                 max_memberships: 1,
-                members: 10
-            }
+                members: 10,
+            },
         });
     });
 });

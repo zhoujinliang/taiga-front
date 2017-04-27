@@ -17,17 +17,17 @@
  * File: theme.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import {ThemeService} from "./theme.service"
+declare var describe: any;
+declare var angular: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import {ThemeService} from "./theme.service";
 
 describe("ThemeService", function() {
     let service: ThemeService;
-    let data = {
-        theme: "testTheme"
+    const data = {
+        theme: "testTheme",
     };
 
     beforeEach(function() {
@@ -35,7 +35,7 @@ describe("ThemeService", function() {
     });
 
     return it("use a test theme", function() {
-        (<any>window)._version = '123';
+        (window as any)._version = "123";
         service.use(data.theme);
         return expect($("link[rel='stylesheet']")).to.have.attr("href", `/123/styles/theme-${data.theme}.css`);
     });

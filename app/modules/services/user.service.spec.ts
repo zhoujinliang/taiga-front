@@ -17,34 +17,34 @@
  * File: user.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("UserService", function() {
     let userService = null;
     let $q = null;
     let provide = null;
     let $rootScope = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockResources = function() {
+    const _mockResources = function() {
         mocks.resources = {};
         mocks.resources.users = {
             getProjects: sinon.stub(),
-            getContacts: sinon.stub()
+            getContacts: sinon.stub(),
         };
 
         return provide.value("tgResources", mocks.resources);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockResources();
@@ -53,7 +53,7 @@ describe("UserService", function() {
         })
     ;
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_tgUserService_, _$q_, _$rootScope_) {
             userService = _tgUserService_;
             $q = _$q_;
@@ -68,18 +68,18 @@ describe("UserService", function() {
     });
 
     it("attach user contacts to projects", function(done) {
-        let userId = 2;
+        const userId = 2;
 
-        let projects = Immutable.fromJS([
+        const projects = Immutable.fromJS([
             {id: 1, members: [1, 2, 3]},
             {id: 2, members: [2, 3]},
-            {id: 3, members: [1]}
+            {id: 3, members: [1]},
         ]);
 
         let contacts = Immutable.fromJS([
             {id: 1, name: "fake1"},
             {id: 2, name: "fake2"},
-            {id: 3, name: "fake3"}
+            {id: 3, name: "fake3"},
         ]);
 
         mocks.resources.users.getContacts = sinon.stub();
@@ -88,19 +88,19 @@ describe("UserService", function() {
         return userService.attachUserContactsToProjects(userId, projects).then(function(_projects_) {
             contacts = _projects_.get(0).get("contacts");
 
-            expect(contacts.get(0).get("name")).to.be.equal('fake1');
+            expect(contacts.get(0).get("name")).to.be.equal("fake1");
 
             return done();
         });
     });
 
     it("get user contacts", function(done) {
-        let userId = 2;
+        const userId = 2;
 
-        let contacts = [
+        const contacts = [
             {id: 1},
             {id: 2},
-            {id: 3}
+            {id: 3},
         ];
 
         mocks.resources.users.getContacts = sinon.stub();
@@ -115,15 +115,15 @@ describe("UserService", function() {
     });
 
     it("get user liked", function(done) {
-        let userId = 2;
-        let pageNumber = 1;
-        let objectType = null;
-        let textQuery = null;
+        const userId = 2;
+        const pageNumber = 1;
+        const objectType = null;
+        const textQuery = null;
 
-        let liked = [
+        const liked = [
             {id: 1},
             {id: 2},
-            {id: 3}
+            {id: 3},
         ];
 
         mocks.resources.users.getLiked = sinon.stub();
@@ -140,15 +140,15 @@ describe("UserService", function() {
     });
 
     it("get user voted", function(done) {
-        let userId = 2;
-        let pageNumber = 1;
-        let objectType = null;
-        let textQuery = null;
+        const userId = 2;
+        const pageNumber = 1;
+        const objectType = null;
+        const textQuery = null;
 
-        let voted = [
+        const voted = [
             {id: 1},
             {id: 2},
-            {id: 3}
+            {id: 3},
         ];
 
         mocks.resources.users.getVoted = sinon.stub();
@@ -165,15 +165,15 @@ describe("UserService", function() {
     });
 
     it("get user watched", function(done) {
-        let userId = 2;
-        let pageNumber = 1;
-        let objectType = null;
-        let textQuery = null;
+        const userId = 2;
+        const pageNumber = 1;
+        const objectType = null;
+        const textQuery = null;
 
-        let watched = [
+        const watched = [
             {id: 1},
             {id: 2},
-            {id: 3}
+            {id: 3},
         ];
 
         mocks.resources.users.getWatched = sinon.stub();
@@ -190,9 +190,9 @@ describe("UserService", function() {
     });
 
     return it("get user by username", function(done) {
-        let username = "username-1";
+        const username = "username-1";
 
-        let user = {id: 1};
+        const user = {id: 1};
 
         mocks.resources.users.getUserByUsername = sinon.stub();
         mocks.resources.users.getUserByUsername.withArgs(username).promise().resolve(user);

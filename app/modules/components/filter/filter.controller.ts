@@ -17,21 +17,21 @@
  * File: filter.controller.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export class FilterController {
-    opened: any
-    customFilterForm:any
-    customFilterName:any
-    q:any
-    selectedFilters:any
-    onSaveCustomFilter:any
-    onRemoveFilter:any
-    onChangeQ:any
-    onAddFilter:any
-    onRemoveCustomFilter:any
-    onSelectCustomFilter:any
+    opened: any;
+    customFilterForm: any;
+    customFilterName: any;
+    q: any;
+    selectedFilters: any;
+    onSaveCustomFilter: any;
+    onRemoveFilter: any;
+    onChangeQ: any;
+    onAddFilter: any;
+    onRemoveCustomFilter: any;
+    onSelectCustomFilter: any;
 
     static initClass() {
         this.$inject = [];
@@ -40,7 +40,7 @@ export class FilterController {
     constructor() {
         this.opened = null;
         this.customFilterForm = false;
-        this.customFilterName = '';
+        this.customFilterName = "";
     }
 
     toggleFilterCategory(filterName) {
@@ -58,8 +58,8 @@ export class FilterController {
     saveCustomFilter() {
         this.onSaveCustomFilter({name: this.customFilterName});
         this.customFilterForm = false;
-        this.opened = 'custom-filter';
-        return this.customFilterName = '';
+        this.opened = "custom-filter";
+        return this.customFilterName = "";
     }
 
     changeQ() {
@@ -70,11 +70,10 @@ export class FilterController {
         return this.onRemoveFilter({filter});
     }
 
-
     selectFilter(filterCategory, filter) {
         filter = {
             category: filterCategory,
-            filter
+            filter,
         };
 
         return this.onAddFilter({filter});
@@ -89,7 +88,7 @@ export class FilterController {
     }
 
     isFilterSelected(filterCategory, filter) {
-        return !!_.find(this.selectedFilters, (it:any) => (filter.id === it.id) && (filterCategory.dataType === it.dataType));
+        return !!_.find(this.selectedFilters, (it: any) => (filter.id === it.id) && (filterCategory.dataType === it.dataType));
     }
 }
 FilterController.initClass();

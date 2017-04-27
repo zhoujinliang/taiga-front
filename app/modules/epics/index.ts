@@ -17,26 +17,26 @@
  * File: wiki-history.module.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
-import {CreateEpicController} from "./create-epic/create-epic.controller"
-import {CreateEpicDirective} from "./create-epic/create-epic.directive"
-import {EpicRowController} from "./dashboard/epic-row/epic-row.controller"
-import {EpicRowDirective} from "./dashboard/epic-row/epic-row.directive"
-import {EpicsDashboardController} from "./dashboard/epics-dashboard.controller"
-import {EpicsSortableDirective} from "./dashboard/epics-sortable/epics-sortable.directive"
-import {EpicsTableController} from "./dashboard/epics-table/epics-table.controller"
-import {EpicsTableDirective} from "./dashboard/epics-table/epics-table.directive"
-import {StoryRowController} from "./dashboard/story-row/story-row.controller"
-import {StoryRowDirective} from "./dashboard/story-row/story-row.directive"
-import {EpicsService} from "./epics.service"
-import {RelatedUserStoriesController} from "./related-userstories/related-userstories-controller"
-import {RelatedUserstoriesCreateController} from "./related-userstories/related-userstories-create/related-userstories-create.controller"
-import {RelatedUserstoriesCreateDirective} from "./related-userstories/related-userstories-create/related-userstories-create.directive"
-import {RelatedUserStoriesDirective} from "./related-userstories/related-userstories.directive"
-import {RelatedUserstoriesSortableDirective} from "./related-userstories/related-userstories-sortable/related-userstories-sortable.directive"
-import {RelatedUserstoryRowController} from "./related-userstories/related-userstory-row/related-userstory-row.controller"
-import {RelatedUserstoryRowDirective} from "./related-userstories/related-userstory-row/related-userstory-row.directive"
+import {CreateEpicController} from "./create-epic/create-epic.controller";
+import {CreateEpicDirective} from "./create-epic/create-epic.directive";
+import {EpicRowController} from "./dashboard/epic-row/epic-row.controller";
+import {EpicRowDirective} from "./dashboard/epic-row/epic-row.directive";
+import {EpicsDashboardController} from "./dashboard/epics-dashboard.controller";
+import {EpicsSortableDirective} from "./dashboard/epics-sortable/epics-sortable.directive";
+import {EpicsTableController} from "./dashboard/epics-table/epics-table.controller";
+import {EpicsTableDirective} from "./dashboard/epics-table/epics-table.directive";
+import {StoryRowController} from "./dashboard/story-row/story-row.controller";
+import {StoryRowDirective} from "./dashboard/story-row/story-row.directive";
+import {EpicsService} from "./epics.service";
+import {RelatedUserStoriesController} from "./related-userstories/related-userstories-controller";
+import {RelatedUserstoriesCreateController} from "./related-userstories/related-userstories-create/related-userstories-create.controller";
+import {RelatedUserstoriesCreateDirective} from "./related-userstories/related-userstories-create/related-userstories-create.directive";
+import {RelatedUserstoriesSortableDirective} from "./related-userstories/related-userstories-sortable/related-userstories-sortable.directive";
+import {RelatedUserStoriesDirective} from "./related-userstories/related-userstories.directive";
+import {RelatedUserstoryRowController} from "./related-userstories/related-userstory-row/related-userstory-row.controller";
+import {RelatedUserstoryRowDirective} from "./related-userstories/related-userstory-row/related-userstory-row.directive";
 
 export let module = angular.module("taigaEpics", []);
 module.controller("CreateEpicCtrl", CreateEpicController);
@@ -49,7 +49,7 @@ module.controller("EpicsTableCtrl", EpicsTableController);
 module.directive("tgEpicsTable", EpicsTableDirective);
 module.controller("StoryRowCtrl", StoryRowController);
 module.directive("tgStoryRow", StoryRowDirective);
-module.service('tgEpicsService', EpicsService);
+module.service("tgEpicsService", EpicsService);
 module.controller("RelatedUserStoriesCtrl", RelatedUserStoriesController);
 module.controller("RelatedUserstoriesCreateCtrl", RelatedUserstoriesCreateController);
 module.directive("tgRelatedUserstoriesCreate", RelatedUserstoriesCreateDirective);

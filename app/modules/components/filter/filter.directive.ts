@@ -17,11 +17,11 @@
  * File: filter.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let FilterDirective = function() {
-    let link = function(scope, el, attrs, ctrl) {
-        var unwatch = scope.$watch("vm.defaultQ", function(q) {
+    const link = function(scope, el, attrs, ctrl) {
+        const unwatch = scope.$watch("vm.defaultQ", function(q) {
             if (q && !scope.vm.filtersForm.$dirty) {
                 scope.vm.q = q;
                 return unwatch();
@@ -34,9 +34,9 @@ export let FilterDirective = function() {
             open = scope.$eval(open);
 
             if (open) {
-                return el.addClass('open');
+                return el.addClass("open");
             } else {
-                return el.removeClass('open');
+                return el.removeClass("open");
             }
         });
     };
@@ -52,12 +52,12 @@ export let FilterDirective = function() {
             customFilters: "<",
             defaultQ: "=q",
             filters: "<",
-            selectedFilters: "<"
+            selectedFilters: "<",
         },
         bindToController: true,
         controller: "Filter",
         controllerAs: "vm",
-        templateUrl: 'components/filter/filter.html',
-        link
+        templateUrl: "components/filter/filter.html",
+        link,
     };
 };

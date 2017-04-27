@@ -17,52 +17,52 @@
  * File: discover-projects.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgDiscoverProjectsService", function() {
     let provide;
     let discoverProjectsService = (provide = null);
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockResources = function() {
+    const _mockResources = function() {
         mocks.resources = {
             projects: {
-                getProjects: sinon.stub()
+                getProjects: sinon.stub(),
             },
             stats: {
-                discover: sinon.stub()
-            }
+                discover: sinon.stub(),
+            },
         };
 
         return provide.value("tgResources", mocks.resources);
     };
 
-    let _mockProjectsService = function() {
+    const _mockProjectsService = function() {
         mocks.projectsService = {
             _decorate(content) {
-                return content.set('decorate', true);
-            }
+                return content.set("decorate", true);
+            },
         };
 
         return provide.value("tgProjectsService", mocks.projectsService);
     };
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_tgDiscoverProjectsService_) {
             discoverProjectsService = _tgDiscoverProjectsService_;
             if (callback) { return callback(); }
         })
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockResources();
@@ -71,7 +71,7 @@ describe("tgDiscoverProjectsService", function() {
         })
     ;
 
-    let _setup = () => _mocks();
+    const _setup = () => _mocks();
 
     beforeEach(function() {
         module("taigaDiscover");
@@ -80,7 +80,7 @@ describe("tgDiscoverProjectsService", function() {
     });
 
     it("fetch most liked", function(done) {
-        let params = {test: 1, discover_mode: true};
+        const params = {test: 1, discover_mode: true};
 
         mocks.resources.projects.getProjects.withArgs(sinon.match(params), false).promise().resolve({
             data: [
@@ -90,12 +90,12 @@ describe("tgDiscoverProjectsService", function() {
                 {id: 4},
                 {id: 5},
                 {id: 6},
-                {id: 7}
-            ]
+                {id: 7},
+            ],
         });
 
         return discoverProjectsService.fetchMostLiked(params).then(function() {
-            let result = discoverProjectsService._mostLiked.toJS();
+            const result = discoverProjectsService._mostLiked.toJS();
 
             expect(result).to.have.length(5);
             expect(result[0].decorate).to.be.ok;
@@ -105,7 +105,7 @@ describe("tgDiscoverProjectsService", function() {
     });
 
     it("fetch most active", function(done) {
-        let params = {test: 1, discover_mode: true};
+        const params = {test: 1, discover_mode: true};
 
         mocks.resources.projects.getProjects.withArgs(sinon.match(params), false).promise().resolve({
             data: [
@@ -115,12 +115,12 @@ describe("tgDiscoverProjectsService", function() {
                 {id: 4},
                 {id: 5},
                 {id: 6},
-                {id: 7}
-            ]
+                {id: 7},
+            ],
         });
 
         return discoverProjectsService.fetchMostActive(params).then(function() {
-            let result = discoverProjectsService._mostActive.toJS();
+            const result = discoverProjectsService._mostActive.toJS();
 
             expect(result).to.have.length(5);
             expect(result[0].decorate).to.be.ok;
@@ -130,7 +130,7 @@ describe("tgDiscoverProjectsService", function() {
     });
 
     it("fetch featured", function(done) {
-        let params = {is_featured: true, discover_mode: true};
+        const params = {is_featured: true, discover_mode: true};
         mocks.resources.projects.getProjects.withArgs(sinon.match(params), false).promise().resolve({
             data: [
                 {id: 1},
@@ -139,12 +139,12 @@ describe("tgDiscoverProjectsService", function() {
                 {id: 4},
                 {id: 5},
                 {id: 6},
-                {id: 7}
-            ]
+                {id: 7},
+            ],
         });
 
         return discoverProjectsService.fetchFeatured().then(function() {
-            let result = discoverProjectsService._featured.toJS();
+            const result = discoverProjectsService._featured.toJS();
 
             expect(result).to.have.length(4);
             expect(result[0].decorate).to.be.ok;
@@ -154,7 +154,7 @@ describe("tgDiscoverProjectsService", function() {
     });
 
     it("reset search list", function() {
-        discoverProjectsService._searchResult = 'xxx';
+        discoverProjectsService._searchResult = "xxx";
 
         discoverProjectsService.resetSearchList();
 
@@ -164,8 +164,8 @@ describe("tgDiscoverProjectsService", function() {
     it("fetch stats", function(done) {
         mocks.resources.stats.discover.promise().resolve(Immutable.fromJS({
             projects: {
-                total: 3
-            }
+                total: 3,
+            },
         }));
 
         return discoverProjectsService.fetchStats().then(function() {
@@ -176,24 +176,24 @@ describe("tgDiscoverProjectsService", function() {
     });
 
     return it("fetch search", function(done) {
-        let params = {test: 1, discover_mode: true};
+        const params = {test: 1, discover_mode: true};
 
         let result = {
             headers: sinon.stub(),
             data: [
                 {id: 1},
                 {id: 2},
-                {id: 3}
-            ]
+                {id: 3},
+            ],
         };
 
-        result.headers.withArgs('X-Pagination-Next').returns('next');
+        result.headers.withArgs("X-Pagination-Next").returns("next");
 
         mocks.resources.projects.getProjects.withArgs(sinon.match(params)).promise().resolve(result);
 
         discoverProjectsService._searchResult = Immutable.fromJS([
             {id: 4},
-            {id: 5}
+            {id: 5},
         ]);
 
         return discoverProjectsService.fetchSearch(params).then(function() {

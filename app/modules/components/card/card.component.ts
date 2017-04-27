@@ -18,39 +18,39 @@
  */
 
 import {Component, Input} from "@angular/core";
-import * as _ from "lodash";
 import * as Immutable from "immutable";
+import * as _ from "lodash";
 
 @Component({
     selector: "tg-card",
-    template: require('./card.jade')(),
+    template: require("./card.jade")(),
 })
 export class Card {
     @Input() item: Immutable.Map<string, any>;
     @Input() zoom: any;
     @Input() project: any;
-    folded:boolean = false;
-    archived:boolean = false;
+    folded: boolean = false;
+    archived: boolean = false;
     visible: string[] = [];
 
     constructor() {}
 
     isVisibleTasks() {
-        return this.zoom.visibility.related_tasks && this.item.get('tasks').size && !this.folded
+        return this.zoom.visibility.related_tasks && this.item.get("tasks").size && !this.folded;
     }
 
     isVisibleFold() {
-        let hasTasks = this.item.get('tasks') && this.item.get('tasks').size > 0;
-        let hasImages = this.item.get('images') && this.item.get('images').size > 0;
-        return this.zoom.visibility.unfold && (hasTasks || hasImages)
+        const hasTasks = this.item.get("tasks") && this.item.get("tasks").size > 0;
+        const hasImages = this.item.get("images") && this.item.get("images").size > 0;
+        return this.zoom.visibility.unfold && (hasTasks || hasImages);
     }
 
     isVisibleSlideshow() {
-        return this.zoom.visibility.attachments && this.item.get('images') && this.item.get('images').size && !this.folded
+        return this.zoom.visibility.attachments && this.item.get("images") && this.item.get("images").size && !this.folded;
     }
 
     isVisibleCompletion() {
-        return this.zoom.visibility.extra_info && this.item.get('tasks') && this.item.get('tasks').size;
+        return this.zoom.visibility.extra_info && this.item.get("tasks") && this.item.get("tasks").size;
     }
 
     toggleFold() {

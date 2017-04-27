@@ -17,23 +17,23 @@
  * File: history.module.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
-import {CommentController} from "./comments/comment.controller"
-import {CommentDirective} from "./comments/comment.directive"
-import {CommentsController} from "./comments/comments.controller"
-import {CommentsDirective} from "./comments/comments.directive"
-import {HistorySectionController} from "./history.controller"
-import {HistorySectionDirective} from "./history.directive"
-import {ActivitiesDiffController} from "./history/history-diff.controller"
-import {HistoryDiffDirective} from "./history/history-diff.directive"
-import {HistoryDirective} from "./history/history.directive"
-import {LightboxDisplayHistoricController} from "./history-lightbox/comment-history-lightbox.controller"
-import {LightboxDisplayHistoricDirective} from "./history-lightbox/comment-history-lightbox.directive"
-import {HistoryEntryDirective} from "./history-lightbox/history-entry.directive"
-import {HistoryTabsDirective} from "./history-tabs/history-tabs.directive"
+import {CommentController} from "./comments/comment.controller";
+import {CommentDirective} from "./comments/comment.directive";
+import {CommentsController} from "./comments/comments.controller";
+import {CommentsDirective} from "./comments/comments.directive";
+import {LightboxDisplayHistoricController} from "./history-lightbox/comment-history-lightbox.controller";
+import {LightboxDisplayHistoricDirective} from "./history-lightbox/comment-history-lightbox.directive";
+import {HistoryEntryDirective} from "./history-lightbox/history-entry.directive";
+import {HistoryTabsDirective} from "./history-tabs/history-tabs.directive";
+import {HistorySectionController} from "./history.controller";
+import {HistorySectionDirective} from "./history.directive";
+import {ActivitiesDiffController} from "./history/history-diff.controller";
+import {HistoryDiffDirective} from "./history/history-diff.directive";
+import {HistoryDirective} from "./history/history.directive";
 
-let module = angular.module("taigaHistory", []);
+const module = angular.module("taigaHistory", []);
 module.controller("CommentCtrl", CommentController);
 module.directive("tgComment", CommentDirective);
 module.controller("CommentsCtrl", CommentsController);

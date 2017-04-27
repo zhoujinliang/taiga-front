@@ -17,12 +17,12 @@
  * File: wiki-resource.service.coffee
  */
 
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
 
-import {Injectable} from "@angular/core"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
-import {RepositoryService} from "../../ts/modules/base/repository"
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../ts/modules/base/http";
+import {RepositoryService} from "../../ts/modules/base/repository";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class WikiHistoryResource {
@@ -47,15 +47,15 @@ export class WikiHistoryResource {
     }
 
     getWikiHistory(wikiId) {
-        let url = this.urls.resolve("history/wiki", wikiId);
+        const url = this.urls.resolve("history/wiki", wikiId);
 
-        let httpOptions = {
+        const httpOptions = {
             headers: {
-                "x-disable-pagination": "1"
-            }
+                "x-disable-pagination": "1",
+            },
         };
 
         return this.http.get(url, null, httpOptions)
-            .map((result:any) => Immutable.fromJS(result.data));
-    };
-};
+            .map((result: any) => Immutable.fromJS(result.data));
+    }
+}

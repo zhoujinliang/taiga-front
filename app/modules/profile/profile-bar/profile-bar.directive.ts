@@ -24,9 +24,8 @@ export let ProfileBarDirective = () =>
         controllerAs: "vm",
         scope: {
             user: "=user",
-            isCurrentUser: "=iscurrentuser"
+            isCurrentUser: "=iscurrentuser",
         },
-        bindToController: true
+        bindToController: true,
     })
 ;
-

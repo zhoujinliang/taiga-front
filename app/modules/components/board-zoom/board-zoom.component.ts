@@ -17,11 +17,11 @@
  * File: board-zoom.directive.coffee
  */
 
-import {Component, Input, Output, EventEmitter} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 
 @Component({
     selector: "tg-board-zoom",
-    template: require("./board-zoom.jade")()
+    template: require("./board-zoom.jade")(),
 })
 export class BoardZoom {
     @Input() levels: number;

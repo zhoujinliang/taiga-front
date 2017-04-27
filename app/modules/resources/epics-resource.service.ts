@@ -17,22 +17,22 @@
  * File: epics-resource.service.coffee
  */
 
-import {generateHash} from "../../libs/utils"
+import {generateHash} from "../../libs/utils";
 
-import * as angular from "angular"
-import * as Immutable from "immutable"
-import * as Promise from "bluebird"
+import * as angular from "angular";
+import * as Promise from "bluebird";
+import * as Immutable from "immutable";
 
-import {Injectable} from "@angular/core"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
-import {StorageService} from "../../ts/modules/base/storage"
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../ts/modules/base/http";
 // TODO: Remove repository usage
-import {RepositoryService} from "../../ts/modules/base/repository"
+import {RepositoryService} from "../../ts/modules/base/repository";
+import {StorageService} from "../../ts/modules/base/storage";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class EpicsResource {
-    hashSuffix:string = "epics-queryparams";
+    hashSuffix: string = "epics-queryparams";
 
     constructor(private repo: RepositoryService,
                 private urls: UrlsService,
@@ -40,133 +40,133 @@ export class EpicsResource {
                 private storage: StorageService) {}
 
     listInAllProjects(params) {
-        let url = this.urls.resolve("epics");
+        const url = this.urls.resolve("epics");
 
-        let httpOptions = {
+        const httpOptions = {
             headers: {
-                "x-disable-pagination": "1"
-            }
+                "x-disable-pagination": "1",
+            },
         };
 
         return this.http.get(url, params, httpOptions)
-            .map((result:any) => Immutable.fromJS(result.data));
-    };
+            .map((result: any) => Immutable.fromJS(result.data));
+    }
 
     list(projectId, page) {
         if (page == null) { page = 0; }
-        let url = this.urls.resolve("epics");
+        const url = this.urls.resolve("epics");
 
-        let params = {project: projectId, page};
+        const params = {project: projectId, page};
 
         return this.http.get(url, params)
-            .map((result:any) =>
+            .map((result: any) =>
                 ({
                     list: Immutable.fromJS(result.data),
-                    headers: result.headers
+                    headers: result.headers,
                 }));
-    };
+    }
 
     patch(id, patch) {
-        let url = this.urls.resolve("epics") + `/${id}`;
+        const url = this.urls.resolve("epics") + `/${id}`;
 
         return this.http.patch(url, patch)
-            .map((result:any) => Immutable.fromJS(result.data));
-    };
+            .map((result: any) => Immutable.fromJS(result.data));
+    }
 
     post(params) {
-        let url = this.urls.resolve("epics");
+        const url = this.urls.resolve("epics");
 
         return this.http.post(url, params)
-            .map((result:any) => Immutable.fromJS(result.data));
-    };
+            .map((result: any) => Immutable.fromJS(result.data));
+    }
 
     reorder(id, data, setOrders) {
-        let url = this.urls.resolve("epics") + `/${id}`;
+        const url = this.urls.resolve("epics") + `/${id}`;
 
-        let options = {"headers": {"set-orders": JSON.stringify(setOrders)}};
+        const options = {headers: {"set-orders": JSON.stringify(setOrders)}};
 
         return this.http.patch(url, data, null, options)
-            .map((result:any) => Immutable.fromJS(result.data));
-    };
+            .map((result: any) => Immutable.fromJS(result.data));
+    }
 
     addRelatedUserstory(epicId, userstoryId) {
-        let url = this.urls.resolve("epic-related-userstories", epicId);
+        const url = this.urls.resolve("epic-related-userstories", epicId);
 
-        let params = {
+        const params = {
             user_story: userstoryId,
-            epic: epicId
+            epic: epicId,
         };
 
         return this.http.post(url, params);
-    };
+    }
 
     reorderRelatedUserstory(epicId, userstoryId, data, setOrders) {
-        let url = this.urls.resolve("epic-related-userstories", epicId) + `/${userstoryId}`;
+        const url = this.urls.resolve("epic-related-userstories", epicId) + `/${userstoryId}`;
 
-        let options = {"headers": {"set-orders": JSON.stringify(setOrders)}};
+        const options = {headers: {"set-orders": JSON.stringify(setOrders)}};
 
         return this.http.patch(url, data, null, options);
-    };
+    }
 
     bulkCreateRelatedUserStories(epicId, projectId, bulk_userstories) {
-        let url = this.urls.resolve("epic-related-userstories-bulk-create", epicId);
+        const url = this.urls.resolve("epic-related-userstories-bulk-create", epicId);
 
-        let params = {
+        const params = {
             bulk_userstories,
-            project_id: projectId
+            project_id: projectId,
         };
 
         return this.http.post(url, params);
-    };
+    }
 
     deleteRelatedUserstory(epicId, userstoryId) {
-        let url = this.urls.resolve("epic-related-userstories", epicId) + `/${userstoryId}`;
+        const url = this.urls.resolve("epic-related-userstories", epicId) + `/${userstoryId}`;
 
         return this.http.delete(url);
-    };
+    }
 
-    getByRef(projectId:number, ref:number):any {
-        let params = this.getQueryParams(projectId);
+    getByRef(projectId: number, ref: number): any {
+        const params = this.getQueryParams(projectId);
         params.project = projectId;
         params.ref = ref;
         return this.repo.queryOne("epics", "by_ref", params);
-    };
+    }
 
-    listValues(projectId:number, type:string):any {
-        let params = {"project": projectId};
+    listValues(projectId: number, type: string): any {
+        const params = {project: projectId};
         this.storeQueryParams(projectId, params);
         return this.repo.queryMany(type, params);
-    };
+    }
 
-    storeQueryParams(projectId:number, params:any):void {
-        let ns = `${projectId}:${this.hashSuffix}`;
-        let hash = generateHash([projectId, ns]);
+    storeQueryParams(projectId: number, params: any): void {
+        const ns = `${projectId}:${this.hashSuffix}`;
+        const hash = generateHash([projectId, ns]);
         this.storage.set(hash, params);
-    };
+    }
 
-    getQueryParams(projectId:number):any {
-        let ns = `${projectId}:${this.hashSuffix}`;
-        let hash = generateHash([projectId, ns]);
+    getQueryParams(projectId: number): any {
+        const ns = `${projectId}:${this.hashSuffix}`;
+        const hash = generateHash([projectId, ns]);
         return this.storage.get(hash) || {};
-    };
+    }
 
-    upvote(epicId:number):any {
-        let url = this.urls.resolve("epic-upvote", epicId);
+    upvote(epicId: number): any {
+        const url = this.urls.resolve("epic-upvote", epicId);
         return this.http.post(url);
-    };
+    }
 
-    downvote(epicId:number):any {
-        let url = this.urls.resolve("epic-downvote", epicId);
+    downvote(epicId: number): any {
+        const url = this.urls.resolve("epic-downvote", epicId);
         return this.http.post(url);
-    };
+    }
 
-    watch(epicId:number):any {
-        let url = this.urls.resolve("epic-watch", epicId);
+    watch(epicId: number): any {
+        const url = this.urls.resolve("epic-watch", epicId);
         return this.http.post(url);
-    };
+    }
 
-    unwatch(epicId:number):any {
-        let url = this.urls.resolve("epic-unwatch", epicId);
+    unwatch(epicId: number): any {
+        const url = this.urls.resolve("epic-unwatch", epicId);
         return this.http.post(url);
-    };
-};
+    }
+}

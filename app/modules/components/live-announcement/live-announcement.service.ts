@@ -17,16 +17,16 @@
  * File: notification.service.coffee
  */
 
-import {Service} from "../../../ts/classes"
-import * as angular from "angular"
+import * as angular from "angular";
+import {Service} from "../../../ts/classes";
 
 export class LiveAnnouncementService extends Service {
-    open:boolean
-    title:string
-    desc:string
+    open: boolean;
+    title: string;
+    desc: string;
 
     constructor() {
-        super()
+        super();
         this.open = false;
         this.title = "";
         this.desc = "";

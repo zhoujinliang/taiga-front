@@ -17,59 +17,59 @@
  * File: tag-line.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let TagOptionDirective = function() {
-    let select = function(selected) {
-        selected.addClass('selected');
+    const select = function(selected) {
+        selected.addClass("selected");
 
-        let selectedPosition = selected.position().top + selected.outerHeight();
-        let containerHeight = selected.parent().outerHeight();
+        const selectedPosition = selected.position().top + selected.outerHeight();
+        const containerHeight = selected.parent().outerHeight();
 
         if (selectedPosition > containerHeight) {
-            let diff = selectedPosition - containerHeight;
+            const diff = selectedPosition - containerHeight;
             return selected.parent().scrollTop(selected.parent().scrollTop() + diff);
         } else if (selected.position().top < 0) {
             return selected.parent().scrollTop(selected.parent().scrollTop() + selected.position().top);
         }
     };
 
-    let dispatch = function(el, code, scope) {
-        let activeElement = el.find(".selected");
+    const dispatch = function(el, code, scope) {
+        const activeElement = el.find(".selected");
 
         // Key: down
         if (code === 40) {
             if (!activeElement.length) {
-                return select(el.find('li:first'));
+                return select(el.find("li:first"));
             } else {
-                let next = activeElement.next('li');
+                const next = activeElement.next("li");
                 if (next.length) {
-                    activeElement.removeClass('selected');
+                    activeElement.removeClass("selected");
                     return select(next);
                 }
             }
         // Key: up
         } else if (code === 38) {
             if (!activeElement.length) {
-                return select(el.find('li:last'));
+                return select(el.find("li:last"));
             } else {
-                let prev = activeElement.prev('li');
+                const prev = activeElement.prev("li");
 
                 if (prev.length) {
-                    activeElement.removeClass('selected');
+                    activeElement.removeClass("selected");
                     return select(prev);
                 }
             }
         }
     };
 
-    let stop = () => $(document).off(".tags-keyboard-navigation");
+    const stop = () => $(document).off(".tags-keyboard-navigation");
 
-    let link = function(scope, el) {
+    const link = function(scope, el) {
         stop();
 
-        $(el).parent().on("keydown.tags-keyboard-navigation", event => {
-            let code = event.keyCode ? event.keyCode : event.which;
+        $(el).parent().on("keydown.tags-keyboard-navigation", (event) => {
+            const code = event.keyCode ? event.keyCode : event.which;
 
             if ((code === 40) || (code === 38)) {
                 event.preventDefault();
@@ -83,12 +83,11 @@ export let TagOptionDirective = function() {
 
     return {
         link,
-        templateUrl:"components/tags/tag-dropdown/tag-dropdown.html",
+        templateUrl: "components/tags/tag-dropdown/tag-dropdown.html",
         scope: {
             onSelectTag: "&",
             colorArray: "=",
-            tag: "="
-        }
+            tag: "=",
+        },
     };
 };
-

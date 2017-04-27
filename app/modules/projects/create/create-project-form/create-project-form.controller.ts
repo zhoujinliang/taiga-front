@@ -18,16 +18,16 @@
  */
 
 export class CreatetProjectFormController {
-    currentUserService:any
-    projectsService:any
-    projectUrl:any
-    location:any
-    navUrls:any
-    projectForm:any
-    canCreatePublicProjects:any
-    canCreatePrivateProjects:any
-    type:any
-    formSubmitLoading:any
+    currentUserService: any;
+    projectsService: any;
+    projectUrl: any;
+    location: any;
+    navUrls: any;
+    projectForm: any;
+    canCreatePublicProjects: any;
+    canCreatePrivateProjects: any;
+    type: any;
+    formSubmitLoading: any;
 
     static initClass() {
         this.$inject = [
@@ -35,7 +35,7 @@ export class CreatetProjectFormController {
             "tgProjectsService",
             "$projectUrl",
             "$location",
-            "$tgNavUrls"
+            "$tgNavUrls",
        ];
     }
 
@@ -46,7 +46,7 @@ export class CreatetProjectFormController {
         this.location = location;
         this.navUrls = navUrls;
         this.projectForm = {
-            is_private: false
+            is_private: false,
         };
 
         this.canCreatePublicProjects = this.currentUserService.canCreatePublicProjects();
@@ -56,7 +56,7 @@ export class CreatetProjectFormController {
             this.projectForm.is_private = true;
         }
 
-        if (this.type === 'scrum') {
+        if (this.type === "scrum") {
             this.projectForm.creation_template = 1;
         } else {
             this.projectForm.creation_template = 2;
@@ -66,7 +66,7 @@ export class CreatetProjectFormController {
     submit() {
         this.formSubmitLoading = true;
 
-        return this.projectsService.create(this.projectForm).then(project => {
+        return this.projectsService.create(this.projectForm).then((project) => {
             return this.location.url(this.projectUrl.get(project));
         });
     }

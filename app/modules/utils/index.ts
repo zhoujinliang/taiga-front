@@ -17,9 +17,9 @@
  * File: utils.module.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
-import {IsolateClickDirective} from "./isolate-click.directive"
+import {IsolateClickDirective} from "./isolate-click.directive";
 
-let module = angular.module("taigaUtils", []);
+const module = angular.module("taigaUtils", []);
 module.directive("tgIsolateClick", IsolateClickDirective);

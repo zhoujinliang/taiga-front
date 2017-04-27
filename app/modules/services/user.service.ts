@@ -17,19 +17,19 @@
  * File: user.service.coffee
  */
 
-import {bindMethods} from "../../libs/utils"
-import {Service} from "../../libs/classes"
-import * as angular from "angular"
+import * as angular from "angular";
+import {Service} from "../../libs/classes";
+import {bindMethods} from "../../libs/utils";
 
 export class UserService extends Service {
-    rs:any
+    rs: any;
 
     static initClass() {
         this.$inject = ["tgResources"];
     }
 
     constructor(rs) {
-        super()
+        super();
         this.rs = rs;
         bindMethods(this);
     }
@@ -38,7 +38,7 @@ export class UserService extends Service {
         return this.rs.users.getUserByUsername(username);
     }
 
-    getContacts(userId, excludeProjectId=null) {
+    getContacts(userId, excludeProjectId= null) {
         return this.rs.users.getContacts(userId, excludeProjectId);
     }
 
@@ -62,9 +62,9 @@ export class UserService extends Service {
         return this.getContacts(userId)
             .then(function(contacts) {
                 projects = projects.map(function(project) {
-                    let contactsFiltered = contacts.filter(function(contact) {
-                        let contactId = contact.get("id");
-                        return project.get('members').indexOf(contactId) !== -1;
+                    const contactsFiltered = contacts.filter(function(contact) {
+                        const contactId = contact.get("id");
+                        return project.get("members").indexOf(contactId) !== -1;
                     });
 
                     project = project.set("contacts", contactsFiltered);

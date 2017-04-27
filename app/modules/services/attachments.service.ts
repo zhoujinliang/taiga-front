@@ -17,23 +17,23 @@
  * File: attachments.service.coffee
  */
 
-import {sizeFormat} from "../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {sizeFormat} from "../../libs/utils";
 
 export class AttachmentsService {
-    confirm:any
-    config:any
-    translate:any
-    rs:any
-    maxFileSize:any
-    maxFileSizeFormated:any
+    confirm: any;
+    config: any;
+    translate: any;
+    rs: any;
+    maxFileSize: any;
+    maxFileSizeFormated: any;
 
     static initClass() {
         this.$inject = [
             "$tgConfirm",
             "$tgConfig",
             "$translate",
-            "tgResources"
+            "tgResources",
         ];
     }
 
@@ -50,10 +50,10 @@ export class AttachmentsService {
     }
 
     sizeError(file) {
-        let message = this.translate.instant("ATTACHMENT.ERROR_MAX_SIZE_EXCEEDED", {
+        const message = this.translate.instant("ATTACHMENT.ERROR_MAX_SIZE_EXCEEDED", {
             fileName: file.name,
             fileSize: sizeFormat(file.size),
-            maxFileSize: this.maxFileSizeFormated
+            maxFileSize: this.maxFileSizeFormated,
         });
 
         return this.confirm.notify("error", message);
@@ -74,8 +74,8 @@ export class AttachmentsService {
     }
 
     list(type, objId, projectId) {
-        return this.rs.attachments.list(type, objId, projectId).then(attachments => {
-            return attachments.sortBy(attachment => attachment.get('order'));
+        return this.rs.attachments.list(type, objId, projectId).then((attachments) => {
+            return attachments.sortBy((attachment) => attachment.get("order"));
         });
     }
 
@@ -88,7 +88,7 @@ export class AttachmentsService {
 
         if (file) {
             message = this.translate.instant("ATTACHMENT.ERROR_UPLOAD_ATTACHMENT", {
-                        fileName: file.name, errorMessage: data.data._error_message
+                        fileName: file.name, errorMessage: data.data._error_message,
                       });
         }
 
@@ -97,7 +97,7 @@ export class AttachmentsService {
 
     upload(file, objId, projectId, type, from_comment) {
         if (from_comment == null) { from_comment = false; }
-        let promise = this.rs.attachments.create(type, projectId, objId, file, from_comment);
+        const promise = this.rs.attachments.create(type, projectId, objId, file, from_comment);
 
         promise.then(null, this.saveError.bind(this, file));
 
@@ -105,7 +105,7 @@ export class AttachmentsService {
     }
 
     patch(id, type, patch) {
-        let promise = this.rs.attachments.patch(type, id, patch);
+        const promise = this.rs.attachments.patch(type, id, patch);
 
         promise.then(null, this.saveError.bind(this, null));
 

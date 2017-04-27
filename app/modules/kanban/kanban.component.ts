@@ -1,20 +1,20 @@
 import * as Immutable from "immutable";
 
-import {Component, OnInit, OnDestroy} from "@angular/core";
-import { IState } from "../../app.store";
-import { Store } from "@ngrx/store";
-import { StartLoadingAction, StopLoadingAction } from "../../app.actions";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { FetchCurrentProjectAction } from "../projects/projects.actions";
-import * as actions from "./kanban.actions";
+import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
 import { Observable, Subscription } from "rxjs";
-import { ZoomLevelService } from "../services/zoom-level.service";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/zip";
+import { StartLoadingAction, StopLoadingAction } from "../../app.actions";
+import { IState } from "../../app.store";
+import { FetchCurrentProjectAction } from "../projects/projects.actions";
+import { ZoomLevelService } from "../services/zoom-level.service";
+import * as actions from "./kanban.actions";
 
 @Component({
-    template: require('./kanban.jade')()
+    template: require("./kanban.jade")(),
 })
 export class KanbanPage implements OnInit, OnDestroy {
     section = "kanban";
@@ -26,34 +26,34 @@ export class KanbanPage implements OnInit, OnDestroy {
     filters: Observable<any>;
     members: Observable<any>;
     assignedOnAssignedTo: Observable<Immutable.List<number>>;
-    filtersOpen:boolean = false;
-    subscriptions: Subscription[]
+    filtersOpen: boolean = false;
+    subscriptions: Subscription[];
     bulkCreateState: Observable<number>;
 
     constructor(private store: Store<IState>,
                 private route: ActivatedRoute,
                 private translate: TranslateService,
                 private zoomLevel: ZoomLevelService) {
-        console.log("Starting loader");
         this.store.dispatch(new StartLoadingAction());
         this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
-        this.userstoriesByState = this.store.select((state) => state.getIn(["kanban", "userstories"])).map((userstories) => {
-            if (userstories.size > 0) {
-                console.log("Stoping loader");
-                this.store.dispatch(new StopLoadingAction());
-            }
-            return userstories.groupBy((us) => us.get('status').toString())
-        });
-        this.zoom = this.store.select((state) => state.getIn(["kanban", "zoomLevel"])).map((zoomLevel) => {
+        this.userstoriesByState = this.store.select((state) => state.getIn(["kanban", "userstories"]))
+                                            .map((userstories) => {
+                                                if (userstories.size > 0) {
+                                                    this.store.dispatch(new StopLoadingAction());
+                                                }
+                                                return userstories.groupBy((us) => us.get("status").toString());
+                                            });
+        this.zoom = this.store.select((state) => state.getIn(["kanban", "zoomLevel"])).map((level) => {
             return {
-                level: zoomLevel,
-                visibility: this.zoomLevel.getVisibility("kanban", zoomLevel),
-            }
+                level,
+                visibility: this.zoomLevel.getVisibility("kanban", level),
+            };
         });
-        this.appliedFilters = this.store.select((state) => state.getIn([this.section, "appliedFilters"]))
-        this.filters = this.store.select((state) => state.getIn(["kanban", "filtersData"])).map(this.filtersDataToFilters.bind(this));
-        this.assignedOnAssignedTo = this.store.select((state) => state.getIn(["kanban","current-us", "assigned_to"]))
+        this.appliedFilters = this.store.select((state) => state.getIn([this.section, "appliedFilters"]));
+        this.filters = this.store.select((state) => state.getIn(["kanban", "filtersData"]))
+                                 .map(this.filtersDataToFilters.bind(this));
+        this.assignedOnAssignedTo = this.store.select((state) => state.getIn(["kanban", "current-us", "assigned_to"]))
                                               .map((id) => Immutable.List(id));
         this.bulkCreateState = this.store.select((state) => state.getIn(["kanban", "bulk-create-state"]));
     }
@@ -65,16 +65,16 @@ export class KanbanPage implements OnInit, OnDestroy {
             }),
             this.project.subscribe((project) => {
                 if (project) {
-                    this.store.dispatch(new actions.FetchKanbanAppliedFiltersAction(project.get('id')));
+                    this.store.dispatch(new actions.FetchKanbanAppliedFiltersAction(project.get("id")));
                 }
             }),
-            Observable.zip(this.project, this.appliedFilters).subscribe(([project, appliedFilters]:any[]) => {
+            Observable.zip(this.project, this.appliedFilters).subscribe(([project, appliedFilters]: any[]) => {
                 if (project && appliedFilters) {
-                    this.store.dispatch(new actions.FetchKanbanFiltersDataAction(project.get('id'), appliedFilters));
-                    this.store.dispatch(new actions.FetchKanbanUserStoriesAction(project.get('id'), appliedFilters));
+                    this.store.dispatch(new actions.FetchKanbanFiltersDataAction(project.get("id"), appliedFilters));
+                    this.store.dispatch(new actions.FetchKanbanUserStoriesAction(project.get("id"), appliedFilters));
                 }
-            })
-        ]
+            }),
+        ];
     }
 
     toggleFiltersOpen() {
@@ -82,70 +82,70 @@ export class KanbanPage implements OnInit, OnDestroy {
     }
 
     addFilter({category, filter}) {
-        this.store.dispatch(new actions.AddKanbanFilter(category.get('dataType'), filter.get('id')));
+        this.store.dispatch(new actions.AddKanbanFilter(category.get("dataType"), filter.get("id")));
     }
 
     removeFilter({category, filter}) {
-        this.store.dispatch(new actions.RemoveKanbanFilter(category.get('dataType'), filter.get('id')));
+        this.store.dispatch(new actions.RemoveKanbanFilter(category.get("dataType"), filter.get("id")));
     }
 
     filtersDataToFilters(filtersData) {
         if (filtersData === null) {
             return null;
         }
-        let statuses = filtersData.get('statuses')
-                                  .map((status) => status.update('id', (id) => id.toString()));
+        const statuses = filtersData.get("statuses")
+                                  .map((status) => status.update("id", (id) => id.toString()));
 
-        let tags = filtersData.get('tags')
-                              .map((tag) => tag.update('id', () => tag.get('name')));
-        let tagsWithAtLeastOneElement = tags.filter((tag) => tag.count > 0);
+        const tags = filtersData.get("tags")
+                              .map((tag) => tag.update("id", () => tag.get("name")));
+        const tagsWithAtLeastOneElement = tags.filter((tag) => tag.count > 0);
 
-        let assignedTo = filtersData.get('assigned_to').map((assigned_to) => {
-            return assigned_to.update("id", (id) => id ? id.toString(): "null")
-                              .update("name", () => assigned_to.get('full_name') || "Undefined");
-        })
-
-        let owners = filtersData.get('owners').map((owner) => {
-            return owner.update("id", (id) => id.toString())
-                        .update("name", () => owner.get('full_name'));
+        const assignedTo = filtersData.get("assigned_to").map((user) => {
+            return user.update("id", (id) => id ? id.toString() : "null")
+                       .update("name", () => user.get("full_name") || "Undefined");
         });
 
-        let epics = filtersData.get('epics').map((epic) => {
-            if (epic.get('id')) {
+        const owners = filtersData.get("owners").map((owner) => {
+            return owner.update("id", (id) => id.toString())
+                        .update("name", () => owner.get("full_name"));
+        });
+
+        const epics = filtersData.get("epics").map((epic) => {
+            if (epic.get("id")) {
                 return epic.update("id", (id) => id.toString())
-                           .update("name", () => `#${epic.get('ref')} ${epic.get('subject')}`);
+                           .update("name", () => `#${epic.get("ref")} ${epic.get("subject")}`);
             }
             return epic.update("id", (id) => "null")
                        .update("name", () => "Not in an epic"); // TODO TRANSLATE IT?
-        })
+        });
 
         let filters = Immutable.List();
         filters = filters.push(Immutable.Map({
-            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.STATUS"),
+            content: statuses,
             dataType: "status",
-            content: statuses
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.STATUS"),
         }));
         filters = filters.push(Immutable.Map({
-            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.TAGS"),
-            dataType: "tags",
             content: tags,
+            dataType: "tags",
             hideEmpty: true,
-            totalTaggedElements: tagsWithAtLeastOneElement.size
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.TAGS"),
+            totalTaggedElements: tagsWithAtLeastOneElement.size,
         }));
         filters = filters.push(Immutable.Map({
-            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.ASSIGNED_TO"),
+            content: assignedTo,
             dataType: "assigned_to",
-            content: assignedTo
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.ASSIGNED_TO"),
         }));
         filters = filters.push(Immutable.Map({
-            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.CREATED_BY"),
+            content: owners,
             dataType: "owner",
-            content: owners
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.CREATED_BY"),
         }));
         filters = filters.push(Immutable.Map({
-            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.EPIC"),
+            content: epics,
             dataType: "epic",
-            content: epics
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.EPIC"),
         }));
         return filters;
     }
@@ -159,7 +159,7 @@ export class KanbanPage implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        for (let subs of this.subscriptions) {
+        for (const subs of this.subscriptions) {
             subs.unsubscribe();
         }
         this.store.dispatch(new actions.CleanKanbanDataAction());

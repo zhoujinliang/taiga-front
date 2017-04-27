@@ -23,8 +23,8 @@ export let HighlightedDirective = () =>
         scope: {
             loading: "=",
             highlighted: "=",
-            orderBy: "="
-        }
+            orderBy: "=",
+        },
     })
 ;
 

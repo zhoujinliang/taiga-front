@@ -17,48 +17,48 @@
  * File: epic-row.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("EpicRow", function() {
-    let epicRowCtrl =  null;
+    const epicRowCtrl =  null;
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgConfirm = function() {
+    const _mockTgConfirm = function() {
         mocks.tgConfirm = {
-            notify: sinon.stub()
+            notify: sinon.stub(),
         };
         return provide.value("$tgConfirm", mocks.tgConfirm);
     };
 
-    let _mockTgProjectService = function() {
+    const _mockTgProjectService = function() {
         mocks.tgProjectService = {
             project: {
-                toJS: sinon.stub()
-            }
+                toJS: sinon.stub(),
+            },
         };
         return provide.value("tgProjectService", mocks.tgProjectService);
     };
 
-    let _mockTgEpicsService = function() {
+    const _mockTgEpicsService = function() {
         mocks.tgEpicsService = {
             listRelatedUserStories: sinon.stub(),
             updateEpicStatus: sinon.stub(),
-            updateEpicAssignedTo: sinon.stub()
+            updateEpicAssignedTo: sinon.stub(),
         };
         return provide.value("tgEpicsService", mocks.tgEpicsService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgConfirm();
@@ -73,62 +73,62 @@ describe("EpicRow", function() {
 
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     it("calculate progress bar in open US", function() {
-        let ctrl = controller("EpicRowCtrl", null, {
+        const ctrl = controller("EpicRowCtrl", null, {
             epic: Immutable.fromJS({
                 status_extra_info: {
-                    is_closed: false
+                    is_closed: false,
                 },
                 user_stories_counts: {
                     opened: 10,
-                    closed: 10
-                }
-            })
+                    closed: 10,
+                },
+            }),
         });
 
         return expect(ctrl.percentage).to.be.equal("50%");
     });
 
     it("calculate progress bar in zero US", function() {
-        let ctrl = controller("EpicRowCtrl", null, {
+        const ctrl = controller("EpicRowCtrl", null, {
             epic: Immutable.fromJS({
                 status_extra_info: {
-                    is_closed: false
+                    is_closed: false,
                 },
                 user_stories_counts: {
                     opened: 0,
-                    closed: 0
-                }
-            })
+                    closed: 0,
+                },
+            }),
         });
         return expect(ctrl.percentage).to.be.equal("0%");
     });
 
     it("calculate progress bar in zero US", function() {
-        let ctrl = controller("EpicRowCtrl", null, {
+        const ctrl = controller("EpicRowCtrl", null, {
             epic: Immutable.fromJS({
                 status_extra_info: {
-                    is_closed: true
-                }
-            })
+                    is_closed: true,
+                },
+            }),
         });
         return expect(ctrl.percentage).to.be.equal("100%");
     });
 
     it("Update Epic Status Success", function(done) {
-        let ctrl = controller("EpicRowCtrl", null, {
+        const ctrl = controller("EpicRowCtrl", null, {
             epic: Immutable.fromJS({
                 id: 1,
-                version: 1
-            })
+                version: 1,
+            }),
         });
 
-        let statusId = 1;
+        const statusId = 1;
 
-        let promise = mocks.tgEpicsService.updateEpicStatus
+        const promise = mocks.tgEpicsService.updateEpicStatus
             .withArgs(ctrl.epic, statusId)
             .promise()
             .resolve();
@@ -144,40 +144,40 @@ describe("EpicRow", function() {
     });
 
     it("Update Epic Status Error", function(done) {
-        let ctrl = controller("EpicRowCtrl", null, {
+        const ctrl = controller("EpicRowCtrl", null, {
             epic: Immutable.fromJS({
                 id: 1,
-                version: 1
-            })
+                version: 1,
+            }),
         });
 
-        let statusId = 1;
+        const statusId = 1;
 
-        let promise = mocks.tgEpicsService.updateEpicStatus
+        const promise = mocks.tgEpicsService.updateEpicStatus
             .withArgs(ctrl.epic, statusId)
             .promise()
-            .reject(new Error('error'));
+            .reject(new Error("error"));
 
         return ctrl.updateStatus(statusId).then(function() {
             expect(ctrl.loadingStatus).to.be.false;
             expect(ctrl.displayStatusList).to.be.false;
-            expect(mocks.tgConfirm.notify).have.been.calledWith('error');
+            expect(mocks.tgConfirm.notify).have.been.calledWith("error");
             return done();
         });
     });
 
     it("display User Stories", function(done) {
-        let ctrl = controller("EpicRowCtrl", null, {
+        const ctrl = controller("EpicRowCtrl", null, {
             epic: Immutable.fromJS({
-                id: 1
-            })
+                id: 1,
+            }),
         });
 
         ctrl.displayUserStories = false;
 
-        let data = Immutable.List();
+        const data = Immutable.List();
 
-        let promise = mocks.tgEpicsService.listRelatedUserStories
+        const promise = mocks.tgEpicsService.listRelatedUserStories
             .withArgs(ctrl.epic)
             .promise()
             .resolve(data);
@@ -190,31 +190,31 @@ describe("EpicRow", function() {
     });
 
     it("display User Stories error", function(done) {
-        let ctrl = controller("EpicRowCtrl", null, {
+        const ctrl = controller("EpicRowCtrl", null, {
             epic: Immutable.fromJS({
-                id: 1
-            })
+                id: 1,
+            }),
         });
 
         ctrl.displayUserStories = false;
 
-        let promise = mocks.tgEpicsService.listRelatedUserStories
+        const promise = mocks.tgEpicsService.listRelatedUserStories
             .withArgs(ctrl.epic)
             .promise()
-            .reject(new Error('error'));
+            .reject(new Error("error"));
 
         return ctrl.toggleUserStoryList().then(function() {
             expect(ctrl.displayUserStories).to.be.false;
-            expect(mocks.tgConfirm.notify).have.been.calledWith('error');
+            expect(mocks.tgConfirm.notify).have.been.calledWith("error");
             return done();
         });
     });
 
     return it("display User Stories error", function() {
-        let ctrl = controller("EpicRowCtrl", null, {
+        const ctrl = controller("EpicRowCtrl", null, {
             epic: Immutable.fromJS({
-                id: 1
-            })
+                id: 1,
+            }),
         });
 
         ctrl.displayUserStories = true;

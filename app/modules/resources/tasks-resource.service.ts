@@ -17,15 +17,15 @@
  * File: tasks-resource.service.coffee
  */
 
-import * as Immutable from "immutable"
-import {generateHash} from "../../libs/utils"
-import * as _ from "lodash"
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {generateHash} from "../../libs/utils";
 
-import {Injectable} from "@angular/core"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
-import {StorageService} from "../../ts/modules/base/storage"
-import {RepositoryService} from "../../ts/modules/base/repository"
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../ts/modules/base/http";
+import {RepositoryService} from "../../ts/modules/base/repository";
+import {StorageService} from "../../ts/modules/base/storage";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class TasksResource {
@@ -45,7 +45,7 @@ export class TasksResource {
         params = _.extend({}, params, extraParams);
 
         return this.repo.queryOne("tasks", taskId, params);
-    };
+    }
 
     getByRef(projectId, ref, extraParams) {
         let params = this.getQueryParams(projectId);
@@ -55,7 +55,7 @@ export class TasksResource {
         params = _.extend({}, params, extraParams);
 
         return this.repo.queryOne("tasks", "by_ref", params);
-    };
+    }
 
     filtersData(params) {
         return this.repo.queryOneRaw("task-filters", null, params);
@@ -69,93 +69,93 @@ export class TasksResource {
         if (userStoryId) { params.user_story = userStoryId; }
         this.storeQueryParams(projectId, params);
         return this.repo.queryMany("tasks", params);
-    };
+    }
 
     bulkCreate(projectId, sprintId, usId, data) {
-        let url = this.urls.resolve("bulk-create-tasks");
-        let params = {project_id: projectId, milestone_id: sprintId, us_id: usId, bulk_tasks: data};
-        return this.http.post(url, params).map((result:any) => result.data);
-    };
+        const url = this.urls.resolve("bulk-create-tasks");
+        const params = {project_id: projectId, milestone_id: sprintId, us_id: usId, bulk_tasks: data};
+        return this.http.post(url, params).map((result: any) => result.data);
+    }
 
     upvote(taskId) {
-        let url = this.urls.resolve("task-upvote", taskId);
+        const url = this.urls.resolve("task-upvote", taskId);
         return this.http.post(url);
-    };
+    }
 
     downvote(taskId) {
-        let url = this.urls.resolve("task-downvote", taskId);
+        const url = this.urls.resolve("task-downvote", taskId);
         return this.http.post(url);
-    };
+    }
 
     watch(taskId) {
-        let url = this.urls.resolve("task-watch", taskId);
+        const url = this.urls.resolve("task-watch", taskId);
         return this.http.post(url);
-    };
+    }
 
     unwatch(taskId) {
-        let url = this.urls.resolve("task-unwatch", taskId);
+        const url = this.urls.resolve("task-unwatch", taskId);
         return this.http.post(url);
-    };
+    }
 
     bulkUpdateTaskTaskboardOrder(projectId, data) {
-        let url = this.urls.resolve("bulk-update-task-taskboard-order");
-        let params = {project_id: projectId, bulk_tasks: data};
+        const url = this.urls.resolve("bulk-update-task-taskboard-order");
+        const params = {project_id: projectId, bulk_tasks: data};
         return this.http.post(url, params);
-    };
+    }
 
     listValues(projectId, type) {
-        let params = {"project": projectId};
+        const params = {project: projectId};
         return this.repo.queryMany(type, params);
-    };
+    }
 
     storeQueryParams(projectId, params) {
-        let ns = `${projectId}:${this.hashSuffix}`;
-        let hash = generateHash([projectId, ns]);
+        const ns = `${projectId}:${this.hashSuffix}`;
+        const hash = generateHash([projectId, ns]);
         return this.storage.set(hash, params);
-    };
+    }
 
     getQueryParams(projectId) {
-        let ns = `${projectId}:${this.hashSuffix}`;
-        let hash = generateHash([projectId, ns]);
+        const ns = `${projectId}:${this.hashSuffix}`;
+        const hash = generateHash([projectId, ns]);
         return this.storage.get(hash) || {};
-    };
+    }
 
     storeStatusColumnModes(projectId, params) {
-        let ns = `${projectId}:${this.hashSuffixStatusColumnModes}`;
-        let hash = generateHash([projectId, ns]);
+        const ns = `${projectId}:${this.hashSuffixStatusColumnModes}`;
+        const hash = generateHash([projectId, ns]);
         return this.storage.set(hash, params);
-    };
+    }
 
     getStatusColumnModes(projectId) {
-        let ns = `${projectId}:${this.hashSuffixStatusColumnModes}`;
-        let hash = generateHash([projectId, ns]);
+        const ns = `${projectId}:${this.hashSuffixStatusColumnModes}`;
+        const hash = generateHash([projectId, ns]);
         return this.storage.get(hash) || {};
-    };
+    }
 
     storeUsRowModes(projectId, sprintId, params) {
-        let ns = `${projectId}:${this.hashSuffixUsRowModes}`;
-        let hash = generateHash([projectId, sprintId, ns]);
+        const ns = `${projectId}:${this.hashSuffixUsRowModes}`;
+        const hash = generateHash([projectId, sprintId, ns]);
 
         return this.storage.set(hash, params);
-    };
+    }
 
     getUsRowModes(projectId, sprintId) {
-        let ns = `${projectId}:${this.hashSuffixUsRowModes}`;
-        let hash = generateHash([projectId, sprintId, ns]);
+        const ns = `${projectId}:${this.hashSuffixUsRowModes}`;
+        const hash = generateHash([projectId, sprintId, ns]);
 
         return this.storage.get(hash) || {};
-    };
+    }
 
     listInAllProjects(params) {
-        let url = this.urls.resolve("tasks");
+        const url = this.urls.resolve("tasks");
 
-        let httpOptions = {
+        const httpOptions = {
             headers: {
-                "x-disable-pagination": "1"
-            }
+                "x-disable-pagination": "1",
+            },
         };
 
         return this.http.get(url, params, httpOptions)
-            .map((result:any) => Immutable.fromJS(result.data));
-    };
-};
+            .map((result: any) => Immutable.fromJS(result.data));
+    }
+}

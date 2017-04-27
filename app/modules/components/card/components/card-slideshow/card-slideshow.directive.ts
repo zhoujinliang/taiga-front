@@ -17,7 +17,7 @@
  * File: card.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let cardSlideshowDirective = () =>
     ({
@@ -26,8 +26,7 @@ export let cardSlideshowDirective = () =>
         bindToController: true,
         controllerAs: "vm",
         scope: {
-            images: "="
-        }
+            images: "=",
+        },
     })
 ;
-

@@ -22,13 +22,13 @@ export let JiraImportDirective = () =>
         link(scope, elm, attrs, ctrl) {
             return ctrl.startProjectSelector();
         },
-        templateUrl:"projects/create/jira-import/jira-import.html",
+        templateUrl: "projects/create/jira-import/jira-import.html",
         controller: "JiraImportCtrl",
         controllerAs: "vm",
         bindToController: true,
         scope: {
-            onCancel: '&'
-        }
+            onCancel: "&",
+        },
     })
 ;
 JiraImportDirective.$inject = [];

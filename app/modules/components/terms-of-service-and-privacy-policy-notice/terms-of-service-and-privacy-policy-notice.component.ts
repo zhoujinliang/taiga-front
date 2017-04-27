@@ -22,8 +22,8 @@
  * File: modules/components/terms-of-service-and-privacy-policy-notice/terms-of-service-and-privacy-policy-notice.directive.coffee
  */
 
-import {ConfigurationService} from "../../../ts/modules/base/conf"
-import {Component} from "@angular/core"
+import {Component} from "@angular/core";
+import {ConfigurationService} from "../../../ts/modules/base/conf";
 
 @Component({
     selector: "tg-terms-of-service-and-privacy-policy-notice",
@@ -32,7 +32,7 @@ import {Component} from "@angular/core"
            translate
            [translateParams]="{termsOfServiceUrl: termsOfServiceUrl, privacyPolicyUrl: privacyPolicyUrl}">
            LEGAL.TERMS_OF_SERVICE_AND_PRIVACY_POLICY_AD
-        </p>`
+        </p>`,
 })
 export class TermsOfServiceAndPrivacyPolicyNotice {
     privacyPolicyUrl: string;
@@ -41,5 +41,5 @@ export class TermsOfServiceAndPrivacyPolicyNotice {
     constructor(config: ConfigurationService) {
         this.privacyPolicyUrl = config.get("privacyPolicyUrl");
         this.termsOfServiceUrl = config.get("termsOfServiceUrl");
-    };
-};
+    }
+}

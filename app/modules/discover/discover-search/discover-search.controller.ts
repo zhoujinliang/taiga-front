@@ -17,31 +17,31 @@
  * File: discover-search.controller.coffee
  */
 
-import {defineImmutableProperty} from "../../../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {defineImmutableProperty} from "../../../libs/utils";
 
 export class DiscoverSearchController {
-    routeParams:any
-    discoverProjectsService:any
-    route:any
-    appMetaService:any
-    translate:any
-    page:number
-    q:any
-    filter:any
-    orderBy:any
-    loadingGlobal:boolean
-    loadingList:boolean
-    loadingPagination:boolean
+    routeParams: any;
+    discoverProjectsService: any;
+    route: any;
+    appMetaService: any;
+    translate: any;
+    page: number;
+    q: any;
+    filter: any;
+    orderBy: any;
+    loadingGlobal: boolean;
+    loadingList: boolean;
+    loadingPagination: boolean;
 
     static initClass() {
         this.$inject = [
-            '$routeParams',
-            'tgDiscoverProjectsService',
-            '$route',
-            'tgAppMetaService',
-            '$translate'
+            "$routeParams",
+            "tgDiscoverProjectsService",
+            "$route",
+            "tgAppMetaService",
+            "$translate",
         ];
     }
 
@@ -53,19 +53,19 @@ export class DiscoverSearchController {
         this.translate = translate;
         this.page = 1;
 
-        defineImmutableProperty(this, "searchResult", () => { return this.discoverProjectsService.searchResult; });
-        defineImmutableProperty(this, "nextSearchPage", () => { return this.discoverProjectsService.nextSearchPage; });
+        defineImmutableProperty(this, "searchResult", () => this.discoverProjectsService.searchResult);
+        defineImmutableProperty(this, "nextSearchPage", () => this.discoverProjectsService.nextSearchPage);
 
         this.q = this.routeParams.text;
-        this.filter = this.routeParams.filter || 'all';
-        this.orderBy = this.routeParams['order_by'] || '';
+        this.filter = this.routeParams.filter || "all";
+        this.orderBy = this.routeParams["order_by"] || "";
 
         this.loadingGlobal = false;
         this.loadingList = false;
         this.loadingPagination = false;
 
-        let title = this.translate.instant("DISCOVER.SEARCH.PAGE_TITLE");
-        let description = this.translate.instant("DISCOVER.SEARCH.PAGE_DESCRIPTION");
+        const title = this.translate.instant("DISCOVER.SEARCH.PAGE_TITLE");
+        const description = this.translate.instant("DISCOVER.SEARCH.PAGE_DESCRIPTION");
         this.appMetaService.setAll(title, description);
     }
 
@@ -104,12 +104,12 @@ export class DiscoverSearchController {
     }
 
     search() {
-        let filter = this.getFilter();
+        const filter = this.getFilter();
 
-        let params = {
+        const params = {
             page: this.page,
             q: this.q,
-            order_by: this.orderBy
+            order_by: this.orderBy,
         };
 
         _.assign(params, filter);
@@ -118,11 +118,11 @@ export class DiscoverSearchController {
     }
 
     getFilter() {
-        if (this.filter === 'people') {
+        if (this.filter === "people") {
             return {is_looking_for_people: true};
-        } else if (this.filter === 'scrum') {
+        } else if (this.filter === "scrum") {
             return {is_backlog_activated: true};
-        } else if (this.filter === 'kanban') {
+        } else if (this.filter === "kanban") {
             return {is_kanban_activated: true};
         }
 
@@ -135,7 +135,7 @@ export class DiscoverSearchController {
 
         this.route.updateParams({
             filter: this.filter,
-            text: this.q
+            text: this.q,
         });
 
         return this.fetchByGlobalSearch();
@@ -145,7 +145,7 @@ export class DiscoverSearchController {
         this.orderBy = orderBy;
 
         this.route.updateParams({
-            order_by: orderBy
+            order_by: orderBy,
         });
 
         return this.fetchByOrderBy();

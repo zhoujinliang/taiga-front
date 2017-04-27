@@ -22,10 +22,10 @@
  * File: modules/resources/memberships.coffee
  */
 
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
-import {HttpService} from "../../ts/modules/base/http"
-import {UrlsService} from "../../ts/modules/base/urls"
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../ts/modules/base/http";
+import {RepositoryService} from "../../ts/modules/base/repository";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class RolesResource {
@@ -39,4 +39,4 @@ export class RolesResource {
     list(projectId) {
         return this.repo.queryMany("roles", {project: projectId});
     }
-};
+}

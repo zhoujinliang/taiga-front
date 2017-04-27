@@ -17,90 +17,90 @@
  * File: external-app.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ExternalAppController", function() {
     let provide = null;
     let $controller = null;
     let $rootScope = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;
         })
     ;
 
-    let _mockRouteParams = function() {
+    const _mockRouteParams = function() {
         mocks.routeParams = {};
         return provide.value("$routeParams", mocks.routeParams);
     };
 
-    let _mockTgExternalAppsService = function() {
+    const _mockTgExternalAppsService = function() {
         mocks.tgExternalAppsService = {
             getApplicationToken: sinon.stub(),
-            authorizeApplicationToken: sinon.stub()
+            authorizeApplicationToken: sinon.stub(),
         };
         return provide.value("tgExternalAppsService", mocks.tgExternalAppsService);
     };
 
-    let _mockWindow = function() {
+    const _mockWindow = function() {
         mocks.window = {
             open: sinon.stub(),
             history: {
-                back: sinon.stub()
-            }
+                back: sinon.stub(),
+            },
         };
         return provide.value("$window", mocks.window);
     };
 
-    let _mockTgCurrentUserService = function() {
+    const _mockTgCurrentUserService = function() {
         mocks.tgCurrentUserService = {
-            getUser: sinon.stub()
+            getUser: sinon.stub(),
         };
         return provide.value("tgCurrentUserService", mocks.tgCurrentUserService);
     };
 
-    let _mockLocation = function() {
+    const _mockLocation = function() {
         mocks.location = {
-            url: sinon.stub()
+            url: sinon.stub(),
         };
         return provide.value("$location", mocks.location);
     };
 
-    let _mockTgNavUrls = function() {
+    const _mockTgNavUrls = function() {
         mocks.tgNavUrls = {
-            resolve: sinon.stub()
+            resolve: sinon.stub(),
         };
         return provide.value("$tgNavUrls", mocks.tgNavUrls);
     };
 
-    let _mockTgXhrErrorService = function() {
+    const _mockTgXhrErrorService = function() {
         mocks.tgXhrErrorService = {
             response: sinon.spy(),
-            notFound: sinon.spy()
+            notFound: sinon.spy(),
         };
         return provide.value("tgXhrErrorService", mocks.tgXhrErrorService);
     };
 
-    let _mockTgLoader = function() {
+    const _mockTgLoader = function() {
         mocks.tgLoader = {
             start: sinon.stub(),
-            pageLoaded: sinon.stub()
+            pageLoaded: sinon.stub(),
         };
         return provide.value("tgLoader", mocks.tgLoader);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockRouteParams();
@@ -122,51 +122,51 @@ describe("ExternalAppController", function() {
     });
 
     it("not existing application", function(done) {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
         mocks.routeParams.application = 6;
         mocks.routeParams.state = "testing-state";
 
-        let error = new Error('404');
+        const error = new Error("404");
 
         mocks.tgExternalAppsService.getApplicationToken.withArgs(mocks.routeParams.application, mocks.routeParams.state).promise().reject(error);
 
-        let ctrl = $controller("ExternalApp");
+        const ctrl = $controller("ExternalApp");
 
         return setTimeout(( function() {
             expect(mocks.tgLoader.start.withArgs(false)).to.be.calledOnce;
             expect(mocks.tgXhrErrorService.response.withArgs(error)).to.be.calledOnce;
             return done();
-        })
+        }),
         );
     });
 
     it("existing application and existing token, automatically redirecting to next url", function(done) {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
         mocks.routeParams.application = 6;
         mocks.routeParams.state = "testing-state";
 
-        let applicationToken = Immutable.fromJS({
+        const applicationToken = Immutable.fromJS({
             auth_code: "testing-auth-code",
-            next_url: "http://next.url"
+            next_url: "http://next.url",
         });
 
         mocks.tgExternalAppsService.getApplicationToken.withArgs(mocks.routeParams.application, mocks.routeParams.state).promise().resolve(applicationToken);
 
-        let ctrl = $controller("ExternalApp");
+        const ctrl = $controller("ExternalApp");
 
         return setTimeout(( function() {
             expect(mocks.tgLoader.start.withArgs(false)).to.be.calledOnce;
             expect(mocks.window.open.callCount).to.be.equal(1);
             expect(mocks.window.open.calledWith("http://next.url")).to.be.true;
             return done();
-        })
+        }),
         );
     });
 
     it("existing application and creating new token", function(done) {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
         mocks.routeParams.application = 6;
         mocks.routeParams.state = "testing-state";
@@ -174,11 +174,11 @@ describe("ExternalAppController", function() {
         let applicationToken = Immutable.fromJS({});
         mocks.tgExternalAppsService.getApplicationToken.withArgs(mocks.routeParams.application, mocks.routeParams.state).promise().resolve(applicationToken);
 
-        let ctrl = $controller("ExternalApp");
+        const ctrl = $controller("ExternalApp");
 
         applicationToken = Immutable.fromJS({
             next_url: "http://next.url",
-            auth_code: "testing-auth-code"
+            auth_code: "testing-auth-code",
         });
 
         mocks.tgExternalAppsService.authorizeApplicationToken.withArgs(mocks.routeParams.application, mocks.routeParams.state).promise().resolve(applicationToken);
@@ -191,20 +191,20 @@ describe("ExternalAppController", function() {
             expect(mocks.window.open.callCount).to.be.equal(1);
             expect(mocks.window.open.calledWith("http://next.url")).to.be.true;
             return done();
-        })
+        }),
         );
     });
 
     return it("cancel back to previous url", function() {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
         mocks.routeParams.application = 6;
         mocks.routeParams.state = "testing-state";
 
-        let applicationToken = Immutable.fromJS({});
+        const applicationToken = Immutable.fromJS({});
         mocks.tgExternalAppsService.getApplicationToken.withArgs(mocks.routeParams.application, mocks.routeParams.state).promise().resolve(applicationToken);
 
-        let ctrl = $controller("ExternalApp");
+        const ctrl = $controller("ExternalApp");
         expect(mocks.window.history.back.callCount).to.be.equal(0);
         ctrl.cancel();
         return expect(mocks.window.history.back.callCount).to.be.equal(1);

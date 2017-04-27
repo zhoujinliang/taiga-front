@@ -17,19 +17,19 @@
  * File: like-project-button.service.coffee
  */
 
-import {Service} from "../../../../ts/classes"
+import {Service} from "../../../../ts/classes";
 
 export class LikeProjectButtonService extends Service {
-    rs:any
-    currentUserService:any
-    projectService:any
+    rs: any;
+    currentUserService: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = ["tgResources", "tgCurrentUserService", "tgProjectService"];
     }
 
     constructor(rs, currentUserService, projectService) {
-        super()
+        super();
         this.rs = rs;
         this.currentUserService = currentUserService;
         this.projectService = projectService;
@@ -37,17 +37,17 @@ export class LikeProjectButtonService extends Service {
 
     _getProjectIndex(projectId) {
         return this.currentUserService.projects
-                .get('all')
-                .findIndex(project => project.get('id') === projectId);
+                .get("all")
+                .findIndex((project) => project.get("id") === projectId);
     }
 
     _updateProjects(projectId, isFan) {
-        let projectIndex = this._getProjectIndex(projectId);
+        const projectIndex = this._getProjectIndex(projectId);
 
         if (projectIndex === -1) { return; }
 
-        let projects = this.currentUserService.projects
-            .get('all')
+        const projects = this.currentUserService.projects
+            .get("all")
             .update(projectIndex, function(project) {
                 let totalFans = project.get("total_fans");
 
@@ -55,7 +55,7 @@ export class LikeProjectButtonService extends Service {
 
                 return project.merge({
                     is_fan: isFan,
-                    total_fans: totalFans
+                    total_fans: totalFans,
                 });
         });
 
@@ -67,9 +67,9 @@ export class LikeProjectButtonService extends Service {
 
         if (isFan) { totalFans++; } else { totalFans--; }
 
-        let project = this.projectService.project.merge({
+        const project = this.projectService.project.merge({
             is_fan: isFan,
-            total_fans: totalFans
+            total_fans: totalFans,
         });
 
         return this.projectService.setProject(project);

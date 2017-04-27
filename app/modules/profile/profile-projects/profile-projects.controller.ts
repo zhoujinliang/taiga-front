@@ -17,18 +17,18 @@
  * File: profile-projects.controller.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export class ProfileProjectsController {
-    projectsService:any
-    userService:any
-    user:any
-    projects:any
+    projectsService: any;
+    userService: any;
+    user: any;
+    projects: any;
 
     static initClass() {
         this.$inject = [
             "tgProjectsService",
-            "tgUserService"
+            "tgUserService",
         ];
     }
 
@@ -39,9 +39,9 @@ export class ProfileProjectsController {
 
     loadProjects() {
         return this.projectsService.getProjectsByUserId(this.user.get("id"))
-            .then(projects => {
+            .then((projects) => {
                 return this.userService.attachUserContactsToProjects(this.user.get("id"), projects);
-        }).then(projects => {
+        }).then((projects) => {
                 return this.projects = projects;
         });
     }

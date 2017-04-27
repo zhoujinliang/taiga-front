@@ -17,24 +17,24 @@
  * File: feedback.service.coffee
  */
 
-import {Service} from "../../ts/classes"
-import * as angular from "angular"
-import {module} from "../../ts/modules/feedback"
+import * as angular from "angular";
+import {Service} from "../../ts/classes";
+import {module} from "../../ts/modules/feedback";
 
 class FeedbackService extends Service {
-    lightboxFactory:any
+    lightboxFactory: any;
     static initClass() {
         this.$inject = ["tgLightboxFactory"];
     }
 
     constructor(lightboxFactory) {
-        super()
+        super();
         this.lightboxFactory = lightboxFactory;
     }
 
     sendFeedback() {
         return this.lightboxFactory.create("tg-lb-feedback", {
-            "class": "lightbox lightbox-feedback lightbox-generic-form"
+            class: "lightbox lightbox-feedback lightbox-generic-form",
         });
     }
 }

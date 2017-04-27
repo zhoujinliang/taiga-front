@@ -17,22 +17,22 @@
  * File: home.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgHome", function() {
     let provide;
     let homeService = (provide = null);
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockResources = function() {
+    const _mockResources = function() {
         mocks.resources = {};
 
         mocks.resources.epics = {};
@@ -48,30 +48,30 @@ describe("tgHome", function() {
         return provide.value("tgResources", mocks.resources);
     };
 
-    let _mockTgNavUrls = function() {
+    const _mockTgNavUrls = function() {
         mocks.tgNavUrls = {
-            resolve: sinon.stub()
+            resolve: sinon.stub(),
         };
 
         return provide.value("$tgNavUrls", mocks.tgNavUrls);
     };
 
-    let _mockProjectsService = function() {
+    const _mockProjectsService = function() {
         mocks.projectsService = {
-            getProjectsByUserId: (<any>sinon.stub()).promise()
+            getProjectsByUserId: (sinon.stub() as any).promise(),
         };
 
         return provide.value("tgProjectsService", mocks.projectsService);
     };
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_tgHomeService_) {
             homeService = _tgHomeService_;
             if (callback) { return callback(); }
         })
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockResources();
@@ -82,7 +82,7 @@ describe("tgHome", function() {
         })
     ;
 
-    let _setup = () => _mocks();
+    const _setup = () => _mocks();
 
     beforeEach(function() {
         module("taigaHome");
@@ -91,22 +91,22 @@ describe("tgHome", function() {
     });
 
     return it("get work in progress by user", function(done) {
-        let userId = 3;
+        const userId = 3;
 
-        let project1 = {id: 1, name: "fake1", slug: "project-1"};
-        let project2 = {id: 2, name: "fake2", slug: "project-2"};
+        const project1 = {id: 1, name: "fake1", slug: "project-1"};
+        const project2 = {id: 2, name: "fake2", slug: "project-2"};
 
         mocks.projectsService.getProjectsByUserId
             .withArgs(userId)
             .resolve(Immutable.fromJS([
                 project1,
-                project2
+                project2,
             ]));
 
         mocks.resources.epics.listInAllProjects
             .withArgs(sinon.match({
                 status__is_closed: false,
-                assigned_to: userId
+                assigned_to: userId,
             }))
             .promise()
             .resolve(Immutable.fromJS([{id: 4, ref: 4, project: "1"}]));
@@ -114,18 +114,18 @@ describe("tgHome", function() {
         mocks.resources.epics.listInAllProjects
             .withArgs(sinon.match({
                 status__is_closed: false,
-                watchers: userId
+                watchers: userId,
             }))
             .promise()
             .resolve(Immutable.fromJS([
                 {id: 4, ref: 4, project: "1"},
-                {id: 5, ref: 5, project: "10"} // the user is not member of this project
+                {id: 5, ref: 5, project: "10"}, // the user is not member of this project
             ]));
 
         mocks.resources.userstories.listInAllProjects
             .withArgs(sinon.match({
                 is_closed: false,
-                assigned_to: userId
+                assigned_to: userId,
             }))
             .promise()
             .resolve(Immutable.fromJS([{id: 1, ref: 1, project: "1"}]));
@@ -133,12 +133,12 @@ describe("tgHome", function() {
         mocks.resources.userstories.listInAllProjects
             .withArgs(sinon.match({
                 is_closed: false,
-                watchers: userId
+                watchers: userId,
             }))
             .promise()
             .resolve(Immutable.fromJS([
                 {id: 1, ref: 1, project: "1"},
-                {id: 2, ref: 2, project: "10"} // the user is not member of this project
+                {id: 2, ref: 2, project: "10"}, // the user is not member of this project
             ]));
 
         mocks.resources.tasks.listInAllProjects.promise()
@@ -171,62 +171,62 @@ describe("tgHome", function() {
                         epics: [{
                             id: 4,
                             ref: 4,
-                            url: '/testing-project/epic/1',
+                            url: "/testing-project/epic/1",
                             project: project1,
-                            _name: 'epics'
+                            _name: "epics",
                         }],
                         userStories: [{
                             id: 1,
                             ref: 1,
-                            url: '/testing-project/us/1',
+                            url: "/testing-project/us/1",
                             project: project1,
-                            _name: 'userstories'
+                            _name: "userstories",
                         }],
                         tasks: [{
                             id: 2,
                             ref: 2,
                             project: project1,
-                            url: '/testing-project/tasks/1',
-                            _name: 'tasks'
+                            url: "/testing-project/tasks/1",
+                            _name: "tasks",
                         }],
                         issues: [{
                             id: 3,
                             ref: 3,
-                            url: '/testing-project/issues/1',
+                            url: "/testing-project/issues/1",
                             project: project1,
-                            _name: 'issues'
-                        }]
+                            _name: "issues",
+                        }],
                     },
                     watching: {
                         epics: [{
                             id: 4,
                             ref: 4,
-                            url: '/testing-project/epic/1',
+                            url: "/testing-project/epic/1",
                             project: project1,
-                            _name: 'epics'
+                            _name: "epics",
                         }],
                         userStories: [{
                             id: 1,
                             ref: 1,
-                            url: '/testing-project/us/1',
+                            url: "/testing-project/us/1",
                             project: project1,
-                            _name: 'userstories'
+                            _name: "userstories",
                         }],
                         tasks: [{
                             id: 2,
                             ref: 2,
-                            url: '/testing-project/tasks/1',
+                            url: "/testing-project/tasks/1",
                             project: project1,
-                            _name: 'tasks'
+                            _name: "tasks",
                         }],
                         issues: [{
                             id: 3,
                             ref: 3,
-                            url: '/testing-project/issues/1',
+                            url: "/testing-project/issues/1",
                             project: project1,
-                            _name: 'issues'
-                        }]
-                    }
+                            _name: "issues",
+                        }],
+                    },
                 });
 
                 return done();

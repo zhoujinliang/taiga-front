@@ -17,15 +17,15 @@
  * File: dropdown-user.directive.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("dropdownUserDirective", function() {
     let compile, provide;
@@ -35,57 +35,57 @@ describe("dropdownUserDirective", function() {
     let mockTgLocation = null;
     let mockTgNavUrls = null;
     let mockTgFeedbackService = null;
-    let template = "<div tg-dropdown-user></div>";
+    const template = "<div tg-dropdown-user></div>";
 
-    let createDirective = function() {
-        let elm = compile(template)(scope);
+    const createDirective = function() {
+        const elm = compile(template)(scope);
         return elm;
     };
 
-    let _mockTranslateFilter = function() {
-        let mockTranslateFilter = value => value;
+    const _mockTranslateFilter = function() {
+        const mockTranslateFilter = (value) => value;
         return provide.value("translateFilter", mockTranslateFilter);
     };
 
-    let _mockTgAuth = function() {
+    const _mockTgAuth = function() {
         mockTgAuth = {
             userData: Immutable.fromJS({id: 66}),
-            logout: sinon.stub()
+            logout: sinon.stub(),
         };
         return provide.value("$tgAuth", mockTgAuth);
     };
 
-    let _mockTgConfig = function() {
+    const _mockTgConfig = function() {
         mockTgConfig = {
-            get: sinon.stub()
+            get: sinon.stub(),
         };
         return provide.value("$tgConfig", mockTgConfig);
     };
 
-    let _mockTgLocation = function() {
+    const _mockTgLocation = function() {
         mockTgLocation = {
             url: sinon.stub(),
-            search: sinon.stub()
+            search: sinon.stub(),
         };
 
         return provide.value("$tgLocation", mockTgLocation);
     };
 
-    let _mockTgNavUrls = function() {
+    const _mockTgNavUrls = function() {
         mockTgNavUrls = {
-            resolve: sinon.stub()
+            resolve: sinon.stub(),
         };
         return provide.value("$tgNavUrls", mockTgNavUrls);
     };
 
-    let _mockTgFeedbackService = function() {
+    const _mockTgFeedbackService = function() {
         mockTgFeedbackService = {
-            sendFeedback: sinon.stub()
+            sendFeedback: sinon.stub(),
         };
         return provide.value("tgFeedbackService", mockTgFeedbackService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTranslateFilter();
@@ -112,19 +112,19 @@ describe("dropdownUserDirective", function() {
 
     it("dropdown user directive scope content", function() {
         mockTgConfig.get.withArgs("feedbackEnabled").returns(true);
-        let elm = createDirective();
+        const elm = createDirective();
         scope.$apply();
 
-        let { vm } = elm.isolateScope();
+        const { vm } = elm.isolateScope();
         expect(vm.user.get("id")).to.be.equal(66);
         return expect(vm.isFeedbackEnabled).to.be.equal(true);
     });
 
     it("dropdown user log out", function() {
         mockTgNavUrls.resolve.withArgs("discover").returns("/discover");
-        let elm = createDirective();
+        const elm = createDirective();
         scope.$apply();
-        let { vm } = elm.isolateScope();
+        const { vm } = elm.isolateScope();
         expect(mockTgAuth.logout.callCount).to.be.equal(0);
         expect(mockTgLocation.url.callCount).to.be.equal(0);
         expect(mockTgLocation.search.callCount).to.be.equal(0);
@@ -137,9 +137,9 @@ describe("dropdownUserDirective", function() {
     });
 
     return it("dropdown user send feedback", function() {
-        let elm = createDirective();
+        const elm = createDirective();
         scope.$apply();
-        let { vm } = elm.isolateScope();
+        const { vm } = elm.isolateScope();
         expect(mockTgFeedbackService.sendFeedback.callCount).to.be.equal(0);
         vm.sendFeedback();
         return expect(mockTgFeedbackService.sendFeedback.callCount).to.be.equal(1);

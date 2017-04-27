@@ -17,29 +17,29 @@
  * File: attchment.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("AttachmentsSimple", function() {
     let $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
     let scope = null;
 
-    let _mockAttachmentsService = function() {
+    const _mockAttachmentsService = function() {
         mocks.attachmentsService = {};
 
         return $provide.value("tgAttachmentsService", mocks.attachmentsService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -49,14 +49,14 @@ describe("AttachmentsSimple", function() {
         })
     ;
 
-    let _inject = () =>
+    const _inject = () =>
         inject(function(_$controller_, $rootScope) {
             $controller = _$controller_;
             return scope = $rootScope.$new();
         })
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -68,18 +68,18 @@ describe("AttachmentsSimple", function() {
     });
 
     it("add attachment", function() {
-        let file = {
-            name: 'name',
-            size: 1000
+        const file = {
+            name: "name",
+            size: 1000,
         };
 
         mocks.attachmentsService.validate = sinon.stub();
         mocks.attachmentsService.validate.withArgs(file).returns(true);
 
-        let ctrl = $controller("AttachmentsSimple", {
-            $scope: scope
+        const ctrl = $controller("AttachmentsSimple", {
+            $scope: scope,
         }, {
-            attachments: Immutable.List()
+            attachments: Immutable.List(),
         });
 
         ctrl.onAdd = sinon.spy();
@@ -91,22 +91,21 @@ describe("AttachmentsSimple", function() {
     });
 
     return it("delete attachment", function() {
-        let attachments = Immutable.fromJS([
+        const attachments = Immutable.fromJS([
             {id: 1},
             {id: 2},
-            {id: 3}
+            {id: 3},
         ]);
 
-        let ctrl = $controller("AttachmentsSimple", {
-            $scope: scope
+        const ctrl = $controller("AttachmentsSimple", {
+            $scope: scope,
         }, {
-            attachments
+            attachments,
         });
 
         ctrl.onDelete = sinon.spy();
 
-
-        let attachment = attachments.get(1);
+        const attachment = attachments.get(1);
 
         ctrl.deleteAttachment(attachment);
 

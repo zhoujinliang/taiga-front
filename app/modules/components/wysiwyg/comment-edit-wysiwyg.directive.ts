@@ -23,16 +23,16 @@
  */
 
 export let CommentEditWysiwyg = function(attachmentsFullService) {
-    let link = function($scope, $el, $attrs) {
-        let types = {
+    const link = function($scope, $el, $attrs) {
+        const types = {
             epics: "epic",
             userstories: "us",
             issues: "issue",
-            tasks: "task"
+            tasks: "task",
         };
 
-        let uploadFile = (file, cb) =>
-            attachmentsFullService.addAttachment($scope.vm.projectId, $scope.vm.comment.comment.id, types[$scope.vm.comment.comment._name], file, true, true).then(result => cb(result.getIn(['file', 'name']), result.getIn(['file', 'url'])))
+        const uploadFile = (file, cb) =>
+            attachmentsFullService.addAttachment($scope.vm.projectId, $scope.vm.comment.comment.id, types[$scope.vm.comment.comment._name], file, true, true).then((result) => cb(result.getIn(["file", "name"]), result.getIn(["file", "url"])))
         ;
 
         return $scope.uploadFiles = (files, cb) =>
@@ -55,6 +55,6 @@ export let CommentEditWysiwyg = function(attachmentsFullService) {
         on-upload-file='uploadFiles(files, cb)'>
     </tg-wysiwyg>
 </div>\
-`
+`,
     };
 };

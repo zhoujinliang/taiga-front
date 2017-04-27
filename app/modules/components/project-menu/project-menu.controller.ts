@@ -17,22 +17,22 @@
  * File: project-menu.controller.coffee
  */
 
-import {slugify} from "../../../libs/utils"
-import * as _ from "lodash"
-import * as angular from "angular"
-import * as Immutable from "immutable"
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {slugify} from "../../../libs/utils";
 
 export class ProjectMenuController {
-    projectService:any
-    lightboxFactory:any
-    project:any
-    menu: Immutable.Map<any,any>
-    active:any
+    projectService: any;
+    lightboxFactory: any;
+    project: any;
+    menu: Immutable.Map<any, any>;
+    active: any;
 
     static initClass() {
         this.$inject = [
             "tgProjectService",
-            "tgLightboxFactory"
+            "tgLightboxFactory",
         ];
     }
 
@@ -59,12 +59,12 @@ export class ProjectMenuController {
 
     search() {
         return this.lightboxFactory.create("tg-search-box", {
-            "class": "lightbox lightbox-search"
+            class: "lightbox lightbox-search",
         });
     }
 
     _setVideoConference() {
-        let videoconferenceUrl = this._videoConferenceUrl();
+        const videoconferenceUrl = this._videoConferenceUrl();
 
         if (videoconferenceUrl) {
             return this.project = this.project.set("videoconferenceUrl", videoconferenceUrl);
@@ -77,7 +77,7 @@ export class ProjectMenuController {
             backlog: false,
             kanban: false,
             issues: false,
-            wiki: false
+            wiki: false,
         });
 
         if (this.project.get("is_epics_activated") && (this.project.get("my_permissions").indexOf("view_epics") !== -1)) {
@@ -105,10 +105,10 @@ export class ProjectMenuController {
         let oldSectionName;
         let sectionName = this.projectService.section;
 
-        let { sectionsBreadcrumb } = this.projectService;
+        const { sectionsBreadcrumb } = this.projectService;
 
-        let indexBacklog = sectionsBreadcrumb.lastIndexOf("backlog");
-        let indexKanban = sectionsBreadcrumb.lastIndexOf("kanban");
+        const indexBacklog = sectionsBreadcrumb.lastIndexOf("backlog");
+        const indexKanban = sectionsBreadcrumb.lastIndexOf("kanban");
 
         if ((indexBacklog !== -1) || (indexKanban !== -1)) {
             if ((indexKanban === -1) || (indexBacklog > indexKanban)) {

@@ -17,28 +17,28 @@
  * File: project.service.coffee
  */
 
-import {defineImmutableProperty} from "../../libs/utils"
-import * as angular from "angular"
-import * as Immutable from "immutable"
-import * as Promise from "bluebird"
+import * as angular from "angular";
+import * as Promise from "bluebird";
+import * as Immutable from "immutable";
+import {defineImmutableProperty} from "../../libs/utils";
 
 export class ProjectService {
-    projectsService:any
-    xhrError:any
-    userActivityService:any
-    interval:any
-    _project:any
-    _section:any
-    _sectionsBreadcrumb: Immutable.List<any>
-    _activeMembers: Immutable.List<any>
-    project: Immutable.Map<any,any>
+    projectsService: any;
+    xhrError: any;
+    userActivityService: any;
+    interval: any;
+    _project: any;
+    _section: any;
+    _sectionsBreadcrumb: Immutable.List<any>;
+    _activeMembers: Immutable.List<any>;
+    project: Immutable.Map<any, any>;
 
     static initClass() {
         this.$inject = [
             "tgProjectsService",
             "tgXhrErrorService",
             "tgUserActivityService",
-            "$interval"
+            "$interval",
         ];
     }
 
@@ -52,10 +52,10 @@ export class ProjectService {
         this._sectionsBreadcrumb = Immutable.List();
         this._activeMembers = Immutable.List();
 
-        defineImmutableProperty(this, "project", () => { return this._project; });
-        defineImmutableProperty(this, "section", () => { return this._section; });
-        defineImmutableProperty(this, "sectionsBreadcrumb", () => { return this._sectionsBreadcrumb; });
-        defineImmutableProperty(this, "activeMembers", () => { return this._activeMembers; });
+        defineImmutableProperty(this, "project", () => this._project);
+        defineImmutableProperty(this, "section", () => this._section);
+        defineImmutableProperty(this, "sectionsBreadcrumb", () => this._sectionsBreadcrumb);
+        defineImmutableProperty(this, "activeMembers", () => this._activeMembers);
 
         if (!window.localStorage.e2e) { this.autoRefresh(); }
     }
@@ -68,7 +68,7 @@ export class ProjectService {
     }
 
     autoRefresh() {
-        let intervalId = this.interval(() => {
+        const intervalId = this.interval(() => {
             return this.fetchProject();
         }
         , 60 * 10 * 1000);
@@ -92,18 +92,18 @@ export class ProjectService {
 
     setProject(project) {
         this._project = project;
-        return this._activeMembers = this._project.get('members').filter(member => member.get('is_active'));
+        return this._activeMembers = this._project.get("members").filter((member) => member.get("is_active"));
     }
 
     setProjectBySlug(pslug) {
         return new Promise((function(resolve, reject) {
-            if (!this.project || (this.project.get('slug') !== pslug)) {
+            if (!this.project || (this.project.get("slug") !== pslug)) {
                 return this.projectsService
                     .getProjectBySlug(pslug)
-                    .subscribe(project => {
+                    .subscribe((project) => {
                         this.setProject(project);
                         return resolve();
-                    }).catch(xhr => {
+                    }).catch((xhr) => {
                         return this.xhrError.response(xhr);
                     });
 
@@ -114,13 +114,13 @@ export class ProjectService {
     fetchProject() {
         if (!this.project) { return; }
 
-        let pslug = this.project.get('slug');
+        const pslug = this.project.get("slug");
 
-        return this.projectsService.getProjectBySlug(pslug).subscribe(project => this.setProject(project));
+        return this.projectsService.getProjectBySlug(pslug).subscribe((project) => this.setProject(project));
     }
 
     hasPermission(permission) {
-        return this._project.get('my_permissions').indexOf(permission) !== -1;
+        return this._project.get("my_permissions").indexOf(permission) !== -1;
     }
 
     isEpicsDashboardEnabled() {

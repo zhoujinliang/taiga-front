@@ -17,18 +17,18 @@
  * File: home.controller.coffee
  */
 
-import * as Rx from "rxjs/Rx"
-import "rxjs/add/operator/map"
-import * as Immutable from "immutable"
-import { CurrentUserService } from "../services/current-user.service";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
+import * as Immutable from "immutable";
+import "rxjs/add/operator/map";
+import * as Rx from "rxjs/Rx";
 import { IState } from "../../app.store";
-import { IHomeState } from "./home.store";
 import { NavigationUrlsService } from "../../ts/modules/base/navurls.service";
+import { CurrentUserService } from "../services/current-user.service";
 import { FetchAssignedToAction, FetchWatchingAction } from "./home.actions";
+import { IHomeState } from "./home.store";
 
-import {Component, OnInit, ChangeDetectionStrategy} from "@angular/core"
+import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
 
 @Component({
     selector: "tg-home",
@@ -43,34 +43,34 @@ export class Home implements OnInit {
     constructor(private router: Router,
                 private store: Store<IState>,
                 private navurls: NavigationUrlsService) {
-      this.user = this.store.select((state) => state.getIn(['auth', 'user']));
-      this.projects = this.store.select((state) => state.getIn(['projects', 'user-projects']));
+      this.user = this.store.select((state) => state.getIn(["auth", "user"]));
+      this.projects = this.store.select((state) => state.getIn(["projects", "user-projects"]));
       this.assignedTo = this.store
-                            .select((state) => state.getIn(['home', 'assigned-to']))
+                            .select((state) => state.getIn(["home", "assigned-to"]))
                             .map((state) =>
-                                    state.get('epics')
-                                    .concat(state.get('userstories'))
-                                    .concat(state.get('tasks'))
-                                    .concat(state.get('issues'))
-                                    .sortBy((i:any) => i.get('modified_date')));
+                                    state.get("epics")
+                                    .concat(state.get("userstories"))
+                                    .concat(state.get("tasks"))
+                                    .concat(state.get("issues"))
+                                    .sortBy((i: any) => i.get("modified_date")));
       this.watching = this.store
-                          .select((state) => state.getIn(['home', 'watching']))
+                          .select((state) => state.getIn(["home", "watching"]))
                           .map((state) =>
-                                  state.get('epics')
-                                  .concat(state.get('userstories'))
-                                  .concat(state.get('tasks'))
-                                  .concat(state.get('issues'))
-                                  .sortBy((i:any) => i.get('modified_date')));
+                                  state.get("epics")
+                                  .concat(state.get("userstories"))
+                                  .concat(state.get("tasks"))
+                                  .concat(state.get("issues"))
+                                  .sortBy((i: any) => i.get("modified_date")));
     }
 
     ngOnInit() {
-        Rx.Observable.zip(this.user, this.projects).subscribe(([user, projects]:any) => {
+        Rx.Observable.zip(this.user, this.projects).subscribe(([user, projects]: any) => {
             if (!this.user || this.user.isEmpty()) {
                 this.router.navigate(["/discover"]);
-                return
+                return;
             }
-            this.store.dispatch(new FetchAssignedToAction(user.get('id'), projects));
-            this.store.dispatch(new FetchWatchingAction(user.get('id'), projects));
+            this.store.dispatch(new FetchAssignedToAction(user.get("id"), projects));
+            this.store.dispatch(new FetchWatchingAction(user.get("id"), projects));
         });
     }
 }

@@ -18,26 +18,26 @@
  */
 
 export let CreateEpicDirective = function() {
-    let link = function(scope, el, attrs, ctrl) {
-        let form = el.find("form").checksley();
+    const link = function(scope, el, attrs, ctrl) {
+        const form = el.find("form").checksley();
 
         ctrl.validateForm = () => {
             return form.validate();
         };
 
-        return ctrl.setFormErrors = errors => {
+        return ctrl.setFormErrors = (errors) => {
             return form.setErrors(errors);
         };
     };
 
     return {
         link,
-        templateUrl:"epics/create-epic/create-epic.html",
+        templateUrl: "epics/create-epic/create-epic.html",
         controller: "CreateEpicCtrl",
         controllerAs: "vm",
         bindToController: {
-            onCreateEpic: '&'
+            onCreateEpic: "&",
         },
-        scope: {}
+        scope: {},
     };
 };

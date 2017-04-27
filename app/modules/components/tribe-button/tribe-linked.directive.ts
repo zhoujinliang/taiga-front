@@ -18,7 +18,7 @@
  */
 
 export let TribeLinkedDirective = function(configService) {
-    let link = function(scope, el, attrs) {
+    const link = function(scope, el, attrs) {
 
         scope.vm = {};
 
@@ -26,21 +26,21 @@ export let TribeLinkedDirective = function(configService) {
 
         scope.vm.show = () => scope.vm.open = true;
 
-        return scope.vm.hide = event => scope.vm.open = false;
+        return scope.vm.hide = (event) => scope.vm.open = false;
     };
 
-    let directive = {
+    const directive = {
         templateUrl: "components/tribe-button/tribe-linked.html",
         scope: {
             gigTitle: "=",
-            gigId: "="
+            gigId: "=",
         },
-        link
+        link,
     };
 
     return directive;
 };
 
 TribeLinkedDirective.$inject = [
-    "$tgConfig"
+    "$tgConfig",
 ];

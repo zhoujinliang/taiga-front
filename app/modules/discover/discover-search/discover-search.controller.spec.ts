@@ -17,52 +17,52 @@
  * File: discover-search.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("DiscoverSearch", function() {
     let $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTranslate = function() {
+    const _mockTranslate = function() {
         mocks.translate = {};
         mocks.translate.instant = sinon.stub();
 
         return $provide.value("$translate", mocks.translate);
     };
 
-    let _mockAppMetaService = function() {
+    const _mockAppMetaService = function() {
         mocks.appMetaService = {
-            setAll: sinon.spy()
+            setAll: sinon.spy(),
         };
 
         return $provide.value("tgAppMetaService", mocks.appMetaService);
     };
 
-    let _mockRouteParams = function() {
+    const _mockRouteParams = function() {
         mocks.routeParams = {};
 
         return $provide.value("$routeParams", mocks.routeParams);
     };
 
-    let _mockRoute = function() {
+    const _mockRoute = function() {
         mocks.route = {};
 
         return $provide.value("$route", mocks.route);
     };
 
-    let _mockDiscoverProjects = function() {
+    const _mockDiscoverProjects = function() {
         mocks.discoverProjects = {
             resetSearchList: sinon.spy(),
-            fetchSearch: sinon.stub()
+            fetchSearch: sinon.stub(),
         };
 
         mocks.discoverProjects.fetchSearch.promise().resolve();
@@ -70,7 +70,7 @@ describe("DiscoverSearch", function() {
         return $provide.value("tgDiscoverProjectsService", mocks.discoverProjects);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -84,11 +84,11 @@ describe("DiscoverSearch", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -101,31 +101,31 @@ describe("DiscoverSearch", function() {
 
     it("initialize meta data", function() {
         mocks.translate.instant
-            .withArgs('DISCOVER.SEARCH.PAGE_TITLE')
-            .returns('meta-title');
+            .withArgs("DISCOVER.SEARCH.PAGE_TITLE")
+            .returns("meta-title");
         mocks.translate.instant
-            .withArgs('DISCOVER.SEARCH.PAGE_DESCRIPTION')
-            .returns('meta-description');
+            .withArgs("DISCOVER.SEARCH.PAGE_DESCRIPTION")
+            .returns("meta-description");
 
-        let ctrl = $controller('DiscoverSearch');
+        const ctrl = $controller("DiscoverSearch");
 
         return expect(mocks.appMetaService.setAll.calledWithExactly("meta-title", "meta-description")).to.be.true;
     });
 
     it("initialize search params", function() {
-        mocks.routeParams.text = 'text';
-        mocks.routeParams.filter = 'filter';
-        mocks.routeParams.order_by = 'order';
+        mocks.routeParams.text = "text";
+        mocks.routeParams.filter = "filter";
+        mocks.routeParams.order_by = "order";
 
-        let ctrl = $controller('DiscoverSearch');
+        const ctrl = $controller("DiscoverSearch");
 
-        expect(ctrl.q).to.be.equal('text');
-        expect(ctrl.filter).to.be.equal('filter');
-        return expect(ctrl.orderBy).to.be.equal('order');
+        expect(ctrl.q).to.be.equal("text");
+        expect(ctrl.filter).to.be.equal("filter");
+        return expect(ctrl.orderBy).to.be.equal("order");
     });
 
     it("fetch", function() {
-        let ctrl = $controller('DiscoverSearch');
+        const ctrl = $controller("DiscoverSearch");
 
         ctrl.search = sinon.spy();
 
@@ -137,9 +137,9 @@ describe("DiscoverSearch", function() {
     });
 
     it("showMore", function(done) {
-        let ctrl = $controller('DiscoverSearch');
+        const ctrl = $controller("DiscoverSearch");
 
-        ctrl.search = (<any>sinon.stub()).promise();
+        ctrl.search = (sinon.stub() as any).promise();
 
         ctrl.showMore().then(function() {
             expect(ctrl.loadingPagination).to.be.false;
@@ -157,23 +157,23 @@ describe("DiscoverSearch", function() {
     it("search", function() {
         mocks.discoverProjects.fetchSearch = sinon.stub();
 
-        let filter = {
-            filter: '123'
+        const filter = {
+            filter: "123",
         };
 
-        let ctrl = $controller('DiscoverSearch');
+        const ctrl = $controller("DiscoverSearch");
 
         ctrl.page = 1;
-        ctrl.q = 'text';
+        ctrl.q = "text";
         ctrl.orderBy = 1;
 
         ctrl.getFilter = () => filter;
 
-        let params = {
-            filter: '123',
+        const params = {
+            filter: "123",
             page: 1,
-            q: 'text',
-            order_by: 1
+            q: "text",
+            order_by: 1,
         };
 
         ctrl.search();
@@ -182,51 +182,51 @@ describe("DiscoverSearch", function() {
     });
 
     it("get filter", function() {
-        let ctrl = $controller('DiscoverSearch');
+        const ctrl = $controller("DiscoverSearch");
 
-        ctrl.filter = 'people';
+        ctrl.filter = "people";
         expect(ctrl.getFilter()).to.be.eql({is_looking_for_people: true});
 
-        ctrl.filter = 'scrum';
+        ctrl.filter = "scrum";
         expect(ctrl.getFilter()).to.be.eql({is_backlog_activated: true});
 
-        ctrl.filter = 'kanban';
+        ctrl.filter = "kanban";
         return expect(ctrl.getFilter()).to.be.eql({is_kanban_activated: true});
     });
 
     it("onChangeFilter", function() {
-        let ctrl = $controller('DiscoverSearch');
+        const ctrl = $controller("DiscoverSearch");
 
         mocks.route.updateParams = sinon.stub();
 
         ctrl.fetchByGlobalSearch = sinon.spy();
 
-        ctrl.onChangeFilter('filter', 'query');
+        ctrl.onChangeFilter("filter", "query");
 
-        expect(ctrl.filter).to.be.equal('filter');
-        expect(ctrl.q).to.be.equal('query');
+        expect(ctrl.filter).to.be.equal("filter");
+        expect(ctrl.q).to.be.equal("query");
         expect(ctrl.fetchByGlobalSearch).to.have.been.called;
-        return expect(mocks.route.updateParams).to.have.been.calledWith(sinon.match({filter: 'filter', text: 'query'}));
+        return expect(mocks.route.updateParams).to.have.been.calledWith(sinon.match({filter: "filter", text: "query"}));
     });
 
     it("onChangeOrder", function() {
-        let ctrl = $controller('DiscoverSearch');
+        const ctrl = $controller("DiscoverSearch");
 
         mocks.route.updateParams = sinon.stub();
 
         ctrl.fetchByOrderBy = sinon.spy();
 
-        ctrl.onChangeOrder('order-by');
+        ctrl.onChangeOrder("order-by");
 
-        expect(ctrl.orderBy).to.be.equal('order-by');
+        expect(ctrl.orderBy).to.be.equal("order-by");
         expect(ctrl.fetchByOrderBy).to.have.been.called;
-        return expect(mocks.route.updateParams).to.have.been.calledWith(sinon.match({order_by: 'order-by'}));
+        return expect(mocks.route.updateParams).to.have.been.calledWith(sinon.match({order_by: "order-by"}));
     });
 
     it("fetchByGlobalSearch", function(done) {
-        let ctrl = $controller('DiscoverSearch');
+        const ctrl = $controller("DiscoverSearch");
 
-        ctrl.fetch = (<any>sinon.stub()).promise();
+        ctrl.fetch = (sinon.stub() as any).promise();
 
         ctrl.fetchByGlobalSearch().then(function() {
             expect(ctrl.loadingGlobal).to.be.false;
@@ -241,9 +241,9 @@ describe("DiscoverSearch", function() {
     });
 
     return it("fetchByOrderBy", function(done) {
-        let ctrl = $controller('DiscoverSearch');
+        const ctrl = $controller("DiscoverSearch");
 
-        ctrl.fetch = (<any>sinon.stub()).promise();
+        ctrl.fetch = (sinon.stub() as any).promise();
 
         ctrl.fetchByOrderBy().then(function() {
             expect(ctrl.loadingList).to.be.false;

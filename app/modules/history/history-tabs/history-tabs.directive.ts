@@ -17,11 +17,11 @@
  * File: history-tabs.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let HistoryTabsDirective = () =>
     ({
-        templateUrl:"history/history-tabs/history-tabs.html",
+        templateUrl: "history/history-tabs/history-tabs.html",
         scope: {
             showCommentTab: "&",
             showActivityTab: "&",
@@ -31,7 +31,7 @@ export let HistoryTabsDirective = () =>
             activeTab: "<",
             commentsNum: "<",
             activitiesNum: "<",
-            onReverse: "<"
-        }
+            onReverse: "<",
+        },
     })
 ;

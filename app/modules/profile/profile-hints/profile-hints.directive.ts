@@ -17,15 +17,15 @@
  * File: profile-hints.directive.coffee
  */
 
-export let ProfileHintsDirective = $translate =>
+export let ProfileHintsDirective = ($translate) =>
     ({
         scope: {},
         controller: "ProfileHints",
         controllerAs: "vm",
-        templateUrl: "profile/profile-hints/profile-hints.html"
+        templateUrl: "profile/profile-hints/profile-hints.html",
     })
 ;
 
 ProfileHintsDirective.$inject = [
-    "$translate"
+    "$translate",
 ];

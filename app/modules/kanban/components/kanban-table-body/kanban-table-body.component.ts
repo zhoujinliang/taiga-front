@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core"
+import {Component, Input} from "@angular/core";
 
 @Component({
     selector: "tg-kanban-table-body",
@@ -13,10 +13,10 @@ export class KanbanTableBody {
     @Input() project: any;
 
     trackStatusFn(idx, status) {
-        return status.get('id');
+        return status.get("id");
     }
 
     trackUSFn(idx, us) {
-        return us.get('id');
+        return us.get("id");
     }
 }

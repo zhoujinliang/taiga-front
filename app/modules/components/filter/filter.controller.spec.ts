@@ -17,26 +17,26 @@
  * File: filter.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("Filter", function() {
-    let $provide = null;
+    const $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _setup = () => _inject();
+    const _setup = () => _inject();
 
     beforeEach(function() {
         module("taigaComponents");
@@ -45,28 +45,28 @@ describe("Filter", function() {
     });
 
     it("toggle filter category", function() {
-        let ctrl = $controller("Filter");
+        const ctrl = $controller("Filter");
 
-        ctrl.toggleFilterCategory('filter1');
+        ctrl.toggleFilterCategory("filter1");
 
-        expect(ctrl.opened).to.be.equal('filter1');
+        expect(ctrl.opened).to.be.equal("filter1");
 
-        ctrl.toggleFilterCategory('filter1');
+        ctrl.toggleFilterCategory("filter1");
 
         return expect(ctrl.opened).to.be.null;
     });
 
     it("is filter open", function() {
-        let ctrl = $controller("Filter");
-        ctrl.opened = 'filter1';
+        const ctrl = $controller("Filter");
+        ctrl.opened = "filter1";
 
-        let isOpen = ctrl.isOpen('filter1');
+        const isOpen = ctrl.isOpen("filter1");
 
         return expect(isOpen).to.be.true;
     });
 
     it("save custom filter", function() {
-        let ctrl = $controller("Filter");
+        const ctrl = $controller("Filter");
         ctrl.customFilterName = "custom-name";
         ctrl.customFilterForm = true;
         ctrl.onSaveCustomFilter = sinon.spy();
@@ -75,16 +75,16 @@ describe("Filter", function() {
 
         expect(ctrl.onSaveCustomFilter).to.have.been.calledWith({name: "custom-name"});
         expect(ctrl.customFilterForm).to.be.false;
-        expect(ctrl.opened).to.be.equal('custom-filter');
-        return expect(ctrl.customFilterName).to.be.equal('');
+        expect(ctrl.opened).to.be.equal("custom-filter");
+        return expect(ctrl.customFilterName).to.be.equal("");
     });
 
     return it("is filter selected", function() {
-        let ctrl = $controller("Filter");
+        const ctrl = $controller("Filter");
         ctrl.selectedFilters = [
             {id: 1, dataType: "1"},
             {id: 2, dataType: "2"},
-            {id: 3, dataType: "3"}
+            {id: 3, dataType: "3"},
         ];
 
         let filterCategory = {dataType: "x"};

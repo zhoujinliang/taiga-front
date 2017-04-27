@@ -17,106 +17,106 @@
  * File: import-project.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ImportProjectCtrl", function() {
     let $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockConfig = function() {
+    const _mockConfig = function() {
         mocks.config = Immutable.fromJS({
-            importers: ['trello', 'github', 'jira', 'asana']
+            importers: ["trello", "github", "jira", "asana"],
         });
 
         return $provide.value("$tgConfig", mocks.config);
     };
 
-    let _mockTrelloImportService = function() {
+    const _mockTrelloImportService = function() {
         mocks.trelloService = {
             authorize: sinon.stub(),
-            getAuthUrl: sinon.stub()
+            getAuthUrl: sinon.stub(),
         };
 
         return $provide.value("tgTrelloImportService", mocks.trelloService);
     };
 
-    let _mockJiraImportService = function() {
+    const _mockJiraImportService = function() {
         mocks.jiraService = {
             authorize: sinon.stub(),
-            getAuthUrl: sinon.stub()
+            getAuthUrl: sinon.stub(),
         };
 
         return $provide.value("tgJiraImportService", mocks.jiraService);
     };
 
-    let _mockGithubImportService = function() {
+    const _mockGithubImportService = function() {
         mocks.githubService = {
             authorize: sinon.stub(),
-            getAuthUrl: sinon.stub()
+            getAuthUrl: sinon.stub(),
         };
 
         return $provide.value("tgGithubImportService", mocks.githubService);
     };
 
-    let _mockAsanaImportService = function() {
+    const _mockAsanaImportService = function() {
         mocks.asanaService = {
             authorize: sinon.stub(),
-            getAuthUrl: sinon.stub()
+            getAuthUrl: sinon.stub(),
         };
 
         return $provide.value("tgAsanaImportService", mocks.asanaService);
     };
 
-    let _mockWindow = function() {
+    const _mockWindow = function() {
         mocks.window = {
-            open: sinon.stub()
+            open: sinon.stub(),
         };
 
         return $provide.value("$window", mocks.window);
     };
 
-    let _mockConfirm = function() {
+    const _mockConfirm = function() {
         mocks.confirm = {
-            notify: sinon.stub()
+            notify: sinon.stub(),
         };
 
         return $provide.value("$tgConfirm", mocks.confirm);
     };
 
-    let _mockLocation = function() {
+    const _mockLocation = function() {
         mocks.location = {
-            search: sinon.stub()
+            search: sinon.stub(),
         };
 
         return $provide.value("$location", mocks.location);
     };
 
-    let _mockRouteParams = function() {
+    const _mockRouteParams = function() {
         mocks.routeParams = {
-            platform: null
+            platform: null,
         };
 
         return $provide.value("$routeParams", mocks.routeParams);
     };
 
-    let _mockTgNavUrls = function() {
+    const _mockTgNavUrls = function() {
         mocks.tgNavUrls = {
-            resolve: sinon.stub()
+            resolve: sinon.stub(),
         };
 
         return $provide.value("$tgNavUrls", mocks.tgNavUrls);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -135,11 +135,11 @@ describe("ImportProjectCtrl", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -151,17 +151,17 @@ describe("ImportProjectCtrl", function() {
     });
 
     it("initialize form with trello", function(done) {
-        let searchResult = {
+        const searchResult = {
             oauth_verifier: 123,
-            token: "token"
+            token: "token",
         };
 
         mocks.location.search.returns(searchResult);
         mocks.trelloService.authorize.withArgs(123).promise().resolve("token2");
 
-        let ctrl = $controller("ImportProjectCtrl");
+        const ctrl = $controller("ImportProjectCtrl");
 
-        mocks.routeParams.platform = 'trello';
+        mocks.routeParams.platform = "trello";
 
         return ctrl.start().then(function() {
             expect(mocks.location.search).have.been.calledWith({token: "token2"});
@@ -171,18 +171,18 @@ describe("ImportProjectCtrl", function() {
     });
 
     it("initialize form with github", function(done) {
-        let searchResult = {
+        const searchResult = {
             code: 123,
             token: "token",
-            from: "github"
+            from: "github",
         };
 
         mocks.location.search.returns(searchResult);
         mocks.githubService.authorize.withArgs(123).promise().resolve("token2");
 
-        let ctrl = $controller("ImportProjectCtrl");
+        const ctrl = $controller("ImportProjectCtrl");
 
-        mocks.routeParams.platform = 'github';
+        mocks.routeParams.platform = "github";
 
         return ctrl.start().then(function() {
             expect(mocks.location.search).have.been.calledWith({token: "token2"});
@@ -192,18 +192,18 @@ describe("ImportProjectCtrl", function() {
     });
 
     it("initialize form with asana", function(done) {
-        let searchResult = {
+        const searchResult = {
             code: 123,
             token: encodeURIComponent("{\"token\": 222}"),
-            from: "asana"
+            from: "asana",
         };
 
         mocks.location.search.returns(searchResult);
         mocks.asanaService.authorize.withArgs(123).promise().resolve("token2");
 
-        let ctrl = $controller("ImportProjectCtrl");
+        const ctrl = $controller("ImportProjectCtrl");
 
-        mocks.routeParams.platform = 'asana';
+        mocks.routeParams.platform = "asana";
 
         return ctrl.start().then(function() {
             expect(mocks.location.search).have.been.calledWith({token: encodeURIComponent(JSON.stringify("token2"))});
@@ -213,7 +213,7 @@ describe("ImportProjectCtrl", function() {
     });
 
     return it("select trello import", function() {
-        let ctrl = $controller("ImportProjectCtrl");
+        const ctrl = $controller("ImportProjectCtrl");
 
         mocks.trelloService.getAuthUrl.promise().resolve("url");
 

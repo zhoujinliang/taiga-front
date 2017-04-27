@@ -19,11 +19,11 @@
 
 export let SingleMemberDirective = () =>
     ({
-        templateUrl:"projects/create/invite-members/single-member/single-member.html",
+        templateUrl: "projects/create/invite-members/single-member/single-member.html",
         scope: {
             disabled: "<",
-            avatar: "="
-        }
+            avatar: "=",
+        },
     })
 ;
 SingleMemberDirective.$inject = [];

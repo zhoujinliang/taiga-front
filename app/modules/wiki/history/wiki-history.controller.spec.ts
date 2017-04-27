@@ -17,31 +17,31 @@
  * File: wiki-history.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("WikiHistorySection", function() {
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgWikiHistoryService = function() {
+    const _mockTgWikiHistoryService = function() {
         mocks.tgWikiHistoryService = {
             setWikiId: sinon.stub(),
-            loadHistoryEntries: sinon.stub()
+            loadHistoryEntries: sinon.stub(),
         };
 
         return provide.value("tgWikiHistoryService", mocks.tgWikiHistoryService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgWikiHistoryService();
@@ -54,13 +54,13 @@ describe("WikiHistorySection", function() {
 
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     it("initialize histori entries with id", function() {
-        let wikiId = 42;
+        const wikiId = 42;
 
-        let historyCtrl = controller("WikiHistoryCtrl");
+        const historyCtrl = controller("WikiHistoryCtrl");
         historyCtrl.initializeHistoryEntries(wikiId);
 
         expect(mocks.tgWikiHistoryService.setWikiId).to.be.calledOnce;
@@ -69,7 +69,7 @@ describe("WikiHistorySection", function() {
     });
 
     return it("initialize history entries without id",  function() {
-        let historyCtrl = controller("WikiHistoryCtrl");
+        const historyCtrl = controller("WikiHistoryCtrl");
         historyCtrl.initializeHistoryEntries();
 
         expect(mocks.tgWikiHistoryService.setWikiId).to.not.be.calledOnce;

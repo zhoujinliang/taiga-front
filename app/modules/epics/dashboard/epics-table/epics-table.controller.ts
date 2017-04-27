@@ -17,21 +17,21 @@
  * File: epics-table.controller.coffee
  */
 
-import {generateHash} from "../../../../libs/app"
-import {defineImmutableProperty} from "../../../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {generateHash} from "../../../../libs/app";
+import {defineImmutableProperty} from "../../../../libs/utils";
 
 export class EpicsTableController {
-    confirm:any
-    epicsService:any
-    timeout:any
-    storage:any
-    projectService:any
-    hash:any
-    displayOptions:any
-    displayVotes:any
-    column:any
-    timer:any
+    confirm: any;
+    epicsService: any;
+    timeout: any;
+    storage: any;
+    projectService: any;
+    hash: any;
+    displayOptions: any;
+    displayVotes: any;
+    column: any;
+    timer: any;
 
     static initClass() {
         this.$inject = [
@@ -39,7 +39,7 @@ export class EpicsTableController {
             "tgEpicsService",
             "$timeout",
             "$tgStorage",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
@@ -49,7 +49,7 @@ export class EpicsTableController {
         this.timeout = timeout;
         this.storage = storage;
         this.projectService = projectService;
-        this.hash = generateHash([this.projectService.project.get('id'), 'epics']);
+        this.hash = generateHash([this.projectService.project.get("id"), "epics"]);
         this.displayOptions = false;
         this.displayVotes = true;
         this.column = this.storage.get(this.hash, {
@@ -59,12 +59,12 @@ export class EpicsTableController {
             sprint: true,
             assigned: true,
             status: true,
-            progress: true
+            progress: true,
         });
 
-        defineImmutableProperty(this, 'epics', () => { return this.epicsService.epics; });
-        defineImmutableProperty(this, 'disabledEpicsPagination', () => { return this.epicsService._disablePagination; });
-        defineImmutableProperty(this, 'loadingEpics', () => { return this.epicsService._loadingEpics; });
+        defineImmutableProperty(this, "epics", () => this.epicsService.epics);
+        defineImmutableProperty(this, "disabledEpicsPagination", () => this.epicsService._disablePagination);
+        defineImmutableProperty(this, "loadingEpics", () => this.epicsService._loadingEpics);
     }
 
     toggleEpicTableOptions() {
@@ -72,7 +72,7 @@ export class EpicsTableController {
     }
 
     reorderEpic(epic, newIndex) {
-        if (epic.get('epics_order') === newIndex) {
+        if (epic.get("epics_order") === newIndex) {
             return null;
         }
 

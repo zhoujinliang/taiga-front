@@ -17,22 +17,22 @@
  * File: create-project.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("CreateProjectController", function() {
-    let provide = null;
+    const provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject((_$controller_, _$q_, _$rootScope_) => controller = _$controller_)
     ;
 

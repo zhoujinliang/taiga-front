@@ -19,9 +19,9 @@
 
 export let EpicsTableDirective = () =>
     ({
-        templateUrl:"epics/dashboard/epics-table/epics-table.html",
+        templateUrl: "epics/dashboard/epics-table/epics-table.html",
         controller: "EpicsTableCtrl",
         controllerAs: "vm",
-        scope: {}
+        scope: {},
     })
 ;

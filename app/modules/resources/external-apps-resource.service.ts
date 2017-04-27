@@ -17,11 +17,11 @@
  * File: external-apps-resource.service.coffee
  */
 
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
 
-import {Injectable} from "@angular/core"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../ts/modules/base/http";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class ExternalAppsResource {
@@ -31,17 +31,17 @@ export class ExternalAppsResource {
     getApplicationToken(applicationId, state) {
         let url = this.urls.resolve("applications");
         url = `${url}/${applicationId}/token?state=${state}`;
-        return this.http.get(url).map((result:any) => Immutable.fromJS(result.data));
-    };
+        return this.http.get(url).map((result: any) => Immutable.fromJS(result.data));
+    }
 
     authorizeApplicationToken(applicationId, state) {
         let url = this.urls.resolve("application-tokens");
         url = `${url}/authorize`;
-        let data = {
-            "state": state,
-            "application": applicationId
+        const data = {
+            state,
+            application: applicationId,
         };
 
-        return this.http.post(url, data).map((result:any) => Immutable.fromJS(result.data));
-    };
-};
+        return this.http.post(url, data).map((result: any) => Immutable.fromJS(result.data));
+    }
+}

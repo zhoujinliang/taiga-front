@@ -17,64 +17,64 @@
  * File: wiki-history.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("StoryHeaderComponent", function() {
     let headerDetailCtrl =  null;
     let provide = null;
     let controller = null;
-    let rootScope = null;
-    let mocks:any = {};
+    const rootScope = null;
+    const mocks: any = {};
 
-    let _mockRootScope = function() {
+    const _mockRootScope = function() {
         mocks.rootScope = {
-            $broadcast: sinon.stub()
+            $broadcast: sinon.stub(),
         };
 
         return provide.value("$rootScope", mocks.rootScope);
     };
 
-    let _mockTgConfirm = function() {
+    const _mockTgConfirm = function() {
         mocks.tgConfirm = {
-            notify: sinon.stub()
+            notify: sinon.stub(),
         };
 
         return provide.value("$tgConfirm", mocks.tgConfirm);
     };
 
-    let _mockTgQueueModelTransformation = function() {
+    const _mockTgQueueModelTransformation = function() {
         mocks.modelTransform = {
-            save: sinon.stub()
+            save: sinon.stub(),
         };
 
         return provide.value("$tgQueueModelTransformation", mocks.tgQueueModelTransformation);
     };
 
-    let _mockTgNav = function() {
+    const _mockTgNav = function() {
         mocks.navUrls = {
-            resolve: sinon.stub().returns('project-issues-detail')
+            resolve: sinon.stub().returns("project-issues-detail"),
         };
 
         return provide.value("$tgNavUrls", mocks.navUrls);
     };
 
-    let _mockWindow = function() {
+    const _mockWindow = function() {
         mocks.window = {
-            getSelection: sinon.stub()
+            getSelection: sinon.stub(),
         };
 
         return provide.value("$window", mocks.window);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockRootScope();
@@ -98,21 +98,21 @@ describe("StoryHeaderComponent", function() {
 
             return headerDetailCtrl = controller("StoryHeaderCtrl", {}, {
                 item: {
-                    subject: 'Example subject'
-                }
-            });});
+                    subject: "Example subject",
+                },
+            }); });
 
         return headerDetailCtrl.originalSubject = headerDetailCtrl.item.subject;
     });
 
     it("previous item neighbor", function() {
         headerDetailCtrl.project = {
-            slug: 'example_subject'
+            slug: "example_subject",
         };
         headerDetailCtrl.item.neighbors = {
             previous: {
-                ref: 42
-            }
+                ref: 42,
+            },
         };
         headerDetailCtrl._checkNav();
         headerDetailCtrl.previousUrl = mocks.navUrls.resolve("project-issues-detail");
@@ -121,16 +121,16 @@ describe("StoryHeaderComponent", function() {
 
     it("check permissions", function() {
         headerDetailCtrl.project = {
-            my_permissions: ['view_us']
+            my_permissions: ["view_us"],
         };
-        headerDetailCtrl.requiredPerm = 'view_us';
+        headerDetailCtrl.requiredPerm = "view_us";
         headerDetailCtrl._checkPermissions();
         return expect(headerDetailCtrl.permissions).to.be.eql({canEdit: true});
     });
 
     it("edit subject without selection", function() {
         mocks.window.getSelection.returns({
-            type: 'Range'
+            type: "Range",
         });
         headerDetailCtrl.editSubject(true);
         return expect(headerDetailCtrl.editMode).to.be.false;
@@ -138,7 +138,7 @@ describe("StoryHeaderComponent", function() {
 
     it("edit subject on click", function() {
         mocks.window.getSelection.returns({
-            type: 'potato'
+            type: "potato",
         });
         headerDetailCtrl.editSubject(true);
         return expect(headerDetailCtrl.editMode).to.be.true;
@@ -146,14 +146,14 @@ describe("StoryHeaderComponent", function() {
 
     it("do not edit subject", function() {
         mocks.window.getSelection.returns({
-            type: 'Range'
+            type: "Range",
         });
         headerDetailCtrl.editSubject(false);
         return expect(headerDetailCtrl.editMode).to.be.false;
     });
 
     it("save on keydown Enter", function() {
-        let event:any = {};
+        const event: any = {};
         event.which = 13;
         headerDetailCtrl.saveSubject = sinon.stub();
         headerDetailCtrl.onKeyDown(event);
@@ -161,7 +161,7 @@ describe("StoryHeaderComponent", function() {
     });
 
     return it("don't save on keydown ESC", function() {
-        let event:any = {};
+        const event: any = {};
         event.which = 27;
         headerDetailCtrl.editSubject = sinon.stub();
         headerDetailCtrl.onKeyDown(event);

@@ -17,27 +17,27 @@
  * File: jira-import.service.coffee
  */
 
-import {Service} from "../../../../ts/classes"
-import * as Immutable from "immutable"
-import * as Promise from "bluebird"
+import * as Promise from "bluebird";
+import * as Immutable from "immutable";
+import {Service} from "../../../../ts/classes";
 
 export class JiraImportService extends Service {
-    resources:any
-    location:any
-    projects:Immutable.List<any>
-    projectUsers:Immutable.List<any>
-    token:any
-    url:any
+    resources: any;
+    location: any;
+    projects: Immutable.List<any>;
+    projectUsers: Immutable.List<any>;
+    token: any;
+    url: any;
 
     static initClass() {
         this.$inject = [
-            'tgResources',
-            '$location'
+            "tgResources",
+            "$location",
         ];
     }
 
     constructor(resources, location) {
-        super()
+        super();
         this.resources = resources;
         this.location = location;
         this.projects = Immutable.List();
@@ -50,11 +50,11 @@ export class JiraImportService extends Service {
     }
 
     fetchProjects() {
-        return this.resources.jiraImporter.listProjects(this.url, this.token).then(projects => this.projects = projects);
+        return this.resources.jiraImporter.listProjects(this.url, this.token).then((projects) => this.projects = projects);
     }
 
     fetchUsers(projectId) {
-        return this.resources.jiraImporter.listUsers(this.url, this.token, projectId).then(users => this.projectUsers = users);
+        return this.resources.jiraImporter.listUsers(this.url, this.token, projectId).then((users) => this.projectUsers = users);
     }
 
     importProject(name, description, projectId, userBindings, keepExternalReference, isPrivate, projectType, importerType) {
@@ -63,11 +63,11 @@ export class JiraImportService extends Service {
 
     getAuthUrl(url) {
         return new Promise((function(resolve, reject) {
-            return this.resources.jiraImporter.getAuthUrl(url).then(response => {
+            return this.resources.jiraImporter.getAuthUrl(url).then((response) => {
                 this.authUrl = response.data.url;
                 return resolve(this.authUrl);
             }
-            , err => {
+            , (err) => {
                 return reject(err.data._error_message);
             });
         }.bind(this)));
@@ -75,7 +75,7 @@ export class JiraImportService extends Service {
 
     authorize(oauth_verifier) {
         return new Promise((function(resolve, reject) {
-            return this.resources.jiraImporter.authorize(oauth_verifier).then((response => {
+            return this.resources.jiraImporter.authorize(oauth_verifier).then(((response) => {
                 this.token = response.data.token;
                 this.url = response.data.url;
                 return resolve(response.data);

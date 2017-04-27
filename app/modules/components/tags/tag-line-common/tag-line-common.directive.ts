@@ -17,16 +17,16 @@
  * File: tag-line.directive.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export let TagLineCommonDirective = function() {
-    let link = function(scope, el, attr, ctrl) {
+    const link = function(scope, el, attr, ctrl) {
         if (!_.isUndefined(attr.disableColorSelection)) {
             ctrl.disableColorSelection = true;
         }
 
-        var unwatch = scope.$watch("vm.project", function(project) {
+        const unwatch = scope.$watch("vm.project", function(project) {
             if (!project || !Object.keys(project).length) { return; }
 
             unwatch();
@@ -47,8 +47,8 @@ export let TagLineCommonDirective = function() {
             } else if (event.keyCode === 13) {
                 event.preventDefault();
 
-                if (el.find('.tags-dropdown .selected').length) {
-                    let tagName = $('.tags-dropdown .selected .tags-dropdown-name').text();
+                if (el.find(".tags-dropdown .selected").length) {
+                    const tagName = $(".tags-dropdown .selected .tags-dropdown-name").text();
                     ctrl.addNewTag(tagName, null);
                 } else {
                     ctrl.addNewTag(ctrl.newTag.name, ctrl.newTag.color);
@@ -68,12 +68,11 @@ export let TagLineCommonDirective = function() {
             tags: "=",
             project: "=",
             onAddTag: "&",
-            onDeleteTag: "&"
+            onDeleteTag: "&",
         },
-        templateUrl:"components/tags/tag-line-common/tag-line-common.html",
+        templateUrl: "components/tags/tag-line-common/tag-line-common.html",
         controller: "TagLineCommonCtrl",
         controllerAs: "vm",
-        bindToController: true
+        bindToController: true,
     };
 };
-

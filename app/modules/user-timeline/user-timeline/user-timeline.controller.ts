@@ -22,27 +22,27 @@
  * File: modules/profile/profile-timeline/profile-timeline.controller.coffee
  */
 
-import {FiltersMixin} from "../../../ts/modules/controllerMixins"
-import * as angular from "angular"
-import * as Immutable from "immutable"
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import {FiltersMixin} from "../../../ts/modules/controllerMixins";
 
 export class UserTimelineController extends FiltersMixin {
-    userTimelineService:any
-    timelineList:any
-    scrollDisabled:any
-    timeline:any
-    projectId:any
-    currentUser:any
-    user:any
+    userTimelineService: any;
+    timelineList: any;
+    scrollDisabled: any;
+    timeline: any;
+    projectId: any;
+    currentUser: any;
+    user: any;
 
     static initClass() {
         this.$inject = [
-            "tgUserTimelineService"
+            "tgUserTimelineService",
         ];
     }
 
     constructor(userTimelineService) {
-        super()
+        super();
         this.userTimelineService = userTimelineService;
         this.timelineList = Immutable.List();
         this.scrollDisabled = false;
@@ -63,7 +63,7 @@ export class UserTimelineController extends FiltersMixin {
 
         return this.timeline
             .next()
-            .then(response => {
+            .then((response) => {
                 this.timelineList = this.timelineList.concat(response.get("items"));
 
                 if (response.get("next")) {

@@ -18,7 +18,7 @@
  */
 
 export let TribeButtonDirective = function(configService, locationService) {
-    let link = function(scope, el, attrs) {
+    const link = function(scope, el, attrs) {
 
         scope.vm = {};
         scope.vm.tribeHost = configService.config.tribeHost;
@@ -34,10 +34,10 @@ export let TribeButtonDirective = function(configService, locationService) {
         scope: {usId: "=", projectSlug: "="},
         controllerAs: "vm",
         templateUrl: "components/tribe-button/tribe-button.html",
-        link
+        link,
     };
 };
 
 TribeButtonDirective.$inject = [
-    "$tgConfig", "$tgLocation"
+    "$tgConfig", "$tgLocation",
 ];

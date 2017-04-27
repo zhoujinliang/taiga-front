@@ -22,34 +22,33 @@
  * File: live-announcement.directive.coffee
  */
 
-
 export let LiveAnnouncementDirective = function(liveAnnouncementService) {
-    let link = function(scope, el, attrs) {};
+    const link = function(scope, el, attrs) {};
 
     return {
         restrict: "AE",
         scope: {},
-        controllerAs: 'vm',
+        controllerAs: "vm",
         controller() {
             this.close = () => liveAnnouncementService.open = false;
 
             return Object.defineProperties(this, {
                 open: {
-                    get() { return liveAnnouncementService.open; }
+                    get() { return liveAnnouncementService.open; },
                 },
                 title: {
-                    get() { return liveAnnouncementService.title; }
+                    get() { return liveAnnouncementService.title; },
                 },
                 desc: {
-                    get() { return liveAnnouncementService.desc; }
-                }
+                    get() { return liveAnnouncementService.desc; },
+                },
             });
         },
         link,
-        templateUrl: "components/live-announcement/live-announcement.html"
+        templateUrl: "components/live-announcement/live-announcement.html",
     };
 };
 
 LiveAnnouncementDirective.$inject = [
-    "tgLiveAnnouncementService"
+    "tgLiveAnnouncementService",
 ];

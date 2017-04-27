@@ -17,9 +17,9 @@
  * File: profile-favs.directive.coffee
  */
 
-import * as _ from "lodash"
+import * as _ from "lodash";
 
-let base = {
+const base = {
     scope: {},
     bindToController: {
         user: "=",
@@ -27,13 +27,12 @@ let base = {
         q: "@",
         scrollDisabled: "@",
         isLoading: "@",
-        hasNoResults: "@"
+        hasNoResults: "@",
     },
     controller: null, // Define in directives
     controllerAs: "vm",
     templateUrl: "profile/profile-favs/profile-favs.html",
 };
-
 
 //###################################################
 //# Liked
@@ -41,10 +40,9 @@ let base = {
 
 export let ProfileLikedDirective = () =>
     _.extend({}, base, {
-        controller: "ProfileLiked"
+        controller: "ProfileLiked",
     })
 ;
-
 
 //###################################################
 //# Voted
@@ -52,10 +50,9 @@ export let ProfileLikedDirective = () =>
 
 export let ProfileVotedDirective = () =>
     _.extend({}, base, {
-        controller: "ProfileVoted"
+        controller: "ProfileVoted",
     })
 ;
-
 
 //###################################################
 //# Watched
@@ -63,6 +60,6 @@ export let ProfileVotedDirective = () =>
 
 export let ProfileWatchedDirective = () =>
     _.extend({}, base, {
-        controller: "ProfileWatched"
+        controller: "ProfileWatched",
     })
 ;

@@ -18,16 +18,16 @@
  */
 
 export let LightboxAddMembersDirective = function(lightboxService) {
-    let link = function(scope, el, attrs, ctrl) {
+    const link = function(scope, el, attrs, ctrl) {
         lightboxService.open(el);
         return ctrl._getContacts();
     };
 
     return {
         scope: {},
-        templateUrl:"invite-members/lightbox-add-members.html",
+        templateUrl: "invite-members/lightbox-add-members.html",
         controller: "AddMembersCtrl",
         controllerAs: "vm",
-        link
+        link,
     };
 };

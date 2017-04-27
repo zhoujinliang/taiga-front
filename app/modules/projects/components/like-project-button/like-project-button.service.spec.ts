@@ -17,34 +17,34 @@
  * File: like-project-button.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var sinon:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-import * as _ from "lodash"
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var sinon: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+import * as _ from "lodash";
 
 describe("tgLikeProjectButtonService", function() {
     let likeButtonService = null;
     let provide = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgResources = function() {
+    const _mockTgResources = function() {
         mocks.tgResources = {
             projects: {
                 likeProject: sinon.stub(),
-                unlikeProject: sinon.stub()
-            }
+                unlikeProject: sinon.stub(),
+            },
         };
 
         return provide.value("tgResources", mocks.tgResources);
     };
 
-    let _mockTgCurrentUserService = function() {
+    const _mockTgCurrentUserService = function() {
         mocks.tgCurrentUserService = {
             setProjects: sinon.stub(),
             projects: Immutable.fromJS({
@@ -52,41 +52,41 @@ describe("tgLikeProjectButtonService", function() {
                     {
                         id: 4,
                         total_fans: 2,
-                        is_fan: false
+                        is_fan: false,
                     },
                     {
                         id: 5,
                         total_fans: 7,
-                        is_fan: true
+                        is_fan: true,
                     },
                     {
                         id: 6,
                         total_fans: 4,
-                        is_fan: true
-                    }
-                ]
-            })
+                        is_fan: true,
+                    },
+                ],
+            }),
         };
 
         return provide.value("tgCurrentUserService", mocks.tgCurrentUserService);
     };
 
-    let _mockTgProjectService = function() {
+    const _mockTgProjectService = function() {
         mocks.tgProjectService = {
-            setProject: sinon.stub()
+            setProject: sinon.stub(),
         };
 
         return provide.value("tgProjectService", mocks.tgProjectService);
     };
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_tgLikeProjectButtonService_) {
             likeButtonService = _tgLikeProjectButtonService_;
             if (callback) { return callback(); }
         })
     ;
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgResources();
@@ -96,7 +96,7 @@ describe("tgLikeProjectButtonService", function() {
         })
     ;
 
-    let _setup = () => _mocks();
+    const _setup = () => _mocks();
 
     beforeEach(function() {
         module("taigaProjects");
@@ -105,30 +105,29 @@ describe("tgLikeProjectButtonService", function() {
     });
 
     it("like", function(done) {
-        let projectId = 4;
+        const projectId = 4;
 
         mocks.tgResources.projects.likeProject.withArgs(projectId).promise().resolve();
 
-        let newProject = {
+        const newProject = {
             id: 4,
             total_fans: 3,
-            is_fan: true
+            is_fan: true,
         };
 
-        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(['all', 0]);
+        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(["all", 0]);
 
-        let userServiceCheckImmutable = sinon.match((function(immutable) {
+        const userServiceCheckImmutable = sinon.match((function(immutable) {
             immutable = immutable.toJS();
 
             return _.isEqual(immutable[0], newProject);
-        }), 'userServiceCheckImmutable');
+        }), "userServiceCheckImmutable");
 
-        let projectServiceCheckImmutable = sinon.match((function(immutable) {
+        const projectServiceCheckImmutable = sinon.match((function(immutable) {
             immutable = immutable.toJS();
 
             return _.isEqual(immutable, newProject);
-        }), 'projectServiceCheckImmutable');
-
+        }), "projectServiceCheckImmutable");
 
         return likeButtonService.like(projectId).finally(function() {
             expect(mocks.tgCurrentUserService.setProjects).to.have.been.calledWith(userServiceCheckImmutable);
@@ -139,28 +138,27 @@ describe("tgLikeProjectButtonService", function() {
     });
 
     it("like, if the user doesn't have the project", function(done) {
-        let projectId = 4;
+        const projectId = 4;
 
         mocks.tgResources.projects.likeProject.withArgs(projectId).promise().resolve();
 
-        let newProject = {
+        const newProject = {
             id: 4,
             total_fans: 3,
-            is_fan: true
+            is_fan: true,
         };
 
-        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(['all', 0]);
+        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(["all", 0]);
 
         mocks.tgCurrentUserService.projects = Immutable.fromJS({
-            all: []
+            all: [],
         });
 
-        let projectServiceCheckImmutable = sinon.match((function(immutable) {
+        const projectServiceCheckImmutable = sinon.match((function(immutable) {
             immutable = immutable.toJS();
 
             return _.isEqual(immutable, newProject);
-        }), 'projectServiceCheckImmutable');
-
+        }), "projectServiceCheckImmutable");
 
         return likeButtonService.like(projectId).finally(function() {
             expect(mocks.tgCurrentUserService.setProjects).to.not.have.been.called;
@@ -171,30 +169,29 @@ describe("tgLikeProjectButtonService", function() {
     });
 
     return it("unlike", function(done) {
-        let projectId = 5;
+        const projectId = 5;
 
         mocks.tgResources.projects.unlikeProject.withArgs(projectId).promise().resolve();
 
-        let newProject =  {
+        const newProject =  {
             id: 5,
             total_fans: 6,
-            is_fan: false
+            is_fan: false,
         };
 
-        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(['all', 1]);
+        mocks.tgProjectService.project =  mocks.tgCurrentUserService.projects.getIn(["all", 1]);
 
-        let userServiceCheckImmutable = sinon.match((function(immutable) {
+        const userServiceCheckImmutable = sinon.match((function(immutable) {
             immutable = immutable.toJS();
 
             return _.isEqual(immutable[1], newProject);
-        }), 'userServiceCheckImmutable');
+        }), "userServiceCheckImmutable");
 
-        let projectServiceCheckImmutable = sinon.match((function(immutable) {
+        const projectServiceCheckImmutable = sinon.match((function(immutable) {
             immutable = immutable.toJS();
 
             return _.isEqual(immutable, newProject);
-        }), 'projectServiceCheckImmutable');
-
+        }), "projectServiceCheckImmutable");
 
         return likeButtonService.unlike(projectId).finally(function() {
             expect(mocks.tgCurrentUserService.setProjects).to.have.been.calledWith(userServiceCheckImmutable);

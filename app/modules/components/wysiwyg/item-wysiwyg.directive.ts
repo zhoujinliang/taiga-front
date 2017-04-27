@@ -24,11 +24,11 @@
 
 // Used in details descriptions
 export let ItemWysiwyg = function($modelTransform, $rootscope, $confirm, attachmentsFullService, $translate) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         $scope.editableDescription = false;
 
         $scope.saveDescription = function(description, cb) {
-            let transform = $modelTransform.save(function(item) {
+            const transform = $modelTransform.save(function(item) {
                 item.description = description;
 
                 return item;
@@ -44,8 +44,8 @@ export let ItemWysiwyg = function($modelTransform, $rootscope, $confirm, attachm
             return transform.finally(cb);
         };
 
-        let uploadFile = (file, cb) =>
-            attachmentsFullService.addAttachment($scope.project.id, $scope.item.id, $attrs.type, file).then(result => cb(result.getIn(['file', 'name']), result.getIn(['file', 'url'])))
+        const uploadFile = (file, cb) =>
+            attachmentsFullService.addAttachment($scope.project.id, $scope.item.id, $attrs.type, file).then((result) => cb(result.getIn(["file", "name"]), result.getIn(["file", "url"])))
         ;
 
         $scope.uploadFiles = (files, cb) =>
@@ -60,7 +60,7 @@ export let ItemWysiwyg = function($modelTransform, $rootscope, $confirm, attachm
             return $scope.storageKey = $scope.project.id + "-" + value.id + "-" + $attrs.type;
         });
 
-        return $scope.$watch('project', function(project) {
+        return $scope.$watch("project", function(project) {
             if (!project) { return; }
 
             return $scope.editableDescription = project.my_permissions.indexOf($attrs.requiredPerm) !== -1;
@@ -93,6 +93,6 @@ export let ItemWysiwyg = function($modelTransform, $rootscope, $confirm, attachm
         {{'COMMON.DESCRIPTION.NO_DESCRIPTION' | translate}}
     </div>
 </div>\
-`
+`,
     };
 };

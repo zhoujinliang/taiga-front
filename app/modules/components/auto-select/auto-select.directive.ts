@@ -17,14 +17,14 @@
  * File: auto-select.directive.coffee
  */
 
-export let AutoSelectDirective = $timeout =>
+export let AutoSelectDirective = ($timeout) =>
     ({
         link(scope, elm) {
             return $timeout(() => elm[0].select());
-        }
+        },
     })
 ;
 
 AutoSelectDirective.$inject = [
-    '$timeout'
+    "$timeout",
 ];

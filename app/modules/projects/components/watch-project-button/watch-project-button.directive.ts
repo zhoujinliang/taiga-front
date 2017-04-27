@@ -22,7 +22,7 @@ export let WatchProjectButtonDirective = () =>
         scope: {},
         controller: "WatchProjectButton",
         bindToController: {
-            project: "="
+            project: "=",
         },
         controllerAs: "vm",
         templateUrl: "projects/components/watch-project-button/watch-project-button.html",

@@ -17,36 +17,36 @@
  * File: attachment-link.directive.coffee
  */
 
-import * as angular from "angular"
-import {isImage, isPdf} from "../../../libs/utils"
+import * as angular from "angular";
+import {isImage, isPdf} from "../../../libs/utils";
 
 export let AttachmentLinkDirective = function($parse, attachmentsPreviewService, lightboxService) {
-    let link = function(scope, el, attrs) {
-        let attachment = $parse(attrs.tgAttachmentLink)(scope);
+    const link = function(scope, el, attrs) {
+        const attachment = $parse(attrs.tgAttachmentLink)(scope);
 
         el.on("click", function(event) {
-            if (isImage(attachment.getIn(['file', 'name']))) {
+            if (isImage(attachment.getIn(["file", "name"]))) {
                 event.preventDefault();
 
                 return scope.$apply(function() {
-                    lightboxService.open($('tg-attachments-preview'));
-                    return attachmentsPreviewService.fileId = attachment.getIn(['file', 'id']);
+                    lightboxService.open($("tg-attachments-preview"));
+                    return attachmentsPreviewService.fileId = attachment.getIn(["file", "id"]);
                 });
-            } else if (isPdf(attachment.getIn(['file', 'name']))) {
+            } else if (isPdf(attachment.getIn(["file", "name"]))) {
                 event.preventDefault();
-                return window.open(attachment.getIn(['file', 'url']));
+                return window.open(attachment.getIn(["file", "url"]));
             }
         });
 
         return scope.$on("$destroy", () => el.off());
     };
     return {
-        link
+        link,
     };
 };
 
 AttachmentLinkDirective.$inject = [
     "$parse",
     "tgAttachmentsPreviewService",
-    "lightboxService"
+    "lightboxService",
 ];

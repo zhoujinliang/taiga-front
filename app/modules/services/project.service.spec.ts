@@ -17,48 +17,48 @@
  * File: project.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("tgProjectService", function() {
     let $provide = null;
     let $interval = null;
-    let mocks:any = {};
+    const mocks: any = {};
     let projectService = null;
 
-    let _mockProjectsService = function() {
+    const _mockProjectsService = function() {
         mocks.projectsService = {
-            getProjectBySlug: sinon.stub()
+            getProjectBySlug: sinon.stub(),
         };
 
         return $provide.value("tgProjectsService", mocks.projectsService);
     };
 
-    let _mockUserActivityService = function() {
+    const _mockUserActivityService = function() {
         mocks.userActivityService = {
             onInactive: sinon.stub(),
-            onActive: sinon.stub()
+            onActive: sinon.stub(),
         };
 
         return $provide.value("tgUserActivityService", mocks.userActivityService);
     };
 
-    let _mockXhrErrorService = function() {
+    const _mockXhrErrorService = function() {
         mocks.xhrErrorService = {
-            response: sinon.stub()
+            response: sinon.stub(),
         };
 
         return $provide.value("tgXhrErrorService", mocks.xhrErrorService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -70,9 +70,9 @@ describe("tgProjectService", function() {
         })
     ;
 
-    let _setup = () => _mocks();
+    const _setup = () => _mocks();
 
-    let _inject = () =>
+    const _inject = () =>
         inject(function(_tgProjectService_, _$interval_) {
             projectService = _tgProjectService_;
             return $interval = _$interval_;
@@ -105,18 +105,18 @@ describe("tgProjectService", function() {
     it("set project if the project slug has changed", function(done) {
         projectService.setProject = sinon.spy();
 
-        let project = Immutable.Map({
+        const project = Immutable.Map({
             id: 1,
-            slug: 'slug-1',
-            members: []
+            slug: "slug-1",
+            members: [],
         });
 
-        mocks.projectsService.getProjectBySlug.withArgs('slug-1').promise().resolve(project);
-        mocks.projectsService.getProjectBySlug.withArgs('slug-2').promise().resolve(project);
+        mocks.projectsService.getProjectBySlug.withArgs("slug-1").promise().resolve(project);
+        mocks.projectsService.getProjectBySlug.withArgs("slug-2").promise().resolve(project);
 
-        return projectService.setProjectBySlug('slug-1')
-            .then(() => projectService.setProjectBySlug('slug-1'))
-            .then(() => projectService.setProjectBySlug('slug-2'))
+        return projectService.setProjectBySlug("slug-1")
+            .then(() => projectService.setProjectBySlug("slug-1"))
+            .then(() => projectService.setProjectBySlug("slug-2"))
             .finally(function() {
                 expect(projectService.setProject).to.be.called.twice;
                 return done();
@@ -124,15 +124,15 @@ describe("tgProjectService", function() {
     });
 
     it("set project and set active members", function() {
-        let project = Immutable.fromJS({
-            name: 'test project',
+        const project = Immutable.fromJS({
+            name: "test project",
             members: [
                 {is_active: true},
                 {is_active: false},
                 {is_active: true},
                 {is_active: false},
-                {is_active: false}
-            ]
+                {is_active: false},
+            ],
         });
 
         projectService.setProject(project);
@@ -142,15 +142,15 @@ describe("tgProjectService", function() {
     });
 
     it("fetch project", function(done) {
-        let project = Immutable.Map({
+        const project = Immutable.Map({
             id: 1,
-            slug: 'slug',
-            members: []
+            slug: "slug",
+            members: [],
         });
 
         projectService._project = project;
 
-        mocks.projectsService.getProjectBySlug.withArgs(project.get('slug')).promise().resolve(project);
+        mocks.projectsService.getProjectBySlug.withArgs(project.get("slug")).promise().resolve(project);
 
         return projectService.fetchProject().then(function() {
             expect(projectService.project).to.be.equal(project);
@@ -164,8 +164,8 @@ describe("tgProjectService", function() {
         projectService._activeMembers = ["fakeMember"];
         projectService._project = Immutable.Map({
             id: 1,
-            slug: 'slug',
-            members: []
+            slug: "slug",
+            members: [],
         });
 
         projectService.cleanProject();
@@ -177,18 +177,18 @@ describe("tgProjectService", function() {
     });
 
     it("has permissions", function() {
-        let project = Immutable.Map({
+        const project = Immutable.Map({
             id: 1,
             my_permissions: [
-                'test1',
-                'test2'
-            ]
+                "test1",
+                "test2",
+            ],
         });
 
         projectService._project = project;
 
-        let perm1 = projectService.hasPermission('test2');
-        let perm2 = projectService.hasPermission('test3');
+        const perm1 = projectService.hasPermission("test2");
+        const perm2 = projectService.hasPermission("test3");
 
         expect(perm1).to.be.true;
         return expect(perm2).to.be.false;

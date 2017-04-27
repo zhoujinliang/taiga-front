@@ -17,25 +17,25 @@
  * File: project-logo.service.spec.coffee
  */
 
-declare var describe:any;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import {ProjectLogoService} from "./project-logo.service"
+declare var describe: any;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import {ProjectLogoService} from "./project-logo.service";
 
 describe("tgProjectLogoService", function() {
     let service: ProjectLogoService;
 
     beforeEach(function() {
-        (<any>window)._version = '123';
-        service = new ProjectLogoService()
+        (window as any)._version = "123";
+        service = new ProjectLogoService();
     });
 
     return it("get default project logo", function() {
-        let logo = service.getDefaultProjectLogo('slug/slug', 2);
+        const logo = service.getDefaultProjectLogo("slug/slug", 2);
 
-        expect(logo.src).to.be.equal('/123/images/project-logos/project-logo-04.png');
-        return expect(logo.color).to.be.equal('rgba( 152, 224, 168,  1 )');
+        expect(logo.src).to.be.equal("/123/images/project-logos/project-logo-04.png");
+        return expect(logo.color).to.be.equal("rgba( 152, 224, 168,  1 )");
     });
 });

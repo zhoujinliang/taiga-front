@@ -17,63 +17,63 @@
  * File: create-project-form.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("CreateProjectFormCtrl", function() {
     let $provide = null;
     let $controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockNavUrlsService = function() {
+    const _mockNavUrlsService = function() {
         mocks.navUrls = {
-            resolve: sinon.stub()
+            resolve: sinon.stub(),
         };
 
         return $provide.value("$tgNavUrls", mocks.navUrls);
     };
 
-    let _mockCurrentUserService = function() {
+    const _mockCurrentUserService = function() {
         mocks.currentUserService = {
             canCreatePublicProjects: sinon.stub().returns({valid: true}),
-            canCreatePrivateProjects: sinon.stub().returns({valid: true})
+            canCreatePrivateProjects: sinon.stub().returns({valid: true}),
         };
 
         return $provide.value("tgCurrentUserService", mocks.currentUserService);
     };
 
-    let _mockProjectsService = function() {
+    const _mockProjectsService = function() {
         mocks.projectsService = {
-            create: sinon.stub()
+            create: sinon.stub(),
         };
 
         return $provide.value("tgProjectsService", mocks.projectsService);
     };
 
-    let _mockProjectUrl = function() {
+    const _mockProjectUrl = function() {
         mocks.projectUrl = {
-            get: sinon.stub()
+            get: sinon.stub(),
         };
 
         return $provide.value("$projectUrl", mocks.projectUrl);
     };
 
-    let _mockLocation = function() {
+    const _mockLocation = function() {
         mocks.location = {
-            url: sinon.stub()
+            url: sinon.stub(),
         };
 
         return $provide.value("$location", mocks.location);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function(_$provide_) {
             $provide = _$provide_;
 
@@ -87,11 +87,11 @@ describe("CreateProjectFormCtrl", function() {
         })
     ;
 
-    let _inject = () =>
-        inject(_$controller_ => $controller = _$controller_)
+    const _inject = () =>
+        inject((_$controller_) => $controller = _$controller_)
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -103,27 +103,27 @@ describe("CreateProjectFormCtrl", function() {
     });
 
     it("submit project form", function() {
-        let ctrl = $controller("CreateProjectFormCtrl");
+        const ctrl = $controller("CreateProjectFormCtrl");
 
-        ctrl.projectForm = 'form';
+        ctrl.projectForm = "form";
 
-        mocks.projectsService.create.withArgs('form').promise().resolve('project1');
-        mocks.projectUrl.get.returns('project-url');
+        mocks.projectsService.create.withArgs("form").promise().resolve("project1");
+        mocks.projectUrl.get.returns("project-url");
 
         return ctrl.submit().then(function() {
             expect(ctrl.formSubmitLoading).to.be.true;
 
-            return expect(mocks.location.url).to.have.been.calledWith('project-url');
+            return expect(mocks.location.url).to.have.been.calledWith("project-url");
         });
     });
 
-    it('check if the user can create a private projects', function() {
+    it("check if the user can create a private projects", function() {
         mocks.currentUserService.canCreatePrivateProjects = sinon.stub().returns({valid: true});
 
         let ctrl = $controller("CreateProjectFormCtrl");
 
         ctrl.projectForm = {
-            is_private: true
+            is_private: true,
         };
 
         expect(ctrl.canCreateProject()).to.be.true;
@@ -133,19 +133,19 @@ describe("CreateProjectFormCtrl", function() {
         ctrl = $controller("CreateProjectFormCtrl");
 
         ctrl.projectForm = {
-            is_private: true
+            is_private: true,
         };
 
         return expect(ctrl.canCreateProject()).to.be.false;
     });
 
-    return it('check if the user can create a public projects', function() {
+    return it("check if the user can create a public projects", function() {
         mocks.currentUserService.canCreatePublicProjects = sinon.stub().returns({valid: true});
 
         let ctrl = $controller("CreateProjectFormCtrl");
 
         ctrl.projectForm = {
-            is_private: false
+            is_private: false,
         };
 
         expect(ctrl.canCreateProject()).to.be.true;
@@ -155,7 +155,7 @@ describe("CreateProjectFormCtrl", function() {
         ctrl = $controller("CreateProjectFormCtrl");
 
         ctrl.projectForm = {
-            is_private: false
+            is_private: false,
         };
 
         return expect(ctrl.canCreateProject()).to.be.false;

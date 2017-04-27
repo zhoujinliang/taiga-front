@@ -17,17 +17,16 @@
  * File: tag-line.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let TagDirective = () =>
     ({
-        templateUrl:"components/tags/tag/tag.html",
+        templateUrl: "components/tags/tag/tag.html",
         scope: {
             tag: "<",
             loadingRemoveTag: "<",
             onDeleteTag: "&",
-            hasPermissions: "@"
-        }
+            hasPermissions: "@",
+        },
     })
 ;
-

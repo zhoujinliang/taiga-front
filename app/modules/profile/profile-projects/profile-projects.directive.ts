@@ -18,16 +18,16 @@
  */
 
 export let ProfileProjectsDirective = function() {
-    let link = (scope, elm, attr, ctrl) => ctrl.loadProjects();
+    const link = (scope, elm, attr, ctrl) => ctrl.loadProjects();
 
     return {
         templateUrl: "profile/profile-projects/profile-projects.html",
         scope: {
-            user: "="
+            user: "=",
         },
         link,
         bindToController: true,
         controllerAs: "vm",
-        controller: "ProfileProjects"
+        controller: "ProfileProjects",
     };
 };

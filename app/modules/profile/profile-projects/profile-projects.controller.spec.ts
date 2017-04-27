@@ -17,49 +17,49 @@
  * File: profile-projects.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("ProfileProjects", function() {
     let $controller = null;
     let provide = null;
     let $rootScope = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockUserService = function() {
+    const _mockUserService = function() {
         mocks.userService = {
-            attachUserContactsToProjects: sinon.stub()
+            attachUserContactsToProjects: sinon.stub(),
         };
 
         return provide.value("tgUserService", mocks.userService);
     };
 
-    let _mockProjectsService = function() {
+    const _mockProjectsService = function() {
         mocks.projectsService = {
-            getProjectsByUserId: sinon.stub()
+            getProjectsByUserId: sinon.stub(),
         };
 
         return provide.value("tgProjectsService", mocks.projectsService);
     };
 
-    let _mockAuthService = function() {
-        let stub = sinon.stub();
+    const _mockAuthService = function() {
+        const stub = sinon.stub();
 
         stub.returns({id: 2});
 
         return provide.value("$tgAuth", {
-            getUser: stub
+            getUser: stub,
         });
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockUserService();
@@ -70,7 +70,7 @@ describe("ProfileProjects", function() {
         })
     ;
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_$controller_,  _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;
@@ -84,26 +84,26 @@ describe("ProfileProjects", function() {
     });
 
     return it("load projects with contacts attached", function(done) {
-        let user = Immutable.fromJS({id: 2});
-        let projects = [
+        const user = Immutable.fromJS({id: 2});
+        const projects = [
             {id: 1},
             {id: 2},
-            {id: 3}
+            {id: 3},
         ];
 
-        let projectsWithContacts = [
+        const projectsWithContacts = [
             {id: 1, contacts: "fake"},
             {id: 2, contacts: "fake"},
-            {id: 3, contacts: "fake"}
+            {id: 3, contacts: "fake"},
         ];
 
         mocks.projectsService.getProjectsByUserId.withArgs(user.get("id")).promise().resolve(projects);
         mocks.userService.attachUserContactsToProjects.withArgs(user.get("id"), projects).returns(projectsWithContacts);
 
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
-        let ctrl = $controller("ProfileProjects", $scope, {
-            user
+        const ctrl = $controller("ProfileProjects", $scope, {
+            user,
         });
 
         return ctrl.loadProjects().then(function() {

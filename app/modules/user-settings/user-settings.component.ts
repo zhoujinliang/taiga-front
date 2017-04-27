@@ -24,27 +24,27 @@
 
 import {Component } from "@angular/core";
 import {Store} from "@ngrx/store";
-import {IState} from "../../app.store"
-import {ConfigurationService} from "../../modules/base/conf"
-import {TranslateService} from "@ngx-translate/core"
+import {TranslateService} from "@ngx-translate/core";
+import {IState} from "../../app.store";
+import {ConfigurationService} from "../../modules/base/conf";
 
 @Component({
     selector: "tg-user-settings",
-    template: require("./user-settings.jade")()
+    template: require("./user-settings.jade")(),
 })
 export class UserSettings {
-    sectionName = "USER_SETTINGS.MENU.SECTION_TITLE"
-    user:any
-    availableLanguages
-    availableThemes
-    defaultLanguage
-    defaultTheme
+    sectionName = "USER_SETTINGS.MENU.SECTION_TITLE";
+    user: any;
+    availableLanguages;
+    availableThemes;
+    defaultLanguage;
+    defaultTheme;
 
     constructor(private store: Store<IState>,
                 private config: ConfigurationService,
                 private translate: TranslateService) {
-        this.user = this.store.select((state) => state.getIn(["auth", "user"]))
-        this.availableLanguages =  this.store.select((state) => state.getIn(["user-settings", "languages"]))
+        this.user = this.store.select((state) => state.getIn(["auth", "user"]));
+        this.availableLanguages =  this.store.select((state) => state.getIn(["user-settings", "languages"]));
 
         this.availableThemes = this.config.get("themes", []);
         this.defaultTheme = this.config.get("defaultTheme", []);
@@ -54,8 +54,8 @@ export class UserSettings {
     openDeleteLightbox(user) {
         this.store.dispatch({
             type: "USER_SETTINGS_OPEN_LB_DELETE",
-            payload: user
-        })
+            payload: user,
+        });
     }
 
     onSubmitForm() {
@@ -91,22 +91,22 @@ export class UserSettings {
 //############################################################################
 
 export let UserAvatarDirective = function($auth, $model, $rs, $confirm) {
-    let link = function($scope, $el, $attrs) {
-        let showSizeInfo = () => $el.find(".size-info").removeClass("hidden");
+    const link = function($scope, $el, $attrs) {
+        const showSizeInfo = () => $el.find(".size-info").removeClass("hidden");
 
-        let onSuccess = function(response) {
-            let user = $model.make_model("users", response.data);
+        const onSuccess = function(response) {
+            const user = $model.make_model("users", response.data);
             $auth.setUser(user);
             $scope.user = user;
 
-            $el.find('.loading-overlay').removeClass('active');
-            return $confirm.notify('success');
+            $el.find(".loading-overlay").removeClass("active");
+            return $confirm.notify("success");
         };
 
-        let onError = function(response) {
+        const onError = function(response) {
             if (response.status === 413) { showSizeInfo(); }
-            $el.find('.loading-overlay').removeClass('active');
-            return $confirm.notify('error', response.data._error_message);
+            $el.find(".loading-overlay").removeClass("active");
+            return $confirm.notify("error", response.data._error_message);
         };
 
         // Change photo
@@ -114,14 +114,14 @@ export let UserAvatarDirective = function($auth, $model, $rs, $confirm) {
 
         $el.on("change", "#avatar-field", function(event) {
             if ($scope.avatarAttachment) {
-                $el.find('.loading-overlay').addClass("active");
+                $el.find(".loading-overlay").addClass("active");
                 return $rs.userSettings.changeAvatar($scope.avatarAttachment).then(onSuccess, onError);
             }
         });
 
         // Use gravatar photo
         $el.on("click", "a.js-use-gravatar", function(event) {
-            $el.find('.loading-overlay').addClass("active");
+            $el.find(".loading-overlay").addClass("active");
             return $rs.userSettings.removeAvatar().then(onSuccess, onError);
         });
 
@@ -136,12 +136,12 @@ export let UserAvatarDirective = function($auth, $model, $rs, $confirm) {
 //############################################################################
 
 export let TaigaAvatarModelDirective = function($parse) {
-    let link = function($scope, $el, $attrs) {
-        let model = $parse($attrs.tgAvatarModel);
-        let modelSetter = model.assign;
+    const link = function($scope, $el, $attrs) {
+        const model = $parse($attrs.tgAvatarModel);
+        const modelSetter = model.assign;
 
-        return $el.bind('change', () =>
-            $scope.$apply(() => modelSetter($scope, $el[0].files[0]))
+        return $el.bind("change", () =>
+            $scope.$apply(() => modelSetter($scope, $el[0].files[0])),
         );
     };
 

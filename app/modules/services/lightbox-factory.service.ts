@@ -17,12 +17,12 @@
  * File: lightbox-factory.service.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export class LightboxFactory {
-    rootScope: angular.IScope
-    compile: any
+    rootScope: angular.IScope;
+    compile: any;
 
     static initClass() {
         this.$inject = ["$rootScope", "$compile"];
@@ -37,7 +37,7 @@ export class LightboxFactory {
 
         scope = _.merge(scope, scopeAttrs);
 
-        let elm = $("<div>")
+        const elm = $("<div>")
             .attr(name, "1")
             .attr("tg-bind-scope", "1");
 
@@ -47,7 +47,7 @@ export class LightboxFactory {
 
         elm.addClass("remove-on-close");
 
-        let html = this.compile(elm)(scope);
+        const html = this.compile(elm)(scope);
 
         $(document.body).append(html);
 

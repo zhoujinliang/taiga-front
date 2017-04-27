@@ -17,34 +17,34 @@
  * File: vote-button.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("VoteButton", function() {
     let provide = null;
     let $controller = null;
     let $rootScope = null;
-    let mocks:any = {};
+    let mocks: any = {};
 
-    let _mockCurrentUser = function() {
+    const _mockCurrentUser = function() {
         mocks.currentUser = {
-            getUser: sinon.stub()
+            getUser: sinon.stub(),
         };
 
         return provide.value("tgCurrentUserService", mocks.currentUser);
     };
 
-    let _mocks = function() {
+    const _mocks = function() {
         mocks = {
             onUpvote: sinon.stub(),
-            onDownvote: sinon.stub()
+            onDownvote: sinon.stub(),
         };
 
         return module(function($provide) {
@@ -54,14 +54,14 @@ describe("VoteButton", function() {
         });
     };
 
-    let _inject = (callback=null) =>
+    const _inject = (callback= null) =>
         inject(function(_$controller_, _$rootScope_) {
             $rootScope = _$rootScope_;
             return $controller = _$controller_;
         })
     ;
 
-    let _setup = function() {
+    const _setup = function() {
         _mocks();
         return _inject();
     };
@@ -72,17 +72,17 @@ describe("VoteButton", function() {
     });
 
     it("upvote", function(done) {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
-        mocks.onUpvote = (<any>sinon.stub()).promise();
+        mocks.onUpvote = (sinon.stub() as any).promise();
 
-        let ctrl = $controller("VoteButton", $scope, {
+        const ctrl = $controller("VoteButton", $scope, {
             item: {is_voter: false},
             onUpvote: mocks.onUpvote,
-            onDownvote: mocks.onDownvote
+            onDownvote: mocks.onDownvote,
         });
 
-        let promise = ctrl.toggleVote();
+        const promise = ctrl.toggleVote();
 
         expect(ctrl.loading).to.be.true;
 
@@ -97,17 +97,17 @@ describe("VoteButton", function() {
     });
 
     return it("downvote", function(done) {
-        let $scope = $rootScope.$new();
+        const $scope = $rootScope.$new();
 
-        mocks.onDownvote = (<any>sinon.stub()).promise();
+        mocks.onDownvote = (sinon.stub() as any).promise();
 
-        let ctrl = $controller("VoteButton", $scope, {
+        const ctrl = $controller("VoteButton", $scope, {
             item: {is_voter: true},
             onUpvote: mocks.onUpvote,
-            onDownvote: mocks.onDownvote
+            onDownvote: mocks.onDownvote,
         });
 
-        let promise = ctrl.toggleVote();
+        const promise = ctrl.toggleVote();
 
         expect(ctrl.loading).to.be.true;
 

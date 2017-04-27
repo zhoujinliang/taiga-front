@@ -17,21 +17,21 @@
  * File: paginate-response.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("PaginateResponseService", function() {
     let paginateResponseService = null;
 
-    let _inject = () =>
-        inject(_tgPaginateResponseService_ => paginateResponseService = _tgPaginateResponseService_)
+    const _inject = () =>
+        inject((_tgPaginateResponseService_) => paginateResponseService = _tgPaginateResponseService_)
     ;
 
     beforeEach(function() {
@@ -40,16 +40,16 @@ describe("PaginateResponseService", function() {
     });
 
     return it("convert angualr pagination response to an object", function() {
-        let headerMock = sinon.stub();
+        const headerMock = sinon.stub();
 
         headerMock.withArgs("x-pagination-next").returns(true);
         headerMock.withArgs("x-pagination-prev").returns(false);
         headerMock.withArgs("x-pagination-current").returns(5);
         headerMock.withArgs("x-pagination-count").returns(234);
 
-        let serverResponse = Immutable.Map({
-            data: ['11', '22'],
-            headers: headerMock
+        const serverResponse = Immutable.Map({
+            data: ["11", "22"],
+            headers: headerMock,
         });
 
         let result = paginateResponseService(serverResponse);

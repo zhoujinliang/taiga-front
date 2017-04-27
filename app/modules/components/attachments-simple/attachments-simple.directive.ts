@@ -18,19 +18,19 @@
  */
 
 export let AttachmentsSimpleDirective = function() {
-    let link = function(scope, el, attrs, ctrl) {};
+    const link = function(scope, el, attrs, ctrl) {};
 
     return {
         scope: {},
         bindToController: {
             attachments: "=",
             onAdd: "&",
-            onDelete: "&"
+            onDelete: "&",
         },
         controller: "AttachmentsSimple",
         controllerAs: "vm",
         templateUrl: "components/attachments-simple/attachments-simple.html",
-        link
+        link,
     };
 };
 

@@ -17,17 +17,17 @@
  * File: tag-line.controller.coffee
  */
 
-import {trim} from "../../../../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {trim} from "../../../../libs/utils";
 
 export class TagLineController {
-    rootScope: angular.IScope
-    confirm:any
-    modelTransform:any
-    loadingAddTag:any
-    loadingRemoveTag:any
-    addTag:any
+    rootScope: angular.IScope;
+    confirm: any;
+    modelTransform: any;
+    loadingAddTag: any;
+    loadingRemoveTag: any;
+    addTag: any;
 
     static initClass() {
         this.$inject = [
@@ -47,24 +47,24 @@ export class TagLineController {
     onDeleteTag(tag) {
         this.loadingRemoveTag = tag[0];
 
-        let onDeleteTagSuccess = item => {
+        const onDeleteTagSuccess = (item) => {
             this.rootScope.$broadcast("object:updated");
             this.loadingRemoveTag = false;
 
             return item;
         };
 
-        let onDeleteTagError = () => {
+        const onDeleteTagError = () => {
             this.confirm.notify("error");
             return this.loadingRemoveTag = false;
         };
 
-        let tagName = trim(tag[0].toLowerCase());
+        const tagName = trim(tag[0].toLowerCase());
 
-        let transform = this.modelTransform.save(function(item) {
-            let itemtags = _.clone(item.tags);
+        const transform = this.modelTransform.save(function(item) {
+            const itemtags = _.clone(item.tags);
 
-            _.remove(itemtags, tag => tag[0] === tagName);
+            _.remove(itemtags, (tag) => tag[0] === tagName);
 
             item.tags = itemtags;
 
@@ -77,7 +77,7 @@ export class TagLineController {
     onAddTag(tag, color) {
         this.loadingAddTag = true;
 
-        let onAddTagSuccess = item => {
+        const onAddTagSuccess = (item) => {
             this.rootScope.$broadcast("object:updated"); //its a kind of magic.
             this.addTag = false;
             this.loadingAddTag = false;
@@ -85,15 +85,15 @@ export class TagLineController {
             return item;
         };
 
-        let onAddTagError = () => {
+        const onAddTagError = () => {
             this.loadingAddTag = false;
             return this.confirm.notify("error");
         };
 
-        let transform = this.modelTransform.save(item => {
-            let value = trim(tag.toLowerCase());
+        const transform = this.modelTransform.save((item) => {
+            const value = trim(tag.toLowerCase());
 
-            let itemtags = _.clone(item.tags);
+            const itemtags = _.clone(item.tags);
 
             itemtags.push([tag , color]);
 

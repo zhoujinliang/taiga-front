@@ -17,37 +17,37 @@
  * File: app-meta.service.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-declare var before:any;
-declare var angular:any;
-declare var angular:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+declare var before: any;
+declare var angular: any;
+declare var angular: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 angular.module("taigaCommon").provider("$exceptionHandler", angular.mock.$ExceptionHandlerProvider);
 
 describe("AppMetaService", function() {
     let appMetaService = null;
     let $rootScope = null;
-    let data = {
+    const data = {
         title: "--title--",
-        description: "--description--"
+        description: "--description--",
     };
 
-    let _inject = () =>
+    const _inject = () =>
         inject(function(_tgAppMetaService_, _$rootScope_) {
             appMetaService = _tgAppMetaService_;
             return $rootScope = _$rootScope_;
         })
     ;
 
-    before(() => (<any>window)._version = 1);
+    before(() => (window as any)._version = 1);
 
     beforeEach(function() {
         module("taigaCommon");
@@ -70,7 +70,7 @@ describe("AppMetaService", function() {
         expect($("meta[name='twitter:site']")).to.have.attr("content",  "@taigaio");
         expect($("meta[name='twitter:title']")).to.have.attr("content",  data.title);
         expect($("meta[name='twitter:description']")).to.have.attr("content",  data.description);
-        return expect($("meta[name='twitter:image']")).to.have.attr("content",  `${window.location.origin}/${(<any>window)._version}/images/logo-color.png`);
+        return expect($("meta[name='twitter:image']")).to.have.attr("content",  `${window.location.origin}/${(window as any)._version}/images/logo-color.png`);
     });
 
     it("set meta for open graph", function() {
@@ -79,7 +79,7 @@ describe("AppMetaService", function() {
         expect($("meta[property='og:site_name']")).to.have.attr("content", "Taiga - Love your projects");
         expect($("meta[property='og:title']")).to.have.attr("content", data.title);
         expect($("meta[property='og:description']")).to.have.attr("content", data.description);
-        expect($("meta[property='og:image']")).to.have.attr("content", `${window.location.origin}/${(<any>window)._version}/images/logo-color.png`);
+        expect($("meta[property='og:image']")).to.have.attr("content", `${window.location.origin}/${(window as any)._version}/images/logo-color.png`);
         return expect($("meta[property='og:url']")).to.have.attr("content", window.location.href);
     });
 
@@ -91,29 +91,28 @@ describe("AppMetaService", function() {
         expect($("meta[name='twitter:site']")).to.have.attr("content",  "@taigaio");
         expect($("meta[name='twitter:title']")).to.have.attr("content",  data.title);
         expect($("meta[name='twitter:description']")).to.have.attr("content",  data.description);
-        expect($("meta[name='twitter:image']")).to.have.attr("content",  `${window.location.origin}/${(<any>window)._version}/images/logo-color.png`);
+        expect($("meta[name='twitter:image']")).to.have.attr("content",  `${window.location.origin}/${(window as any)._version}/images/logo-color.png`);
         expect($("meta[property='og:type']")).to.have.attr("content", "object");
         expect($("meta[property='og:site_name']")).to.have.attr("content", "Taiga - Love your projects");
         expect($("meta[property='og:title']")).to.have.attr("content", data.title);
         expect($("meta[property='og:description']")).to.have.attr("content", data.description);
-        expect($("meta[property='og:image']")).to.have.attr("content", `${window.location.origin}/${(<any>window)._version}/images/logo-color.png`);
+        expect($("meta[property='og:image']")).to.have.attr("content", `${window.location.origin}/${(window as any)._version}/images/logo-color.png`);
         return expect($("meta[property='og:url']")).to.have.attr("content", window.location.href);
     });
 
     return it("set function to set the metas", function() {
-        let fn = () =>
+        const fn = () =>
             ({
-                title: 'test',
-                description: 'test2'
+                title: "test",
+                description: "test2",
             })
         ;
-
 
         appMetaService.setAll = sinon.stub();
         appMetaService.setfn(fn);
 
         $rootScope.$digest();
 
-        return expect(appMetaService.setAll).to.have.been.calledWith('test', 'test2');
+        return expect(appMetaService.setAll).to.have.been.calledWith("test", "test2");
     });
 });

@@ -17,20 +17,20 @@
  * File: profile-contacts.controller.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export class ProfileContactsController {
-    userService:any
-    currentUserService:any
-    currentUser:any
-    isCurrentUser:boolean
-    user:any
-    contacts:any
+    userService: any;
+    currentUserService: any;
+    currentUser: any;
+    isCurrentUser: boolean;
+    user: any;
+    contacts: any;
 
     static initClass() {
         this.$inject = [
             "tgUserService",
-            "tgCurrentUserService"
+            "tgCurrentUserService",
         ];
     }
 
@@ -48,7 +48,7 @@ export class ProfileContactsController {
 
     loadContacts() {
         return this.userService.getContacts(this.user.get("id"))
-            .then(contacts => {
+            .then((contacts) => {
                 return this.contacts = contacts;
         });
     }

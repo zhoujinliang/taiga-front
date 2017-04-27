@@ -27,8 +27,8 @@ export let AssignedToDirective = () =>
             assignedTo: "=",
             project: "=",
             onRemoveAssigned: "&",
-            onAssignTo: "&"
-        }
+            onAssignTo: "&",
+        },
     })
 ;
 AssignedToDirective.$inject = [];

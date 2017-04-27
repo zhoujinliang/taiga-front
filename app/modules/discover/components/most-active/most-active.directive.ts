@@ -18,14 +18,14 @@
  */
 
 export let MostActiveDirective = function() {
-    let link = (scope, el, attrs, ctrl) => ctrl.fetch();
+    const link = (scope, el, attrs, ctrl) => ctrl.fetch();
 
     return {
         controller: "MostActive",
         controllerAs: "vm",
         templateUrl: "discover/components/most-active/most-active.html",
         scope: {},
-        link
+        link,
     };
 };
 

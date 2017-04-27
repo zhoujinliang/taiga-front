@@ -18,17 +18,17 @@
  */
 
 export class ImportTaigaController {
-    confirm:any
-    rs:any
-    importProjectService:any
-    translate:any
+    confirm: any;
+    rs: any;
+    importProjectService: any;
+    translate: any;
 
     static initClass() {
         this.$inject = [
-            '$tgConfirm',
-            '$tgResources',
-            'tgImportProjectService',
-            '$translate'
+            "$tgConfirm",
+            "$tgResources",
+            "tgImportProjectService",
+            "$translate",
         ];
     }
 
@@ -40,13 +40,13 @@ export class ImportTaigaController {
     }
 
     importTaiga(files) {
-        let file = files[0];
+        const file = files[0];
 
-        let loader = this.confirm.loader(this.translate.instant('PROJECT.IMPORT.IN_PROGRESS.TITLE'), this.translate.instant('PROJECT.IMPORT.IN_PROGRESS.DESCRIPTION'), true);
+        const loader = this.confirm.loader(this.translate.instant("PROJECT.IMPORT.IN_PROGRESS.TITLE"), this.translate.instant("PROJECT.IMPORT.IN_PROGRESS.DESCRIPTION"), true);
 
         loader.start();
 
-        let promise = this.rs.projects.import(file, loader.update);
+        const promise = this.rs.projects.import(file, loader.update);
 
         this.importProjectService.importPromise(promise).finally(() => loader.stop());
 

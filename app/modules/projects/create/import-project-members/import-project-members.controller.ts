@@ -17,32 +17,32 @@
  * File: import-project-members.controller.coffee
  */
 
-import * as Immutable from "immutable"
-import * as _ from "lodash"
+import * as Immutable from "immutable";
+import * as _ from "lodash";
 
 export class ImportProjectMembersController {
-    currentUserService:any
-    userService:any
-    selectImportUserLightbox:boolean
-    warningImportUsers:boolean
-    displayEmailSelector:boolean
+    currentUserService: any;
+    userService: any;
+    selectImportUserLightbox: boolean;
+    warningImportUsers: boolean;
+    displayEmailSelector: boolean;
     cancelledUsers: Immutable.List<any>;
     selectedUsers: Immutable.List<any>;
     selectableUsers: Immutable.List<any>;
     userContacts: Immutable.List<any>;
-    currentUser:any
-    searchingUser:any
-    members:any
-    onSubmit:any
-    limitMembersPrivateProject:any
-    limitMembersPublicProject:any
-    importMoreUsersDisabled:any
-    project:any
+    currentUser: any;
+    searchingUser: any;
+    members: any;
+    onSubmit: any;
+    limitMembersPrivateProject: any;
+    limitMembersPublicProject: any;
+    importMoreUsersDisabled: any;
+    project: any;
 
     static initClass() {
         this.$inject = [
-            'tgCurrentUserService',
-            'tgUserService'
+            "tgCurrentUserService",
+            "tgUserService",
         ];
     }
 
@@ -61,7 +61,7 @@ export class ImportProjectMembersController {
     fetchUser() {
         this.currentUser = this.currentUserService.getUser();
 
-        return this.userService.getContacts(this.currentUser.get('id')).then(userContacts => {
+        return this.userService.getContacts(this.currentUser.get("id")).then((userContacts) => {
             this.userContacts = userContacts;
             return this.refreshSelectableUsers();
         });
@@ -84,8 +84,8 @@ export class ImportProjectMembersController {
         this.selectImportUserLightbox = false;
 
         let user = Immutable.Map();
-        user = user.set('user', externalUser);
-        user = user.set('taigaUser', taigaUser);
+        user = user.set("user", externalUser);
+        user = user.set("taigaUser", taigaUser);
 
         this.selectedUsers = this.selectedUsers.push(user);
 
@@ -95,18 +95,18 @@ export class ImportProjectMembersController {
     }
 
     unselectUser(user) {
-        let index = this.selectedUsers.findIndex(it => it.getIn(['user', 'id']) === user.get('id'));
+        const index = this.selectedUsers.findIndex((it) => it.getIn(["user", "id"]) === user.get("id"));
 
         this.selectedUsers = this.selectedUsers.delete(index);
         return this.refreshSelectableUsers();
     }
 
     discardSuggestedUser(member) {
-        return this.cancelledUsers = this.cancelledUsers.push(member.get('id'));
+        return this.cancelledUsers = this.cancelledUsers.push(member.get("id"));
     }
 
     getSelectedMember(member) {
-        return this.selectedUsers.find(it => it.getIn(['user', 'id']) === member.get('id'));
+        return this.selectedUsers.find((it) => it.getIn(["user", "id"]) === member.get("id"));
     }
 
     isMemberSelected(member) {
@@ -114,10 +114,10 @@ export class ImportProjectMembersController {
     }
 
     getUser(user) {
-        let userSelected = this.getSelectedMember(user);
+        const userSelected = this.getSelectedMember(user);
 
         if (userSelected) {
-            return userSelected.get('taigaUser');
+            return userSelected.get("taigaUser");
         } else {
             return null;
         }
@@ -129,15 +129,15 @@ export class ImportProjectMembersController {
         let users = Immutable.Map();
 
         this.selectedUsers.map(function(it) {
-            let id = '';
+            let id = "";
 
-            if (_.isString(it.get('taigaUser'))) {
-                id = it.get('taigaUser');
+            if (_.isString(it.get("taigaUser"))) {
+                id = it.get("taigaUser");
             } else {
-                id = it.getIn(['taigaUser', 'id']);
+                id = it.getIn(["taigaUser", "id"]);
             }
 
-            return users = users.set(it.getIn(['user', 'id']), id);
+            return users = users.set(it.getIn(["user", "id"]), id);
         });
 
         return this.onSubmit({users});
@@ -149,14 +149,14 @@ export class ImportProjectMembersController {
     }
 
     showSuggestedMatch(member) {
-        return member.get('user') && (this.cancelledUsers.indexOf(member.get('id')) === -1) && !this.isMemberSelected(member);
+        return member.get("user") && (this.cancelledUsers.indexOf(member.get("id")) === -1) && !this.isMemberSelected(member);
     }
 
     getDistinctSelectedTaigaUsers() {
-        let ids = [];
+        const ids = [];
 
-        let users = this.selectedUsers.filter(function(it) {
-            let id = it.getIn(['taigaUser', 'id']);
+        const users = this.selectedUsers.filter(function(it) {
+            const id = it.getIn(["taigaUser", "id"]);
 
             if (ids.indexOf(id) === -1) {
                 ids.push(id);
@@ -166,8 +166,8 @@ export class ImportProjectMembersController {
             return false;
         });
 
-        return users.filter(it => {
-            return it.getIn(['taigaUser', 'id']) !== this.currentUser.get('id');
+        return users.filter((it) => {
+            return it.getIn(["taigaUser", "id"]) !== this.currentUser.get("id");
         });
     }
 
@@ -175,9 +175,9 @@ export class ImportProjectMembersController {
         this.importMoreUsersDisabled = this.isImportMoreUsersDisabled();
 
         if (this.importMoreUsersDisabled) {
-            let users = this.getDistinctSelectedTaigaUsers();
+            const users = this.getDistinctSelectedTaigaUsers();
 
-            this.selectableUsers = <Immutable.List<any>>users.map(it => it.get('taigaUser'));
+            this.selectableUsers = users.map((it) => it.get("taigaUser")) as Immutable.List<any>;
             this.displayEmailSelector = false;
         } else {
             this.selectableUsers = this.userContacts;
@@ -188,13 +188,12 @@ export class ImportProjectMembersController {
     }
 
     isImportMoreUsersDisabled() {
-        let users = this.getDistinctSelectedTaigaUsers();
+        const users = this.getDistinctSelectedTaigaUsers();
 
         // currentUser + newUser = +2
-        let total = users.size + 2;
+        const total = users.size + 2;
 
-
-        if (this.project.get('is_private')) {
+        if (this.project.get("is_private")) {
             return !this.currentUserService.canAddMembersPrivateProject(total).valid;
         } else {
             return !this.currentUserService.canAddMembersPublicProject(total).valid;

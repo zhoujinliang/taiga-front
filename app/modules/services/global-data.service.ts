@@ -17,21 +17,21 @@
  * File: global-data.service.ts
  */
 
-import {Injectable} from "@angular/core"
+import {Injectable} from "@angular/core";
 
 @Injectable()
 export class GlobalDataService {
-    private data:any = {};
+    private data: any = {};
 
-    get(key:string):any {
-        return this.data[key]
+    get(key: string): any {
+        return this.data[key];
     }
 
-    set(key:string, value:any):void {
+    set(key: string, value: any): void {
         this.data[key] = value;
     }
 
-    unset(key:string):void {
+    unset(key: string): void {
         delete this.data[key];
     }
 }

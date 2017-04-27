@@ -18,16 +18,16 @@
  */
 
 export let TransferProjectDirective = function() {
-    let link = (scope, el, attrs, ctrl) => ctrl.initialize();
+    const link = (scope, el, attrs, ctrl) => ctrl.initialize();
 
     return {
         link,
         scope: {},
         bindToController: {
-            project: "="
+            project: "=",
         },
         templateUrl: "projects/transfer/transfer-project.html",
-        controller: 'TransferProjectController',
-        controllerAs: 'vm'
+        controller: "TransferProjectController",
+        controllerAs: "vm",
     };
 };

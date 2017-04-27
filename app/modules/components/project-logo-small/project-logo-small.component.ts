@@ -17,10 +17,10 @@
  * File: project-logo-small.component.ts
  */
 
-import * as angular from "angular"
-import * as Immutable from "immutable"
-import {Component, OnInit, Input} from "@angular/core"
-import {ProjectLogoService} from "../../services/project-logo.service"
+import {Component, Input, OnInit} from "@angular/core";
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import {ProjectLogoService} from "../../services/project-logo.service";
 
 @Component({
     selector: "tg-project-logo-small",
@@ -28,23 +28,23 @@ import {ProjectLogoService} from "../../services/project-logo.service"
         [src]='logo'
         [style.background]='color'
         [alt]='project.get("name")'
-        [title]='project.get("name")' />`
+        [title]='project.get("name")' />`,
 })
 export class ProjectLogoSmall implements OnInit {
-    @Input() project
-    logo:string
-    color:string
+    @Input() project;
+    logo: string;
+    color: string;
 
     constructor(private projectLogo: ProjectLogoService) {}
 
     ngOnInit() {
-        this.color = ""
-        this.logo = this.project.get('logo_small_url');
+        this.color = "";
+        this.logo = this.project.get("logo_small_url");
 
         if (!this.logo) {
-            let generated_logo = this.projectLogo.getDefaultProjectLogo(this.project.get('slug'), this.project.get('id'));
-            this.logo = generated_logo.src
-            this.color = generated_logo.color
+            const generated_logo = this.projectLogo.getDefaultProjectLogo(this.project.get("slug"), this.project.get("id"));
+            this.logo = generated_logo.src;
+            this.color = generated_logo.color;
         }
     }
 }

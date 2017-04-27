@@ -17,11 +17,11 @@
  * File: stats-resource.service.coffee
  */
 
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
 
-import {Injectable} from "@angular/core"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../ts/modules/base/http";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class StatsResource {
@@ -29,7 +29,7 @@ export class StatsResource {
                 private http: HttpService) {}
 
     discover() {
-        let url = this.urls.resolve("stats-discover");
-        return this.http.get(url).map((result:any) => Immutable.fromJS(result.data));
-    };
-};
+        const url = this.urls.resolve("stats-discover");
+        return this.http.get(url).map((result: any) => Immutable.fromJS(result.data));
+    }
+}

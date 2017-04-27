@@ -17,11 +17,11 @@
  * File: error-handling.service.coffee
  */
 
-import {Injectable} from "@angular/core"
+import {Injectable} from "@angular/core";
 
 @Injectable()
 export class ErrorHandlingService {
-    static errorHandling:any = {}
+    static errorHandling: any = {};
 
     init() {
         return ErrorHandlingService.errorHandling = {};

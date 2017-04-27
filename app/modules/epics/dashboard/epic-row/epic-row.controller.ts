@@ -17,27 +17,27 @@
  * File: epics-table.controller.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export class EpicRowController {
-    confirm:any
-    projectService:any
-    epicsService:any
-    displayUserStories:boolean
-    displayAssignedTo:boolean
-    displayStatusList:boolean
-    loadingStatus:boolean
-    project:any
-    epic:any
-    percentage:any
-    epicStories:any
-    assignLoader:any
+    confirm: any;
+    projectService: any;
+    epicsService: any;
+    displayUserStories: boolean;
+    displayAssignedTo: boolean;
+    displayStatusList: boolean;
+    loadingStatus: boolean;
+    project: any;
+    epic: any;
+    percentage: any;
+    epicStories: any;
+    assignLoader: any;
 
     static initClass() {
         this.$inject = [
             "$tgConfirm",
             "tgProjectService",
-            "tgEpicsService"
+            "tgEpicsService",
         ];
     }
 
@@ -58,12 +58,12 @@ export class EpicRowController {
     }
 
     _calculateProgressBar() {
-        if (this.epic.getIn(['status_extra_info', 'is_closed']) === true) {
+        if (this.epic.getIn(["status_extra_info", "is_closed"]) === true) {
             return this.percentage = "100%";
         } else {
-            let opened = this.epic.getIn(['user_stories_counts', 'opened']);
-            let closed = this.epic.getIn(['user_stories_counts', 'closed']);
-            let total = opened + closed;
+            const opened = this.epic.getIn(["user_stories_counts", "opened"]);
+            const closed = this.epic.getIn(["user_stories_counts", "closed"]);
+            const total = opened + closed;
             if (total === 0) {
                 return this.percentage = "0%";
             } else {
@@ -79,11 +79,11 @@ export class EpicRowController {
     toggleUserStoryList() {
         if (!this.displayUserStories) {
             return this.epicsService.listRelatedUserStories(this.epic)
-                .then(userStories => {
+                .then((userStories) => {
                     this.epicStories = userStories;
                     return this.displayUserStories = true;
             }).catch(() => {
-                    return this.confirm.notify('error');
+                    return this.confirm.notify("error");
             });
         } else {
             return this.displayUserStories = false;
@@ -95,7 +95,7 @@ export class EpicRowController {
         this.loadingStatus = true;
         return this.epicsService.updateEpicStatus(this.epic, statusId)
             .catch(() => {
-                return this.confirm.notify('error');
+                return this.confirm.notify("error");
         }).finally(() => {
                 return this.loadingStatus = false;
         });
@@ -105,7 +105,7 @@ export class EpicRowController {
         this.assignLoader = true;
         return this.epicsService.updateEpicAssignedTo(this.epic, (member != null ? member.id : undefined) || null)
             .catch(() => {
-                return this.confirm.notify('error');
+                return this.confirm.notify("error");
         }).then(() => {
                 return this.assignLoader = false;
         });

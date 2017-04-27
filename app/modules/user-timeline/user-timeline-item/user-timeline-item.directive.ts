@@ -21,7 +21,7 @@ export let UserTimelineItemDirective = () =>
     ({
         templateUrl: "user-timeline/user-timeline-item/user-timeline-item.html",
         scope: {
-            timeline: "=tgUserTimelineItem"
-        }
+            timeline: "=tgUserTimelineItem",
+        },
     })
 ;

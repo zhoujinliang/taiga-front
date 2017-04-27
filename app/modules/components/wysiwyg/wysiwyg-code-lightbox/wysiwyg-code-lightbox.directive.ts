@@ -23,20 +23,20 @@
  */
 
 export let WysiwygCodeLightbox = function(lightboxService) {
-    let link = (scope, el, attrs, ctrl) =>
-        scope.$watch('visible', function(visible) {
-            if (visible && !el.hasClass('open')) {
+    const link = (scope, el, attrs, ctrl) =>
+        scope.$watch("visible", function(visible) {
+            if (visible && !el.hasClass("open")) {
                 scope.open = true;
                 lightboxService.open(el, null, scope.onClose);
 
                 return scope.$applyAsync(function() {
-                    let textarea = el[0].querySelector('textarea');
+                    const textarea = el[0].querySelector("textarea");
                     if (textarea) {
                         return textarea.select();
                     }
                 });
 
-            } else if (!visible && el.hasClass('open')) {
+            } else if (!visible && el.hasClass("open")) {
                 scope.open = false;
                 return lightboxService.close(el);
             }
@@ -45,14 +45,14 @@ export let WysiwygCodeLightbox = function(lightboxService) {
 
     return {
         scope: {
-            languages: '<',
-            codeLanguage: '<',
-            code: '<',
-            visible: '<',
-            onClose: '&',
-            onSave: '&'
+            languages: "<",
+            codeLanguage: "<",
+            code: "<",
+            visible: "<",
+            onClose: "&",
+            onSave: "&",
         },
         link,
-        templateUrl: "components/wysiwyg/wysiwyg-code-lightbox/wysiwyg-code-lightbox.html"
+        templateUrl: "components/wysiwyg/wysiwyg-code-lightbox/wysiwyg-code-lightbox.html",
     };
 };

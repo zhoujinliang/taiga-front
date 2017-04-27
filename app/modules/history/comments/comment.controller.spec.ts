@@ -17,45 +17,45 @@
  * File: subscriptions.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("CommentController", function() {
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgCurrentUserService = function() {
+    const _mockTgCurrentUserService = function() {
         mocks.tgCurrentUserService = {
-            getUser: sinon.stub()
+            getUser: sinon.stub(),
         };
 
         return provide.value("tgCurrentUserService", mocks.tgCurrentUserService);
     };
 
-    let _mockTgCheckPermissionsService = function() {
+    const _mockTgCheckPermissionsService = function() {
         mocks.tgCheckPermissionsService = {
-            check: sinon.stub()
+            check: sinon.stub(),
         };
         return provide.value("tgCheckPermissionsService", mocks.tgCheckPermissionsService);
     };
 
-    let _mockTgLightboxFactory = function() {
+    const _mockTgLightboxFactory = function() {
         mocks.tgLightboxFactory = {
-            create: sinon.stub()
+            create: sinon.stub(),
         };
 
         return provide.value("tgLightboxFactory", mocks.tgLightboxFactory);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgCurrentUserService();
@@ -69,9 +69,9 @@ describe("CommentController", function() {
         module("taigaHistory");
         _mocks();
 
-        inject($controller => controller = $controller);
+        inject(($controller) => controller = $controller);
 
-        let commentsCtrl = controller("CommentCtrl");
+        const commentsCtrl = controller("CommentCtrl");
 
         commentsCtrl.comment = "comment";
         commentsCtrl.hiddenDeletedComment = true;
@@ -79,13 +79,13 @@ describe("CommentController", function() {
     });
 
     it("show deleted Comment", function() {
-        let commentsCtrl = controller("CommentCtrl");
+        const commentsCtrl = controller("CommentCtrl");
         commentsCtrl.showDeletedComment();
         return expect(commentsCtrl.hiddenDeletedComment).to.be.false;
     });
 
     it("hide deleted Comment", function() {
-        let commentsCtrl = controller("CommentCtrl");
+        const commentsCtrl = controller("CommentCtrl");
 
         commentsCtrl.hiddenDeletedComment = false;
         commentsCtrl.hideDeletedComment();
@@ -93,12 +93,12 @@ describe("CommentController", function() {
     });
 
     it("cancel comment on keyup", function() {
-        let commentsCtrl = controller("CommentCtrl");
+        const commentsCtrl = controller("CommentCtrl");
         commentsCtrl.comment = {
-            id: 2
+            id: 2,
         };
-        let event = {
-            keyCode: 27
+        const event = {
+            keyCode: 27,
         };
         commentsCtrl.onEditMode = sinon.stub();
         commentsCtrl.checkCancelComment(event);
@@ -107,44 +107,44 @@ describe("CommentController", function() {
     });
 
     it("can Edit Comment", function() {
-        let commentsCtrl = controller("CommentCtrl");
+        const commentsCtrl = controller("CommentCtrl");
 
         commentsCtrl.user = Immutable.fromJS({
-            id: 7
+            id: 7,
         });
 
         mocks.tgCurrentUserService.getUser.returns(commentsCtrl.user);
 
         commentsCtrl.comment = {
             user: {
-                pk: 7
-            }
+                pk: 7,
+            },
         };
 
-        mocks.tgCheckPermissionsService.check.withArgs('modify_project').returns(true);
+        mocks.tgCheckPermissionsService.check.withArgs("modify_project").returns(true);
 
-        let canEdit = commentsCtrl.canEditDeleteComment();
+        const canEdit = commentsCtrl.canEditDeleteComment();
         return expect(canEdit).to.be.true;
     });
 
     return it("cannot Edit Comment", function() {
-        let commentsCtrl = controller("CommentCtrl");
+        const commentsCtrl = controller("CommentCtrl");
 
         commentsCtrl.user = Immutable.fromJS({
-            id: 8
+            id: 8,
         });
 
         mocks.tgCurrentUserService.getUser.returns(commentsCtrl.user);
 
         commentsCtrl.comment = {
             user: {
-                pk: 7
-            }
+                pk: 7,
+            },
         };
 
-        mocks.tgCheckPermissionsService.check.withArgs('modify_project').returns(false);
+        mocks.tgCheckPermissionsService.check.withArgs("modify_project").returns(false);
 
-        let canEdit = commentsCtrl.canEditDeleteComment();
+        const canEdit = commentsCtrl.canEditDeleteComment();
         return expect(canEdit).to.be.false;
     });
 });

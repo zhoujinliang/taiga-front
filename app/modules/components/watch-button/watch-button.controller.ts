@@ -17,22 +17,22 @@
  * File: watch-button.controller.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export class WatchButtonController {
-    rootScope: angular.IScope
-    currentUserService:any
-    user:any
-    isMouseOver:boolean
-    loading:boolean
-    item:any
-    onWatch:any
-    onUnwatch:any
+    rootScope: angular.IScope;
+    currentUserService: any;
+    user: any;
+    isMouseOver: boolean;
+    loading: boolean;
+    item: any;
+    onWatch: any;
+    onUnwatch: any;
 
     static initClass() {
         this.$inject = [
             "tgCurrentUserService",
-            "$rootScope"
+            "$rootScope",
         ];
     }
 
@@ -59,13 +59,13 @@ export class WatchButtonController {
     getPerms() {
         if (!this.item) { return ""; }
 
-        let name = this.item._name;
+        const name = this.item._name;
 
-        let perms = {
-            userstories: 'modify_us',
-            issues: 'modify_issue',
-            tasks: 'modify_task',
-            epics: 'modify_epic'
+        const perms = {
+            userstories: "modify_us",
+            issues: "modify_issue",
+            tasks: "modify_task",
+            epics: "modify_epic",
         };
 
         return perms[name];

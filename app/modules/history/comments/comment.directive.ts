@@ -17,7 +17,7 @@
  * File: comment.directive.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export let CommentDirective = () =>
 
@@ -35,11 +35,11 @@ export let CommentDirective = () =>
             onEditMode: "&",
             onDeleteComment: "&",
             onRestoreDeletedComment: "&",
-            onEditComment: "&"
+            onEditComment: "&",
         },
-        templateUrl:"history/comments/comment.html",
+        templateUrl: "history/comments/comment.html",
         bindToController: true,
-        controller: 'CommentCtrl',
+        controller: "CommentCtrl",
         controllerAs: "vm",
     })
 ;

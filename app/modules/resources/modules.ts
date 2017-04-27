@@ -17,8 +17,8 @@
  * File: modules.coffee
  */
 
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
+import {Injectable} from "@angular/core";
+import {RepositoryService} from "../../ts/modules/base/repository";
 
 @Injectable()
 export class ModulesResource {
@@ -27,4 +27,4 @@ export class ModulesResource {
     list(projectId, module) {
         this.repo.queryOneAttribute("project-modules", projectId, module);
     }
-};
+}

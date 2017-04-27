@@ -18,7 +18,7 @@
  */
 
 export let AttachmentPreviewLightboxDirective = function(lightboxService, attachmentsPreviewService) {
-    let link = function($scope, el, attrs, ctrl) {
+    const link = function($scope, el, attrs, ctrl) {
         $(document.body).on("keydown.image-preview", function(e) {
             if (attachmentsPreviewService.fileId) {
                 if (e.keyCode === 39) {
@@ -31,17 +31,17 @@ export let AttachmentPreviewLightboxDirective = function(lightboxService, attach
             return $scope.$digest();
         });
 
-        return $scope.$on('$destroy', () => $(document.body).off('.image-preview'));
+        return $scope.$on("$destroy", () => $(document.body).off(".image-preview"));
     };
 
     return {
         scope: {},
-        controller: 'AttachmentsPreview',
-        templateUrl: 'components/attachments-preview/attachments-preview.html',
+        controller: "AttachmentsPreview",
+        templateUrl: "components/attachments-preview/attachments-preview.html",
         link,
         controllerAs: "vm",
         bindToController: {
-            attachments: "="
-        }
+            attachments: "=",
+        },
     };
 };

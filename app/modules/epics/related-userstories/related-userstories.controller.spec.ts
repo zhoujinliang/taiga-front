@@ -17,39 +17,39 @@
  * File: related-userstories.controller.spec.coffee
  */
 
-declare var describe:any;
-declare var angular:any;
-let module = angular.mock.module;;
-declare var inject:any;
-declare var it:any;
-declare var expect:any;
-declare var beforeEach:any;
-import * as Immutable from "immutable"
-declare var sinon:any;
+declare var describe: any;
+declare var angular: any;
+const module = angular.mock.module;
+declare var inject: any;
+declare var it: any;
+declare var expect: any;
+declare var beforeEach: any;
+import * as Immutable from "immutable";
+declare var sinon: any;
 
 describe("RelatedUserStories", function() {
-    let RelatedUserStoriesCtrl =  null;
+    const RelatedUserStoriesCtrl =  null;
     let provide = null;
     let controller = null;
-    let mocks:any = {};
+    const mocks: any = {};
 
-    let _mockTgEpicsService = function() {
+    const _mockTgEpicsService = function() {
         mocks.tgEpicsService = {
             listRelatedUserStories: sinon.stub(),
-            reorderRelatedUserstory: sinon.stub()
+            reorderRelatedUserstory: sinon.stub(),
         };
 
         return provide.value("tgEpicsService", mocks.tgEpicsService);
     };
 
-    let _mockTgProjectService = function() {
+    const _mockTgProjectService = function() {
         mocks.tgProjectService = {
-            hasPermission: sinon.stub()
+            hasPermission: sinon.stub(),
         };
         return provide.value("tgProjectService", mocks.tgProjectService);
     };
 
-    let _mocks = () =>
+    const _mocks = () =>
         module(function($provide) {
             provide = $provide;
             _mockTgEpicsService();
@@ -63,22 +63,22 @@ describe("RelatedUserStories", function() {
 
         _mocks();
 
-        return inject($controller => controller = $controller);
+        return inject(($controller) => controller = $controller);
     });
 
     it("load related userstories", function(done) {
-        let ctrl = controller("RelatedUserStoriesCtrl");
-        let userstories = Immutable.fromJS([
+        const ctrl = controller("RelatedUserStoriesCtrl");
+        const userstories = Immutable.fromJS([
             {
-                id: 1
-            }
+                id: 1,
+            },
         ]);
 
         ctrl.epic = Immutable.fromJS({
-            id: 66
+            id: 66,
         });
 
-        let promise = mocks.tgEpicsService.listRelatedUserStories
+        const promise = mocks.tgEpicsService.listRelatedUserStories
             .withArgs(ctrl.epic)
             .promise()
             .resolve(userstories);
@@ -90,30 +90,30 @@ describe("RelatedUserStories", function() {
     });
 
     return it("reorderRelatedUserstory", function(done) {
-        let ctrl = controller("RelatedUserStoriesCtrl");
-        let userstories = Immutable.fromJS([
+        const ctrl = controller("RelatedUserStoriesCtrl");
+        const userstories = Immutable.fromJS([
             {
-                id: 1
+                id: 1,
             },
             {
-                id: 2
-            }
+                id: 2,
+            },
         ]);
 
-        let reorderedUserstories = Immutable.fromJS([
+        const reorderedUserstories = Immutable.fromJS([
             {
-                id: 2
+                id: 2,
             },
             {
-                id: 1
-            }
+                id: 1,
+            },
         ]);
 
         ctrl.epic = Immutable.fromJS({
-            id: 66
+            id: 66,
         });
 
-        let promise = mocks.tgEpicsService.reorderRelatedUserstory
+        const promise = mocks.tgEpicsService.reorderRelatedUserstory
             .withArgs(ctrl.epic, ctrl.userstories, userstories.get(1), 0)
             .promise()
             .resolve(reorderedUserstories);

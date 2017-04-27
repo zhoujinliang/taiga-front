@@ -19,15 +19,15 @@
 
 export let DuplicateProjectDirective = function() {
 
-    let link = function(scope, el, attr, ctrl) {};
+    const link = function(scope, el, attr, ctrl) {};
 
     return {
         link,
-        templateUrl:"projects/create/duplicate/duplicate-project.html",
+        templateUrl: "projects/create/duplicate/duplicate-project.html",
         controller: "DuplicateProjectCtrl",
         controllerAs: "vm",
         bindToController: true,
-        scope: {}
+        scope: {},
     };
 };
 DuplicateProjectDirective.$inject = [];

@@ -17,28 +17,28 @@
  * File: create-epic.controller.coffee
  */
 
-import {getRandomDefaultColor, trim} from "../../../libs/utils"
-import * as angular from "angular"
-import * as Immutable from "immutable"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {getRandomDefaultColor, trim} from "../../../libs/utils";
 
 export class CreateEpicController {
-    confirm:any
-    projectService:any
-    epicsService:any
-    project:any
-    loading:boolean
-    newEpic:any
-    attachments:Immutable.List<any>
-    validateForm:any
-    onCreateEpic:any
-    setFormErrors:any
+    confirm: any;
+    projectService: any;
+    epicsService: any;
+    project: any;
+    loading: boolean;
+    newEpic: any;
+    attachments: Immutable.List<any>;
+    validateForm: any;
+    onCreateEpic: any;
+    setFormErrors: any;
 
     static initClass() {
         this.$inject = [
             "$tgConfirm",
             "tgProjectService",
-            "tgEpicsService"
+            "tgEpicsService",
         ];
     }
 
@@ -56,7 +56,7 @@ export class CreateEpicController {
         this.newEpic = {
             color: getRandomDefaultColor(),
             status: this.project.default_epic_status,
-            tags: []
+            tags: [],
         };
         this.attachments = Immutable.List();
 
@@ -69,10 +69,10 @@ export class CreateEpicController {
         this.loading = true;
 
         return this.epicsService.createEpic(this.newEpic, this.attachments)
-            .then(response => { // On success
+            .then((response) => { // On success
                 this.onCreateEpic();
                 return this.loading = false;
-        }).catch(response => { // On error
+        }).catch((response) => { // On error
                 this.loading = false;
                 this.setFormErrors(response.data);
                 if (response.data._error_message) {
@@ -90,13 +90,13 @@ export class CreateEpicController {
     addTag(name, color) {
         name = trim(name.toLowerCase());
 
-        if (!_.find(this.newEpic.tags, it => it[0] === name)) {
+        if (!_.find(this.newEpic.tags, (it) => it[0] === name)) {
             return this.newEpic.tags.push([name, color]);
         }
     }
 
     deleteTag(tag) {
-        return _.remove(this.newEpic.tags, it => it[0] === tag[0]);
+        return _.remove(this.newEpic.tags, (it) => it[0] === tag[0]);
     }
 
     // Attachments

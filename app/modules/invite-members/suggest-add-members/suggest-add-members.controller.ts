@@ -17,14 +17,14 @@
  * File: suggest-add-members.controller.coffee
  */
 
-import {isEmail} from "../../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {isEmail} from "../../../libs/utils";
 
 export class SuggestAddMembersController {
-    contactQuery:any
-    filteredContacts:any
-    onInviteSuggested:any
-    contacts:any
+    contactQuery: any;
+    filteredContacts: any;
+    onInviteSuggested: any;
+    contacts: any;
 
     static initClass() {
         this.$inject = [];
@@ -39,13 +39,13 @@ export class SuggestAddMembersController {
     }
 
     filterContacts() {
-        return this.filteredContacts = this.contacts.filter( contact => {
-            return contact.get('full_name_display').toLowerCase().includes(this.contactQuery.toLowerCase()) || contact.get('username').toLowerCase().includes(this.contactQuery.toLowerCase());
-        }).slice(0,12);
+        return this.filteredContacts = this.contacts.filter( (contact) => {
+            return contact.get("full_name_display").toLowerCase().includes(this.contactQuery.toLowerCase()) || contact.get("username").toLowerCase().includes(this.contactQuery.toLowerCase());
+        }).slice(0, 12);
     }
 
     setInvited(contact) {
-        return this.onInviteSuggested({'contact': contact});
+        return this.onInviteSuggested({contact});
     }
 }
 SuggestAddMembersController.initClass();

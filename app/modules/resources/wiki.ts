@@ -22,8 +22,8 @@
  * File: modules/resources/wikis.coffee
  */
 
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
+import {Injectable} from "@angular/core";
+import {RepositoryService} from "../../ts/modules/base/repository";
 
 @Injectable()
 export class WikiResource {
@@ -44,4 +44,4 @@ export class WikiResource {
     listLinks(projectId) {
         return this.repo.queryMany("wiki-links", {project: projectId});
     }
-};
+}

@@ -17,17 +17,17 @@
  * File: assigned-to.controller.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export class AssignedToController {
-    lightboxService:any
-    lightboxFactory:any
-    has_permissions:any
-    project:any
-    assignedTo:any
-    onRemoveAssigned:any
-    onAssignTo:any
+    lightboxService: any;
+    lightboxFactory: any;
+    has_permissions: any;
+    project: any;
+    assignedTo: any;
+    onRemoveAssigned: any;
+    onAssignTo: any;
 
     static initClass() {
         this.$inject = [
@@ -39,7 +39,7 @@ export class AssignedToController {
     constructor(lightboxFactory, lightboxService) {
         this.lightboxFactory = lightboxFactory;
         this.lightboxService = lightboxService;
-        this.has_permissions = _.includes(this.project.my_permissions, 'modify_epic');
+        this.has_permissions = _.includes(this.project.my_permissions, "modify_epic");
     }
 
     _closeAndRemoveAssigned() {
@@ -49,21 +49,21 @@ export class AssignedToController {
 
     _closeAndAssign(member) {
         this.lightboxService.closeAll();
-        return this.onAssignTo({'member': member});
+        return this.onAssignTo({member});
     }
 
     onSelectAssignedTo(assigned, project) {
-        return this.lightboxFactory.create('tg-assigned-to-selector', {
+        return this.lightboxFactory.create("tg-assigned-to-selector", {
             "class": "lightbox lightbox-assigned-to-selector open",
             "assigned": "assigned",
             "project": "project",
             "on-remove-assigned": "onRemoveAssigned()",
-            "on-assign-to": "assignTo(member)"
+            "on-assign-to": "assignTo(member)",
         }, {
-            "assigned": this.assignedTo,
-            "project": this.project,
-            "onRemoveAssigned": this._closeAndRemoveAssigned.bind(this),
-            "assignTo": this._closeAndAssign.bind(this)
+            assigned: this.assignedTo,
+            project: this.project,
+            onRemoveAssigned: this._closeAndRemoveAssigned.bind(this),
+            assignTo: this._closeAndAssign.bind(this),
         });
     }
 }

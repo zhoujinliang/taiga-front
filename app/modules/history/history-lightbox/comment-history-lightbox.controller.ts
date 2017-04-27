@@ -17,14 +17,14 @@
  * File: history.controller.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 export class LightboxDisplayHistoricController {
-    rs:any
-    name:any
-    object:any
-    comment:any
-    commentHistoryEntries:any
+    rs: any;
+    name: any;
+    object: any;
+    comment: any;
+    commentHistoryEntries: any;
 
     static initClass() {
         this.$inject = [
@@ -37,11 +37,11 @@ export class LightboxDisplayHistoricController {
     }
 
     _loadHistoric() {
-        let type = this.name;
-        let objectId = this.object;
-        let activityId = this.comment.id;
+        const type = this.name;
+        const objectId = this.object;
+        const activityId = this.comment.id;
 
-        return this.rs.history.getCommentHistory(type, objectId, activityId).then(data => {
+        return this.rs.history.getCommentHistory(type, objectId, activityId).then((data) => {
             return this.commentHistoryEntries = data;
         });
     }

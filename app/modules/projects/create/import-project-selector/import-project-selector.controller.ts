@@ -17,10 +17,10 @@
  * File: import-project-selector.controller.coffee
  */
 
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
 
 export class ImportProjectSelectorController {
-    onSelectProject:any
+    onSelectProject: any;
 
     selectProject(project) {
         return this.onSelectProject({project: Immutable.fromJS(project)});

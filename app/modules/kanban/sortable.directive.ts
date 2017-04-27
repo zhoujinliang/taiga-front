@@ -22,14 +22,14 @@
  * File: modules/kanban/sortable.coffee
  */
 
-import * as _ from "lodash";
-import {autoScroll} from "../../libs/dom-autoscroller";
+import {Directive, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, Output} from "@angular/core";
 import * as dragula from "dragula";
 import * as Immutable from "immutable";
-import {Directive, ElementRef, Input, Output, OnDestroy, OnChanges, EventEmitter} from "@angular/core";
+import * as _ from "lodash";
+import {autoScroll} from "../../libs/dom-autoscroller";
 
 @Directive({
-    selector: "[tg-kanban-sortable]"
+    selector: "[tg-kanban-sortable]",
 })
 export class KanbanSortableDirective implements OnDestroy, OnChanges {
     @Input() userstories: Immutable.List<any>;
@@ -45,45 +45,45 @@ export class KanbanSortableDirective implements OnDestroy, OnChanges {
 
     ngOnChanges() {
         this.drake.destroy();
-        let containers = _.map(this.el.find('.task-column'), item => item);
+        const containers = _.map(this.el.find(".task-column"), (item) => item);
         let prevIndex = null;
         let prevState = null;
 
-        this.drake = dragula(<any[]>containers, <dragula.DragulaOptions>{
-            copySortSource: false,
+        this.drake = dragula(containers as any, {
             copy: false,
+            copySortSource: false,
             moves(item) {
-                return $(item).is('tg-card');
-            }
-        });
+                return $(item).is("tg-card");
+            },
+        } as dragula.DragulaOptions);
 
-        this.drake.on('drag', item => {
+        this.drake.on("drag", (item) => {
             prevIndex = $(item).index();
-            prevState = $(item).parent(".task-column").data('status-id');
+            prevState = $(item).parent(".task-column").data("status-id");
         });
 
-        this.drake.on('dragend', (item) => {
+        this.drake.on("dragend", (item) => {
             this.sorted.emit({
-                "usId": $(item).data('us-id'),
-                "prevIndex": prevIndex,
-                "prevState": prevState,
-                "newIndex": $(item).index(),
-                "newState": $(item).parent(".task-column").data('status-id'),
-            })
+                newIndex: $(item).index(),
+                newState: $(item).parent(".task-column").data("status-id"),
+                prevIndex,
+                prevState,
+                usId: $(item).data("us-id"),
+            });
         });
 
-        let drake = this.drake;
-        let scroll = autoScroll(containers, {
+        const drake = this.drake;
+        const scroll = autoScroll(containers, {
             margin: 100,
             pixels: 30,
             scrollWhenOutside: true,
             autoScroll() {
                 return this.down && drake.dragging;
-            }
+            },
         });
     }
 
     ngOnDestroy() {
         this.drake.destroy();
     }
-};
+}

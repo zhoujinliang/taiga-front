@@ -22,10 +22,10 @@
  * File: modules/resources/history.coffee
  */
 
-import {Injectable} from "@angular/core"
-import {RepositoryService} from "../../ts/modules/base/repository"
-import {HttpService} from "../../ts/modules/base/http"
-import {UrlsService} from "../../ts/modules/base/urls"
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../ts/modules/base/http";
+import {RepositoryService} from "../../ts/modules/base/repository";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class HistoryResource {
@@ -33,48 +33,48 @@ export class HistoryResource {
                 private http: HttpService,
                 private urls: UrlsService) {}
 
-    get(type:string, objectId:number):any {
+    get(type: string, objectId: number): any {
         return this.repo.queryOneRaw(`history/${type}`, objectId);
     }
 
-    editComment(type:string, objectId:number, activityId:number, comment:string):any {
+    editComment(type: string, objectId: number, activityId: number, comment: string): any {
         let url = this.urls.resolve(`history/${type}`);
         url = `${url}/${objectId}/edit_comment`;
-        let params = {
-            id: activityId
+        const params = {
+            id: activityId,
         };
-        let commentData = {
-            comment
+        const commentData = {
+            comment,
         };
-        return this.http.post(url, commentData, params).map((data:any) => {
+        return this.http.post(url, commentData, params).map((data: any) => {
             return data.data;
         });
-    };
+    }
 
-    getCommentHistory(type:string, objectId:number, activityId:number):any {
+    getCommentHistory(type: string, objectId: number, activityId: number): any {
         let url = this.urls.resolve(`history/${type}`);
         url = `${url}/${objectId}/comment_versions`;
-        let params = {id: activityId};
-        return this.http.get(url, params).map((data:any) => {
+        const params = {id: activityId};
+        return this.http.get(url, params).map((data: any) => {
             return data.data;
         });
-    };
+    }
 
-    deleteComment(type:string, objectId:number, activityId:number):any {
+    deleteComment(type: string, objectId: number, activityId: number): any {
         let url = this.urls.resolve(`history/${type}`);
         url = `${url}/${objectId}/delete_comment`;
-        let params = {id: activityId};
-        return this.http.post(url, null, params).map((data:any) => {
+        const params = {id: activityId};
+        return this.http.post(url, null, params).map((data: any) => {
             return data.data;
         });
-    };
+    }
 
-    undeleteComment(type:string, objectId:number, activityId:number):any {
+    undeleteComment(type: string, objectId: number, activityId: number): any {
         let url = this.urls.resolve(`history/${type}`);
         url = `${url}/${objectId}/undelete_comment`;
-        let params = {id: activityId};
-        return this.http.post(url, null, params).map((data:any) => {
+        const params = {id: activityId};
+        return this.http.post(url, null, params).map((data: any) => {
             return data.data;
         });
-    };
-};
+    }
+}

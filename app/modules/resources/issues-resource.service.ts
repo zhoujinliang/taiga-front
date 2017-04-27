@@ -17,16 +17,16 @@
  * File: issues-resource.service.coffee
  */
 
-import * as Immutable from "immutable"
-import * as _ from "lodash"
-import {generateHash} from "../../libs/utils"
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {generateHash} from "../../libs/utils";
 
-import {Injectable} from "@angular/core"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {HttpService} from "../../ts/modules/base/http"
+import {Injectable} from "@angular/core";
+import {HttpService} from "../../ts/modules/base/http";
 // TODO: Remove repository usage
-import {RepositoryService} from "../../ts/modules/base/repository"
-import {StorageService} from "../../ts/modules/base/storage"
+import {RepositoryService} from "../../ts/modules/base/repository";
+import {StorageService} from "../../ts/modules/base/storage";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class IssuesResource {
@@ -38,13 +38,13 @@ export class IssuesResource {
                 private storage: StorageService) {}
 
     get(projectId, issueId) {
-        let params = this.getQueryParams(projectId);
+        const params = this.getQueryParams(projectId);
         params.project = projectId;
         return this.repo.queryOne("issues", issueId, params);
     }
 
     getByRef(projectId, ref) {
-        let params = this.getQueryParams(projectId);
+        const params = this.getQueryParams(projectId);
         params.project = projectId;
         params.ref = ref;
         return this.repo.queryOne("issues", "by_ref", params);
@@ -58,28 +58,28 @@ export class IssuesResource {
     }
 
     bulkCreate(projectId, data) {
-        let url = this.urls.resolve("bulk-create-issues");
-        let params = {project_id: projectId, bulk_issues: data};
+        const url = this.urls.resolve("bulk-create-issues");
+        const params = {project_id: projectId, bulk_issues: data};
         return this.http.post(url, params);
     }
 
     upvote(issueId) {
-        let url = this.urls.resolve("issue-upvote", issueId);
+        const url = this.urls.resolve("issue-upvote", issueId);
         return this.http.post(url);
     }
 
     downvote(issueId) {
-        let url = this.urls.resolve("issue-downvote", issueId);
+        const url = this.urls.resolve("issue-downvote", issueId);
         return this.http.post(url);
     }
 
     watch(issueId) {
-        let url = this.urls.resolve("issue-watch", issueId);
+        const url = this.urls.resolve("issue-watch", issueId);
         return this.http.post(url);
     }
 
     unwatch(issueId) {
-        let url = this.urls.resolve("issue-unwatch", issueId);
+        const url = this.urls.resolve("issue-unwatch", issueId);
         return this.http.post(url);
     }
 
@@ -92,33 +92,33 @@ export class IssuesResource {
     }
 
     listValues(projectId, type) {
-        let params = {"project": projectId};
+        const params = {project: projectId};
         this.storeQueryParams(projectId, params);
         return this.repo.queryMany(type, params);
     }
 
     storeQueryParams(projectId, params) {
-        let ns = `${projectId}:${this.hashSuffix}`;
-        let hash = generateHash([projectId, ns]);
+        const ns = `${projectId}:${this.hashSuffix}`;
+        const hash = generateHash([projectId, ns]);
         return this.storage.set(hash, params);
     }
 
     getQueryParams(projectId) {
-        let ns = `${projectId}:${this.hashSuffix}`;
-        let hash = generateHash([projectId, ns]);
+        const ns = `${projectId}:${this.hashSuffix}`;
+        const hash = generateHash([projectId, ns]);
         return this.storage.get(hash) || {};
     }
 
     listInAllProjects(params) {
-        let url = this.urls.resolve("issues");
+        const url = this.urls.resolve("issues");
 
-        let httpOptions = {
+        const httpOptions = {
             headers: {
-                "x-disable-pagination": "1"
-            }
+                "x-disable-pagination": "1",
+            },
         };
 
         return this.http.get(url, params, httpOptions)
-            .map((result:any) => Immutable.fromJS(result.data));
-    };
-};
+            .map((result: any) => Immutable.fromJS(result.data));
+    }
+}

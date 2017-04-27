@@ -17,22 +17,22 @@
  * File: jira-import-project-form.controller.coffee
  */
 
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
 
 export class JiraImportProjectFormController {
-    currentUserService:any
-    canCreatePublicProjects:any
-    canCreatePrivateProjects:any
-    project:any
-    projectForm:any
-    limitMembersPrivateProject:any
-    limitMembersPublicProject:any
-    members:any
-    onSaveProjectDetails: any
+    currentUserService: any;
+    canCreatePublicProjects: any;
+    canCreatePrivateProjects: any;
+    project: any;
+    projectForm: any;
+    limitMembersPrivateProject: any;
+    limitMembersPublicProject: any;
+    members: any;
+    onSaveProjectDetails: any;
 
     static initClass() {
         this.$inject = [
-            "tgCurrentUserService"
+            "tgCurrentUserService",
         ];
     }
 

@@ -22,10 +22,10 @@
  * File: modules/resources/kanban.coffee
  */
 
-import {generateHash} from "../../libs/utils"
+import {generateHash} from "../../libs/utils";
 
-import {Injectable} from "@angular/core"
-import {StorageService} from "../../ts/modules/base/storage"
+import {Injectable} from "@angular/core";
+import {StorageService} from "../../ts/modules/base/storage";
 
 @Injectable()
 export class KanbanResource {
@@ -35,14 +35,14 @@ export class KanbanResource {
     constructor(private storage: StorageService) {}
 
     storeStatusColumnModes(projectId, params) {
-        let ns = `${projectId}:${this.hashSuffixStatusColumnModes}`;
-        let hash = generateHash([projectId, ns]);
+        const ns = `${projectId}:${this.hashSuffixStatusColumnModes}`;
+        const hash = generateHash([projectId, ns]);
         return this.storage.set(hash, params);
-    };
+    }
 
     getStatusColumnModes(projectId) {
-        let ns = `${projectId}:${this.hashSuffixStatusColumnModes}`;
-        let hash = generateHash([projectId, ns]);
+        const ns = `${projectId}:${this.hashSuffixStatusColumnModes}`;
+        const hash = generateHash([projectId, ns]);
         return this.storage.get(hash) || {};
-    };
-};
+    }
+}

@@ -17,26 +17,26 @@
  * File: history.controller.coffee
  */
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 export class CommentController {
-    currentUserService:any
-    permissionService:any
-    lightboxFactory:any
-    hiddenDeletedComment:any
-    comment:any
-    onEditMode:any
-    onEditComment:any
-    user:any
-    name:any
-    object:any
+    currentUserService: any;
+    permissionService: any;
+    lightboxFactory: any;
+    hiddenDeletedComment: any;
+    comment: any;
+    onEditMode: any;
+    onEditComment: any;
+    user: any;
+    name: any;
+    object: any;
 
     static initClass() {
         this.$inject = [
             "tgCurrentUserService",
             "tgCheckPermissionsService",
-            "tgLightboxFactory"
+            "tgLightboxFactory",
         ];
     }
 
@@ -64,7 +64,7 @@ export class CommentController {
     canEditDeleteComment() {
         if (this.currentUserService.getUser()) {
             this.user = this.currentUserService.getUser();
-            return (this.user.get('id') === this.comment.user.pk) || this.permissionService.check('modify_project');
+            return (this.user.get("id") === this.comment.user.pk) || this.permissionService.check("modify_project");
         }
     }
 
@@ -73,15 +73,15 @@ export class CommentController {
     }
 
     displayCommentHistory() {
-        return this.lightboxFactory.create('tg-lb-display-historic', {
-            "class": "lightbox lightbox-display-historic",
-            "comment": "comment",
-            "name": "name",
-            "object": "object"
+        return this.lightboxFactory.create("tg-lb-display-historic", {
+            class: "lightbox lightbox-display-historic",
+            comment: "comment",
+            name: "name",
+            object: "object",
         }, {
-            "comment": this.comment,
-            "name": this.name,
-            "object": this.object
+            comment: this.comment,
+            name: this.name,
+            object: this.object,
         });
     }
 }

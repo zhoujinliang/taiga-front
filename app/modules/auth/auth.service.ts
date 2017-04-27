@@ -1,22 +1,22 @@
-import * as _ from "lodash"
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
+import * as _ from "lodash";
 
-import {Injectable} from "@angular/core"
-import {downgradeInjectable} from "@angular/upgrade/static"
-import {StorageService} from "../../ts/modules/base/storage"
-import {ModelService} from "../../ts/modules/base/model"
-import {HttpService} from "../../ts/modules/base/http"
-import {UrlsService} from "../../ts/modules/base/urls"
-import {ConfigurationService} from "../../ts/modules/base/conf"
-import {TranslateService} from "@ngx-translate/core"
-import {CurrentUserService} from "../services/current-user.service"
-import {ThemeService} from "../services/theme.service"
-import {GlobalDataService} from "../services/global-data.service"
+import {Injectable} from "@angular/core";
+import {downgradeInjectable} from "@angular/upgrade/static";
+import {TranslateService} from "@ngx-translate/core";
+import {ConfigurationService} from "../../ts/modules/base/conf";
+import {HttpService} from "../../ts/modules/base/http";
+import {ModelService} from "../../ts/modules/base/model";
+import {StorageService} from "../../ts/modules/base/storage";
+import {UrlsService} from "../../ts/modules/base/urls";
+import {CurrentUserService} from "../services/current-user.service";
+import {GlobalDataService} from "../services/global-data.service";
+import {ThemeService} from "../services/theme.service";
 
 @Injectable()
 export class AuthService {
-    _currentTheme:any
-    userData:any
+    _currentTheme: any;
+    userData: any;
 
     constructor(private globalData: GlobalDataService,
                 private storage: StorageService,
@@ -27,7 +27,7 @@ export class AuthService {
                 private translate: TranslateService,
                 private currentUser: CurrentUserService,
                 private theme: ThemeService) {
-        let userModel = this.getUser();
+        const userModel = this.getUser();
         this._currentTheme = this._getUserTheme();
 
         this.setUserdata(userModel);
@@ -43,11 +43,11 @@ export class AuthService {
     }
 
     _getUserTheme() {
-        return (this.globalData.get('user') != null && this.globalData.get('user').theme) || this.config.get("defaultTheme") || "taiga"; // load on index.jade
+        return (this.globalData.get("user") != null && this.globalData.get("user").theme) || this.config.get("defaultTheme") || "taiga"; // load on index.jade
     }
 
     _setTheme() {
-        let newTheme = this._getUserTheme();
+        const newTheme = this._getUserTheme();
 
         if (this._currentTheme !== newTheme) {
             this._currentTheme = newTheme;
@@ -56,21 +56,21 @@ export class AuthService {
     }
 
     _setLocales() {
-        let lang = (this.globalData.get('user') != null && this.globalData.get('user').lang) || this.config.get("defaultLanguage") || "en";
+        const lang = (this.globalData.get("user") != null && this.globalData.get("user").lang) || this.config.get("defaultLanguage") || "en";
         this.translate.setDefaultLang(lang);  // Needed for calls to the api in the correct language
         return this.translate.use(lang);                // Needed for change the interface in runtime
     }
 
     getUser() {
-        if (this.globalData.get('user')) {
-            return this.globalData.get('user');
+        if (this.globalData.get("user")) {
+            return this.globalData.get("user");
         }
 
-        let userData = this.storage.get("userInfo");
+        const userData = this.storage.get("userInfo");
 
         if (userData) {
-            let user = this.model.make_model("users", userData);
-            this.globalData.set('user', user);
+            const user = this.model.make_model("users", userData);
+            this.globalData.set("user", user);
             this._setLocales();
             this._setTheme();
             return user;
@@ -82,9 +82,9 @@ export class AuthService {
     }
 
     setUser(user) {
-        this.globalData.set('auth', user);
+        this.globalData.set("auth", user);
         this.storage.set("userInfo", user.getAttrs());
-        this.globalData.set('user', user);
+        this.globalData.set("user", user);
 
         this.setUserdata(user);
 
@@ -93,8 +93,8 @@ export class AuthService {
     }
 
     clear() {
-        this.globalData.unset('auth');
-        this.globalData.unset('user');
+        this.globalData.unset("auth");
+        this.globalData.unset("user");
         return this.storage.remove("userInfo");
     }
 
@@ -119,9 +119,9 @@ export class AuthService {
 
     //# Http interface
     refresh() {
-        let url = this.urls.resolve("user-me");
+        const url = this.urls.resolve("user-me");
 
-        return this.http.get(url).subscribe((data:any) => {
+        return this.http.get(url).subscribe((data: any) => {
             let user = data.data;
             user.token = this.getUser().auth_token;
 
@@ -133,16 +133,16 @@ export class AuthService {
     }
 
     login(data, type) {
-        let url = this.urls.resolve("auth");
+        const url = this.urls.resolve("auth");
 
         data = _.clone(data);
         data.type = type ? type : "normal";
 
         this.removeToken();
 
-        return this.http.post(url, data).subscribe((data:any) => {
-            let user = this.model.make_model("users", data.data);
-            this.setToken((<any>user).auth_token);
+        return this.http.post(url, data).subscribe((data: any) => {
+            const user = this.model.make_model("users", data.data);
+            this.setToken((user as any).auth_token);
             this.setUser(user);
             return user;
         });
@@ -157,9 +157,8 @@ export class AuthService {
         return this._setLocales();
     }
 
-
     register(data, type, existing) {
-        let url = this.urls.resolve("auth-register");
+        const url = this.urls.resolve("auth-register");
 
         data = _.clone(data);
         data.type = type ? type : "public";
@@ -169,9 +168,9 @@ export class AuthService {
 
         this.removeToken();
 
-        return this.http.post(url, data).subscribe((response:any) => {
-            let user = this.model.make_model("users", response.data);
-            this.setToken((<any>user).auth_token);
+        return this.http.post(url, data).subscribe((response: any) => {
+            const user = this.model.make_model("users", response.data);
+            this.setToken((user as any).auth_token);
             this.setUser(user);
             return user;
         });
@@ -182,30 +181,28 @@ export class AuthService {
     }
 
     forgotPassword(data) {
-        let url = this.urls.resolve("users-password-recovery");
+        const url = this.urls.resolve("users-password-recovery");
         data = _.clone(data);
         this.removeToken();
         return this.http.post(url, data);
     }
 
     changePasswordFromRecovery(data) {
-        let url = this.urls.resolve("users-change-password-from-recovery");
+        const url = this.urls.resolve("users-change-password-from-recovery");
         data = _.clone(data);
         this.removeToken();
         return this.http.post(url, data);
     }
 
     changeEmail(data) {
-        let url = this.urls.resolve("users-change-email");
+        const url = this.urls.resolve("users-change-email");
         data = _.clone(data);
         return this.http.post(url, data);
     }
 
     cancelAccount(data) {
-        let url = this.urls.resolve("users-cancel-account");
+        const url = this.urls.resolve("users-cancel-account");
         data = _.clone(data);
         return this.http.post(url, data);
     }
 }
-
-

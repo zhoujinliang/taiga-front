@@ -17,22 +17,22 @@
  * File: projects-listing.controller.coffee
  */
 
-import * as _ from "lodash"
-import "rxjs/add/operator/map"
-import {Component} from "@angular/core"
-import {Store} from "@ngrx/store"
-import {IState} from "../../../app.store"
+import {Component} from "@angular/core";
+import {Store} from "@ngrx/store";
+import * as _ from "lodash";
+import "rxjs/add/operator/map";
+import {IState} from "../../../app.store";
 
 @Component({
     selector: "tg-project-listing",
-    template: require("./projects-listing.jade")()
+    template: require("./projects-listing.jade")(),
 })
 export class ProjectsListing {
-    projects:any;
+    projects: any;
 
     constructor(private store: Store<IState>) {
         this.projects = this.store
                             .select((state) => state.getIn(["projects", "user-projects"]))
-                            .map((state) => state.sortBy((i:any) => i.get('order')));
+                            .map((state) => state.sortBy((i: any) => i.get("order")));
     }
 }
