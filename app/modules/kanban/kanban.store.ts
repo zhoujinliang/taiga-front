@@ -8,6 +8,9 @@ export const kanbanInitialState = {
     folds: {},
     archiveVisible: {},
     addTask: null,
+    "current-userstory": null,
+    "creation-state": null,
+    "bulk-create-state": null,
 }
 
 export const kanbanReducer = (state, action) => {
@@ -36,6 +39,11 @@ export const kanbanReducer = (state, action) => {
             });
         case 'SET_KANBAN_ZOOM':
             return state.set('zoomLevel', action.payload);
+        case 'SET_BULK_CREATE_LIGHTBOX_DATA':
+            return state.set('bulk-create-state', action.payload);
+        case 'SET_NEW_US_LIGHTBOX_DATA':
+            return state.set('current-us', action.payload.us)
+                        .set('creation-state', action.payload.statusId);
         case 'CLEAN_KANBAN_DATA':
             return Immutable.fromJS(kanbanInitialState);
         default:

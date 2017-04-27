@@ -28,6 +28,7 @@ export class KanbanPage implements OnInit, OnDestroy {
     assignedOnAssignedTo: Observable<Immutable.List<number>>;
     filtersOpen:boolean = false;
     subscriptions: Subscription[]
+    bulkCreateState: Observable<number>;
 
     constructor(private store: Store<IState>,
                 private route: ActivatedRoute,
@@ -54,6 +55,7 @@ export class KanbanPage implements OnInit, OnDestroy {
         this.filters = this.store.select((state) => state.getIn(["kanban", "filtersData"])).map(this.filtersDataToFilters.bind(this));
         this.assignedOnAssignedTo = this.store.select((state) => state.getIn(["kanban","current-us", "assigned_to"]))
                                               .map((id) => Immutable.List(id));
+        this.bulkCreateState = this.store.select((state) => state.getIn(["kanban", "bulk-create-state"]));
     }
 
     ngOnInit() {
@@ -149,6 +151,10 @@ export class KanbanPage implements OnInit, OnDestroy {
     }
 
     onSorted(value) {
+        console.log(value);
+    }
+
+    onBulkCreate(value) {
         console.log(value);
     }
 

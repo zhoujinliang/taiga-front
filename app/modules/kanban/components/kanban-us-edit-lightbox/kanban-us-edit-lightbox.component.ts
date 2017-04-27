@@ -30,5 +30,6 @@ import { IState } from "../../../../app.store";
 })
 export class KanbanUsEditLightbox {
     @Input() us: any;
+    @Input() currentState:any;
     @Input() project: any;
 };

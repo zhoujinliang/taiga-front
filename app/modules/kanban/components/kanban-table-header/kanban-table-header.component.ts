@@ -1,4 +1,8 @@
 import {Component, Input, Output, EventEmitter} from "@angular/core"
+import {SetNewUsLightboxDataAction, SetBulkCreateLightboxDataAction} from "../../kanban.actions";
+import {OpenLightboxAction} from "../../../../app.actions";
+import {Store} from "@ngrx/store";
+import {IState} from "../../../../app.store";
 import * as Immutable from "immutable";
 
 @Component({
@@ -12,7 +16,7 @@ export class KanbanTableHeader {
     @Input() archivedWatched: any = {}
     @Output("archivedWatched") archivedWatchedChange: EventEmitter<any>;
 
-    constructor() {
+    constructor(private store: Store<IState>) {
         this.foldsChange = new EventEmitter();
         this.archivedWatchedChange = new EventEmitter();
     }
@@ -35,5 +39,15 @@ export class KanbanTableHeader {
     archivedUnwatch(status) {
         this.archivedWatched[status.get('id')] = false;
         this.archivedWatchedChange.emit(this.archivedWatched);
+    }
+
+    addNewUs(type, status) {
+        if (type === "bulk") {
+            this.store.dispatch(new SetBulkCreateLightboxDataAction(status))
+            this.store.dispatch(new OpenLightboxAction("kanban.bulk-create"))
+        } else {
+            this.store.dispatch(new SetNewUsLightboxDataAction(status, null))
+            this.store.dispatch(new OpenLightboxAction("kanban.edit"))
+        }
     }
 }

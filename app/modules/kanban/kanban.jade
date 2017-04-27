@@ -6,6 +6,10 @@ tg-lightbox(key="kanban.edit")
   tg-lightbox-close
   tg-kanban-us-edit-lightbox([us]="itemToEdit|async", [project]="project|async")
 
+tg-lightbox(key="kanban.bulk-create")
+  tg-lightbox-close
+  tg-kanban-bulk-create-lightbox([status]="bulkCreateState|async", (create)="onBulkCreate($event)")
+
 div.wrapper
     tg-project-menu([project]="project|async", active="kanban")
 

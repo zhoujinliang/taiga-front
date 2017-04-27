@@ -18,6 +18,7 @@ import {KanbanArchivedStatusIntro} from "./components/kanban-archived-status-int
 import {KanbanEffects} from "./kanban.effects";
 import {KanbanSortableDirective} from "./sortable.directive";
 import {KanbanUsEditLightbox} from "./components/kanban-us-edit-lightbox/kanban-us-edit-lightbox.component";
+import {KanbanBulkCreateLightbox} from "./components/kanban-bulk-create-lightbox/kanban-bulk-create-lightbox.component";
 
 @NgModule({
     imports: [
@@ -45,6 +46,7 @@ import {KanbanUsEditLightbox} from "./components/kanban-us-edit-lightbox/kanban-
         KanbanArchivedStatusIntro,
         KanbanUsEditLightbox,
         KanbanSortableDirective,
+        KanbanBulkCreateLightbox,
     ],
     providers: [
     ],

@@ -93,3 +93,18 @@ export class CleanKanbanDataAction implements Action {
   readonly type = 'CLEAN_KANBAN_DATA';
   payload = null;
 }
+
+export class SetBulkCreateLightboxDataAction implements Action {
+  readonly type = 'SET_BULK_CREATE_LIGHTBOX_DATA';
+
+  constructor(public payload:number) {}
+}
+
+export class SetNewUsLightboxDataAction implements Action {
+  readonly type = 'SET_NEW_US_LIGHTBOX_DATA';
+  payload: any;
+
+  constructor(statusId:number, us:Immutable.Map<string, any>) {
+      this.payload = {statusId, us};
+  }
+}
