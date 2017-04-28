@@ -155,7 +155,11 @@ export class KanbanPage implements OnInit, OnDestroy {
     }
 
     onBulkCreate(value) {
-        console.log(value);
+        this.store.dispatch(new actions.USBulkCreateAction(
+            value.projectId,
+            value.statusId,
+            value.stories
+        ));
     }
 
     ngOnDestroy() {

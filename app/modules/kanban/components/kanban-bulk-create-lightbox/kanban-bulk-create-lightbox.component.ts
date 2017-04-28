@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
+import * as Immutable from "immutable";
 
 @Component({
     host: {class: "lightbox-generic-bulk"},
@@ -7,6 +8,7 @@ import {Component, EventEmitter, Input, Output} from "@angular/core";
 })
 export class KanbanBulkCreateLightbox {
     @Input() status: number;
+    @Input() project: Immutable.Map<string, any>;
     @Output() create: EventEmitter<any>;
 
     constructor() {
@@ -15,8 +17,9 @@ export class KanbanBulkCreateLightbox {
 
     onClick(value) {
         this.create.emit({
-            status: this.status,
-            subjects: value.split(/\r?\n/),
+            projectId: this.project.get('id'),
+            statusId: this.status,
+            subjects: value,
         });
     }
 }

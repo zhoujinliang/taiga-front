@@ -8,7 +8,7 @@ tg-lightbox(key="kanban.edit")
 
 tg-lightbox(key="kanban.bulk-create")
   tg-lightbox-close
-  tg-kanban-bulk-create-lightbox([status]="bulkCreateState|async", (create)="onBulkCreate($event)")
+  tg-kanban-bulk-create-lightbox([project]="project|async", [status]="bulkCreateState|async", (create)="onBulkCreate($event)")
 
 div.wrapper
     tg-project-menu([project]="project|async", active="kanban")

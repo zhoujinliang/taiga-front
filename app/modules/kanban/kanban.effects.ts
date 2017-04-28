@@ -61,6 +61,16 @@ export class KanbanEffects {
             return new actions.SetKanbanZoom(payload);
         });
 
+    @Effect()
+    usBulkCreate$: Observable<Action> = this.actions$
+        .ofType("US_BULK_CREATE")
+        .map(toPayload)
+        .switchMap((payload) => {
+            return this.rs.userstories.bulkCreate(payload.projectId, payload.statusId, payload.stories);
+        }).map((result) => {
+            return new actions.AppendKanbanUserStoriesAction(result);
+        });
+
     constructor(private actions$: Actions,
                 private rs: ResourcesService,
                 private storage: StorageService,

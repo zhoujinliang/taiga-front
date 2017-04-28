@@ -89,7 +89,7 @@ export class UserstoriesResource {
 
         const url = this.urls.resolve("bulk-create-us");
 
-        return this.http.post(url, data);
+        return this.http.post(url, data).map((response:any) => Immutable.fromJS(response.data)) ;
     }
 
     upvote(userStoryId) {

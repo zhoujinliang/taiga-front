@@ -5,7 +5,7 @@ div.project-data(*ngIf="project")
     section.involved-data
         .looking-for-people(*ngIf="project.get('is_looking_for_people')")
             img(
-                src="/#{v}/images/looking-for-people.png"
+                src="/#{_version}/images/looking-for-people.png"
                 title="{{'PROJECT.LOOKING_FOR_PEOPLE' | translate}}"
             )
             h3([class.is-empty]="!project.get('looking_for_people_note')",

@@ -28,6 +28,12 @@ export class SetKanbanUserStoriesAction implements Action {
   constructor(public payload: Immutable.List<any>) { }
 }
 
+export class AppendKanbanUserStoriesAction implements Action {
+  readonly type = "APPEND_KANBAN_USER_STORIES";
+
+  constructor(public payload: Immutable.List<any>) { }
+}
+
 export class FetchKanbanFiltersDataAction implements Action {
   readonly type = "FETCH_KANBAN_FILTERS_DATA";
   payload: any;
@@ -105,5 +111,14 @@ export class SetNewUsLightboxDataAction implements Action {
 
   constructor(statusId: number, us: Immutable.Map<string, any>) {
       this.payload = {statusId, us};
+  }
+}
+
+export class USBulkCreateAction implements Action {
+  readonly type = "US_BULK_CREATE";
+  payload: any;
+
+  constructor(projectId: number, statusId: number, stories: string) {
+      this.payload = {projectId, statusId, stories};
   }
 }

@@ -17,6 +17,8 @@ export const kanbanReducer = (state, action) => {
     switch (action.type) {
         case "SET_KANBAN_USER_STORIES":
             return state.set("userstories", action.payload);
+        case "APPEND_KANBAN_USER_STORIES":
+            return state.update("userstories", (stories) => stories.concat(action.payload));
         case "SET_KANBAN_FILTERS_DATA":
             return state.set("filtersData", action.payload);
         case "SET_KANBAN_APPLIED_FILTERS":
