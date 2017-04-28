@@ -1,7 +1,7 @@
 var gulp = require("gulp"),
     fs = require('fs'),
     imagemin = require("gulp-imagemin"),
-    jade = require("gulp-jade"),
+    pug = require("gulp-pug"),
     ts = require('gulp-typescript'),
     concat = require("gulp-concat"),
     uglify = require("gulp-uglify"),
@@ -31,8 +31,9 @@ var gulp = require("gulp"),
     source = require('vinyl-source-stream'),
     watchify = require("watchify"),
     tsify = require("tsify"),
-    jadeify = require("jadeify"),
+    pugify = require("pugify"),
     gutil = require("gulp-util"),
+    puglint = require("gulp-pug-lint"),
     tslint = require("gulp-tslint");
 
 var argv = require('minimist')(process.argv.slice(2));
@@ -114,7 +115,7 @@ var BrowserifyApp = browserify({
     entries: ['app/main.ts'],
     cache: {},
     packageCache: {}
-}).transform('jadeify', {
+}).transform('pugify', {
     compileDebug: false,
     doctype: 'html',
 }).plugin(tsify);
@@ -125,7 +126,7 @@ var DeployBrowserifyApp = browserify({
     entries: ['app/main.ts'],
     cache: {},
     packageCache: {}
-}).transform('jadeify', {
+}).transform('pugify', {
     compileDebug: false,
     doctype: 'html',
 }).plugin(tsify);
@@ -150,7 +151,6 @@ function watchBundleApp() {
 
 function deployBundleApp() {
     return DeployBrowserifyApp
-        .transform('jadeify')
         .transform({global: true }, 'uglifyify')
         .bundle().on('error', gutil.log)
         .pipe(source('js/app.js'))
@@ -164,10 +164,10 @@ function deployBundleApp() {
 ##############################################################################
 */
 
-gulp.task("jade", function() {
-    return gulp.src(paths.app + "index.jade")
+gulp.task("pug", function() {
+    return gulp.src(paths.app + "index.pug")
         .pipe(plumber())
-        .pipe(jade({pretty: true, locals:{v:version}}))
+        .pipe(pug({pretty: true, locals:{v:version}}))
         .pipe(gulp.dest(paths.tmp));
 });
 
@@ -181,12 +181,12 @@ gulp.task("copy-jquery", function() {
         .pipe(gulp.dest(paths.distVersion + "js/"));
 });
 
-gulp.task("jade-deploy", function(cb) {
-    return runSequence("jade", "copy-index", cb);
+gulp.task("pug-deploy", function(cb) {
+    return runSequence("pug", "copy-index", cb);
 });
 
-gulp.task("jade-watch", function(cb) {
-    return runSequence("jade", "copy-index", cb);
+gulp.task("pug-watch", function(cb) {
+    return runSequence("pug", "copy-index", cb);
 });
 
 /*
@@ -604,13 +604,24 @@ gulp.task("tslint", () =>
         }))
 );
 
+gulp.task("puglint", () =>
+    gulp.src("app/**/*.ts")
+        .pipe(puglint({
+            formater: "prose",
+            configuration: "./tslint.json",
+        }))
+        .pipe(tslint.report({
+            summarizeFailureOutput: true
+        }))
+);
+
 gulp.task("deploy", function(cb) {
     runSequence("clear", "delete-old-version", "delete-tmp", [
         "copy",
         "conf",
         "locales",
         "moment-locales",
-        "jade-deploy",
+        "pug-deploy",
         "app-deploy",
         "copy-jquery",
         "compile-themes"
@@ -626,7 +637,7 @@ gulp.task("default", function(cb) {
         "locales",
         "moment-locales",
         "copy-jquery",
-        "jade-deploy",
+        "pug-deploy",
         "copy-index",
         "express",
         "watch"
