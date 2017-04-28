@@ -32,9 +32,7 @@ var gulp = require("gulp"),
     watchify = require("watchify"),
     tsify = require("tsify"),
     pugify = require("pugify"),
-    gutil = require("gulp-util"),
-    puglint = require("gulp-pug-lint"),
-    tslint = require("gulp-tslint");
+    gutil = require("gulp-util");
 
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -592,28 +590,6 @@ gulp.task("watch", function() {
     gulp.watch(paths.images, ["copy-images"]);
     gulp.watch(paths.fonts, ["copy-fonts"]);
 });
-
-gulp.task("tslint", () =>
-    gulp.src("app/**/*.ts")
-        .pipe(tslint({
-            formater: "prose",
-            configuration: "./tslint.json",
-        }))
-        .pipe(tslint.report({
-            summarizeFailureOutput: true
-        }))
-);
-
-gulp.task("puglint", () =>
-    gulp.src("app/**/*.ts")
-        .pipe(puglint({
-            formater: "prose",
-            configuration: "./tslint.json",
-        }))
-        .pipe(tslint.report({
-            summarizeFailureOutput: true
-        }))
-);
 
 gulp.task("deploy", function(cb) {
     runSequence("clear", "delete-old-version", "delete-tmp", [

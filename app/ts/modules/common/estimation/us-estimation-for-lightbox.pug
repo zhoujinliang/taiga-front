@@ -3,7 +3,7 @@ ul.points-per-role
         *ngFor="let role of computableRoles",
         [class.clickable]="editable",
         [title]="role.get('name')",
-        (click)="openRole(role.get('id'))",
+        (click)="openRole(role.get('id'))"
     )
         span.points
             | {{ role.get('points') }}

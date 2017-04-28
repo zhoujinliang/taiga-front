@@ -7,20 +7,20 @@
             tg-svg(svg-icon="icon-close")
 
     a.button.button-gray.save-filters.ng-animate-disabled.e2e-open-custom-filter-form(
-        *ngIf="filters.size && !customFilterForm"
-        (click)="customFilterForm = true"
+        *ngIf="filters.size && !customFilterForm",
+        (click)="customFilterForm = true",
         title="{{'COMMON.SAVE' | translate}}",
         translate="COMMON.FILTERS.ACTION_SAVE_CUSTOM_FILTER"
     )
 
     form(
-        *ngIf="customFilterForm"
+        *ngIf="customFilterForm",
         (submit)="saveCustomFilter()"
     )
         // tg-autofocus
         input.my-filter-name.e2e-filter-name-input(
-            name="customFilterName"
-            type="text"
+            name="customFilterName",
+            type="text",
             placeholder="{{'COMMON.FILTERS.PLACEHOLDER_FILTER_NAME' | translate}}"
         )
 
