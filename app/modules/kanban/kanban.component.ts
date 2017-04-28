@@ -60,9 +60,6 @@ export class KanbanPage implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.subscriptions = [
-            this.route.params.subscribe((params) => {
-                this.store.dispatch(new FetchCurrentProjectAction(params.slug));
-            }),
             this.project.subscribe((project) => {
                 if (project) {
                     this.store.dispatch(new actions.FetchKanbanAppliedFiltersAction(project.get("id")));

@@ -1,0 +1,28 @@
+.summary.wiki-summary
+    .wiki-username-edition
+        .avatar
+            // img(
+            //     style!="background-color: <%- user.avatar.bg %>"
+            //     src!="<%- user.avatar.url %>"
+            //     alt!="<%- user.name %>"
+            // )
+        .wiki-user-modification
+            span.description(translate="WIKI.SUMMARY.LAST_MODIFICATION")
+            // span.username {{ user.name }}
+
+    .wiki-last-modified
+        span.number {{ page.get('lastModifiedDate') }}
+        span.description(translate="WIKI.SUMMARY.LAST_EDIT")
+
+    .wiki-times-edited
+        span.number {{ page.get('totalEditions') }}
+        span.description(translate="WIKI.SUMMARY.TIMES_EDITED")
+
+    // tg-check-permission="delete_wiki_page"
+    tg-svg.remove(
+        *ngIf="wiki.get('id')",
+        [title]="'WIKI.REMOVE' | translate",
+        (click)="delete()",
+        svg-icon="icon-trash"
+
+    )

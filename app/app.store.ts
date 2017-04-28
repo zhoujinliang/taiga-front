@@ -22,6 +22,9 @@ const initialState = Immutable.fromJS({
     common: commonInitialState,
     auth: authInitialState,
     projects: projectsInitialState,
+    router: {
+        path: window.location.pathname + window.location.search
+    }
 });
 
 export const globalReducer = (state, action) => {

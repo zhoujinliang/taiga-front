@@ -13,10 +13,10 @@ html(lang="en")
         meta(http-equiv="X-Frame-Options", content="deny")
 
         //-meta(name="viewport", content="width=device-width, user-scalable=no")
-        link(rel="icon", type="image/png", href="/#{v}/images/favicon.png")
+        link(rel="icon", type="image/png", href="/" + v + "/images/favicon.png")
         // TODO: REMOVE THIS IN ANY WAY
-        script(src="/#{v}/js/jquery.min.js", type="text/javascript")
-        link(rel='stylesheet', href='/#{v}/styles/theme-taiga.css', type='text/css')
+        script(src="/" + v + "/js/jquery.min.js", type="text/javascript")
+        link(rel='stylesheet', href='/' + v + '/styles/theme-taiga.css', type='text/css')
 
         //- PRERENDER SERVICE: This is to know when the page is completely loaded.
         script(type='text/javascript').
@@ -27,6 +27,6 @@ html(lang="en")
 
     body(tg-main)
         tg-view
-        script(src="/#{v}/js/app.js")
+        script(src="/" + v + "/js/app.js")
         include assets/svg/sprite.svg
         include assets/svg/editor.svg

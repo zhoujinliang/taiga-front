@@ -1,0 +1,27 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="wiki")
+
+    tg-wiki-nav([project]="project|async", [links]="links|async", *ngIf="linksVisible")
+    section.main.wiki
+        header
+            h1
+                span(tg-bo-bind="project.name")
+                span.green(translate="PROJECT.SECTION.WIKI")
+
+        // tg-wiki-wysiwyg([page]="page|async")
+        //
+        // tg-wiki-summary([page]="page|async")
+        //
+        // tg-attachments-full([page]="page|async")
+        // //     ng-if="wiki.id",
+        // //     obj-id="wiki.id",
+        // //     type="wiki_page",
+        // //     project-id="projectId",
+        // //     edit-permission = "modify_wiki_page"
+        // // )
+        //
+        // tg-wiki-history([page]="page|async")
+        // //     ng-if="wiki.id",
+        // //     wiki-id="wiki.id"
+        // // )
+        //

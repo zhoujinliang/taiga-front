@@ -51,8 +51,5 @@ export class ProjectDetail implements OnInit {
     }
 
     ngOnInit() {
-        this.route.params.subscribe((params) => {
-            this.store.dispatch(new FetchCurrentProjectAction(params.slug));
-        });
     }
 }

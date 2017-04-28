@@ -17,6 +17,7 @@ import { TgComponentsModule } from "./modules/components/components.module";
 import { DiscoverModule } from "./modules/discover/discover.module";
 import { HomeModule } from "./modules/home/home.module";
 import { KanbanModule } from "./modules/kanban/kanban.module";
+import { WikiModule } from "./modules/wiki/wiki.module";
 import { ProjectsModule } from "./modules/projects/projects.module";
 import { ResourcesModule } from "./modules/resources/resources.module";
 import { TgServicesModule } from "./modules/services/services.module";
@@ -58,6 +59,7 @@ export function HttpLoaderFactory(http: Http) {
     NavigationBarModule,
     AuthModule,
     KanbanModule,
+    WikiModule,
     TranslateModule.forRoot({
         loader: {
             provide: TranslateLoader,

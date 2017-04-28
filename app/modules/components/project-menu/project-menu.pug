@@ -69,7 +69,7 @@ nav.menu(
 
             li#nav-issues(*ngIf="menu.get('issues')")
                 a(
-                    [routerLink]="['/project', project.get('slug'), '/issues']",
+                    [routerLink]="['/project', project.get('slug'), 'issues']",
                     [class.active]="active == 'issues'",
                     [attr.aria-label]="'PROJECT.SECTION.ISSUES' | translate",
                     tabindex="4"
@@ -79,7 +79,7 @@ nav.menu(
 
             li#nav-wiki(*ngIf="menu.get('wiki')")
                 a(
-                    [routerLink]="['/project', project.get('slug'), '/wiki']",
+                    [routerLink]="['/project', project.get('slug'), 'wiki']",
                     [class.active]="active == 'wiki'",
                     [attr.aria-label]="'PROJECT.SECTION.WIKI' | translate",
                     tabindex="5"
@@ -89,7 +89,7 @@ nav.menu(
 
             li#nav-team
                 a(
-                    [routerLink]="['/project', project.get('slug'), '/team']",
+                    [routerLink]="['/project', project.get('slug'), 'team']",
                     [class.active]="active == 'team'",
                     [attr.aria-label]="'PROJECT.SECTION.TEAM' | translate",
                     tabindex="6"
@@ -109,7 +109,7 @@ nav.menu(
 
             li#nav-admin(*ngIf="project.get('i_am_admin')")
                 a(
-                    [routerLink]="['/project', project.get('slug'), '/admin']",
+                    [routerLink]="['/project', project.get('slug'), 'admin']",
                     [class.active]="active == 'admin'",
                     [attr.aria-label]="'PROJECT.SECTION.ADMIN' | translate",
                     tabindex="8"

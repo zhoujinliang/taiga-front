@@ -113,10 +113,10 @@ var BrowserifyApp = browserify({
     entries: ['app/main.ts'],
     cache: {},
     packageCache: {}
-}).transform('pugify', {
+}).transform(pugify.pug({
     compileDebug: false,
     doctype: 'html',
-}).plugin(tsify);
+})).plugin(tsify);
 
 var DeployBrowserifyApp = browserify({
     basedir: '.',
@@ -124,10 +124,10 @@ var DeployBrowserifyApp = browserify({
     entries: ['app/main.ts'],
     cache: {},
     packageCache: {}
-}).transform('pugify', {
+}).transform(pugify.pug({
     compileDebug: false,
     doctype: 'html',
-}).plugin(tsify);
+})).plugin(tsify);
 
 var watchedBrowserifyApp = watchify(BrowserifyApp);
 watchedBrowserifyApp.on("update", bundleApp);
