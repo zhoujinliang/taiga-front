@@ -22,27 +22,27 @@
  * File: modules/feedback.coffee
  */
 
-import {groupBy, bindOnce, debounce, trim} from "../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {bindOnce, debounce, groupBy, trim} from "../libs/utils";
 
 export let module = angular.module("taigaFeedback", []);
 
-let FeedbackDirective = function($lightboxService, $repo, $confirm, $loading, feedbackService){
-    let link = function($scope, $el, $attrs) {
-        let form = $el.find("form").checksley();
+const FeedbackDirective = function($lightboxService, $repo, $confirm, $loading, feedbackService){
+    const link = function($scope, $el, $attrs) {
+        const form = $el.find("form").checksley();
 
-        let submit = debounce(2000, event => {
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
             if (!form.validate()) {
                 return;
             }
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
-            let promise = $repo.create("feedback", $scope.feedback);
+            const promise = $repo.create("feedback", $scope.feedback);
 
             promise.then(function(data) {
                 currentLoading.finish();
@@ -56,11 +56,11 @@ let FeedbackDirective = function($lightboxService, $repo, $confirm, $loading, fe
             });
         });
 
-        var submitButton = $el.find(".submit-button");
+        const submitButton = $el.find(".submit-button");
 
         $el.on("submit", "form", submit);
 
-        let openLightbox = function() {
+        const openLightbox = function() {
             $scope.feedback = {};
             $lightboxService.open($el);
             return $el.find("textarea").focus();
@@ -71,10 +71,10 @@ let FeedbackDirective = function($lightboxService, $repo, $confirm, $loading, fe
         return openLightbox();
     };
 
-    let directive = {
+    const directive = {
         link,
         templateUrl: "common/lightbox-feedback.html",
-        scope: {}
+        scope: {},
     };
 
     return directive;

@@ -6,6 +6,6 @@ import {Component} from "@angular/core";
                   <input type="text"
                          name="blocked_note"
                          [placeholder]="'COMMON.BLOCKED_NOTE' | translate" />
-               </fieldset>`
+               </fieldset>`,
 })
 export class BlockingMessageInput {}

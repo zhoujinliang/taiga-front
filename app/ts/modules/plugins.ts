@@ -22,6 +22,6 @@
  * File: modules/backlog.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
-let module = angular.module("taigaPlugins", ["ngRoute"]);
+const module = angular.module("taigaPlugins", ["ngRoute"]);

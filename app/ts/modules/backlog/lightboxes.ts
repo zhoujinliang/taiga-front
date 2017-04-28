@@ -22,17 +22,17 @@
  * File: modules/backlog/lightboxes.coffee
  */
 
-import { debounce } from "../../libs/utils"
-import * as angular from "angular"
-import * as moment from "moment"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import * as moment from "moment";
+import { debounce } from "../../libs/utils";
 
 //############################################################################
 //# Creare/Edit Sprint Lightbox Directive
 //############################################################################
 
 export let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightboxService, $loading, $translate) {
-    let link = function($scope, $el, attrs) {
+    const link = function($scope, $el, attrs) {
         let estimated_start, newSprint, prettyDate;
         let hasErrors = false;
         let createSprint = true;
@@ -40,24 +40,24 @@ export let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightbo
         $scope.newSprint = {};
         let ussToAdd = null;
 
-        let resetSprint = function() {
+        const resetSprint = function() {
             if (form) { form.reset(); }
 
             return $scope.newSprint = {
                 project: null,
                 name: null,
                 estimated_start: null,
-                estimated_finish: null
+                estimated_finish: null,
             };
         };
 
-        let submit = debounce(2000, event => {
+        const submit = debounce(2000, (event) => {
             let promise;
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             prettyDate = $translate.instant("COMMON.PICKERDATE.FORMAT");
 
-            let submitButton = $el.find(".submit-button");
+            const submitButton = $el.find(".submit-button");
             form = $el.find("form").checksley();
 
             if (!form.validate()) {
@@ -69,8 +69,8 @@ export let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightbo
             hasErrors = false;
             let broadcastEvent = null;
 
-            estimated_start = $('.date-start').val();
-            let estimated_end = $('.date-end').val();
+            estimated_start = $(".date-start").val();
+            const estimated_end = $(".date-end").val();
 
             if (createSprint) {
                 newSprint = angular.copy($scope.newSprint);
@@ -88,7 +88,7 @@ export let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightbo
                 broadcastEvent = "sprintform:edit:success";
             }
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
@@ -96,7 +96,7 @@ export let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightbo
                 currentLoading.finish();
                 if (createSprint) { $scope.sprintsCounter += 1; }
 
-                $scope.sprints = _.map($scope.sprints, function(it:any) {
+                $scope.sprints = _.map($scope.sprints, function(it: any) {
                     if (it.id === data.id) {
                         return data;
                     } else {
@@ -125,19 +125,19 @@ export let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightbo
             });
         });
 
-        let remove = function() {
-            let title = $translate.instant("LIGHTBOX.DELETE_SPRINT.TITLE");
-            let message = $scope.newSprint.name;
+        const remove = function() {
+            const title = $translate.instant("LIGHTBOX.DELETE_SPRINT.TITLE");
+            const message = $scope.newSprint.name;
 
-            return $confirm.askOnDelete(title, message).then(askResponse => {
-                let onSuccess = function() {
+            return $confirm.askOnDelete(title, message).then((askResponse) => {
+                const onSuccess = function() {
                     askResponse.finish();
                     $scope.milestonesCounter -= 1;
                     lightboxService.close($el);
                     return $rootscope.$broadcast("sprintform:remove:success", $scope.newSprint);
                 };
 
-                let onError = function() {
+                const onError = function() {
                     askResponse.finish(false);
                     return $confirm.notify("error");
                 };
@@ -145,10 +145,10 @@ export let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightbo
             });
         };
 
-        let getLastSprint = function() {
-            let openSprints = _.filter($scope.sprints, (sprint:any) => !sprint.closed);
+        const getLastSprint = function() {
+            const openSprints = _.filter($scope.sprints, (sprint: any) => !sprint.closed);
 
-            let sortedSprints = _.sortBy(openSprints, (sprint:any) => moment(sprint.estimated_finish, 'YYYY-MM-DD').format('X'));
+            const sortedSprints = _.sortBy(openSprints, (sprint: any) => moment(sprint.estimated_finish, "YYYY-MM-DD").format("X"));
 
             return sortedSprints[sortedSprints.length - 1];
         };
@@ -167,7 +167,7 @@ export let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightbo
             $scope.newSprint.name = null;
             $scope.newSprint.slug = null;
 
-            let lastSprint = getLastSprint();
+            const lastSprint = getLastSprint();
 
             let estimatedStart = moment();
 
@@ -189,7 +189,7 @@ export let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightbo
 
             $scope.newSprint.estimated_finish = estimatedFinish.format(prettyDate);
 
-            let lastSprintNameDom = $el.find(".last-sprint-name");
+            const lastSprintNameDom = $el.find(".last-sprint-name");
             if ((lastSprint != null ? lastSprint.name : undefined) != null) {
                 text = $translate.instant("LIGHTBOX.ADD_EDIT_SPRINT.LAST_SPRINT_NAME", {
                             lastSprint: lastSprint.name});
@@ -223,10 +223,10 @@ export let CreateEditSprint = function($repo, $confirm, $rs, $rootscope, lightbo
 
             $el.find(".delete-sprint").removeClass("hidden");
 
-            let editSprint = $translate.instant("BACKLOG.EDIT_SPRINT");
+            const editSprint = $translate.instant("BACKLOG.EDIT_SPRINT");
             $el.find(".title").text(editSprint);
 
-            let save = $translate.instant("COMMON.SAVE");
+            const save = $translate.instant("COMMON.SAVE");
             $el.find(".button-green").text(save);
 
             lightboxService.open($el);

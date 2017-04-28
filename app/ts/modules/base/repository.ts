@@ -22,13 +22,13 @@
  * File: modules/base/repository.coffee
  */
 
-import * as _ from "lodash"
-import * as Promise from "bluebird"
-import * as Immutable from "immutable"
-import {Injectable} from "@angular/core"
-import {UrlsService} from "./urls"
-import {ModelService} from "./model"
-import {HttpService} from "./http"
+import {Injectable} from "@angular/core";
+import * as Promise from "bluebird";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {HttpService} from "./http";
+import {ModelService} from "./model";
+import {UrlsService} from "./urls";
 
 @Injectable()
 export class RepositoryService {
@@ -36,8 +36,8 @@ export class RepositoryService {
                 private http: HttpService,
                 private urls: UrlsService) {}
 
-    resolveUrlForModel(model):string {
-        let idAttrName = model.getIdAttrName();
+    resolveUrlForModel(model): string {
+        const idAttrName = model.getIdAttrName();
         return `${this.urls.resolve(model.getName())}/${model[idAttrName]}`;
     }
 
@@ -45,11 +45,11 @@ export class RepositoryService {
         return this.urls.resolve(model.getName(), model.parent);
     }
 
-    create(name, data, dataTypes={}, extraParams={}) {
+    create(name, data, dataTypes= {}, extraParams= {}) {
         return new Promise(function(resolve, reject) {
-            let url = this.urls.resolve(name);
+            const url = this.urls.resolve(name);
 
-            let promise = this.http.post(url, JSON.stringify(data), extraParams);
+            const promise = this.http.post(url, JSON.stringify(data), extraParams);
             promise.success((_data, _status) => {
                 return resolve(this.model.make_model(name, _data, null, dataTypes));
             });
@@ -57,42 +57,42 @@ export class RepositoryService {
             promise.error((data, status) => {
                 return reject(data);
             });
-        })
+        });
     }
 
-    remove(model, params={}) {
+    remove(model, params= {}) {
         return new Promise(function(resolve, reject) {
-            let url = this.resolveUrlForModel(model);
+            const url = this.resolveUrlForModel(model);
 
-            let promise = this.http.delete(url, {}, params);
+            const promise = this.http.delete(url, {}, params);
             promise.success((data, status) => resolve(model));
             promise.error((data, status) => reject(model));
         });
     }
 
-    saveAll(models, patch=true) {
-        let promises = _.map(models, x => this.save(x, true));
+    saveAll(models, patch= true) {
+        const promises = _.map(models, (x) => this.save(x, true));
         return Promise.all(promises);
     }
 
-    save(model, patch=true, params={}, options={}, returnHeaders=false) {
+    save(model, patch= true, params= {}, options= {}, returnHeaders= false) {
         return new Promise(function(resolve, reject) {
         let promise;
-            if (!model.isModified() && patch) {
+        if (!model.isModified() && patch) {
                 return resolve(model);
             }
 
-            let url = this.resolveUrlForModel(model);
+        const url = this.resolveUrlForModel(model);
 
-            let data = JSON.stringify(model.getAttrs(patch));
+        const data = JSON.stringify(model.getAttrs(patch));
 
-            if (patch) {
+        if (patch) {
                 promise = this.http.patch(url, data, params, options);
             } else {
                 promise = this.http.put(url, data, params, options);
             }
 
-            promise.success((data, status, headers, response) => {
+        promise.success((data, status, headers, response) => {
                 model._isModified = false;
                 model._attrs = _.extend(model.getAttrs(), data);
                 model._modifiedAttrs = {};
@@ -106,19 +106,19 @@ export class RepositoryService {
                 }
             });
 
-            promise.error((data, status) => reject(data));
+        promise.error((data, status) => reject(data));
         });
     }
 
-    saveAttribute(model, attribute, patch=true) {
+    saveAttribute(model, attribute, patch= true) {
         return new Promise(function(resolve, reject) {
             if (!model.isModified() && patch) {
                 return resolve(model);
             }
 
-            let url = this.resolveUrlForAttributeModel(model);
+            const url = this.resolveUrlForAttributeModel(model);
 
-            let data = {};
+            const data = {};
 
             data[attribute] = model.getAttrs();
 
@@ -144,8 +144,8 @@ export class RepositoryService {
 
     refresh(model) {
         return new Promise(function(resolve, reject) {
-            let url = this.resolveUrlForModel(model);
-            let promise = this.http.get(url);
+            const url = this.resolveUrlForModel(model);
+            const promise = this.http.get(url);
             promise.success(function(data, status) {
                 model._modifiedAttrs = {};
                 model._attrs = data;
@@ -155,19 +155,19 @@ export class RepositoryService {
             });
 
             promise.error((data, status) => reject(data));
-        })
+        });
     }
 
-    queryMany(name, params={}, options:any={}, headers=false):any {
-        let url = this.urls.resolve(name);
-        let httpOptions = {headers: {}};
+    queryMany(name, params= {}, options: any= {}, headers= false): any {
+        const url = this.urls.resolve(name);
+        const httpOptions = {headers: {}};
 
         if (!options.enablePagination) {
             httpOptions.headers["x-disable-pagination"] =  "1";
         }
 
-        return this.http.get(url, params, httpOptions).map((data:any) => {
-            let result =  Immutable.fromJS(data.data);
+        return this.http.get(url, params, httpOptions).map((data: any) => {
+            const result =  Immutable.fromJS(data.data);
 
             if (headers) {
                 return [result, data.headers];
@@ -177,53 +177,53 @@ export class RepositoryService {
         });
     }
 
-    queryOneAttribute(name, id, attribute, params={}, options:any={}):any {
-        let url = this.urls.resolve(name, id);
-        let httpOptions = {headers: {}};
+    queryOneAttribute(name, id, attribute, params= {}, options: any= {}): any {
+        const url = this.urls.resolve(name, id);
+        const httpOptions = {headers: {}};
 
         if (!options.enablePagination) {
             httpOptions.headers["x-disable-pagination"] =  "1";
         }
 
-        return this.http.get(url, params, httpOptions).map((data:any) => {
-            let model = this.model.make_model(name, data.data[attribute]);
-            (<any>model).parent = id;
+        return this.http.get(url, params, httpOptions).map((data: any) => {
+            const model = this.model.make_model(name, data.data[attribute]);
+            (model as any).parent = id;
 
             return model;
         });
     }
 
-    queryOne(name, id, params={}, options:any={}):any {
+    queryOne(name, id, params= {}, options: any= {}): any {
         let url = this.urls.resolve(name);
         if (id) { url = `${url}/${id}`; }
-        let httpOptions = {headers: {}};
+        const httpOptions = {headers: {}};
         if (!options.enablePagination) {
             httpOptions.headers["x-disable-pagination"] =  "1";
         }
 
-        return this.http.get(url, params, httpOptions).map((data:any) => {
+        return this.http.get(url, params, httpOptions).map((data: any) => {
             return this.model.make_model(name, data.data);
         });
     }
 
-    queryOneRaw(name, id, params={}, options:any={}):any {
+    queryOneRaw(name, id, params= {}, options: any= {}): any {
         let url = this.urls.resolve(name);
         if (id) { url = `${url}/${id}`; }
-        let httpOptions = _.merge({headers: {}}, options);
+        const httpOptions = _.merge({headers: {}}, options);
         if (!options.enablePagination) {
             httpOptions.headers["x-disable-pagination"] =  "1";
         }
-        return this.http.get(url, params, httpOptions).map((data:any) => {
+        return this.http.get(url, params, httpOptions).map((data: any) => {
             return data.data;
         });
     }
 
-    queryPaginated(name, params={}, options={}):any {
-        let url = this.urls.resolve(name);
-        let httpOptions = _.merge({headers: {}}, options);
-        return this.http.get(url, params, httpOptions).map((data:any) => {
-            let headers = data.headers();
-            let result:any = {};
+    queryPaginated(name, params= {}, options= {}): any {
+        const url = this.urls.resolve(name);
+        const httpOptions = _.merge({headers: {}}, options);
+        return this.http.get(url, params, httpOptions).map((data: any) => {
+            const headers = data.headers();
+            const result: any = {};
             result.models = Immutable.fromJS(data.data);
             result.count = parseInt(headers["x-pagination-count"], 10);
             result.current = parseInt(headers["x-pagination-current"] || 1, 10);
@@ -232,14 +232,14 @@ export class RepositoryService {
         });
     }
 
-    queryOnePaginatedRaw(name, id, params={}, options={}):any {
+    queryOnePaginatedRaw(name, id, params= {}, options= {}): any {
         let url = this.urls.resolve(name);
         if (id) { url = `${url}/${id}`; }
-        let httpOptions = _.merge({headers: {}}, options);
+        const httpOptions = _.merge({headers: {}}, options);
 
-        return this.http.get(url, params, httpOptions).map((data:any) => {
-            let headers = data.headers();
-            let result:any = {};
+        return this.http.get(url, params, httpOptions).map((data: any) => {
+            const headers = data.headers();
+            const result: any = {};
             result.data = data.data;
             result.count = parseInt(headers["x-pagination-count"], 10);
             result.current = parseInt(headers["x-pagination-current"] || 1, 10);
@@ -250,7 +250,7 @@ export class RepositoryService {
     }
 
     resolve(options) {
-        let params:any = {};
+        const params: any = {};
         if (options.pslug != null) { params.project = options.pslug; }
         if (options.usref != null) { params.us = options.usref; }
         if (options.taskref != null) { params.task = options.taskref; }
@@ -259,7 +259,7 @@ export class RepositoryService {
         if (options.wikipage != null) { params.wikipage = options.wikipage; }
         if (options.ref != null) { params.ref = options.ref; }
 
-        let cache = !(options.wikipage || options.sslug);
+        const cache = !(options.wikipage || options.sslug);
         return this.queryOneRaw("resolver", null, params, {cache});
     }
 }

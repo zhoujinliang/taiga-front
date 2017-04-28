@@ -22,9 +22,9 @@
  * File: modules/common/estimation.coffee
  */
 
-import {groupBy} from "../../../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {groupBy} from "../../../libs/utils";
 
 //############################################################################
 //# User story estimation directive (for Lightboxes)
@@ -40,10 +40,10 @@ export let LbUsEstimationDirective = function($tgEstimationsService, $rootScope,
     //   - Us object (ng-model)
     //   - scope.project object
 
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
         $scope.$watch($attrs.ngModel, function(us) {
             if (us) {
-                let estimationProcess = $tgEstimationsService.create($el, us, $scope.project);
+                const estimationProcess = $tgEstimationsService.create($el, us, $scope.project);
                 estimationProcess.onSelectedPointForRole = function(roleId, pointId, points) {
                     us.points = points;
                     estimationProcess.render();
@@ -52,14 +52,14 @@ export let LbUsEstimationDirective = function($tgEstimationsService, $rootScope,
                 };
 
                 estimationProcess.render = function() {
-                    let ctx = {
+                    const ctx = {
                         totalPoints: this.calculateTotalPoints(),
                         roles: this.calculateRoles(),
                         editable: this.isEditable,
-                        loading: false
+                        loading: false,
                     };
-                    let mainTemplate = "common/estimation/us-estimation-points-per-role.html";
-                    let template = $template.get(mainTemplate, true);
+                    const mainTemplate = "common/estimation/us-estimation-points-per-role.html";
+                    const template = $template.get(mainTemplate, true);
                     let html = template(ctx);
                     html = $compile(html)($scope);
                     return this.$el.html(html);
@@ -74,10 +74,9 @@ export let LbUsEstimationDirective = function($tgEstimationsService, $rootScope,
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
-
 
 //############################################################################
 //# User story estimation directive
@@ -93,15 +92,15 @@ export let UsEstimationDirective = function($tgEstimationsService, $rootScope, $
     //   - Us object (ng-model)
     //   - scope.project object
 
-    let link = function($scope, $el, $attrs, $model) {
-        let save = function(points) {
-            let transform = $modelTransform.save(us => {
+    const link = function($scope, $el, $attrs, $model) {
+        const save = function(points) {
+            const transform = $modelTransform.save((us) => {
                 us.points = points;
 
                 return us;
             });
 
-            let onError = () => {
+            const onError = () => {
                 return $confirm.notify("error");
             };
 
@@ -110,9 +109,9 @@ export let UsEstimationDirective = function($tgEstimationsService, $rootScope, $
 
         $scope.$watchCollection(() => $model.$modelValue && $model.$modelValue.points
         , function() {
-            let us = $model.$modelValue;
+            const us = $model.$modelValue;
             if (us) {
-                let estimationProcess = $tgEstimationsService.create($el, us, $scope.project);
+                const estimationProcess = $tgEstimationsService.create($el, us, $scope.project);
                 estimationProcess.onSelectedPointForRole = function(roleId, pointId, points) {
                     estimationProcess.loading = roleId;
                     estimationProcess.render();
@@ -124,14 +123,14 @@ export let UsEstimationDirective = function($tgEstimationsService, $rootScope, $
                 };
 
                 estimationProcess.render = function() {
-                    let ctx = {
+                    const ctx = {
                         totalPoints: this.calculateTotalPoints(),
                         roles: this.calculateRoles(),
                         editable: this.isEditable,
-                        loading: estimationProcess.loading
+                        loading: estimationProcess.loading,
                     };
-                    let mainTemplate = "common/estimation/us-estimation-points-per-role.html";
-                    let template = $template.get(mainTemplate, true);
+                    const mainTemplate = "common/estimation/us-estimation-points-per-role.html";
+                    const template = $template.get(mainTemplate, true);
                     let html = template(ctx);
                     html = $compile(html)($scope);
                     return this.$el.html(html);
@@ -147,7 +146,7 @@ export let UsEstimationDirective = function($tgEstimationsService, $rootScope, $
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
@@ -156,19 +155,19 @@ export let UsEstimationDirective = function($tgEstimationsService, $rootScope, $
 //############################################################################
 
 export let EstimationsService = function($template, $repo, $confirm, $q, $qqueue) {
-    let pointsTemplate = $template.get("common/estimation/us-estimation-points.html", true);
+    const pointsTemplate = $template.get("common/estimation/us-estimation-points.html", true);
 
     class EstimationProcess {
-        $el:any
-        us:any
-        project:any
-        isEditable:any
-        roles:any
-        points:any
-        loading:any
-        pointsById:any
-        onSelectedPointForRole:any
-        render:any
+        $el: any;
+        us: any;
+        project: any;
+        isEditable: any;
+        roles: any;
+        points: any;
+        loading: any;
+        pointsById: any;
+        onSelectedPointForRole: any;
+        render: any;
 
         constructor($el, us, project) {
             this.bindClickEvents = this.bindClickEvents.bind(this);
@@ -179,20 +178,20 @@ export let EstimationsService = function($template, $repo, $confirm, $q, $qqueue
             this.roles = this.project.roles;
             this.points = this.project.points;
             this.loading = false;
-            this.pointsById = groupBy(this.points, x => x.id);
+            this.pointsById = groupBy(this.points, (x) => x.id);
             this.onSelectedPointForRole =  function(roleId, pointId) {};
             this.render = function() {};
         }
 
         save(roleId, pointId) {
-            let deferred = $q.defer();
+            const deferred = $q.defer();
             $qqueue.add(() => {
-                let onSuccess = () => {
+                const onSuccess = () => {
                     deferred.resolve();
                     return this.render();
                 };
 
-                let onError = () => {
+                const onError = () => {
                     $confirm.notify("error");
                     this.us.revert();
                     this.render();
@@ -206,13 +205,13 @@ export let EstimationsService = function($template, $repo, $confirm, $q, $qqueue
         }
 
         calculateTotalPoints() {
-            let values = _.map(this.us.points, (v:number, k) => (this.pointsById[v] != null ? this.pointsById[v].value : undefined));
+            const values = _.map(this.us.points, (v: number, k) => (this.pointsById[v] != null ? this.pointsById[v].value : undefined));
 
             if (values.length === 0) {
                 return "?";
             }
 
-            let notNullValues = _.filter(values, v => v != null);
+            const notNullValues = _.filter(values, (v) => v != null);
             if (notNullValues.length === 0) {
                 return "?";
             }
@@ -221,10 +220,10 @@ export let EstimationsService = function($template, $repo, $confirm, $q, $qqueue
         }
 
         calculateRoles() {
-            let computableRoles = _.filter(this.project.roles, "computable");
-            let roles = _.map(computableRoles, (role:any) => {
-                let pointId = this.us.points[role.id];
-                let pointObj = this.pointsById[pointId];
+            const computableRoles = _.filter(this.project.roles, "computable");
+            const roles = _.map(computableRoles, (role: any) => {
+                const pointId = this.us.points[role.id];
+                const pointObj = this.pointsById[pointId];
                 role = _.cloneDeep(role);
                 role.points = (pointObj != null) && (pointObj.name != null) ? pointObj.name : "?";
                 return role;
@@ -235,25 +234,25 @@ export let EstimationsService = function($template, $repo, $confirm, $q, $qqueue
 
         bindClickEvents() {
             let roleId, target;
-            this.$el.on("click", ".total.clickable", event => {
+            this.$el.on("click", ".total.clickable", (event) => {
                 event.preventDefault();
                 event.stopPropagation();
                 target = angular.element(event.currentTarget);
                 roleId = target.data("role-id");
                 this.renderPointsSelector(roleId, target);
-                target.siblings().removeClass('active');
-                return target.addClass('active');
+                target.siblings().removeClass("active");
+                return target.addClass("active");
             });
 
-            return this.$el.on("click", ".point", event => {
+            return this.$el.on("click", ".point", (event) => {
                 event.preventDefault();
                 event.stopPropagation();
                 target = angular.element(event.currentTarget);
                 roleId = target.data("role-id");
-                let pointId = target.data("point-id");
+                const pointId = target.data("point-id");
                 this.$el.find(".popover").popover().close();
 
-                let points = _.cloneDeep(this.us.points);
+                const points = _.cloneDeep(this.us.points);
                 points[roleId] = pointId;
 
                 return this.onSelectedPointForRole(roleId, pointId, points);
@@ -261,16 +260,16 @@ export let EstimationsService = function($template, $repo, $confirm, $q, $qqueue
         }
 
         renderPointsSelector(roleId, target) {
-            let points = _.map(this.points, (point:any) => {
+            const points = _.map(this.points, (point: any) => {
                 point = _.cloneDeep(point);
                 point.selected = this.us.points[roleId] === point.id ? false : true;
                 return point;
             });
 
-            let maxPointLength = 5;
-            let horizontalList =  _.some(points, point => point.name.length > maxPointLength);
+            const maxPointLength = 5;
+            const horizontalList =  _.some(points, (point) => point.name.length > maxPointLength);
 
-            let html = pointsTemplate({"points": points, roleId, horizontal: horizontalList});
+            const html = pointsTemplate({points, roleId, horizontal: horizontalList});
             // Remove any previous state
             this.$el.find(".popover").popover().close();
             this.$el.find(".pop-points-open").remove();
@@ -289,17 +288,17 @@ export let EstimationsService = function($template, $repo, $confirm, $q, $qqueue
 
             this.$el.find(".pop-points-open").show();
 
-            let pop = this.$el.find(".pop-points-open");
+            const pop = this.$el.find(".pop-points-open");
             if ((pop.offset().top + pop.height()) > document.body.clientHeight) {
-                return pop.addClass('pop-bottom');
+                return pop.addClass("pop-bottom");
             }
         }
     }
 
-    let create = function($el, us, project) {
+    const create = function($el, us, project) {
         $el.unbind("click");
 
-        let estimationProcess = new EstimationProcess($el, us, project);
+        const estimationProcess = new EstimationProcess($el, us, project);
 
         if (estimationProcess.isEditable) {
             estimationProcess.bindClickEvents();
@@ -309,6 +308,6 @@ export let EstimationsService = function($template, $repo, $confirm, $q, $qqueue
     };
 
     return {
-        create
+        create,
     };
 };

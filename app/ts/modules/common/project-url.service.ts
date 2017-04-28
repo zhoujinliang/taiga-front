@@ -1,5 +1,5 @@
-import {Injectable} from "@angular/core"
-import {NavigationUrlsService} from "../base/navurls.service"
+import {Injectable} from "@angular/core";
+import {NavigationUrlsService} from "../base/navurls.service";
 
 @Injectable()
 export class ProjectUrlService {
@@ -10,7 +10,7 @@ export class ProjectUrlService {
             project = project.toJS();
         }
 
-        let ctx = {project: project.slug};
+        const ctx = {project: project.slug};
 
         if (project.is_backlog_activated && (project.my_permissions.indexOf("view_us") > -1)) {
             return this.navurls.resolve("project-backlog", ctx);
@@ -26,5 +26,5 @@ export class ProjectUrlService {
         }
 
         return this.navurls.resolve("project", ctx);
-    };
-};
+    }
+}

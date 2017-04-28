@@ -22,50 +22,50 @@
  * File: modules/backlog/main.coffee
  */
 
-import {toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods} from "../../libs/utils"
-import {generateHash} from "../../app"
-import {UsFiltersMixin} from "../controllerMixins"
-import * as _ from "lodash"
-import * as angular from "angular"
-import * as moment from "moment"
+import * as angular from "angular";
+import * as _ from "lodash";
+import * as moment from "moment";
+import {generateHash} from "../../app";
+import {bindMethods, bindOnce, groupBy, scopeDefer, timeout, toggleText} from "../../libs/utils";
+import {UsFiltersMixin} from "../controllerMixins";
 
 //############################################################################
 //# Backlog Controller
 //############################################################################
 
 export class BacklogController extends UsFiltersMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    appMetaService:any
-    navUrls:any
-    events:any
-    analytics:any
-    translate:any
-    loading:any
-    rs2:any
-    modelTransform:any
-    errorHandlingService:any
-    storage:any
-    filterRemoteStorageService:any
-    projectService:any
-    storeCustomFiltersName:any
-    storeFiltersName:any
-    backlogOrder:any
-    milestonesOrder:any
-    page:any
-    disablePagination:any
-    firstLoadComplete:any
-    showTags:any
-    activeFilters:any
-    displayVelocity:any
-    forecastedStories:any
-    loadingUserstories:boolean
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    appMetaService: any;
+    navUrls: any;
+    events: any;
+    analytics: any;
+    translate: any;
+    loading: any;
+    rs2: any;
+    modelTransform: any;
+    errorHandlingService: any;
+    storage: any;
+    filterRemoteStorageService: any;
+    projectService: any;
+    storeCustomFiltersName: any;
+    storeFiltersName: any;
+    backlogOrder: any;
+    milestonesOrder: any;
+    page: any;
+    disablePagination: any;
+    firstLoadComplete: any;
+    showTags: any;
+    activeFilters: any;
+    displayVelocity: any;
+    forecastedStories: any;
+    loadingUserstories: boolean;
 
     static initClass() {
         this.$inject = [
@@ -88,19 +88,19 @@ export class BacklogController extends UsFiltersMixin {
             "tgErrorHandlingService",
             "$tgStorage",
             "tgFilterRemoteStorageService",
-            "tgProjectService"
+            "tgProjectService",
         ];
 
-        this.prototype.storeCustomFiltersName = 'backlog-custom-filters';
-        this.prototype.storeFiltersName = 'backlog-filters';
+        this.prototype.storeCustomFiltersName = "backlog-custom-filters";
+        this.prototype.storeFiltersName = "backlog-filters";
         this.prototype.backlogOrder = {};
         this.prototype.milestonesOrder = {};
     }
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, appMetaService, navUrls,
-                  events, analytics, translate, loading, rs2, modelTransform, errorHandlingService,
-                  storage, filterRemoteStorageService, projectService) {
-        super()
+                events, analytics, translate, loading, rs2, modelTransform, errorHandlingService,
+                storage, filterRemoteStorageService, projectService) {
+        super();
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -141,16 +141,16 @@ export class BacklogController extends UsFiltersMixin {
 
         this.initializeEventHandlers();
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         // On Success
         promise.then(() => {
             this.firstLoadComplete = true;
 
-            let title = this.translate.instant("BACKLOG.PAGE_TITLE", {projectName: this.scope.project.name});
-            let description = this.translate.instant("BACKLOG.PAGE_DESCRIPTION", {
+            const title = this.translate.instant("BACKLOG.PAGE_TITLE", {projectName: this.scope.project.name});
+            const description = this.translate.instant("BACKLOG.PAGE_DESCRIPTION", {
                 projectName: this.scope.project.name,
-                projectDescription: this.scope.project.description
+                projectDescription: this.scope.project.description,
             });
             this.appMetaService.setAll(title, description);
 
@@ -213,7 +213,7 @@ export class BacklogController extends UsFiltersMixin {
         });
 
         this.scope.$on("usform:edit:success", (event, data) => {
-            let index = _.findIndex(this.scope.userstories, (us:any) => us.id === data.id);
+            const index = _.findIndex(this.scope.userstories, (us: any) => us.id === data.id);
 
             this.scope.userstories[index] = data;
 
@@ -231,14 +231,14 @@ export class BacklogController extends UsFiltersMixin {
     }
 
     initializeSubscription() {
-        let routingKey1 = `changes.project.${this.scope.projectId}.userstories`;
-        this.events.subscribe(this.scope, routingKey1, message => {
+        const routingKey1 = `changes.project.${this.scope.projectId}.userstories`;
+        this.events.subscribe(this.scope, routingKey1, (message) => {
             this.loadAllPaginatedUserstories();
             return this.loadSprints();
         });
 
-        let routingKey2 = `changes.project.${this.scope.projectId}.milestones`;
-        return this.events.subscribe(this.scope, routingKey2, message => {
+        const routingKey2 = `changes.project.${this.scope.projectId}.milestones`;
+        return this.events.subscribe(this.scope, routingKey2, (message) => {
             return this.loadSprints();
         });
     }
@@ -257,9 +257,9 @@ export class BacklogController extends UsFiltersMixin {
     toggleVelocityForecasting() {
         this.displayVelocity = !this.displayVelocity;
         if (!this.displayVelocity) {
-            this.scope.visibleUserStories = _.map(this.scope.userstories, (it:any) => it.ref);
+            this.scope.visibleUserStories = _.map(this.scope.userstories, (it: any) => it.ref);
         } else {
-            this.scope.visibleUserStories = _.map(this.forecastedStories, (it:any) => it.ref);
+            this.scope.visibleUserStories = _.map(this.forecastedStories, (it: any) => it.ref);
         }
         return scopeDefer(this.scope, () => {
             return this.scope.$broadcast("userstories:loaded");
@@ -267,9 +267,9 @@ export class BacklogController extends UsFiltersMixin {
     }
 
     loadProjectStats() {
-        return this.rs.projects.stats(this.scope.projectId).then(stats => {
+        return this.rs.projects.stats(this.scope.projectId).then((stats) => {
             this.scope.stats = stats;
-            let totalPoints = stats.total_points ? stats.total_points : stats.defined_points;
+            const totalPoints = stats.total_points ? stats.total_points : stats.defined_points;
 
             if (totalPoints) {
                 this.scope.stats.completedPercentage = Math.round((100 * stats.closed_points) / totalPoints);
@@ -298,29 +298,29 @@ export class BacklogController extends UsFiltersMixin {
     }
 
     loadClosedSprints() {
-        let params = {closed: true};
-        return this.rs.sprints.list(this.scope.projectId, params).then(result => {
-            let sprints = result.milestones;
+        const params = {closed: true};
+        return this.rs.sprints.list(this.scope.projectId, params).then((result) => {
+            const sprints = result.milestones;
 
             this.setMilestonesOrder(sprints);
 
             this.scope.totalClosedMilestones = result.closed;
 
             // NOTE: Fix order of USs because the filter orderBy does not work propertly in partials files
-            for (let sprint of sprints) {
+            for (const sprint of sprints) {
                 sprint.user_stories = _.sortBy(sprint.user_stories, "sprint_order");
             }
             this.scope.closedSprints =  sprints;
-            this.scope.closedSprintsById = groupBy(sprints, x => x.id);
+            this.scope.closedSprintsById = groupBy(sprints, (x) => x.id);
             this.rootscope.$broadcast("closed-sprints:reloaded", sprints);
             return sprints;
         });
     }
 
     loadSprints() {
-        let params = {closed: false};
-        return this.rs.sprints.list(this.scope.projectId, params).then(result => {
-            let sprints = result.milestones;
+        const params = {closed: false};
+        return this.rs.sprints.list(this.scope.projectId, params).then((result) => {
+            const sprints = result.milestones;
 
             this.setMilestonesOrder(sprints);
 
@@ -330,7 +330,7 @@ export class BacklogController extends UsFiltersMixin {
             this.scope.totalMilestones = this.scope.totalOpenMilestones + this.scope.totalClosedMilestones;
 
             // NOTE: Fix order of USs because the filter orderBy does not work propertly in partials files
-            for (let sprint of sprints) {
+            for (const sprint of sprints) {
                 sprint.user_stories = _.sortBy(sprint.user_stories, "sprint_order");
             }
 
@@ -339,7 +339,7 @@ export class BacklogController extends UsFiltersMixin {
             if (!this.scope.closedSprints) { this.scope.closedSprints =  []; }
 
             this.scope.sprintsCounter = sprints.length;
-            this.scope.sprintsById = groupBy(sprints, x => x.id);
+            this.scope.sprintsById = groupBy(sprints, (x) => x.id);
             this.rootscope.$broadcast("sprints:loaded", sprints);
 
             this.scope.currentSprint = this.findCurrentSprint();
@@ -349,23 +349,23 @@ export class BacklogController extends UsFiltersMixin {
     }
 
     openSprints() {
-        return _.filter(this.scope.sprints, (sprint:any) => !sprint.closed).reverse();
+        return _.filter(this.scope.sprints, (sprint: any) => !sprint.closed).reverse();
     }
 
     loadAllPaginatedUserstories() {
-        let { page } = this;
+        const { page } = this;
 
         return this.loadUserstories(true, this.scope.userstories.length).then(() => {
           return this.page = page;
         });
     }
 
-    loadUserstories(resetPagination=false, pageSize=null) {
+    loadUserstories(resetPagination= false, pageSize= null) {
         if (!this.scope.projectId) { return null; }
 
         this.loadingUserstories = true;
         this.disablePagination = true;
-        let params = _.clone(this.location.search());
+        const params = _.clone(this.location.search());
         this.rs.userstories.storeQueryParams(this.scope.projectId, params);
 
         if (resetPagination) {
@@ -374,12 +374,12 @@ export class BacklogController extends UsFiltersMixin {
 
         params.page = this.page;
 
-        let promise = this.rs.userstories.listUnassigned(this.scope.projectId, params, pageSize);
+        const promise = this.rs.userstories.listUnassigned(this.scope.projectId, params, pageSize);
 
-        return promise.then(result => {
+        return promise.then((result) => {
 
-            let userstories = result[0];
-            let header = result[1];
+            const userstories = result[0];
+            const header = result[1];
 
             if (resetPagination) {
                 this.scope.userstories = [];
@@ -387,15 +387,15 @@ export class BacklogController extends UsFiltersMixin {
 
             // NOTE: Fix order of USs because the filter orderBy does not work propertly in the partials files
             this.scope.userstories = this.scope.userstories.concat(_.sortBy(userstories, "backlog_order"));
-            this.scope.visibleUserStories = _.map(this.scope.userstories, (it:any) => it.ref);
+            this.scope.visibleUserStories = _.map(this.scope.userstories, (it: any) => it.ref);
 
-            for (let it of this.scope.userstories) {
+            for (const it of this.scope.userstories) {
                 this.backlogOrder[it.id] = it.backlog_order;
             }
 
             this.loadingUserstories = false;
 
-            if (header('x-pagination-next')) {
+            if (header("x-pagination-next")) {
                 this.disablePagination = false;
                 this.page++;
             }
@@ -414,20 +414,20 @@ export class BacklogController extends UsFiltersMixin {
         return this.q.all([
             this.loadProjectStats(),
             this.loadSprints(),
-            this.loadUserstories()
+            this.loadUserstories(),
         ]).then(this.calculateForecasting);
     }
 
     calculateForecasting() {
-        let { stats } = this.scope;
-        let { total_points } = stats;
+        const { stats } = this.scope;
+        const { total_points } = stats;
         let current_sum = stats.assigned_points;
         let backlog_points_sum = 0;
         this.forecastedStories = [];
 
         return (() => {
-            let result = [];
-            for (let us of this.scope.userstories) {
+            const result = [];
+            for (const us of this.scope.userstories) {
                 let item;
                 current_sum += us.total_points;
                 backlog_points_sum += us.total_points;
@@ -443,7 +443,7 @@ export class BacklogController extends UsFiltersMixin {
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         if (!project.is_backlog_activated) {
             this.errorHandlingService.permissionDenied();
@@ -452,17 +452,17 @@ export class BacklogController extends UsFiltersMixin {
         this.scope.projectId = project.id;
         this.scope.project = project;
         this.scope.closedMilestones = !!project.total_closed_milestones;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
         this.scope.points = _.sortBy(project.points, "order");
-        this.scope.pointsById = groupBy(project.points, x => x.id);
-        this.scope.usStatusById = groupBy(project.us_statuses, x => x.id);
+        this.scope.pointsById = groupBy(project.points, (x) => x.id);
+        this.scope.usStatusById = groupBy(project.us_statuses, (x) => x.id);
         this.scope.usStatusList = _.sortBy(project.us_statuses, "id");
 
         return project;
     }
 
     loadInitialData() {
-        let project = this.loadProject();
+        const project = this.loadProject();
 
         this.fillUsersAndRoles(project.members, project.roles);
         this.initializeSubscription();
@@ -474,7 +474,7 @@ export class BacklogController extends UsFiltersMixin {
 
     prepareBulkUpdateData(uses, field) {
          if (field == null) { field = "backlog_order"; }
-         return _.map(uses, (x:any) => ({"us_id": x.id, "order": x[field]}));
+         return _.map(uses, (x: any) => ({us_id: x.id, order: x[field]}));
      }
 
     // --move us api behavior--
@@ -489,8 +489,8 @@ export class BacklogController extends UsFiltersMixin {
     // you must send them with the other USs
     moveUs(ctx, usList, newUsIndex, newSprintId) {
         let afterDestination, beforeDestination, data, it, key, newSprint, promise, sprint, startIndex, us;
-        let oldSprintId = usList[0].milestone;
-        let { project } = usList[0];
+        const oldSprintId = usList[0].milestone;
+        const { project } = usList[0];
 
         if (oldSprintId) {
             sprint = this.scope.sprintsById[oldSprintId] || this.scope.closedSprintsById[oldSprintId];
@@ -500,7 +500,7 @@ export class BacklogController extends UsFiltersMixin {
             newSprint = this.scope.sprintsById[newSprintId] || this.scope.closedSprintsById[newSprintId];
         }
 
-        let currentSprintId = newSprintId !== oldSprintId ? newSprintId : oldSprintId;
+        const currentSprintId = newSprintId !== oldSprintId ? newSprintId : oldSprintId;
 
         let orderList = null;
         let orderField = "";
@@ -509,7 +509,7 @@ export class BacklogController extends UsFiltersMixin {
             if (newSprintId === null) { // From sprint to backlog
                 for (key = 0; key < usList.length; key++) { // delete from sprint userstories
                     us = usList[key];
-                    _.remove(sprint.user_stories, (it:any) => it.id === us.id);
+                    _.remove(sprint.user_stories, (it: any) => it.id === us.id);
                 }
 
                 orderField = "backlog_order";
@@ -521,7 +521,7 @@ export class BacklogController extends UsFiltersMixin {
                 this.scope.userstories = this.scope.userstories.concat(usList);
             } else { // From backlog to sprint
                 for (us of usList) { // delete from sprint userstories
-                    _.remove(this.scope.userstories, (it:any) => it.id === us.id);
+                    _.remove(this.scope.userstories, (it: any) => it.id === us.id);
                 }
 
                 orderField = "sprint_order";
@@ -538,8 +538,8 @@ export class BacklogController extends UsFiltersMixin {
                 orderField = "backlog_order";
                 orderList = this.backlogOrder;
 
-                list = _.filter(this.scope.userstories, (listIt:any) => // Remove moved US from list
-                    !_.find(usList, (moveIt:any) => listIt.id === moveIt.id)
+                list = _.filter(this.scope.userstories, (listIt: any) => // Remove moved US from list
+                    !_.find(usList, (moveIt: any) => listIt.id === moveIt.id),
                 );
 
                 beforeDestination = _.slice(list, 0, newUsIndex);
@@ -548,8 +548,8 @@ export class BacklogController extends UsFiltersMixin {
                 orderField = "sprint_order";
                 orderList = this.milestonesOrder[sprint.id];
 
-                list = _.filter(newSprint.user_stories, (listIt:any) => // Remove moved US from list
-                    !_.find(usList, (moveIt:any) => listIt.id === moveIt.id)
+                list = _.filter(newSprint.user_stories, (listIt: any) => // Remove moved US from list
+                    !_.find(usList, (moveIt: any) => listIt.id === moveIt.id),
                 );
 
                 beforeDestination = _.slice(list, 0, newUsIndex);
@@ -558,7 +558,7 @@ export class BacklogController extends UsFiltersMixin {
         }
 
         // previous us
-        let previous = beforeDestination[beforeDestination.length - 1];
+        const previous = beforeDestination[beforeDestination.length - 1];
 
         // this will store the previous us with the same position
         let setPreviousOrders = [];
@@ -568,18 +568,18 @@ export class BacklogController extends UsFiltersMixin {
         } else if (previous) {
             startIndex = orderList[previous.id] + 1;
 
-            let previousWithTheSameOrder = _.filter(beforeDestination, it => it[orderField] === orderList[previous.id]);
+            const previousWithTheSameOrder = _.filter(beforeDestination, (it) => it[orderField] === orderList[previous.id]);
 
             // we must send the USs previous to the dropped USs to tell the backend
             // which USs are before the dropped USs, if they have the same value to
             // order, the backend doens't know after which one do you want to drop
             // the USs
             if (previousWithTheSameOrder.length > 1) {
-                setPreviousOrders = _.map(previousWithTheSameOrder, (it:any) => ({us_id: it.id, order: orderList[it.id]}));
+                setPreviousOrders = _.map(previousWithTheSameOrder, (it: any) => ({us_id: it.id, order: orderList[it.id]}));
             }
         }
 
-        let modifiedUs = [];
+        const modifiedUs = [];
 
         for (key = 0; key < usList.length; key++) { // update sprint and new position
             us = usList[key];
@@ -598,15 +598,15 @@ export class BacklogController extends UsFiltersMixin {
         }
 
         // refresh order
-        this.scope.userstories = _.sortBy(this.scope.userstories, (it:any) => this.backlogOrder[it.id]);
-        this.scope.visibleUserStories = _.map(this.scope.userstories, (it:any) => it.ref);
+        this.scope.userstories = _.sortBy(this.scope.userstories, (it: any) => this.backlogOrder[it.id]);
+        this.scope.visibleUserStories = _.map(this.scope.userstories, (it: any) => it.ref);
 
         for (sprint of this.scope.sprints) {
-            sprint.user_stories = _.sortBy(sprint.user_stories, (it:any) => this.milestonesOrder[sprint.id][it.id]);
+            sprint.user_stories = _.sortBy(sprint.user_stories, (it: any) => this.milestonesOrder[sprint.id][it.id]);
         }
 
         for (sprint of this.scope.closedSprints) {
-            sprint.user_stories = _.sortBy(sprint.user_stories, (it:any) => this.milestonesOrder[sprint.id][it.id]);
+            sprint.user_stories = _.sortBy(sprint.user_stories, (it: any) => this.milestonesOrder[sprint.id][it.id]);
         }
 
         // saving
@@ -617,15 +617,15 @@ export class BacklogController extends UsFiltersMixin {
             data = modifiedUs.concat(setPreviousOrders);
             promise = this.rs.userstories.bulkUpdateBacklogOrder(project, data);
         } else {  // drag single
-            let setOrders = {};
+            const setOrders = {};
             for (it of setPreviousOrders) {
                 setOrders[it.us_id] = it.order;
             }
 
-            let options = {
+            const options = {
                 headers: {
-                    "set-orders": JSON.stringify(setOrders)
-                }
+                    "set-orders": JSON.stringify(setOrders),
+                },
             };
 
             promise = this.repo.save(usList[0], true, {}, options, true);
@@ -652,16 +652,16 @@ export class BacklogController extends UsFiltersMixin {
     }
 
     editUserStory(projectId, ref, $event) {
-        let target = $($event.target);
+        const target = $($event.target);
 
-        let currentLoading = this.loading()
+        const currentLoading = this.loading()
             .target(target)
             .removeClasses("edit-story")
             .timeout(200)
             .start();
 
-        return this.rs.userstories.getByRef(projectId, ref).then(us => {
-            return this.rs2.attachments.list("us", us.id, projectId).then(attachments => {
+        return this.rs.userstories.getByRef(projectId, ref).then((us) => {
+            return this.rs2.attachments.list("us", us.id, projectId).then((attachments) => {
                 this.rootscope.$broadcast("usform:edit", us, attachments.toJS());
                 return currentLoading.finish();
             });
@@ -669,20 +669,20 @@ export class BacklogController extends UsFiltersMixin {
     }
 
     deleteUserStory(us) {
-        let title = this.translate.instant("US.TITLE_DELETE_ACTION");
+        const title = this.translate.instant("US.TITLE_DELETE_ACTION");
 
-        let message = us.subject;
+        const message = us.subject;
 
-        return this.confirm.askOnDelete(title, message).then(askResponse => {
+        return this.confirm.askOnDelete(title, message).then((askResponse) => {
             // We modify the userstories in scope so the user doesn't see the removed US for a while
             this.scope.userstories = _.without(this.scope.userstories, us);
-            let promise = this.repo.remove(us);
+            const promise = this.repo.remove(us);
             promise.then(() => {
                 askResponse.finish();
 
                 return this.q.all([
                     this.loadProjectStats(),
-                    this.loadSprints()
+                    this.loadSprints(),
                 ]);
             });
             return promise.then(null, () => {
@@ -706,11 +706,11 @@ export class BacklogController extends UsFiltersMixin {
     }
 
     findCurrentSprint() {
-      let currentDate = new Date().getTime();
+      const currentDate = new Date().getTime();
 
-      return  _.find(this.scope.sprints, function(sprint:any) {
-          let start:any = moment(sprint.estimated_start, 'YYYY-MM-DD').format('x');
-          let end:any = moment(sprint.estimated_finish, 'YYYY-MM-DD').format('x');
+      return  _.find(this.scope.sprints, function(sprint: any) {
+          const start: any = moment(sprint.estimated_start, "YYYY-MM-DD").format("x");
+          const end: any = moment(sprint.estimated_finish, "YYYY-MM-DD").format("x");
 
           return (currentDate >= start) && (currentDate <= end);
       });
@@ -718,19 +718,18 @@ export class BacklogController extends UsFiltersMixin {
 }
 BacklogController.initClass();
 
-
 //############################################################################
 //# Backlog Directive
 //############################################################################
 
 export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
     //# Doom line Link
-    let doomLineTemplate = _.template(`\
+    const doomLineTemplate = _.template(`\
 <div class="doom-line"><span><%- text %></span></div>\
 `);
 
-    let linkDoomLine = function($scope, $el, $attrs, $ctrl) {
-        let reloadDoomLine = function() {
+    const linkDoomLine = function($scope, $el, $attrs, $ctrl) {
+        const reloadDoomLine = function() {
             if ($scope.displayVelocity) {
                 removeDoomlineDom();
             }
@@ -738,21 +737,21 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
             if (($scope.stats != null) && ($scope.stats.total_points != null) && ($scope.stats.total_points !== 0) && ($scope.displayVelocity == null)) {
                 removeDoomlineDom();
 
-                let { stats } = $scope;
-                let { total_points } = stats;
+                const { stats } = $scope;
+                const { total_points } = stats;
                 let current_sum = stats.assigned_points;
 
                 if (!$scope.userstories) { return; }
 
                 return (() => {
-                    let result = [];
+                    const result = [];
                     for (let i = 0; i < $scope.userstories.length; i++) {
-                        let us = $scope.userstories[i];
+                        const us = $scope.userstories[i];
                         let item;
                         current_sum += us.total_points;
 
                         if (current_sum > total_points) {
-                            let domElement = $el.find('.backlog-table-body .us-item-row')[i];
+                            const domElement = $el.find(".backlog-table-body .us-item-row")[i];
                             addDoomLineDom(domElement);
 
                             break;
@@ -764,16 +763,16 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
             }
         };
 
-        var removeDoomlineDom = () => $el.find(".doom-line").remove();
+        const removeDoomlineDom = () => $el.find(".doom-line").remove();
 
-        var addDoomLineDom = function(element) {
-            let text = $translate.instant("BACKLOG.DOOMLINE");
-            return $(element).before(doomLineTemplate({"text": text}));
+        const addDoomLineDom = function(element) {
+            const text = $translate.instant("BACKLOG.DOOMLINE");
+            return $(element).before(doomLineTemplate({text}));
         };
 
-        let getUsItems = function() {
-            let rowElements = $el.find('.backlog-table-body .us-item-row');
-            return _.map(rowElements, x => angular.element(x));
+        const getUsItems = function() {
+            const rowElements = $el.find(".backlog-table-body .us-item-row");
+            return _.map(rowElements, (x) => angular.element(x));
         };
 
         $scope.$on("userstories:loaded", reloadDoomLine);
@@ -783,28 +782,28 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
 
     //# Move to current sprint link
 
-    let linkToolbar = function($scope, $el, $attrs, $ctrl) {
+    const linkToolbar = function($scope, $el, $attrs, $ctrl) {
         let ussToMove;
-        let getUsToMove = function() {
+        const getUsToMove = function() {
             // Calculating the us's to be modified
-            let ussDom = $el.find(".backlog-table-body input:checkbox:checked");
+            const ussDom = $el.find(".backlog-table-body input:checkbox:checked");
 
-            return _.map(ussDom, function(item:any) {
-                item =  $(item).closest('.tg-scope');
-                let itemScope = item.scope();
+            return _.map(ussDom, function(item: any) {
+                item =  $(item).closest(".tg-scope");
+                const itemScope = item.scope();
                 itemScope.us.milestone = $scope.sprints[0].id;
                 return itemScope.us;
             });
         };
 
-        let moveUssToSprint = function(selectedUss, sprint) {
-            let ussCurrent = _($scope.userstories);
+        const moveUssToSprint = function(selectedUss, sprint) {
+            const ussCurrent = _($scope.userstories);
 
             // Remove them from backlog
             $scope.userstories = ussCurrent.without.apply(ussCurrent, selectedUss).value();
 
-            let extraPoints = _.map(selectedUss, (v:any, k:any) => v.total_points);
-            let totalExtraPoints =  _.reduce(extraPoints, (acc, num) => acc + num);
+            const extraPoints = _.map(selectedUss, (v: any, k: any) => v.total_points);
+            const totalExtraPoints =  _.reduce(extraPoints, (acc, num) => acc + num);
 
             // Add them to current sprint
             sprint.user_stories = _.union(sprint.user_stories, selectedUss);
@@ -812,11 +811,11 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
             // Update the total of points
             sprint.total_points += totalExtraPoints;
 
-            let data = _.map(selectedUss, (us:any) =>
+            const data = _.map(selectedUss, (us: any) =>
                 ({
                     us_id: us.id,
-                    order: us.sprint_order
-                })
+                    order: us.sprint_order,
+                }),
         );
             $rs.userstories.bulkUpdateMilestone($scope.project.id, $scope.sprints[0].id, data).then(() => {
                 $ctrl.loadSprints();
@@ -828,20 +827,20 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
             return $el.find(".move-to-sprint").hide();
         };
 
-        let moveToCurrentSprint = selectedUss => moveUssToSprint(selectedUss, $scope.currentSprint);
+        const moveToCurrentSprint = (selectedUss) => moveUssToSprint(selectedUss, $scope.currentSprint);
 
-        let moveToLatestSprint = selectedUss => moveUssToSprint(selectedUss, $scope.sprints[0]);
+        const moveToLatestSprint = (selectedUss) => moveUssToSprint(selectedUss, $scope.sprints[0]);
 
         $scope.$on("sprintform:create:success:callback", (e, ussToMove) => _.partial(moveToCurrentSprint, ussToMove)());
 
         let shiftPressed = false;
         let lastChecked = null;
 
-        let checkSelected = function(target) {
+        const checkSelected = function(target) {
             lastChecked = target.closest(".us-item-row");
-            target.closest('.us-item-row').toggleClass('ui-multisortable-multiple');
-            let moveToSprintDom = $el.find(".move-to-sprint");
-            let selectedUsDom = $el.find(".backlog-table-body input:checkbox:checked");
+            target.closest(".us-item-row").toggleClass("ui-multisortable-multiple");
+            const moveToSprintDom = $el.find(".move-to-sprint");
+            const selectedUsDom = $el.find(".backlog-table-body input:checkbox:checked");
 
             if ((selectedUsDom.length > 0) && ($scope.sprints.length > 0)) {
                 return moveToSprintDom.show();
@@ -849,7 +848,6 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
                 return moveToSprintDom.hide();
             }
         };
-
 
         $(window).on("keydown.shift-pressed keyup.shift-pressed", function(event) {
             shiftPressed = !!event.shiftKey;
@@ -862,35 +860,35 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
             // check elements between the last two if shift is pressed
             if (lastChecked && shiftPressed) {
                 let elements = [];
-                let current = $(event.currentTarget).closest(".us-item-row");
-                let nextAll = lastChecked.nextAll();
-                let prevAll = lastChecked.prevAll();
+                const current = $(event.currentTarget).closest(".us-item-row");
+                const nextAll = lastChecked.nextAll();
+                const prevAll = lastChecked.prevAll();
 
-                if (_.some(nextAll, next => next === current[0])) {
+                if (_.some(nextAll, (next) => next === current[0])) {
                     elements = lastChecked.nextUntil(current);
-                } else if (_.some(prevAll, prev => prev === current[0])) {
+                } else if (_.some(prevAll, (prev) => prev === current[0])) {
                     elements = lastChecked.prevUntil(current);
                 }
 
                 _.map(elements, function(elm) {
-                    let input = $(elm).find("input:checkbox");
-                    input.prop('checked', true);
+                    const input = $(elm).find("input:checkbox");
+                    input.prop("checked", true);
                     return checkSelected(input);
                 });
             }
 
-            let target = angular.element(event.currentTarget);
-            target.closest(".us-item-row").toggleClass('is-checked');
+            const target = angular.element(event.currentTarget);
+            target.closest(".us-item-row").toggleClass("is-checked");
             return checkSelected(target);
         });
 
-        $el.on("click", "#move-to-latest-sprint", event => {
+        $el.on("click", "#move-to-latest-sprint", (event) => {
             ussToMove = getUsToMove();
 
             return $scope.$apply(_.partial(moveToLatestSprint, ussToMove));
         });
 
-        $el.on("click", "#move-to-current-sprint", event => {
+        $el.on("click", "#move-to-current-sprint", (event) => {
             ussToMove = getUsToMove();
 
             return $scope.$apply(_.partial(moveToCurrentSprint, ussToMove));
@@ -905,9 +903,9 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
         });
 
         return $el.on("click", ".forecasting-add-sprint", function(event) {
-            let ussToMoveList = $ctrl.forecastedStories;
+            const ussToMoveList = $ctrl.forecastedStories;
             if ($scope.currentSprint) {
-                ussToMove = _.map(ussToMoveList, function(us:any, index:any) {
+                ussToMove = _.map(ussToMoveList, function(us: any, index: any) {
                     us.milestone = $scope.currentSprint.id;
                     us.order = index;
                     return us;
@@ -915,7 +913,7 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
 
                 return $scope.$apply(_.partial(moveToCurrentSprint, ussToMove));
             } else {
-                ussToMove = _.map(ussToMoveList, function(us:any, index:any) {
+                ussToMove = _.map(ussToMoveList, function(us: any, index: any) {
                     us.order = index;
                     return us;
                 });
@@ -925,9 +923,9 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
         });
     };
 
-    var showHideTags = function($ctrl) {
+    const showHideTags = function($ctrl) {
         let text;
-        let elm = angular.element("#show-tags");
+        const elm = angular.element("#show-tags");
 
         if ($ctrl.showTags) {
             elm.addClass("active");
@@ -942,30 +940,30 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
         }
     };
 
-    let openFilterInit = function($scope, $el, $ctrl) {
-        let sidebar = $el.find("sidebar.backlog-filter");
+    const openFilterInit = function($scope, $el, $ctrl) {
+        const sidebar = $el.find("sidebar.backlog-filter");
 
         sidebar.addClass("active");
 
         return $ctrl.activeFilters = true;
     };
 
-    let showHideFilter = function($scope, $el, $ctrl) {
-        let sidebar = $el.find("sidebar.backlog-filter");
+    const showHideFilter = function($scope, $el, $ctrl) {
+        const sidebar = $el.find("sidebar.backlog-filter");
         sidebar.one("transitionend", () =>
             timeout(150, function() {
                 $rootscope.$broadcast("resize");
-                return $('.burndown').css("visibility", "visible");
-            })
+                return $(".burndown").css("visibility", "visible");
+            }),
         );
 
-        let target = angular.element("#show-filters-button");
-        $('.burndown').css("visibility", "hidden");
+        const target = angular.element("#show-filters-button");
+        $(".burndown").css("visibility", "hidden");
         sidebar.toggleClass("active");
         target.toggleClass("active");
 
-        let hideText = $translate.instant("BACKLOG.FILTERS.HIDE");
-        let showText = $translate.instant("BACKLOG.FILTERS.SHOW");
+        const hideText = $translate.instant("BACKLOG.FILTERS.HIDE");
+        const showText = $translate.instant("BACKLOG.FILTERS.SHOW");
 
         toggleText(target, [hideText, showText]);
 
@@ -974,7 +972,7 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
 
     //# Filters Link
 
-    let linkFilters = function($scope, $el, $attrs, $ctrl) {
+    const linkFilters = function($scope, $el, $attrs, $ctrl) {
         $scope.filtersSearch = {};
         return $el.on("click", "#show-filters-button", function(event) {
             event.preventDefault();
@@ -982,14 +980,14 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
         });
     };
 
-    let link = function($scope, $el, $attrs, $rootscope) {
-        let $ctrl = $el.controller();
+    const link = function($scope, $el, $attrs, $rootscope) {
+        const $ctrl = $el.controller();
 
         linkToolbar($scope, $el, $attrs, $ctrl);
         linkFilters($scope, $el, $attrs, $ctrl);
         linkDoomLine($scope, $el, $attrs, $ctrl);
 
-        let filters = $ctrl.location.search();
+        const filters = $ctrl.location.search();
         if (filters.status ||
            filters.tags ||
            filters.q ||
@@ -1009,22 +1007,21 @@ export let BacklogDirective = function($repo, $rootscope, $translate, $rs) {
     return {link};
 };
 
-
 //############################################################################
 //# User story points directive
 //############################################################################
 
 export let UsRolePointsSelectorDirective = function($rootscope, $template, $compile, $translate) {
-    let selectionTemplate = $template.get("backlog/us-role-points-popover.html", true);
+    const selectionTemplate = $template.get("backlog/us-role-points-popover.html", true);
 
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         // Watchers
         bindOnce($scope, "project", function(project) {
-            let roles = _.filter(project.roles, "computable");
-            let numberOfRoles = _.size(roles);
+            const roles = _.filter(project.roles, "computable");
+            const numberOfRoles = _.size(roles);
 
             if (numberOfRoles > 1) {
-                return $el.append($compile(selectionTemplate({"roles": roles}))($scope));
+                return $el.append($compile(selectionTemplate({roles}))($scope));
             } else {
                 $el.find(".icon-arrow-down").remove();
                 return $el.find(".header-points").addClass("not-clickable");
@@ -1039,13 +1036,13 @@ export let UsRolePointsSelectorDirective = function($rootscope, $template, $comp
         $scope.$on("uspoints:clear-selection", function(ctx, roleId) {
             $el.find(".popover").popover().close();
 
-            let text = $translate.instant("COMMON.FIELDS.POINTS");
+            const text = $translate.instant("COMMON.FIELDS.POINTS");
             return $el.find(".header-points").text(text);
         });
 
         // Dom Event Handlers
         $el.on("click", function(event) {
-            let target = angular.element(event.target);
+            const target = angular.element(event.target);
 
             if (target.is("span") || target.is("div")) {
                 event.stopPropagation();
@@ -1063,8 +1060,8 @@ export let UsRolePointsSelectorDirective = function($rootscope, $template, $comp
         $el.on("click", ".role", function(event) {
             event.preventDefault();
             event.stopPropagation();
-            let target = angular.element(event.currentTarget);
-            let rolScope = target.scope();
+            const target = angular.element(event.currentTarget);
+            const rolScope = target.scope();
             return $rootscope.$broadcast("uspoints:select", target.data("role-id"), target.text());
         });
 
@@ -1075,23 +1072,23 @@ export let UsRolePointsSelectorDirective = function($rootscope, $template, $comp
 };
 
 export let UsPointsDirective = function($tgEstimationsService, $repo, $tgTemplate) {
-    let rolesTemplate = $tgTemplate.get("common/estimation/us-points-roles-popover.html", true);
+    const rolesTemplate = $tgTemplate.get("common/estimation/us-points-roles-popover.html", true);
 
-    let link = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
+    const link = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
         let updatingSelectedRoleId = null;
         let selectedRoleId = null;
-        let filteringRoleId = null;
+        const filteringRoleId = null;
         let estimationProcess = null;
 
         $scope.$on("uspoints:select", function(ctx, roleId, roleName) {
-            let us = $scope.$eval($attrs.tgBacklogUsPoints);
+            const us = $scope.$eval($attrs.tgBacklogUsPoints);
             selectedRoleId = roleId;
             return estimationProcess.render();
         });
 
         $scope.$on("uspoints:clear-selection", function(ctx) {
-            let us = $scope.$eval($attrs.tgBacklogUsPoints);
+            const us = $scope.$eval($attrs.tgBacklogUsPoints);
             selectedRoleId = null;
             return estimationProcess.render();
         });
@@ -1101,7 +1098,7 @@ export let UsPointsDirective = function($tgEstimationsService, $repo, $tgTemplat
                 estimationProcess = $tgEstimationsService.create($el, us, $scope.project);
 
                 // Update roles
-                let roles = estimationProcess.calculateRoles();
+                const roles = estimationProcess.calculateRoles();
                 if (roles.length === 0) {
                     $el.find(".icon-arrow-bottom").remove();
                     $el.find("a.us-points").addClass("not-clickable");
@@ -1124,27 +1121,27 @@ export let UsPointsDirective = function($tgEstimationsService, $repo, $tgTemplat
 
                 estimationProcess.render = function() {
                     let text, title;
-                    let totalPoints = this.calculateTotalPoints();
+                    const totalPoints = this.calculateTotalPoints();
                     if ((selectedRoleId == null) || (roles.length === 1)) {
                         text = totalPoints;
                         title = totalPoints;
                     } else {
-                        let pointId = this.us.points[selectedRoleId];
-                        let pointObj = this.pointsById[pointId];
+                        const pointId = this.us.points[selectedRoleId];
+                        const pointObj = this.pointsById[pointId];
                         text = `${pointObj.name} / <span>${totalPoints}</span>`;
                         title = `${pointObj.name} / ${totalPoints}`;
                     }
 
-                    let ctx = {
+                    const ctx = {
                         totalPoints,
                         roles: this.calculateRoles(),
                         editable: this.isEditable,
                         text,
-                        title
+                        title,
                     };
-                    let mainTemplate = "common/estimation/us-estimation-total.html";
-                    let template = $tgTemplate.get(mainTemplate, true);
-                    let html = template(ctx);
+                    const mainTemplate = "common/estimation/us-estimation-total.html";
+                    const template = $tgTemplate.get(mainTemplate, true);
+                    const html = template(ctx);
                     return this.$el.html(html);
                 };
 
@@ -1152,19 +1149,19 @@ export let UsPointsDirective = function($tgEstimationsService, $repo, $tgTemplat
             }
         });
 
-        let renderRolesSelector = function() {
-            let roles = estimationProcess.calculateRoles();
-            let html = rolesTemplate({"roles": roles});
+        const renderRolesSelector = function() {
+            const roles = estimationProcess.calculateRoles();
+            const html = rolesTemplate({roles});
             // Render into DOM and show the new created element
             $el.append(html);
             return $el.find(".pop-role").popover().open(function() { return $(this).remove(); });
         };
 
-        var bindClickElements = function() {
+        const bindClickElements = function() {
             $el.on("click", "a.us-points", function(event) {
                 event.preventDefault();
                 event.stopPropagation();
-                let us = $scope.$eval($attrs.tgBacklogUsPoints);
+                const us = $scope.$eval($attrs.tgBacklogUsPoints);
                 updatingSelectedRoleId = selectedRoleId;
                 if (selectedRoleId != null) {
                     return estimationProcess.renderPointsSelector(selectedRoleId);
@@ -1176,10 +1173,10 @@ export let UsPointsDirective = function($tgEstimationsService, $repo, $tgTemplat
             return $el.on("click", ".role", function(event) {
                 event.preventDefault();
                 event.stopPropagation();
-                let target = angular.element(event.currentTarget);
-                let us = $scope.$eval($attrs.tgBacklogUsPoints);
+                const target = angular.element(event.currentTarget);
+                const us = $scope.$eval($attrs.tgBacklogUsPoints);
                 updatingSelectedRoleId = target.data("role-id");
-                let popRolesDom = $el.find(".pop-role");
+                const popRolesDom = $el.find(".pop-role");
                 popRolesDom.find("a").removeClass("active");
                 popRolesDom.find(`a[data-role-id='${updatingSelectedRoleId}']`).addClass("active");
                 return estimationProcess.renderPointsSelector(updatingSelectedRoleId);
@@ -1196,13 +1193,13 @@ export let UsPointsDirective = function($tgEstimationsService, $repo, $tgTemplat
 //# Burndown graph directive
 //############################################################################
 export let ToggleBurndownVisibility = function($storage) {
-    let hide = function() {
+    const hide = function() {
         $(".js-burndown-graph").removeClass("shown");
         $(".js-toggle-burndown-visibility-button").removeClass("active");
         return $(".js-burndown-graph").removeClass("open");
     };
 
-    let show = function(firstLoad) {
+    const show = function(firstLoad) {
         $(".js-toggle-burndown-visibility-button").addClass("active");
 
         if (firstLoad) {
@@ -1212,12 +1209,12 @@ export let ToggleBurndownVisibility = function($storage) {
         }
     };
 
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         let firstLoad = true;
-        let hash = generateHash(["is-burndown-grpahs-collapsed"]);
+        const hash = generateHash(["is-burndown-grpahs-collapsed"]);
         $scope.isBurndownGraphCollapsed = $storage.get(hash) || false;
 
-        let toggleGraph = function() {
+        const toggleGraph = function() {
             if ($scope.isBurndownGraphCollapsed) {
                 hide();
             } else {
@@ -1244,7 +1241,7 @@ export let ToggleBurndownVisibility = function($storage) {
     };
 
     return {
-        link
+        link,
     };
 };
 
@@ -1253,62 +1250,62 @@ export let ToggleBurndownVisibility = function($storage) {
 //############################################################################
 
 export let BurndownBacklogGraphDirective = function($translate) {
-    let redrawChart = function(element, dataToDraw) {
-        let width = element.width();
-        element.height(width/6);
-        let milestonesRange = __range__(0, (dataToDraw.milestones.length - 1), true);
-        let data = [];
-        let zero_line = _.map(dataToDraw.milestones, ml => 0);
+    const redrawChart = function(element, dataToDraw) {
+        const width = element.width();
+        element.height(width / 6);
+        const milestonesRange = __range__(0, (dataToDraw.milestones.length - 1), true);
+        const data = [];
+        const zero_line = _.map(dataToDraw.milestones, (ml) => 0);
         data.push({
             data: _.zip(milestonesRange, zero_line),
             lines: {
-                fillColor : "rgba(0,0,0,0)"
+                fillColor : "rgba(0,0,0,0)",
             },
             points: {
-                show: false
-            }
+                show: false,
+            },
         });
-        let optimal_line = _.map(dataToDraw.milestones, (ml:any) => ml.optimal);
+        const optimal_line = _.map(dataToDraw.milestones, (ml: any) => ml.optimal);
         data.push({
             data: _.zip(milestonesRange, optimal_line),
             lines: {
-                fillColor : "rgba(120,120,120,0.2)"
-            }
+                fillColor : "rgba(120,120,120,0.2)",
+            },
         });
-        let evolution_line = _.filter(_.map(dataToDraw.milestones, (ml:any) => ml.evolution), evolution => evolution != null);
+        const evolution_line = _.filter(_.map(dataToDraw.milestones, (ml: any) => ml.evolution), (evolution) => evolution != null);
         data.push({
             data: _.zip(milestonesRange, evolution_line),
             lines: {
-                fillColor : "rgba(102,153,51,0.3)"
-            }
+                fillColor : "rgba(102,153,51,0.3)",
+            },
         });
-        let client_increment_line = _.map(dataToDraw.milestones, ml => -ml["team-increment"] - ml["client-increment"]);
+        const client_increment_line = _.map(dataToDraw.milestones, (ml) => -ml["team-increment"] - ml["client-increment"]);
         data.push({
             data: _.zip(milestonesRange, client_increment_line),
             lines: {
-                fillColor : "rgba(255,51,51,0.3)"
-            }
+                fillColor : "rgba(255,51,51,0.3)",
+            },
         });
-        let team_increment_line = _.map(dataToDraw.milestones, ml => -ml["team-increment"]);
+        const team_increment_line = _.map(dataToDraw.milestones, (ml) => -ml["team-increment"]);
         data.push({
             data: _.zip(milestonesRange, team_increment_line),
             lines: {
-                fillColor : "rgba(153,51,51,0.3)"
-            }
+                fillColor : "rgba(153,51,51,0.3)",
+            },
         });
-        let colors = [
+        const colors = [
             "rgba(0,0,0,1)",
             "rgba(120,120,120,0.2)",
             "rgba(102,153,51,1)",
             "rgba(153,51,51,1)",
-            "rgba(255,51,51,1)"
+            "rgba(255,51,51,1)",
         ];
 
-        let options = {
+        const options = {
             grid: {
-                borderWidth: { top: 0, right: 1, left:0, bottom: 0 },
+                borderWidth: { top: 0, right: 1, left: 0, bottom: 0 },
                 borderColor: "#ccc",
-                hoverable: true
+                hoverable: true,
             },
             xaxis: {
                 ticks: dataToDraw.milestones.length,
@@ -1317,27 +1314,27 @@ export let BurndownBacklogGraphDirective = function($translate) {
                 axisLabelFontSizePixels: 12,
                 axisLabelFontFamily: "Verdana, Arial, Helvetica, Tahoma, sans-serif",
                 axisLabelPadding: 5,
-                tickFormatter(val, axis) { return ""; }
+                tickFormatter(val, axis) { return ""; },
             },
             yaxis: {
                 axisLabel: $translate.instant("BACKLOG.CHART.YAXIS_LABEL"),
                 axisLabelUseCanvas: true,
                 axisLabelFontSizePixels: 12,
                 axisLabelFontFamily: "Verdana, Arial, Helvetica, Tahoma, sans-serif",
-                axisLabelPadding: 5
+                axisLabelPadding: 5,
             },
             series: {
                 shadowSize: 0,
                 lines: {
                     show: true,
-                    fill: true
+                    fill: true,
                 },
                 points: {
                     show: true,
                     fill: true,
                     radius: 4,
-                    lineWidth: 2
-                }
+                    lineWidth: 2,
+                },
             },
             colors,
             tooltip: true,
@@ -1357,16 +1354,16 @@ export let BurndownBacklogGraphDirective = function($translate) {
                         ctx = {sprintName: dataToDraw.milestones[xval].name, value: Math.abs(yval)};
                         return $translate.instant("BACKLOG.CHART.INCREMENT_TEAM", ctx);
                     }
-                }
-            }
+                },
+            },
         };
 
         element.empty();
         return element.plot(data, options).data("plot");
     };
 
-    let link = function($scope, $el, $attrs) {
-        let element = angular.element($el);
+    const link = function($scope, $el, $attrs) {
+        const element = angular.element($el);
 
         $scope.$watch("stats", function(value) {
             if ($scope.stats != null) {
@@ -1387,32 +1384,32 @@ export let BurndownBacklogGraphDirective = function($translate) {
 //############################################################################
 
 export let TgBacklogProgressBarDirective = function($template, $compile) {
-    let template = $template.get("backlog/progress-bar.html", true);
+    const template = $template.get("backlog/progress-bar.html", true);
 
-    let render = function(scope, el, projectPointsPercentaje, closedPointsPercentaje) {
+    const render = function(scope, el, projectPointsPercentaje, closedPointsPercentaje) {
         let html = template({
             projectPointsPercentaje,
-            closedPointsPercentaje
+            closedPointsPercentaje,
         });
         html = $compile(html)(scope);
         return el.html(html);
     };
 
-    let adjustPercentaje = function(percentage) {
+    const adjustPercentaje = function(percentage) {
         let adjusted = _.max([0 , percentage]);
         adjusted = _.min([100, adjusted]);
         return Math.round(adjusted);
     };
 
-    let link = function($scope, $el, $attrs) {
-        let element = angular.element($el);
+    const link = function($scope, $el, $attrs) {
+        const element = angular.element($el);
 
         $scope.$watch($attrs.tgBacklogProgressBar, function(stats) {
             if (stats != null) {
                 let closedPointsPercentaje, projectPointsPercentaje;
-                let totalPoints = stats.total_points ? stats.total_points : stats.defined_points;
-                let definedPoints = stats.defined_points;
-                let closedPoints = stats.closed_points;
+                const totalPoints = stats.total_points ? stats.total_points : stats.defined_points;
+                const definedPoints = stats.defined_points;
+                const closedPoints = stats.closed_points;
                 if (definedPoints > totalPoints) {
                     projectPointsPercentaje = (totalPoints * 100) / definedPoints;
                     closedPointsPercentaje = (closedPoints * 100) / definedPoints;
@@ -1434,9 +1431,9 @@ export let TgBacklogProgressBarDirective = function($template, $compile) {
 };
 
 function __range__(left, right, inclusive) {
-  let range = [];
-  let ascending = left < right;
-  let end = !inclusive ? right : ascending ? right + 1 : right - 1;
+  const range = [];
+  const ascending = left < right;
+  const end = !inclusive ? right : ascending ? right + 1 : right - 1;
   for (let i = left; ascending ? i < end : i > end; ascending ? i++ : i--) {
     range.push(i);
   }

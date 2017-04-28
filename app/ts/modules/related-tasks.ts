@@ -22,28 +22,27 @@
  * File: modules/related-tasks.coffee
  */
 
-import {trim, debounce, bindOnce} from "../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {bindOnce, debounce, trim} from "../libs/utils";
 
-let module = angular.module("taigaRelatedTasks", []);
+const module = angular.module("taigaRelatedTasks", []);
 
+const RelatedTaskRowDirective = function($repo, $compile, $confirm, $rootscope, $loading, $template, $translate) {
+    const templateView = $template.get("task/related-task-row.html", true);
+    const templateEdit = $template.get("task/related-task-row-edit.html", true);
 
-let RelatedTaskRowDirective = function($repo, $compile, $confirm, $rootscope, $loading, $template, $translate) {
-    let templateView = $template.get("task/related-task-row.html", true);
-    let templateEdit = $template.get("task/related-task-row-edit.html", true);
-
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
         let childScope = $scope.$new();
 
-        let saveTask = debounce(2000, function(task) {
-            task.subject = $el.find('input').val();
+        const saveTask = debounce(2000, function(task) {
+            task.subject = $el.find("input").val();
 
-            let currentLoading = $loading()
-                .target($el.find('.task-name'))
+            const currentLoading = $loading()
+                .target($el.find(".task-name"))
                 .start();
 
-            let promise = $repo.save(task);
+            const promise = $repo.save(task);
             promise.then(() => {
                 currentLoading.finish();
                 return $rootscope.$broadcast("related-tasks:update");
@@ -51,13 +50,13 @@ let RelatedTaskRowDirective = function($repo, $compile, $confirm, $rootscope, $l
 
             promise.then(null, () => {
                 currentLoading.finish();
-                $el.find('input').val(task.subject);
+                $el.find("input").val(task.subject);
                 return $confirm.notify("error");
             });
             return promise;
         });
 
-        let renderEdit = function(task) {
+        const renderEdit = function(task) {
             childScope.$destroy();
             childScope = $scope.$new();
             $el.off();
@@ -73,33 +72,33 @@ let RelatedTaskRowDirective = function($repo, $compile, $confirm, $rootscope, $l
                 }
             });
 
-            $el.on("click", ".save-task", event =>
-                saveTask($model.$modelValue).then(() => renderView($model.$modelValue))
+            $el.on("click", ".save-task", (event) =>
+                saveTask($model.$modelValue).then(() => renderView($model.$modelValue)),
             );
 
-            return $el.on("click", ".cancel-edit", event => renderView($model.$modelValue));
+            return $el.on("click", ".cancel-edit", (event) => renderView($model.$modelValue));
         };
 
-        var renderView = function(task) {
-            let perms = {
+        const renderView = function(task) {
+            const perms = {
                 modify_task: $scope.project.my_permissions.indexOf("modify_task") !== -1,
-                delete_task: $scope.project.my_permissions.indexOf("delete_task") !== -1
+                delete_task: $scope.project.my_permissions.indexOf("delete_task") !== -1,
             };
 
             $el.html($compile(templateView({task, perms}))($scope));
 
             $el.on("click", ".edit-task", function() {
                 renderEdit($model.$modelValue);
-                return $el.find('input').focus().select();
+                return $el.find("input").focus().select();
             });
 
             return $el.on("click", ".delete-task", function(event) {
-                let title = $translate.instant("TASK.TITLE_DELETE_ACTION");
+                const title = $translate.instant("TASK.TITLE_DELETE_ACTION");
                 task = $model.$modelValue;
-                let message = task.subject;
+                const message = task.subject;
 
                 return $confirm.askOnDelete(title, message).then(function(askResponse) {
-                    let promise = $repo.remove(task);
+                    const promise = $repo.remove(task);
                     promise.then(function() {
                         askResponse.finish();
                         return $scope.$emit("related-tasks:delete");
@@ -125,32 +124,31 @@ let RelatedTaskRowDirective = function($repo, $compile, $confirm, $rootscope, $l
         return $scope.$on("$destroy", () => $el.off());
     };
 
-    return {link, require:"ngModel"};
+    return {link, require: "ngModel"};
 };
 
 module.directive("tgRelatedTaskRow", ["$tgRepo", "$compile", "$tgConfirm", "$rootScope", "$tgLoading",
                                       "$tgTemplate", "$translate", RelatedTaskRowDirective]);
 
-
-let RelatedTaskCreateFormDirective = function($repo, $compile, $confirm, $tgmodel, $loading, $analytics) {
+const RelatedTaskCreateFormDirective = function($repo, $compile, $confirm, $tgmodel, $loading, $analytics) {
     let newTask = {
         subject: "",
-        assigned_to: null
+        assigned_to: null,
     };
 
-    let link = function($scope, $el, $attrs) {
-        let createTask = function(task) {
-            task.subject = $el.find('input').val();
+    const link = function($scope, $el, $attrs) {
+        const createTask = function(task) {
+            task.subject = $el.find("input").val();
             task.assigned_to = $scope.newTask.assigned_to;
             task.status = $scope.newTask.status;
             $scope.newTask.status = $scope.project.default_task_status;
             $scope.newTask.assigned_to = null;
 
-            let currentLoading = $loading()
-                .target($el.find('.task-name'))
+            const currentLoading = $loading()
+                .target($el.find(".task-name"))
                 .start();
 
-            let promise = $repo.create("tasks", task);
+            const promise = $repo.create("tasks", task);
             promise.then(function() {
                 $analytics.trackEvent("task", "create", "create task on userstory", 1);
                 currentLoading.finish();
@@ -158,7 +156,7 @@ let RelatedTaskCreateFormDirective = function($repo, $compile, $confirm, $tgmode
             });
 
             promise.then(null, function() {
-                $el.find('input').val(task.subject);
+                $el.find("input").val(task.subject);
                 currentLoading.finish();
                 return $confirm.notify("error");
             });
@@ -166,16 +164,16 @@ let RelatedTaskCreateFormDirective = function($repo, $compile, $confirm, $tgmode
             return promise;
         };
 
-        let close = function() {
+        const close = function() {
             $el.off();
 
             return $scope.openNewRelatedTask = false;
         };
 
-        let reset = function() {
+        const reset = function() {
             newTask = {
                 subject: "",
-                assigned_to: null
+                assigned_to: null,
             };
 
             newTask["status"] = $scope.project.default_task_status;
@@ -185,7 +183,7 @@ let RelatedTaskCreateFormDirective = function($repo, $compile, $confirm, $tgmode
             return $scope.newTask = $tgmodel.make_model("tasks", newTask);
         };
 
-        let render = function() {
+        const render = function() {
             if ($scope.openNewRelatedTask) { return; }
 
             $scope.openNewRelatedTask = true;
@@ -194,7 +192,7 @@ let RelatedTaskCreateFormDirective = function($repo, $compile, $confirm, $tgmode
                 if (event.keyCode === 13) {
                     return createTask(newTask).then(function() {
                         reset();
-                        return $el.find('input').focus();
+                        return $el.find("input").focus();
                     });
 
                 } else if (event.keyCode === 27) {
@@ -217,18 +215,17 @@ let RelatedTaskCreateFormDirective = function($repo, $compile, $confirm, $tgmode
     return {
         scope: true,
         link,
-        templateUrl: 'task/related-task-create-form.html'
+        templateUrl: "task/related-task-create-form.html",
     };
 };
 
 module.directive("tgRelatedTaskCreateForm", ["$tgRepo", "$compile", "$tgConfirm", "$tgModel", "$tgLoading",
                                              "$tgAnalytics", RelatedTaskCreateFormDirective]);
 
+const RelatedTaskCreateButtonDirective = function($repo, $compile, $confirm, $tgmodel, $template) {
+    const template = $template.get("common/components/add-button.html", true);
 
-let RelatedTaskCreateButtonDirective = function($repo, $compile, $confirm, $tgmodel, $template) {
-    let template = $template.get("common/components/add-button.html", true);
-
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         $scope.$watch("project", function(val) {
             if (!val) { return; }
             $el.off();
@@ -238,7 +235,7 @@ let RelatedTaskCreateButtonDirective = function($repo, $compile, $confirm, $tgmo
                 $el.html("");
             }
 
-            return $el.on("click", ".add-button", event=> $scope.$emit("related-tasks:add-new-clicked"));
+            return $el.on("click", ".add-button", (event) => $scope.$emit("related-tasks:add-new-clicked"));
         });
 
         return $scope.$on("$destroy", () => $el.off());
@@ -250,24 +247,23 @@ let RelatedTaskCreateButtonDirective = function($repo, $compile, $confirm, $tgmo
 module.directive("tgRelatedTaskCreateButton", ["$tgRepo", "$compile", "$tgConfirm", "$tgModel",
                                                "$tgTemplate", RelatedTaskCreateButtonDirective]);
 
-
-let RelatedTasksDirective = function($repo, $rs, $rootscope) {
-    let link = function($scope, $el, $attrs) {
-        let loadTasks = () =>
-            $rs.tasks.list($scope.projectId, null, $scope.usId).then(tasks => {
-                $scope.tasks = _.sortBy(tasks, (x:any) => [x.us_order, x.ref]);
+const RelatedTasksDirective = function($repo, $rs, $rootscope) {
+    const link = function($scope, $el, $attrs) {
+        const loadTasks = () =>
+            $rs.tasks.list($scope.projectId, null, $scope.usId).then((tasks) => {
+                $scope.tasks = _.sortBy(tasks, (x: any) => [x.us_order, x.ref]);
                 return tasks;
             })
         ;
 
-        let _isVisible = function() {
+        const _isVisible = function() {
             if ($scope.project) {
                 return $scope.project.my_permissions.indexOf("view_tasks") !== -1;
             }
             return false;
         };
 
-        let _isEditable = function() {
+        const _isEditable = function() {
             if ($scope.project) {
                 return $scope.project.my_permissions.indexOf("modify_task") !== -1;
             }
@@ -277,16 +273,16 @@ let RelatedTasksDirective = function($repo, $rs, $rootscope) {
         $scope.showRelatedTasks = () => _isVisible() && ( _isEditable() ||  ($scope.tasks != null ? $scope.tasks.length : undefined) );
 
         $scope.$on("related-tasks:add", () =>
-            loadTasks().then(() => $rootscope.$broadcast("related-tasks:update"))
+            loadTasks().then(() => $rootscope.$broadcast("related-tasks:update")),
         );
 
         $scope.$on("related-tasks:delete", () =>
-            loadTasks().then(() => $rootscope.$broadcast("related-tasks:update"))
+            loadTasks().then(() => $rootscope.$broadcast("related-tasks:update")),
         );
 
         $scope.$on("related-tasks:add-new-clicked", () => $scope.$broadcast("related-tasks:show-form"));
 
-        bindOnce($scope, "us", val => loadTasks());
+        bindOnce($scope, "us", (val) => loadTasks());
 
         return $scope.$on("$destroy", () => $el.off());
     };
@@ -296,22 +292,21 @@ let RelatedTasksDirective = function($repo, $rs, $rootscope) {
 
 module.directive("tgRelatedTasks", ["$tgRepo", "$tgResources", "$rootScope", RelatedTasksDirective]);
 
-
-let RelatedTaskAssignedToInlineEditionDirective = function($repo, $rootscope, $translate, avatarService) {
-    let template = _.template(`\
+const RelatedTaskAssignedToInlineEditionDirective = function($repo, $rootscope, $translate, avatarService) {
+    const template = _.template(`\
 <img style="background-color: <%- bg %>" src="<%- imgurl %>" alt="<%- name %>"/>
 <figcaption><%- name %></figcaption>\
 `);
 
-    let link = function($scope, $el, $attrs) {
-        let updateRelatedTask = function(task) {
-            let ctx:any = {
+    const link = function($scope, $el, $attrs) {
+        const updateRelatedTask = function(task) {
+            const ctx: any = {
                 name: $translate.instant("COMMON.ASSIGNED_TO.NOT_ASSIGNED"),
             };
 
-            let member = $scope.usersById[task.assigned_to];
+            const member = $scope.usersById[task.assigned_to];
 
-            let avatar = avatarService.getAvatar(member);
+            const avatar = avatarService.getAvatar(member);
             ctx.imgurl = avatar.url;
             ctx.bg = avatar.bg;
 
@@ -320,13 +315,13 @@ let RelatedTaskAssignedToInlineEditionDirective = function($repo, $rootscope, $t
             }
 
             $el.find(".avatar").html(template(ctx));
-            return $el.find(".task-assignedto").attr('title', ctx.name);
+            return $el.find(".task-assignedto").attr("title", ctx.name);
         };
 
-        let $ctrl = $el.controller();
+        const $ctrl = $el.controller();
         let task = $scope.$eval($attrs.tgRelatedTaskAssignedToInlineEdition);
-        let notAutoSave = $scope.$eval($attrs.notAutoSave);
-        let autoSave = !notAutoSave;
+        const notAutoSave = $scope.$eval($attrs.notAutoSave);
+        const autoSave = !notAutoSave;
 
         $scope.$watch($attrs.tgRelatedTaskAssignedToInlineEdition, function() {
             task = $scope.$eval($attrs.tgRelatedTaskAssignedToInlineEdition);
@@ -335,7 +330,7 @@ let RelatedTaskAssignedToInlineEditionDirective = function($repo, $rootscope, $t
 
         updateRelatedTask(task);
 
-        $el.on("click", ".task-assignedto", event => $rootscope.$broadcast("assigned-to:add", task));
+        $el.on("click", ".task-assignedto", (event) => $rootscope.$broadcast("assigned-to:add", task));
 
         bindOnce($scope, "project", function(project) {
             // If the user has not enough permissions the click events are unbinded
@@ -353,7 +348,7 @@ let RelatedTaskAssignedToInlineEditionDirective = function($repo, $rootscope, $t
                 }
                 return updateRelatedTask(updatedRelatedTask);
             }
-        })
+        }),
         );
 
         return $scope.$on("$destroy", () => $el.off());

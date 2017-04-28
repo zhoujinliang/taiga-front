@@ -22,19 +22,19 @@
  * File: modules/base/confirm.coffee
  */
 
-import {timeout, cancelTimeout, debounce, bindMethods, addClass} from "../../../libs/utils"
-import { Component } from "@angular/core"
-import * as _ from "lodash"
-import { Store } from "@ngrx/store"
-import { IState } from "../../../app.store"
-import { DiscardNotificationMessageAction } from "./common.actions"
+import { Component } from "@angular/core";
+import { Store } from "@ngrx/store";
+import * as _ from "lodash";
+import { IState } from "../../../app.store";
+import {addClass, bindMethods, cancelTimeout, debounce, timeout} from "../../../libs/utils";
+import { DiscardNotificationMessageAction } from "./common.actions";
 
 @Component({
     selector: "tg-notification-messages",
     template: `<div *ngIf="msg" class="notification-message notification-message-{{msg.type}}" [class.active]="msg">
                   <h4>{{msg.title || NOTIFICATION_MSG[msg.type].title | translate}}</h4>
                   <p>{{msg.message || NOTIFICATION_MSG[msg.type].message | translate}}</p>
-               </div>`
+               </div>`,
 })
 export class NotificationMessages {
     messages$: any;
@@ -43,36 +43,36 @@ export class NotificationMessages {
     NOTIFICATION_MSG = {
         "success": {
             title: "NOTIFICATION.OK",
-            message: "NOTIFICATION.SAVED"
+            message: "NOTIFICATION.SAVED",
         },
         "error": {
             title: "NOTIFICATION.WARNING",
-            message: "NOTIFICATION.WARNING_TEXT"
+            message: "NOTIFICATION.WARNING_TEXT",
         },
         "light-error": {
             title: "NOTIFICATION.WARNING",
-            message: "NOTIFICATION.WARNING_TEXT"
-        }
+            message: "NOTIFICATION.WARNING_TEXT",
+        },
     };
 
     constructor(private store: Store<IState>) {
-        this.messages$ = this.store.select((state) => state.getIn(['common', 'notification-messages']));
+        this.messages$ = this.store.select((state) => state.getIn(["common", "notification-messages"]));
         this.messages$.subscribe((state) => {
             this.currentState = state;
             console.log(state);
             if (!this.msg && this.currentState.size > 0) {
                 this.msg = this.getNextMessage(state);
                 console.log(this.msg);
-                let time = this.msg.time
+                let time = this.msg.time;
                 if (!time) {
-                    time = (this.msg.type === 'error') || (this.msg.type === 'light-error') ? 3500 : 1500;
+                    time = (this.msg.type === "error") || (this.msg.type === "light-error") ? 3500 : 1500;
                 }
                 timeout(time, () => {
                     this.store.dispatch(new DiscardNotificationMessageAction());
                     this.msg = this.getNextMessage(state);
                 });
             }
-        })
+        });
     }
 
     getNextMessage(state) {

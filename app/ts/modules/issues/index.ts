@@ -21,12 +21,12 @@
  *
  * File: modules/issues.coffee
  */
-import * as angular from "angular"
-import * as list from "./list"
-import * as detail from "./detail"
-import * as lightboxes from "./lightboxes"
+import * as angular from "angular";
+import * as detail from "./detail";
+import * as lightboxes from "./lightboxes";
+import * as list from "./list";
 
-let module = angular.module("taigaIssues", []);
+const module = angular.module("taigaIssues", []);
 
 module.controller("IssuesController", list.IssuesController);
 module.directive("tgIssues", ["$log", "$tgLocation", "$tgTemplate", "$compile", list.IssuesDirective]);

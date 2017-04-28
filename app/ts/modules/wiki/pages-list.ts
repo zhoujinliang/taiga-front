@@ -22,22 +22,22 @@
  * File: modules/wiki/pages-list.coffee
  */
 
-import {PageMixin} from "../controllerMixins"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {PageMixin} from "../controllerMixins";
 
 //############################################################################
 //# Wiki Pages List Controller
 //############################################################################
 
 export class WikiPagesListController extends PageMixin {
-    scope: angular.IScope
-    rs:any
-    params:any
-    q:any
-    navUrls:any
-    errorHandlingService:any
-    projectService:any
+    scope: angular.IScope;
+    rs: any;
+    params: any;
+    q: any;
+    navUrls: any;
+    errorHandlingService: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -51,13 +51,13 @@ export class WikiPagesListController extends PageMixin {
             "$q",
             "$tgNavUrls",
             "tgErrorHandlingService",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, rs, params, q,
-                  navUrls, errorHandlingService, projectService) {
-        super()
+                navUrls, errorHandlingService, projectService) {
+        super();
         this.scope = scope;
         this.rs = rs;
         this.params = params;
@@ -70,14 +70,14 @@ export class WikiPagesListController extends PageMixin {
         this.scope.sectionName = "Wiki";
         this.scope.linksVisible = false;
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         // On Error
         promise.then(null, this.onInitialDataError.bind(this));
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         if (!project.is_wiki_activated) {
             this.errorHandlingService.permissionDenied();
@@ -85,29 +85,29 @@ export class WikiPagesListController extends PageMixin {
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
 
         return project;
     }
 
     loadWikiPages() {
         let promise;
-        return promise = this.rs.wiki.list(this.scope.projectId).then(wikipages => {
+        return promise = this.rs.wiki.list(this.scope.projectId).then((wikipages) => {
             return this.scope.wikipages = wikipages;
         });
     }
 
     loadWikiLinks() {
-        return this.rs.wiki.listLinks(this.scope.projectId).then(wikiLinks => {
+        return this.rs.wiki.listLinks(this.scope.projectId).then((wikiLinks) => {
             let selectedWikiLink;
             this.scope.wikiLinks = wikiLinks;
 
-            let link:any;
+            let link: any;
 
             for (link of this.scope.wikiLinks) {
                 link.url = this.navUrls.resolve("project-wiki-page", {
                     project: this.scope.projectSlug,
-                    slug: link.href
+                    slug: link.href,
                 });
             }
 
@@ -116,7 +116,7 @@ export class WikiPagesListController extends PageMixin {
     }
 
     loadInitialData() {
-        let project = this.loadProject();
+        const project = this.loadProject();
 
         this.fillUsersAndRoles(project.members, project.roles);
 

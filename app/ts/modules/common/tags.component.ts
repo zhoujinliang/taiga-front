@@ -22,11 +22,11 @@
  * File: modules/common/tags.components.ts
  */
 
-import {Component, Input} from "@angular/core"
+import {Component, Input} from "@angular/core";
 
 @Component({
-  selector: 'tg-colorize-backlog-tag',
-  styles: ['h1 { font-weight: normal; }'],
+  selector: "tg-colorize-backlog-tag",
+  styles: ["h1 { font-weight: normal; }"],
   template: `
       <span
           class="tag"
@@ -34,30 +34,30 @@ import {Component, Input} from "@angular/core"
           title="{{name}}">
           {{name}}
       </span>
-  `
+  `,
 })
 export class ColorizeBacklogTag {
     @Input("name") name: any = [];
     @Input("color") color: any = [];
 
     getBorder() {
-        if(this.color === null) {
-            return ""
+        if (this.color === null) {
+            return "";
         }
-        return `5px solid ${this.color}`
+        return `5px solid ${this.color}`;
     }
-};
+}
 
 @Component({
-  selector: 'tg-colorize-backlog-tags',
+  selector: "tg-colorize-backlog-tags",
   template: `
      <tg-colorize-backlog-tag
         *ngFor="let tag of tags"
         [name]="tag[0]"
         [color]="tag[1]">
      </tg-colorize-backlog-tag>
-  `
+  `,
 })
 export class ColorizeBacklogTags {
     @Input("tags") tags: any = [];
-};
+}

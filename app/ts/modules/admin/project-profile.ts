@@ -22,37 +22,37 @@
  * File: modules/admin/project-profile.coffee
  */
 
-import {debounce} from "../../libs/utils"
-import {Controller} from "../../classes"
-import {PageMixin} from "../controllerMixins"
+import {Controller} from "../../classes";
+import {debounce} from "../../libs/utils";
+import {PageMixin} from "../controllerMixins";
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 //############################################################################
 //# Project Profile Controller
 //############################################################################
 
 export class ProjectProfileController extends PageMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    navUrls:any
-    appMetaService:any
-    translate:any
-    tgAuth:any
-    currentUserService:any
-    errorHandlingService:any
-    projectService:any
-    model:any
-    description:any
-    sectionName:any
-    title:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    navUrls: any;
+    appMetaService: any;
+    translate: any;
+    tgAuth: any;
+    currentUserService: any;
+    errorHandlingService: any;
+    projectService: any;
+    model: any;
+    description: any;
+    sectionName: any;
+    title: any;
 
     static initClass() {
         this.$inject = [
@@ -71,13 +71,13 @@ export class ProjectProfileController extends PageMixin {
             "tgCurrentUserService",
             "tgErrorHandlingService",
             "tgProjectService",
-            "$tgModel"
+            "$tgModel",
         ];
     }
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, navUrls,
-                  appMetaService, translate, tgAuth, currentUserService, errorHandlingService, projectService, model) {
-        super()
+                appMetaService, translate, tgAuth, currentUserService, errorHandlingService, projectService, model) {
+        super();
         let description, sectionName, title;
         this.scope = scope;
         this.rootscope = rootscope;
@@ -98,7 +98,7 @@ export class ProjectProfileController extends PageMixin {
         this.scope.project = {};
 
         this.scope.projectTags = [];
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         promise.then(() => {
             sectionName = this.translate.instant( this.scope.sectionName);
@@ -139,9 +139,9 @@ export class ProjectProfileController extends PageMixin {
         this.scope.issueStatusList = _.sortBy(project.issue_statuses, "order");
         this.scope.prioritiesList = _.sortBy(project.priorities, "order");
         this.scope.severitiesList = _.sortBy(project.severities, "order");
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
 
-        this.scope.projectTags = _.map(this.scope.project.tags, (it:any) => {
+        this.scope.projectTags = _.map(this.scope.project.tags, (it: any) => {
             return [it, this.scope.project.tags_colors[it]];
     });
 
@@ -159,7 +159,7 @@ export class ProjectProfileController extends PageMixin {
     }
 
     addTag(name, color) {
-        let tags = _.clone(this.scope.project.tags);
+        const tags = _.clone(this.scope.project.tags);
 
         tags.push(name);
 
@@ -168,9 +168,9 @@ export class ProjectProfileController extends PageMixin {
     }
 
     deleteTag(tag) {
-        let tags = _.clone(this.scope.project.tags);
+        const tags = _.clone(this.scope.project.tags);
         _.pull(tags, tag[0]);
-        _.remove(this.scope.projectTags, it => it[0] === tag[0]);
+        _.remove(this.scope.projectTags, (it) => it[0] === tag[0]);
 
         return this.scope.project.tags = tags;
     }
@@ -182,25 +182,25 @@ ProjectProfileController.initClass();
 //############################################################################
 
 export let ProjectProfileDirective = function($repo, $confirm, $loading, $navurls, $location, projectService, currentUserService) {
-    let link = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
+    const link = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
 
-        let form = $el.find("form").checksley({"onlyOneErrorElement": true});
-        let submit = debounce(2000, event => {
+        const form = $el.find("form").checksley({onlyOneErrorElement: true});
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
             if (!form.validate()) { return; }
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
-            let promise = $repo.save($scope.project);
+            const promise = $repo.save($scope.project);
             promise.then(function() {
                 currentLoading.finish();
                 $confirm.notify("success");
-                let newUrl = $navurls.resolve("project-admin-project-profile-details", {
-                    project: $scope.project.slug
+                const newUrl = $navurls.resolve("project-admin-project-profile-details", {
+                    project: $scope.project.slug,
                 });
                 $location.path(newUrl);
 
@@ -220,7 +220,7 @@ export let ProjectProfileDirective = function($repo, $confirm, $loading, $navurl
             });
         });
 
-        var submitButton = $el.find(".submit-button");
+        const submitButton = $el.find(".submit-button");
 
         return $el.on("submit", "form", submit);
     };
@@ -233,18 +233,18 @@ export let ProjectProfileDirective = function($repo, $confirm, $loading, $navurl
 //############################################################################
 
 export let ProjectDefaultValuesDirective = function($repo, $confirm, $loading) {
-    let link = function($scope, $el, $attrs) {
-        let form = $el.find("form").checksley({"onlyOneErrorElement": true});
-        let submit = debounce(2000, event => {
+    const link = function($scope, $el, $attrs) {
+        const form = $el.find("form").checksley({onlyOneErrorElement: true});
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
             if (!form.validate()) { return; }
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
-            let promise = $repo.save($scope.project);
+            const promise = $repo.save($scope.project);
             promise.then(function() {
                 currentLoading.finish();
                 return $confirm.notify("success");
@@ -259,7 +259,7 @@ export let ProjectDefaultValuesDirective = function($repo, $confirm, $loading) {
             });
         });
 
-        var submitButton = $el.find(".submit-button");
+        const submitButton = $el.find(".submit-button");
 
         $el.on("submit", "form", submit);
 
@@ -274,14 +274,14 @@ export let ProjectDefaultValuesDirective = function($repo, $confirm, $loading) {
 //############################################################################
 
 export let ProjectModulesDirective = function($repo, $confirm, $loading, projectService) {
-    let link = function($scope, $el, $attrs) {
-        let submit = () => {
-            let form = $el.find("form").checksley();
+    const link = function($scope, $el, $attrs) {
+        const submit = () => {
+            const form = $el.find("form").checksley();
             form.initializeFields(); // Need to reset the form constrains
             form.reset(); // Need to reset the form constrains
             if (!form.validate()) { return; }
 
-            let promise = $repo.save($scope.project);
+            const promise = $repo.save($scope.project);
             promise.then(function() {
                 $scope.$emit("project:loaded", $scope.project);
                 $confirm.notify("success");
@@ -314,7 +314,7 @@ export let ProjectModulesDirective = function($repo, $confirm, $loading, project
             return submit();
         });
 
-        $el.on("keydown", ".videoconference-attributes input", e => e.which !== 32);
+        $el.on("keydown", ".videoconference-attributes input", (e) => e.which !== 32);
 
         $scope.$watch("project.videoconferences", function(newVal, oldVal) {
             // Reset videoconferences_extra_data if videoconference system change
@@ -351,39 +351,38 @@ export let ProjectModulesDirective = function($repo, $confirm, $loading, project
 //############################################################################
 
 export let ProjectExportDirective = function($window, $rs, $confirm, $translate) {
-    let link = function($scope, $el, $attrs) {
-        let buttonsEl = $el.find(".admin-project-export-buttons");
-        let showButtons = () => buttonsEl.removeClass("hidden");
-        let hideButtons = () => buttonsEl.addClass("hidden");
+    const link = function($scope, $el, $attrs) {
+        const buttonsEl = $el.find(".admin-project-export-buttons");
+        const showButtons = () => buttonsEl.removeClass("hidden");
+        const hideButtons = () => buttonsEl.addClass("hidden");
 
-        let resultEl = $el.find(".admin-project-export-result");
-        let showResult = () => resultEl.removeClass("hidden");
-        let hideResult = () => resultEl.addClass("hidden");
+        const resultEl = $el.find(".admin-project-export-result");
+        const showResult = () => resultEl.removeClass("hidden");
+        const hideResult = () => resultEl.addClass("hidden");
 
-        let spinnerEl = $el.find(".spin");
-        let showSpinner = () => spinnerEl.removeClass("hidden");
-        let hideSpinner = () => spinnerEl.addClass("hidden");
+        const spinnerEl = $el.find(".spin");
+        const showSpinner = () => spinnerEl.removeClass("hidden");
+        const hideSpinner = () => spinnerEl.addClass("hidden");
 
-        let resultTitleEl = $el.find(".result-title");
+        const resultTitleEl = $el.find(".result-title");
 
-
-        let loading_title = $translate.instant("ADMIN.PROJECT_EXPORT.LOADING_TITLE");
-        let loading_msg = $translate.instant("ADMIN.PROJECT_EXPORT.LOADING_MESSAGE");
-        let dump_ready_text = () => resultTitleEl.html($translate.instant("ADMIN.PROJECT_EXPORT.DUMP_READY"));
-        let asyn_message = () => resultTitleEl.html($translate.instant("ADMIN.PROJECT_EXPORT.ASYNC_MESSAGE"));
-        let syn_message = url => resultTitleEl.html($translate.instant("ADMIN.PROJECT_EXPORT.SYNC_MESSAGE", {
+        const loading_title = $translate.instant("ADMIN.PROJECT_EXPORT.LOADING_TITLE");
+        const loading_msg = $translate.instant("ADMIN.PROJECT_EXPORT.LOADING_MESSAGE");
+        const dump_ready_text = () => resultTitleEl.html($translate.instant("ADMIN.PROJECT_EXPORT.DUMP_READY"));
+        const asyn_message = () => resultTitleEl.html($translate.instant("ADMIN.PROJECT_EXPORT.ASYNC_MESSAGE"));
+        const syn_message = (url) => resultTitleEl.html($translate.instant("ADMIN.PROJECT_EXPORT.SYNC_MESSAGE", {
                                                                                                    url})) ;
 
-        let setLoadingTitle = () => resultTitleEl.html(loading_title);
-        let setAsyncTitle = () => resultTitleEl.html(loading_msg);
-        let setSyncTitle = () => resultTitleEl.html(dump_ready_text);
+        const setLoadingTitle = () => resultTitleEl.html(loading_title);
+        const setAsyncTitle = () => resultTitleEl.html(loading_msg);
+        const setSyncTitle = () => resultTitleEl.html(dump_ready_text);
 
-        let resultMessageEl = $el.find(".result-message ");
-        let setLoadingMessage = () => resultMessageEl.html(loading_msg);
-        let setAsyncMessage = () => resultMessageEl.html(asyn_message);
-        let setSyncMessage = url => resultMessageEl.html(syn_message(url));
+        const resultMessageEl = $el.find(".result-message ");
+        const setLoadingMessage = () => resultMessageEl.html(loading_msg);
+        const setAsyncMessage = () => resultMessageEl.html(asyn_message);
+        const setSyncMessage = (url) => resultMessageEl.html(syn_message(url));
 
-        let showLoadingMode = function() {
+        const showLoadingMode = function() {
             showSpinner();
             setLoadingTitle();
             setLoadingMessage();
@@ -391,38 +390,38 @@ export let ProjectExportDirective = function($window, $rs, $confirm, $translate)
             return showResult();
         };
 
-        let showExportResultAsyncMode = function() {
+        const showExportResultAsyncMode = function() {
             hideSpinner();
             setAsyncTitle();
             return setAsyncMessage();
         };
 
-        let showExportResultSyncMode = function(url) {
+        const showExportResultSyncMode = function(url) {
             hideSpinner();
             setSyncTitle();
             return setSyncMessage(url);
         };
 
-        let showErrorMode = function() {
+        const showErrorMode = function() {
             hideSpinner();
             hideResult();
             return showButtons();
         };
 
-        return $el.on("click", "a.button-export", debounce(2000, event => {
+        return $el.on("click", "a.button-export", debounce(2000, (event) => {
             event.preventDefault();
 
-            let onSuccess = result => {
+            const onSuccess = (result) => {
                 if (result.status === 202) { // Async mode
                     return showExportResultAsyncMode();
                 } else { //result.status == 200 # Sync mode
-                    let dumpUrl = result.data.url;
+                    const dumpUrl = result.data.url;
                     showExportResultSyncMode(dumpUrl);
                     return $window.open(dumpUrl, "_blank");
                 }
             };
 
-            let onError = result => {
+            const onError = (result) => {
                 showErrorMode();
 
                 let errorMsg = $translate.instant("ADMIN.PROJECT_EXPORT.ERROR");
@@ -439,7 +438,7 @@ export let ProjectExportDirective = function($window, $rs, $confirm, $translate)
 
             showLoadingMode();
             return $rs.projects.export($scope.projectId).then(onSuccess, onError);
-        })
+        }),
         );
     };
 
@@ -451,13 +450,13 @@ export let ProjectExportDirective = function($window, $rs, $confirm, $translate)
 //############################################################################
 
 class CsvExporterController extends Controller {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    urls:any
-    confirm:any
-    rs:any
-    translate:any
-    type:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    urls: any;
+    confirm: any;
+    rs: any;
+    translate: any;
+    type: any;
 
     static initClass() {
         this.$inject = [
@@ -466,12 +465,12 @@ class CsvExporterController extends Controller {
             "$tgUrls",
             "$tgConfirm",
             "$tgResources",
-            "$translate"
+            "$translate",
         ];
     }
 
     constructor(scope, rootscope, urls, confirm, rs, translate) {
-        super()
+        super();
         this.setCsvUuid = this.setCsvUuid.bind(this);
         this._generateUuid = this._generateUuid.bind(this);
         this.scope = scope;
@@ -481,7 +480,7 @@ class CsvExporterController extends Controller {
         this.rs = rs;
         this.translate = translate;
         this.rootscope.$on("project:loaded", this.setCsvUuid);
-        this.scope.$watch("csvUuid", value => {
+        this.scope.$watch("csvUuid", (value) => {
             if (value) {
                 return this.scope.csvUrl = this.urls.resolveAbsolute(`${this.type}-csv`, value);
             } else {
@@ -494,10 +493,10 @@ class CsvExporterController extends Controller {
         return this.scope.csvUuid = this.scope.project[`${this.type}_csv_uuid`];
     }
 
-    _generateUuid(response=null) {
-        let promise = this.rs.projects[`regenerate_${this.type}_csv_uuid`](this.scope.projectId);
+    _generateUuid(response= null) {
+        const promise = this.rs.projects[`regenerate_${this.type}_csv_uuid`](this.scope.projectId);
 
-        promise.then(data => {
+        promise.then((data) => {
             return this.scope.csvUuid = data.data != null ? data.data.uuid : undefined;
         });
 
@@ -513,8 +512,8 @@ class CsvExporterController extends Controller {
 
     regenerateUuid() {
         if (this.scope.csvUuid) {
-            let title = this.translate.instant("ADMIN.REPORTS.REGENERATE_TITLE");
-            let subtitle = this.translate.instant("ADMIN.REPORTS.REGENERATE_SUBTITLE");
+            const title = this.translate.instant("ADMIN.REPORTS.REGENERATE_TITLE");
+            const subtitle = this.translate.instant("ADMIN.REPORTS.REGENERATE_SUBTITLE");
 
             return this.confirm.ask(title, subtitle).then(this._generateUuid);
         } else {
@@ -524,14 +523,12 @@ class CsvExporterController extends Controller {
 }
 CsvExporterController.initClass();
 
-
 export class CsvExporterEpicsController extends CsvExporterController {
     static initClass() {
         this.prototype.type = "epics";
     }
 }
 CsvExporterEpicsController.initClass();
-
 
 export class CsvExporterUserstoriesController extends CsvExporterController {
     static initClass() {
@@ -540,14 +537,12 @@ export class CsvExporterUserstoriesController extends CsvExporterController {
 }
 CsvExporterUserstoriesController.initClass();
 
-
 export class CsvExporterTasksController extends CsvExporterController {
     static initClass() {
         this.prototype.type = "tasks";
     }
 }
 CsvExporterTasksController.initClass();
-
 
 export class CsvExporterIssuesController extends CsvExporterController {
     static initClass() {
@@ -561,50 +556,50 @@ CsvExporterIssuesController.initClass();
 //############################################################################
 
 export let CsvEpicDirective = function($translate) {
-    let link = $scope => $scope.sectionTitle = "ADMIN.CSV.SECTION_TITLE_EPIC";
+    const link = ($scope) => $scope.sectionTitle = "ADMIN.CSV.SECTION_TITLE_EPIC";
 
     return {
         controller: "CsvExporterEpicsController",
         controllerAs: "ctrl",
         templateUrl: "admin/project-csv.html",
         link,
-        scope: true
+        scope: true,
     };
 };
 
 export let CsvUsDirective = function($translate) {
-    let link = $scope => $scope.sectionTitle = "ADMIN.CSV.SECTION_TITLE_US";
+    const link = ($scope) => $scope.sectionTitle = "ADMIN.CSV.SECTION_TITLE_US";
 
     return {
         controller: "CsvExporterUserstoriesController",
         controllerAs: "ctrl",
         templateUrl: "admin/project-csv.html",
         link,
-        scope: true
+        scope: true,
     };
 };
 
 export let CsvTaskDirective = function($translate) {
-    let link = $scope => $scope.sectionTitle = "ADMIN.CSV.SECTION_TITLE_TASK";
+    const link = ($scope) => $scope.sectionTitle = "ADMIN.CSV.SECTION_TITLE_TASK";
 
     return {
         controller: "CsvExporterTasksController",
         controllerAs: "ctrl",
         templateUrl: "admin/project-csv.html",
         link,
-        scope: true
+        scope: true,
     };
 };
 
 export let CsvIssueDirective = function($translate) {
-    let link = $scope => $scope.sectionTitle = "ADMIN.CSV.SECTION_TITLE_ISSUE";
+    const link = ($scope) => $scope.sectionTitle = "ADMIN.CSV.SECTION_TITLE_ISSUE";
 
     return {
         controller: "CsvExporterIssuesController",
         controllerAs: "ctrl",
         templateUrl: "admin/project-csv.html",
         link,
-        scope: true
+        scope: true,
     };
 };
 
@@ -613,21 +608,21 @@ export let CsvIssueDirective = function($translate) {
 //############################################################################
 
 export let ProjectLogoDirective = function($auth, $model, $rs, $confirm) {
-    let link = function($scope, $el, $attrs) {
-        let showSizeInfo = () => $el.find(".size-info").addClass("active");
+    const link = function($scope, $el, $attrs) {
+        const showSizeInfo = () => $el.find(".size-info").addClass("active");
 
-        let onSuccess = function(response) {
-            let project = $model.make_model("projects", response.data);
+        const onSuccess = function(response) {
+            const project = $model.make_model("projects", response.data);
             $scope.project = project;
 
-            $el.find('.loading-overlay').removeClass('active');
-            return $confirm.notify('success');
+            $el.find(".loading-overlay").removeClass("active");
+            return $confirm.notify("success");
         };
 
-        let onError = function(response) {
+        const onError = function(response) {
             if (response.status === 413) { showSizeInfo(); }
-            $el.find('.loading-overlay').removeClass('active');
-            return $confirm.notify('error', response.data._error_message);
+            $el.find(".loading-overlay").removeClass("active");
+            return $confirm.notify("error", response.data._error_message);
         };
 
         // Change photo
@@ -635,14 +630,14 @@ export let ProjectLogoDirective = function($auth, $model, $rs, $confirm) {
 
         $el.on("change", "#logo-field", function(event) {
             if ($scope.logoAttachment) {
-                $el.find('.loading-overlay').addClass("active");
+                $el.find(".loading-overlay").addClass("active");
                 return $rs.projects.changeLogo($scope.project.id, $scope.logoAttachment).then(onSuccess, onError);
             }
         });
 
         // Use default photo
         $el.on("click", "a.js-use-default-logo", function(event) {
-            $el.find('.loading-overlay').addClass("active");
+            $el.find(".loading-overlay").addClass("active");
             return $rs.projects.removeLogo($scope.project.id).then(onSuccess, onError);
         });
 
@@ -657,12 +652,12 @@ export let ProjectLogoDirective = function($auth, $model, $rs, $confirm) {
 //############################################################################
 
 export let ProjectLogoModelDirective = function($parse) {
-    let link = function($scope, $el, $attrs) {
-        let model = $parse($attrs.tgProjectLogoModel);
-        let modelSetter = model.assign;
+    const link = function($scope, $el, $attrs) {
+        const model = $parse($attrs.tgProjectLogoModel);
+        const modelSetter = model.assign;
 
-        return $el.bind('change', () =>
-            $scope.$apply(() => modelSetter($scope, $el[0].files[0]))
+        return $el.bind("change", () =>
+            $scope.$apply(() => modelSetter($scope, $el[0].files[0])),
         );
     };
 
@@ -672,33 +667,33 @@ export let ProjectLogoModelDirective = function($parse) {
 export let AdminProjectRestrictionsDirective = () =>
     ({
         scope: {
-            "project": "="
+            project: "=",
         },
-        templateUrl: "admin/admin-project-restrictions.html"
+        templateUrl: "admin/admin-project-restrictions.html",
     })
 ;
 
-export let AdminProjectRequestOwnershipDirective = lightboxFactory =>
+export let AdminProjectRequestOwnershipDirective = (lightboxFactory) =>
     ({
         link(scope) {
             return scope.requestOwnership = () =>
                 lightboxFactory.create("tg-lb-request-ownership", {
-                    "class": "lightbox lightbox-request-ownership"
+                    class: "lightbox lightbox-request-ownership",
                 }, {
-                    projectId: scope.projectId
+                    projectId: scope.projectId,
                 })
             ;
         },
 
         scope: {
-            "projectId": "=",
-            "owner": "="
+            projectId: "=",
+            owner: "=",
         },
-        templateUrl: "admin/admin-project-request-ownership.html"
+        templateUrl: "admin/admin-project-request-ownership.html",
     })
 ;
 
-export let AdminProjectChangeOwnerDirective = lightboxFactory =>
+export let AdminProjectChangeOwnerDirective = (lightboxFactory) =>
     ({
         link(scope) {
             return scope.changeOwner = () =>
@@ -706,22 +701,22 @@ export let AdminProjectChangeOwnerDirective = lightboxFactory =>
                     "class": "lightbox lightbox-select-user",
                     "project-id": "projectId",
                     "active-users": "activeUsers",
-                    "current-owner-id": "currentOwnerId"
+                    "current-owner-id": "currentOwnerId",
                 }, {
                     projectId: scope.projectId,
                     activeUsers: scope.activeUsers,
                     currentOwnerId: scope.owner.id,
-                    members: scope.members
+                    members: scope.members,
                 })
             ;
         },
 
         scope: {
-            "activeUsers": "=",
-            "projectId": "=",
-            "owner": "=",
-            "members": "="
+            activeUsers: "=",
+            projectId: "=",
+            owner: "=",
+            members: "=",
         },
-        templateUrl: "admin/admin-project-change-owner.html"
+        templateUrl: "admin/admin-project-change-owner.html",
     })
 ;

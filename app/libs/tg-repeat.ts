@@ -39,30 +39,30 @@ updateScope(block.scope, index, valueIdentifier, immutable_value, keyIdentifier,
   var uid = 0;
 */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
-var NODE_TYPE_ELEMENT = 1;
-var uid = 0;
+const NODE_TYPE_ELEMENT = 1;
+let uid = 0;
 
 function nextUid() {
     return ++uid;
 }
 
-function hashKey(obj, nextUidFn=null) {
-    var key = obj && obj.$$hashKey;
+function hashKey(obj, nextUidFn= null) {
+    let key = obj && obj.$$hashKey;
 
     if (key) {
-        if (typeof key === 'function') {
+        if (typeof key === "function") {
             key = obj.$$hashKey();
         }
         return key;
     }
 
-    var objType = typeof obj;
-    if (objType == 'function' || (objType == 'object' && obj !== null)) {
-        key = obj.$$hashKey = objType + ':' + (nextUidFn || nextUid)();
+    const objType = typeof obj;
+    if (objType == "function" || (objType == "object" && obj !== null)) {
+        key = obj.$$hashKey = objType + ":" + (nextUidFn || nextUid)();
     } else {
-        key = objType + ':' + obj;
+        key = objType + ":" + obj;
     }
 
     return key;
@@ -77,28 +77,28 @@ function isArrayLike(obj) {
         return false;
     }
 
-    var length = obj.length;
+    const length = obj.length;
 
     if (obj.nodeType === NODE_TYPE_ELEMENT && length) {
         return true;
     }
 
     return angular.isString(obj) || angular.isArray(obj) || length === 0 ||
-        typeof length === 'number' && length > 0 && (length - 1) in obj;
+        typeof length === "number" && length > 0 && (length - 1) in obj;
 }
 
 function isWindow(obj) {
     return obj && obj.window === obj;
 }
 
-function isString(value) {return typeof value === 'string';}
+function isString(value) {return typeof value === "string"; }
 
 function getBlockNodes(nodes) {
     // TODO(perf): just check if all items in `nodes` are siblings and if they are return the original
     //             collection, otherwise update the original collection.
-    var node = nodes[0];
-    var endNode = nodes[nodes.length - 1];
-    var blockNodes = [node];
+    let node = nodes[0];
+    const endNode = nodes[nodes.length - 1];
+    const blockNodes = [node];
 
     do {
         node = node.nextSibling;
@@ -109,14 +109,14 @@ function getBlockNodes(nodes) {
     return jqLite(blockNodes);
 }
 
-var isArray = Array.isArray;
+const isArray = Array.isArray;
 
-var jqLite = $;
+const jqLite = $;
 
 function tgRepeatDirective($parse, $animate) {
-    var NG_REMOVED = '$$NG_REMOVED';
-    var ngRepeatMinErr = (<any>angular).$$minErr('ngRepeat');
-    var updateScope = function(scope, index, valueIdentifier, value, keyIdentifier, key, arrayLength) {
+    const NG_REMOVED = "$$NG_REMOVED";
+    const ngRepeatMinErr = (angular as any).$$minErr("ngRepeat");
+    const updateScope = function(scope, index, valueIdentifier, value, keyIdentifier, key, arrayLength) {
         // TODO(perf): generate setters to shave off ~40ms or 1-1.5%
         scope[valueIdentifier] = value;
         if (keyIdentifier) scope[keyIdentifier] = key;
@@ -125,49 +125,49 @@ function tgRepeatDirective($parse, $animate) {
         scope.$last = (index === (arrayLength - 1));
         scope.$middle = !(scope.$first || scope.$last);
         // jshint bitwise: false
-        scope.$odd = !(scope.$even = (index&1) === 0);
+        scope.$odd = !(scope.$even = (index & 1) === 0);
         // jshint bitwise: true
     };
-    var getBlockStart = function(block) {
+    const getBlockStart = function(block) {
         return block.clone[0];
     };
-    var getBlockEnd = function(block) {
+    const getBlockEnd = function(block) {
         return block.clone[block.clone.length - 1];
     };
     return {
-        restrict: 'A',
+        restrict: "A",
         multiElement: true,
-        transclude: 'element',
+        transclude: "element",
         priority: 1000,
         terminal: true,
         $$tlb: true,
         compile: function ngRepeatCompile($element, $attr) {
-            var expression = $attr.tgRepeat;
-            var ngRepeatEndComment = document.createComment(' end ngRepeat: ' + expression + ' ');
-            var match = expression.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+as\s+([\s\S]+?))?(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
+            const expression = $attr.tgRepeat;
+            const ngRepeatEndComment = document.createComment(" end ngRepeat: " + expression + " ");
+            let match = expression.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+as\s+([\s\S]+?))?(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
             if (!match) {
-                throw ngRepeatMinErr('iexp', "Expected expression in form of '_item_ in _collection_[ track by _id_]' but got '{0}'.",
+                throw ngRepeatMinErr("iexp", "Expected expression in form of '_item_ in _collection_[ track by _id_]' but got '{0}'.",
                                      expression);
             }
-            var lhs = match[1];
-            var rhs = match[2];
-            var aliasAs = match[3];
-            var trackByExp = match[4];
+            const lhs = match[1];
+            const rhs = match[2];
+            const aliasAs = match[3];
+            const trackByExp = match[4];
 
             match = lhs.match(/^(?:(\s*[\$\w]+)|\(\s*([\$\w]+)\s*,\s*([\$\w]+)\s*\))$/);
             if (!match) {
-                throw ngRepeatMinErr('iidexp', "'_item_' in '_item_ in _collection_' should be an identifier or '(_key_, _value_)' expression, but got '{0}'.",
+                throw ngRepeatMinErr("iidexp", "'_item_' in '_item_ in _collection_' should be an identifier or '(_key_, _value_)' expression, but got '{0}'.",
                                      lhs);
             }
-            var valueIdentifier = match[3] || match[1];
-            var keyIdentifier = match[2];
+            const valueIdentifier = match[3] || match[1];
+            const keyIdentifier = match[2];
             if (aliasAs && (!/^[$a-zA-Z_][$a-zA-Z0-9_]*$/.test(aliasAs) ||
                             /^(null|undefined|this|\$index|\$first|\$middle|\$last|\$even|\$odd|\$parent|\$root|\$id)$/.test(aliasAs))) {
-                throw ngRepeatMinErr('badident', "alias '{0}' is invalid --- must be a valid JS identifier which is not a reserved name.",
+                throw ngRepeatMinErr("badident", "alias '{0}' is invalid --- must be a valid JS identifier which is not a reserved name.",
                                      aliasAs);
             }
-            var trackByExpGetter, trackByIdExpFn, trackByIdArrayFn, trackByIdObjFn;
-            var hashFnLocals:any = {$id: hashKey};
+            let trackByExpGetter, trackByIdExpFn, trackByIdArrayFn, trackByIdObjFn;
+            const hashFnLocals: any = {$id: hashKey};
             if (trackByExp) {
                 trackByExpGetter = $parse(trackByExp);
             } else {
@@ -196,15 +196,15 @@ function tgRepeatDirective($parse, $animate) {
                 //
                 // We are using no-proto object so that we don't need to guard against inherited props via
                 // hasOwnProperty.
-                var lastBlockMap = createMap();
+                let lastBlockMap = createMap();
                 $scope.$watch(rhs, function ngRepeatAction(immutable_collection) {
-                    var collection = []
+                    let collection = [];
 
                     if (immutable_collection && immutable_collection.toJS) {
                         collection = immutable_collection.toJS();
                     }
 
-                    var index, length,
+                    let index, length,
                     previousNode = $element[0], // node that cloned nodes should be inserted after
                     // initialized to the comment node anchor
                     nextNode,
@@ -229,8 +229,8 @@ function tgRepeatDirective($parse, $animate) {
                         trackByIdFn = trackByIdExpFn || trackByIdObjFn;
                         // if object, extract keys, in enumeration order, unsorted
                         collectionKeys = [];
-                        for (var itemKey in collection) {
-                            if (collection.hasOwnProperty(itemKey) && itemKey.charAt(0) !== '$') {
+                        for (const itemKey in collection) {
+                            if (collection.hasOwnProperty(itemKey) && itemKey.charAt(0) !== "$") {
                                 collectionKeys.push(itemKey);
                             }
                         }
@@ -241,7 +241,7 @@ function tgRepeatDirective($parse, $animate) {
                     for (index = 0; index < collectionLength; index++) {
                         key = (collection === collectionKeys) ? index : collectionKeys[index];
                         value = collection[key];
-                        let immutable_value = immutable_collection.get(key);
+                        const immutable_value = immutable_collection.get(key);
                         trackById = trackByIdFn(key, immutable_value, index);
                         if (lastBlockMap[trackById]) {
                             // found previously seen block
@@ -254,7 +254,7 @@ function tgRepeatDirective($parse, $animate) {
                             nextBlockOrder.forEach(function(block) {
                                 if (block && block.scope) lastBlockMap[block.id] = block;
                             });
-                            throw ngRepeatMinErr('dupes',
+                            throw ngRepeatMinErr("dupes",
                                                  "Duplicates in a repeater are not allowed. Use 'track by' expression to specify unique keys. Repeater: {0}, Duplicate key: {1}, Duplicate value: {2}",
                                                  expression, trackById, value);
                         } else {
@@ -264,7 +264,7 @@ function tgRepeatDirective($parse, $animate) {
                         }
                     }
                     // remove leftover items
-                    for (var blockKey in lastBlockMap) {
+                    for (const blockKey in lastBlockMap) {
                         block = lastBlockMap[blockKey];
                         elementsToRemove = getBlockNodes(block.clone);
                         $animate.leave(elementsToRemove);
@@ -281,7 +281,7 @@ function tgRepeatDirective($parse, $animate) {
                     for (index = 0; index < collectionLength; index++) {
                         key = (collection === collectionKeys) ? index : collectionKeys[index];
                         value = collection[key];
-                        let immutable_value = immutable_collection.get(key);
+                        const immutable_value = immutable_collection.get(key);
                         block = nextBlockOrder[index];
                         if (block.scope) {
                             // if we have already seen this object, then we need to reuse the
@@ -302,7 +302,7 @@ function tgRepeatDirective($parse, $animate) {
                             $transclude(function ngRepeatTransclude(clone, scope) {
                                 block.scope = scope;
                                 // http://jsperf.com/clone-vs-createcomment
-                                var endNode = ngRepeatEndComment.cloneNode(false);
+                                const endNode = ngRepeatEndComment.cloneNode(false);
                                 clone[clone.length++] = endNode;
                                 // TODO(perf): support naked previousNode in `enter` to avoid creation of jqLite wrapper?
                                 $animate.enter(clone, null, jqLite(previousNode));
@@ -319,9 +319,9 @@ function tgRepeatDirective($parse, $animate) {
                     lastBlockMap = nextBlockMap;
                 });
             };
-        }
+        },
     };
-};
+}
 
-let module = angular.module("tgRepeat", []);
-module.directive("tgRepeat", ["$parse", "$animate", <any>tgRepeatDirective]);
+const module = angular.module("tgRepeat", []);
+module.directive("tgRepeat", ["$parse", "$animate", tgRepeatDirective as any]);

@@ -18,7 +18,7 @@
  */
 
 export function CompileHtmlDirective($compile) {
-    let link = (scope, element, attrs) =>
+    const link = (scope, element, attrs) =>
         scope.$watch(attrs.tgCompileHtml, function(newValue, oldValue) {
             element.html(newValue);
             return $compile(element.contents())(scope);
@@ -26,7 +26,7 @@ export function CompileHtmlDirective($compile) {
     ;
 
     return {
-        link
+        link,
     };
-};
+}
 CompileHtmlDirective.$inject = ["$compile"];

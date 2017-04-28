@@ -22,27 +22,27 @@
  * File: modules/admin/third-parties.coffee
  */
 
-import {bindMethods, debounce, timeout} from "../../libs/utils"
-import {FiltersMixin} from "../controllerMixins"
-import * as angular from "angular"
-import * as moment from "moment"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import * as moment from "moment";
+import {bindMethods, debounce, timeout} from "../../libs/utils";
+import {FiltersMixin} from "../controllerMixins";
 
 //############################################################################
 //# Webhooks
 //############################################################################
 
 export class WebhooksController extends FiltersMixin {
-    scope: angular.IScope
-    repo:any
-    rs:any
-    params:any
-    location:any
-    navUrls:any
-    appMetaService:any
-    translate:any
-    errorHandlingService:any
-    projectService:any
+    scope: angular.IScope;
+    repo: any;
+    rs: any;
+    params: any;
+    location: any;
+    navUrls: any;
+    appMetaService: any;
+    translate: any;
+    errorHandlingService: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -55,12 +55,12 @@ export class WebhooksController extends FiltersMixin {
             "tgAppMetaService",
             "$translate",
             "tgErrorHandlingService",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, repo, rs, params, location, navUrls, appMetaService, translate, errorHandlingService, projectService) {
-        super()
+        super();
         this.scope = scope;
         this.repo = repo;
         this.rs = rs;
@@ -76,11 +76,11 @@ export class WebhooksController extends FiltersMixin {
         this.scope.sectionName = "ADMIN.WEBHOOKS.SECTION_NAME";
         this.scope.project = {};
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         promise.then(() => {
-            let title = this.translate.instant("ADMIN.WEBHOOKS.PAGE_TITLE", {projectName: this.scope.project.name});
-            let { description } = this.scope.project;
+            const title = this.translate.instant("ADMIN.WEBHOOKS.PAGE_TITLE", {projectName: this.scope.project.name});
+            const { description } = this.scope.project;
             return this.appMetaService.setAll(title, description);
         });
 
@@ -90,13 +90,13 @@ export class WebhooksController extends FiltersMixin {
     }
 
     loadWebhooks() {
-        return this.rs.webhooks.list(this.scope.projectId).then(webhooks => {
+        return this.rs.webhooks.list(this.scope.projectId).then((webhooks) => {
             return this.scope.webhooks = webhooks;
         });
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         if (!project.i_am_admin) {
             this.errorHandlingService.permissionDenied();
@@ -104,7 +104,7 @@ export class WebhooksController extends FiltersMixin {
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
         return project;
     }
 
@@ -121,16 +121,16 @@ WebhooksController.initClass();
 //############################################################################
 
 export let WebhookDirective = function($rs, $repo, $confirm, $loading, $translate) {
-    let link = function($scope, $el, $attrs) {
-        let webhook = $scope.$eval($attrs.tgWebhook);
+    const link = function($scope, $el, $attrs) {
+        const webhook = $scope.$eval($attrs.tgWebhook);
 
-        let updateLogs = function() {
-            let prettyDate = $translate.instant("ADMIN.WEBHOOKS.DATE");
+        const updateLogs = function() {
+            const prettyDate = $translate.instant("ADMIN.WEBHOOKS.DATE");
 
-            return $rs.webhooklogs.list(webhook.id).then(webhooklogs => {
-                for (let log of webhooklogs) {
+            return $rs.webhooklogs.list(webhook.id).then((webhooklogs) => {
+                for (const log of webhooklogs) {
                     log.validStatus = 200 <= log.status && log.status < 300;
-                    log.prettySentHeaders = _.map(_.toPairs(log.request_headers), function(...args) { let [header, value] = args[0]; return `${header}: ${value}`; }).join("\n");
+                    log.prettySentHeaders = _.map(_.toPairs(log.request_headers), function(...args) { const [header, value] = args[0]; return `${header}: ${value}`; }).join("\n");
                     log.prettySentData = JSON.stringify(log.request_data);
                     log.prettyDate = moment(log.created).format(prettyDate);
                 }
@@ -141,10 +141,10 @@ export let WebhookDirective = function($rs, $repo, $confirm, $loading, $translat
             });
         };
 
-        var updateShowHideHistoryText = function() {
+        const updateShowHideHistoryText = function() {
             let text, title;
-            let textElement = $el.find(".toggle-history");
-            let historyElement = textElement.parents(".single-webhook-wrapper").find(".webhooks-history");
+            const textElement = $el.find(".toggle-history");
+            const historyElement = textElement.parents(".single-webhook-wrapper").find(".webhooks-history");
 
             if (historyElement.hasClass("open")) {
                 text = $translate.instant("ADMIN.WEBHOOKS.ACTION_HIDE_HISTORY");
@@ -158,27 +158,27 @@ export let WebhookDirective = function($rs, $repo, $confirm, $loading, $translat
             return textElement.prop("title", title);
         };
 
-        let showVisualizationMode = function() {
+        const showVisualizationMode = function() {
             $el.find(".edition-mode").addClass("hidden");
             return $el.find(".visualization-mode").removeClass("hidden");
         };
 
-        let showEditMode = function() {
+        const showEditMode = function() {
             $el.find(".visualization-mode").addClass("hidden");
             return $el.find(".edition-mode").removeClass("hidden");
         };
 
-        let openHistory = () => $el.find(".webhooks-history").addClass("open");
+        const openHistory = () => $el.find(".webhooks-history").addClass("open");
 
-        let cancel = function() {
+        const cancel = function() {
             showVisualizationMode();
             return $scope.$apply(() => webhook.revert());
         };
 
-        let save = debounce(2000, function(target) {
-            let form = target.parents("form").checksley();
+        const save = debounce(2000, function(target) {
+            const form = target.parents("form").checksley();
             if (!form.validate()) { return; }
-            let promise = $repo.save(webhook);
+            const promise = $repo.save(webhook);
             promise.then(() => {
                 return showVisualizationMode();
             });
@@ -202,7 +202,7 @@ export let WebhookDirective = function($rs, $repo, $confirm, $loading, $translat
 
         $el.on("click", ".edit-existing", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             return save(target);
         });
 
@@ -218,16 +218,16 @@ export let WebhookDirective = function($rs, $repo, $confirm, $loading, $translat
         });
 
         $el.on("click", ".delete-webhook", function() {
-            let title = $translate.instant("ADMIN.WEBHOOKS.DELETE");
-            let message = $translate.instant("ADMIN.WEBHOOKS.WEBHOOK_NAME", {name: webhook.name});
+            const title = $translate.instant("ADMIN.WEBHOOKS.DELETE");
+            const message = $translate.instant("ADMIN.WEBHOOKS.WEBHOOK_NAME", {name: webhook.name});
 
-            return $confirm.askOnDelete(title, message).then(askResponse => {
-                let onSucces = function() {
+            return $confirm.askOnDelete(title, message).then((askResponse) => {
+                const onSucces = function() {
                     askResponse.finish();
                     return $scope.$emit("webhooks:reload");
                 };
 
-                let onError = function() {
+                const onError = function() {
                     askResponse.finish(false);
                     return $confirm.notify("error");
                 };
@@ -237,7 +237,7 @@ export let WebhookDirective = function($rs, $repo, $confirm, $loading, $translat
         });
 
         $el.on("click", ".toggle-history", function(event) {
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
             if ((webhook.logs == null) || (webhook.logs.length === 0)) {
                 return updateLogs().then(() =>
@@ -248,7 +248,7 @@ export let WebhookDirective = function($rs, $repo, $confirm, $loading, $translat
                             .slideToggle();
 
                         return updateShowHideHistoryText();
-                    })
+                    }),
                 );
 
             } else {
@@ -260,16 +260,15 @@ export let WebhookDirective = function($rs, $repo, $confirm, $loading, $translat
             }
         });
 
-
         $el.on("click", ".history-single", function(event) {
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             target.toggleClass("history-single-open");
             return target.siblings(".history-single-response").toggleClass("open");
         });
 
         return $el.on("click", ".resend-request", function(event) {
-            let target = angular.element(event.currentTarget);
-            let log = target.data("log");
+            const target = angular.element(event.currentTarget);
+            const log = target.data("log");
             return $rs.webhooklogs.resend(log).then(() => {
                 return updateLogs();
             });
@@ -284,15 +283,15 @@ export let WebhookDirective = function($rs, $repo, $confirm, $loading, $translat
 //############################################################################
 
 export let NewWebhookDirective = function($rs, $repo, $confirm, $loading) {
-    let link = function($scope, $el, $attrs) {
-        let webhook = $scope.$eval($attrs.tgWebhook);
-        let formDOMNode = $el.find(".new-webhook-form");
-        let addWebhookDOMNode = $el.find(".add-webhook");
-        let initializeNewValue = () =>
+    const link = function($scope, $el, $attrs) {
+        const webhook = $scope.$eval($attrs.tgWebhook);
+        const formDOMNode = $el.find(".new-webhook-form");
+        const addWebhookDOMNode = $el.find(".add-webhook");
+        const initializeNewValue = () =>
             $scope.newValue = {
-                "name": "",
-                "url": "",
-                "key": ""
+                name: "",
+                url: "",
+                key: "",
             }
         ;
 
@@ -311,12 +310,12 @@ export let NewWebhookDirective = function($rs, $repo, $confirm, $loading) {
             }
         });
 
-        let save = debounce(2000, function() {
-            let form = formDOMNode.checksley();
+        const save = debounce(2000, function() {
+            const form = formDOMNode.checksley();
             if (!form.validate()) { return; }
 
             $scope.newValue.project = $scope.project.id;
-            let promise = $repo.create("webhooks", $scope.newValue);
+            const promise = $repo.create("webhooks", $scope.newValue);
             promise.then(() => {
                 $scope.$emit("webhooks:reload");
                 return initializeNewValue();
@@ -339,7 +338,7 @@ export let NewWebhookDirective = function($rs, $repo, $confirm, $loading) {
             }
         });
 
-        formDOMNode.on("click", ".cancel-new", event =>
+        formDOMNode.on("click", ".cancel-new", (event) =>
             $scope.$apply(function() {
                 initializeNewValue();
 
@@ -347,7 +346,7 @@ export let NewWebhookDirective = function($rs, $repo, $confirm, $loading) {
                 if ($scope.webhooks.length >= 1) {
                     return formDOMNode.addClass("hidden");
                 }
-            })
+            }),
         );
 
         return addWebhookDOMNode.on("click", function(event) {
@@ -364,13 +363,13 @@ export let NewWebhookDirective = function($rs, $repo, $confirm, $loading) {
 //############################################################################
 
 export class GithubController extends FiltersMixin {
-    scope: angular.IScope
-    repo:any
-    rs:any
-    params:any
-    appMetaService:any
-    translate:any
-    projectService:any
+    scope: angular.IScope;
+    repo: any;
+    rs: any;
+    params: any;
+    appMetaService: any;
+    translate: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -380,12 +379,12 @@ export class GithubController extends FiltersMixin {
             "$routeParams",
             "tgAppMetaService",
             "$translate",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, repo, rs, params, appMetaService, translate, projectService) {
-        super()
+        super();
         this.scope = scope;
         this.repo = repo;
         this.rs = rs;
@@ -398,11 +397,11 @@ export class GithubController extends FiltersMixin {
         this.scope.sectionName = this.translate.instant("ADMIN.GITHUB.SECTION_NAME");
         this.scope.project = {};
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         promise.then(() => {
-            let title = this.translate.instant("ADMIN.GITHUB.PAGE_TITLE", {projectName: this.scope.project.name});
-            let { description } = this.scope.project;
+            const title = this.translate.instant("ADMIN.GITHUB.PAGE_TITLE", {projectName: this.scope.project.name});
+            const { description } = this.scope.project;
             return this.appMetaService.setAll(title, description);
         });
 
@@ -410,22 +409,22 @@ export class GithubController extends FiltersMixin {
     }
 
     loadModules() {
-        return this.rs.modules.list(this.scope.projectId, "github").then(github => {
+        return this.rs.modules.list(this.scope.projectId, "github").then((github) => {
             return this.scope.github = github;
         });
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
         return project;
     }
 
     loadInitialData() {
-        let promise = this.loadProject();
+        const promise = this.loadProject();
         return this.loadModules();
     }
 }
@@ -436,13 +435,13 @@ GithubController.initClass();
 //############################################################################
 
 export class GitlabController extends FiltersMixin {
-    scope: angular.IScope
-    repo:any
-    rs:any
-    params:any
-    appMetaService:any
-    translate:any
-    projectService:any
+    scope: angular.IScope;
+    repo: any;
+    rs: any;
+    params: any;
+    appMetaService: any;
+    translate: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -452,12 +451,12 @@ export class GitlabController extends FiltersMixin {
             "$routeParams",
             "tgAppMetaService",
             "$translate",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, repo, rs, params, appMetaService, translate, projectService) {
-        super()
+        super();
         this.scope = scope;
         this.repo = repo;
         this.rs = rs;
@@ -469,11 +468,11 @@ export class GitlabController extends FiltersMixin {
 
         this.scope.sectionName = this.translate.instant("ADMIN.GITLAB.SECTION_NAME");
         this.scope.project = {};
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         promise.then(() => {
-            let title = this.translate.instant("ADMIN.GITLAB.PAGE_TITLE", {projectName: this.scope.project.name});
-            let { description } = this.scope.project;
+            const title = this.translate.instant("ADMIN.GITLAB.PAGE_TITLE", {projectName: this.scope.project.name});
+            const { description } = this.scope.project;
             return this.appMetaService.setAll(title, description);
         });
 
@@ -485,17 +484,17 @@ export class GitlabController extends FiltersMixin {
     }
 
     loadModules() {
-        return this.rs.modules.list(this.scope.projectId, "gitlab").then(gitlab => {
+        return this.rs.modules.list(this.scope.projectId, "gitlab").then((gitlab) => {
             return this.scope.gitlab = gitlab;
         });
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
         return project;
     }
 
@@ -511,13 +510,13 @@ GitlabController.initClass();
 //############################################################################
 
 export class BitbucketController extends FiltersMixin {
-    scope: angular.IScope
-    repo:any
-    rs:any
-    params:any
-    appMetaService:any
-    translate:any
-    projectService:any
+    scope: angular.IScope;
+    repo: any;
+    rs: any;
+    params: any;
+    appMetaService: any;
+    translate: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -527,12 +526,12 @@ export class BitbucketController extends FiltersMixin {
             "$routeParams",
             "tgAppMetaService",
             "$translate",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, repo, rs, params, appMetaService, translate, projectService) {
-        super()
+        super();
         this.scope = scope;
         this.repo = repo;
         this.rs = rs;
@@ -544,11 +543,11 @@ export class BitbucketController extends FiltersMixin {
 
         this.scope.sectionName = this.translate.instant("ADMIN.BITBUCKET.SECTION_NAME");
         this.scope.project = {};
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         promise.then(() => {
-            let title = this.translate.instant("ADMIN.BITBUCKET.PAGE_TITLE", {projectName: this.scope.project.name});
-            let { description } = this.scope.project;
+            const title = this.translate.instant("ADMIN.BITBUCKET.PAGE_TITLE", {projectName: this.scope.project.name});
+            const { description } = this.scope.project;
             return this.appMetaService.setAll(title, description);
         });
 
@@ -560,17 +559,17 @@ export class BitbucketController extends FiltersMixin {
     }
 
     loadModules() {
-        return this.rs.modules.list(this.scope.projectId, "bitbucket").then(bitbucket => {
+        return this.rs.modules.list(this.scope.projectId, "bitbucket").then((bitbucket) => {
             return this.scope.bitbucket = bitbucket;
         });
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
         return project;
     }
 
@@ -582,7 +581,7 @@ export class BitbucketController extends FiltersMixin {
 BitbucketController.initClass();
 
 export let SelectInputText =  function() {
-    let link = ($scope, $el, $attrs) =>
+    const link = ($scope, $el, $attrs) =>
         $el.on("click", ".select-input-content", function() {
             $el.find("input").select();
             return $el.find(".help-copy").addClass("visible");
@@ -597,18 +596,18 @@ export let SelectInputText =  function() {
 //############################################################################
 
 export let GithubWebhooksDirective = function($repo, $confirm, $loading) {
-    let link = function($scope, $el, $attrs) {
-        let form = $el.find("form").checksley({"onlyOneErrorElement": true});
-        let submit = debounce(2000, event => {
+    const link = function($scope, $el, $attrs) {
+        const form = $el.find("form").checksley({onlyOneErrorElement: true});
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
             if (!form.validate()) { return; }
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
-            let promise = $repo.saveAttribute($scope.github, "github");
+            const promise = $repo.saveAttribute($scope.github, "github");
             promise.then(function() {
                 currentLoading.finish();
                 return $confirm.notify("success");
@@ -623,7 +622,7 @@ export let GithubWebhooksDirective = function($repo, $confirm, $loading) {
             });
         });
 
-        var submitButton = $el.find(".submit-button");
+        const submitButton = $el.find(".submit-button");
 
         return $el.on("submit", "form", submit);
     };
@@ -636,18 +635,18 @@ export let GithubWebhooksDirective = function($repo, $confirm, $loading) {
 //############################################################################
 
 export let GitlabWebhooksDirective = function($repo, $confirm, $loading) {
-    let link = function($scope, $el, $attrs) {
-        let form = $el.find("form").checksley({"onlyOneErrorElement": true});
-        let submit = debounce(2000, event => {
+    const link = function($scope, $el, $attrs) {
+        const form = $el.find("form").checksley({onlyOneErrorElement: true});
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
             if (!form.validate()) { return; }
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
-            let promise = $repo.saveAttribute($scope.gitlab, "gitlab");
+            const promise = $repo.saveAttribute($scope.gitlab, "gitlab");
             promise.then(function() {
                 currentLoading.finish();
                 $confirm.notify("success");
@@ -663,7 +662,7 @@ export let GitlabWebhooksDirective = function($repo, $confirm, $loading) {
             });
         });
 
-        var submitButton = $el.find(".submit-button");
+        const submitButton = $el.find(".submit-button");
 
         return $el.on("submit", "form", submit);
     };
@@ -676,18 +675,18 @@ export let GitlabWebhooksDirective = function($repo, $confirm, $loading) {
 //############################################################################
 
 export let BitbucketWebhooksDirective = function($repo, $confirm, $loading) {
-    let link = function($scope, $el, $attrs) {
-        let form = $el.find("form").checksley({"onlyOneErrorElement": true});
-        let submit = debounce(2000, event => {
+    const link = function($scope, $el, $attrs) {
+        const form = $el.find("form").checksley({onlyOneErrorElement: true});
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
             if (!form.validate()) { return; }
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
-            let promise = $repo.saveAttribute($scope.bitbucket, "bitbucket");
+            const promise = $repo.saveAttribute($scope.bitbucket, "bitbucket");
             promise.then(function() {
                 currentLoading.finish();
                 $confirm.notify("success");
@@ -703,7 +702,7 @@ export let BitbucketWebhooksDirective = function($repo, $confirm, $loading) {
             });
         });
 
-        var submitButton = $el.find(".submit-button");
+        const submitButton = $el.find(".submit-button");
 
         return $el.on("submit", "form", submit);
     };
@@ -715,7 +714,7 @@ export let BitbucketWebhooksDirective = function($repo, $confirm, $loading) {
 //# Valid Origin IP's Directive
 //############################################################################
 export let ValidOriginIpsDirective = function() {
-    let link = ($scope, $el, $attrs, $ngModel) =>
+    const link = ($scope, $el, $attrs, $ngModel) =>
         $ngModel.$parsers.push(function(value) {
             value = $.trim(value);
             if (value === "") {
@@ -729,7 +728,7 @@ export let ValidOriginIpsDirective = function() {
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
@@ -738,13 +737,13 @@ export let ValidOriginIpsDirective = function() {
 //############################################################################
 
 export class GogsController extends FiltersMixin {
-    scope: angular.IScope
-    repo:any
-    rs:any
-    params:any
-    appMetaService:any
-    translate:any
-    projectService:any
+    scope: angular.IScope;
+    repo: any;
+    rs: any;
+    params: any;
+    appMetaService: any;
+    translate: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -754,12 +753,12 @@ export class GogsController extends FiltersMixin {
             "$routeParams",
             "tgAppMetaService",
             "$translate",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, repo, rs, params, appMetaService, translate, projectService) {
-        super()
+        super();
         this.scope = scope;
         this.repo = repo;
         this.rs = rs;
@@ -772,11 +771,11 @@ export class GogsController extends FiltersMixin {
         this.scope.sectionName = this.translate.instant("ADMIN.GOGS.SECTION_NAME");
         this.scope.project = {};
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         promise.then(() => {
-            let title = this.translate.instant("ADMIN.GOGS.PAGE_TITLE", {projectName: this.scope.project.name});
-            let { description } = this.scope.project;
+            const title = this.translate.instant("ADMIN.GOGS.PAGE_TITLE", {projectName: this.scope.project.name});
+            const { description } = this.scope.project;
             return this.appMetaService.setAll(title, description);
         });
 
@@ -784,17 +783,17 @@ export class GogsController extends FiltersMixin {
     }
 
     loadModules() {
-        return this.rs.modules.list(this.scope.projectId, "gogs").then(gogs => {
+        return this.rs.modules.list(this.scope.projectId, "gogs").then((gogs) => {
             return this.scope.gogs = gogs;
         });
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
         return project;
     }
 

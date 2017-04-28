@@ -22,33 +22,33 @@
  * File: modules/admin/memberships.coffee
  */
 
-import {bindMethods} from "../../libs/utils"
-import {FiltersMixin} from "../controllerMixins"
-import * as angular from "angular"
-import * as _ from "lodash"
-declare var _version:string;
+import * as angular from "angular";
+import * as _ from "lodash";
+import {bindMethods} from "../../libs/utils";
+import {FiltersMixin} from "../controllerMixins";
+declare var _version: string;
 
 //############################################################################
 //# Project Memberships Controller
 //############################################################################
 
 export class MembershipsController extends FiltersMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    navUrls:any
-    analytics:any
-    appMetaService:any
-    translate:any
-    auth:any
-    lightboxFactory:any
-    errorHandlingService:any
-    projectService:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    navUrls: any;
+    analytics: any;
+    appMetaService: any;
+    translate: any;
+    auth: any;
+    lightboxFactory: any;
+    errorHandlingService: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -67,13 +67,13 @@ export class MembershipsController extends FiltersMixin {
             "$tgAuth",
             "tgLightboxFactory",
             "tgErrorHandlingService",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, navUrls, analytics,
-                  appMetaService, translate, auth, lightboxFactory, errorHandlingService, projectService) {
-        super()
+                appMetaService, translate, auth, lightboxFactory, errorHandlingService, projectService) {
+        super();
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -95,11 +95,11 @@ export class MembershipsController extends FiltersMixin {
         this.scope.project = {};
         this.scope.filters = {};
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         promise.then(() => {
-           let title = this.translate.instant("ADMIN.MEMBERSHIPS.PAGE_TITLE", {projectName:  this.scope.project.name});
-           let { description } = this.scope.project;
+           const title = this.translate.instant("ADMIN.MEMBERSHIPS.PAGE_TITLE", {projectName:  this.scope.project.name});
+           const { description } = this.scope.project;
            return this.appMetaService.setAll(title, description);
         });
 
@@ -112,7 +112,7 @@ export class MembershipsController extends FiltersMixin {
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         if (!project.i_am_admin) {
             this.errorHandlingService.permissionDenied();
@@ -123,15 +123,15 @@ export class MembershipsController extends FiltersMixin {
 
         this.scope.canAddUsers = (project.max_memberships === null) || (project.max_memberships > project.total_memberships);
 
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
         return project;
     }
 
     loadMembers() {
-        let httpFilters = this.getUrlFilters();
+        const httpFilters = this.getUrlFilters();
 
-        return this.rs.memberships.list(this.scope.projectId, httpFilters).then(data => {
-            this.scope.memberships = _.filter(data.models, (membership:any) => (membership.user === null) || membership.is_user_active);
+        return this.rs.memberships.list(this.scope.projectId, httpFilters).then((data) => {
+            this.scope.memberships = _.filter(data.models, (membership: any) => (membership.user === null) || membership.is_user_active);
 
             this.scope.page = data.current;
             this.scope.count = data.count;
@@ -145,12 +145,12 @@ export class MembershipsController extends FiltersMixin {
 
         return this.q.all([
             this.loadMembers(),
-            this.auth.refresh()
+            this.auth.refresh(),
         ]);
     }
 
     getUrlFilters() {
-        let filters:any = _.pick(this.location.search(), "page");
+        const filters: any = _.pick(this.location.search(), "page");
         if (!filters.page) { filters.page = 1; }
         return filters;
     }
@@ -159,26 +159,26 @@ export class MembershipsController extends FiltersMixin {
 
     addNewMembers() {
         return this.lightboxFactory.create(
-            'tg-lb-add-members',
+            "tg-lb-add-members",
             {
-                "class": "lightbox lightbox-add-member",
-                "project": "project"
+                class: "lightbox lightbox-add-member",
+                project: "project",
             },
             {
-                "project": this.scope.project
-            }
+                project: this.scope.project,
+            },
         );
     }
 
     showLimitUsersWarningMessage() {
-        let title = this.translate.instant("ADMIN.MEMBERSHIPS.LIMIT_USERS_WARNING");
-        let message = this.translate.instant("ADMIN.MEMBERSHIPS.LIMIT_USERS_WARNING_MESSAGE", {
-            members: this.scope.project.max_memberships
+        const title = this.translate.instant("ADMIN.MEMBERSHIPS.LIMIT_USERS_WARNING");
+        const message = this.translate.instant("ADMIN.MEMBERSHIPS.LIMIT_USERS_WARNING_MESSAGE", {
+            members: this.scope.project.max_memberships,
         });
-        let icon = `/${_version}/svg/icons/team-question.svg`;
+        const icon = `/${_version}/svg/icons/team-question.svg`;
         return this.confirm.success(title, message, {
             name: icon,
-            type: "img"
+            type: "img",
         });
     }
 }
@@ -189,19 +189,19 @@ MembershipsController.initClass();
 //############################################################################
 
 export let MembershipsDirective = function($template, $compile) {
-    let template = $template.get("admin/admin-membership-paginator.html", true);
+    const template = $template.get("admin/admin-membership-paginator.html", true);
 
-    let linkPagination = function($scope, $el, $attrs, $ctrl) {
+    const linkPagination = function($scope, $el, $attrs, $ctrl) {
         // Constants
-        let afterCurrent = 2;
-        let beforeCurrent = 4;
-        let atBegin = 2;
-        let atEnd = 2;
+        const afterCurrent = 2;
+        const beforeCurrent = 4;
+        const atBegin = 2;
+        const atEnd = 2;
 
-        let $pagEl = $el.find(".memberships-paginator");
+        const $pagEl = $el.find(".memberships-paginator");
 
-        let getNumPages = function() {
-            let numPages:any = $scope.count / $scope.paginatedBy;
+        const getNumPages = function() {
+            let numPages: any = $scope.count / $scope.paginatedBy;
             if (parseInt(numPages, 10) < numPages) {
                 numPages = parseInt(numPages, 10) + 1;
             } else {
@@ -211,21 +211,21 @@ export let MembershipsDirective = function($template, $compile) {
             return numPages;
         };
 
-        let renderPagination = function() {
-            let numPages = getNumPages();
+        const renderPagination = function() {
+            const numPages = getNumPages();
 
             if (numPages <= 1) {
                 $pagEl.hide();
                 return;
             }
 
-            let pages = [];
-            let options:any = {};
+            const pages = [];
+            const options: any = {};
             options.pages = pages;
             options.showPrevious = ($scope.page > 1);
             options.showNext = !($scope.page === numPages);
 
-            let cpage = $scope.page;
+            const cpage = $scope.page;
 
             for (let i = 1, end = numPages, asc = 1 <= end; asc ? i <= end : i >= end; asc ? i++ : i--) {
                 if ((i === (cpage + afterCurrent)) && (numPages > (cpage + afterCurrent + atEnd))) {
@@ -274,8 +274,8 @@ export let MembershipsDirective = function($template, $compile) {
 
         return $el.on("click", ".memberships-paginator li.page > a", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
-            let pagenum = target.data("pagenum");
+            const target = angular.element(event.currentTarget);
+            const pagenum = target.data("pagenum");
 
             return $scope.$apply(function() {
                 $ctrl.selectFilter("page", pagenum);
@@ -284,9 +284,8 @@ export let MembershipsDirective = function($template, $compile) {
         });
     };
 
-
-    let link = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
+    const link = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
         linkPagination($scope, $el, $attrs, $ctrl);
 
         return $scope.$on("$destroy", () => $el.off());
@@ -300,20 +299,20 @@ export let MembershipsDirective = function($template, $compile) {
 //############################################################################
 
 export let MembershipsRowAvatarDirective = function($log, $template, $translate, $compile, avatarService) {
-    let template = $template.get("admin/memberships-row-avatar.html", true);
+    const template = $template.get("admin/memberships-row-avatar.html", true);
 
-    let link = function($scope, $el, $attrs) {
-        let pending = $translate.instant("ADMIN.MEMBERSHIP.STATUS_PENDING");
-        let render = function(member) {
-            let avatar = avatarService.getAvatar(member);
+    const link = function($scope, $el, $attrs) {
+        const pending = $translate.instant("ADMIN.MEMBERSHIP.STATUS_PENDING");
+        const render = function(member) {
+            const avatar = avatarService.getAvatar(member);
 
-            let ctx = {
+            const ctx = {
                 full_name: member.full_name ? member.full_name : "",
                 email: member.user_email ? member.user_email : member.email,
                 imgurl: avatar.url,
                 bg: avatar.bg,
                 pending: !member.is_user_active ? pending : "",
-                isOwner: member.is_owner
+                isOwner: member.is_owner,
             };
 
             let html = template(ctx);
@@ -326,7 +325,7 @@ export let MembershipsRowAvatarDirective = function($log, $template, $translate,
             return $log.error("MembershipsRowAvatarDirective: the directive need a member");
         }
 
-        let member = $scope.$eval($attrs.tgMembershipsRowAvatar);
+        const member = $scope.$eval($attrs.tgMembershipsRowAvatar);
         render(member);
 
         return $scope.$on("$destroy", () => $el.off());
@@ -340,24 +339,24 @@ export let MembershipsRowAvatarDirective = function($log, $template, $translate,
 //############################################################################
 
 export let MembershipsRowAdminCheckboxDirective = function($log, $repo, $confirm, $template, $compile) {
-    let template = $template.get("admin/admin-memberships-row-checkbox.html", true);
+    const template = $template.get("admin/admin-memberships-row-checkbox.html", true);
 
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         $scope.$on("$destroy", () => $el.off());
 
         if (($attrs.tgMembershipsRowAdminCheckbox == null)) {
             return $log.error("MembershipsRowAdminCheckboxDirective: the directive need a member");
         }
 
-        let member = $scope.$eval($attrs.tgMembershipsRowAdminCheckbox);
+        const member = $scope.$eval($attrs.tgMembershipsRowAdminCheckbox);
 
         if (member.is_owner) {
             $el.find(".js-check").remove();
             return;
         }
 
-        let render = function(member) {
-            let ctx = {inputId: `is-admin-${member.id}`};
+        const render = function(member) {
+            const ctx = {inputId: `is-admin-${member.id}`};
 
             let html = template(ctx);
             html = $compile(html)($scope);
@@ -365,21 +364,21 @@ export let MembershipsRowAdminCheckboxDirective = function($log, $repo, $confirm
             return $el.html(html);
         };
 
-        $el.on("click", ":checkbox", event => {
-            let onSuccess = () => $confirm.notify("success");
+        $el.on("click", ":checkbox", (event) => {
+            const onSuccess = () => $confirm.notify("success");
 
-            let onError = function(data) {
+            const onError = function(data) {
                 member.revert();
                 $el.find(":checkbox").prop("checked", member.is_admin);
                 return $confirm.notify("error", data.is_admin[0]);
             };
 
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             member.is_admin = target.prop("checked");
             return $repo.save(member).then(onSuccess, onError);
         });
 
-        let html = render(member);
+        const html = render(member);
 
         if (member.is_admin) {
             return $el.find(":checkbox").prop("checked", true);
@@ -394,7 +393,7 @@ export let MembershipsRowAdminCheckboxDirective = function($log, $repo, $confirm
 //############################################################################
 
 export let MembershipsRowRoleSelectorDirective = function($log, $repo, $confirm) {
-    let template = _.template(`\
+    const template = _.template(`\
 <select>
     <% _.each(roleList, function(role) { %>
     <option value="<%- role.id %>" <% if(selectedRole === role.id){ %>selected="selected"<% } %>>
@@ -404,14 +403,14 @@ export let MembershipsRowRoleSelectorDirective = function($log, $repo, $confirm)
 </select>\
 `);
 
-    let link = function($scope, $el, $attrs) {
-        let render = function(member) {
-            let ctx = {
+    const link = function($scope, $el, $attrs) {
+        const render = function(member) {
+            const ctx = {
                 roleList: $scope.project.roles,
-                selectedRole: member.role
+                selectedRole: member.role,
             };
 
-            let html = template(ctx);
+            const html = template(ctx);
             return $el.html(html);
         };
 
@@ -419,17 +418,17 @@ export let MembershipsRowRoleSelectorDirective = function($log, $repo, $confirm)
             return $log.error("MembershipsRowRoleSelectorDirective: the directive need a member");
         }
 
-        let $ctrl = $el.controller();
-        let member = $scope.$eval($attrs.tgMembershipsRowRoleSelector);
-        let html = render(member);
+        const $ctrl = $el.controller();
+        const member = $scope.$eval($attrs.tgMembershipsRowRoleSelector);
+        const html = render(member);
 
-        $el.on("change", "select", event => {
-            let onSuccess = () => $confirm.notify("success");
+        $el.on("change", "select", (event) => {
+            const onSuccess = () => $confirm.notify("success");
 
-            let onError = () => $confirm.notify("error");
+            const onError = () => $confirm.notify("error");
 
-            let target = angular.element(event.currentTarget);
-            let newRole = parseInt(target.val(), 10);
+            const target = angular.element(event.currentTarget);
+            const newRole = parseInt(target.val(), 10);
 
             if (member.role !== newRole) {
                 member.role = newRole;
@@ -448,8 +447,8 @@ export let MembershipsRowRoleSelectorDirective = function($log, $repo, $confirm)
 //############################################################################
 
 export let MembershipsRowActionsDirective = function($log, $repo, $rs, $confirm, $compile, $translate, $location,
-                                  $navUrls, lightboxFactory, projectService) {
-    let activedTemplate = `\
+                                                     $navUrls, lightboxFactory, projectService) {
+    const activedTemplate = `\
 <div class="active"
      translate="ADMIN.MEMBERSHIP.STATUS_ACTIVE">
 </div>
@@ -459,7 +458,7 @@ export let MembershipsRowActionsDirective = function($log, $repo, $rs, $confirm,
 </a>\
 `;
 
-    let pendingTemplate = `\
+    const pendingTemplate = `\
 <a class="resend js-resend" href=""
    title="{{ 'ADMIN.MEMBERSHIP.RESEND' | translate }}"
    translate="ADMIN.MEMBERSHIP.RESEND">
@@ -470,8 +469,8 @@ export let MembershipsRowActionsDirective = function($log, $repo, $rs, $confirm,
 </a>\
 `;
 
-    let link = function($scope, $el, $attrs) {
-        let render = function(member) {
+    const link = function($scope, $el, $attrs) {
+        const render = function(member) {
             let html;
             if (member.user) {
                 html = $compile(activedTemplate)($scope);
@@ -486,34 +485,34 @@ export let MembershipsRowActionsDirective = function($log, $repo, $rs, $confirm,
             return $log.error("MembershipsRowActionsDirective: the directive need a member");
         }
 
-        let $ctrl = $el.controller();
-        let member = $scope.$eval($attrs.tgMembershipsRowActions);
+        const $ctrl = $el.controller();
+        const member = $scope.$eval($attrs.tgMembershipsRowActions);
         render(member);
 
         $el.on("click", ".js-resend", function(event) {
             event.preventDefault();
-            let onSuccess = function() {
-                let text = $translate.instant("ADMIN.MEMBERSHIP.SUCCESS_SEND_INVITATION", {
-                    email: $scope.member.email
+            const onSuccess = function() {
+                const text = $translate.instant("ADMIN.MEMBERSHIP.SUCCESS_SEND_INVITATION", {
+                    email: $scope.member.email,
                 });
                 return $confirm.notify("success", text);
             };
-            let onError = function() {
-                let text = $translate.instant("ADMIM.MEMBERSHIP.ERROR_SEND_INVITATION");
+            const onError = function() {
+                const text = $translate.instant("ADMIM.MEMBERSHIP.ERROR_SEND_INVITATION");
                 return $confirm.notify("error", text);
             };
 
             return $rs.memberships.resendInvitation($scope.member.id).then(onSuccess, onError);
         });
 
-        let leaveConfirm = function() {
-            let title = $translate.instant("ADMIN.MEMBERSHIP.DELETE_MEMBER");
-            let defaultMsg = $translate.instant("ADMIN.MEMBERSHIP.DEFAULT_DELETE_MESSAGE", {email: member.email});
-            let message = member.user ? member.full_name : defaultMsg;
+        const leaveConfirm = function() {
+            const title = $translate.instant("ADMIN.MEMBERSHIP.DELETE_MEMBER");
+            const defaultMsg = $translate.instant("ADMIN.MEMBERSHIP.DEFAULT_DELETE_MESSAGE", {email: member.email});
+            const message = member.user ? member.full_name : defaultMsg;
 
             return $confirm.askOnDelete(title, message).then(function(askResponse) {
                 let text;
-                let onSuccess = () => {
+                const onSuccess = () => {
                     askResponse.finish();
                     if (member.user !== $scope.user.id) {
                         if (($scope.page > 1) && (($scope.count - 1) <= $scope.paginatedBy)) {
@@ -531,7 +530,7 @@ export let MembershipsRowActionsDirective = function($log, $repo, $rs, $confirm,
                     return $confirm.notify("success", text, null, 5000);
                 };
 
-                let onError = () => {
+                const onError = () => {
                     askResponse.finish(false);
 
                     text = $translate.instant("ADMIN.MEMBERSHIP.ERROR_DELETE", {message});
@@ -546,13 +545,13 @@ export let MembershipsRowActionsDirective = function($log, $repo, $rs, $confirm,
             event.preventDefault();
 
             if ($scope.project.owner.id === member.user) {
-                let isCurrentUser = $scope.user.id === member.user;
+                const isCurrentUser = $scope.user.id === member.user;
 
                 return lightboxFactory.create("tg-lightbox-leave-project-warning", {
-                    class: "lightbox lightbox-leave-project-warning"
+                    class: "lightbox lightbox-leave-project-warning",
                 }, {
                     isCurrentUser,
-                    project: $scope.project
+                    project: $scope.project,
                 });
             } else {
                 return leaveConfirm();
@@ -573,7 +572,7 @@ export let NoMoreMembershipsExplanationDirective = () =>
     ({
           templateUrl: "admin/no-more-memberships-explanation.html",
           scope: {
-              project: "="
-          }
+              project: "=",
+          },
     })
 ;

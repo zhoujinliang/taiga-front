@@ -22,11 +22,10 @@
  * File: modules/base/location.coffee
  */
 
-
 export let locationFactory = function($location, $route, $rootscope) {
     $location.noreload =  function(scope) {
-        let lastRoute = $route.current;
-        var un = scope.$on("$locationChangeSuccess", function() {
+        const lastRoute = $route.current;
+        const un = scope.$on("$locationChangeSuccess", function() {
             $route.current = lastRoute;
             return un();
         });
@@ -35,7 +34,7 @@ export let locationFactory = function($location, $route, $rootscope) {
     };
 
     $location.isInCurrentRouteParams = function(name, value) {
-        let params = $location.search() || {};
+        const params = $location.search() || {};
 
         return params[name] === value;
     };

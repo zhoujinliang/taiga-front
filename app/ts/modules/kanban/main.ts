@@ -22,44 +22,44 @@
  * File: modules/kanban/main.coffee
  */
 
-import {toggleText, scopeDefer, bindOnce, groupBy, timeout, bindMethods, defineImmutableProperty} from "../../libs/utils"
-import {UsFiltersMixin} from "../controllerMixins"
+import {bindMethods, bindOnce, defineImmutableProperty, groupBy, scopeDefer, timeout, toggleText} from "../../libs/utils";
+import {UsFiltersMixin} from "../controllerMixins";
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 //############################################################################
 //# Kanban Controller
 //############################################################################
 
 export class KanbanController extends UsFiltersMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    rs2:any
-    params:any
-    q:any
-    location:any
-    appMetaService:any
-    navUrls:any
-    events:any
-    analytics:any
-    translate:any
-    errorHandlingService:any
-    model:any
-    kanbanUserstoriesService:any
-    storage:any
-    filterRemoteStorageService:any
-    projectService:any
-    storeCustomFiltersName:any
-    storeFiltersName:any
-    openFilter:any
-    isFirstLoad:any
-    zoomLevel:any
-    zoom:any
-    zoomLoading:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    rs2: any;
+    params: any;
+    q: any;
+    location: any;
+    appMetaService: any;
+    navUrls: any;
+    events: any;
+    analytics: any;
+    translate: any;
+    errorHandlingService: any;
+    model: any;
+    kanbanUserstoriesService: any;
+    storage: any;
+    filterRemoteStorageService: any;
+    projectService: any;
+    storeCustomFiltersName: any;
+    storeFiltersName: any;
+    openFilter: any;
+    isFirstLoad: any;
+    zoomLevel: any;
+    zoom: any;
+    zoomLoading: any;
 
     static initClass() {
         this.$inject = [
@@ -82,17 +82,17 @@ export class KanbanController extends UsFiltersMixin {
             "tgKanbanUserstories",
             "$tgStorage",
             "tgFilterRemoteStorageService",
-            "tgProjectService"
+            "tgProjectService",
         ];
 
-        this.prototype.storeCustomFiltersName = 'kanban-custom-filters';
-        this.prototype.storeFiltersName = 'kanban-filters';
+        this.prototype.storeCustomFiltersName = "kanban-custom-filters";
+        this.prototype.storeFiltersName = "kanban-filters";
     }
 
     constructor(scope, rootscope, repo, confirm, rs, rs2, params, q, location,
-                  appMetaService, navUrls, events, analytics, translate, errorHandlingService,
-                  model, kanbanUserstoriesService, storage, filterRemoteStorageService, projectService) {
-        super()
+                appMetaService, navUrls, events, analytics, translate, errorHandlingService,
+                model, kanbanUserstoriesService, storage, filterRemoteStorageService, projectService) {
+        super();
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -128,14 +128,14 @@ export class KanbanController extends UsFiltersMixin {
     }
 
     firstLoad() {
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         // On Success
         promise.then(() => {
-            let title = this.translate.instant("KANBAN.PAGE_TITLE", {projectName: this.scope.project.name});
-            let description = this.translate.instant("KANBAN.PAGE_DESCRIPTION", {
+            const title = this.translate.instant("KANBAN.PAGE_TITLE", {projectName: this.scope.project.name});
+            const description = this.translate.instant("KANBAN.PAGE_DESCRIPTION", {
                 projectName: this.scope.project.name,
-                projectDescription: this.scope.project.description
+                projectDescription: this.scope.project.description,
             });
             return this.appMetaService.setAll(title, description);
         });
@@ -151,7 +151,7 @@ export class KanbanController extends UsFiltersMixin {
 
         this.isFirstLoad = !this.zoomLevel;
 
-        let previousZoomLevel = this.zoomLevel;
+        const previousZoomLevel = this.zoomLevel;
 
         this.zoomLevel = zoomLevel;
         this.zoom = zoom;
@@ -174,7 +174,7 @@ export class KanbanController extends UsFiltersMixin {
 
     filtersReloadContent() {
         return this.loadUserstories().then(() => {
-            let openArchived = _.difference(this.kanbanUserstoriesService.archivedStatus,
+            const openArchived = _.difference(this.kanbanUserstoriesService.archivedStatus,
                                         this.kanbanUserstoriesService.statusHide);
             if (openArchived.length) {
                 return openArchived.map((statusId) =>
@@ -223,15 +223,15 @@ export class KanbanController extends UsFiltersMixin {
 
     editUs(id) {
         let us = this.kanbanUserstoriesService.getUs(id);
-        us = us.set('loading', true);
+        us = us.set("loading", true);
         this.kanbanUserstoriesService.replace(us);
 
-        return this.rs.userstories.getByRef(us.getIn(['model', 'project']), us.getIn(['model', 'ref']))
-         .then(editingUserStory => {
-            return this.rs2.attachments.list("us", us.get('id'), us.getIn(['model', 'project'])).then(attachments => {
+        return this.rs.userstories.getByRef(us.getIn(["model", "project"]), us.getIn(["model", "ref"]))
+         .then((editingUserStory) => {
+            return this.rs2.attachments.list("us", us.get("id"), us.getIn(["model", "project"])).then((attachments) => {
                 this.rootscope.$broadcast("usform:edit", editingUserStory, attachments.toJS());
 
-                us = us.set('loading', false);
+                us = us.set("loading", false);
                 return this.kanbanUserstoriesService.replace(us);
             });
         });
@@ -255,7 +255,7 @@ export class KanbanController extends UsFiltersMixin {
     }
 
     changeUsAssignedTo(id) {
-        let us = this.kanbanUserstoriesService.getUsModel(id);
+        const us = this.kanbanUserstoriesService.getUsModel(id);
 
         return this.rootscope.$broadcast("assigned-to:add", us);
     }
@@ -265,19 +265,19 @@ export class KanbanController extends UsFiltersMixin {
 
         this.kanbanUserstoriesService.replaceModel(usModel);
 
-        let promise = this.repo.save(usModel);
+        const promise = this.repo.save(usModel);
         return promise.then(null, () => console.log("FAIL")); // TODO
     }
 
     refreshTagsColors() {
-        return this.rs.projects.tagsColors(this.scope.projectId).then(tags_colors => {
+        return this.rs.projects.tagsColors(this.scope.projectId).then((tags_colors) => {
             return this.scope.project.tags_colors = tags_colors._attrs;
         });
     }
 
     loadUserstories() {
-        let params:any = {
-            status__is_archived: false
+        let params: any = {
+            status__is_archived: false,
         };
 
         if (this.zoomLevel > 1) {
@@ -287,7 +287,7 @@ export class KanbanController extends UsFiltersMixin {
 
         params = _.merge(params, this.location.search());
 
-        let promise = this.rs.userstories.listAll(this.scope.projectId, params).then(userstories => {
+        const promise = this.rs.userstories.listAll(this.scope.projectId, params).then((userstories) => {
             this.kanbanUserstoriesService.init(this.scope.project, this.scope.usersById);
             this.kanbanUserstoriesService.set(userstories);
 
@@ -310,7 +310,7 @@ export class KanbanController extends UsFiltersMixin {
 
         // if there are filters applied the action doesn't end if the statusId is not in the url
         if (filteredStatus) {
-            filteredStatus = filteredStatus.split(",").map(it => parseInt(it, 10));
+            filteredStatus = filteredStatus.split(",").map((it) => parseInt(it, 10));
 
             if (filteredStatus.indexOf(statusId) === -1) { return; }
         }
@@ -318,12 +318,12 @@ export class KanbanController extends UsFiltersMixin {
         let params = {
             status: statusId,
             include_attachments: true,
-            include_tasks: true
+            include_tasks: true,
         };
 
         params = _.merge(params, this.location.search());
 
-        return this.rs.userstories.listAll(this.scope.projectId, params).then(userstories => {
+        return this.rs.userstories.listAll(this.scope.projectId, params).then((userstories) => {
             this.scope.$broadcast("kanban:shown-userstories-for-status", statusId, userstories);
 
             return userstories;
@@ -337,12 +337,12 @@ export class KanbanController extends UsFiltersMixin {
     loadKanban() {
         return this.q.all([
             this.refreshTagsColors(),
-            this.loadUserstories()
+            this.loadUserstories(),
         ]);
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         if (!project.is_kanban_activated) {
             this.errorHandlingService.permissionDenied();
@@ -352,8 +352,8 @@ export class KanbanController extends UsFiltersMixin {
         this.scope.project = project;
         this.scope.projectId = project.id;
         this.scope.points = _.sortBy(project.points, "order");
-        this.scope.pointsById = groupBy(project.points, x => x.id);
-        this.scope.usStatusById = groupBy(project.us_statuses, x => x.id);
+        this.scope.pointsById = groupBy(project.points, (x) => x.id);
+        this.scope.usStatusById = groupBy(project.us_statuses, (x) => x.id);
         this.scope.usStatusList = _.sortBy(project.us_statuses, "order");
 
         this.scope.$emit("project:loaded", project);
@@ -361,14 +361,14 @@ export class KanbanController extends UsFiltersMixin {
     }
 
     initializeSubscription() {
-        let routingKey1 = `changes.project.${this.scope.projectId}.userstories`;
-        return this.events.subscribe(this.scope, routingKey1, message => {
+        const routingKey1 = `changes.project.${this.scope.projectId}.userstories`;
+        return this.events.subscribe(this.scope, routingKey1, (message) => {
             return this.loadUserstories();
         });
     }
 
     loadInitialData() {
-        let project = this.loadProject();
+        const project = this.loadProject();
 
         this.fillUsersAndRoles(project.members, project.roles);
         this.initializeSubscription();
@@ -380,32 +380,32 @@ export class KanbanController extends UsFiltersMixin {
 
     prepareBulkUpdateData(uses, field) {
         if (field == null) { field = "kanban_order"; }
-        return _.map(uses, (x:any) => ({"us_id": x.id, "order": x[field]}));
+        return _.map(uses, (x: any) => ({us_id: x.id, order: x[field]}));
     }
 
     moveUs(ctx, us, oldStatusId, newStatusId, index) {
-        us = this.kanbanUserstoriesService.getUsModel(us.get('id'));
+        us = this.kanbanUserstoriesService.getUsModel(us.get("id"));
 
-        let moveUpdateData = this.kanbanUserstoriesService.move(us.id, newStatusId, index);
+        const moveUpdateData = this.kanbanUserstoriesService.move(us.id, newStatusId, index);
 
-        let params = {
+        const params = {
             include_attachments: true,
-            include_tasks: true
+            include_tasks: true,
         };
 
-        let options = {
+        const options = {
             headers: {
-                "set-orders": JSON.stringify(moveUpdateData.set_orders)
-            }
+                "set-orders": JSON.stringify(moveUpdateData.set_orders),
+            },
         };
 
         let promise = this.repo.save(us, true, params, options, true);
 
-        promise = promise.then(result => {
-            let headers = result[1];
+        promise = promise.then((result) => {
+            const headers = result[1];
 
-            if (headers && headers['taiga-info-order-updated']) {
-                let order = JSON.parse(headers['taiga-info-order-updated']);
+            if (headers && headers["taiga-info-order-updated"]) {
+                const order = JSON.parse(headers["taiga-info-order-updated"]);
                 return this.kanbanUserstoriesService.assignOrders(order);
             }
         });
@@ -420,12 +420,12 @@ KanbanController.initClass();
 //############################################################################
 
 export let KanbanDirective = function($repo, $rootscope) {
-    let link = function($scope, $el, $attrs) {
-        let tableBodyDom = $el.find(".kanban-table-body");
+    const link = function($scope, $el, $attrs) {
+        const tableBodyDom = $el.find(".kanban-table-body");
 
         tableBodyDom.on("scroll", function(event) {
-            let target = angular.element(event.currentTarget);
-            let tableHeaderDom = $el.find(".kanban-table-header .kanban-table-inner");
+            const target = angular.element(event.currentTarget);
+            const tableHeaderDom = $el.find(".kanban-table-header .kanban-table-inner");
             return tableHeaderDom.css("left", -1 * target.scrollLeft());
         });
 
@@ -440,11 +440,11 @@ export let KanbanDirective = function($repo, $rootscope) {
 //############################################################################
 
 export let KanbanArchivedStatusHeaderDirective = function($rootscope, $translate, kanbanUserstoriesService) {
-    let showArchivedText = $translate.instant("KANBAN.ACTION_SHOW_ARCHIVED");
-    let hideArchivedText = $translate.instant("KANBAN.ACTION_HIDE_ARCHIVED");
+    const showArchivedText = $translate.instant("KANBAN.ACTION_SHOW_ARCHIVED");
+    const hideArchivedText = $translate.instant("KANBAN.ACTION_HIDE_ARCHIVED");
 
-    let link = function($scope, $el, $attrs) {
-        let status = $scope.$eval($attrs.tgKanbanArchivedStatusHeader);
+    const link = function($scope, $el, $attrs) {
+        const status = $scope.$eval($attrs.tgKanbanArchivedStatusHeader);
         let hidden = true;
 
         kanbanUserstoriesService.addArchivedStatus(status.id);
@@ -484,14 +484,14 @@ export let KanbanArchivedStatusHeaderDirective = function($rootscope, $translate
 //############################################################################
 
 export let KanbanArchivedStatusIntroDirective = function($translate, kanbanUserstoriesService) {
-    let userStories = [];
+    const userStories = [];
 
-    let link = function($scope, $el, $attrs) {
-        let hiddenUserStoriexText = $translate.instant("KANBAN.HIDDEN_USER_STORIES");
-        let status = $scope.$eval($attrs.tgKanbanArchivedStatusIntro);
+    const link = function($scope, $el, $attrs) {
+        const hiddenUserStoriexText = $translate.instant("KANBAN.HIDDEN_USER_STORIES");
+        const status = $scope.$eval($attrs.tgKanbanArchivedStatusIntro);
         $el.text(hiddenUserStoriexText);
 
-        let updateIntroText = function(hasArchived) {
+        const updateIntroText = function(hasArchived) {
             if (hasArchived) {
                 return $el.text("");
             } else {
@@ -500,7 +500,7 @@ export let KanbanArchivedStatusIntroDirective = function($translate, kanbanUsers
         };
 
         $scope.$on("kanban:us:move", function(ctx, itemUs, oldStatusId, newStatusId, itemIndex) {
-            let hasArchived = !!kanbanUserstoriesService.getStatus(newStatusId).length;
+            const hasArchived = !!kanbanUserstoriesService.getStatus(newStatusId).length;
             return updateIntroText(hasArchived);
         });
 
@@ -509,7 +509,7 @@ export let KanbanArchivedStatusIntroDirective = function($translate, kanbanUsers
                 kanbanUserstoriesService.deleteStatus(statusId);
                 kanbanUserstoriesService.add(userStoriesLoaded);
 
-                let hasArchived = !!kanbanUserstoriesService.getStatus(statusId).length;
+                const hasArchived = !!kanbanUserstoriesService.getStatus(statusId).length;
                 return updateIntroText(hasArchived);
             }
         });
@@ -531,7 +531,7 @@ export let KanbanArchivedStatusIntroDirective = function($translate, kanbanUsers
 //############################################################################
 
 export let KanbanSquishColumnDirective = function(rs, projectService) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         let unwatch;
         $scope.foldStatus = function(status) {
             $scope.folds[status.id] = !!!$scope.folds[status.id];
@@ -539,8 +539,8 @@ export let KanbanSquishColumnDirective = function(rs, projectService) {
             updateTableWidth();
         };
 
-        var updateTableWidth = function() {
-            let columnWidths = _.map($scope.usStatusList, function(status:any) {
+        const updateTableWidth = function() {
+            const columnWidths = _.map($scope.usStatusList, function(status: any) {
                 if ($scope.folds[status.id]) {
                     return 40;
                 } else {
@@ -548,14 +548,14 @@ export let KanbanSquishColumnDirective = function(rs, projectService) {
                 }
             });
 
-            let totalWidth = _.reduce(columnWidths, (total:number, width:number) => total + width);
+            const totalWidth = _.reduce(columnWidths, (total: number, width: number) => total + width);
 
-            return $el.find('.kanban-table-inner').css("width", totalWidth);
+            return $el.find(".kanban-table-inner").css("width", totalWidth);
         };
 
-        return unwatch = $scope.$watch('usByStatus', function(usByStatus) {
+        return unwatch = $scope.$watch("usByStatus", function(usByStatus) {
             if (usByStatus.size) {
-                $scope.folds = rs.kanban.getStatusColumnModes(projectService.project.get('id'));
+                $scope.folds = rs.kanban.getStatusColumnModes(projectService.project.get("id"));
                 updateTableWidth();
 
                 return unwatch();
@@ -571,13 +571,13 @@ export let KanbanSquishColumnDirective = function(rs, projectService) {
 //############################################################################
 
 export let KanbanWipLimitDirective = function() {
-    let link = function($scope, $el, $attrs) {
-        let status = $scope.$eval($attrs.tgKanbanWipLimit);
+    const link = function($scope, $el, $attrs) {
+        const status = $scope.$eval($attrs.tgKanbanWipLimit);
 
-        let redrawWipLimit = () => {
+        const redrawWipLimit = () => {
             $el.find(".kanban-wip-limit").remove();
             return timeout(200, () => {
-                let element = $el.find("tg-card")[status.wip_limit];
+                const element = $el.find("tg-card")[status.wip_limit];
                 if (element) {
                     return angular.element(element).before("<div class='kanban-wip-limit'></div>");
                 }

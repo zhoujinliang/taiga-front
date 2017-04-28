@@ -22,10 +22,10 @@
  * File: modules/tasks.coffee
  */
 
-import * as angular from "angular"
-import * as detail from "./detail"
+import * as angular from "angular";
+import * as detail from "./detail";
 
-let module = angular.module("taigaTasks", []);
+const module = angular.module("taigaTasks", []);
 module.controller("TaskDetailController", detail.TaskDetailController);
 module.directive("tgTaskStatusDisplay", ["$tgTemplate", "$compile", detail.TaskStatusDisplayDirective]);
 module.directive("tgTaskStatusButton", ["$rootScope", "$tgRepo", "$tgConfirm", "$tgLoading", "$tgQueueModelTransformation",

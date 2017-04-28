@@ -22,29 +22,29 @@
  * File: modules/backlog/sprints.coffee
  */
 
-import * as _ from "lodash"
-import * as moment from "moment"
+import * as _ from "lodash";
+import * as moment from "moment";
 
 //############################################################################
 //# Sprint Actions Directive
 //############################################################################
 
 export let BacklogSprintDirective = function($repo, $rootscope) {
-    let sprintTableMinHeight = 50;
-    let slideOptions = {
+    const sprintTableMinHeight = 50;
+    const slideOptions = {
         duration: 500,
-        easing: 'linear'
+        easing: "linear",
     };
 
-    let toggleSprint = $el => {
-        let sprintTable = $el.find(".sprint-table");
-        let sprintArrow = $el.find(".compact-sprint");
+    const toggleSprint = ($el) => {
+        const sprintTable = $el.find(".sprint-table");
+        const sprintArrow = $el.find(".compact-sprint");
 
-        sprintArrow.toggleClass('active');
-        return sprintTable.toggleClass('open');
+        sprintArrow.toggleClass("active");
+        return sprintTable.toggleClass("open");
     };
 
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         $scope.$watch($attrs.tgBacklogSprint, function(sprint) {
             sprint = $scope.$eval($attrs.tgBacklogSprint);
 
@@ -67,7 +67,7 @@ export let BacklogSprintDirective = function($repo, $rootscope) {
         $el.on("click", ".edit-sprint", function(event) {
             event.preventDefault();
 
-            let sprint = $scope.$eval($attrs.tgBacklogSprint);
+            const sprint = $scope.$eval($attrs.tgBacklogSprint);
             return $rootscope.$broadcast("sprintform:edit", sprint);
         });
 
@@ -82,50 +82,50 @@ export let BacklogSprintDirective = function($repo, $rootscope) {
 //############################################################################
 
 export let BacklogSprintHeaderDirective = function($navUrls, $template, $compile, $translate) {
-    let template = $template.get("backlog/sprint-header.html");
+    const template = $template.get("backlog/sprint-header.html");
 
-    let link = function($scope, $el, $attrs, $model) {
-        let prettyDate = $translate.instant("BACKLOG.SPRINTS.DATE");
+    const link = function($scope, $el, $attrs, $model) {
+        const prettyDate = $translate.instant("BACKLOG.SPRINTS.DATE");
 
-        let isEditable = () => $scope.project.my_permissions.indexOf("modify_milestone") !== -1;
+        const isEditable = () => $scope.project.my_permissions.indexOf("modify_milestone") !== -1;
 
-        let isVisible = () => $scope.project.my_permissions.indexOf("view_milestones") !== -1;
+        const isVisible = () => $scope.project.my_permissions.indexOf("view_milestones") !== -1;
 
-        let render = function(sprint) {
-            let taskboardUrl = $navUrls.resolve("project-taskboard",
+        const render = function(sprint) {
+            const taskboardUrl = $navUrls.resolve("project-taskboard",
                                             {project: $scope.project.slug, sprint: sprint.slug});
 
-            let start = moment(sprint.estimated_start).format(prettyDate);
-            let finish = moment(sprint.estimated_finish).format(prettyDate);
+            const start = moment(sprint.estimated_start).format(prettyDate);
+            const finish = moment(sprint.estimated_finish).format(prettyDate);
 
-            let estimatedDateRange = `${start}-${finish}`;
+            const estimatedDateRange = `${start}-${finish}`;
 
-            let ctx = {
+            const ctx = {
                 name: sprint.name,
                 taskboardUrl,
                 estimatedDateRange,
                 closedPoints: sprint.closed_points || 0,
                 totalPoints: sprint.total_points || 0,
                 isVisible: isVisible(),
-                isEditable: isEditable()
+                isEditable: isEditable(),
             };
 
-            let templateScope = $scope.$new();
+            const templateScope = $scope.$new();
 
             _.assign(templateScope, ctx);
 
-            let compiledTemplate = $compile(template)(templateScope);
+            const compiledTemplate = $compile(template)(templateScope);
             return $el.html(compiledTemplate);
         };
 
-        $scope.$watch("sprint", sprint => render(sprint));
+        $scope.$watch("sprint", (sprint) => render(sprint));
 
         return $scope.$on("$destroy", () => $el.off());
     };
 
     return {
         link,
-        restrict: "EA"
+        restrict: "EA",
     };
 };
 
@@ -136,9 +136,9 @@ export let BacklogSprintHeaderDirective = function($navUrls, $template, $compile
 export let ToggleExcludeClosedSprintsVisualization = function($rootscope, $loading, $translate) {
     let excludeClosedSprints = true;
 
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         // insert loading wrapper
-        let loadingElm = $("<div>");
+        const loadingElm = $("<div>");
         $el.after(loadingElm);
 
         let currentLoading = null;
@@ -171,7 +171,7 @@ export let ToggleExcludeClosedSprintsVisualization = function($rootscope, $loadi
                 key = "BACKLOG.SPRINTS.ACTION_SHOW_CLOSED_SPRINTS";
             }
 
-            let text = $translate.instant(key);
+            const text = $translate.instant(key);
 
             return $el.find(".text").text(text);
         });

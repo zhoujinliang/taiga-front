@@ -1,14 +1,14 @@
-import * as MediumEditor from "medium-editor"
+import * as MediumEditor from "medium-editor";
 
-export var MentionExtension = MediumEditor.Extension.extend({
-    name: 'mediumMention',
+export let MentionExtension = MediumEditor.Extension.extend({
+    name: "mediumMention",
     init: function() {
-        this.subscribe('editableKeyup', this.handleKeyup.bind(this));
-        this.subscribe('editableKeydown', this.handleKeydown.bind(this));
-        this.subscribe('blur', this.cancel.bind(this));
+        this.subscribe("editableKeyup", this.handleKeyup.bind(this));
+        this.subscribe("editableKeydown", this.handleKeydown.bind(this));
+        this.subscribe("blur", this.cancel.bind(this));
     },
     isEditMode: function() {
-        return !this.base.origElements.parentNode.classList.contains('read-mode');
+        return !this.base.origElements.parentNode.classList.contains("read-mode");
     },
     cancel: function() {
         if (this.isEditMode()) {
@@ -17,22 +17,22 @@ export var MentionExtension = MediumEditor.Extension.extend({
         }
     },
     handleKeydown: function(e) {
-        var code = e.keyCode ? e.keyCode : e.which;
+        const code = e.keyCode ? e.keyCode : e.which;
 
         if (this.mentionPanel && code === MediumEditor.util.keyCode.ENTER) {
             e.preventDefault();
         }
     },
     handleKeyup: function(e) {
-        var code = e.keyCode ? e.keyCode : e.which;
-        var isSpace = code === MediumEditor.util.keyCode.SPACE;
-        var isBackspace = code === MediumEditor.util.keyCode.BACKSPACE;
+        const code = e.keyCode ? e.keyCode : e.which;
+        const isSpace = code === MediumEditor.util.keyCode.SPACE;
+        const isBackspace = code === MediumEditor.util.keyCode.BACKSPACE;
 
         if (this.mentionPanel) {
             this.keyDownMentionPanel(e);
         }
 
-        var moveKeys = [37, 38, 39, 40];
+        const moveKeys = [37, 38, 39, 40];
 
         if (moveKeys.indexOf(code) !== -1) {
             return;
@@ -40,25 +40,25 @@ export var MentionExtension = MediumEditor.Extension.extend({
 
         this.selection = this.document.getSelection();
 
-        if (isBackspace && this.selection.focusNode.nodeName.toLowerCase() === 'p') {
+        if (isBackspace && this.selection.focusNode.nodeName.toLowerCase() === "p") {
             return;
         }
 
         if (!isSpace && this.selection.rangeCount === 1) {
-            var endChar = this.selection.getRangeAt(0).startOffset;
-            var textContent = this.selection.focusNode.textContent;
+            const endChar = this.selection.getRangeAt(0).startOffset;
+            let textContent = this.selection.focusNode.textContent;
 
             textContent = textContent.substring(0, endChar);
             this.word = this.getLastWord(textContent);
 
-            if (this.word.length > 1 && ['@', '#', ':'].indexOf(this.word[0]) != -1) {
+            if (this.word.length > 1 && ["@", "#", ":"].indexOf(this.word[0]) != -1) {
                 this.wrap();
                 this.showPanel();
 
                 MediumEditor.selection.select(
                   this.document,
                   this.wordNode.firstChild,
-                  this.word.length
+                  this.word.length,
                 );
 
                 return;
@@ -76,8 +76,8 @@ export var MentionExtension = MediumEditor.Extension.extend({
     },
     cancelMentionSpace: function() {
         if (this.wordNode && this.wordNode.nextSibling) {
-            var textNode = this.document.createTextNode('');
-            textNode.textContent = this.word + '\u00A0';
+            const textNode = this.document.createTextNode("");
+            textNode.textContent = this.word + "\u00A0";
 
             this.wordNode.parentNode.replaceChild(textNode, this.wordNode);
 
@@ -87,11 +87,11 @@ export var MentionExtension = MediumEditor.Extension.extend({
         this.reset();
     },
     wrap: function() {
-        var range = this.selection.getRangeAt(0).cloneRange();
+        let range = this.selection.getRangeAt(0).cloneRange();
 
-        if (range.startContainer.parentNode.nodeName.toLowerCase() === 'a') {
-            var parentLink = range.startContainer.parentNode.parentNode;
-            var textNode = this.document.createTextNode(range.startContainer.parentNode.innerText);
+        if (range.startContainer.parentNode.nodeName.toLowerCase() === "a") {
+            const parentLink = range.startContainer.parentNode.parentNode;
+            const textNode = this.document.createTextNode(range.startContainer.parentNode.innerText);
 
             parentLink.replaceChild(textNode, range.startContainer.parentNode);
 
@@ -105,9 +105,9 @@ export var MentionExtension = MediumEditor.Extension.extend({
             this.selection.addRange(range);
         }
 
-        if (!range.startContainer.parentNode.classList.contains('mention')) {
-            this.wordNode = this.document.createElement('span');
-            this.wordNode.classList.add('mention');
+        if (!range.startContainer.parentNode.classList.contains("mention")) {
+            this.wordNode = this.document.createElement("span");
+            this.wordNode.classList.add("mention");
 
             range.setStart(range.startContainer, this.selection.getRangeAt(0).startOffset - this.word.length);
             range.surroundContents(this.wordNode);
@@ -125,71 +125,71 @@ export var MentionExtension = MediumEditor.Extension.extend({
         }
     },
     refreshPositionPanel: function() {
-        var bound = this.wordNode.getBoundingClientRect();
+        const bound = this.wordNode.getBoundingClientRect();
 
-        this.mentionPanel.style.top = this.window.pageYOffset + bound.bottom + 'px';
-        this.mentionPanel.style.left = this.window.pageXOffset + bound.left + 'px';
+        this.mentionPanel.style.top = this.window.pageYOffset + bound.bottom + "px";
+        this.mentionPanel.style.left = this.window.pageXOffset + bound.left + "px";
     },
     selectMention: function(item) {
         if (item.image) {
-            var img = document.createElement('img');
+            const img = document.createElement("img");
             img.src = item.image;
 
             this.wordNode.parentNode.replaceChild(img, this.wordNode);
             this.wordNode = img;
         } else {
-            var link = document.createElement('a');
+            const link = document.createElement("a");
 
-            link.setAttribute('href', item.url);
+            link.setAttribute("href", item.url);
 
             if (item.ref) {
-                link.innerText = '#' + item.ref + '-' + item.subject;
+                link.innerText = "#" + item.ref + "-" + item.subject;
             } else {
-                link.innerText = '@' + item.username;
+                link.innerText = "@" + item.username;
             }
 
             this.wordNode.parentNode.replaceChild(link, this.wordNode);
             this.wordNode = link;
         }
 
-        var textNode = this.document.createTextNode('');
-        textNode.textContent = '\u00A0';
+        const textNode = this.document.createTextNode("");
+        textNode.textContent = "\u00A0";
 
         this.wordNode.parentNode.insertBefore(textNode, this.wordNode.nextSibling);
         MediumEditor.selection.select(this.document, textNode, 1);
 
-        var target = this.base.getFocusedElement();
+        const target = this.base.getFocusedElement();
 
         this.base.events.updateInput(target, {
-          target: target,
-          currentTarget: target
+          target,
+          currentTarget: target,
         });
 
         this.hidePanel();
         this.reset();
     },
     showPanel: function() {
-        if(document.querySelectorAll('.medium-editor-mention-panel').length) {
+        if (document.querySelectorAll(".medium-editor-mention-panel").length) {
             this.refreshPositionPanel();
             this.getItems(this.word, this.renderPanel.bind(this));
             return;
         }
 
-        var  el = this.document.createElement('div');
-        el.classList.add('medium-editor-mention-panel');
+        const  el = this.document.createElement("div");
+        el.classList.add("medium-editor-mention-panel");
         this.mentionPanel = el;
-        this.getEditorOption('elementsContainer').appendChild(el);
+        this.getEditorOption("elementsContainer").appendChild(el);
 
         this.refreshPositionPanel();
         this.getItems(this.word, this.renderPanel.bind(this));
     },
     keyDownMentionPanel: function(e) {
-        var code = e.keyCode ? e.keyCode : e.which;
-        var active = this.mentionPanel.querySelector('.active');
+        const code = e.keyCode ? e.keyCode : e.which;
+        const active = this.mentionPanel.querySelector(".active");
 
-        this.wordNode = document.querySelector('span.mention');
+        this.wordNode = document.querySelector("span.mention");
 
-        if(!active) {
+        if (!active) {
             return;
         }
 
@@ -197,65 +197,65 @@ export var MentionExtension = MediumEditor.Extension.extend({
             e.preventDefault();
             e.stopPropagation();
 
-            var event = document.createEvent('HTMLEvents');
-            event.initEvent('mousedown', true, false);
+            const event = document.createEvent("HTMLEvents");
+            event.initEvent("mousedown", true, false);
 
             active.dispatchEvent(event);
 
             return;
         }
 
-        active.classList.remove('active');
+        active.classList.remove("active");
 
         if (code === 38) {
-            if(active.previousSibling) {
-                active.previousSibling.classList.add('active');
+            if (active.previousSibling) {
+                active.previousSibling.classList.add("active");
             } else {
-                active.parentNode.lastChild.classList.add('active');
+                active.parentNode.lastChild.classList.add("active");
             }
         } else if (code === 40) {
-            if(active.nextSibling) {
-                active.nextSibling.classList.add('active');
+            if (active.nextSibling) {
+                active.nextSibling.classList.add("active");
             } else {
-                active.parentNode.firstChild.classList.add('active');
+                active.parentNode.firstChild.classList.add("active");
             }
         }
     },
     renderPanel: function(items) {
-        this.mentionPanel.innerHTML = '';
+        this.mentionPanel.innerHTML = "";
 
         if (!items.length) return;
 
-        var ul = this.document.createElement('ul');
+        const ul = this.document.createElement("ul");
 
-        ul.classList.add('medium-mention');
+        ul.classList.add("medium-mention");
 
         items.forEach(function(it) {
-            var li = this.document.createElement('li');
+            const li = this.document.createElement("li");
 
             if (it.image) {
-                var img = this.document.createElement('img');
+                const img = this.document.createElement("img");
 
                 img.src = it.image;
                 li.appendChild(img);
 
-                var textNode = document.createTextNode('');
-                textNode.textContent = ' ' + it.name;
+                const textNode = document.createTextNode("");
+                textNode.textContent = " " + it.name;
 
                 li.appendChild(textNode);
 
             } else if (it.ref) {
-                li.innerText = '#' + it.ref + ' - ' + it.subject;
+                li.innerText = "#" + it.ref + " - " + it.subject;
             } else {
-                li.innerText = '@' + it.username;
+                li.innerText = "@" + it.username;
             }
 
-            li.addEventListener('mousedown', this.selectMention.bind(this, it));
+            li.addEventListener("mousedown", this.selectMention.bind(this, it));
 
             ul.appendChild(li);
         }.bind(this));
 
-        ul.firstChild.classList.add('active');
+        ul.firstChild.classList.add("active");
 
         this.mentionPanel.appendChild(ul);
     },
@@ -266,7 +266,7 @@ export var MentionExtension = MediumEditor.Extension.extend({
         }
     },
     getLastWord: function(text) {
-        var n = text.split(' ');
+        const n = text.split(" ");
         return n[n.length - 1].trim();
-    }
+    },
 });

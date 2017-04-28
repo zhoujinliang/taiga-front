@@ -22,14 +22,14 @@
  * File: modules/base/http.coffee
  */
 
-import * as _ from "lodash"
-import {Injectable} from "@angular/core"
-import {ConfigurationService} from "./conf"
+import {Injectable} from "@angular/core";
+import * as _ from "lodash";
+import {ConfigurationService} from "./conf";
 
 @Injectable()
 export class UrlsService {
-    urls:any = {};
-    mainUrl:any;
+    urls: any = {};
+    mainUrl: any;
 
     constructor(private config: ConfigurationService) {
         this.mainUrl = this.config.get("api");
@@ -37,24 +37,24 @@ export class UrlsService {
 
     private format(fmt, obj) {
         obj = _.clone(obj);
-        return fmt.replace(/%s/g, match => String(obj.shift()));
-    };
+        return fmt.replace(/%s/g, (match) => String(obj.shift()));
+    }
 
     update(urls) {
         return this.urls = _.merge(this.urls, urls);
     }
 
     resolve(name, ...args) {
-        let url = this.format(this.urls[name], args);
+        const url = this.format(this.urls[name], args);
 
         return this.format("%s/%s", [
             _.trimEnd(this.mainUrl, "/"),
-            _.trimStart(url, "/")
+            _.trimStart(url, "/"),
         ]);
     }
 
     resolveAbsolute() {
-        let url = this.resolve.apply(this, arguments);
+        const url = this.resolve.apply(this, arguments);
         if ((/^https?:\/\//i).test(url)) {
             return url;
         }

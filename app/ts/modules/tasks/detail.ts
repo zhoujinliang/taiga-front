@@ -22,32 +22,32 @@
  * File: modules/tasks/detail.coffee
  */
 
-import {groupBy, bindMethods} from "../../libs/utils"
-import {PageMixin} from "../controllerMixins"
+import {bindMethods, groupBy} from "../../libs/utils";
+import {PageMixin} from "../controllerMixins";
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 //############################################################################
 //# Task Detail Controller
 //############################################################################
 
 export class TaskDetailController extends PageMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    log:any
-    appMetaService:any
-    navUrls:any
-    analytics:any
-    translate:any
-    modelTransform:any
-    errorHandlingService:any
-    projectService:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    log: any;
+    appMetaService: any;
+    navUrls: any;
+    analytics: any;
+    translate: any;
+    modelTransform: any;
+    errorHandlingService: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -66,13 +66,13 @@ export class TaskDetailController extends PageMixin {
             "$translate",
             "$tgQueueModelTransformation",
             "tgErrorHandlingService",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location,
-                  log, appMetaService, navUrls, analytics, translate, modelTransform, errorHandlingService, projectService) {
-        super()
+                log, appMetaService, navUrls, analytics, translate, modelTransform, errorHandlingService, projectService) {
+        super();
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -95,7 +95,7 @@ export class TaskDetailController extends PageMixin {
         this.scope.sectionName = this.translate.instant("TASK.SECTION_NAME");
         this.initializeEventHandlers();
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         promise.then(() => {
             this._setMeta();
@@ -106,14 +106,14 @@ export class TaskDetailController extends PageMixin {
     }
 
     _setMeta() {
-        let title = this.translate.instant("TASK.PAGE_TITLE", {
+        const title = this.translate.instant("TASK.PAGE_TITLE", {
             taskRef: `#${this.scope.task.ref}`,
             taskSubject: this.scope.task.subject,
-            projectName: this.scope.project.name
+            projectName: this.scope.project.name,
         });
-        let description = this.translate.instant("TASK.PAGE_DESCRIPTION", {
+        const description = this.translate.instant("TASK.PAGE_DESCRIPTION", {
             taskStatus: (this.scope.statusById[this.scope.task.status] != null ? this.scope.statusById[this.scope.task.status].name : undefined) || "--",
-            taskDescription: angular.element(this.scope.task.description_html || "").text()
+            taskDescription: angular.element(this.scope.task.description_html || "").text(),
         });
         return this.appMetaService.setAll(title, description);
     }
@@ -131,7 +131,7 @@ export class TaskDetailController extends PageMixin {
     }
 
     initializeOnDeleteGoToUrl() {
-        let ctx:any = {project: this.scope.project.slug};
+        const ctx: any = {project: this.scope.project.slug};
         this.scope.onDeleteGoToUrl = this.navUrls.resolve("project", ctx);
         if (this.scope.project.is_backlog_activated) {
             if (this.scope.task.milestone) {
@@ -150,29 +150,29 @@ export class TaskDetailController extends PageMixin {
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
         this.scope.statusList = project.task_statuses;
-        this.scope.statusById = groupBy(project.task_statuses, x => x.id);
+        this.scope.statusById = groupBy(project.task_statuses, (x) => x.id);
         return project;
     }
 
     loadTask() {
-        return this.rs.tasks.getByRef(this.scope.projectId, this.params.taskref).then(task => {
+        return this.rs.tasks.getByRef(this.scope.projectId, this.params.taskref).then((task) => {
             let ctx;
             this.scope.task = task;
             this.scope.taskId = task.id;
             this.scope.commentModel = task;
 
-            this.modelTransform.setObject(this.scope, 'task');
+            this.modelTransform.setObject(this.scope, "task");
 
             if ((this.scope.task.neighbors.previous != null ? this.scope.task.neighbors.previous.ref : undefined) != null) {
                 ctx = {
                     project: this.scope.project.slug,
-                    ref: this.scope.task.neighbors.previous.ref
+                    ref: this.scope.task.neighbors.previous.ref,
                 };
                 this.scope.previousUrl = this.navUrls.resolve("project-tasks-detail", ctx);
             }
@@ -180,7 +180,7 @@ export class TaskDetailController extends PageMixin {
             if ((this.scope.task.neighbors.next != null ? this.scope.task.neighbors.next.ref : undefined) != null) {
                 ctx = {
                     project: this.scope.project.slug,
-                    ref: this.scope.task.neighbors.next.ref
+                    ref: this.scope.task.neighbors.next.ref,
                 };
                 this.scope.nextUrl = this.navUrls.resolve("project-tasks-detail", ctx);
             }
@@ -190,7 +190,7 @@ export class TaskDetailController extends PageMixin {
 
     loadSprint() {
         if (this.scope.task.milestone) {
-            return this.rs.sprints.get(this.scope.task.project, this.scope.task.milestone).then(sprint => {
+            return this.rs.sprints.get(this.scope.task.project, this.scope.task.milestone).then((sprint) => {
                 this.scope.sprint = sprint;
                 return sprint;
             });
@@ -199,7 +199,7 @@ export class TaskDetailController extends PageMixin {
 
     loadUserStory() {
         if (this.scope.task.user_story) {
-            return this.rs.userstories.get(this.scope.task.project, this.scope.task.user_story).then(us => {
+            return this.rs.userstories.get(this.scope.task.project, this.scope.task.user_story).then((us) => {
                 this.scope.us = us;
                 return us;
             });
@@ -207,7 +207,7 @@ export class TaskDetailController extends PageMixin {
     }
 
     loadInitialData() {
-        let project = this.loadProject();
+        const project = this.loadProject();
 
         this.fillUsersAndRoles(project.members, project.roles);
         return this.loadTask().then(() => this.q.all([this.loadSprint(), this.loadUserStory()]));
@@ -218,11 +218,11 @@ export class TaskDetailController extends PageMixin {
      *       See app/modules/components/vote-button for more info
      */
     onUpvote() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadTask();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -230,11 +230,11 @@ export class TaskDetailController extends PageMixin {
     }
 
     onDownvote() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadTask();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -246,11 +246,11 @@ export class TaskDetailController extends PageMixin {
      *       See app/modules/components/watch-button for more info
      */
     onWatch() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadTask();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -258,11 +258,11 @@ export class TaskDetailController extends PageMixin {
     }
 
     onUnwatch() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadTask();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -285,15 +285,15 @@ export let TaskStatusDisplayDirective = function($template, $compile) {
     //   - Task object (ng-model)
     //   - scope.statusById object
 
-    let template = $template.get("common/components/status-display.html", true);
+    const template = $template.get("common/components/status-display.html", true);
 
-    let link = function($scope, $el, $attrs) {
-        let render = function(task) {
-            let status =  $scope.statusById[task.status];
+    const link = function($scope, $el, $attrs) {
+        const render = function(task) {
+            const status =  $scope.statusById[task.status];
 
             let html = template({
                 is_closed: status.is_closed,
-                status
+                status,
             });
 
             html = $compile(html)($scope);
@@ -310,7 +310,7 @@ export let TaskStatusDisplayDirective = function($template, $compile) {
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
@@ -329,41 +329,41 @@ export let TaskStatusButtonDirective = function($rootScope, $repo, $confirm, $lo
     //   - scope.statusById object
     //   - $scope.project.my_permissions
 
-    let template = $template.get("common/components/status-button.html", true);
+    const template = $template.get("common/components/status-button.html", true);
 
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
         let status;
-        let isEditable = () => $scope.project.my_permissions.indexOf("modify_task") !== -1;
+        const isEditable = () => $scope.project.my_permissions.indexOf("modify_task") !== -1;
 
-        let render = task => {
+        const render = (task) => {
             status = $scope.statusById[task.status];
 
-            let html = $compile(template({
+            const html = $compile(template({
                 status,
                 statuses: $scope.statusList,
-                editable: isEditable()
+                editable: isEditable(),
             }))($scope);
 
             return $el.html(html);
         };
 
-        let save = function(status) {
-            let currentLoading = $loading()
+        const save = function(status) {
+            const currentLoading = $loading()
                 .target($el)
                 .start();
 
-            let transform = $modelTransform.save(function(task) {
+            const transform = $modelTransform.save(function(task) {
                 task.status = status;
 
                 return task;
             });
 
-            let onSuccess = function() {
+            const onSuccess = function() {
                 $rootScope.$broadcast("object:updated");
                 return currentLoading.finish();
             };
 
-            let onError = function() {
+            const onError = function() {
                 $confirm.notify("error");
                 return currentLoading.finish();
             };
@@ -384,7 +384,7 @@ export let TaskStatusButtonDirective = function($rootScope, $repo, $confirm, $lo
             event.stopPropagation();
             if (!isEditable()) { return; }
 
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
             $.fn.popover().closeAll();
 
@@ -393,7 +393,7 @@ export let TaskStatusButtonDirective = function($rootScope, $repo, $confirm, $lo
 
         $scope.$watch(() => $model.$modelValue != null ? $model.$modelValue.status : undefined
         , function() {
-            let task = $model.$modelValue;
+            const task = $model.$modelValue;
             if (task) { return render(task); }
         });
 
@@ -403,36 +403,36 @@ export let TaskStatusButtonDirective = function($rootScope, $repo, $confirm, $lo
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
 export let TaskIsIocaineButtonDirective = function($rootscope, $tgrepo, $confirm, $loading, $modelTransform, $compile, $template) {
-    let template = $template.get("issue/iocaine-button.html", true);
+    const template = $template.get("issue/iocaine-button.html", true);
 
-    let link = function($scope, $el, $attrs, $model) {
-        let isEditable = () => $scope.project.my_permissions.indexOf("modify_task") !== -1;
+    const link = function($scope, $el, $attrs, $model) {
+        const isEditable = () => $scope.project.my_permissions.indexOf("modify_task") !== -1;
 
-        let render = function(task) {
+        const render = function(task) {
             if (!isEditable() && !task.is_iocaine) {
                 $el.html("");
                 return;
             }
 
-            let ctx = {
+            const ctx = {
                 isIocaine: task.is_iocaine,
-                isEditable: isEditable()
+                isEditable: isEditable(),
             };
-            let html = $compile(template(ctx))($scope);
+            const html = $compile(template(ctx))($scope);
             return $el.html(html);
         };
 
-        let save = function(is_iocaine) {
-            let currentLoading = $loading()
-                .target($el.find('label'))
+        const save = function(is_iocaine) {
+            const currentLoading = $loading()
+                .target($el.find("label"))
                 .start();
 
-            let transform = $modelTransform.save(function(task) {
+            const transform = $modelTransform.save(function(task) {
                 task.is_iocaine = is_iocaine;
 
                 return task;
@@ -448,13 +448,13 @@ export let TaskIsIocaineButtonDirective = function($rootscope, $tgrepo, $confirm
         $el.on("click", ".is-iocaine", function(event) {
             if (!isEditable()) { return; }
 
-            let is_iocaine = !$model.$modelValue.is_iocaine;
+            const is_iocaine = !$model.$modelValue.is_iocaine;
             return save(is_iocaine);
         });
 
         $scope.$watch(() => $model.$modelValue != null ? $model.$modelValue.is_iocaine : undefined
         , function() {
-            let task = $model.$modelValue;
+            const task = $model.$modelValue;
             if (task) { return render(task); }
         });
 
@@ -464,6 +464,6 @@ export let TaskIsIocaineButtonDirective = function($rootscope, $tgrepo, $confirm
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };

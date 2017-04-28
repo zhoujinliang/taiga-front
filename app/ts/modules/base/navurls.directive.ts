@@ -22,13 +22,13 @@
  * File: modules/base/navurl.coffee
  */
 
-import {trim, bindOnce} from "../../../libs/utils"
-import * as _ from "lodash"
-import {Directive, ElementRef, Input, HostListener} from "@angular/core"
-import {Router} from "@angular/router"
-import {AuthService} from "../../../modules/auth/auth.service"
-import {LightboxService} from "../common/lightboxes"
-import {NavigationUrlsService} from "./navurls.service"
+import {Directive, ElementRef, HostListener, Input} from "@angular/core";
+import {Router} from "@angular/router";
+import * as _ from "lodash";
+import {bindOnce, trim} from "../../../libs/utils";
+import {AuthService} from "../../../modules/auth/auth.service";
+import {LightboxService} from "../common/lightboxes";
+import {NavigationUrlsService} from "./navurls.service";
 
 //############################################################################
 //# Navigation Urls Directive
@@ -53,14 +53,14 @@ export class NavigationUrlsDirective {
         }
     }
 
-    @HostListener('mouseenter') onMouseEnter() {
+    @HostListener("mouseenter") onMouseEnter() {
         if (this.fullUrl) {
-            return
+            return;
         }
         this.fullUrl = this.navurls.resolve(this.name, this.params);
 
         if (this.queryParams) {
-            let queryParamsStr = $.param(this.queryParams);
+            const queryParamsStr = $.param(this.queryParams);
             this.fullUrl = `${this.fullUrl}?${queryParamsStr}`;
         }
 
@@ -70,12 +70,12 @@ export class NavigationUrlsDirective {
         return true;
     }
 
-    @HostListener('click') onClickEnter(event) {
+    @HostListener("click") onClickEnter(event) {
         if (event.metaKey || event.ctrlKey) {
             return;
         }
 
-        if (this.el.nativeElement.classList.contains('noclick')) {
+        if (this.el.nativeElement.classList.contains("noclick")) {
             return;
         }
 

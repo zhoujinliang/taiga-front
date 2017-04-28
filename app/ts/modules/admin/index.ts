@@ -22,25 +22,25 @@
  * File: modules/admin.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
-import * as lightboxes from "./lightboxes"
-import * as memberships from "./memberships"
-import {AdminNavigationDirective} from "./nav"
-import * as projectProfile from "./project-profile"
-import * as projectValues from "./project-values"
-import * as roles from "./roles"
-import * as thirdParties from "./third-parties"
+import * as lightboxes from "./lightboxes";
+import * as memberships from "./memberships";
+import {AdminNavigationDirective} from "./nav";
+import * as projectProfile from "./project-profile";
+import * as projectValues from "./project-values";
+import * as roles from "./roles";
+import * as thirdParties from "./third-parties";
 
 export let module = angular.module("taigaAdmin", []);
 module.directive("tgLightboxAddMembersWarningMessage", [lightboxes.LightboxAddMembersWarningMessageDirective]);
-module.directive('tgLbRequestOwnership', ["lightboxService", "tgResources", "$tgConfirm", "$translate", lightboxes.LbRequestOwnershipDirective]);
-module.controller('ChangeOwnerLightbox', lightboxes.ChangeOwnerLightboxController);
+module.directive("tgLbRequestOwnership", ["lightboxService", "tgResources", "$tgConfirm", "$translate", lightboxes.LbRequestOwnershipDirective]);
+module.controller("ChangeOwnerLightbox", lightboxes.ChangeOwnerLightboxController);
 module.directive("tgLbChangeOwner", ["lightboxService", "lightboxKeyboardNavigationService", "$tgTemplate", "$compile", lightboxes.ChangeOwnerLightboxDirective]);
 module.directive("tgLbTransferProjectStartSuccess", ["lightboxService", lightboxes.TransferProjectStartSuccessDirective]);
 module.controller("MembershipsController", memberships.MembershipsController);
 module.directive("tgMemberships", ["$tgTemplate", "$compile", memberships.MembershipsDirective]);
-module.directive("tgMembershipsRowAvatar", ["$log", "$tgTemplate", '$translate', "$compile", "tgAvatarService", memberships.MembershipsRowAvatarDirective]);
+module.directive("tgMembershipsRowAvatar", ["$log", "$tgTemplate", "$translate", "$compile", "tgAvatarService", memberships.MembershipsRowAvatarDirective]);
 module.directive("tgMembershipsRowAdminCheckbox", ["$log", "$tgRepo", "$tgConfirm", "$tgTemplate",
                                                    "$compile", memberships.MembershipsRowAdminCheckboxDirective]);
 module.directive("tgMembershipsRowRoleSelector", ["$log", "$tgRepo", "$tgConfirm",
@@ -68,10 +68,10 @@ module.directive("tgCsvUs", ["$translate", projectProfile.CsvUsDirective]);
 module.directive("tgCsvTask", ["$translate", projectProfile.CsvTaskDirective]);
 module.directive("tgCsvIssue", ["$translate", projectProfile.CsvIssueDirective]);
 module.directive("tgProjectLogo", ["$tgAuth", "$tgModel", "$tgResources", "$tgConfirm", projectProfile.ProjectLogoDirective]);
-module.directive('tgProjectLogoModel', ['$parse', projectProfile.ProjectLogoModelDirective]);
-module.directive('tgAdminProjectRestrictions', [projectProfile.AdminProjectRestrictionsDirective]);
-module.directive('tgAdminProjectRequestOwnership', ["tgLightboxFactory", projectProfile.AdminProjectRequestOwnershipDirective]);
-module.directive('tgAdminProjectChangeOwner', ["tgLightboxFactory", projectProfile.AdminProjectChangeOwnerDirective]);
+module.directive("tgProjectLogoModel", ["$parse", projectProfile.ProjectLogoModelDirective]);
+module.directive("tgAdminProjectRestrictions", [projectProfile.AdminProjectRestrictionsDirective]);
+module.directive("tgAdminProjectRequestOwnership", ["tgLightboxFactory", projectProfile.AdminProjectRequestOwnershipDirective]);
+module.directive("tgAdminProjectChangeOwner", ["tgLightboxFactory", projectProfile.AdminProjectChangeOwnerDirective]);
 module.controller("ProjectValuesSectionController", projectValues.ProjectValuesSectionController);
 module.controller("ProjectValuesController", projectValues.ProjectValuesController);
 module.directive("tgProjectValues", ["$log", "$tgRepo", "$tgConfirm", "$tgLocation", "animationFrame",

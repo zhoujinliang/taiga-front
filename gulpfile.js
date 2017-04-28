@@ -32,7 +32,8 @@ var gulp = require("gulp"),
     watchify = require("watchify"),
     tsify = require("tsify"),
     jadeify = require("jadeify"),
-    gutil = require("gulp-util");
+    gutil = require("gulp-util"),
+    tslint = require("gulp-tslint");
 
 var argv = require('minimist')(process.argv.slice(2));
 
@@ -591,6 +592,17 @@ gulp.task("watch", function() {
     gulp.watch(paths.images, ["copy-images"]);
     gulp.watch(paths.fonts, ["copy-fonts"]);
 });
+
+gulp.task("tslint", () =>
+    gulp.src("app/**/*.ts")
+        .pipe(tslint({
+            formater: "prose",
+            configuration: "./tslint.json",
+        }))
+        .pipe(tslint.report({
+            summarizeFailureOutput: true
+        }))
+);
 
 gulp.task("deploy", function(cb) {
     runSequence("clear", "delete-old-version", "delete-tmp", [

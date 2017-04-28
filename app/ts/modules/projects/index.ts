@@ -22,9 +22,9 @@
  * File: modules/projects.coffee
  */
 
-import * as angular from "angular"
-import {DeleteProjectDirective} from "./lightboxes"
+import * as angular from "angular";
+import {DeleteProjectDirective} from "./lightboxes";
 
-let module = angular.module("taigaProject", []);
+const module = angular.module("taigaProject", []);
 module.directive("tgLbDeleteProject", ["$tgRepo", "$rootScope", "$tgAuth", "$tgLocation", "$tgNavUrls",
                                        "$tgConfirm", "lightboxService", "tgLoader", "tgCurrentUserService", DeleteProjectDirective]);

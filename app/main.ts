@@ -1,58 +1,58 @@
-import * as _ from "lodash"
+import "Flot";
+import "Flot/jquery.flot.time";
+import "jquery.flot.tooltip";
 // import * as Promise from "bluebird"
-import "l.js"
-import "Flot"
-import "Flot/jquery.flot.time"
-import "jquery.flot.tooltip"
-import "prismjs/plugins/custom-class/prism-custom-class"
-import "pikaday"
-import "markdown-it"
-import "zone.js"
-import "reflect-metadata"
+import "l.js";
+import * as _ from "lodash";
+import "markdown-it";
+import "pikaday";
+import "prismjs/plugins/custom-class/prism-custom-class";
+import "reflect-metadata";
+import "zone.js";
 
-import "./export-to-plugins"
+import "./export-to-plugins";
 
-import {generateUniqueSessionIdentifier} from "./libs/utils"
+import {generateUniqueSessionIdentifier} from "./libs/utils";
 
 export let taigaContribPlugins = [];
-export var sessionId = generateUniqueSessionIdentifier();
+export let sessionId = generateUniqueSessionIdentifier();
 
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { enableProdMode } from '@angular/core';
-import { AppModule } from './app.module';
+import { enableProdMode } from "@angular/core";
+import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
+import { AppModule } from "./app.module";
 
-(<any>window).taigaConfig = {
-    "api": "http://localhost:8000/api/v1/",
-    "eventsUrl": null,
-    "tribeHost": null,
-    "eventsMaxMissedHeartbeats": 5,
-    "eventsHeartbeatIntervalTime": 60000,
-    "debug": true,
-    "defaultLanguage": "en",
-    "themes": ["taiga", "material-design", "high-contrast"],
-    "defaultTheme": "taiga",
-    "publicRegisterEnabled": true,
-    "feedbackEnabled": true,
-    "privacyPolicyUrl": null,
-    "termsOfServiceUrl": null,
-    "maxUploadFileSize": null,
-    "importers": [],
-    "contribPlugins": []
+(window as any).taigaConfig = {
+    api: "http://localhost:8000/api/v1/",
+    eventsUrl: null,
+    tribeHost: null,
+    eventsMaxMissedHeartbeats: 5,
+    eventsHeartbeatIntervalTime: 60000,
+    debug: true,
+    defaultLanguage: "en",
+    themes: ["taiga", "material-design", "high-contrast"],
+    defaultTheme: "taiga",
+    publicRegisterEnabled: true,
+    feedbackEnabled: true,
+    privacyPolicyUrl: null,
+    termsOfServiceUrl: null,
+    maxUploadFileSize: null,
+    importers: [],
+    contribPlugins: [],
 };
 
-(<any>window).taigaContribPlugins = [];
-(<any>window)._decorators = [];
-(<any>window).addDecorator = (provider, decorator) => (<any>window)._decorators.push({provider, decorator});
-(<any>window).getDecorators = () => (<any>window)._decorators;
+(window as any).taigaContribPlugins = [];
+(window as any)._decorators = [];
+(window as any).addDecorator = (provider, decorator) => (window as any)._decorators.push({provider, decorator});
+(window as any).getDecorators = () => (window as any)._decorators;
 
-function loadStylesheet(path:string) {
-    $('head').append(`<link rel="stylesheet" href="${path}" type="text/css" />`);
+function loadStylesheet(path: string) {
+    $("head").append(`<link rel="stylesheet" href="${path}" type="text/css" />`);
 }
 
-function loadPlugin(pluginPath:string) {
+function loadPlugin(pluginPath: string) {
     return new Promise(function(resolve, reject) {
-        let success = function(plugin) {
-            (<any>window).taigaContribPlugins.push(plugin);
+        const success = function(plugin) {
+            (window as any).taigaContribPlugins.push(plugin);
             if (plugin.css) {
                 loadStylesheet(plugin.css);
             }
@@ -65,27 +65,27 @@ function loadPlugin(pluginPath:string) {
             }
         };
 
-        let fail = () => console.error("error loading", pluginPath);
+        const fail = () => console.error("error loading", pluginPath);
 
         return $.getJSON(pluginPath).then(success, fail);
-    })
+    });
 }
 
-function loadPlugins (plugins:string[]) {
-    let promises = _.map(plugins, pluginPath => loadPlugin(pluginPath));
+function loadPlugins(plugins: string[]) {
+    const promises = _.map(plugins, (pluginPath) => loadPlugin(pluginPath));
     return Promise.all(promises);
 }
 
-let promise = $.getJSON("/conf.json");
-promise.done(data => (<any>window).taigaConfig = _.assign({}, (<any>window).taigaConfig, data));
+const promise = $.getJSON("/conf.json");
+promise.done((data) => (window as any).taigaConfig = _.assign({}, (window as any).taigaConfig, data));
 promise.fail(() => console.error("Your conf.json file is not a valid json file, please review it."));
 promise.always(function() {
-    if (!(<any>window).taigaConfig.debug) {
+    if (!(window as any).taigaConfig.debug) {
         enableProdMode();
     }
 
-    if ((<any>window).taigaConfig.contribPlugins.length > 0) {
-        return loadPlugins((<any>window).taigaConfig.contribPlugins).then(() => {
+    if ((window as any).taigaConfig.contribPlugins.length > 0) {
+        return loadPlugins((window as any).taigaConfig.contribPlugins).then(() => {
             platformBrowserDynamic().bootstrapModule(AppModule);
         });
     } else {

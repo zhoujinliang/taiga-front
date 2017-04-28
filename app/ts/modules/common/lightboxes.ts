@@ -22,12 +22,12 @@
  * File: modules/common/lightboxes.coffee
  */
 
-import {Service} from "../../../ts/classes"
-import {bindOnce, timeout, debounce, sizeFormat, trim} from "../../../../../libs/utils"
-import * as _ from "lodash"
-import * as angular from "angular"
-import * as Immutable from "immutable"
-import * as Promise from "bluebird"
+import * as angular from "angular";
+import * as Promise from "bluebird";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {bindOnce, debounce, sizeFormat, timeout, trim} from "../../../../../libs/utils";
+import {Service} from "../../../ts/classes";
 
 //############################################################################
 //# Common Lightbox Services
@@ -35,13 +35,13 @@ import * as Promise from "bluebird"
 
 // the lightboxContent hide/show doesn't have sense because is an IE hack
 export class LightboxService extends Service {
-    animationFrame:any
-    q:any
-    rootScope: angular.IScope
-    onClose:any
+    animationFrame: any;
+    q: any;
+    rootScope: angular.IScope;
+    onClose: any;
 
     constructor(animationFrame, q, rootScope) {
-        super()
+        super();
         this.animationFrame = animationFrame;
         this.q = q;
         this.rootScope = rootScope;
@@ -53,20 +53,20 @@ export class LightboxService extends Service {
         if (_.isString($el)) {
             $el = $($el);
         }
-        let defered = this.q.defer();
+        const defered = this.q.defer();
 
-        let lightboxContent = $el.children().not(".close");
+        const lightboxContent = $el.children().not(".close");
         lightboxContent.hide();
 
-        this.animationFrame.add(() => $el.css('display', 'flex'));
+        this.animationFrame.add(() => $el.css("display", "flex"));
 
         this.animationFrame.add(function() {
             $el.addClass("open");
             return $el.one("transitionend", () => {
-                let firstField = $el.find('input,textarea').first();
+                const firstField = $el.find("input,textarea").first();
 
                 if (firstField.length) {
-                    return $el.find('input,textarea').first().focus();
+                    return $el.find("input,textarea").first().focus();
                 } else if (document.activeElement) {
                     return $(document.activeElement).blur();
                 }
@@ -78,9 +78,9 @@ export class LightboxService extends Service {
             return defered.resolve();
         });
 
-        let docEl = angular.element(document);
-        docEl.on("keydown.lightbox", e => {
-            let code = e.keyCode ? e.keyCode : e.which;
+        const docEl = angular.element(document);
+        docEl.on("keydown.lightbox", (e) => {
+            const code = e.keyCode ? e.keyCode : e.which;
             if (code === 27) {
                 if (onEsc) {
                     return this.rootScope.$applyAsync(onEsc);
@@ -90,7 +90,6 @@ export class LightboxService extends Service {
             }
         });
 
-
         return defered.promise;
     }
 
@@ -99,21 +98,21 @@ export class LightboxService extends Service {
             if (_.isString($el)) {
                 $el = $($el);
             }
-            let docEl = angular.element(document);
+            const docEl = angular.element(document);
             docEl.off(".lightbox");
             docEl.off(".keyboard-navigation"); // Hack: to fix problems in the WYSIWYG textareas when press ENTER
 
-            $el.addClass('close-started'); // don't attach animations
+            $el.addClass("close-started"); // don't attach animations
 
             this.animationFrame.add(() => {
-                $el.addClass('close');
+                $el.addClass("close");
 
                 return $el.one("transitionend", () => {
-                    $el.removeAttr('style');
+                    $el.removeAttr("style");
                     $el
                         .removeClass("open")
-                        .removeClass('close')
-                        .removeClass('close-started');
+                        .removeClass("close")
+                        .removeClass("close-started");
 
                     if (this.onClose) {
                         this.rootScope.$apply(this.onClose);
@@ -124,20 +123,19 @@ export class LightboxService extends Service {
             });
 
             if ($el.hasClass("remove-on-close")) {
-                let scope = $el.data("scope");
+                const scope = $el.data("scope");
                 if (scope) { scope.$destroy(); }
                 return $el.remove();
             }
         }.bind(this)));
     }
 
-
     getLightboxOpen() {
         return $(".lightbox.open:not(.close-started)");
     }
 
     closeAll() {
-        let docEl = angular.element(document);
+        const docEl = angular.element(document);
         return docEl.find(".lightbox.open").map((index, lightboxEl) =>
             this.close($(lightboxEl)));
     }
@@ -145,17 +143,17 @@ export class LightboxService extends Service {
 
 export class LightboxKeyboardNavigationService extends Service {
     stop() {
-        let docEl = angular.element(document);
+        const docEl = angular.element(document);
         return docEl.off(".keyboard-navigation");
     }
 
     dispatch($el, code) {
-        let activeElement = $el.find(".selected");
+        const activeElement = $el.find(".selected");
 
         // Key: enter
         if (code === 13) {
             if ($el.find(".user-list-single").length === 1) {
-                return $el.find('.user-list-single:first').trigger("click");
+                return $el.find(".user-list-single:first").trigger("click");
             } else {
                 return activeElement.trigger("click");
             }
@@ -163,24 +161,24 @@ export class LightboxKeyboardNavigationService extends Service {
         // Key: down
         } else if (code === 40) {
             if (!activeElement.length) {
-                return $el.find('.user-list-single:not(".is-active"):first').addClass('selected');
+                return $el.find('.user-list-single:not(".is-active"):first').addClass("selected");
             } else {
-                let next = activeElement.next('.user-list-single');
+                const next = activeElement.next(".user-list-single");
                 if (next.length) {
-                    activeElement.removeClass('selected');
-                    return next.addClass('selected');
+                    activeElement.removeClass("selected");
+                    return next.addClass("selected");
                 }
             }
         // Key: up
         } else if (code === 38) {
             if (!activeElement.length) {
-                return $el.find('.user-list-single:last').addClass('selected');
+                return $el.find(".user-list-single:last").addClass("selected");
             } else {
-                let prev = activeElement.prev('.user-list-single:not(".is-active")');
+                const prev = activeElement.prev('.user-list-single:not(".is-active")');
 
                 if (prev.length) {
-                    activeElement.removeClass('selected');
-                    return prev.addClass('selected');
+                    activeElement.removeClass("selected");
+                    return prev.addClass("selected");
                 }
             }
         }
@@ -188,9 +186,9 @@ export class LightboxKeyboardNavigationService extends Service {
 
     init($el) {
         this.stop();
-        let docEl = angular.element(document);
-        return docEl.on("keydown.keyboard-navigation", event => {
-            let code = event.keyCode ? event.keyCode : event.which;
+        const docEl = angular.element(document);
+        return docEl.on("keydown.keyboard-navigation", (event) => {
+            const code = event.keyCode ? event.keyCode : event.which;
             if ((code === 40) || (code === 38) || (code === 13)) {
                 event.preventDefault();
                 return this.dispatch($el, code);
@@ -207,7 +205,7 @@ export class LightboxKeyboardNavigationService extends Service {
 // close button event handlers.
 
 export let LightboxDirective = function(lightboxService) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
 
         if (!$attrs.$attr.visible) {
             return $el.on("click", ".close", function(event) {
@@ -227,12 +225,12 @@ export let LightboxDirective = function(lightboxService) {
 // Issue/Userstory blocking message lightbox directive.
 
 export let BlockLightboxDirective = function($rootscope, $tgrepo, $confirm, lightboxService, $loading, $modelTransform, $translate) {
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
         let transform;
-        let title = $translate.instant($attrs.title);
+        const title = $translate.instant($attrs.title);
         $el.find("h2.title").text(title);
 
-        let unblock = finishCallback => {
+        const unblock = (finishCallback) => {
             transform = $modelTransform.save(function(item) {
                 item.is_blocked = false;
                 item.blocked_note = "";
@@ -256,8 +254,8 @@ export let BlockLightboxDirective = function($rootscope, $tgrepo, $confirm, ligh
             return transform;
         };
 
-        let block = function() {
-            let currentLoading = $loading()
+        const block = function() {
+            const currentLoading = $loading()
                 .target($el.find(".button-green"))
                 .start();
 
@@ -302,7 +300,7 @@ export let BlockLightboxDirective = function($rootscope, $tgrepo, $confirm, ligh
     return {
         templateUrl: "common/lightbox/lightbox-block.html",
         link,
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
@@ -311,7 +309,7 @@ export let BlockLightboxDirective = function($rootscope, $tgrepo, $confirm, ligh
 //############################################################################
 
 export let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScope, lightboxService, $loading, $translate, $confirm, $q, attachmentsService) {
-    let link = function($scope, $el, attrs) {
+    const link = function($scope, $el, attrs) {
         let form = null;
         $scope.createEditUs = {};
         $scope.isNew = true;
@@ -319,15 +317,15 @@ export let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScop
         let attachmentsToAdd = Immutable.List();
         let attachmentsToDelete = Immutable.List();
 
-        let resetAttachments = function() {
+        const resetAttachments = function() {
             attachmentsToAdd = Immutable.List();
             return attachmentsToDelete = Immutable.List();
         };
 
-        $scope.addAttachment = attachment => attachmentsToAdd = attachmentsToAdd.push(attachment);
+        $scope.addAttachment = (attachment) => attachmentsToAdd = attachmentsToAdd.push(attachment);
 
         $scope.deleteAttachment = function(attachment) {
-            attachmentsToAdd = <Immutable.List<any>>attachmentsToAdd.filter((it:Immutable.Map<string,any>) => it.get('name') !== attachment.get('name'));
+            attachmentsToAdd = attachmentsToAdd.filter((it: Immutable.Map<string, any>) => it.get("name") !== attachment.get("name")) as Immutable.List<any>;
 
             if (attachment.get("id")) {
                 return attachmentsToDelete = attachmentsToDelete.push(attachment);
@@ -335,7 +333,7 @@ export let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScop
         };
 
         $scope.addTag = function(tag, color) {
-            let value = trim(tag.toLowerCase());
+            const value = trim(tag.toLowerCase());
 
             let { tags } = $scope.project;
             let projectTags = $scope.project.tags_colors;
@@ -351,9 +349,9 @@ export let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScop
 
             $scope.project.tags = tags;
 
-            let itemtags = _.clone($scope.us.tags);
+            const itemtags = _.clone($scope.us.tags);
 
-            let inserted = _.find(itemtags, it => it[0] === value);
+            const inserted = _.find(itemtags, (it) => it[0] === value);
 
             if (!inserted) {
                 itemtags.push([value , color]);
@@ -362,12 +360,12 @@ export let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScop
         };
 
         $scope.deleteTag = function(tag) {
-            let value = trim(tag[0].toLowerCase());
+            const value = trim(tag[0].toLowerCase());
 
-            let { tags } = $scope.project;
-            let itemtags = _.clone($scope.us.tags);
+            const { tags } = $scope.project;
+            const itemtags = _.clone($scope.us.tags);
 
-            _.remove(itemtags, tag => tag[0] === value);
+            _.remove(itemtags, (tag) => tag[0] === value);
 
             $scope.us.tags = itemtags;
 
@@ -387,7 +385,7 @@ export let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScop
                 points : {},
                 status,
                 is_archived: false,
-                tags: []
+                tags: [],
             });
 
             // Update texts for creation
@@ -444,19 +442,19 @@ export let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScop
             return lightboxService.open($el, () => $scope.createEditUsOpen = false);
         });
 
-        let createAttachments = function(obj) {
-            let promises = _.map(attachmentsToAdd.toJS(), (attachment:any) => attachmentsService.upload(attachment.file, obj.id, $scope.us.project, 'us'));
+        const createAttachments = function(obj) {
+            const promises = _.map(attachmentsToAdd.toJS(), (attachment: any) => attachmentsService.upload(attachment.file, obj.id, $scope.us.project, "us"));
 
             return $q.all(promises);
         };
 
-        let deleteAttachments = function(obj) {
-            let promises = _.map(attachmentsToDelete.toJS(), (attachment:any) => attachmentsService.delete("us", attachment.id));
+        const deleteAttachments = function(obj) {
+            const promises = _.map(attachmentsToDelete.toJS(), (attachment: any) => attachmentsService.delete("us", attachment.id));
 
             return $q.all(promises);
         };
 
-        let submit = debounce(2000, event => {
+        const submit = debounce(2000, (event) => {
             let broadcastEvent, promise;
             event.preventDefault();
 
@@ -465,13 +463,13 @@ export let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScop
                 return;
             }
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
-            let params = {
+            const params = {
                 include_attachments: true,
-                include_tasks: true
+                include_tasks: true,
             };
 
             if ($scope.isNew) {
@@ -482,17 +480,16 @@ export let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScop
                 broadcastEvent = "usform:edit:success";
             }
 
-            promise.then(data =>
+            promise.then((data) =>
                 deleteAttachments(data)
                     .then(() => createAttachments(data))
                     .then(() => {
                         currentLoading.finish();
                         lightboxService.close($el);
 
-                        return $rs.userstories.getByRef(data.project, data.ref, params).then(us => $rootScope.$broadcast(broadcastEvent, us));
-                })
+                        return $rs.userstories.getByRef(data.project, data.ref, params).then((us) => $rootScope.$broadcast(broadcastEvent, us));
+                }),
             );
-
 
             return promise.then(null, function(data) {
                 currentLoading.finish();
@@ -503,7 +500,7 @@ export let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScop
             });
         });
 
-        var submitButton = $el.find(".submit-button");
+        const submitButton = $el.find(".submit-button");
 
         $el.on("submit", "form", submit);
 
@@ -516,7 +513,7 @@ export let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScop
         });
 
         $el.keydown(function(event) {
-            let code = event.keyCode ? event.keyCode : event.which;
+            const code = event.keyCode ? event.keyCode : event.which;
             if (code === 27) {
                 lightboxService.close($el);
                 return $scope.$apply(() => $scope.us.revert());
@@ -534,7 +531,7 @@ export let CreateEditUserstoryDirective = function($repo, $model, $rs, $rootScop
 //############################################################################
 
 export let CreateBulkUserstoriesDirective = function($repo, $rs, $rootscope, lightboxService, $loading, $model, $confirm) {
-    let link = function($scope, $el, attrs) {
+    const link = function($scope, $el, attrs) {
         let form = null;
 
         $scope.$on("usform:bulk", function(ctx, projectId, status) {
@@ -543,12 +540,12 @@ export let CreateBulkUserstoriesDirective = function($repo, $rs, $rootscope, lig
             $scope.new = {
                 projectId,
                 statusId: status,
-                bulk: ""
+                bulk: "",
             };
             return lightboxService.open($el);
         });
 
-        let submit = debounce(2000, event => {
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
             form = $el.find("form").checksley({onlyOneErrorElement: true});
@@ -556,13 +553,13 @@ export let CreateBulkUserstoriesDirective = function($repo, $rs, $rootscope, lig
                 return;
             }
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
-            let promise = $rs.userstories.bulkCreate($scope.new.projectId, $scope.new.statusId, $scope.new.bulk);
+            const promise = $rs.userstories.bulkCreate($scope.new.projectId, $scope.new.statusId, $scope.new.bulk);
             promise.then(function(result) {
-                result =  _.map(result.data, x => $model.make_model('userstories', x));
+                result =  _.map(result.data, (x) => $model.make_model("userstories", x));
                 currentLoading.finish();
                 $rootscope.$broadcast("usform:bulk:success", result);
                 return lightboxService.close($el);
@@ -577,7 +574,7 @@ export let CreateBulkUserstoriesDirective = function($repo, $rs, $rootscope, lig
             });
         });
 
-        var submitButton = $el.find(".submit-button");
+        const submitButton = $el.find(".submit-button");
 
         $el.on("submit", "form", submit);
 
@@ -592,12 +589,12 @@ export let CreateBulkUserstoriesDirective = function($repo, $rs, $rootscope, lig
 //############################################################################
 
 export let AssignedToLightboxDirective = function(lightboxService, lightboxKeyboardNavigationService, $template, $compile, avatarService) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         let selectedUser = null;
         let selectedItem = null;
-        let usersTemplate = $template.get("common/lightbox/lightbox-assigned-to-users.html", true);
+        const usersTemplate = $template.get("common/lightbox/lightbox-assigned-to-users.html", true);
 
-        let normalizeString = function(string) {
+        const normalizeString = function(string) {
             let normalizedString = string;
             normalizedString = normalizedString.replace("Á", "A").replace("Ä", "A").replace("À", "A");
             normalizedString = normalizedString.replace("É", "E").replace("Ë", "E").replace("È", "E");
@@ -607,7 +604,7 @@ export let AssignedToLightboxDirective = function(lightboxService, lightboxKeybo
             return normalizedString;
         };
 
-        let filterUsers = function(text, user) {
+        const filterUsers = function(text, user) {
             let username = user.full_name_display.toUpperCase();
             username = normalizeString(username);
             text = text.toUpperCase();
@@ -615,24 +612,24 @@ export let AssignedToLightboxDirective = function(lightboxService, lightboxKeybo
             return _.includes(username, text);
         };
 
-        let render = function(selected, text=null) {
+        const render = function(selected, text= null) {
             let users = _.cloneDeep($scope.activeUsers);
-            if (selected != null) { users = _.reject(users, {"id": selected.id}); }
-            users = _.sortBy(users, function(o:any) { if (o.id === $scope.user.id) { return 0; } else { return o.id; } });
+            if (selected != null) { users = _.reject(users, {id: selected.id}); }
+            users = _.sortBy(users, function(o: any) { if (o.id === $scope.user.id) { return 0; } else { return o.id; } });
             if (text != null) { users = _.filter(users, _.partial(filterUsers, text)); }
 
             let visibleUsers = _.slice(users, 0, 5);
 
-            visibleUsers = _.map(visibleUsers, (user:any) => user.avatar = avatarService.getAvatar(user));
+            visibleUsers = _.map(visibleUsers, (user: any) => user.avatar = avatarService.getAvatar(user));
 
             if (selected) {
                 if (selected) { selected.avatar = avatarService.getAvatar(selected); }
             }
 
-            let ctx = {
+            const ctx = {
                 selected,
                 users: _.slice(users, 0, 5),
-                showMore: users.length > 5
+                showMore: users.length > 5,
             };
 
             let html = usersTemplate(ctx);
@@ -641,19 +638,19 @@ export let AssignedToLightboxDirective = function(lightboxService, lightboxKeybo
             return $el.find(".assigned-to-list").html(html);
         };
 
-        let closeLightbox = function() {
+        const closeLightbox = function() {
             lightboxKeyboardNavigationService.stop();
             return lightboxService.close($el);
         };
 
         $scope.$on("assigned-to:add", function(ctx, item) {
             selectedItem = item;
-            let assignedToId = item.assigned_to;
+            const assignedToId = item.assigned_to;
             selectedUser = $scope.usersById[assignedToId];
 
             render(selectedUser);
             return lightboxService.open($el).then(function() {
-                $el.find('input').focus();
+                $el.find("input").focus();
                 return lightboxKeyboardNavigationService.init($el);
             });
         });
@@ -661,13 +658,13 @@ export let AssignedToLightboxDirective = function(lightboxService, lightboxKeybo
         $scope.$watch("usersSearch", function(searchingText) {
             if (searchingText != null) {
                 render(selectedUser, searchingText);
-                return $el.find('input').focus();
+                return $el.find("input").focus();
             }
         });
 
         $el.on("click", ".user-list-single", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
             closeLightbox();
 
@@ -702,7 +699,7 @@ export let AssignedToLightboxDirective = function(lightboxService, lightboxKeybo
 
     return {
         templateUrl: "common/lightbox/lightbox-assigned-to.html",
-        link
+        link,
     };
 };
 
@@ -711,19 +708,19 @@ export let AssignedToLightboxDirective = function(lightboxService, lightboxKeybo
 //############################################################################
 
 export let WatchersLightboxDirective = function($repo, lightboxService, lightboxKeyboardNavigationService, $template, $compile, avatarService) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         let selectedItem = null;
-        let usersTemplate = $template.get("common/lightbox/lightbox-assigned-to-users.html", true);
+        const usersTemplate = $template.get("common/lightbox/lightbox-assigned-to-users.html", true);
 
         // Get prefiltered users by text
         // and without now watched users.
-        let getFilteredUsers = function(text="") {
-            let _filterUsers = function(text, user) {
-                if (selectedItem && _.find(selectedItem.watchers, x => x === user.id)) {
+        const getFilteredUsers = function(text= "") {
+            const _filterUsers = function(text, user) {
+                if (selectedItem && _.find(selectedItem.watchers, (x) => x === user.id)) {
                     return false;
                 }
 
-                let username = user.full_name_display.toUpperCase();
+                const username = user.full_name_display.toUpperCase();
                 text = text.toUpperCase();
                 return _.includes(username, text);
             };
@@ -734,19 +731,19 @@ export let WatchersLightboxDirective = function($repo, lightboxService, lightbox
         };
 
         // Render the specific list of users.
-        let render = function(users) {
+        const render = function(users) {
             let visibleUsers = _.slice(users, 0, 5);
 
-            visibleUsers = _.map(visibleUsers, function(user:any) {
+            visibleUsers = _.map(visibleUsers, function(user: any) {
                 user.avatar = avatarService.getAvatar(user);
 
                 return user;
             });
 
-            let ctx = {
+            const ctx = {
                 selected: false,
                 users: visibleUsers,
-                showMore: users.length > 5
+                showMore: users.length > 5,
             };
 
             let html = usersTemplate(ctx);
@@ -754,7 +751,7 @@ export let WatchersLightboxDirective = function($repo, lightboxService, lightbox
             return $el.find(".ticket-watchers").html(html);
         };
 
-        let closeLightbox = function() {
+        const closeLightbox = function() {
             lightboxKeyboardNavigationService.stop();
             return lightboxService.close($el);
         };
@@ -762,7 +759,7 @@ export let WatchersLightboxDirective = function($repo, lightboxService, lightbox
         $scope.$on("watcher:add", function(ctx, item) {
             selectedItem = item;
 
-            let users = getFilteredUsers();
+            const users = getFilteredUsers();
             render(users);
 
             return lightboxService.open($el).then(function() {
@@ -776,7 +773,7 @@ export let WatchersLightboxDirective = function($repo, lightboxService, lightbox
                 return;
             }
 
-            let users = getFilteredUsers(searchingText);
+            const users = getFilteredUsers(searchingText);
             render(users);
             return $el.find("input").focus();
         });
@@ -785,13 +782,13 @@ export let WatchersLightboxDirective = function($repo, lightboxService, lightbox
             closeLightbox();
 
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
             return $scope.$apply(function() {
                 $scope.usersSearch = null;
                 return $scope.$broadcast("watcher:added", target.data("user-id"));
             });
-        })
+        }),
         );
 
         $el.on("click", ".close", function(event) {
@@ -807,16 +804,16 @@ export let WatchersLightboxDirective = function($repo, lightboxService, lightbox
 
     return {
         templateUrl: "common/lightbox/lightbox-users.html",
-        link
+        link,
     };
 };
 
 export let LightboxLeaveProjectWarningDirective = function(lightboxService, $template, $compile) {
-    let link = ($scope, $el, attrs) => lightboxService.open($el);
+    const link = ($scope, $el, attrs) => lightboxService.open($el);
 
     return {
-        templateUrl: 'common/lightbox/lightbox-leave-project-warning.html',
+        templateUrl: "common/lightbox/lightbox-leave-project-warning.html",
         link,
-        scope: true
+        scope: true,
     };
 };

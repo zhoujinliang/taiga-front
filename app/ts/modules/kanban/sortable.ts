@@ -22,16 +22,16 @@
  * File: modules/kanban/sortable.coffee
  */
 
-import * as _ from "lodash"
-import {autoScroll} from "../../libs/dom-autoscroller"
-import * as dragula from "dragula"
+import * as dragula from "dragula";
+import * as _ from "lodash";
+import {autoScroll} from "../../libs/dom-autoscroller";
 
 //############################################################################
 //# Sortable Directive
 //############################################################################
 
 export let KanbanSortableDirective = function($repo, $rs, $rootscope) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         let unwatch;
         return unwatch = $scope.$watch("usByStatus", function(usByStatus) {
             if (!usByStatus || !usByStatus.size) { return; }
@@ -45,51 +45,51 @@ export let KanbanSortableDirective = function($repo, $rs, $rootscope) {
             let oldParentScope = null;
             let newParentScope = null;
             let itemEl = null;
-            let tdom = $el;
+            const tdom = $el;
 
-            let deleteElement = function(itemEl) {
+            const deleteElement = function(itemEl) {
                 // Completelly remove item and its scope from dom
                 itemEl.scope().$destroy();
                 itemEl.off();
                 return itemEl.remove();
             };
 
-            let containers = _.map($el.find('.task-column'), item => item);
+            const containers = _.map($el.find(".task-column"), (item) => item);
 
-            let drake = dragula(<any[]>containers, <dragula.DragulaOptions>{
+            const drake = dragula(containers as any[], {
                 copySortSource: false,
                 copy: false,
                 moves(item) {
-                    return $(item).is('tg-card');
-                }
-            });
+                    return $(item).is("tg-card");
+                },
+            } as dragula.DragulaOptions);
 
-            drake.on('drag', item => oldParentScope = $(item).parent().scope());
+            drake.on("drag", (item) => oldParentScope = $(item).parent().scope());
 
-            drake.on('dragend', function(item) {
-                let parentEl = $(item).parent();
+            drake.on("dragend", function(item) {
+                const parentEl = $(item).parent();
                 itemEl = $(item);
-                let itemUs = itemEl.scope().us;
-                let itemIndex = itemEl.index();
+                const itemUs = itemEl.scope().us;
+                const itemIndex = itemEl.index();
                 newParentScope = parentEl.scope();
 
-                let newStatusId = newParentScope.s.id;
-                let oldStatusId = oldParentScope.s.id;
+                const newStatusId = newParentScope.s.id;
+                const oldStatusId = oldParentScope.s.id;
 
                 if (newStatusId !== oldStatusId) {
                     deleteElement(itemEl);
                 }
 
-                return $scope.$apply(() => $rootscope.$broadcast("kanban:us:move", itemUs, itemUs.getIn(['model', 'status']), newStatusId, itemIndex));
+                return $scope.$apply(() => $rootscope.$broadcast("kanban:us:move", itemUs, itemUs.getIn(["model", "status"]), newStatusId, itemIndex));
             });
 
-            let scroll = autoScroll(containers, {
+            const scroll = autoScroll(containers, {
                 margin: 100,
                 pixels: 30,
                 scrollWhenOutside: true,
                 autoScroll() {
                     return this.down && drake.dragging;
-                }
+                },
             });
 
             return $scope.$on("$destroy", function() {

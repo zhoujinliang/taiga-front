@@ -22,45 +22,45 @@
  * File: modules/issues/list.coffee
  */
 
-import {groupBy, bindMethods, startswith, trim, bindOnce} from "../../libs/utils"
-import {FiltersMixin} from "../controllerMixins"
-import * as angular from "angular"
-import * as Immutable from "immutable"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {bindMethods, bindOnce, groupBy, startswith, trim} from "../../libs/utils";
+import {FiltersMixin} from "../controllerMixins";
 
-declare var _version:string;
+declare var _version: string;
 
 //############################################################################
 //# Issues Controller
 //############################################################################
 
 export class IssuesController extends FiltersMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    urls:any
-    params:any
-    q:any
-    location:any
-    appMetaService:any
-    navUrls:any
-    events:any
-    analytics:any
-    translate:any
-    errorHandlingService:any
-    storage:any
-    filterRemoteStorageService:any
-    projectService:any
-    filtersHashSuffix:any
-    myFiltersHashSuffix:any
-    loadIssuesRequests:any
-    voting:any
-    filters:any
-    filterQ:any
-    customFilters:any
-    selectedFilters:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    urls: any;
+    params: any;
+    q: any;
+    location: any;
+    appMetaService: any;
+    navUrls: any;
+    events: any;
+    analytics: any;
+    translate: any;
+    errorHandlingService: any;
+    storage: any;
+    filterRemoteStorageService: any;
+    projectService: any;
+    filtersHashSuffix: any;
+    myFiltersHashSuffix: any;
+    loadIssuesRequests: any;
+    voting: any;
+    filters: any;
+    filterQ: any;
+    customFilters: any;
+    selectedFilters: any;
 
     static initClass() {
         this.$inject = [
@@ -82,7 +82,7 @@ export class IssuesController extends FiltersMixin {
             "$tgStorage",
             "tgFilterRemoteStorageService",
             "tgProjectService",
-            "tgUserActivityService"
+            "tgUserActivityService",
         ];
 
         this.prototype.filtersHashSuffix = "issues-filters";
@@ -96,8 +96,8 @@ export class IssuesController extends FiltersMixin {
     }
 
     constructor(scope, rootscope, repo, confirm, rs, urls, params, q, location, appMetaService,
-                  navUrls, events, analytics, translate, errorHandlingService, storage, filterRemoteStorageService, projectService) {
-        super()
+                navUrls, events, analytics, translate, errorHandlingService, storage, filterRemoteStorageService, projectService) {
+        super();
         this.loadIssues = this.loadIssues.bind(this);
         this.scope = scope;
         this.rootscope = rootscope;
@@ -124,14 +124,14 @@ export class IssuesController extends FiltersMixin {
 
         if (this.applyStoredFilters(this.params.pslug, this.filtersHashSuffix)) { return; }
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         // On Success
         promise.then(() => {
-            let title = this.translate.instant("ISSUES.PAGE_TITLE", {projectName: this.scope.project.name});
-            let description = this.translate.instant("ISSUES.PAGE_DESCRIPTION", {
+            const title = this.translate.instant("ISSUES.PAGE_TITLE", {projectName: this.scope.project.name});
+            const description = this.translate.instant("ISSUES.PAGE_DESCRIPTION", {
                 projectName: this.scope.project.name,
-                projectDescription: this.scope.project.description
+                projectDescription: this.scope.project.description,
             });
             return this.appMetaService.setAll(title, description);
         });
@@ -167,7 +167,7 @@ export class IssuesController extends FiltersMixin {
     }
 
     selectCustomFilter(customFilter) {
-        let orderBy = this.location.search().order_by;
+        const orderBy = this.location.search().order_by;
 
         if (orderBy) {
             customFilter.filter.order_by = orderBy;
@@ -180,15 +180,15 @@ export class IssuesController extends FiltersMixin {
     }
 
     removeCustomFilter(customFilter) {
-        return this.filterRemoteStorageService.getFilters(this.scope.projectId, this.myFiltersHashSuffix).then(userFilters => {
+        return this.filterRemoteStorageService.getFilters(this.scope.projectId, this.myFiltersHashSuffix).then((userFilters) => {
             delete userFilters[customFilter.id];
             return this.filterRemoteStorageService.storeFilters(this.scope.projectId, userFilters, this.myFiltersHashSuffix).then(this.generateFilters);
         });
     }
 
     saveCustomFilter(name) {
-        let filters:any = {};
-        let urlfilters = this.location.search();
+        const filters: any = {};
+        const urlfilters = this.location.search();
         filters.tags = urlfilters.tags;
         filters.status = urlfilters.status;
         filters.type = urlfilters.type;
@@ -197,7 +197,7 @@ export class IssuesController extends FiltersMixin {
         filters.assigned_to = urlfilters.assigned_to;
         filters.owner = urlfilters.owner;
 
-        return this.filterRemoteStorageService.getFilters(this.scope.projectId, this.myFiltersHashSuffix).then(userFilters => {
+        return this.filterRemoteStorageService.getFilters(this.scope.projectId, this.myFiltersHashSuffix).then((userFilters) => {
             userFilters[name] = filters;
 
             return this.filterRemoteStorageService.storeFilters(this.scope.projectId, userFilters, this.myFiltersHashSuffix).then(this.generateFilters);
@@ -207,9 +207,9 @@ export class IssuesController extends FiltersMixin {
     generateFilters() {
         this.storeFilters(this.params.pslug, this.location.search(), this.filtersHashSuffix);
 
-        let urlfilters = this.location.search();
+        const urlfilters = this.location.search();
 
-        let loadFilters:any = {};
+        const loadFilters: any = {};
         loadFilters.project = this.scope.projectId;
         loadFilters.tags = urlfilters.tags;
         loadFilters.status = urlfilters.status;
@@ -222,41 +222,41 @@ export class IssuesController extends FiltersMixin {
 
         return this.q.all([
             this.rs.issues.filtersData(loadFilters),
-            this.filterRemoteStorageService.getFilters(this.scope.projectId, this.myFiltersHashSuffix)
-        ]).then(result => {
+            this.filterRemoteStorageService.getFilters(this.scope.projectId, this.myFiltersHashSuffix),
+        ]).then((result) => {
             let selected;
-            let data = result[0];
-            let customFiltersRaw = result[1];
+            const data = result[0];
+            const customFiltersRaw = result[1];
 
-            let statuses = _.map(data.statuses, function(it:any) {
+            const statuses = _.map(data.statuses, function(it: any) {
                 it.id = it.id.toString();
 
                 return it;
             });
-            let type = _.map(data.types, function(it:any) {
+            const type = _.map(data.types, function(it: any) {
                 it.id = it.id.toString();
 
                 return it;
             });
-            let severity = _.map(data.severities, function(it:any) {
+            const severity = _.map(data.severities, function(it: any) {
                 it.id = it.id.toString();
 
                 return it;
             });
-            let priority = _.map(data.priorities, function(it:any) {
+            const priority = _.map(data.priorities, function(it: any) {
                 it.id = it.id.toString();
 
                 return it;
             });
-            let tags = _.map(data.tags, function(it:any) {
+            const tags = _.map(data.tags, function(it: any) {
                 it.id = it.name;
 
                 return it;
             });
 
-            let tagsWithAtLeastOneElement = _.filter(tags, (tag:any) => tag.count > 0);
+            const tagsWithAtLeastOneElement = _.filter(tags, (tag: any) => tag.count > 0);
 
-            let assignedTo = _.map(data.assigned_to, function(it:any) {
+            const assignedTo = _.map(data.assigned_to, function(it: any) {
                 if (it.id) {
                     it.id = it.id.toString();
                 } else {
@@ -267,7 +267,7 @@ export class IssuesController extends FiltersMixin {
 
                 return it;
             });
-            let owner = _.map(data.owners, function(it:any) {
+            const owner = _.map(data.owners, function(it: any) {
                 it.id = it.id.toString();
                 it.name = it.full_name;
 
@@ -317,40 +317,40 @@ export class IssuesController extends FiltersMixin {
                 {
                     title: this.translate.instant("COMMON.FILTERS.CATEGORIES.TYPE"),
                     dataType: "type",
-                    content: type
+                    content: type,
                 },
                 {
                     title: this.translate.instant("COMMON.FILTERS.CATEGORIES.SEVERITY"),
                     dataType: "severity",
-                    content: severity
+                    content: severity,
                 },
                 {
                     title: this.translate.instant("COMMON.FILTERS.CATEGORIES.PRIORITIES"),
                     dataType: "priority",
-                    content: priority
+                    content: priority,
                 },
                 {
                     title: this.translate.instant("COMMON.FILTERS.CATEGORIES.STATUS"),
                     dataType: "status",
-                    content: statuses
+                    content: statuses,
                 },
                 {
                     title: this.translate.instant("COMMON.FILTERS.CATEGORIES.TAGS"),
                     dataType: "tags",
                     content: tags,
                     hideEmpty: true,
-                    totalTaggedElements: tagsWithAtLeastOneElement.length
+                    totalTaggedElements: tagsWithAtLeastOneElement.length,
                 },
                 {
                     title: this.translate.instant("COMMON.FILTERS.CATEGORIES.ASSIGNED_TO"),
                     dataType: "assigned_to",
-                    content: assignedTo
+                    content: assignedTo,
                 },
                 {
                     title: this.translate.instant("COMMON.FILTERS.CATEGORIES.CREATED_BY"),
                     dataType: "owner",
-                    content: owner
-                }
+                    content: owner,
+                },
             ];
 
             this.customFilters = [];
@@ -361,15 +361,14 @@ export class IssuesController extends FiltersMixin {
     }
 
     initializeSubscription() {
-        let routingKey = `changes.project.${this.scope.projectId}.issues`;
-        return this.events.subscribe(this.scope, routingKey, message => {
+        const routingKey = `changes.project.${this.scope.projectId}.issues`;
+        return this.events.subscribe(this.scope, routingKey, (message) => {
             return this.loadIssues();
         });
     }
 
-
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         if (!project.is_issues_activated) {
             this.errorHandlingService.permissionDenied();
@@ -377,26 +376,26 @@ export class IssuesController extends FiltersMixin {
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
 
-        this.scope.issueStatusById = groupBy(project.issue_statuses, x => x.id);
+        this.scope.issueStatusById = groupBy(project.issue_statuses, (x) => x.id);
         this.scope.issueStatusList = _.sortBy(project.issue_statuses, "order");
-        this.scope.severityById = groupBy(project.severities, x => x.id);
+        this.scope.severityById = groupBy(project.severities, (x) => x.id);
         this.scope.severityList = _.sortBy(project.severities, "order");
-        this.scope.priorityById = groupBy(project.priorities, x => x.id);
+        this.scope.priorityById = groupBy(project.priorities, (x) => x.id);
         this.scope.priorityList = _.sortBy(project.priorities, "order");
         this.scope.issueTypes = _.sortBy(project.issue_types, "order");
-        this.scope.issueTypeById = groupBy(project.issue_types, x => x.id);
+        this.scope.issueTypeById = groupBy(project.issue_types, (x) => x.id);
 
         return project;
     }
     loadIssues() {
-        let params = this.location.search();
+        const params = this.location.search();
 
-        let promise = this.rs.issues.list(this.scope.projectId, params);
+        const promise = this.rs.issues.list(this.scope.projectId, params);
         this.loadIssuesRequests += 1;
         promise.index = this.loadIssuesRequests;
-        promise.then(data => {
+        promise.then((data) => {
             if (promise.index === this.loadIssuesRequests) {
                 this.scope.issues = data.models;
                 this.scope.page = data.current;
@@ -411,7 +410,7 @@ export class IssuesController extends FiltersMixin {
     }
 
     loadInitialData() {
-        let project = this.loadProject();
+        const project = this.loadProject();
 
         this.fillUsersAndRoles(project.members, project.roles);
         this.initializeSubscription();
@@ -431,11 +430,11 @@ export class IssuesController extends FiltersMixin {
 
     upVoteIssue(issueId) {
         this.voting = issueId;
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadIssues();
             return this.voting = null;
         };
-        let onError = () => {
+        const onError = () => {
             this.confirm.notify("error");
             return this.voting = null;
         };
@@ -445,11 +444,11 @@ export class IssuesController extends FiltersMixin {
 
     downVoteIssue(issueId) {
         this.voting = issueId;
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadIssues();
             return this.voting = null;
         };
-        let onError = () => {
+        const onError = () => {
             this.confirm.notify("error");
             return this.voting = null;
         };
@@ -473,19 +472,19 @@ IssuesController.initClass();
 
 export let IssuesDirective = function($log, $location, $template, $compile) {
     //# Issues Pagination
-    let template = $template.get("issue/issue-paginator.html", true);
+    const template = $template.get("issue/issue-paginator.html", true);
 
-    let linkPagination = function($scope, $el, $attrs, $ctrl) {
+    const linkPagination = function($scope, $el, $attrs, $ctrl) {
         // Constants
-        let afterCurrent = 2;
-        let beforeCurrent = 4;
-        let atBegin = 2;
-        let atEnd = 2;
+        const afterCurrent = 2;
+        const beforeCurrent = 4;
+        const atBegin = 2;
+        const atEnd = 2;
 
-        let $pagEl = $el.find(".issues-paginator");
+        const $pagEl = $el.find(".issues-paginator");
 
-        let getNumPages = function() {
-            let numPages:any = $scope.count / $scope.paginatedBy;
+        const getNumPages = function() {
+            let numPages: any = $scope.count / $scope.paginatedBy;
             if (parseInt(numPages, 10) < numPages) {
                 numPages = parseInt(numPages, 10) + 1;
             } else {
@@ -495,8 +494,8 @@ export let IssuesDirective = function($log, $location, $template, $compile) {
             return numPages;
         };
 
-        let renderPagination = function() {
-            let numPages = getNumPages();
+        const renderPagination = function() {
+            const numPages = getNumPages();
 
             if (numPages <= 1) {
                 $pagEl.hide();
@@ -504,13 +503,13 @@ export let IssuesDirective = function($log, $location, $template, $compile) {
             }
             $pagEl.show();
 
-            let pages = [];
-            let options:any = {};
+            const pages = [];
+            const options: any = {};
             options.pages = pages;
             options.showPrevious = ($scope.page > 1);
             options.showNext = !($scope.page === numPages);
 
-            let cpage = $scope.page;
+            const cpage = $scope.page;
 
             for (let i = 1, end = numPages, asc = 1 <= end; asc ? i <= end : i >= end; asc ? i++ : i--) {
                 if ((i === (cpage + afterCurrent)) && (numPages > (cpage + afterCurrent + atEnd))) {
@@ -525,7 +524,6 @@ export let IssuesDirective = function($log, $location, $template, $compile) {
                     pages.push({classes: "page", num: i, type: "page"});
                 }
             }
-
 
             let html = template(options);
             html = $compile(html)($scope);
@@ -559,8 +557,8 @@ export let IssuesDirective = function($log, $location, $template, $compile) {
 
         return $el.on("click", ".issues-paginator li.page > a", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
-            let pagenum = target.data("pagenum");
+            const target = angular.element(event.currentTarget);
+            const pagenum = target.data("pagenum");
 
             return $scope.$apply(function() {
                 $ctrl.selectFilter("page", pagenum);
@@ -570,7 +568,7 @@ export let IssuesDirective = function($log, $location, $template, $compile) {
     };
 
     //# Issues Filters
-    let linkOrdering = function($scope, $el, $attrs, $ctrl) {
+    const linkOrdering = function($scope, $el, $attrs, $ctrl) {
         // Draw the arrow the first time
 
         let icon, svg;
@@ -578,7 +576,7 @@ export let IssuesDirective = function($log, $location, $template, $compile) {
 
         if (currentOrder) {
             icon = startswith(currentOrder, "-") ? "icon-arrow-up" : "icon-arrow-down";
-            let colHeadElement = $el.find(`.row.title > div[data-fieldname='${trim(currentOrder, "-")}']`);
+            const colHeadElement = $el.find(`.row.title > div[data-fieldname='${trim(currentOrder, "-")}']`);
 
             svg = $("<tg-svg>").attr("svg-icon", icon);
 
@@ -588,12 +586,12 @@ export let IssuesDirective = function($log, $location, $template, $compile) {
 
         return $el.on("click", ".row.title > div", function(event) {
             let finalOrder;
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
             currentOrder = $ctrl.getOrderBy();
-            let newOrder = target.data("fieldname");
+            const newOrder = target.data("fieldname");
 
-            if (newOrder === 'total_voters') {
+            if (newOrder === "total_voters") {
                 finalOrder = currentOrder === newOrder ? newOrder : `-${newOrder}`;
             } else {
                 finalOrder = currentOrder === newOrder ? `-${newOrder}` : newOrder;
@@ -619,8 +617,8 @@ export let IssuesDirective = function($log, $location, $template, $compile) {
     };
 
     //# Issues Link
-    let link = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
+    const link = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
         linkOrdering($scope, $el, $attrs, $ctrl);
         linkPagination($scope, $el, $attrs, $ctrl);
 
@@ -646,24 +644,24 @@ export let IssueStatusInlineEditionDirective = function($repo, $template, $roots
 
     NOTE: This directive need 'issueStatusById' and 'project'.
     */
-    let selectionTemplate = $template.get("issue/issue-status-inline-edition-selection.html", true);
+    const selectionTemplate = $template.get("issue/issue-status-inline-edition-selection.html", true);
 
-    let updateIssueStatus = function($el, issue, issueStatusById) {
-        let issueStatusDomParent = $el.find(".issue-status");
-        let issueStatusDom = $el.find(".issue-status .issue-status-bind");
+    const updateIssueStatus = function($el, issue, issueStatusById) {
+        const issueStatusDomParent = $el.find(".issue-status");
+        const issueStatusDom = $el.find(".issue-status .issue-status-bind");
 
-        let status = issueStatusById[issue.status];
+        const status = issueStatusById[issue.status];
 
         if (status) {
             issueStatusDom.text(status.name);
             issueStatusDom.prop("title", status.name);
-            return issueStatusDomParent.css('color', status.color);
+            return issueStatusDomParent.css("color", status.color);
         }
     };
 
-    let link = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
-        let issue = $scope.$eval($attrs.tgIssueStatusInlineEdition);
+    const link = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
+        const issue = $scope.$eval($attrs.tgIssueStatusInlineEdition);
 
         $el.on("click", ".issue-status", function(event) {
             event.preventDefault();
@@ -674,7 +672,7 @@ export let IssueStatusInlineEditionDirective = function($repo, $template, $roots
         $el.on("click", ".status", function(event) {
             event.preventDefault();
             event.stopPropagation();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
             issue.status = target.data("status-id");
             $el.find(".pop-status").popover().close();
@@ -684,12 +682,12 @@ export let IssueStatusInlineEditionDirective = function($repo, $template, $roots
                 $repo.save(issue).then(function() {
                     $ctrl.loadIssues();
                     return $ctrl.generateFilters();
-                })
+                }),
             );
         });
 
         bindOnce($scope, "project", function(project) {
-            $el.append(selectionTemplate({ 'statuses':  project.issue_statuses }));
+            $el.append(selectionTemplate({ statuses:  project.issue_statuses }));
             updateIssueStatus($el, issue, $scope.issueStatusById);
 
             // If the user has not enough permissions the click events are unbinded
@@ -699,7 +697,7 @@ export let IssueStatusInlineEditionDirective = function($repo, $template, $roots
             }
         });
 
-        $scope.$watch($attrs.tgIssueStatusInlineEdition, val => {
+        $scope.$watch($attrs.tgIssueStatusInlineEdition, (val) => {
             return updateIssueStatus($el, val, $scope.issueStatusById);
         });
 
@@ -714,22 +712,22 @@ export let IssueStatusInlineEditionDirective = function($repo, $template, $roots
 //############################################################################
 
 export let IssueAssignedToInlineEditionDirective = function($repo, $rootscope, $translate, avatarService) {
-    let template = _.template(`\
+    const template = _.template(`\
 <img style="background-color: <%- bg %>" src="<%- imgurl %>" alt="<%- name %>"/>
 <figcaption><%- name %></figcaption>\
 `);
 
-    let link = function($scope, $el, $attrs) {
-        let updateIssue = function(issue) {
-            let ctx = {
+    const link = function($scope, $el, $attrs) {
+        const updateIssue = function(issue) {
+            const ctx = {
                 name: $translate.instant("COMMON.ASSIGNED_TO.NOT_ASSIGNED"),
                 imgurl: `/${_version}/images/unnamed.png`,
-                bg: null
+                bg: null,
             };
 
-            let member = $scope.usersById[issue.assigned_to];
+            const member = $scope.usersById[issue.assigned_to];
 
-            let avatar = avatarService.getAvatar(member);
+            const avatar = avatarService.getAvatar(member);
             ctx.imgurl = avatar.url;
             ctx.bg = null;
 
@@ -739,14 +737,14 @@ export let IssueAssignedToInlineEditionDirective = function($repo, $rootscope, $
             }
 
             $el.find(".avatar").html(template(ctx));
-            return $el.find(".issue-assignedto").attr('title', ctx.name);
+            return $el.find(".issue-assignedto").attr("title", ctx.name);
         };
 
-        let $ctrl = $el.controller();
-        let issue = $scope.$eval($attrs.tgIssueAssignedToInlineEdition);
+        const $ctrl = $el.controller();
+        const issue = $scope.$eval($attrs.tgIssueAssignedToInlineEdition);
         updateIssue(issue);
 
-        $el.on("click", ".issue-assignedto", event => $rootscope.$broadcast("assigned-to:add", issue));
+        $el.on("click", ".issue-assignedto", (event) => $rootscope.$broadcast("assigned-to:add", issue));
 
         bindOnce($scope, "project", function(project) {
             // If the user has not enough permissions the click events are unbinded
@@ -764,7 +762,7 @@ export let IssueAssignedToInlineEditionDirective = function($repo, $rootscope, $
             }
         });
 
-        $scope.$watch($attrs.tgIssueAssignedToInlineEdition, val => {
+        $scope.$watch($attrs.tgIssueAssignedToInlineEdition, (val) => {
             return updateIssue(val);
         });
 

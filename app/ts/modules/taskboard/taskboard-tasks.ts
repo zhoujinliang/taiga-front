@@ -17,25 +17,25 @@
  * File: home.service.coffee
  */
 
-import {groupBy} from "../../libs/utils"
-import {Service} from "../../classes"
-import * as Immutable from "immutable"
-import * as _ from "lodash"
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {Service} from "../../classes";
+import {groupBy} from "../../libs/utils";
 
 export class TaskboardTasksService extends Service {
-    tasksRaw:any
-    foldStatusChanged:any
-    usTasks:any
-    project:any
-    usersById:any
-    userstories:any
-    order:any
+    tasksRaw: any;
+    foldStatusChanged: any;
+    usTasks: any;
+    project: any;
+    usersById: any;
+    userstories: any;
+    order: any;
 
     static initClass() {
         this.$inject = [];
     }
     constructor() {
-        super()
+        super();
         this.reset();
     }
 
@@ -93,7 +93,7 @@ export class TaskboardTasksService extends Service {
 
         this.usTasks.forEach(function(us) {
             us.forEach(function(status) {
-                findedTask = status.find(task => task.get('id') === id);
+                findedTask = status.find((task) => task.get("id") === id);
 
                 if (findedTask) { return false; }
             });
@@ -105,25 +105,25 @@ export class TaskboardTasksService extends Service {
     }
 
     replace(task) {
-        return this.usTasks = this.usTasks.map(us =>
+        return this.usTasks = this.usTasks.map((us) =>
             us.map(function(status) {
-                let findedIndex = status.findIndex(usItem => usItem.get('id') === us.get('id'));
+                const findedIndex = status.findIndex((usItem) => usItem.get("id") === us.get("id"));
 
                 if (findedIndex !== -1) {
                     status = status.set(findedIndex, task);
                 }
 
                 return status;
-            })
+            }),
         );
     }
 
     getTaskModel(id) {
-        return _.find(this.tasksRaw, (task:any) => task.id === id);
+        return _.find(this.tasksRaw, (task: any) => task.id === id);
     }
 
     replaceModel(task) {
-        this.tasksRaw = _.map(this.tasksRaw, function(it:any) {
+        this.tasksRaw = _.map(this.tasksRaw, function(it: any) {
             if (task.id === it.id) {
                 return task;
             } else {
@@ -136,23 +136,23 @@ export class TaskboardTasksService extends Service {
 
     move(id, usId, statusId, index) {
         let it;
-        let task = this.getTaskModel(id);
+        const task = this.getTaskModel(id);
 
-        let taskByUsStatus = _.filter(this.tasksRaw, (task:any) => {
+        let taskByUsStatus = _.filter(this.tasksRaw, (task: any) => {
             return (task.status === statusId) && (task.user_story === usId);
         });
 
-        taskByUsStatus = _.sortBy(taskByUsStatus, (it:any) => this.order[it.id]);
+        taskByUsStatus = _.sortBy(taskByUsStatus, (it: any) => this.order[it.id]);
 
-        let taksWithoutMoved = _.filter(taskByUsStatus, (it:any) => it.id !== id);
-        let beforeDestination = _.slice(taksWithoutMoved, 0, index);
-        let afterDestination = _.slice(taksWithoutMoved, index);
+        const taksWithoutMoved = _.filter(taskByUsStatus, (it: any) => it.id !== id);
+        const beforeDestination = _.slice(taksWithoutMoved, 0, index);
+        const afterDestination = _.slice(taksWithoutMoved, index);
 
-        let setOrders = {};
+        const setOrders = {};
 
-        let previous = beforeDestination[beforeDestination.length - 1];
+        const previous = beforeDestination[beforeDestination.length - 1];
 
-        let previousWithTheSameOrder = _.filter(beforeDestination, (it:any) => {
+        const previousWithTheSameOrder = _.filter(beforeDestination, (it: any) => {
             return this.order[it.id] === this.order[previous.id];
     });
 
@@ -179,39 +179,39 @@ export class TaskboardTasksService extends Service {
 
         this.refresh();
 
-        return {"task_id": task.id, "order": this.order[task.id], "set_orders": setOrders};
+        return {task_id: task.id, order: this.order[task.id], set_orders: setOrders};
     }
 
     refresh() {
         let status;
-        this.tasksRaw = _.sortBy(this.tasksRaw, (it:any) => this.order[it.id]);
+        this.tasksRaw = _.sortBy(this.tasksRaw, (it: any) => this.order[it.id]);
 
-        let tasks = this.tasksRaw;
-        let taskStatusList = _.sortBy(this.project.task_statuses, "order");
+        const tasks = this.tasksRaw;
+        const taskStatusList = _.sortBy(this.project.task_statuses, "order");
 
-        let usTasks = {};
+        const usTasks = {};
 
         // Iterate over all userstories and
         // null userstory for unassigned tasks
-        for (let us of _.union(this.userstories, [{id:null}])) {
+        for (const us of _.union(this.userstories, [{id: null}])) {
             usTasks[us.id] = {};
             for (status of taskStatusList) {
                 usTasks[us.id][status.id] = [];
             }
         }
 
-        for (let taskModel of tasks) {
+        for (const taskModel of tasks) {
             if ((usTasks[taskModel.user_story] != null) && (usTasks[taskModel.user_story][taskModel.status] != null)) {
-                let task:any = {};
+                const task: any = {};
 
-                let model = taskModel.getAttrs();
+                const model = taskModel.getAttrs();
 
                 task.foldStatusChanged = this.foldStatusChanged[taskModel.id];
                 task.model = model;
-                task.images = _.filter(model.attachments, (it:any) => !!it.thumbnail_card_url);
+                task.images = _.filter(model.attachments, (it: any) => !!it.thumbnail_card_url);
                 task.id = taskModel.id;
                 task.assigned_to = this.usersById[taskModel.assigned_to];
-                task.colorized_tags = _.map(task.model.tags, tag => {
+                task.colorized_tags = _.map(task.model.tags, (tag) => {
                     return {name: tag[0], color: tag[1]};
             });
 

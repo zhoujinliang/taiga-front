@@ -22,48 +22,48 @@
  * File: modules/taskboard/lightboxes.coffee
  */
 
-import {debounce, trim} from "../../libs/utils"
-import * as Immutable from "immutable"
-import * as _ from "lodash"
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {debounce, trim} from "../../libs/utils";
 
 export let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $loading, lightboxService, $translate, $q, attachmentsService) {
-    let link = function($scope, $el, attrs) {
+    const link = function($scope, $el, attrs) {
         $scope.isNew = true;
 
         let attachmentsToAdd = Immutable.List();
         let attachmentsToDelete = Immutable.List();
 
-        let resetAttachments = function() {
+        const resetAttachments = function() {
             attachmentsToAdd = Immutable.List();
             return attachmentsToDelete = Immutable.List();
         };
 
-        $scope.addAttachment = attachment => attachmentsToAdd = attachmentsToAdd.push(attachment);
+        $scope.addAttachment = (attachment) => attachmentsToAdd = attachmentsToAdd.push(attachment);
 
         $scope.deleteAttachment = function(attachment) {
-            attachmentsToAdd = <Immutable.List<any>>attachmentsToAdd.filter((it:Immutable.Map<string,any>) => it.get('name') !== attachment.get('name'));
+            attachmentsToAdd = attachmentsToAdd.filter((it: Immutable.Map<string, any>) => it.get("name") !== attachment.get("name")) as Immutable.List<any>;
 
             if (attachment.get("id")) {
                 return attachmentsToDelete = attachmentsToDelete.push(attachment);
             }
         };
 
-        let createAttachments = function(obj) {
-            let promises = _.map(attachmentsToAdd.toJS(), (attachment:any) => attachmentsService.upload(attachment.file, obj.id, $scope.task.project, 'task'));
+        const createAttachments = function(obj) {
+            const promises = _.map(attachmentsToAdd.toJS(), (attachment: any) => attachmentsService.upload(attachment.file, obj.id, $scope.task.project, "task"));
 
             return $q.all(promises);
         };
 
-        let deleteAttachments = function(obj) {
-            let promises = _.map(attachmentsToDelete.toJS(), (attachment:any) => attachmentsService.delete("task", attachment.id));
+        const deleteAttachments = function(obj) {
+            const promises = _.map(attachmentsToDelete.toJS(), (attachment: any) => attachmentsService.delete("task", attachment.id));
 
             return $q.all(promises);
         };
 
-        let tagsToAdd = [];
+        const tagsToAdd = [];
 
         $scope.addTag = function(tag, color) {
-            let value = trim(tag.toLowerCase());
+            const value = trim(tag.toLowerCase());
 
             let { tags } = $scope.project;
             let projectTags = $scope.project.tags_colors;
@@ -79,9 +79,9 @@ export let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $l
 
             $scope.project.tags = tags;
 
-            let itemtags = _.clone($scope.task.tags);
+            const itemtags = _.clone($scope.task.tags);
 
-            let inserted = _.find(itemtags, it => it[0] === value);
+            const inserted = _.find(itemtags, (it) => it[0] === value);
 
             if (!inserted) {
                 itemtags.push([tag , color]);
@@ -89,14 +89,13 @@ export let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $l
             }
         };
 
-
         $scope.deleteTag = function(tag) {
-            let value = trim(tag[0].toLowerCase());
+            const value = trim(tag[0].toLowerCase());
 
-            let { tags } = $scope.project;
-            let itemtags = _.clone($scope.task.tags);
+            const { tags } = $scope.project;
+            const itemtags = _.clone($scope.task.tags);
 
-            _.remove(itemtags, tag => tag[0] === value);
+            _.remove(itemtags, (tag) => tag[0] === value);
 
             $scope.task.tags = itemtags;
 
@@ -111,7 +110,7 @@ export let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $l
                 is_archived: false,
                 status: $scope.project.default_task_status,
                 assigned_to: null,
-                tags: []
+                tags: [],
             };
             $scope.isNew = true;
             $scope.attachments = Immutable.List();
@@ -119,10 +118,10 @@ export let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $l
             resetAttachments();
 
             // Update texts for creation
-            let create = $translate.instant("COMMON.CREATE");
+            const create = $translate.instant("COMMON.CREATE");
             $el.find(".button-green").html(create);
 
-            let newTask = $translate.instant("LIGHTBOX.CREATE_EDIT_TASK.TITLE");
+            const newTask = $translate.instant("LIGHTBOX.CREATE_EDIT_TASK.TITLE");
             $el.find(".title").html(newTask + "  ");
 
             $el.find(".tag-input").val("");
@@ -140,8 +139,8 @@ export let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $l
             resetAttachments();
 
             // Update texts for edition
-            let save = $translate.instant("COMMON.SAVE");
-            let edit = $translate.instant("LIGHTBOX.CREATE_EDIT_TASK.ACTION_EDIT");
+            const save = $translate.instant("COMMON.SAVE");
+            const edit = $translate.instant("LIGHTBOX.CREATE_EDIT_TASK.ACTION_EDIT");
 
             $el.find(".button-green").html(save);
             $el.find(".title").html(edit + "  ");
@@ -152,21 +151,20 @@ export let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $l
             return $scope.createEditTaskOpen = true;
         });
 
+        const submitButton = $el.find(".submit-button");
 
-        let submitButton = $el.find(".submit-button");
-
-        let submit = debounce(2000, event => {
+        const submit = debounce(2000, (event) => {
             let broadcastEvent, promise;
             event.preventDefault();
 
-            let form = $el.find("form").checksley();
+            const form = $el.find("form").checksley();
             if (!form.validate()) {
                 return;
             }
 
-            let params = {
+            const params = {
                 include_attachments: true,
-                include_tasks: true
+                include_tasks: true,
             };
 
             if ($scope.isNew) {
@@ -177,15 +175,15 @@ export let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $l
                 broadcastEvent = "taskform:edit:success";
             }
 
-            promise.then(data =>
+            promise.then((data) =>
                 deleteAttachments(data)
                     .then(() => createAttachments(data))
                     .then(() => {
-                        return $rs.tasks.getByRef(data.project, data.ref, params).then(task => $rootscope.$broadcast(broadcastEvent, task));
-                })
+                        return $rs.tasks.getByRef(data.project, data.ref, params).then((task) => $rootscope.$broadcast(broadcastEvent, task));
+                }),
             );
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
@@ -203,13 +201,12 @@ export let CreateEditTaskDirective = function($repo, $model, $rs, $rootscope, $l
     return {link};
 };
 
-
 export let CreateBulkTasksDirective = function($repo, $rs, $rootscope, $loading, lightboxService, $model) {
-    let link = function($scope, $el, attrs) {
+    const link = function($scope, $el, attrs) {
         let data, form;
         $scope.form = {data: "", usId: null};
 
-        let submit = debounce(2000, event => {
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
             form = $el.find("form").checksley();
@@ -217,18 +214,18 @@ export let CreateBulkTasksDirective = function($repo, $rs, $rootscope, $loading,
                 return;
             }
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
             ({ data } = $scope.form);
-            let { projectId } = $scope;
-            let { sprintId } = $scope.form;
-            let { usId } = $scope.form;
+            const { projectId } = $scope;
+            const { sprintId } = $scope.form;
+            const { usId } = $scope.form;
 
-            let promise = $rs.tasks.bulkCreate(projectId, sprintId, usId, data);
+            const promise = $rs.tasks.bulkCreate(projectId, sprintId, usId, data);
             promise.then(function(result) {
-                result =  _.map(result, x => $model.make_model('tasks', x));
+                result =  _.map(result, (x) => $model.make_model("tasks", x));
                 currentLoading.finish();
                 $rootscope.$broadcast("taskform:bulk:success", result);
                 return lightboxService.close($el);
@@ -246,7 +243,7 @@ export let CreateBulkTasksDirective = function($repo, $rs, $rootscope, $loading,
             return $scope.form = {data: "", sprintId, usId};
     });
 
-        var submitButton = $el.find(".submit-button");
+        const submitButton = $el.find(".submit-button");
 
         $el.on("submit", "form", submit);
 

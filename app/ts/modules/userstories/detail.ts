@@ -22,37 +22,37 @@
  * File: modules/userstories/detail.coffee
  */
 
-import {groupBy, bindOnce, bindMethods} from "../../libs/utils"
-import {PageMixin} from "../controllerMixins"
+import {bindMethods, bindOnce, groupBy} from "../../libs/utils";
+import {PageMixin} from "../controllerMixins";
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
-declare var _version:string;
+declare var _version: string;
 
 //############################################################################
 //# User story Detail Controller
 //############################################################################
 
 export class UserStoryDetailController extends PageMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    log:any
-    appMetaService:any
-    navUrls:any
-    analytics:any
-    translate:any
-    modelTransform:any
-    errorHandlingService:any
-    configService:any
-    projectService:any
-    wysiwigService:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    log: any;
+    appMetaService: any;
+    navUrls: any;
+    analytics: any;
+    translate: any;
+    modelTransform: any;
+    errorHandlingService: any;
+    configService: any;
+    projectService: any;
+    wysiwigService: any;
 
     static initClass() {
         this.$inject = [
@@ -73,14 +73,14 @@ export class UserStoryDetailController extends PageMixin {
             "tgErrorHandlingService",
             "$tgConfig",
             "tgProjectService",
-            "tgWysiwygService"
+            "tgWysiwygService",
         ];
     }
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location,
-                  log, appMetaService, navUrls, analytics, translate, modelTransform,
-                  errorHandlingService, configService, projectService, wysiwigService) {
-        super()
+                log, appMetaService, navUrls, analytics, translate, modelTransform,
+                errorHandlingService, configService, projectService, wysiwigService) {
+        super();
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -107,7 +107,7 @@ export class UserStoryDetailController extends PageMixin {
 
         this.initializeEventHandlers();
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         // On Success
         promise.then(() => {
@@ -120,22 +120,22 @@ export class UserStoryDetailController extends PageMixin {
     }
 
     _setMeta() {
-        let totalTasks = this.scope.tasks.length;
-        let closedTasks = _.filter(this.scope.tasks, (t:any) => this.scope.taskStatusById[t.status].is_closed).length;
-        let progressPercentage = totalTasks > 0 ? Math.round((100 * closedTasks) / totalTasks) : 0;
+        const totalTasks = this.scope.tasks.length;
+        const closedTasks = _.filter(this.scope.tasks, (t: any) => this.scope.taskStatusById[t.status].is_closed).length;
+        const progressPercentage = totalTasks > 0 ? Math.round((100 * closedTasks) / totalTasks) : 0;
 
-        let title = this.translate.instant("US.PAGE_TITLE", {
+        const title = this.translate.instant("US.PAGE_TITLE", {
             userStoryRef: `#${this.scope.us.ref}`,
             userStorySubject: this.scope.us.subject,
-            projectName: this.scope.project.name
+            projectName: this.scope.project.name,
         });
-        let description = this.translate.instant("US.PAGE_DESCRIPTION", {
+        const description = this.translate.instant("US.PAGE_DESCRIPTION", {
             userStoryStatus: (this.scope.statusById[this.scope.us.status] != null ? this.scope.statusById[this.scope.us.status].name : undefined) || "--",
             userStoryPoints: this.scope.us.total_points,
             userStoryDescription: angular.element(this.wysiwigService.getHTML(this.scope.us.description) || "").text(),
             userStoryClosedTasks: closedTasks,
             userStoryTotalTasks: totalTasks,
-            userStoryProgressPercentage: progressPercentage
+            userStoryProgressPercentage: progressPercentage,
         });
 
         return this.appMetaService.setAll(title, description);
@@ -144,7 +144,7 @@ export class UserStoryDetailController extends PageMixin {
     initializeEventHandlers() {
         this.scope.$on("related-tasks:update", () => {
             this.scope.tasks = _.clone(this.scope.tasks);
-            let allClosed = _.every(this.scope.tasks, (task:any) => task.is_closed);
+            const allClosed = _.every(this.scope.tasks, (task: any) => task.is_closed);
 
             if (this.scope.us.is_closed !== allClosed) {
                 return this.loadUs();
@@ -161,7 +161,7 @@ export class UserStoryDetailController extends PageMixin {
     }
 
     initializeOnDeleteGoToUrl() {
-        let ctx:any = {project: this.scope.project.slug};
+        const ctx: any = {project: this.scope.project.slug};
         this.scope.onDeleteGoToUrl = this.navUrls.resolve("project", ctx);
         if (this.scope.project.is_backlog_activated) {
             if (this.scope.us.milestone) {
@@ -176,53 +176,51 @@ export class UserStoryDetailController extends PageMixin {
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
         this.scope.statusList = project.us_statuses;
-        this.scope.statusById = groupBy(project.us_statuses, x => x.id);
-        this.scope.taskStatusById = groupBy(project.task_statuses, x => x.id);
+        this.scope.statusById = groupBy(project.us_statuses, (x) => x.id);
+        this.scope.taskStatusById = groupBy(project.task_statuses, (x) => x.id);
         this.scope.pointsList = _.sortBy(project.points, "order");
-        this.scope.pointsById = groupBy(this.scope.pointsList, e => e.id);
+        this.scope.pointsById = groupBy(this.scope.pointsList, (e) => e.id);
         return project;
     }
 
     loadUs() {
-        let httpParams:any = _.pick(this.location.search(), "milestone", "no-milestone", "kanban-status");
-        let { milestone } = httpParams;
+        const httpParams: any = _.pick(this.location.search(), "milestone", "no-milestone", "kanban-status");
+        const { milestone } = httpParams;
         if (milestone) {
             this.rs.userstories.storeQueryParams(this.scope.projectId, {
                 milestone,
-                order_by: "sprint_order"
+                order_by: "sprint_order",
             });
         }
 
-        let noMilestone = httpParams["no-milestone"];
+        const noMilestone = httpParams["no-milestone"];
         if (noMilestone) {
             this.rs.userstories.storeQueryParams(this.scope.projectId, {
                 milestone: "null",
-                order_by: "backlog_order"
+                order_by: "backlog_order",
             });
         }
 
-        let kanbanStaus = httpParams["kanban-status"];
+        const kanbanStaus = httpParams["kanban-status"];
         if (kanbanStaus) {
             this.rs.userstories.storeQueryParams(this.scope.projectId, {
                 status: kanbanStaus,
-                order_by: "kanban_order"
+                order_by: "kanban_order",
             });
         }
 
-
-
-        return this.rs.userstories.getByRef(this.scope.projectId, this.params.usref).then(us => {
+        return this.rs.userstories.getByRef(this.scope.projectId, this.params.usref).then((us) => {
             this.scope.us = us;
             this.scope.usId = us.id;
             this.scope.commentModel = us;
 
-            this.modelTransform.setObject(this.scope, 'us');
+            this.modelTransform.setObject(this.scope, "us");
 
             return us;
         });
@@ -230,7 +228,7 @@ export class UserStoryDetailController extends PageMixin {
 
     loadSprint() {
         if (this.scope.us.milestone) {
-            return this.rs.sprints.get(this.scope.us.project, this.scope.us.milestone).then(sprint => {
+            return this.rs.sprints.get(this.scope.us.project, this.scope.us.milestone).then((sprint) => {
                 this.scope.sprint = sprint;
                 return sprint;
             });
@@ -238,14 +236,14 @@ export class UserStoryDetailController extends PageMixin {
     }
 
     loadTasks() {
-        return this.rs.tasks.list(this.scope.projectId, null, this.scope.usId).then(tasks => {
+        return this.rs.tasks.list(this.scope.projectId, null, this.scope.usId).then((tasks) => {
             this.scope.tasks = tasks;
             return tasks;
         });
     }
 
     loadInitialData() {
-        let project = this.loadProject();
+        const project = this.loadProject();
         this.fillUsersAndRoles(project.members, project.roles);
         return this.loadUs().then(() => this.q.all([this.loadSprint(), this.loadTasks()]));
     }
@@ -255,11 +253,11 @@ export class UserStoryDetailController extends PageMixin {
      *       See app/modules/components/vote-button for more info
      */
     onUpvote() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadUs();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -267,11 +265,11 @@ export class UserStoryDetailController extends PageMixin {
     }
 
     onDownvote() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadUs();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -283,11 +281,11 @@ export class UserStoryDetailController extends PageMixin {
      *       See app/modules/components/watch-button for more info
      */
     onWatch() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadUs();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -295,11 +293,11 @@ export class UserStoryDetailController extends PageMixin {
     }
 
     onUnwatch() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadUs();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -307,14 +305,14 @@ export class UserStoryDetailController extends PageMixin {
     }
 
     onTribeInfo() {
-            let publishTitle = this.translate.instant("US.TRIBE.PUBLISH_MORE_INFO_TITLE");
-            let image = $('<img />')
+            const publishTitle = this.translate.instant("US.TRIBE.PUBLISH_MORE_INFO_TITLE");
+            const image = $("<img />")
                 .attr({
-                    'src': `/${_version}/images/monster-fight.png`,
-                    'alt': this.translate.instant("US.TRIBE.PUBLISH_MORE_INFO_TITLE")
+                    src: `/${_version}/images/monster-fight.png`,
+                    alt: this.translate.instant("US.TRIBE.PUBLISH_MORE_INFO_TITLE"),
                 });
-            let text = this.translate.instant("US.TRIBE.PUBLISH_MORE_INFO_TEXT");
-            let publishDesc = $('<div></div>').append(image).append(text);
+            const text = this.translate.instant("US.TRIBE.PUBLISH_MORE_INFO_TEXT");
+            const publishDesc = $("<div></div>").append(image).append(text);
             return this.confirm.success(publishTitle, publishDesc);
         }
 }
@@ -334,15 +332,15 @@ export let UsStatusDisplayDirective = function($template, $compile) {
     //   - US object (ng-model)
     //   - scope.statusById object
 
-    let template = $template.get("common/components/status-display.html", true);
+    const template = $template.get("common/components/status-display.html", true);
 
-    let link = function($scope, $el, $attrs) {
-        let render = function(us) {
-            let status = $scope.statusById[us.status];
+    const link = function($scope, $el, $attrs) {
+        const render = function(us) {
+            const status = $scope.statusById[us.status];
 
             let html = template({
                 is_closed: us.is_closed,
-                status
+                status,
             });
 
             html = $compile(html)($scope);
@@ -359,7 +357,7 @@ export let UsStatusDisplayDirective = function($template, $compile) {
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
@@ -378,19 +376,19 @@ export let UsStatusButtonDirective = function($rootScope, $repo, $confirm, $load
     //   - scope.statusById object
     //   - $scope.project.my_permissions
 
-    let template = $template.get("common/components/status-button.html", true);
+    const template = $template.get("common/components/status-button.html", true);
 
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
         let status;
-        let isEditable = () => $scope.project.my_permissions.indexOf("modify_us") !== -1;
+        const isEditable = () => $scope.project.my_permissions.indexOf("modify_us") !== -1;
 
-        let render = us => {
+        const render = (us) => {
             status = $scope.statusById[us.status];
 
-            let html = template({
+            const html = template({
                 status,
                 statuses: $scope.statusList,
-                editable: isEditable()
+                editable: isEditable(),
             });
 
             $el.html(html);
@@ -398,25 +396,25 @@ export let UsStatusButtonDirective = function($rootScope, $repo, $confirm, $load
             return $compile($el.contents())($scope);
         };
 
-        let save = status => {
+        const save = (status) => {
             $el.find(".pop-status").popover().close();
 
-            let currentLoading = $loading()
-                .target($el.find('.js-edit-status'))
+            const currentLoading = $loading()
+                .target($el.find(".js-edit-status"))
                 .start();
 
-            let transform = $modelTransform.save(function(us) {
+            const transform = $modelTransform.save(function(us) {
                 us.status = status;
 
                 return us;
             });
 
-            let onSuccess = function() {
+            const onSuccess = function() {
                 $rootScope.$broadcast("object:updated");
                 return currentLoading.finish();
             };
 
-            let onError = function() {
+            const onError = function() {
                 $confirm.notify("error");
                 return currentLoading.finish();
             };
@@ -437,7 +435,7 @@ export let UsStatusButtonDirective = function($rootScope, $repo, $confirm, $load
             event.stopPropagation();
             if (!isEditable()) { return; }
 
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             status = target.data("status-id");
 
             return save(status);
@@ -445,7 +443,7 @@ export let UsStatusButtonDirective = function($rootScope, $repo, $confirm, $load
 
         $scope.$watch(() => $model.$modelValue != null ? $model.$modelValue.status : undefined
         , function() {
-            let us = $model.$modelValue;
+            const us = $model.$modelValue;
 
             if (us) { return render(us); }
         });
@@ -456,7 +454,7 @@ export let UsStatusButtonDirective = function($rootScope, $repo, $confirm, $load
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
@@ -465,15 +463,15 @@ export let UsStatusButtonDirective = function($rootScope, $repo, $confirm, $load
 //############################################################################
 
 export let UsTeamRequirementButtonDirective = function($rootscope, $tgrepo, $confirm, $loading, $modelTransform, $template, $compile) {
-    let template = $template.get("us/us-team-requirement-button.html", true);
+    const template = $template.get("us/us-team-requirement-button.html", true);
 
-    let link = function($scope, $el, $attrs, $model) {
-        let canEdit = () => $scope.project.my_permissions.indexOf("modify_us") !== -1;
+    const link = function($scope, $el, $attrs, $model) {
+        const canEdit = () => $scope.project.my_permissions.indexOf("modify_us") !== -1;
 
-        let render = function(us) {
-            let ctx = {
+        const render = function(us) {
+            const ctx = {
                 canEdit: canEdit(),
-                isRequired: us.team_requirement
+                isRequired: us.team_requirement,
             };
             let html = template(ctx);
             html = $compile(html)($scope);
@@ -481,12 +479,12 @@ export let UsTeamRequirementButtonDirective = function($rootscope, $tgrepo, $con
             return $el.html(html);
         };
 
-        let save = function(team_requirement) {
-            let currentLoading = $loading()
+        const save = function(team_requirement) {
+            const currentLoading = $loading()
                 .target($el.find("label"))
                 .start();
 
-            let transform = $modelTransform.save(function(us) {
+            const transform = $modelTransform.save(function(us) {
                 us.team_requirement = team_requirement;
 
                 return us;
@@ -506,14 +504,14 @@ export let UsTeamRequirementButtonDirective = function($rootscope, $tgrepo, $con
         $el.on("click", ".team-requirement", function(event) {
             if (!canEdit()) { return; }
 
-            let team_requirement = !$model.$modelValue.team_requirement;
+            const team_requirement = !$model.$modelValue.team_requirement;
 
             return save(team_requirement);
         });
 
         $scope.$watch(() => $model.$modelValue != null ? $model.$modelValue.team_requirement : undefined
         , function() {
-            let us = $model.$modelValue;
+            const us = $model.$modelValue;
 
             if (us) { return render(us); }
         });
@@ -524,7 +522,7 @@ export let UsTeamRequirementButtonDirective = function($rootscope, $tgrepo, $con
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
@@ -533,26 +531,26 @@ export let UsTeamRequirementButtonDirective = function($rootscope, $tgrepo, $con
 //############################################################################
 
 export let UsClientRequirementButtonDirective = function($rootscope, $tgrepo, $confirm, $loading, $modelTransform, $template, $compile) {
-    let template = $template.get("us/us-client-requirement-button.html", true);
+    const template = $template.get("us/us-client-requirement-button.html", true);
 
-    let link = function($scope, $el, $attrs, $model) {
-        let canEdit = () => $scope.project.my_permissions.indexOf("modify_us") !== -1;
+    const link = function($scope, $el, $attrs, $model) {
+        const canEdit = () => $scope.project.my_permissions.indexOf("modify_us") !== -1;
 
-        let render = function(us) {
-            let ctx = {
+        const render = function(us) {
+            const ctx = {
                 canEdit: canEdit(),
-                isRequired: us.client_requirement
+                isRequired: us.client_requirement,
             };
-            let html = $compile(template(ctx))($scope);
+            const html = $compile(template(ctx))($scope);
             return $el.html(html);
         };
 
-        let save = function(client_requirement) {
-            let currentLoading = $loading()
+        const save = function(client_requirement) {
+            const currentLoading = $loading()
                 .target($el.find("label"))
                 .start();
 
-            let transform = $modelTransform.save(function(us) {
+            const transform = $modelTransform.save(function(us) {
                 us.client_requirement = client_requirement;
 
                 return us;
@@ -569,13 +567,13 @@ export let UsClientRequirementButtonDirective = function($rootscope, $tgrepo, $c
         $el.on("click", ".client-requirement", function(event) {
             if (!canEdit()) { return; }
 
-            let client_requirement = !$model.$modelValue.client_requirement;
+            const client_requirement = !$model.$modelValue.client_requirement;
             return save(client_requirement);
         });
 
         $scope.$watch(() => $model.$modelValue != null ? $model.$modelValue.client_requirement : undefined
         , function() {
-            let us = $model.$modelValue;
+            const us = $model.$modelValue;
             if (us) { return render(us); }
         });
 
@@ -585,6 +583,6 @@ export let UsClientRequirementButtonDirective = function($rootscope, $tgrepo, $c
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };

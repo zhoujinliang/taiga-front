@@ -22,14 +22,14 @@
  * File: modules/user-settings.coffee
  */
 
-import * as angular from "angular"
-import * as changePassword from "./change-password"
-import {DeleteUserDirective} from "./lightboxes"
-import * as main from "./main"
-import {UserSettingsNavigationDirective} from "./nav"
-import * as notifications from "./notifications"
+import * as angular from "angular";
+import * as changePassword from "./change-password";
+import {DeleteUserDirective} from "./lightboxes";
+import * as main from "./main";
+import {UserSettingsNavigationDirective} from "./nav";
+import * as notifications from "./notifications";
 
-let module = angular.module("taigaUserSettings", []);
+const module = angular.module("taigaUserSettings", []);
 module.controller("UserChangePasswordController", changePassword.UserChangePasswordController);
 module.directive("tgUserChangePassword", ["$tgResources", "$tgConfirm", "$tgLoading", "$translate", changePassword.UserChangePasswordDirective]);
 module.directive("tgLbDeleteUser", ["$tgRepo", "$rootScope", "$tgAuth", "$tgLocation", "$tgNavUrls",
@@ -37,7 +37,7 @@ module.directive("tgLbDeleteUser", ["$tgRepo", "$rootScope", "$tgAuth", "$tgLoca
 module.controller("UserSettingsController", main.UserSettingsController);
 module.directive("tgUserProfile", ["$tgConfirm", "$tgAuth", "$tgRepo", "$translate", main.UserProfileDirective]);
 module.directive("tgUserAvatar", ["$tgAuth", "$tgModel", "$tgResources", "$tgConfirm", main.UserAvatarDirective]);
-module.directive('tgAvatarModel', ['$parse', main.TaigaAvatarModelDirective]);
+module.directive("tgAvatarModel", ["$parse", main.TaigaAvatarModelDirective]);
 module.directive("tgUserSettingsNavigation", UserSettingsNavigationDirective);
 module.controller("UserNotificationsController", notifications.UserNotificationsController);
 module.directive("tgUserNotifications", notifications.UserNotificationsDirective);

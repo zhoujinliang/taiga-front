@@ -22,22 +22,22 @@
  * File: modules/wiki/detail.coffee
  */
 
-import {groupBy, bindOnce} from "../../libs/utils"
-import {autoScroll} from "../../libs/dom-autoscroller"
+import {autoScroll} from "../../libs/dom-autoscroller";
+import {bindOnce, groupBy} from "../../libs/utils";
 
-import * as dragula from "dragula"
-import * as angular from "angular"
+import * as angular from "angular";
+import * as dragula from "dragula";
 
 //############################################################################
 //# Wiki Main Directive
 //############################################################################
 
 export let WikiNavDirective = function($tgrepo, $log, $location, $confirm, $analytics, $loading, $template,
-                    $compile, $translate) {
-    let template = $template.get("wiki/wiki-nav.html", true);
+                                       $compile, $translate) {
+    const template = $template.get("wiki/wiki-nav.html", true);
 
-    let linkWikiLinks = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
+    const linkWikiLinks = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
 
         if (($attrs.ngModel == null)) {
             return $log.error("WikiNavDirective: no ng-model attr is defined");
@@ -46,15 +46,15 @@ export let WikiNavDirective = function($tgrepo, $log, $location, $confirm, $anal
         let addWikiLinkPermission = $scope.project.my_permissions.indexOf("add_wiki_link") > -1;
         let drake = null;
 
-        var render = function(wikiLinks) {
+        const render = function(wikiLinks) {
             addWikiLinkPermission = $scope.project.my_permissions.indexOf("add_wiki_link") > -1;
-            let deleteWikiLinkPermission = $scope.project.my_permissions.indexOf("delete_wiki_link") > -1;
+            const deleteWikiLinkPermission = $scope.project.my_permissions.indexOf("delete_wiki_link") > -1;
 
             let html = template({
                 wikiLinks,
                 projectSlug: $scope.projectSlug,
                 addWikiLinkPermission,
-                deleteWikiLinkPermission
+                deleteWikiLinkPermission,
             });
 
             html = $compile(html)($scope);
@@ -68,30 +68,30 @@ export let WikiNavDirective = function($tgrepo, $log, $location, $confirm, $anal
 
             if (addWikiLinkPermission) {
                 let itemEl = null;
-                let tdom = $el.find(".sortable");
+                const tdom = $el.find(".sortable");
 
-                drake = dragula([tdom[0]], <dragula.DragulaOptions>{
-                    direction: 'vertical',
+                drake = dragula([tdom[0]], {
+                    direction: "vertical",
                     copySortSource: false,
                     copy: false,
                     mirrorContainer: tdom[0],
-                    moves(item) { return $(item).is('li'); }
-                });
+                    moves(item) { return $(item).is("li"); },
+                } as dragula.DragulaOptions);
 
-                drake.on('dragend', function(item) {
+                drake.on("dragend", function(item) {
                     itemEl = $(item);
                     item = itemEl.scope().link;
-                    let itemIndex = itemEl.index();
+                    const itemIndex = itemEl.index();
                     return $scope.$emit("wiki:links:move", item, itemIndex);
                 });
 
-                let scroll = autoScroll(window, {
+                const scroll = autoScroll(window, {
                     margin: 20,
                     pixels: 30,
                     scrollWhenOutside: true,
                     autoScroll() {
                         return this.down && drake.dragging;
-                    }
+                    },
                 });
             }
 
@@ -105,13 +105,13 @@ export let WikiNavDirective = function($tgrepo, $log, $location, $confirm, $anal
             $el.on("click", ".js-delete-link", function(event) {
                 event.preventDefault();
                 event.stopPropagation();
-                let target = angular.element(event.currentTarget);
-                let linkId = target.parents('.wiki-link').data('id');
+                const target = angular.element(event.currentTarget);
+                const linkId = target.parents(".wiki-link").data("id");
 
-                let title = $translate.instant("WIKI.DELETE_LINK_TITLE");
-                let message = $scope.wikiLinks[linkId].title;
+                const title = $translate.instant("WIKI.DELETE_LINK_TITLE");
+                const message = $scope.wikiLinks[linkId].title;
 
-                return $confirm.askOnDelete(title, message).then(askResponse => {
+                return $confirm.askOnDelete(title, message).then((askResponse) => {
                     let promise = $tgrepo.remove($scope.wikiLinks[linkId]);
                     promise.then(function() {
                         promise = $ctrl.loadWikiLinks();
@@ -133,27 +133,27 @@ export let WikiNavDirective = function($tgrepo, $log, $location, $confirm, $anal
                 event.preventDefault();
                 if (event.keyCode === 13) {
                     target = angular.element(event.currentTarget);
-                    let newLink = target.val();
+                    const newLink = target.val();
 
-                    let currentLoading = $loading()
+                    const currentLoading = $loading()
                         .target($el.find(".new"))
                         .start();
 
-                    let promise = $tgrepo.create("wiki-links", {project: $scope.projectId, title: newLink});
+                    const promise = $tgrepo.create("wiki-links", {project: $scope.projectId, title: newLink});
                     promise.then(function() {
                         $analytics.trackEvent("wikilink", "create", "create wiki link", 1);
-                        let loadPromise = $ctrl.loadWikiLinks();
+                        const loadPromise = $ctrl.loadWikiLinks();
                         loadPromise.then(function() {
                             currentLoading.finish();
                             $el.find(".new").addClass("hidden");
-                            $el.find(".new input").val('');
+                            $el.find(".new input").val("");
                             $el.find(".add-button").show();
                             return render($scope.wikiLinks);
                         });
                         return loadPromise.then(null, function() {
                             currentLoading.finish();
                             $el.find(".new").addClass("hidden");
-                            $el.find(".new input").val('');
+                            $el.find(".new input").val("");
                             $el.find(".add-button").show();
                             return $confirm.notify("error", "Error loading wiki links");
                         });
@@ -163,7 +163,7 @@ export let WikiNavDirective = function($tgrepo, $log, $location, $confirm, $anal
                         currentLoading.finish();
                         $el.find(".new input").val(newLink);
                         $el.find(".new input").focus().select();
-                        if (__guard__(error != null ? error.__all__ : undefined, x => x[0]) != null) {
+                        if (__guard__(error != null ? error.__all__ : undefined, (x) => x[0]) != null) {
                             return $confirm.notify("error", "The link already exists");
                         } else {
                             return $confirm.notify("error");
@@ -173,7 +173,7 @@ export let WikiNavDirective = function($tgrepo, $log, $location, $confirm, $anal
                 } else if (event.keyCode === 27) {
                     target = angular.element(event.currentTarget);
                     $el.find(".new").addClass("hidden");
-                    $el.find(".new input").val('');
+                    $el.find(".new input").val("");
                     return $el.find(".add-button").show();
                 }
             });
@@ -182,7 +182,7 @@ export let WikiNavDirective = function($tgrepo, $log, $location, $confirm, $anal
         return bindOnce($scope, $attrs.ngModel, render);
     };
 
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         linkWikiLinks($scope, $el, $attrs);
 
         return $scope.$on("$destroy", () => $el.off());
@@ -192,5 +192,5 @@ export let WikiNavDirective = function($tgrepo, $log, $location, $confirm, $anal
 };
 
 function __guard__(value, transform) {
-  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+  return (typeof value !== "undefined" && value !== null) ? transform(value) : undefined;
 }

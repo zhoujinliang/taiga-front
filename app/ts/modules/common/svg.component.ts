@@ -1,4 +1,4 @@
-import {Component, Input, ElementRef} from "@angular/core"
+import {Component, ElementRef, Input} from "@angular/core";
 
 @Component({
     selector: "tg-svg",
@@ -9,7 +9,7 @@ import {Component, Input, ElementRef} from "@angular/core"
               <title *ngIf="svgTitleTranslate" i18n>{{svgTitleTranslate}}</title>
           </use>
       </svg>
-    `
+    `,
 })
 export class Svg {
     @Input("svg-icon") svgIcon: string = "";
@@ -17,10 +17,8 @@ export class Svg {
     @Input("svg-title-translate") svgTitleTranslate: string = "";
 
     constructor(elm: ElementRef) {
-        this.svgIcon = elm.nativeElement.getAttribute('svg-icon');
-        this.svgTitle = elm.nativeElement.getAttribute('svg-title');
-        this.svgTitleTranslate = elm.nativeElement.getAttribute('svg-title-translate');
+        this.svgIcon = elm.nativeElement.getAttribute("svg-icon");
+        this.svgTitle = elm.nativeElement.getAttribute("svg-title");
+        this.svgTitleTranslate = elm.nativeElement.getAttribute("svg-title-translate");
     }
-};
-
-
+}

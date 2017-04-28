@@ -22,26 +22,26 @@
  * File: modules/issues/lightboxes.coffee
  */
 
-import {debounce} from "../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {debounce} from "../../libs/utils";
 
 //############################################################################
 //# Delete User Lightbox Directive
 //############################################################################
 
 export let DeleteUserDirective = function($repo, $rootscope, $auth, $location, $navUrls, lightboxService, $loading) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         let submitButton;
-        $scope.$on("deletelightbox:new", (ctx, user)=> lightboxService.open($el));
+        $scope.$on("deletelightbox:new", (ctx, user) => lightboxService.open($el));
 
         $scope.$on("$destroy", () => $el.off());
 
-        let submit = function() {
-            let currentLoading = $loading()
+        const submit = function() {
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
-            let promise = $repo.remove($scope.user);
+            const promise = $repo.remove($scope.user);
 
             promise.then(function(data) {
                 currentLoading.finish();
@@ -65,7 +65,7 @@ export let DeleteUserDirective = function($repo, $rootscope, $auth, $location, $
         $el.on("click", ".button-red", debounce(2000, function(event) {
             event.preventDefault();
             return submit();
-        })
+        }),
         );
 
         return submitButton = $el.find(".button-red");
@@ -73,6 +73,6 @@ export let DeleteUserDirective = function($repo, $rootscope, $auth, $location, $
 
     return {
         link,
-        templateUrl: "user/lightbox/lightbox-delete-account.html"
+        templateUrl: "user/lightbox/lightbox-delete-account.html",
     };
 };

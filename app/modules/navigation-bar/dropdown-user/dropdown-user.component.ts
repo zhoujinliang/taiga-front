@@ -38,8 +38,8 @@ export class DropdownUser {
     // userSettingsPlugins:any;
 
     constructor(private config: ConfigurationService,
-                 private router: Router,
-                 private navurls: NavigationUrlsService) {
+                private router: Router,
+                private navurls: NavigationUrlsService) {
                  // private globalData: GlobalDataService) {
                  // private feedback: FeedbackService) {
         this.logout = new EventEmitter();

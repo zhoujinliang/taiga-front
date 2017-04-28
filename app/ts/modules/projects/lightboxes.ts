@@ -22,14 +22,14 @@
  * File: modules/common/attachments.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
 //############################################################################
 //# Delete Project Lightbox Directive
 //############################################################################
 
 export let DeleteProjectDirective = function($repo, $rootscope, $auth, $location, $navUrls, $confirm, lightboxService, tgLoader, currentUserService) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         let projectToDelete = null;
         $scope.$on("deletelightbox:new", function(ctx, project){
             lightboxService.open($el);
@@ -38,11 +38,11 @@ export let DeleteProjectDirective = function($repo, $rootscope, $auth, $location
 
         $scope.$on("$destroy", () => $el.off());
 
-        let submit = function() {
+        const submit = function() {
             tgLoader.start();
             lightboxService.close($el);
 
-            let promise = $repo.remove(projectToDelete);
+            const promise = $repo.remove(projectToDelete);
 
             promise.then(function(data) {
                 tgLoader.pageLoaded();

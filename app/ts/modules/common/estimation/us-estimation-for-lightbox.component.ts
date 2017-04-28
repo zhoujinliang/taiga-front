@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges} from "@angular/core"
+import {Component, Input, OnChanges} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
@@ -8,12 +8,12 @@ import * as Immutable from "immutable";
 export class UsEstimationForLightbox implements OnChanges {
     @Input() roles;
     @Input() points;
-    private roleOpen:number = null;
+    private roleOpen: number = null;
     computableRoles: Immutable.List<any> = Immutable.List();
 
     ngOnChanges() {
         if (this.roles) {
-            this.computableRoles = this.roles.filter((role) => role.get('computable'))
+            this.computableRoles = this.roles.filter((role) => role.get("computable"));
         }
     }
 
@@ -23,6 +23,6 @@ export class UsEstimationForLightbox implements OnChanges {
 
     onPointsSelect(roleId, eventId) {
         this.roleOpen = null;
-        console.log(roleId, eventId)
+        console.log(roleId, eventId);
     }
 }

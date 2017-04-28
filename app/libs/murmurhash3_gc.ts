@@ -35,7 +35,7 @@
  */
 
 export function murmurhash3_32_gc(key, seed) {
-	var remainder, bytes, h1, h1b, c1, c1b, c2, c2b, k1, i;
+	let remainder, bytes, h1, h1b, c1, c1b, c2, c2b, k1, i;
 
 	remainder = key.length & 3; // key.length % 4
 	bytes = key.length - remainder;
@@ -57,7 +57,7 @@ export function murmurhash3_32_gc(key, seed) {
 		k1 = ((((k1 & 0xffff) * c2) + ((((k1 >>> 16) * c2) & 0xffff) << 16))) & 0xffffffff;
 
 		h1 ^= k1;
-        h1 = (h1 << 13) | (h1 >>> 19);
+  h1 = (h1 << 13) | (h1 >>> 19);
 		h1b = ((((h1 & 0xffff) * 5) + ((((h1 >>> 16) * 5) & 0xffff) << 16))) & 0xffffffff;
 		h1 = (((h1b & 0xffff) + 0x6b64) + ((((h1b >>> 16) + 0xe654) & 0xffff) << 16));
 	}
@@ -69,10 +69,10 @@ export function murmurhash3_32_gc(key, seed) {
 		case 2: k1 ^= (key.charCodeAt(i + 1) & 0xff) << 8;
 		case 1: k1 ^= (key.charCodeAt(i) & 0xff);
 
-		k1 = (((k1 & 0xffff) * c1) + ((((k1 >>> 16) * c1) & 0xffff) << 16)) & 0xffffffff;
-		k1 = (k1 << 15) | (k1 >>> 17);
-		k1 = (((k1 & 0xffff) * c2) + ((((k1 >>> 16) * c2) & 0xffff) << 16)) & 0xffffffff;
-		h1 ^= k1;
+		        k1 = (((k1 & 0xffff) * c1) + ((((k1 >>> 16) * c1) & 0xffff) << 16)) & 0xffffffff;
+		        k1 = (k1 << 15) | (k1 >>> 17);
+		        k1 = (((k1 & 0xffff) * c2) + ((((k1 >>> 16) * c2) & 0xffff) << 16)) & 0xffffffff;
+		        h1 ^= k1;
 	}
 
 	h1 ^= key.length;
@@ -85,5 +85,3 @@ export function murmurhash3_32_gc(key, seed) {
 
 	return h1 >>> 0;
 }
-
-

@@ -22,49 +22,47 @@
  * File: modules/controllerMixins.coffee
  */
 
-import * as _ from "lodash"
-import {groupBy, joinStr, trim, toString} from "../libs/utils"
-import {generateHash} from "../app"
-import {Controller} from "../classes"
-
+import * as _ from "lodash";
+import {generateHash} from "../app";
+import {Controller} from "../classes";
+import {groupBy, joinStr, toString, trim} from "../libs/utils";
 
 //############################################################################
 //# Page Mixin
 //############################################################################
 
 export class PageMixin extends Controller {
-    scope:any
-    q: any
-    rs: any
+    scope: any;
+    q: any;
+    rs: any;
 
     fillUsersAndRoles(users, roles) {
-        let activeUsers = _.filter(users, (user:any) => user.is_active);
+        const activeUsers = _.filter(users, (user: any) => user.is_active);
         this.scope.activeUsers = _.sortBy(activeUsers, "full_name_display");
-        this.scope.activeUsersById = groupBy(this.scope.activeUsers, e => e.id);
+        this.scope.activeUsersById = groupBy(this.scope.activeUsers, (e) => e.id);
 
         this.scope.users = _.sortBy(users, "full_name_display");
-        this.scope.usersById = groupBy(this.scope.users, e => e.id);
+        this.scope.usersById = groupBy(this.scope.users, (e) => e.id);
 
         this.scope.roles = _.sortBy(roles, "order");
-        let computableRoles = _(this.scope.project.members).map("role").uniq().value();
+        const computableRoles = _(this.scope.project.members).map("role").uniq().value();
         return this.scope.computableRoles = _(roles).filter("computable")
-                                         .filter((x:any) => _.includes(computableRoles, x.id))
+                                         .filter((x: any) => _.includes(computableRoles, x.id))
                                          .value();
     }
     loadUsersAndRoles() {
-        let promise = this.q.all([
+        const promise = this.q.all([
             this.rs.projects.usersList(this.scope.projectId),
-            this.rs.projects.rolesList(this.scope.projectId)
+            this.rs.projects.rolesList(this.scope.projectId),
         ]);
 
-        return promise.then(results => {
-            let [users, roles] = results;
+        return promise.then((results) => {
+            const [users, roles] = results;
             this.fillUsersAndRoles(users, roles);
             return results;
         });
     }
 }
-
 
 //############################################################################
 //# Filters Mixin
@@ -72,39 +70,39 @@ export class PageMixin extends Controller {
 // This mixin requires @location ($tgLocation), and @scope
 
 export class FiltersMixin extends PageMixin{
-    location: any
-    scope: any
-    storage: any
+    location: any;
+    scope: any;
+    storage: any;
 
-    selectFilter(name, value, load=false) {
-        let params = this.location.search();
+    selectFilter(name, value, load= false) {
+        const params = this.location.search();
         if ((params[name] !== undefined) && (name !== "page")) {
-            let existing = _.map(toString(params[name]).split(","), x => trim(x));
+            let existing = _.map(toString(params[name]).split(","), (x) => trim(x));
             existing.push(toString(value));
             existing = _.compact(existing);
             value = joinStr(",", _.uniq(existing));
         }
 
         if (!this.location.isInCurrentRouteParams(name, value)) {
-            let location = load ? this.location : this.location.noreload(this.scope);
+            const location = load ? this.location : this.location.noreload(this.scope);
             return location.search(name, value);
         }
     }
 
-    replaceFilter(name, value, load=false) {
+    replaceFilter(name, value, load= false) {
         if (!this.location.isInCurrentRouteParams(name, value)) {
-            let location = load ? this.location : this.location.noreload(this.scope);
+            const location = load ? this.location : this.location.noreload(this.scope);
             return location.search(name, value);
         }
     }
 
-    replaceAllFilters(filters, load=false) {
-        let location = load ? this.location : this.location.noreload(this.scope);
+    replaceAllFilters(filters, load= false) {
+        const location = load ? this.location : this.location.noreload(this.scope);
         return location.search(filters);
     }
 
-    unselectFilter(name, value=null, load=false) {
-        let params = this.location.search();
+    unselectFilter(name, value= null, load= false) {
+        const params = this.location.search();
 
         if (params[name] === undefined) {
             return;
@@ -114,8 +112,8 @@ export class FiltersMixin extends PageMixin{
             delete params[name];
         }
 
-        let parsedValues = _.map(toString(params[name]).split(","), x => trim(x));
-        let newValues = _.reject(parsedValues, x => x === toString(value));
+        const parsedValues = _.map(toString(params[name]).split(","), (x) => trim(x));
+        let newValues = _.reject(parsedValues, (x) => x === toString(value));
         newValues = _.compact(newValues);
 
         if (_.isEmpty(newValues)) {
@@ -124,13 +122,13 @@ export class FiltersMixin extends PageMixin{
             value = joinStr(",", _.uniq(newValues));
         }
 
-        let location = load ? this.location : this.location.noreload(this.scope);
+        const location = load ? this.location : this.location.noreload(this.scope);
         return location.search(name, value);
     }
 
     applyStoredFilters(projectSlug, key) {
         if (_.isEmpty(this.location.search())) {
-            let filters = this.getFilters(projectSlug, key);
+            const filters = this.getFilters(projectSlug, key);
             if (Object.keys(filters).length) {
                 this.location.search(filters);
                 this.location.replace();
@@ -143,41 +141,41 @@ export class FiltersMixin extends PageMixin{
     }
 
     storeFilters(projectSlug, params, filtersHashSuffix) {
-        let ns = `${projectSlug}:${filtersHashSuffix}`;
-        let hash = generateHash([projectSlug, ns]);
+        const ns = `${projectSlug}:${filtersHashSuffix}`;
+        const hash = generateHash([projectSlug, ns]);
         return this.storage.set(hash, params);
     }
 
     getFilters(projectSlug, filtersHashSuffix) {
-        let ns = `${projectSlug}:${filtersHashSuffix}`;
-        let hash = generateHash([projectSlug, ns]);
+        const ns = `${projectSlug}:${filtersHashSuffix}`;
+        const hash = generateHash([projectSlug, ns]);
 
         return this.storage.get(hash) || {};
     }
 
     formatSelectedFilters(type, list, urlIds) {
-        let selectedIds = urlIds.split(',');
-        let selectedFilters = _.filter(list, (it:any) => selectedIds.indexOf(_.toString(it.id)) !== -1);
+        const selectedIds = urlIds.split(",");
+        const selectedFilters = _.filter(list, (it: any) => selectedIds.indexOf(_.toString(it.id)) !== -1);
 
-        let invalidTags = _.filter(selectedIds, (it:any) => !_.find(selectedFilters, sit => _.toString(sit.id) === it));
+        const invalidTags = _.filter(selectedIds, (it: any) => !_.find(selectedFilters, (sit) => _.toString(sit.id) === it));
 
-        let invalidAppliedTags =  _.map(invalidTags, it =>
+        const invalidAppliedTags =  _.map(invalidTags, (it) =>
             ({
                 id: it,
                 key: type + ":" + it,
                 dataType: type,
-                name: it
-            })
+                name: it,
+            }),
     );
 
-        let validAppliedTags = _.map(selectedFilters, (it:any) =>
+        const validAppliedTags = _.map(selectedFilters, (it: any) =>
             ({
                 id: it.id,
                 key: type + ":" + it.id,
                 dataType: type,
                 name: it.name,
-                color: it.color
-            })
+                color: it.color,
+            }),
     );
 
         return invalidAppliedTags.concat(validAppliedTags);
@@ -189,15 +187,15 @@ export class FiltersMixin extends PageMixin{
 //############################################################################
 
 export class UsFiltersMixin extends FiltersMixin {
-    filterRemoteStorageService:any
-    storeCustomFiltersName:any
-    storeFiltersName:any
-    params:any
-    selectedFilters:any
-    filters:any
-    filterQ:any
-    customFilters:any
-    translate:any
+    filterRemoteStorageService: any;
+    storeCustomFiltersName: any;
+    storeFiltersName: any;
+    params: any;
+    selectedFilters: any;
+    filters: any;
+    filterQ: any;
+    customFilters: any;
+    translate: any;
 
     filtersReloadContent() {
     }
@@ -227,14 +225,14 @@ export class UsFiltersMixin extends FiltersMixin {
     }
 
     saveCustomFilter(name) {
-        let filters:any = {};
-        let urlfilters = this.location.search();
+        const filters: any = {};
+        const urlfilters = this.location.search();
         filters.tags = urlfilters.tags;
         filters.status = urlfilters.status;
         filters.assigned_to = urlfilters.assigned_to;
         filters.owner = urlfilters.owner;
 
-        return this.filterRemoteStorageService.getFilters(this.scope.projectId, this.storeCustomFiltersName).then(userFilters => {
+        return this.filterRemoteStorageService.getFilters(this.scope.projectId, this.storeCustomFiltersName).then((userFilters) => {
             userFilters[name] = filters;
 
             return this.filterRemoteStorageService.storeFilters(this.scope.projectId, userFilters, this.storeCustomFiltersName).then(this.generateFilters);
@@ -242,7 +240,7 @@ export class UsFiltersMixin extends FiltersMixin {
     }
 
     removeCustomFilter(customFilter) {
-        return this.filterRemoteStorageService.getFilters(this.scope.projectId, this.storeCustomFiltersName).then(userFilters => {
+        return this.filterRemoteStorageService.getFilters(this.scope.projectId, this.storeCustomFiltersName).then((userFilters) => {
             delete userFilters[customFilter.id];
 
             this.filterRemoteStorageService.storeFilters(this.scope.projectId, userFilters, this.storeCustomFiltersName).then(this.generateFilters);
@@ -253,9 +251,9 @@ export class UsFiltersMixin extends FiltersMixin {
     generateFilters() {
         this.storeFilters(this.params.pslug, this.location.search(), this.storeFiltersName);
 
-        let urlfilters = this.location.search();
+        const urlfilters = this.location.search();
 
-        let loadFilters:any = {};
+        const loadFilters: any = {};
         loadFilters.project = this.scope.projectId;
         loadFilters.tags = urlfilters.tags;
         loadFilters.status = urlfilters.status;
@@ -266,24 +264,24 @@ export class UsFiltersMixin extends FiltersMixin {
 
         return this.q.all([
             this.rs.userstories.filtersData(loadFilters),
-            this.filterRemoteStorageService.getFilters(this.scope.projectId, this.storeCustomFiltersName)
-        ]).then(result => {
+            this.filterRemoteStorageService.getFilters(this.scope.projectId, this.storeCustomFiltersName),
+        ]).then((result) => {
             let selected;
-            let data = result[0];
-            let customFiltersRaw = result[1];
+            const data = result[0];
+            const customFiltersRaw = result[1];
 
-            let statuses = _.map(data.statuses, function(it:any) {
+            const statuses = _.map(data.statuses, function(it: any) {
                 it.id = it.id.toString();
 
                 return it;
             });
-            let tags = _.map(data.tags, function(it:any) {
+            const tags = _.map(data.tags, function(it: any) {
                 it.id = it.name;
 
                 return it;
             });
-            let tagsWithAtLeastOneElement = _.filter(tags, (tag:any) => tag.count > 0);
-            let assignedTo = _.map(data.assigned_to, function(it:any) {
+            const tagsWithAtLeastOneElement = _.filter(tags, (tag: any) => tag.count > 0);
+            const assignedTo = _.map(data.assigned_to, function(it: any) {
                 if (it.id) {
                     it.id = it.id.toString();
                 } else {
@@ -294,13 +292,13 @@ export class UsFiltersMixin extends FiltersMixin {
 
                 return it;
             });
-            let owner = _.map(data.owners, function(it:any) {
+            const owner = _.map(data.owners, function(it: any) {
                 it.id = it.id.toString();
                 it.name = it.full_name;
 
                 return it;
             });
-            let epic = _.map(data.epics, function(it:any) {
+            const epic = _.map(data.epics, function(it: any) {
                 if (it.id) {
                     it.id = it.id.toString();
                     it.name = `#${it.ref} ${it.subject}`;
@@ -345,30 +343,30 @@ export class UsFiltersMixin extends FiltersMixin {
                 {
                     title: this.translate.instant("COMMON.FILTERS.CATEGORIES.STATUS"),
                     dataType: "status",
-                    content: statuses
+                    content: statuses,
                 },
                 {
                     title: this.translate.instant("COMMON.FILTERS.CATEGORIES.TAGS"),
                     dataType: "tags",
                     content: tags,
                     hideEmpty: true,
-                    totalTaggedElements: tagsWithAtLeastOneElement.length
+                    totalTaggedElements: tagsWithAtLeastOneElement.length,
                 },
                 {
                     title: this.translate.instant("COMMON.FILTERS.CATEGORIES.ASSIGNED_TO"),
                     dataType: "assigned_to",
-                    content: assignedTo
+                    content: assignedTo,
                 },
                 {
                     title: this.translate.instant("COMMON.FILTERS.CATEGORIES.CREATED_BY"),
                     dataType: "owner",
-                    content: owner
+                    content: owner,
                 },
                 {
                     title: this.translate.instant("COMMON.FILTERS.CATEGORIES.EPIC"),
                     dataType: "epic",
-                    content: epic
-                }
+                    content: epic,
+                },
             ];
 
             this.customFilters = [];

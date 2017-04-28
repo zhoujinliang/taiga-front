@@ -22,29 +22,29 @@
  * File: modules/team/main.coffee
  */
 
-import {PageMixin} from "../controllerMixins"
+import {PageMixin} from "../controllerMixins";
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 //############################################################################
 //# Team Controller
 //############################################################################
 
 export class TeamController extends PageMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    navUrls:any
-    appMetaService:any
-    auth:any
-    translate:any
-    projectService:any
-    errorHandlingService:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    navUrls: any;
+    appMetaService: any;
+    auth: any;
+    translate: any;
+    projectService: any;
+    errorHandlingService: any;
 
     static initClass() {
         this.$inject = [
@@ -60,13 +60,13 @@ export class TeamController extends PageMixin {
             "$tgAuth",
             "$translate",
             "tgProjectService",
-            "tgErrorHandlingService"
+            "tgErrorHandlingService",
         ];
     }
 
     constructor(scope, rootscope, repo, rs, params, q, location, navUrls, appMetaService, auth,
-                  translate, projectService, errorHandlingService) {
-        super()
+                translate, projectService, errorHandlingService) {
+        super();
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -82,14 +82,14 @@ export class TeamController extends PageMixin {
         this.errorHandlingService = errorHandlingService;
         this.scope.sectionName = "TEAM.SECTION_NAME";
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         // On Success
         promise.then(() => {
-            let title = this.translate.instant("TEAM.PAGE_TITLE", {projectName: this.scope.project.name});
-            let description = this.translate.instant("TEAM.PAGE_DESCRIPTION", {
+            const title = this.translate.instant("TEAM.PAGE_TITLE", {projectName: this.scope.project.name});
+            const description = this.translate.instant("TEAM.PAGE_DESCRIPTION", {
                 projectName: this.scope.project.name,
-                projectDescription: this.scope.project.description
+                projectDescription: this.scope.project.description,
             });
             return this.appMetaService.setAll(title, description);
         });
@@ -107,11 +107,11 @@ export class TeamController extends PageMixin {
     }
 
     loadMembers() {
-        let user = this.auth.getUser();
+        const user = this.auth.getUser();
 
         // Calculate totals
         this.scope.totals = {};
-        for (let member of this.scope.activeUsers) {
+        for (const member of this.scope.activeUsers) {
             this.scope.totals[member.id] = 0;
         }
 
@@ -123,11 +123,11 @@ export class TeamController extends PageMixin {
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
 
         this.scope.issuesEnabled = project.is_issues_activated;
         this.scope.tasksEnabled = project.is_kanban_activated || project.is_backlog_activated;
@@ -138,10 +138,10 @@ export class TeamController extends PageMixin {
     }
 
     loadMemberStats() {
-        return this.rs.projects.memberStats(this.scope.projectId).then(stats => {
-          let totals = {};
+        return this.rs.projects.memberStats(this.scope.projectId).then((stats) => {
+          const totals = {};
           _.forEach(this.scope.totals, (total, userId) => {
-              let vals = _.map(stats, (memberStats, statsKey) => memberStats[userId]);
+              const vals = _.map(stats, (memberStats, statsKey) => memberStats[userId]);
               total = _.reduce(vals, (sum, el) => sum + el);
               return this.scope.totals[userId] = total;
           });
@@ -152,12 +152,12 @@ export class TeamController extends PageMixin {
     }
 
     _processStat(stat) {
-        let max:number = <number>_.max(_.toArray(stat));
-        let min:number = <number>_.min(_.toArray(stat));
+        const max: number = _.max(_.toArray(stat)) as number;
+        const min: number = _.min(_.toArray(stat)) as number;
 
-        let singleStat = Object();
-        for (let key of Object.keys(stat || {})) {
-            let value:number = stat[key];
+        const singleStat = Object();
+        for (const key of Object.keys(stat || {})) {
+            const value: number = stat[key];
             if (value === min) {
                 singleStat[key] = 0.1;
             } else if (value === max) {
@@ -171,28 +171,27 @@ export class TeamController extends PageMixin {
     }
 
     _processStats(stats) {
-        for (let key in stats) {
-            let value = stats[key];
+        for (const key in stats) {
+            const value = stats[key];
             stats[key] = this._processStat(value);
         }
         return stats;
     }
 
     loadInitialData() {
-        let project = this.loadProject();
+        const project = this.loadProject();
 
         this.fillUsersAndRoles(project.members, project.roles);
         this.loadMembers();
 
-        let userRoles = _.map(this.scope.users, (user:any) => user.role);
+        const userRoles = _.map(this.scope.users, (user: any) => user.role);
 
-        this.scope.roles = _.filter(this.scope.roles, (role:any) => userRoles.indexOf(role.id) !== -1);
+        this.scope.roles = _.filter(this.scope.roles, (role: any) => userRoles.indexOf(role.id) !== -1);
 
         return this.loadMemberStats();
     }
 }
 TeamController.initClass();
-
 
 //############################################################################
 //# Team Filters Directive
@@ -200,10 +199,9 @@ TeamController.initClass();
 
 export let TeamFiltersDirective = () =>
     ({
-        templateUrl: "team/team-filter.html"
+        templateUrl: "team/team-filter.html",
     })
 ;
-
 
 //############################################################################
 //# Team Member Stats Directive
@@ -217,8 +215,8 @@ export let TeamMemberStatsDirective = () =>
             userId: "=user",
             issuesEnabled: "=issuesenabled",
             tasksEnabled: "=tasksenabled",
-            wikiEnabled: "=wikienabled"
-        }
+            wikiEnabled: "=wikienabled",
+        },
     })
 ;
 
@@ -236,8 +234,8 @@ export let TeamMemberCurrentUserDirective = () =>
             issuesEnabled: "=issuesenabled",
             tasksEnabled: "=tasksenabled",
             wikiEnabled: "=wikienabled",
-            owner: "=owner"
-        }
+            owner: "=owner",
+        },
     })
 ;
 
@@ -246,7 +244,7 @@ export let TeamMemberCurrentUserDirective = () =>
 //############################################################################
 
 export let TeamMembersDirective = function() {
-    let template = "team/team-members.html";
+    const template = "team/team-members.html";
 
     return {
         templateUrl: template,
@@ -258,8 +256,8 @@ export let TeamMembersDirective = function() {
             issuesEnabled: "=issuesenabled",
             tasksEnabled: "=tasksenabled",
             wikiEnabled: "=wikienabled",
-            owner: "=owner"
-        }
+            owner: "=owner",
+        },
     };
 };
 
@@ -268,13 +266,13 @@ export let TeamMembersDirective = function() {
 //############################################################################
 
 export let LeaveProjectDirective = function($repo, $confirm, $location, $rs, $navurls, $translate, lightboxFactory, currentUserService) {
-    let link = function($scope, $el, $attrs) {
-        let leaveConfirm = function() {
-            let leave_project_text = $translate.instant("TEAM.ACTION_LEAVE_PROJECT");
-            let confirm_leave_project_text = $translate.instant("TEAM.CONFIRM_LEAVE_PROJECT");
+    const link = function($scope, $el, $attrs) {
+        const leaveConfirm = function() {
+            const leave_project_text = $translate.instant("TEAM.ACTION_LEAVE_PROJECT");
+            const confirm_leave_project_text = $translate.instant("TEAM.CONFIRM_LEAVE_PROJECT");
 
-            return $confirm.ask(leave_project_text, confirm_leave_project_text).then(response => {
-                let promise = $rs.projects.leave($scope.project.id);
+            return $confirm.ask(leave_project_text, confirm_leave_project_text).then((response) => {
+                const promise = $rs.projects.leave($scope.project.id);
 
                 promise.then(() => {
                     return currentUserService.loadProjects().then(function() {
@@ -286,7 +284,7 @@ export let LeaveProjectDirective = function($repo, $confirm, $location, $rs, $na
 
                 return promise.then(null, function(response) {
                     response.finish();
-                    return $confirm.notify('error', response.data._error_message);
+                    return $confirm.notify("error", response.data._error_message);
                 });
             });
         };
@@ -294,10 +292,10 @@ export let LeaveProjectDirective = function($repo, $confirm, $location, $rs, $na
         return $scope.leave = function() {
             if ($scope.project.owner.id === $scope.user.id) {
                 return lightboxFactory.create("tg-lightbox-leave-project-warning", {
-                    class: "lightbox lightbox-leave-project-warning"
+                    class: "lightbox lightbox-leave-project-warning",
                 }, {
                     isCurrentUser: true,
-                    project: $scope.project
+                    project: $scope.project,
                 });
             } else {
                 return leaveConfirm();
@@ -308,10 +306,10 @@ export let LeaveProjectDirective = function($repo, $confirm, $location, $rs, $na
     return {
         scope: {
             user: "=",
-            project: "="
+            project: "=",
         },
         templateUrl: "team/leave-project.html",
-        link
+        link,
     };
 };
 
@@ -321,7 +319,7 @@ export let LeaveProjectDirective = function($repo, $confirm, $location, $rs, $na
 
 export let membersFilter = () =>
     (members, filtersQ, filtersRole) =>
-        _.filter(members, (m:any) => (!filtersRole || (m.role === filtersRole.id)) &&
-                                        (!filtersQ || (m.full_name.search(new RegExp(filtersQ, "i")) >= 0))
+        _.filter(members, (m: any) => (!filtersRole || (m.role === filtersRole.id)) &&
+                                        (!filtersQ || (m.full_name.search(new RegExp(filtersQ, "i")) >= 0)),
          )
 ;

@@ -22,13 +22,13 @@
  * File: modules/base/http.coffee
  */
 
-import {Injectable} from "@angular/core"
-import {Http} from "@angular/http"
-import {StorageService} from "./storage"
-import {TranslateService} from "@ngx-translate/core"
-import 'rxjs/add/operator/toPromise';
-import * as _ from "lodash"
-import * as Promise from "bluebird"
+import {Injectable} from "@angular/core";
+import {Http} from "@angular/http";
+import {TranslateService} from "@ngx-translate/core";
+import * as Promise from "bluebird";
+import * as _ from "lodash";
+import "rxjs/add/operator/toPromise";
+import {StorageService} from "./storage";
 
 @Injectable()
 export class HttpService {
@@ -37,18 +37,18 @@ export class HttpService {
                 private translate: TranslateService) {}
 
     headers() {
-        let headers = {
-            "Content-Type": "application/json"
+        const headers = {
+            "Content-Type": "application/json",
         };
 
         // Authorization
-        let token = this.storage.get('token');
+        const token = this.storage.get("token");
         if (token) {
             headers["Authorization"] = `Bearer ${token}`;
         }
 
         // Accept-Language
-        let lang = this.translate.currentLang;
+        const lang = this.translate.currentLang;
         if (lang) {
             headers["Accept-Language"] = lang;
         }
@@ -64,12 +64,12 @@ export class HttpService {
 
         return this.http.request(options.url, options)
                         .map(function(res) {
-                            (<any>res).data = res.json();
+                            (res as any).data = res.json();
                             return res;
-                        })
+                        });
     }
 
-    get(url, params=null, options:any={}) {
+    get(url, params= null, options: any= {}) {
         options = _.assign({method: "GET", url}, options);
         if (params) { options.params = params; }
 
@@ -78,7 +78,7 @@ export class HttpService {
         return this.request(options);
     }
 
-    post(url, data=null, params=null, options:any={}) {
+    post(url, data= null, params= null, options: any= {}) {
         options = _.assign({method: "POST", url}, options);
 
         if (data) { options.data = data; }
@@ -87,21 +87,21 @@ export class HttpService {
         return this.request(options);
     }
 
-    put(url, data=null, params=null, options:any={}) {
+    put(url, data= null, params= null, options: any= {}) {
         options = _.assign({method: "PUT", url}, options);
         if (data) { options.data = data; }
         if (params) { options.params = params; }
         return this.request(options);
     }
 
-    patch(url, data=null, params=null, options:any={}) {
+    patch(url, data= null, params= null, options: any= {}) {
         options = _.assign({method: "PATCH", url}, options);
         if (data) { options.data = data; }
         if (params) { options.params = params; }
         return this.request(options);
     }
 
-    delete(url, data=null, params=null, options:any={}) {
+    delete(url, data= null, params= null, options: any= {}) {
         options = _.assign({method: "DELETE", url}, options);
         if (data) { options.data = data; }
         if (params) { options.params = params; }

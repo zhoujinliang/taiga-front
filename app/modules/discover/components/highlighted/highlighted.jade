@@ -48,8 +48,8 @@
             p.project-description {{ project.get('description').slice(0,150) }}{{ project.get('description').length < 150 ? '' : '...'}}
 
     div(*ngIf="!loading")
-            // tg-nav="discover-search"
-            // tg-nav-get-params="{\"order_by\": \"{{orderBy}}\"}"
+        // tg-nav="discover-search"
+        // tg-nav-get-params="{\"order_by\": \"{{orderBy}}\"}"
         a.view-more-projects.button-green(
             *ngIf="highlighted"
             href="#"

@@ -22,34 +22,34 @@
  * File: modules/wiki/detail.coffee
  */
 
-import {groupBy, bindOnce, debounce} from "../../libs/utils"
-import {PageMixin} from "../controllerMixins"
-import * as angular from "angular"
-import * as moment from "moment"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import * as moment from "moment";
+import {bindOnce, debounce, groupBy} from "../../libs/utils";
+import {PageMixin} from "../controllerMixins";
 
 //############################################################################
 //# Wiki Detail Controller
 //############################################################################
 
 export class WikiDetailController extends PageMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    model:any
-    confirm:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    filter:any
-    log:any
-    appMetaService:any
-    navUrls:any
-    analytics:any
-    translate:any
-    errorHandlingService:any
-    projectService:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    model: any;
+    confirm: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    filter: any;
+    log: any;
+    appMetaService: any;
+    navUrls: any;
+    analytics: any;
+    translate: any;
+    errorHandlingService: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -69,13 +69,13 @@ export class WikiDetailController extends PageMixin {
             "$tgAnalytics",
             "$translate",
             "tgErrorHandlingService",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, rootscope, repo, model, confirm, rs, params, q, location,
-                  filter, log, appMetaService, navUrls, analytics, translate, errorHandlingService, projectService) {
-        super()
+                filter, log, appMetaService, navUrls, analytics, translate, errorHandlingService, projectService) {
+        super();
         this.loadWiki = this.loadWiki.bind(this);
         this.moveLink = this.moveLink.bind(this);
         this.scope = scope;
@@ -102,7 +102,7 @@ export class WikiDetailController extends PageMixin {
         this.scope.sectionName = "Wiki";
         this.scope.linksVisible = false;
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         // On Success
         promise.then(() => this._setMeta());
@@ -112,21 +112,21 @@ export class WikiDetailController extends PageMixin {
     }
 
     _setMeta() {
-        let title =  this.translate.instant("WIKI.PAGE_TITLE", {
+        const title =  this.translate.instant("WIKI.PAGE_TITLE", {
             wikiPageName: this.scope.wikiSlug,
-            projectName: this.scope.project.name
+            projectName: this.scope.project.name,
         });
-        let description =  this.translate.instant("WIKI.PAGE_DESCRIPTION", {
+        const description =  this.translate.instant("WIKI.PAGE_DESCRIPTION", {
             wikiPageContent: angular.element((this.scope.wiki != null ? this.scope.wiki.html : undefined) || "").text(),
             totalEditions: (this.scope.wiki != null ? this.scope.wiki.editions : undefined) || 0,
-            lastModifiedDate: moment(this.scope.wiki != null ? this.scope.wiki.modified_date : undefined).format(this.translate.instant("WIKI.DATETIME"))
+            lastModifiedDate: moment(this.scope.wiki != null ? this.scope.wiki.modified_date : undefined).format(this.translate.instant("WIKI.DATETIME")),
         });
 
         return this.appMetaService.setAll(title, description);
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         if (!project.is_wiki_activated) {
             this.errorHandlingService.permissionDenied();
@@ -134,29 +134,29 @@ export class WikiDetailController extends PageMixin {
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
         return project;
     }
 
     loadWiki() {
-        let promise = this.rs.wiki.getBySlug(this.scope.projectId, this.params.slug);
-        promise.then(wiki => {
+        const promise = this.rs.wiki.getBySlug(this.scope.projectId, this.params.slug);
+        promise.then((wiki) => {
             this.scope.wiki = wiki;
             this.scope.wikiId = wiki.id;
             return this.scope.wiki;
         });
 
-        return promise.then(null, xhr => {
+        return promise.then(null, (xhr) => {
             this.scope.wikiId = null;
 
             if (this.scope.project.my_permissions.indexOf("add_wiki_page") === -1) {
                 return null;
             }
 
-            let data = {
+            const data = {
                 project: this.scope.projectId,
                 slug: this.scope.wikiSlug,
-                content: ""
+                content: "",
             };
             this.scope.wiki = this.model.make_model("wiki", data);
             return this.scope.wiki;
@@ -164,16 +164,16 @@ export class WikiDetailController extends PageMixin {
     }
 
     loadWikiLinks() {
-        return this.rs.wiki.listLinks(this.scope.projectId).then(wikiLinks => {
+        return this.rs.wiki.listLinks(this.scope.projectId).then((wikiLinks) => {
             let selectedWikiLink;
             this.scope.wikiLinks = wikiLinks;
 
-            let link:any;
+            let link: any;
 
             for (link of this.scope.wikiLinks) {
                 link.url = this.navUrls.resolve("project-wiki-page", {
                     project: this.scope.projectSlug,
-                    slug: link.href
+                    slug: link.href,
                 });
             }
 
@@ -182,7 +182,7 @@ export class WikiDetailController extends PageMixin {
     }
 
     loadInitialData() {
-        let project = this.loadProject();
+        const project = this.loadProject();
 
         this.fillUsersAndRoles(project.members, project.roles);
         return this.q.all([this.loadWikiLinks(), this.loadWiki()]).then(this.checkLinksPerms.bind(this));
@@ -196,19 +196,19 @@ export class WikiDetailController extends PageMixin {
     }
 
     delete() {
-        let title = this.translate.instant("WIKI.DELETE_LIGHTBOX_TITLE");
-        let message = this.scope.wikiSlug;
+        const title = this.translate.instant("WIKI.DELETE_LIGHTBOX_TITLE");
+        const message = this.scope.wikiSlug;
 
-        return this.confirm.askOnDelete(title, message).then(askResponse => {
-            let onSuccess = () => {
+        return this.confirm.askOnDelete(title, message).then((askResponse) => {
+            const onSuccess = () => {
                 askResponse.finish();
-                let ctx = {project: this.scope.projectSlug};
+                const ctx = {project: this.scope.projectSlug};
                 this.location.path(this.navUrls.resolve("project-wiki", ctx));
                 this.confirm.notify("success");
                 return this.loadWiki();
             };
 
-            let onError = () => {
+            const onError = () => {
                 askResponse.finish(false);
                 return this.confirm.notify("error");
             };
@@ -218,8 +218,8 @@ export class WikiDetailController extends PageMixin {
     }
 
     moveLink(ctx, item, itemIndex) {
-        let values = this.scope.wikiLinks;
-        let r = values.indexOf(item);
+        const values = this.scope.wikiLinks;
+        const r = values.indexOf(item);
         values.splice(r, 1);
         values.splice(itemIndex, 0, item);
         _.each(values, (value, index) => value.order = index);
@@ -234,10 +234,10 @@ WikiDetailController.initClass();
 //############################################################################
 
 export let WikiSummaryDirective = function($log, $template, $compile, $translate, avatarService) {
-    let template = $template.get("wiki/wiki-summary.html", true);
+    const template = $template.get("wiki/wiki-summary.html", true);
 
-    let link = function($scope, $el, $attrs, $model) {
-        let render = function(wiki) {
+    const link = function($scope, $el, $attrs, $model) {
+        const render = function(wiki) {
             let user;
             if (($scope.usersById == null)) {
                 $log.error("WikiSummaryDirective requires userById set in scope.");
@@ -245,7 +245,7 @@ export let WikiSummaryDirective = function($log, $template, $compile, $translate
                 user = $scope.usersById[wiki.last_modifier];
             }
 
-            let avatar = avatarService.getAvatar(user);
+            const avatar = avatarService.getAvatar(user);
 
             if (user === undefined) {
                 user = {name: "unknown", avatar};
@@ -253,10 +253,10 @@ export let WikiSummaryDirective = function($log, $template, $compile, $translate
                 user = {name: user.full_name_display, avatar};
             }
 
-            let ctx = {
+            const ctx = {
                 totalEditions: wiki.editions,
                 lastModifiedDate: moment(wiki.modified_date).format($translate.instant("WIKI.DATETIME")),
-                user
+                user,
             };
             let html = template(ctx);
             html = $compile(html)($scope);
@@ -274,18 +274,18 @@ export let WikiSummaryDirective = function($log, $template, $compile, $translate
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
 export let WikiWysiwyg = function($modelTransform, $rootscope, $confirm, attachmentsFullService,
-$qqueue, $repo, $analytics, wikiHistoryService) {
-    let link = function($scope, $el, $attrs) {
+                                  $qqueue, $repo, $analytics, wikiHistoryService) {
+    const link = function($scope, $el, $attrs) {
         $scope.editableDescription = false;
 
         $scope.saveDescription = $qqueue.bindAdd(function(description, cb) {
             let promise;
-            let onSuccess = function(wikiPage) {
+            const onSuccess = function(wikiPage) {
                 if (($scope.item.id == null)) {
                     $analytics.trackEvent("wikipage", "create", "create wiki page", 1);
                     $scope.$emit("wikipage:add");
@@ -295,7 +295,7 @@ $qqueue, $repo, $analytics, wikiHistoryService) {
                 return $confirm.notify("success");
             };
 
-            let onError = () => $confirm.notify("error");
+            const onError = () => $confirm.notify("error");
 
             $scope.item.content =  description;
 
@@ -308,8 +308,8 @@ $qqueue, $repo, $analytics, wikiHistoryService) {
             return promise.finally(cb);
         });
 
-        let uploadFile = (file, cb) =>
-            attachmentsFullService.addAttachment($scope.project.id, $scope.item.id, 'wiki_page', file).then(result => cb(result.getIn(['file', 'name']), result.getIn(['file', 'url'])))
+        const uploadFile = (file, cb) =>
+            attachmentsFullService.addAttachment($scope.project.id, $scope.item.id, "wiki_page", file).then((result) => cb(result.getIn(["file", "name"]), result.getIn(["file", "url"])))
         ;
 
         $scope.uploadFiles = (files, cb) =>
@@ -324,7 +324,7 @@ $qqueue, $repo, $analytics, wikiHistoryService) {
             return $scope.storageKey = $scope.project.id + "-" + value.id + "-wiki";
         });
 
-        return $scope.$watch('project', function(project) {
+        return $scope.$watch("project", function(project) {
             if (!project) { return; }
 
             return $scope.editableDescription = project.my_permissions.indexOf("modify_wiki_page") !== -1;
@@ -356,6 +356,6 @@ $qqueue, $repo, $analytics, wikiHistoryService) {
         {{'COMMON.DESCRIPTION.NO_DESCRIPTION' | translate}}
     </div>
 </div>\
-`
+`,
     };
 };

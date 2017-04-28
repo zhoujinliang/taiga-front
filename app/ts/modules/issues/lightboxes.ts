@@ -22,18 +22,18 @@
  * File: modules/issues/lightboxes.coffee
  */
 
-import {debounce, trim} from "../../libs/utils"
-import * as angular from "angular"
-import * as Immutable from "immutable"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {debounce, trim} from "../../libs/utils";
 
 //############################################################################
 //# Issue Create Lightbox Directive
 //############################################################################
 
 export let CreateIssueDirective = function($repo, $confirm, $rootscope, lightboxService, $loading, $q, attachmentsService) {
-    let link = function($scope, $el, $attrs) {
-        let form = $el.find("form").checksley();
+    const link = function($scope, $el, $attrs) {
+        const form = $el.find("form").checksley();
         $scope.issue = {};
         $scope.attachments = Immutable.List();
 
@@ -52,7 +52,7 @@ export let CreateIssueDirective = function($repo, $confirm, $rootscope, lightbox
                 type: project.default_issue_type,
                 priority: project.default_priority,
                 severity: project.default_severity,
-                tags: []
+                tags: [],
             };
 
             return $scope.createIssueOpen = true;
@@ -60,27 +60,27 @@ export let CreateIssueDirective = function($repo, $confirm, $rootscope, lightbox
 
         $scope.$on("$destroy", () => $el.off());
 
-        let createAttachments = function(obj) {
-            let promises = _.map(attachmentsToAdd.toJS(), (attachment:any) => attachmentsService.upload(attachment.file, obj.id, $scope.issue.project, 'issue'));
+        const createAttachments = function(obj) {
+            const promises = _.map(attachmentsToAdd.toJS(), (attachment: any) => attachmentsService.upload(attachment.file, obj.id, $scope.issue.project, "issue"));
 
             return $q.all(promises);
         };
 
-        var attachmentsToAdd = Immutable.List();
+        let attachmentsToAdd = Immutable.List();
 
-        var resetAttachments = function() {
+        const resetAttachments = function() {
             attachmentsToAdd = Immutable.List();
             return $scope.attachments = Immutable.List();
         };
 
-        $scope.addAttachment = attachment => attachmentsToAdd = attachmentsToAdd.push(attachment);
+        $scope.addAttachment = (attachment) => attachmentsToAdd = attachmentsToAdd.push(attachment);
 
-        $scope.deleteAttachment = attachment =>
-            attachmentsToAdd = <Immutable.List<any>>attachmentsToAdd.filter((it:Immutable.Map<string,any>) => it.get('name') !== attachment.get('name'))
+        $scope.deleteAttachment = (attachment) =>
+            attachmentsToAdd = attachmentsToAdd.filter((it: Immutable.Map<string, any>) => it.get("name") !== attachment.get("name")) as Immutable.List<any>
         ;
 
         $scope.addTag = function(tag, color) {
-            let value = trim(tag.toLowerCase());
+            const value = trim(tag.toLowerCase());
 
             let { tags } = $scope.project;
             let projectTags = $scope.project.tags_colors;
@@ -96,9 +96,9 @@ export let CreateIssueDirective = function($repo, $confirm, $rootscope, lightbox
 
             $scope.project.tags = tags;
 
-            let itemtags = _.clone($scope.issue.tags);
+            const itemtags = _.clone($scope.issue.tags);
 
-            let inserted = _.find(itemtags, it => it[0] === value);
+            const inserted = _.find(itemtags, (it) => it[0] === value);
 
             if (!inserted) {
                 itemtags.push([tag , color]);
@@ -107,32 +107,32 @@ export let CreateIssueDirective = function($repo, $confirm, $rootscope, lightbox
         };
 
         $scope.deleteTag = function(tag) {
-            let value = trim(tag[0].toLowerCase());
+            const value = trim(tag[0].toLowerCase());
 
-            let { tags } = $scope.project;
-            let itemtags = _.clone($scope.issue.tags);
+            const { tags } = $scope.project;
+            const itemtags = _.clone($scope.issue.tags);
 
-            _.remove(itemtags, tag => tag[0] === value);
+            _.remove(itemtags, (tag) => tag[0] === value);
 
             $scope.issue.tags = itemtags;
 
             return _.pull($scope.issue.tags, value);
         };
 
-        let submit = debounce(2000, event => {
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
             if (!form.validate()) {
                 return;
             }
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
-            let promise = $repo.create("issues", $scope.issue);
+            const promise = $repo.create("issues", $scope.issue);
 
-            promise.then(data => createAttachments(data));
+            promise.then((data) => createAttachments(data));
 
             promise.then(function(data) {
                 currentLoading.finish();
@@ -147,22 +147,20 @@ export let CreateIssueDirective = function($repo, $confirm, $rootscope, lightbox
             });
         });
 
-        var submitButton = $el.find(".submit-button");
+        const submitButton = $el.find(".submit-button");
 
         return $el.on("submit", "form", submit);
     };
 
-
     return {link};
 };
-
 
 //############################################################################
 //# Issue Bulk Create Lightbox Directive
 //############################################################################
 
 export let CreateBulkIssuesDirective = function($repo, $rs, $confirm, $rootscope, $loading, lightboxService) {
-    let link = function($scope, $el, attrs) {
+    const link = function($scope, $el, attrs) {
         let form = null;
 
         $scope.$on("issueform:bulk", function(ctx, projectId, status){
@@ -171,11 +169,11 @@ export let CreateBulkIssuesDirective = function($repo, $rs, $confirm, $rootscope
             lightboxService.open($el);
             return $scope.new = {
                 projectId,
-                bulk: ""
+                bulk: "",
             };
     });
 
-        let submit = debounce(2000, event => {
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
             form = $el.find("form").checksley();
@@ -183,14 +181,14 @@ export let CreateBulkIssuesDirective = function($repo, $rs, $confirm, $rootscope
                 return;
             }
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
-            let data = $scope.new.bulk;
-            let { projectId } = $scope.new;
+            const data = $scope.new.bulk;
+            const { projectId } = $scope.new;
 
-            let promise = $rs.issues.bulkCreate(projectId, data);
+            const promise = $rs.issues.bulkCreate(projectId, data);
             promise.then(function(result) {
                 currentLoading.finish();
                 $rootscope.$broadcast("issueform:new:success", result);
@@ -204,7 +202,7 @@ export let CreateBulkIssuesDirective = function($repo, $rs, $confirm, $rootscope
             });
         });
 
-        var submitButton = $el.find(".submit-button");
+        const submitButton = $el.find(".submit-button");
 
         $el.on("submit", "form", submit);
 

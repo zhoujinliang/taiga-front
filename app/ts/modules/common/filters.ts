@@ -22,10 +22,10 @@
  * File: modules/common/filters.coffee
  */
 
-import * as _ from "lodash"
-import * as moment from "moment"
-import * as Immutable from "immutable"
-import * as utils from "../../../libs/utils"
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import * as moment from "moment";
+import * as utils from "../../../libs/utils";
 
 export let defaultFilter = () =>
     function(value, defaultValue) {
@@ -36,7 +36,7 @@ export let defaultFilter = () =>
     }
 ;
 
-export let yesNoFilter = $translate =>
+export let yesNoFilter = ($translate) =>
     function(value) {
         if (value) {
             return $translate.instant("COMMON.YES");
@@ -71,9 +71,9 @@ export let sizeFormat = () => {
 };
 
 export let toMutableFilter =  function() {
-    let toMutable = js => js.toJS();
+    const toMutable = (js) => js.toJS();
 
-    let memoizedMutable = _.memoize(toMutable);
+    const memoizedMutable = _.memoize(toMutable);
 
     return function(input) {
       if (input instanceof Immutable.List) {
@@ -84,11 +84,11 @@ export let toMutableFilter =  function() {
   };
 };
 
-export let byRefFilter = $filterFilter=>
+export let byRefFilter = ($filterFilter) =>
     function(userstories, filter) {
         if (filter != null ? _.startsWith(filter, "#") : undefined) {
-            let cleanRef = filter.substr(1);
-            return _.filter(userstories, (us:any) => _.startsWith(us.ref, cleanRef));
+            const cleanRef = filter.substr(1);
+            return _.filter(userstories, (us: any) => _.startsWith(us.ref, cleanRef));
         }
 
         return $filterFilter(userstories, filter);
@@ -98,22 +98,22 @@ export let byRefFilter = $filterFilter=>
 export let darkerFilter = () =>
     function(color, luminosity) {
         // validate hex string
-        color = new String(color).replace(/[^0-9a-f]/gi, '');
+        color = new String(color).replace(/[^0-9a-f]/gi, "");
         if (color.length < 6) {
-            color = color[0]+ color[0]+ color[1]+ color[1]+ color[2]+ color[2];
+            color = color[0] + color[0] + color[1] + color[1] + color[2] + color[2];
         }
 
         luminosity = luminosity || 0;
 
         // convert to decimal and change luminosity
         let newColor = "#";
-        let c:any = 0;
-        let i = 0;
-        let black = 0;
-        let white = 255;
+        let c: any = 0;
+        const i = 0;
+        const black = 0;
+        const white = 255;
         // for (i = 0; i < 3; i++)
         for (i of [0, 1, 2]) {
-            c = parseInt(color.substr(i*2,2), 16);
+            c = parseInt(color.substr(i * 2, 2), 16);
             c = Math.round(Math.min(Math.max(black, c + (luminosity * white)), white)).toString(16);
             newColor += (`00${c}`).substr(c.length);
         }
@@ -122,7 +122,7 @@ export let darkerFilter = () =>
     }
 ;
 
-export let markdownToHTML = wysiwigService =>
+export let markdownToHTML = (wysiwigService) =>
     function(input) {
         if (input) {
             return wysiwigService.getHTML(input);
@@ -132,11 +132,11 @@ export let markdownToHTML = wysiwigService =>
     }
 ;
 
-export let inArray = $filter =>
+export let inArray = ($filter) =>
     function(list, arrayFilter, element) {
         if (arrayFilter) {
-            let filter = $filter("filter");
-            return filter(list, listItem => arrayFilter.indexOf(listItem[element]) !== -1);
+            const filter = $filter("filter");
+            return filter(list, (listItem) => arrayFilter.indexOf(listItem[element]) !== -1);
         }
     }
 ;

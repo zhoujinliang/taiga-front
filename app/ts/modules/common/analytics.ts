@@ -22,22 +22,22 @@
  * File: modules/common/analytics.coffee
  */
 
-import {Service} from "../../../ts/classes"
-import * as _ from "lodash"
+import * as _ from "lodash";
+import {Service} from "../../../ts/classes";
 
 export class AnalyticsService extends Service {
-    rootscope:any
-    log:any
-    config:any
-    win:any
-    doc:any
-    location:any
-    conf:any
-    accountId:any
-    pageEvent:any
-    trackRoutes:any
-    ignoreFirstPageLoad:any
-    initialized:boolean
+    rootscope: any;
+    log: any;
+    config: any;
+    win: any;
+    doc: any;
+    location: any;
+    conf: any;
+    accountId: any;
+    pageEvent: any;
+    trackRoutes: any;
+    ignoreFirstPageLoad: any;
+    initialized: boolean;
 
     static initClass() {
         this.$inject = ["$rootScope", "$log", "$tgConfig", "$window", "$document", "$location"];
@@ -53,7 +53,7 @@ export class AnalyticsService extends Service {
         this.location = location;
         this.initialized = false;
 
-        let conf = this.config.get("analytics", {});
+        const conf = this.config.get("analytics", {});
 
         this.accountId = conf.accountId;
         this.pageEvent = conf.pageEvent || "$routeChangeSuccess";
@@ -91,13 +91,13 @@ export class AnalyticsService extends Service {
     }
 
     injectAnalytics() {
-        var gaNewElem : any = {};
-        var gaElems : any = {};
-        var currdate : any = new Date();
+        const gaNewElem : any = {};
+        const gaElems : any = {};
+        const currdate : any = new Date();
 
-        let fn = (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
-              (i[r].q=i[r].q||[]).push(arguments);},i[r].l=1*currdate;a=s.createElement(o),
-              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m);});
+        const fn = (function(i, s, o, g, r, a, m){i["GoogleAnalyticsObject"] = r; i[r] = i[r] || function(){
+              (i[r].q = i[r].q || []).push(arguments); }, i[r].l = 1 * currdate; a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m); });
         return fn(window, document, "script", "//www.google-analytics.com/analytics.js", "ga", gaNewElem, gaElems);
     }
 
@@ -107,8 +107,8 @@ export class AnalyticsService extends Service {
 
         title = title || this.doc[0].title;
         return this.win.ga("send", "pageview", {
-            "page": url,
-            "title": title
+            page: url,
+            title,
         });
     }
 

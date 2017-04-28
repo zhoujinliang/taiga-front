@@ -22,11 +22,11 @@
  * File: modules/base/navurl.coffee
  */
 
-import {trim} from "../../../libs/utils"
-import * as _ from "lodash"
-import {Injectable} from "@angular/core"
+import {Injectable} from "@angular/core";
+import * as _ from "lodash";
+import {trim} from "../../../libs/utils";
 
-let navUrls = {
+const navUrls = {
     "home": "/",
     "projects": "/projects",
     "error": "/error",
@@ -105,10 +105,9 @@ let navUrls = {
     "user-settings-user-change-password": "/user-settings/user-change-password",
     "user-settings-user-avatar": "/user-settings/user-avatar",
     "user-settings-mail-notifications": "/user-settings/mail-notifications",
-    "user-settings-contrib": "/user-settings/contrib/:plugin"
+    "user-settings-contrib": "/user-settings/contrib/:plugin",
 
 };
-
 
 //############################################################################
 //# Navigation Urls Service
@@ -116,7 +115,7 @@ let navUrls = {
 
 @Injectable()
 export class NavigationUrlsService {
-    urls:any
+    urls: any;
 
     constructor() {
         this.urls = navUrls;
@@ -126,16 +125,16 @@ export class NavigationUrlsService {
         return this.urls = _.merge({}, this.urls, urls || {});
     }
 
-    formatUrl(url, ctx={}) {
-        let replacer = function(match) {
+    formatUrl(url, ctx= {}) {
+        const replacer = function(match) {
             match = trim(match, ":");
             return ctx[match] || "undefined";
         };
         return url.replace(/(:\w+)/g, replacer);
     }
 
-    resolve(name, ctx={}) {
-        let url = this.urls[name];
+    resolve(name, ctx= {}) {
+        const url = this.urls[name];
         if (!url) { return ""; }
         if (ctx) { return this.formatUrl(url, ctx); }
         return url;

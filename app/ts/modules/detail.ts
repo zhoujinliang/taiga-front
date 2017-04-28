@@ -22,24 +22,24 @@
  * File: modules/detail.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
-let module = angular.module("taigaCommon");
+const module = angular.module("taigaCommon");
 
 class DetailController {
-    params:any
-    repo:any
-    projectService:any
-    navurls:any
-    location:any
+    params: any;
+    repo: any;
+    projectService: any;
+    navurls: any;
+    location: any;
 
     static initClass() {
         this.$inject = [
-            '$routeParams',
-            '$tgRepo',
+            "$routeParams",
+            "$tgRepo",
             "tgProjectService",
             "$tgNavUrls",
-            "$location"
+            "$location",
         ];
     }
 
@@ -51,34 +51,34 @@ class DetailController {
         this.location = location;
         this.repo.resolve({
             pslug: this.params.pslug,
-            ref: this.params.ref
+            ref: this.params.ref,
         })
-        .then(result => {
+        .then((result) => {
             let url;
             if (result.issue) {
-                url = this.navurls.resolve('project-issues-detail', {
-                    project: this.projectService.project.get('slug'),
-                    ref: this.params.ref
+                url = this.navurls.resolve("project-issues-detail", {
+                    project: this.projectService.project.get("slug"),
+                    ref: this.params.ref,
                 });
             } else if (result.task) {
-                url = this.navurls.resolve('project-tasks-detail', {
-                    project: this.projectService.project.get('slug'),
-                    ref: this.params.ref
+                url = this.navurls.resolve("project-tasks-detail", {
+                    project: this.projectService.project.get("slug"),
+                    ref: this.params.ref,
                 });
             } else if (result.us) {
-                url = this.navurls.resolve('project-userstories-detail', {
-                    project: this.projectService.project.get('slug'),
-                    ref: this.params.ref
+                url = this.navurls.resolve("project-userstories-detail", {
+                    project: this.projectService.project.get("slug"),
+                    ref: this.params.ref,
                 });
             } else if (result.epic) {
-                url = this.navurls.resolve('project-epics-detail', {
-                    project: this.projectService.project.get('slug'),
-                    ref: this.params.ref
+                url = this.navurls.resolve("project-epics-detail", {
+                    project: this.projectService.project.get("slug"),
+                    ref: this.params.ref,
                 });
             } else if (result.wikipage) {
-                url = this.navurls.resolve('project-wiki-page', {
-                    project: this.projectService.project.get('slug'),
-                    slug: this.params.ref
+                url = this.navurls.resolve("project-wiki-page", {
+                    project: this.projectService.project.get("slug"),
+                    slug: this.params.ref,
                 });
             }
 

@@ -22,35 +22,35 @@
  * File: modules/epics/detail.coffee
  */
 
-import {groupBy, bindMethods} from "../../libs/utils"
-import {PageMixin} from "../controllerMixins"
-import * as angular from "angular"
-import * as Immutable from "immutable"
+import * as angular from "angular";
+import * as Immutable from "immutable";
+import {bindMethods, groupBy} from "../../libs/utils";
+import {PageMixin} from "../controllerMixins";
 
-import {module} from "../../../modules/epics"
+import {module} from "../../../modules/epics";
 
 //############################################################################
 //# Epic Detail Controller
 //############################################################################
 
 class EpicDetailController extends PageMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    rs2:any
-    params:any
-    q:any
-    location:any
-    log:any
-    appMetaService:any
-    analytics:any
-    navUrls:any
-    translate:any
-    modelTransform:any
-    errorHandlingService:any
-    projectService:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    rs2: any;
+    params: any;
+    q: any;
+    location: any;
+    log: any;
+    appMetaService: any;
+    analytics: any;
+    navUrls: any;
+    translate: any;
+    modelTransform: any;
+    errorHandlingService: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -70,13 +70,13 @@ class EpicDetailController extends PageMixin {
             "$translate",
             "$tgQueueModelTransformation",
             "tgErrorHandlingService",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, rootscope, repo, confirm, rs, rs2, params, q, location,
-                  log, appMetaService, analytics, navUrls, translate, modelTransform, errorHandlingService, projectService) {
-        super()
+                log, appMetaService, analytics, navUrls, translate, modelTransform, errorHandlingService, projectService) {
+        super();
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -100,7 +100,7 @@ class EpicDetailController extends PageMixin {
         this.scope.sectionName = this.translate.instant("EPIC.SECTION_NAME");
         this.initializeEventHandlers();
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         // On Success
         promise.then(() => {
@@ -113,14 +113,14 @@ class EpicDetailController extends PageMixin {
     }
 
     _setMeta() {
-        let title = this.translate.instant("EPIC.PAGE_TITLE", {
+        const title = this.translate.instant("EPIC.PAGE_TITLE", {
             epicRef: `#${this.scope.epic.ref}`,
             epicSubject: this.scope.epic.subject,
-            projectName: this.scope.project.name
+            projectName: this.scope.project.name,
         });
-        let description = this.translate.instant("EPIC.PAGE_DESCRIPTION", {
+        const description = this.translate.instant("EPIC.PAGE_DESCRIPTION", {
             epicStatus: (this.scope.statusById[this.scope.epic.status] != null ? this.scope.statusById[this.scope.epic.status].name : undefined) || "--",
-            epicDescription: angular.element(this.scope.epic.description_html || "").text()
+            epicDescription: angular.element(this.scope.epic.description_html || "").text(),
         });
         return this.appMetaService.setAll(title, description);
     }
@@ -140,36 +140,36 @@ class EpicDetailController extends PageMixin {
     }
 
     initializeOnDeleteGoToUrl() {
-       let ctx = {project: this.scope.project.slug};
+       const ctx = {project: this.scope.project.slug};
        return this.scope.onDeleteGoToUrl = this.navUrls.resolve("project-epics", ctx);
    }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         this.scope.projectId = project.id;
         this.scope.project = project;
         this.scope.immutableProject = this.projectService.project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
         this.scope.statusList = project.epic_statuses;
-        this.scope.statusById = groupBy(project.epic_statuses, x => x.id);
+        this.scope.statusById = groupBy(project.epic_statuses, (x) => x.id);
         return project;
     }
 
     loadEpic() {
-        return this.rs.epics.getByRef(this.scope.projectId, this.params.epicref).then(epic => {
+        return this.rs.epics.getByRef(this.scope.projectId, this.params.epicref).then((epic) => {
             let ctx;
             this.scope.epic = epic;
             this.scope.immutableEpic = Immutable.fromJS(epic._attrs);
             this.scope.epicId = epic.id;
             this.scope.commentModel = epic;
 
-            this.modelTransform.setObject(this.scope, 'epic');
+            this.modelTransform.setObject(this.scope, "epic");
 
             if ((this.scope.epic.neighbors.previous != null ? this.scope.epic.neighbors.previous.ref : undefined) != null) {
                 ctx = {
                     project: this.scope.project.slug,
-                    ref: this.scope.epic.neighbors.previous.ref
+                    ref: this.scope.epic.neighbors.previous.ref,
                 };
                 this.scope.previousUrl = this.navUrls.resolve("project-epics-detail", ctx);
             }
@@ -177,7 +177,7 @@ class EpicDetailController extends PageMixin {
             if ((this.scope.epic.neighbors.next != null ? this.scope.epic.neighbors.next.ref : undefined) != null) {
                 ctx = {
                     project: this.scope.project.slug,
-                    ref: this.scope.epic.neighbors.next.ref
+                    ref: this.scope.epic.neighbors.next.ref,
                 };
                 return this.scope.nextUrl = this.navUrls.resolve("project-epics-detail", ctx);
             }
@@ -185,13 +185,13 @@ class EpicDetailController extends PageMixin {
     }
 
     loadUserstories() {
-          return this.rs2.userstories.listInEpic(this.scope.epicId).then(data => {
+          return this.rs2.userstories.listInEpic(this.scope.epicId).then((data) => {
               return this.scope.userstories = data;
           });
       }
 
     loadInitialData() {
-        let project = this.loadProject();
+        const project = this.loadProject();
 
         this.fillUsersAndRoles(project.members, project.roles);
         return this.loadEpic().then(() => this.loadUserstories());
@@ -202,11 +202,11 @@ class EpicDetailController extends PageMixin {
      *       See app/modules/components/vote-button for more info
      */
     onUpvote() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadEpic();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -214,11 +214,11 @@ class EpicDetailController extends PageMixin {
     }
 
     onDownvote() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadEpic();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -230,11 +230,11 @@ class EpicDetailController extends PageMixin {
      *       See app/modules/components/watch-button for more info
      */
     onWatch() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadEpic();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -242,11 +242,11 @@ class EpicDetailController extends PageMixin {
     }
 
     onUnwatch() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadEpic();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -254,16 +254,16 @@ class EpicDetailController extends PageMixin {
     }
 
     onSelectColor(color) {
-        let onSelectColorSuccess = () => {
+        const onSelectColorSuccess = () => {
             this.rootscope.$broadcast("object:updated");
-            return this.confirm.notify('success');
+            return this.confirm.notify("success");
         };
 
-        let onSelectColorError = () => {
-            return this.confirm.notify('error');
+        const onSelectColorError = () => {
+            return this.confirm.notify("error");
         };
 
-        let transform = this.modelTransform.save(function(epic) {
+        const transform = this.modelTransform.save(function(epic) {
             epic.color = color;
             return epic;
         });
@@ -275,12 +275,11 @@ EpicDetailController.initClass();
 
 module.controller("EpicDetailController", EpicDetailController);
 
-
 //############################################################################
 //# Epic status display directive
 //############################################################################
 
-let EpicStatusDisplayDirective = function($template, $compile) {
+const EpicStatusDisplayDirective = function($template, $compile) {
     // Display if an epic is open or closed and its status.
     //
     // Example:
@@ -290,15 +289,15 @@ let EpicStatusDisplayDirective = function($template, $compile) {
     //   - Epic object (ng-model)
     //   - scope.statusById object
 
-    let template = $template.get("common/components/status-display.html", true);
+    const template = $template.get("common/components/status-display.html", true);
 
-    let link = function($scope, $el, $attrs) {
-        let render = function(epic) {
-            let status =  $scope.statusById[epic.status];
+    const link = function($scope, $el, $attrs) {
+        const render = function(epic) {
+            const status =  $scope.statusById[epic.status];
 
             let html = template({
                 is_closed: status.is_closed,
-                status
+                status,
             });
 
             html = $compile(html)($scope);
@@ -315,18 +314,17 @@ let EpicStatusDisplayDirective = function($template, $compile) {
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
 module.directive("tgEpicStatusDisplay", ["$tgTemplate", "$compile", EpicStatusDisplayDirective]);
 
-
 //############################################################################
 //# Epic status button directive
 //############################################################################
 
-let EpicStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $compile, $translate, $template) {
+const EpicStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, $modelTransform, $compile, $translate, $template) {
     // Display the status of epic and you can edit it.
     //
     // Example:
@@ -337,41 +335,41 @@ let EpicStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, 
     //   - scope.statusById object
     //   - $scope.project.my_permissions
 
-    let template = $template.get("common/components/status-button.html", true);
+    const template = $template.get("common/components/status-button.html", true);
 
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
         let status;
-        let isEditable = () => $scope.project.my_permissions.indexOf("modify_epic") !== -1;
+        const isEditable = () => $scope.project.my_permissions.indexOf("modify_epic") !== -1;
 
-        let render = epic => {
+        const render = (epic) => {
             status = $scope.statusById[epic.status];
 
-            let html = $compile(template({
+            const html = $compile(template({
                 status,
                 statuses: $scope.statusList,
-                editable: isEditable()
+                editable: isEditable(),
             }))($scope);
 
             return $el.html(html);
         };
 
-        let save = function(status) {
-            let currentLoading = $loading()
+        const save = function(status) {
+            const currentLoading = $loading()
                 .target($el)
                 .start();
 
-            let transform = $modelTransform.save(function(epic) {
+            const transform = $modelTransform.save(function(epic) {
                 epic.status = status;
 
                 return epic;
             });
 
-            let onSuccess = function() {
+            const onSuccess = function() {
                 $rootScope.$broadcast("object:updated");
                 return currentLoading.finish();
             };
 
-            let onError = function() {
+            const onError = function() {
                 $confirm.notify("error");
                 return currentLoading.finish();
             };
@@ -392,7 +390,7 @@ let EpicStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, 
             event.stopPropagation();
             if (!isEditable()) { return; }
 
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
             $.fn.popover().closeAll();
 
@@ -401,7 +399,7 @@ let EpicStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, 
 
         $scope.$watch(() => $model.$modelValue != null ? $model.$modelValue.status : undefined
         , function() {
-            let epic = $model.$modelValue;
+            const epic = $model.$modelValue;
             if (epic) { return render(epic); }
         });
 
@@ -411,7 +409,7 @@ let EpicStatusButtonDirective = function($rootScope, $repo, $confirm, $loading, 
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 

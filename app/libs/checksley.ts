@@ -4,12 +4,12 @@
 // Author: Jesús Espino / @jespinog
 // Author: Andrey Antukh / @niwibe
 
-import * as _ from "lodash"
+import * as _ from "lodash";
 
-let defaults = {
-    inputs: 'input, textarea, select',
-    excluded: 'input[type=hidden], input[type=file], :disabled',
-    focus: 'first',
+const defaults = {
+    inputs: "input, textarea, select",
+    excluded: "input[type=hidden], input[type=file], :disabled",
+    focus: "first",
 
     validationMinlength: 3,
     validateIfUnchanged: false,
@@ -40,7 +40,7 @@ let defaults = {
         },
 
         errorsWrapper: "<ul />",
-        errorElem: "<li />"
+        errorElem: "<li />",
     },
 
     // Default listeners
@@ -48,26 +48,25 @@ let defaults = {
         onFieldValidate(element, field) { return false; },
         onFormSubmit(ok, event, form) {  },
         onFieldError(element, constraints, field) {  },
-        onFieldSuccess(element, constraints, field) {  }
-    }
+        onFieldSuccess(element, constraints, field) {  },
+    },
 };
 
-
-var validators = {
+const validators = {
     notnull(val) {
         return val.length > 0;
     },
 
     notblank(val) {
-        return _.isString(val) && ('' !== val.replace(/^\s+/g, '').replace(/\s+$/g, ''));
+        return _.isString(val) && ("" !== val.replace(/^\s+/g, "").replace(/\s+$/g, ""));
     },
 
     // Works on all inputs. val is object for checkboxes
     required(val) {
         // for checkboxes and select multiples. Check there is at least one required value
         if (_.isArray(val)) {
-            for (let i of val) {
-                if (validators.required(val[<string>i])) {
+            for (const i of val) {
+                if (validators.required(val[i as string])) {
                     return true;
                 }
             }
@@ -80,20 +79,20 @@ var validators = {
     type(val, type) {
         let regExp = null;
         switch (type) {
-            case 'number': regExp = /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/; break;
-            case 'digits': regExp = /^\d+$/; break;
-            case 'alphanum': regExp = /^\w+$/; break;
-            case 'email': regExp = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/i; break;
-            case 'url':
+            case "number": regExp = /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/; break;
+            case "digits": regExp = /^\d+$/; break;
+            case "alphanum": regExp = /^\w+$/; break;
+            case "email": regExp = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/i; break;
+            case "url":
                 if (!/(https?|s?ftp|git)/i.test(val)) {
                     val = `http://${val}`;
                 }
 
                 regExp = /^(https?|s?ftp|git):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i;
                 break;
-            case 'urlstrict': regExp = /^(https?|s?ftp|git):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i; break;
-            case 'dateIso': regExp = /^(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])$/; break;
-            case 'phone': regExp = /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/; break;
+            case "urlstrict": regExp = /^(https?|s?ftp|git):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i; break;
+            case "dateIso": regExp = /^(\d{4})\D?(0[1-9]|1[0-2])\D?([12]\d|0[1-9]|3[01])$/; break;
+            case "phone": regExp = /^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/; break;
         }
 
         if (regExp) {
@@ -103,7 +102,7 @@ var validators = {
     },
 
     regexp(val, regExp, self) {
-        return new RegExp( regExp, self.options.regexpFlag || '' ).test( val );
+        return new RegExp( regExp, self.options.regexpFlag || "" ).test( val );
     },
 
     minlength(val, min) {
@@ -146,11 +145,10 @@ var validators = {
 
     rangecheck(obj, arrayRange) {
         return validators.rangelength(obj, arrayRange);
-    }
+    },
 };
 
-
-let messages = {
+const messages = {
     defaultMessage: "This value seems to be invalid.",
     type: {
         email:      "This value should be a valid email.",
@@ -160,7 +158,7 @@ let messages = {
         digits:     "This value should be digits.",
         dateIso:    "This value should be a valid date (YYYY-MM-DD).",
         alphanum:   "This value should be alphanumeric.",
-        phone:      "This value should be a valid phone number."
+        phone:      "This value should be a valid phone number.",
     },
     notnull:        "This value should not be null.",
     notblank:       "This value should not be blank.",
@@ -175,32 +173,29 @@ let messages = {
     mincheck:       "You must select at least %s choices.",
     maxcheck:       "You must select %s choices or less.",
     rangecheck:     "You must select between %s and %s choices.",
-    equalto:        "This value should be the same."
+    equalto:        "This value should be the same.",
 };
 
-
-let formatMessage = function(message, args) {
+const formatMessage = function(message, args) {
     if (!_.isArray(args)) {
         args = [args];
     }
-    if (message.indexOf('%s') >= 0) {
-        return message.replace(/%s/g, match => String(args.shift()));
-    } else if (message.indexOf('%e') >= 0) {
-        return message.replace(/%e/g, match => String($(args.shift()).val()));
+    if (message.indexOf("%s") >= 0) {
+        return message.replace(/%s/g, (match) => String(args.shift()));
+    } else if (message.indexOf("%e") >= 0) {
+        return message.replace(/%e/g, (match) => String($(args.shift()).val()));
     } else {
         return message;
     }
 };
 
+const toInt = (num) => parseInt(num, 10);
 
-let toInt = num => parseInt(num, 10);
-
-
-let _checksley = function(options) {
-    let element = $(this);
+const _checksley = function(options) {
+    const element = $(this);
 
     if (!element.is("form, input, select, textarea")) {
-        throw "element is not a valid element for checksley";
+        throw new Error("element is not a valid element for checksley");
     }
 
     let instance = element.data("checksley");
@@ -231,21 +226,20 @@ let _checksley = function(options) {
     }
 };
 
-
 class Checksley {
-    messages: any
-    lang: any
-    Form: any
-    Field: any
-    FieldMultiple: any
-    ComposedField: any
-    Checksley: any
+    messages: any;
+    lang: any;
+    Form: any;
+    Field: any;
+    FieldMultiple: any;
+    ComposedField: any;
+    Checksley: any;
 
     constructor() {
         this.messages = {
             default: {
-                defaultMessage: "Invalid"
-            }
+                defaultMessage: "Invalid",
+            },
         };
 
         this.lang = this.detectLang();
@@ -259,7 +253,7 @@ class Checksley {
         return _.extend(validators, _validators);
     }
 
-    updateMessages(lang, messages, overwrite=false) {
+    updateMessages(lang, messages, overwrite= false) {
         if (this.messages[lang] === undefined) {
             this.messages[lang] = {};
         }
@@ -285,17 +279,17 @@ class Checksley {
         return $("html").attr("lang") || "default";
     }
 
-    getMessage(key, lang=null) {
+    getMessage(key, lang= null) {
         if (lang === null) {
-            lang = this.lang
+            lang = this.lang;
         }
 
-        let messages:any = this.messages[lang];
+        let messages: any = this.messages[lang];
         if (messages === undefined) {
             messages = {};
         }
 
-        let message = messages[key];
+        const message = messages[key];
         if (message === undefined) {
             if (lang === "default") {
                 return this.getMessage("defaultMessage", lang);
@@ -308,19 +302,18 @@ class Checksley {
     }
 }
 
-
 class Field {
-    id: any
-    fields: any
-    element: any
-    validatedOnce: boolean
-    options: any
-    validators: any
-    isRadioOrCheckbox: boolean
-    constraints: any
-    valid: boolean
-    required: boolean
-    form:any
+    id: any;
+    fields: any;
+    element: any;
+    validatedOnce: boolean;
+    options: any;
+    validators: any;
+    isRadioOrCheckbox: boolean;
+    constraints: any;
+    valid: boolean;
+    required: boolean;
+    form: any;
 
     constructor(elm, options) {
         if (options == null) { options = {}; }
@@ -351,8 +344,8 @@ class Field {
     }
 
     eventValidate(event) {
-        let trigger = this.element.data("trigger");
-        let value = this.getValue();
+        const trigger = this.element.data("trigger");
+        const value = this.getValue();
 
         if ((event.type === "keyup") && !/keyup/i.test(trigger) && !this.validatedOnce) {
             return true;
@@ -375,7 +368,7 @@ class Field {
 
     bindEvents() {
         this.unbindEvents();
-        let trigger = this.element.data("trigger");
+        const trigger = this.element.data("trigger");
 
         if (_.isString(trigger)) {
             this.element.on(`${trigger}.${this.id}`, _.bind(this.eventValidate, this));
@@ -401,19 +394,19 @@ class Field {
             this.required = true;
         }
 
-        let typeRx = new RegExp(this.element.attr('type'), "i");
+        const typeRx = new RegExp(this.element.attr("type"), "i");
         if (typeRx.test("email url number range")) {
-            let type = this.element.attr('type');
+            const type = this.element.attr("type");
             switch (type) {
                 case "range":
-                    let min = this.element.attr('min');
-                    let max = this.element.attr('max');
+                    const min = this.element.attr("min");
+                    const max = this.element.attr("max");
 
                     if (min && max) {
                         return this.constraints[type] = {
                             valid: true,
                             params: [toInt(min), toInt(max)],
-                            fn: this.validators[type]
+                            fn: this.validators[type],
                         };
                     }
                     break;
@@ -427,12 +420,12 @@ class Field {
         this.required = false;
 
         this.resetHtml5Constraints();
-        this.element.addClass('checksley-validated');
+        this.element.addClass("checksley-validated");
 
         return (() => {
-            let result = [];
-            for (let constraint in this.validators) {
-                let fn = this.validators[constraint];
+            const result = [];
+            for (const constraint in this.validators) {
+                const fn = this.validators[constraint];
                 let item;
                 if (this.element.data(constraint) === undefined) {
                     continue;
@@ -441,7 +434,7 @@ class Field {
                 this.constraints[constraint] = {
                     valid: true,
                     params: this.element.data(constraint),
-                    fn
+                    fn,
                 };
 
                 if (constraint === "required") {
@@ -457,7 +450,7 @@ class Field {
         return !_.isEmpty(this.constraints);
     }
 
-    validate(showErrors=false) {
+    validate(showErrors= false) {
         this.validatedOnce = true;
 
         if (!this.hasConstraints()) {
@@ -482,10 +475,10 @@ class Field {
             ({ showErrors } = this.options);
         }
 
-        let val = this.getValue();
+        const val = this.getValue();
         let valid = true;
 
-        let { listeners } = this.options;
+        const { listeners } = this.options;
 
         // If showErrors is true, remove previous errors
         // before put new errors.
@@ -494,8 +487,8 @@ class Field {
         }
 
         // Apply all declared validators
-        for (let name in this.constraints) {
-            let data = this.constraints[name];
+        for (const name in this.constraints) {
+            const data = this.constraints[name];
             data.valid = data.fn(this.getValue(), data.params, this);
 
             if (data.valid === false) {
@@ -512,10 +505,10 @@ class Field {
     }
 
     handleClasses(valid) {
-        let classHandlerElement = this.options.errors.classHandler(this.element, false);
+        const classHandlerElement = this.options.errors.classHandler(this.element, false);
 
-        let { errorClass } = this.options;
-        let { successClass } = this.options;
+        const { errorClass } = this.options;
+        const { successClass } = this.options;
 
         switch (valid) {
             case null:
@@ -532,7 +525,7 @@ class Field {
 
     manageError(name, constraint) {
         let message;
-        let data = this.element.data();
+        const data = this.element.data();
 
         if (data["errorMessage"] !== undefined) {
             message = data["errorMessage"];
@@ -564,15 +557,15 @@ class Field {
     }
 
     makeErrorElement(constraintName, message) {
-        let element = $("<li />", {"class": `checksley-${constraintName}`});
+        const element = $("<li />", {class: `checksley-${constraintName}`});
         element.html(message);
         element.addClass(constraintName);
         return element;
     }
 
     addError(errorElement) {
-        let container = this.getErrorContainer();
-        let selector = this.options.containerErrorsSelector;
+        const container = this.getErrorContainer();
+        const selector = this.options.containerErrorsSelector;
 
         if (!this.options.onlyOneErrorElement || !container.find(selector).length) {
             return container.append(errorElement);
@@ -609,14 +602,14 @@ class Field {
             return errorContainerEl;
         }
 
-        let params = {
-            "class": this.errorContainerClass(),
-            "id": this.errorContainerId()
+        const params = {
+            class: this.errorContainerClass(),
+            id: this.errorContainerId(),
         };
 
         errorContainerEl = $("<ul />", params);
 
-        let definedContainer = this.element.data('error-container');
+        const definedContainer = this.element.data("error-container");
         if (definedContainer === undefined) {
             if (this.isRadioOrCheckbox) {
                 errorContainerEl.insertAfter(this.element.parent());
@@ -632,7 +625,7 @@ class Field {
             container = this.element.closest(definedContainer);
         }
 
-        let preferenceSelector = this.options.errors.containerPreferenceSelector;
+        const preferenceSelector = this.options.errors.containerPreferenceSelector;
         if (container.find(preferenceSelector).length === 1) {
             container = container.find(preferenceSelector);
         }
@@ -652,11 +645,10 @@ class Field {
     }
 }
 
-
 class FieldMultiple extends Field {
-    isRadioOrCheckbox: boolean
-    isRadio: boolean
-    isCheckbox: boolean
+    isRadioOrCheckbox: boolean;
+    isRadio: boolean;
+    isCheckbox: boolean;
 
     constructor(elm, options) {
         super(elm, options);
@@ -667,9 +659,9 @@ class FieldMultiple extends Field {
     }
 
     getSiblings() {
-        let group = this.element.data("group");
+        const group = this.element.data("group");
         if (group === undefined) {
-            return `input[name=${this.element.attr('name')}]`;
+            return `input[name=${this.element.attr("name")}]`;
         } else {
             return `[data-group=\"${group}\"]`;
         }
@@ -677,13 +669,13 @@ class FieldMultiple extends Field {
 
     getValue() {
         if (this.isRadio) {
-            return $(`${this.getSiblings()}:checked`).val() || '';
+            return $(`${this.getSiblings()}:checked`).val() || "";
         }
 
         if (this.isCheckbox) {
-            let values = [];
+            const values = [];
 
-            for (let element of $(`${this.getSiblings()}:checked`)) {
+            for (const element of $(`${this.getSiblings()}:checked`)) {
                 values.push($(element).val());
             }
 
@@ -698,10 +690,10 @@ class FieldMultiple extends Field {
 
     bindEvents() {
         this.unbindEvents();
-        let trigger = this.element.data("trigger");
+        const trigger = this.element.data("trigger");
 
         return (() => {
-            let result = [];
+            const result = [];
             for (let element of $(this.getSiblings())) {
                 let item;
                 element = $(element);
@@ -726,16 +718,16 @@ class ComposedField extends Field {
     }
 
     getComponents() {
-        let components = [];
-        let fields = this.element.data("composed").split(',');
-        for (let field of fields) {
+        const components = [];
+        const fields = this.element.data("composed").split(",");
+        for (const field of fields) {
             components.push(this.element.find(`[name=${field}]`));
         }
         return components;
     }
 
     getValue() {
-        let value = _.map(this.getComponents(), x => x.val()).join(this.element.data("composed-joiner"));
+        const value = _.map(this.getComponents(), (x) => x.val()).join(this.element.data("composed-joiner"));
         this.element.val(value);
         return value;
     }
@@ -747,11 +739,11 @@ class ComposedField extends Field {
 
     bindEvents() {
         this.unbindEvents();
-        let trigger = this.element.data("trigger");
+        const trigger = this.element.data("trigger");
 
         return (() => {
-            let result = [];
-            for (let component of $(this.getComponents())) {
+            const result = [];
+            for (const component of $(this.getComponents())) {
                 let item;
                 if (_.isString(trigger)) {
                     component.on(`${trigger}.${this.id}`, _.bind(this.eventValidate, this));
@@ -768,12 +760,12 @@ class ComposedField extends Field {
 }
 
 class Form {
-    fields: any
-    id: any
-    element: any
-    options: any
-    fieldsByName: any
-    field: any
+    fields: any;
+    id: any;
+    element: any;
+    options: any;
+    fieldsByName: any;
+    field: any;
 
     constructor(elm, options) {
         if (options == null) { options = {}; }
@@ -803,26 +795,25 @@ class Form {
         this.fields = [];
         this.fieldsByName = {};
 
-        for (let fieldElm of this.element.find(this.options.inputs)) {
+        for (const fieldElm of this.element.find(this.options.inputs)) {
             element = $(fieldElm);
             if (element.is(this.options.excluded)) {
                 continue;
             }
 
             if (element.is("input[type=radio], input[type=checkbox]")) {
-                field = new (<any>checksley).FieldMultiple(fieldElm, this.options);
+                field = new (checksley as any).FieldMultiple(fieldElm, this.options);
             } else {
-                field = new (<any>checksley).Field(fieldElm, this.options);
+                field = new (checksley as any).Field(fieldElm, this.options);
             }
-
 
             field.setForm(this);
             this.fields.push(field);
             this.fieldsByName[element.attr("name")] = field;
         }
 
-        return this.element.find('[data-composed]').map((composedField) =>
-            ((field = new (<any>checksley).ComposedField(composedField, this.options)),
+        return this.element.find("[data-composed]").map((composedField) =>
+            ((field = new (checksley as any).ComposedField(composedField, this.options)),
 
             field.setForm(this),
             this.fields.push(field)));
@@ -830,11 +821,11 @@ class Form {
 
     setErrors(errors) {
         return (() => {
-            let result = [];
-            for (let name in errors) {
-                let error = errors[name];
+            const result = [];
+            for (const name in errors) {
+                const error = errors[name];
                 let item;
-                let field = this.fieldsByName[name];
+                const field = this.fieldsByName[name];
                 if (field) {
                     item = field.setErrors(error);
                 }
@@ -846,9 +837,9 @@ class Form {
 
     validate() {
         let valid = true;
-        let invalidFields = [];
+        const invalidFields = [];
 
-        for (let field of this.fields) {
+        for (const field of this.fields) {
             if (field.validate() === false) {
                 valid = false;
                 invalidFields.push(field);
@@ -866,10 +857,10 @@ class Form {
     }
 
     bindEvents() {
-        let self = this;
+        const self = this;
         this.unbindEvents();
         return this.element.on(`submit.${this.id}`, function(event) {
-            let ok = self.validate();
+            const ok = self.validate();
             self.options.listeners.onFormSubmit(ok, event, self);
 
             if (self.options.interceptSubmit && !ok) {
@@ -891,13 +882,12 @@ class Form {
         this.unbindEvents();
         this.unbindData();
 
-        for (let field of this.fields) {
+        for (const field of this.fields) {
             field.destroy();
         }
 
         return this.field = [];
     }
-
 
     reset() {
         return this.fields.map((field) =>
@@ -905,9 +895,8 @@ class Form {
     }
 }
 
-
 // Main checksley global instance
-var checksley = new Checksley();
+const checksley = new Checksley();
 checksley.updateMessages("default", messages);
 checksley.injectPlugin();
 

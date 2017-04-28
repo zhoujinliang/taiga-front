@@ -1,44 +1,44 @@
-declare var _version:string;
-import { NgModule } from "@angular/core"
-import { BrowserModule } from '@angular/platform-browser';
-import { UpgradeModule } from "@angular/upgrade/static"
-import { RouterModule, UrlHandlingStrategy, UrlTree } from '@angular/router';
-import { HttpModule, Http } from '@angular/http';
+declare var _version: string;
+import { NgModule } from "@angular/core";
+import { Http, HttpModule } from "@angular/http";
+import { BrowserModule } from "@angular/platform-browser";
+import { RouterModule, UrlHandlingStrategy, UrlTree } from "@angular/router";
+import { UpgradeModule } from "@angular/upgrade/static";
 
 // NGRX MODULES
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { RouterStoreModule } from '@ngrx/router-store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from "@ngrx/effects";
+import { RouterStoreModule } from "@ngrx/router-store";
+import { StoreModule } from "@ngrx/store";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
 // TAIGA MODULES
-import { DiscoverModule } from "./modules/discover/discover.module"
-import { HomeModule } from "./modules/home/home.module"
-import { AuthModule } from "./modules/auth/auth.module"
-import { KanbanModule } from "./modules/kanban/kanban.module"
-import { ProjectsModule } from "./modules/projects/projects.module"
-import { TgBaseModule } from './ts/modules/base/base.module';
-import { TgServicesModule } from './modules/services/services.module';
-import { ResourcesModule } from './modules/resources/resources.module';
-import { TgComponentsModule } from './modules/components/components.module';
+import { AuthModule } from "./modules/auth/auth.module";
+import { TgComponentsModule } from "./modules/components/components.module";
+import { DiscoverModule } from "./modules/discover/discover.module";
+import { HomeModule } from "./modules/home/home.module";
+import { KanbanModule } from "./modules/kanban/kanban.module";
+import { ProjectsModule } from "./modules/projects/projects.module";
+import { ResourcesModule } from "./modules/resources/resources.module";
+import { TgServicesModule } from "./modules/services/services.module";
+import { TgBaseModule } from "./ts/modules/base/base.module";
 
-import { TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
-import { AuthService } from './modules/auth/auth.service';
+import { AuthService } from "./modules/auth/auth.service";
 
-import { ProjectsService } from './modules/projects/projects.service';
-import { ProjectUrlService } from './ts/modules/common/project-url.service';
-import { DateRange } from './ts/modules/common/components';
-import { TgCommonModule } from './ts/modules/common/common.module';
-import { NavigationBarModule } from './modules/navigation-bar/navigation-bar.module';
+import { NavigationBarModule } from "./modules/navigation-bar/navigation-bar.module";
+import { ProjectsService } from "./modules/projects/projects.service";
+import { TgCommonModule } from "./ts/modules/common/common.module";
+import { DateRange } from "./ts/modules/common/components";
+import { ProjectUrlService } from "./ts/modules/common/project-url.service";
 
-import {AppComponent} from "./app.component"
-import {GlobalEffects} from "./app.effects"
-import {rootReducer} from "./app.store"
+import {AppComponent} from "./app.component";
+import {GlobalEffects} from "./app.effects";
+import {rootReducer} from "./app.store";
 
 export function HttpLoaderFactory(http: Http) {
-    return new TranslateHttpLoader(http, `/${_version}/locales/taiga/locale-`, '.json');
+    return new TranslateHttpLoader(http, `/${_version}/locales/taiga/locale-`, ".json");
 }
 
 @NgModule({
@@ -62,8 +62,8 @@ export function HttpLoaderFactory(http: Http) {
         loader: {
             provide: TranslateLoader,
             useFactory: HttpLoaderFactory,
-            deps: [Http]
-        }
+            deps: [Http],
+        },
     }),
     StoreModule.provideStore(rootReducer),
     StoreDevtoolsModule.instrumentOnlyWithExtension(),
@@ -83,6 +83,6 @@ export function HttpLoaderFactory(http: Http) {
   ],
   bootstrap: [
     AppComponent,
-  ]
+  ],
 })
 export class AppModule {}

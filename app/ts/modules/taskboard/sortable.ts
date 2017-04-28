@@ -22,16 +22,16 @@
  * File: modules/taskboard/sortable.coffee
  */
 
-import * as _ from "lodash"
-import {autoScroll} from "../../libs/dom-autoscroller"
-import * as dragula from "dragula"
+import * as dragula from "dragula";
+import * as _ from "lodash";
+import {autoScroll} from "../../libs/dom-autoscroller";
 
 //############################################################################
 //# Sortable Directive
 //############################################################################
 
 export let TaskboardSortableDirective = function($repo, $rs, $rootscope, $translate, $tgConfirm) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         let unwatch;
         return unwatch = $scope.$watch("usTasks", function(usTasks) {
             if (!usTasks || !usTasks.size) { return; }
@@ -45,32 +45,32 @@ export let TaskboardSortableDirective = function($repo, $rs, $rootscope, $transl
             let oldParentScope = null;
             let newParentScope = null;
             let itemEl = null;
-            let tdom = $el;
+            const tdom = $el;
 
-            let filterError = function() {
-                let text = $translate.instant("BACKLOG.SORTABLE_FILTER_ERROR");
+            const filterError = function() {
+                const text = $translate.instant("BACKLOG.SORTABLE_FILTER_ERROR");
                 return $tgConfirm.notify("error", text);
             };
 
-            let deleteElement = function(itemEl) {
+            const deleteElement = function(itemEl) {
                 // Completelly remove item and its scope from dom
                 itemEl.scope().$destroy();
                 itemEl.off();
                 return itemEl.remove();
             };
 
-            let containers = _.map($el.find('.task-column'), item => item);
+            const containers = _.map($el.find(".task-column"), (item) => item);
 
-            let drake = dragula(<any[]>containers, <dragula.DragulaOptions>{
+            const drake = dragula(containers as any[], {
                 copySortSource: false,
                 copy: false,
-                accepts(el, target) { return !$(target).hasClass('taskboard-userstory-box'); },
+                accepts(el, target) { return !$(target).hasClass("taskboard-userstory-box"); },
                 moves(item) {
-                    return $(item).is('tg-card');
-                }
-            });
+                    return $(item).is("tg-card");
+                },
+            } as dragula.DragulaOptions);
 
-            drake.on('drag', function(item) {
+            drake.on("drag", function(item) {
                 oldParentScope = $(item).parent().scope();
 
                 if ($el.hasClass("active-filters")) {
@@ -82,33 +82,32 @@ export let TaskboardSortableDirective = function($repo, $rs, $rootscope, $transl
                 }
             });
 
-            drake.on('dragend', function(item) {
-                let parentEl = $(item).parent();
+            drake.on("dragend", function(item) {
+                const parentEl = $(item).parent();
                 itemEl = $(item);
-                let itemTask = itemEl.scope().task;
-                let itemIndex = itemEl.index();
+                const itemTask = itemEl.scope().task;
+                const itemIndex = itemEl.index();
                 newParentScope = parentEl.scope();
 
-                let oldUsId = oldParentScope.us ? oldParentScope.us.id : null;
-                let oldStatusId = oldParentScope.st.id;
-                let newUsId = newParentScope.us ? newParentScope.us.id : null;
-                let newStatusId = newParentScope.st.id;
+                const oldUsId = oldParentScope.us ? oldParentScope.us.id : null;
+                const oldStatusId = oldParentScope.st.id;
+                const newUsId = newParentScope.us ? newParentScope.us.id : null;
+                const newStatusId = newParentScope.st.id;
 
                 if ((newStatusId !== oldStatusId) || (newUsId !== oldUsId)) {
                     deleteElement(itemEl);
                 }
 
-                return $scope.$apply(() => $rootscope.$broadcast("taskboard:task:move", itemTask, itemTask.getIn(['model', 'status']), newUsId, newStatusId, itemIndex));
+                return $scope.$apply(() => $rootscope.$broadcast("taskboard:task:move", itemTask, itemTask.getIn(["model", "status"]), newUsId, newStatusId, itemIndex));
             });
 
-
-            let scroll = autoScroll([$('.taskboard-table-body')[0]], {
+            const scroll = autoScroll([$(".taskboard-table-body")[0]], {
                 margin: 100,
                 pixels: 30,
                 scrollWhenOutside: true,
                 autoScroll() {
                     return this.down && drake.dragging;
-                }
+                },
             });
 
             return $scope.$on("$destroy", function() {

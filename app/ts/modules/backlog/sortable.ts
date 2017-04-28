@@ -22,27 +22,26 @@
  * File: modules/backlog/sortable.coffee
  */
 
+import * as angular from "angular";
+import * as _ from "lodash";
+import {autoScroll} from "../../libs/dom-autoscroller";
+import {dragMultiple} from "../../libs/dragula-drag-multiple";
+import {bindOnce} from "../../libs/utils";
 
-import * as angular from "angular"
-import * as _ from "lodash"
-import {bindOnce} from "../../libs/utils"
-import {autoScroll} from "../../libs/dom-autoscroller"
-import {dragMultiple} from "../../libs/dragula-drag-multiple"
-
-import * as dragula from "dragula"
+import * as dragula from "dragula";
 
 //############################################################################
 //# Sortable Directive
 //############################################################################
 
-let deleteElement = function(el) {
+const deleteElement = function(el) {
     $(el).scope().$destroy();
     $(el).off();
     return $(el).remove();
 };
 
 export let BacklogSortableDirective = function() {
-    let link = ($scope, $el, $attrs) =>
+    const link = ($scope, $el, $attrs) =>
         bindOnce($scope, "project", function(project) {
             // If the user has not enough permissions we don't enable the sortable
             if (!(project.my_permissions.indexOf("modify_us") > -1)) {
@@ -51,42 +50,42 @@ export let BacklogSortableDirective = function() {
 
             let initIsBacklog = false;
 
-            let drake = dragula([$el[0], $('.js-empty-backlog')[0]], <dragula.DragulaOptions>{
+            const drake = dragula([$el[0], $(".js-empty-backlog")[0]], {
                 copySortSource: false,
                 copy: false,
-                isContainer(el) { return el.classList.contains('sprint-table'); },
+                isContainer(el) { return el.classList.contains("sprint-table"); },
                 moves(item) {
-                    if (!$(item).hasClass('row')) {
+                    if (!$(item).hasClass("row")) {
                         return false;
                     }
 
                     return true;
-                }
-            });
+                },
+            } as dragula.DragulaOptions);
 
-            drake.on('drag', function(item, container) {
+            drake.on("drag", function(item, container) {
                 // it doesn't move is the filter is open
-                let parent = $(item).parent();
-                initIsBacklog = parent.hasClass('backlog-table-body');
+                const parent = $(item).parent();
+                initIsBacklog = parent.hasClass("backlog-table-body");
 
                 $(document.body).addClass("drag-active");
 
-                let isChecked = $(item).find("input[type='checkbox']").is(":checked");
+                const isChecked = $(item).find("input[type='checkbox']").is(":checked");
 
                 return dragMultiple.start(item, container);
             });
 
-            drake.on('cloned', item => $(item).addClass('backlog-us-mirror'));
+            drake.on("cloned", (item) => $(item).addClass("backlog-us-mirror"));
 
-            drake.on('dragend', function(item) {
+            drake.on("dragend", function(item) {
                 let index, sameContainer, usList;
                 let parent = $(item).parent();
 
-                $('.doom-line').remove();
+                $(".doom-line").remove();
 
                 parent = $(item).parent();
 
-                let isBacklog = parent.hasClass('backlog-table-body') || parent.hasClass('js-empty-backlog');
+                const isBacklog = parent.hasClass("backlog-table-body") || parent.hasClass("js-empty-backlog");
 
                 if (initIsBacklog || isBacklog) {
                     sameContainer = (initIsBacklog === isBacklog);
@@ -94,13 +93,13 @@ export let BacklogSortableDirective = function() {
                     sameContainer = $(item).scope().sprint.id === parent.scope().sprint.id;
                 }
 
-                let dragMultipleItems = dragMultiple.stop();
+                const dragMultipleItems = dragMultiple.stop();
 
                 $(document.body).removeClass("drag-active");
 
                 let sprint = null;
 
-                let firstElement = dragMultipleItems.length ? dragMultipleItems[0] : item;
+                const firstElement = dragMultipleItems.length ? dragMultipleItems[0] : item;
 
                 if (isBacklog) {
                     index = $(firstElement).index(".backlog-table-body .row");
@@ -111,19 +110,19 @@ export let BacklogSortableDirective = function() {
 
                 if (!sameContainer) {
                     if (dragMultipleItems.length) {
-                        usList = _.map(dragMultipleItems, item => item = $(item).scope().us);
+                        usList = _.map(dragMultipleItems, (item) => item = $(item).scope().us);
                     } else {
                         usList = [$(item).scope().us];
                     }
 
                     if (dragMultipleItems.length) {
-                        _.each(dragMultipleItems, item => deleteElement(item));
+                        _.each(dragMultipleItems, (item) => deleteElement(item));
                     } else {
                         deleteElement(item);
                     }
                 } else {
                     if (dragMultipleItems.length) {
-                        usList = _.map(dragMultipleItems, item => item = $(item).scope().us);
+                        usList = _.map(dragMultipleItems, (item) => item = $(item).scope().us);
                     } else {
                         usList = [$(item).scope().us];
                     }
@@ -132,13 +131,13 @@ export let BacklogSortableDirective = function() {
                 return $scope.$emit("sprint:us:move", usList, index, sprint);
             });
 
-            let scroll = autoScroll([window], {
+            const scroll = autoScroll([window], {
                 margin: 20,
                 pixels: 30,
                 scrollWhenOutside: true,
                 autoScroll() {
                     return this.down && drake.dragging;
-                }
+                },
             });
 
             return $scope.$on("$destroy", function() {

@@ -22,9 +22,9 @@
  * File: modules/admin/lightboxes.coffee
  */
 
-import {debounce} from "../../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {debounce} from "../../libs/utils";
 
 //############################################################################
 //# Warning message directive
@@ -34,8 +34,8 @@ export let LightboxAddMembersWarningMessageDirective = () =>
     ({
           templateUrl: "admin/memberships-warning-message.html",
           scope: {
-              project: "="
-          }
+              project: "=",
+          },
     })
 ;
 
@@ -61,25 +61,25 @@ export let LbRequestOwnershipDirective = (lightboxService, rs, confirmService, $
             };
         },
 
-        templateUrl: "common/lightbox/lightbox-request-ownership.html"
+        templateUrl: "common/lightbox/lightbox-request-ownership.html",
     })
 ;
 
 export class ChangeOwnerLightboxController {
-    rs:any
-    lightboxService:any
-    confirm:any
-    translate:any
-    users:any
-    q:string
-    commentOpen:boolean
-    activeUsers:any
-    limit:any
-    currentOwnerId:any
-    selected:any
-    loading:any
-    projectId:any
-    comment:any
+    rs: any;
+    lightboxService: any;
+    confirm: any;
+    translate: any;
+    users: any;
+    q: string;
+    commentOpen: boolean;
+    activeUsers: any;
+    limit: any;
+    currentOwnerId: any;
+    selected: any;
+    loading: any;
+    projectId: any;
+    comment: any;
 
     static initClass() {
         this.prototype.limit = 3;
@@ -95,7 +95,7 @@ export class ChangeOwnerLightboxController {
         this.commentOpen = false;
     }
 
-    normalizeString(normalizedString:string):string {
+    normalizeString(normalizedString: string): string {
         normalizedString = normalizedString.replace("Á", "A").replace("Ä", "A").replace("À", "A");
         normalizedString = normalizedString.replace("É", "E").replace("Ë", "E").replace("È", "E");
         normalizedString = normalizedString.replace("Í", "I").replace("Ï", "I").replace("Ì", "I");
@@ -122,21 +122,21 @@ export class ChangeOwnerLightboxController {
         }
 
         users = users.slice(0, this.limit);
-        users = _.reject(users, {"selected": true});
+        users = _.reject(users, {selected: true});
 
-        return _.reject(users, {"id": this.currentOwnerId});
+        return _.reject(users, {id: this.currentOwnerId});
     }
 
     userSearch() {
         this.users = this.activeUsers;
 
-        this.selected = _.find(this.users, {"selected": true});
+        this.selected = _.find(this.users, {selected: true});
 
         if (this.q) { return this.users = _.filter(this.users, this.filterUsers.bind(this)); }
     }
 
     selectUser(user) {
-        this.activeUsers = _.map(this.activeUsers, function(user:any) {
+        this.activeUsers = _.map(this.activeUsers, function(user: any) {
             user.selected = false;
 
             return user;
@@ -154,12 +154,12 @@ export class ChangeOwnerLightboxController {
                 this.loading = false;
                 this.lightboxService.closeAll();
 
-                let title = this.translate.instant("ADMIN.PROJECT_PROFILE.CHANGE_OWNER_SUCCESS_TITLE");
-                let desc = this.translate.instant("ADMIN.PROJECT_PROFILE.CHANGE_OWNER_SUCCESS_DESC");
+                const title = this.translate.instant("ADMIN.PROJECT_PROFILE.CHANGE_OWNER_SUCCESS_TITLE");
+                const desc = this.translate.instant("ADMIN.PROJECT_PROFILE.CHANGE_OWNER_SUCCESS_DESC");
 
                 return this.confirm.success(title, desc, {
                     type: "svg",
-                    name: "icon-speak-up"
+                    name: "icon-speak-up",
                 });
         });
     }
@@ -170,11 +170,11 @@ ChangeOwnerLightboxController.$inject = [
         "tgResources",
         "lightboxService",
         "$tgConfirm",
-        "$translate"
+        "$translate",
 ];
 
 export let ChangeOwnerLightboxDirective = function(lightboxService, lightboxKeyboardNavigationService, $template, $compile) {
-    let link = (scope, el) => lightboxService.open(el);
+    const link = (scope, el) => lightboxService.open(el);
 
     return {
         scope: true,
@@ -183,15 +183,15 @@ export let ChangeOwnerLightboxDirective = function(lightboxService, lightboxKeyb
         bindToController: {
             currentOwnerId: "=",
             projectId: "=",
-            activeUsers: "="
+            activeUsers: "=",
         },
         templateUrl: "common/lightbox/lightbox-change-owner.html",
-        link
+        link,
     };
 };
 
 export let TransferProjectStartSuccessDirective = function(lightboxService) {
-    let link = function(scope, el) {
+    const link = function(scope, el) {
         scope.close = () => lightboxService.close(el);
 
         return lightboxService.open(el);
@@ -199,6 +199,6 @@ export let TransferProjectStartSuccessDirective = function(lightboxService) {
 
     return {
         templateUrl: "common/lightbox/lightbox-transfer-project-start-success.html",
-        link
+        link,
     };
 };

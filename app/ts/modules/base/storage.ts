@@ -22,13 +22,13 @@
  * File: modules/base/storage.coffee
  */
 
-import * as _ from "lodash"
-import {Injectable} from "@angular/core"
+import {Injectable} from "@angular/core";
+import * as _ from "lodash";
 
 @Injectable()
 export class StorageService {
-    get(key, _default=null) {
-        let serializedValue = localStorage.getItem(key);
+    get(key, _default= null) {
+        const serializedValue = localStorage.getItem(key);
         if (serializedValue === null) {
             return _default || null;
         }
@@ -47,7 +47,7 @@ export class StorageService {
     }
 
     contains(key) {
-        let value = this.get(key);
+        const value = this.get(key);
         return (value !== null);
     }
 

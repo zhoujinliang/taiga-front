@@ -22,33 +22,33 @@
  * File: modules/admin/project-profile.coffee
  */
 
-import {debounce, getDefaulColorList} from "../../libs/utils"
-import {Controller} from "../../classes"
-import {PageMixin} from "../controllerMixins"
-import {autoScroll} from "../../libs/dom-autoscroller"
+import {Controller} from "../../classes";
+import {autoScroll} from "../../libs/dom-autoscroller";
+import {debounce, getDefaulColorList} from "../../libs/utils";
+import {PageMixin} from "../controllerMixins";
 
-import * as dragula from "dragula"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as dragula from "dragula";
+import * as _ from "lodash";
 
 //############################################################################
 //# Project values section Controller
 //############################################################################
 
 export class ProjectValuesSectionController extends PageMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    navUrls:any
-    appMetaService:any
-    translate:any
-    errorHandlingService:any
-    projectService:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    navUrls: any;
+    appMetaService: any;
+    translate: any;
+    errorHandlingService: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -64,13 +64,13 @@ export class ProjectValuesSectionController extends PageMixin {
             "tgAppMetaService",
             "$translate",
             "tgErrorHandlingService",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, navUrls,
-                  appMetaService, translate, errorHandlingService, projectService) {
-        super()
+                appMetaService, translate, errorHandlingService, projectService) {
+        super();
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -88,19 +88,19 @@ export class ProjectValuesSectionController extends PageMixin {
 
         this.loadInitialData();
 
-        let sectionName = this.translate.instant(this.scope.sectionName);
+        const sectionName = this.translate.instant(this.scope.sectionName);
 
-        let title = this.translate.instant("ADMIN.PROJECT_VALUES.PAGE_TITLE", {
-            "sectionName": sectionName,
-            "projectName": this.scope.project.name
+        const title = this.translate.instant("ADMIN.PROJECT_VALUES.PAGE_TITLE", {
+            sectionName,
+            projectName: this.scope.project.name,
         });
 
-        let { description } = this.scope.project;
+        const { description } = this.scope.project;
         this.appMetaService.setAll(title, description);
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         if (!project.i_am_admin) {
             this.errorHandlingService.permissionDenied();
@@ -108,12 +108,12 @@ export class ProjectValuesSectionController extends PageMixin {
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
         return project;
     }
 
     loadInitialData() {
-        let promise = this.loadProject();
+        const promise = this.loadProject();
         return promise;
     }
 }
@@ -124,11 +124,11 @@ ProjectValuesSectionController.initClass();
 //############################################################################
 
 export class ProjectValuesController extends Controller {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
 
     static initClass() {
         this.$inject = [
@@ -141,7 +141,7 @@ export class ProjectValuesController extends Controller {
     }
 
     constructor(scope, rootscope, repo, confirm, rs) {
-        super()
+        super();
         this.loadValues = this.loadValues.bind(this);
         this.moveValue = this.moveValue.bind(this);
         this.scope = scope;
@@ -151,7 +151,7 @@ export class ProjectValuesController extends Controller {
         this.rs = rs;
         this.scope.$on("admin:project-values:move", this.moveValue);
 
-        var unwatch = this.scope.$watch("resource", resource => {
+        const unwatch = this.scope.$watch("resource", (resource) => {
             if (resource) {
                 this.loadValues();
                 return unwatch();
@@ -159,7 +159,7 @@ export class ProjectValuesController extends Controller {
         });
     }
     loadValues() {
-        return this.rs[this.scope.resource].listValues(this.scope.projectId, this.scope.type).then((values:any[]) => {
+        return this.rs[this.scope.resource].listValues(this.scope.projectId, this.scope.type).then((values: any[]) => {
             this.scope.values = values;
             this.scope.maxValueOrder = _.maxBy(values, "order").order;
             return values;
@@ -167,8 +167,8 @@ export class ProjectValuesController extends Controller {
     }
 
     moveValue(ctx, itemValue, itemIndex) {
-        let { values } = this.scope;
-        let r = values.indexOf(itemValue);
+        const { values } = this.scope;
+        const r = values.indexOf(itemValue);
         values.splice(r, 1);
         values.splice(itemIndex, 0, itemValue);
         _.each(values, (value, index) => value.order = index);
@@ -185,34 +185,34 @@ ProjectValuesController.initClass();
 export let ProjectValuesDirective = function($log, $repo, $confirm, $location, animationFrame, $translate, $rootscope, projectService) {
     //# Drag & Drop Link
 
-    let linkDragAndDrop = function($scope, $el, $attrs) {
-        let oldParentScope = null;
-        let newParentScope = null;
+    const linkDragAndDrop = function($scope, $el, $attrs) {
+        const oldParentScope = null;
+        const newParentScope = null;
         let itemEl = null;
-        let tdom = $el.find(".sortable");
+        const tdom = $el.find(".sortable");
 
-        let drake = dragula([tdom[0]], <dragula.DragulaOptions>{
-            direction: 'vertical',
+        const drake = dragula([tdom[0]], {
+            direction: "vertical",
             copySortSource: false,
             copy: false,
             mirrorContainer: tdom[0],
-            moves(item) { return $(item).is('div[tg-bind-scope]'); }
-        });
+            moves(item) { return $(item).is("div[tg-bind-scope]"); },
+        } as dragula.DragulaOptions);
 
-        drake.on('dragend', function(item) {
+        drake.on("dragend", function(item) {
             itemEl = $(item);
-            let itemValue = itemEl.scope().value;
-            let itemIndex = itemEl.index();
+            const itemValue = itemEl.scope().value;
+            const itemIndex = itemEl.index();
             return $scope.$broadcast("admin:project-values:move", itemValue, itemIndex);
         });
 
-        let scroll = autoScroll(window, {
+        const scroll = autoScroll(window, {
             margin: 20,
             pixels: 30,
             scrollWhenOutside: true,
             autoScroll() {
                 return this.down && drake.dragging;
-            }
+            },
         });
 
         return $scope.$on("$destroy", function() {
@@ -223,22 +223,22 @@ export let ProjectValuesDirective = function($log, $repo, $confirm, $location, a
 
     //# Value Link
 
-    let linkValue = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
-        let valueType = $attrs.type;
-        let objName = $attrs.objname;
+    const linkValue = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
+        const valueType = $attrs.type;
+        const objName = $attrs.objname;
 
-        let initializeNewValue = () =>
+        const initializeNewValue = () =>
             $scope.newValue = {
-                "name": "",
-                "is_closed": false,
-                "is_archived": false
+                name: "",
+                is_closed: false,
+                is_archived: false,
             }
         ;
 
-        let initializeTextTranslations = () =>
+        const initializeTextTranslations = () =>
             $scope.addNewElementText = $translate.instant(
-                `ADMIN.PROJECT_VALUES_${objName.toUpperCase()}.ACTION_ADD`
+                `ADMIN.PROJECT_VALUES_${objName.toUpperCase()}.ACTION_ADD`,
             )
         ;
 
@@ -247,9 +247,9 @@ export let ProjectValuesDirective = function($log, $repo, $confirm, $location, a
 
         $rootscope.$on("$translateChangeEnd", () => $scope.$evalAsync(initializeTextTranslations));
 
-        let goToBottomList = focus => {
+        const goToBottomList = (focus) => {
             if (focus == null) { focus = false; }
-            let table = $el.find(".table-main");
+            const table = $el.find(".table-main");
 
             $(document.body).scrollTop(table.offset().top + table.height());
 
@@ -258,35 +258,35 @@ export let ProjectValuesDirective = function($log, $repo, $confirm, $location, a
             }
         };
 
-        let saveValue = function(target) {
-            let formEl = target.parents("form");
-            let form = formEl.checksley();
+        const saveValue = function(target) {
+            const formEl = target.parents("form");
+            const form = formEl.checksley();
             if (!form.validate()) { return; }
 
-            let { value } = formEl.scope();
-            let promise = $repo.save(value);
+            const { value } = formEl.scope();
+            const promise = $repo.save(value);
             promise.then(() => {
-                let row = target.parents(".row.table-main");
+                const row = target.parents(".row.table-main");
                 row.addClass("hidden");
-                row.siblings(".visualization").removeClass('hidden');
+                row.siblings(".visualization").removeClass("hidden");
 
                 return projectService.fetchProject();
             });
 
-            return promise.then(null, data => form.setErrors(data));
+            return promise.then(null, (data) => form.setErrors(data));
         };
 
-        let saveNewValue = function(target) {
-            let formEl = target.parents("form");
-            let form = formEl.checksley();
+        const saveNewValue = function(target) {
+            const formEl = target.parents("form");
+            const form = formEl.checksley();
             if (!form.validate()) { return; }
 
             $scope.newValue.project = $scope.project.id;
 
             $scope.newValue.order = $scope.maxValueOrder ? $scope.maxValueOrder + 1 : 1;
 
-            let promise = $repo.create(valueType, $scope.newValue);
-            promise.then(data => {
+            const promise = $repo.create(valueType, $scope.newValue);
+            promise.then((data) => {
                 target.addClass("hidden");
 
                 $scope.values.push(data);
@@ -294,32 +294,32 @@ export let ProjectValuesDirective = function($log, $repo, $confirm, $location, a
                 return initializeNewValue();
             });
 
-            return promise.then(null, data => form.setErrors(data));
+            return promise.then(null, (data) => form.setErrors(data));
         };
 
-        let cancel = function(target) {
-            let row = target.parents(".row.table-main");
-            let formEl = target.parents("form");
-            let { value } = formEl.scope();
+        const cancel = function(target) {
+            const row = target.parents(".row.table-main");
+            const formEl = target.parents("form");
+            const { value } = formEl.scope();
             return $scope.$apply(function() {
                 row.addClass("hidden");
                 value.revert();
-                return row.siblings(".visualization").removeClass('hidden');
+                return row.siblings(".visualization").removeClass("hidden");
             });
         };
 
         $el.on("click", ".show-add-new", function(event) {
             event.preventDefault();
-            $el.find(".new-value").removeClass('hidden');
+            $el.find(".new-value").removeClass("hidden");
 
             return goToBottomList(true);
         });
 
         $el.on("click", ".add-new", debounce(2000, function(event) {
             event.preventDefault();
-            let target = $el.find(".new-value");
+            const target = $el.find(".new-value");
             return saveNewValue(target);
-        })
+        }),
         );
 
         $el.on("click", ".delete-new", function(event) {
@@ -330,19 +330,19 @@ export let ProjectValuesDirective = function($log, $repo, $confirm, $location, a
 
         $el.on("click", ".edit-value", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
-            let row = target.parents(".row.table-main");
+            const row = target.parents(".row.table-main");
             row.addClass("hidden");
 
-            let editionRow = row.siblings(".edition");
-            editionRow.removeClass('hidden');
-            return editionRow.find('input:visible').first().focus().select();
+            const editionRow = row.siblings(".edition");
+            editionRow.removeClass("hidden");
+            return editionRow.find("input:visible").first().focus().select();
         });
 
         $el.on("keyup", ".new-value input", function(event) {
             if (event.keyCode === 13) {
-                let target = $el.find(".new-value");
+                const target = $el.find(".new-value");
                 return saveNewValue(target);
             } else if (event.keyCode === 27) {
                 $el.find(".new-value").addClass("hidden");
@@ -352,49 +352,49 @@ export let ProjectValuesDirective = function($log, $repo, $confirm, $location, a
 
         $el.on("click", ".save", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             return saveValue(target);
         });
 
         $el.on("click", ".cancel", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             return cancel(target);
         });
 
         return $el.on("click", ".delete-value", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
-            let formEl = target.parents("form");
-            let { value } = formEl.scope();
+            const target = angular.element(event.currentTarget);
+            const formEl = target.parents("form");
+            const { value } = formEl.scope();
 
-            let choices = {};
+            const choices = {};
             _.each($scope.values, function(option) {
                 if (value.id !== option.id) {
                     return choices[option.id] = option.name;
                 }
             });
 
-            let subtitle = value.name;
+            const subtitle = value.name;
 
             if (_.keys(choices).length === 0) {
                 return $confirm.error($translate.instant("ADMIN.PROJECT_VALUES.ERROR_DELETE_ALL"));
             }
 
-            let title = $translate.instant("ADMIN.COMMON.TITLE_ACTION_DELETE_VALUE");
-            let text = $translate.instant("ADMIN.PROJECT_VALUES.REPLACEMENT");
+            const title = $translate.instant("ADMIN.COMMON.TITLE_ACTION_DELETE_VALUE");
+            const text = $translate.instant("ADMIN.PROJECT_VALUES.REPLACEMENT");
 
             return $confirm.askChoice(title, subtitle, choices, text).then(function(response) {
-                let onSucces = () =>
+                const onSucces = () =>
                     $ctrl.loadValues().finally(() => response.finish())
                 ;
-                let onError = () => $confirm.notify("error");
-                return $repo.remove(value, {"moveTo": response.selected}).then(onSucces, onError);
+                const onError = () => $confirm.notify("error");
+                return $repo.remove(value, {moveTo: response.selected}).then(onSucces, onError);
             });
         });
     };
 
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         linkDragAndDrop($scope, $el, $attrs);
         linkValue($scope, $el, $attrs);
 
@@ -411,7 +411,7 @@ export let ProjectValuesDirective = function($log, $repo, $confirm, $location, a
 export let ColorSelectionDirective = function() {
     //# Color selection Link
 
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
         $scope.colorList = getDefaulColorList();
 
         $scope.allowEmpty = false;
@@ -419,20 +419,20 @@ export let ColorSelectionDirective = function() {
             $scope.allowEmpty = true;
         }
 
-        let $ctrl = $el.controller();
+        const $ctrl = $el.controller();
 
-        $scope.$watch($attrs.ngModel, element => $scope.color = element.color);
+        $scope.$watch($attrs.ngModel, (element) => $scope.color = element.color);
 
         $el.on("click", ".current-color", function(event) {
             // Showing the color selector
             event.preventDefault();
             event.stopPropagation();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             $(".select-color").hide();
             target.siblings(".select-color").show();
             // Hide when click outside
-            let body = angular.element("body");
-            return body.on("click", event => {
+            const body = angular.element("body");
+            return body.on("click", (event) => {
                 if (angular.element(event.target).parent(".select-color").length === 0) {
                     $el.find(".select-color").hide();
                     return body.unbind("click");
@@ -443,7 +443,7 @@ export let ColorSelectionDirective = function() {
         $el.on("click", ".select-color .color", function(event) {
             // Selecting one color on color selector
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             $scope.$apply(() => $model.$modelValue.color = target.data("color"));
             return $el.find(".select-color").hide();
         });
@@ -470,7 +470,7 @@ export let ColorSelectionDirective = function() {
 
     return {
           link,
-          require:"ngModel"
+          require: "ngModel",
       };
 };
 
@@ -479,48 +479,47 @@ export let ColorSelectionDirective = function() {
 //############################################################################
 
 // Custom attributes types (see taiga-back/taiga/projects/custom_attributes/choices.py)
-let TEXT_TYPE = "text";
-let MULTILINE_TYPE = "multiline";
-let RICHTEXT_TYPE = "richtext";
-let DATE_TYPE = "date";
-let URL_TYPE = "url";
+const TEXT_TYPE = "text";
+const MULTILINE_TYPE = "multiline";
+const RICHTEXT_TYPE = "richtext";
+const DATE_TYPE = "date";
+const URL_TYPE = "url";
 
-
-let TYPE_CHOICES = [
+const TYPE_CHOICES = [
     {
         key: TEXT_TYPE,
-        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_TEXT"
+        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_TEXT",
     },
     {
         key: MULTILINE_TYPE,
-        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_MULTI"
+        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_MULTI",
     },
     {
         key: RICHTEXT_TYPE,
-        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_RICHTEXT"
+        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_RICHTEXT",
     },
     {
         key: DATE_TYPE,
-        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_DATE"
+        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_DATE",
     },
     {
         key: URL_TYPE,
-        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_URL"
-    }
+        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_URL",
+    },
 ];
 
 export class ProjectCustomAttributesController extends PageMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    navUrls:any
-    appMetaService:any
-    translate:any
-    projectService:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    navUrls: any;
+    appMetaService: any;
+    translate: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -534,13 +533,13 @@ export class ProjectCustomAttributesController extends PageMixin {
             "$tgNavUrls",
             "tgAppMetaService",
             "$translate",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, rootscope, repo, rs, params, q, location, navUrls, appMetaService,
-                  translate, projectService) {
-        super()
+                translate, projectService) {
+        super();
         this.loadCustomAttributes = this.loadCustomAttributes.bind(this);
         this.createCustomAttribute = this.createCustomAttribute.bind(this);
         this.saveCustomAttribute = this.saveCustomAttribute.bind(this);
@@ -561,15 +560,15 @@ export class ProjectCustomAttributesController extends PageMixin {
         this.scope.project = this.projectService.project.toJS();
         this.scope.projectId = this.scope.project.id;
 
-        let sectionName = this.translate.instant(this.scope.sectionName);
-        let title = this.translate.instant("ADMIN.CUSTOM_ATTRIBUTES.PAGE_TITLE", {
-            "sectionName": sectionName,
-            "projectName": this.scope.project.name
+        const sectionName = this.translate.instant(this.scope.sectionName);
+        const title = this.translate.instant("ADMIN.CUSTOM_ATTRIBUTES.PAGE_TITLE", {
+            sectionName,
+            projectName: this.scope.project.name,
         });
-        let { description } = this.scope.project;
+        const { description } = this.scope.project;
         this.appMetaService.setAll(title, description);
 
-        this.scope.init = type => {
+        this.scope.init = (type) => {
             this.scope.type = type;
             return this.loadCustomAttributes();
         };
@@ -580,9 +579,9 @@ export class ProjectCustomAttributesController extends PageMixin {
     //########################
 
     loadCustomAttributes() {
-        return this.rs.customAttributes[this.scope.type].list(this.scope.projectId).then(customAttributes => {
+        return this.rs.customAttributes[this.scope.type].list(this.scope.projectId).then((customAttributes) => {
             this.scope.customAttributes = customAttributes;
-            this.scope.maxOrder = __guard__(_.maxBy(customAttributes, "order"), x => x.order);
+            this.scope.maxOrder = __guard__(_.maxBy(customAttributes, "order"), (x) => x.order);
             return customAttributes;
         });
     }
@@ -600,8 +599,8 @@ export class ProjectCustomAttributesController extends PageMixin {
     }
 
     moveCustomAttributes(attrModel, newIndex) {
-        let { customAttributes } = this.scope;
-        let r = customAttributes.indexOf(attrModel);
+        const { customAttributes } = this.scope;
+        const r = customAttributes.indexOf(attrModel);
         customAttributes.splice(r, 1);
         customAttributes.splice(newIndex, 0, attrModel);
 
@@ -617,27 +616,27 @@ ProjectCustomAttributesController.initClass();
 //############################################################################
 
 export let ProjectCustomAttributesDirective = function($log, $confirm, animationFrame, $translate) {
-    let link = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
+    const link = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
 
         $scope.$on("$destroy", () => $el.off());
 
         //#################################
         // Drag & Drop
         //#################################
-        let sortableEl = $el.find(".js-sortable");
-        let drake = dragula([sortableEl[0]], <dragula.DragulaOptions>{
-            direction: 'vertical',
+        const sortableEl = $el.find(".js-sortable");
+        const drake = dragula([sortableEl[0]], {
+            direction: "vertical",
             copySortSource: false,
             copy: false,
             mirrorContainer: sortableEl[0],
-            moves(item) { return $(item).is('div[tg-bind-scope]'); }
-        });
+            moves(item) { return $(item).is("div[tg-bind-scope]"); },
+        } as dragula.DragulaOptions);
 
-        drake.on('dragend', function(item) {
-            let itemEl = $(item);
-            let itemAttr = itemEl.scope().attr;
-            let itemIndex = itemEl.index();
+        drake.on("dragend", function(item) {
+            const itemEl = $(item);
+            const itemAttr = itemEl.scope().attr;
+            const itemIndex = itemEl.index();
             return $ctrl.moveCustomAttributes(itemAttr, itemIndex);
         });
 
@@ -645,46 +644,46 @@ export let ProjectCustomAttributesDirective = function($log, $confirm, animation
         // New custom attribute
         //#################################
 
-        let showCreateForm = function() {
+        const showCreateForm = function() {
             $el.find(".js-new-custom-field").removeClass("hidden");
             return $el.find(".js-new-custom-field input:visible").first().focus();
         };
 
-        let hideCreateForm = () => $el.find(".js-new-custom-field").addClass("hidden");
+        const hideCreateForm = () => $el.find(".js-new-custom-field").addClass("hidden");
 
-        let showAddButton = () => $el.find(".js-add-custom-field-button").removeClass("hidden");
+        const showAddButton = () => $el.find(".js-add-custom-field-button").removeClass("hidden");
 
-        let hideAddButton = () => $el.find(".js-add-custom-field-button").addClass("hidden");
+        const hideAddButton = () => $el.find(".js-add-custom-field-button").addClass("hidden");
 
-        let showCancelButton = () => $el.find(".js-cancel-new-custom-field-button").removeClass("hidden");
+        const showCancelButton = () => $el.find(".js-cancel-new-custom-field-button").removeClass("hidden");
 
-        let hideCancelButton = () => $el.find(".js-cancel-new-custom-field-button").addClass("hidden");
+        const hideCancelButton = () => $el.find(".js-cancel-new-custom-field-button").addClass("hidden");
 
-        let resetNewAttr = () => $scope.newAttr = {};
+        const resetNewAttr = () => $scope.newAttr = {};
 
-        let create = function(formEl) {
-            let form = formEl.checksley();
+        const create = function(formEl) {
+            const form = formEl.checksley();
             if (!form.validate()) { return; }
 
-            let onSucces = () => {
+            const onSucces = () => {
                 $ctrl.loadCustomAttributes();
                 hideCreateForm();
                 resetNewAttr();
                 return $confirm.notify("success");
             };
 
-            let onError = data => {
+            const onError = (data) => {
                 return form.setErrors(data);
             };
 
-            let attr = $scope.newAttr;
+            const attr = $scope.newAttr;
             attr.project = $scope.projectId;
             attr.order = $scope.maxOrder ? $scope.maxOrder + 1 : 1;
 
             return $ctrl.createCustomAttribute(attr).then(onSucces, onError);
         };
 
-        let cancelCreate = function() {
+        const cancelCreate = function() {
             hideCreateForm();
             return resetNewAttr();
         };
@@ -710,11 +709,11 @@ export let ProjectCustomAttributesDirective = function($log, $confirm, animation
 
         $el.on("click", ".js-create-custom-field-button", debounce(2000, function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
-            let formEl = target.closest("form");
+            const target = angular.element(event.currentTarget);
+            const formEl = target.closest("form");
 
             return create(formEl);
-        })
+        }),
         );
 
         $el.on("click", ".js-cancel-new-custom-field-button", function(event) {
@@ -724,8 +723,8 @@ export let ProjectCustomAttributesDirective = function($log, $confirm, animation
 
         $el.on("keyup", ".js-new-custom-field input", function(event) {
             if (event.keyCode === 13) { // Enter
-                let target = angular.element(event.currentTarget);
-                let formEl = target.closest("form");
+                const target = angular.element(event.currentTarget);
+                const formEl = target.closest("form");
                 return create(formEl);
             } else if (event.keyCode === 27) { // Esc
                 return cancelCreate();
@@ -736,65 +735,65 @@ export let ProjectCustomAttributesDirective = function($log, $confirm, animation
         // Edit custom attribute
         //#################################
 
-        let showEditForm = function(formEl) {
+        const showEditForm = function(formEl) {
             formEl.find(".js-view-custom-field").addClass("hidden");
             formEl.find(".js-edit-custom-field").removeClass("hidden");
             return formEl.find(".js-edit-custom-field input:visible").first().focus().select();
         };
 
-        let hideEditForm = function(formEl) {
+        const hideEditForm = function(formEl) {
             formEl.find(".js-edit-custom-field").addClass("hidden");
             return formEl.find(".js-view-custom-field").removeClass("hidden");
         };
 
-        let revertChangesInCustomAttribute = formEl =>
+        const revertChangesInCustomAttribute = (formEl) =>
             $scope.$apply(() => formEl.scope().attr.revert())
         ;
 
-        let update = function(formEl) {
-            let form = formEl.checksley();
+        const update = function(formEl) {
+            const form = formEl.checksley();
             if (!form.validate()) { return; }
 
-            let onSucces = () => {
+            const onSucces = () => {
                 $ctrl.loadCustomAttributes();
                 hideEditForm(formEl);
                 return $confirm.notify("success");
             };
 
-            let onError = data => {
+            const onError = (data) => {
                 return form.setErrors(data);
             };
 
-            let { attr } = formEl.scope();
+            const { attr } = formEl.scope();
             return $ctrl.saveCustomAttribute(attr).then(onSucces, onError);
         };
 
-        let cancelUpdate = function(formEl) {
+        const cancelUpdate = function(formEl) {
             hideEditForm(formEl);
             return revertChangesInCustomAttribute(formEl);
         };
 
         $el.on("click", ".js-edit-custom-field-button", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
-            let formEl = target.closest("form");
+            const target = angular.element(event.currentTarget);
+            const formEl = target.closest("form");
 
             return showEditForm(formEl);
         });
 
         $el.on("click", ".js-update-custom-field-button", debounce(2000, function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
-            let formEl = target.closest("form");
+            const target = angular.element(event.currentTarget);
+            const formEl = target.closest("form");
 
             return update(formEl);
-        })
+        }),
         );
 
         $el.on("click", ".js-cancel-edit-custom-field-button", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
-            let formEl = target.closest("form");
+            const target = angular.element(event.currentTarget);
+            const formEl = target.closest("form");
 
             return cancelUpdate(formEl);
         });
@@ -816,17 +815,17 @@ export let ProjectCustomAttributesDirective = function($log, $confirm, animation
         // Delete custom attribute
         //#################################
 
-        let deleteCustomAttribute = function(formEl) {
-            let { attr } = formEl.scope();
-            let message = attr.name;
+        const deleteCustomAttribute = function(formEl) {
+            const { attr } = formEl.scope();
+            const message = attr.name;
 
-            let title = $translate.instant("COMMON.CUSTOM_ATTRIBUTES.DELETE");
-            let text = $translate.instant("COMMON.CUSTOM_ATTRIBUTES.CONFIRM_DELETE");
+            const title = $translate.instant("COMMON.CUSTOM_ATTRIBUTES.DELETE");
+            const text = $translate.instant("COMMON.CUSTOM_ATTRIBUTES.CONFIRM_DELETE");
 
             return $confirm.ask(title, text, message).then(function(response) {
-                let onSucces = () => $ctrl.loadCustomAttributes().finally(() => response.finish());
+                const onSucces = () => $ctrl.loadCustomAttributes().finally(() => response.finish());
 
-                let onError = () => $confirm.notify("error", null, `We have not been able to delete '${message}'.`);
+                const onError = () => $confirm.notify("error", null, `We have not been able to delete '${message}'.`);
 
                 return $ctrl.deleteCustomAttribute(attr).then(onSucces, onError);
             });
@@ -834,11 +833,11 @@ export let ProjectCustomAttributesDirective = function($log, $confirm, animation
 
         return $el.on("click", ".js-delete-custom-field-button", debounce(2000, function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
-            let formEl = target.closest("form");
+            const target = angular.element(event.currentTarget);
+            const formEl = target.closest("form");
 
             return deleteCustomAttribute(formEl);
-        })
+        }),
         );
     };
 
@@ -850,14 +849,14 @@ export let ProjectCustomAttributesDirective = function($log, $confirm, animation
 //############################################################################
 
 export class ProjectTagsController extends Controller {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    model:any
-    projectService:any
-    loading:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    model: any;
+    projectService: any;
+    loading: any;
 
     static initClass() {
         this.$inject = [
@@ -867,12 +866,12 @@ export class ProjectTagsController extends Controller {
             "$tgConfirm",
             "$tgResources",
             "$tgModel",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, rootscope, repo, confirm, rs, model, projectService) {
-        super()
+        super();
         this.loadTags = this.loadTags.bind(this);
         this.filterAndSortTags = this.filterAndSortTags.bind(this);
         this.createTag = this.createTag.bind(this);
@@ -895,10 +894,10 @@ export class ProjectTagsController extends Controller {
     }
 
     loadTags() {
-        let project = this.projectService.project.toJS();
-        return this.rs.projects.tagsColors(project.id).then(tags => {
+        const project = this.projectService.project.toJS();
+        return this.rs.projects.tagsColors(project.id).then((tags) => {
             this.scope.projectTagsAll = _.map(tags.getAttrs(), (color, name) => {
-                return this.model.make_model('tag', {name, color});
+                return this.model.make_model("tag", {name, color});
             });
             this.filterAndSortTags();
             return this.loading = false;
@@ -906,11 +905,11 @@ export class ProjectTagsController extends Controller {
     }
 
     filterAndSortTags() {
-        this.scope.projectTags = _.sortBy(this.scope.projectTagsAll, (it:any) => it.name.toLowerCase());
+        this.scope.projectTags = _.sortBy(this.scope.projectTagsAll, (it: any) => it.name.toLowerCase());
 
         return this.scope.projectTags = _.filter(
             this.scope.projectTags,
-            (tag:any) => tag.name.indexOf(this.scope.tagsFilter.name) !== -1
+            (tag: any) => tag.name.indexOf(this.scope.tagsFilter.name) !== -1,
         );
     }
 
@@ -939,7 +938,7 @@ export class ProjectTagsController extends Controller {
 
     toggleMixingFromTags(tag) {
         if (tag.name !== this.scope.mixingTags.toTag) {
-            let index = this.scope.mixingTags.fromTags.indexOf(tag.name);
+            const index = this.scope.mixingTags.fromTags.indexOf(tag.name);
             if (index === -1) {
                 return this.scope.mixingTags.fromTags.push(tag.name);
             } else {
@@ -949,8 +948,8 @@ export class ProjectTagsController extends Controller {
     }
 
     confirmMixingTags() {
-        let { toTag } = this.scope.mixingTags;
-        let { fromTags } = this.scope.mixingTags;
+        const { toTag } = this.scope.mixingTags;
+        const { fromTags } = this.scope.mixingTags;
         this.scope.loadingMixing = true;
         return this.rs.projects.mixTags(this.scope.projectId, toTag, fromTags)
             .then(() => {
@@ -983,34 +982,34 @@ ProjectTagsController.initClass();
 //############################################################################
 
 export let ProjectTagsDirective = function($log, $repo, $confirm, $location, animationFrame, $translate, $rootscope) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         let form, formEl, promise, row, tag;
-        let $window = $(window);
-        let $ctrl = $el.controller();
-        let valueType = $attrs.type;
-        let objName = $attrs.objname;
+        const $window = $(window);
+        const $ctrl = $el.controller();
+        const valueType = $attrs.type;
+        const objName = $attrs.objname;
 
-        let initializeNewValue = () =>
+        const initializeNewValue = () =>
             $scope.newValue = {
-                "tag": "",
-                "color": ""
+                tag: "",
+                color: "",
             }
         ;
 
-        let initializeTagsFilter = () =>
+        const initializeTagsFilter = () =>
             $scope.tagsFilter = {
-                "name": ""
+                name: "",
             }
         ;
 
-        let initializeMixingTags = () =>
+        const initializeMixingTags = () =>
             $scope.mixingTags = {
-                "toTag": null,
-                "fromTags": []
+                toTag: null,
+                fromTags: [],
             }
         ;
 
-        let initializeTextTranslations = () => $scope.addNewElementText = $translate.instant("ADMIN.PROJECT_VALUES_TAGS.ACTION_ADD");
+        const initializeTextTranslations = () => $scope.addNewElementText = $translate.instant("ADMIN.PROJECT_VALUES_TAGS.ACTION_ADD");
 
         initializeNewValue();
         initializeTagsFilter();
@@ -1019,9 +1018,9 @@ export let ProjectTagsDirective = function($log, $repo, $confirm, $location, ani
 
         $rootscope.$on("$translateChangeEnd", () => $scope.$evalAsync(initializeTextTranslations));
 
-        let goToBottomList = focus => {
+        const goToBottomList = (focus) => {
             if (focus == null) { focus = false; }
-            let table = $el.find(".table-main");
+            const table = $el.find(".table-main");
 
             $(document.body).scrollTop(table.offset().top + table.height());
 
@@ -1030,13 +1029,13 @@ export let ProjectTagsDirective = function($log, $repo, $confirm, $location, ani
             }
         };
 
-        let saveValue = target => {
+        const saveValue = (target) => {
             formEl = target.parents("form");
             form = formEl.checksley();
             if (!form.validate()) { return; }
 
             ({ tag } = formEl.scope());
-            let originalTag = tag.clone();
+            const originalTag = tag.clone();
             originalTag.revert();
 
             $scope.loadingEdit = true;
@@ -1046,7 +1045,7 @@ export let ProjectTagsDirective = function($log, $repo, $confirm, $location, ani
                     row = target.parents(".row.table-main");
                     row.addClass("hidden");
                     $scope.loadingEdit = false;
-                    return row.siblings(".visualization").removeClass('hidden');
+                    return row.siblings(".visualization").removeClass("hidden");
                 });
             });
 
@@ -1056,7 +1055,7 @@ export let ProjectTagsDirective = function($log, $repo, $confirm, $location, ani
             });
         };
 
-        let saveNewValue = target => {
+        const saveNewValue = (target) => {
             formEl = target.parents("form");
             formEl = target;
             form = formEl.checksley();
@@ -1064,7 +1063,7 @@ export let ProjectTagsDirective = function($log, $repo, $confirm, $location, ani
 
             $scope.loadingCreate = true;
             promise = $ctrl.createTag($scope.newValue.tag, $scope.newValue.color);
-            promise.then(data => {
+            promise.then((data) => {
                 return $ctrl.loadTags().then(() => {
                     $scope.loadingCreate = false;
                     target.addClass("hidden");
@@ -1078,7 +1077,7 @@ export let ProjectTagsDirective = function($log, $repo, $confirm, $location, ani
             });
         };
 
-        let cancel = function(target) {
+        const cancel = function(target) {
             row = target.parents(".row.table-main");
             formEl = target.parents("form");
             ({ tag } = formEl.scope());
@@ -1086,11 +1085,11 @@ export let ProjectTagsDirective = function($log, $repo, $confirm, $location, ani
             return $scope.$apply(function() {
                 row.addClass("hidden");
                 tag.revert();
-                return row.siblings(".visualization").removeClass('hidden');
+                return row.siblings(".visualization").removeClass("hidden");
             });
         };
 
-        $scope.$watch("tagsFilter.name", tagsFilter => $ctrl.filterAndSortTags());
+        $scope.$watch("tagsFilter.name", (tagsFilter) => $ctrl.filterAndSortTags());
 
         $window.on("keyup", function(event) {
             if (event.keyCode === 27) {
@@ -1100,14 +1099,14 @@ export let ProjectTagsDirective = function($log, $repo, $confirm, $location, ani
 
         $el.on("click", ".show-add-new", function(event) {
             event.preventDefault();
-            return $el.find(".new-value").removeClass('hidden');
+            return $el.find(".new-value").removeClass("hidden");
         });
 
         $el.on("click", ".add-new", debounce(2000, function(event) {
             event.preventDefault();
-            let target = $el.find(".new-value");
+            const target = $el.find(".new-value");
             return saveNewValue(target);
-        })
+        }),
         );
 
         $el.on("click", ".delete-new", function(event) {
@@ -1118,14 +1117,14 @@ export let ProjectTagsDirective = function($log, $repo, $confirm, $location, ani
 
         $el.on("click", ".mix-tags", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
-            return $scope.$apply(() => $ctrl.startMixingTags(target.parents('form').scope().tag));
+            const target = angular.element(event.currentTarget);
+            return $scope.$apply(() => $ctrl.startMixingTags(target.parents("form").scope().tag));
         });
 
         $el.on("click", ".mixing-row", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
-            return $scope.$apply(() => $ctrl.toggleMixingFromTags(target.parents('form').scope().tag));
+            const target = angular.element(event.currentTarget);
+            return $scope.$apply(() => $ctrl.toggleMixingFromTags(target.parents("form").scope().tag));
         });
 
         $el.on("click", ".mixing-confirm", function(event) {
@@ -1142,19 +1141,19 @@ export let ProjectTagsDirective = function($log, $repo, $confirm, $location, ani
 
         $el.on("click", ".edit-value", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
             row = target.parents(".row.table-main");
             row.addClass("hidden");
 
-            let editionRow = row.siblings(".edition");
-            editionRow.removeClass('hidden');
-            return editionRow.find('input:visible').first().focus().select();
+            const editionRow = row.siblings(".edition");
+            editionRow.removeClass("hidden");
+            return editionRow.find("input:visible").first().focus().select();
         });
 
         $el.on("keyup", ".new-value input", function(event) {
             if (event.keyCode === 13) {
-                let target = $el.find(".new-value");
+                const target = $el.find(".new-value");
                 return saveNewValue(target);
             } else if (event.keyCode === 27) {
                 $el.find(".new-value").addClass("hidden");
@@ -1163,7 +1162,7 @@ export let ProjectTagsDirective = function($log, $repo, $confirm, $location, ani
         });
 
         $el.on("keyup", ".status-name input", function(event) {
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             if (event.keyCode === 13) {
                 return saveValue(target);
             } else if (event.keyCode === 27) {
@@ -1173,29 +1172,29 @@ export let ProjectTagsDirective = function($log, $repo, $confirm, $location, ani
 
         $el.on("click", ".save", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             return saveValue(target);
         });
 
         $el.on("click", ".cancel", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             return cancel(target);
         });
 
         $el.on("click", ".delete-tag", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             formEl = target.parents("form");
             ({ tag } = formEl.scope());
 
-            let title = $translate.instant("ADMIN.COMMON.TITLE_ACTION_DELETE_TAG");
+            const title = $translate.instant("ADMIN.COMMON.TITLE_ACTION_DELETE_TAG");
 
             return $confirm.askOnDelete(title, tag.name).then(function(response) {
-                let onSucces = () =>
+                const onSucces = () =>
                     $ctrl.loadTags().finally(() => response.finish())
                 ;
-                let onError = () => $confirm.notify("error");
+                const onError = () => $confirm.notify("error");
                 return $ctrl.deleteTag(tag.name).then(onSucces, onError);
             });
         });
@@ -1210,5 +1209,5 @@ export let ProjectTagsDirective = function($log, $repo, $confirm, $location, ani
 };
 
 function __guard__(value, transform) {
-  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+  return (typeof value !== "undefined" && value !== null) ? transform(value) : undefined;
 }

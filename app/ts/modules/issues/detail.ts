@@ -22,32 +22,32 @@
  * File: modules/issues/detail.coffee
  */
 
-import {groupBy, bindMethods} from "../../libs/utils"
-import {PageMixin} from "../controllerMixins"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {bindMethods, groupBy} from "../../libs/utils";
+import {PageMixin} from "../controllerMixins";
 
 //############################################################################
 //# Issue Detail Controller
 //############################################################################
 
 export class IssueDetailController extends PageMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    log:any
-    appMetaService:any
-    analytics:any
-    navUrls:any
-    translate:any
-    modelTransform:any
-    errorHandlingService:any
-    projectService:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    log: any;
+    appMetaService: any;
+    analytics: any;
+    navUrls: any;
+    translate: any;
+    modelTransform: any;
+    errorHandlingService: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -66,13 +66,13 @@ export class IssueDetailController extends PageMixin {
             "$translate",
             "$tgQueueModelTransformation",
             "tgErrorHandlingService",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location,
-                  log, appMetaService, analytics, navUrls, translate, modelTransform, errorHandlingService, projectService) {
-        super()
+                log, appMetaService, analytics, navUrls, translate, modelTransform, errorHandlingService, projectService) {
+        super();
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -95,7 +95,7 @@ export class IssueDetailController extends PageMixin {
         this.scope.sectionName = this.translate.instant("ISSUES.SECTION_NAME");
         this.initializeEventHandlers();
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         // On Success
         promise.then(() => {
@@ -108,17 +108,17 @@ export class IssueDetailController extends PageMixin {
     }
 
     _setMeta() {
-        let title = this.translate.instant("ISSUE.PAGE_TITLE", {
+        const title = this.translate.instant("ISSUE.PAGE_TITLE", {
             issueRef: `#${this.scope.issue.ref}`,
             issueSubject: this.scope.issue.subject,
-            projectName: this.scope.project.name
+            projectName: this.scope.project.name,
         });
-        let description = this.translate.instant("ISSUE.PAGE_DESCRIPTION", {
+        const description = this.translate.instant("ISSUE.PAGE_DESCRIPTION", {
             issueStatus: (this.scope.statusById[this.scope.issue.status] != null ? this.scope.statusById[this.scope.issue.status].name : undefined) || "--",
             issueType: (this.scope.typeById[this.scope.issue.type] != null ? this.scope.typeById[this.scope.issue.type].name : undefined) || "--",
             issueSeverity: (this.scope.severityById[this.scope.issue.severity] != null ? this.scope.severityById[this.scope.issue.severity].name : undefined) || "--",
             issuePriority: (this.scope.priorityById[this.scope.issue.priority] != null ? this.scope.priorityById[this.scope.issue.priority].name : undefined) || "--",
-            issueDescription: angular.element(this.scope.issue.description_html || "").text()
+            issueDescription: angular.element(this.scope.issue.description_html || "").text(),
         });
         return this.appMetaService.setAll(title, description);
     }
@@ -144,7 +144,7 @@ export class IssueDetailController extends PageMixin {
     }
 
     initializeOnDeleteGoToUrl() {
-       let ctx = {project: this.scope.project.slug};
+       const ctx = {project: this.scope.project.slug};
        if (this.scope.project.is_issues_activated) {
            return this.scope.onDeleteGoToUrl = this.navUrls.resolve("project-issues", ctx);
        } else {
@@ -153,35 +153,35 @@ export class IssueDetailController extends PageMixin {
    }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
         this.scope.statusList = project.issue_statuses;
-        this.scope.statusById = groupBy(project.issue_statuses, x => x.id);
-        this.scope.typeById = groupBy(project.issue_types, x => x.id);
+        this.scope.statusById = groupBy(project.issue_statuses, (x) => x.id);
+        this.scope.typeById = groupBy(project.issue_types, (x) => x.id);
         this.scope.typeList = _.sortBy(project.issue_types, "order");
         this.scope.severityList = project.severities;
-        this.scope.severityById = groupBy(project.severities, x => x.id);
+        this.scope.severityById = groupBy(project.severities, (x) => x.id);
         this.scope.priorityList = project.priorities;
-        this.scope.priorityById = groupBy(project.priorities, x => x.id);
+        this.scope.priorityById = groupBy(project.priorities, (x) => x.id);
         return project;
     }
 
     loadIssue() {
-        return this.rs.issues.getByRef(this.scope.projectId, this.params.issueref).then(issue => {
+        return this.rs.issues.getByRef(this.scope.projectId, this.params.issueref).then((issue) => {
             let ctx;
             this.scope.issue = issue;
             this.scope.issueId = issue.id;
             this.scope.commentModel = issue;
 
-            this.modelTransform.setObject(this.scope, 'issue');
+            this.modelTransform.setObject(this.scope, "issue");
 
             if ((this.scope.issue.neighbors.previous != null ? this.scope.issue.neighbors.previous.ref : undefined) != null) {
                 ctx = {
                     project: this.scope.project.slug,
-                    ref: this.scope.issue.neighbors.previous.ref
+                    ref: this.scope.issue.neighbors.previous.ref,
                 };
                 this.scope.previousUrl = this.navUrls.resolve("project-issues-detail", ctx);
             }
@@ -189,7 +189,7 @@ export class IssueDetailController extends PageMixin {
             if ((this.scope.issue.neighbors.next != null ? this.scope.issue.neighbors.next.ref : undefined) != null) {
                 ctx = {
                     project: this.scope.project.slug,
-                    ref: this.scope.issue.neighbors.next.ref
+                    ref: this.scope.issue.neighbors.next.ref,
                 };
                 return this.scope.nextUrl = this.navUrls.resolve("project-issues-detail", ctx);
             }
@@ -197,7 +197,7 @@ export class IssueDetailController extends PageMixin {
     }
 
     loadInitialData() {
-        let project = this.loadProject();
+        const project = this.loadProject();
 
         this.fillUsersAndRoles(project.members, project.roles);
 
@@ -209,11 +209,11 @@ export class IssueDetailController extends PageMixin {
      *       See app/modules/components/vote-button for more info
      */
     onUpvote() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadIssue();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -221,11 +221,11 @@ export class IssueDetailController extends PageMixin {
     }
 
     onDownvote() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadIssue();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -237,11 +237,11 @@ export class IssueDetailController extends PageMixin {
      *       See app/modules/components/watch-button for more info
      */
     onWatch() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadIssue();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -249,11 +249,11 @@ export class IssueDetailController extends PageMixin {
     }
 
     onUnwatch() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.loadIssue();
             return this.rootscope.$broadcast("object:updated");
         };
-        let onError = () => {
+        const onError = () => {
             return this.confirm.notify("error");
         };
 
@@ -276,15 +276,15 @@ export let IssueStatusDisplayDirective = function($template, $compile){
     //   - Issue object (ng-model)
     //   - scope.statusById object
 
-    let template = $template.get("common/components/status-display.html", true);
+    const template = $template.get("common/components/status-display.html", true);
 
-    let link = function($scope, $el, $attrs) {
-        let render = function(issue) {
-            let status = $scope.statusById[issue.status];
+    const link = function($scope, $el, $attrs) {
+        const render = function(issue) {
+            const status = $scope.statusById[issue.status];
 
             let html = template({
                 is_closed: status.is_closed,
-                status
+                status,
             });
 
             html = $compile(html)($scope);
@@ -302,7 +302,7 @@ export let IssueStatusDisplayDirective = function($template, $compile){
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
@@ -321,19 +321,19 @@ export let IssueStatusButtonDirective = function($rootScope, $repo, $confirm, $l
     //   - scope.statusById object
     //   - $scope.project.my_permissions
 
-    let template = $template.get("common/components/status-button.html", true);
+    const template = $template.get("common/components/status-button.html", true);
 
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
         let status;
-        let isEditable = () => $scope.project.my_permissions.indexOf("modify_issue") !== -1;
+        const isEditable = () => $scope.project.my_permissions.indexOf("modify_issue") !== -1;
 
-        let render = issue => {
+        const render = (issue) => {
             status = $scope.statusById[issue.status];
 
             let html = template({
                 status,
                 statuses: $scope.statusList,
-                editable: isEditable()
+                editable: isEditable(),
             });
 
             html = $compile(html)($scope);
@@ -341,25 +341,25 @@ export let IssueStatusButtonDirective = function($rootScope, $repo, $confirm, $l
             return $el.html(html);
         };
 
-        let save = function(statusId) {
+        const save = function(statusId) {
             $.fn.popover().closeAll();
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target($el)
                 .start();
 
-            let transform = $modelTransform.save(function(issue) {
+            const transform = $modelTransform.save(function(issue) {
                 issue.status = statusId;
 
                 return issue;
             });
 
-            let onSuccess = function() {
+            const onSuccess = function() {
                 $rootScope.$broadcast("object:updated");
                 return currentLoading.finish();
             };
 
-            let onError = function() {
+            const onError = function() {
                 $confirm.notify("error");
                 return currentLoading.finish();
             };
@@ -380,14 +380,14 @@ export let IssueStatusButtonDirective = function($rootScope, $repo, $confirm, $l
             event.stopPropagation();
             if (!isEditable()) { return; }
 
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
             return save(target.data("status-id"));
         });
 
         $scope.$watch(() => $model.$modelValue != null ? $model.$modelValue.status : undefined
         , function() {
-            let issue = $model.$modelValue;
+            const issue = $model.$modelValue;
             if (issue) { return render(issue); }
         });
 
@@ -397,7 +397,7 @@ export let IssueStatusButtonDirective = function($rootScope, $repo, $confirm, $l
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
@@ -416,19 +416,19 @@ export let IssueTypeButtonDirective = function($rootScope, $repo, $confirm, $loa
     //   - scope.typeById object
     //   - $scope.project.my_permissions
 
-    let template = $template.get("issue/issue-type-button.html", true);
+    const template = $template.get("issue/issue-type-button.html", true);
 
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
         let type;
-        let isEditable = () => $scope.project.my_permissions.indexOf("modify_issue") !== -1;
+        const isEditable = () => $scope.project.my_permissions.indexOf("modify_issue") !== -1;
 
-        let render = issue => {
+        const render = (issue) => {
             type = $scope.typeById[issue.type];
 
             let html = template({
                 type,
                 typees: $scope.typeList,
-                editable: isEditable()
+                editable: isEditable(),
             });
 
             html = $compile(html)($scope);
@@ -436,25 +436,25 @@ export let IssueTypeButtonDirective = function($rootScope, $repo, $confirm, $loa
             return $el.html(html);
         };
 
-        let save = function(type) {
+        const save = function(type) {
             $.fn.popover().closeAll();
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target($el.find(".level-name"))
                 .start();
 
-            let transform = $modelTransform.save(function(issue) {
+            const transform = $modelTransform.save(function(issue) {
                 issue.type = type;
 
                 return issue;
             });
 
-            let onSuccess = function() {
+            const onSuccess = function() {
                 $rootScope.$broadcast("object:updated");
                 return currentLoading.finish();
             };
 
-            let onError = function() {
+            const onError = function() {
                 $confirm.notify("error");
                 return currentLoading.finish();
             };
@@ -475,14 +475,14 @@ export let IssueTypeButtonDirective = function($rootScope, $repo, $confirm, $loa
             event.stopPropagation();
             if (!isEditable()) { return; }
 
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             type = target.data("type-id");
             return save(type);
         });
 
         $scope.$watch(() => $model.$modelValue != null ? $model.$modelValue.type : undefined
         , function() {
-            let issue = $model.$modelValue;
+            const issue = $model.$modelValue;
             if (issue) { return render(issue); }
         });
 
@@ -492,7 +492,7 @@ export let IssueTypeButtonDirective = function($rootScope, $repo, $confirm, $loa
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
@@ -511,19 +511,19 @@ export let IssueSeverityButtonDirective = function($rootScope, $repo, $confirm, 
     //   - scope.severityById object
     //   - $scope.project.my_permissions
 
-    let template = $template.get("issue/issue-severity-button.html", true);
+    const template = $template.get("issue/issue-severity-button.html", true);
 
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
         let severity;
-        let isEditable = () => $scope.project.my_permissions.indexOf("modify_issue") !== -1;
+        const isEditable = () => $scope.project.my_permissions.indexOf("modify_issue") !== -1;
 
-        let render = issue => {
+        const render = (issue) => {
             severity = $scope.severityById[issue.severity];
 
             let html = template({
                 severity,
                 severityes: $scope.severityList,
-                editable: isEditable()
+                editable: isEditable(),
             });
 
             html = $compile(html)($scope);
@@ -531,25 +531,25 @@ export let IssueSeverityButtonDirective = function($rootScope, $repo, $confirm, 
             return $el.html(html);
         };
 
-        let save = function(severity) {
+        const save = function(severity) {
             $.fn.popover().closeAll();
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target($el.find(".level-name"))
                 .start();
 
-            let transform = $modelTransform.save(function(issue) {
+            const transform = $modelTransform.save(function(issue) {
                 issue.severity = severity;
 
                 return issue;
             });
 
-            let onSuccess = function() {
+            const onSuccess = function() {
                 $rootScope.$broadcast("object:updated");
                 return currentLoading.finish();
             };
 
-            let onError = function() {
+            const onError = function() {
                 $confirm.notify("error");
                 return currentLoading.finish();
             };
@@ -570,7 +570,7 @@ export let IssueSeverityButtonDirective = function($rootScope, $repo, $confirm, 
             event.stopPropagation();
             if (!isEditable()) { return; }
 
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             severity = target.data("severity-id");
 
             return save(severity);
@@ -578,7 +578,7 @@ export let IssueSeverityButtonDirective = function($rootScope, $repo, $confirm, 
 
         $scope.$watch(() => $model.$modelValue != null ? $model.$modelValue.severity : undefined
         , function() {
-            let issue = $model.$modelValue;
+            const issue = $model.$modelValue;
             if (issue) { return render(issue); }
         });
 
@@ -588,7 +588,7 @@ export let IssueSeverityButtonDirective = function($rootScope, $repo, $confirm, 
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
@@ -607,19 +607,19 @@ export let IssuePriorityButtonDirective = function($rootScope, $repo, $confirm, 
     //   - scope.priorityById object
     //   - $scope.project.my_permissions
 
-    let template = $template.get("issue/issue-priority-button.html", true);
+    const template = $template.get("issue/issue-priority-button.html", true);
 
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
         let priority;
-        let isEditable = () => $scope.project.my_permissions.indexOf("modify_issue") !== -1;
+        const isEditable = () => $scope.project.my_permissions.indexOf("modify_issue") !== -1;
 
-        let render = issue => {
+        const render = (issue) => {
             priority = $scope.priorityById[issue.priority];
 
             let html = template({
                 priority,
                 priorityes: $scope.priorityList,
-                editable: isEditable()
+                editable: isEditable(),
             });
 
             html = $compile(html)($scope);
@@ -627,25 +627,25 @@ export let IssuePriorityButtonDirective = function($rootScope, $repo, $confirm, 
             return $el.html(html);
         };
 
-        let save = function(priority) {
+        const save = function(priority) {
             $.fn.popover().closeAll();
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target($el.find(".level-name"))
                 .start();
 
-            let transform = $modelTransform.save(function(issue) {
+            const transform = $modelTransform.save(function(issue) {
                 issue.priority = priority;
 
                 return issue;
             });
 
-            let onSuccess = function() {
+            const onSuccess = function() {
                 $rootScope.$broadcast("object:updated");
                 return currentLoading.finish();
             };
 
-            let onError = function() {
+            const onError = function() {
                 $confirm.notify("error");
                 return currentLoading.finish();
             };
@@ -666,7 +666,7 @@ export let IssuePriorityButtonDirective = function($rootScope, $repo, $confirm, 
             event.stopPropagation();
             if (!isEditable()) { return; }
 
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             priority = target.data("priority-id");
 
             return save(priority);
@@ -674,7 +674,7 @@ export let IssuePriorityButtonDirective = function($rootScope, $repo, $confirm, 
 
         $scope.$watch(() => $model.$modelValue != null ? $model.$modelValue.priority : undefined
         , function() {
-            let issue = $model.$modelValue;
+            const issue = $model.$modelValue;
             if (issue) { return render(issue); }
         });
 
@@ -684,7 +684,7 @@ export let IssuePriorityButtonDirective = function($rootScope, $repo, $confirm, 
     return {
         link,
         restrict: "EA",
-        require: "ngModel"
+        require: "ngModel",
     };
 };
 
@@ -693,26 +693,26 @@ export let IssuePriorityButtonDirective = function($rootScope, $repo, $confirm, 
 //############################################################################
 
 export let PromoteIssueToUsButtonDirective = function($rootScope, $repo, $confirm, $translate) {
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
 
-        let save = (issue, askResponse) => {
-            let data = {
+        const save = (issue, askResponse) => {
+            const data = {
                 generated_from_issue: issue.id,
                 project: issue.project,
                 subject: issue.subject,
                 description: issue.description,
                 tags: issue.tags,
                 is_blocked: issue.is_blocked,
-                blocked_note: issue.blocked_note
+                blocked_note: issue.blocked_note,
             };
 
-            let onSuccess = function() {
+            const onSuccess = function() {
                 askResponse.finish();
                 $confirm.notify("success");
                 return $rootScope.$broadcast("promote-issue-to-us:success");
             };
 
-            let onError = function() {
+            const onError = function() {
                 askResponse.finish();
                 return $confirm.notify("error");
             };
@@ -722,13 +722,13 @@ export let PromoteIssueToUsButtonDirective = function($rootScope, $repo, $confir
 
         $el.on("click", "a", function(event) {
             event.preventDefault();
-            let issue = $model.$modelValue;
+            const issue = $model.$modelValue;
 
-            let title = $translate.instant("ISSUES.CONFIRM_PROMOTE.TITLE");
-            let message = $translate.instant("ISSUES.CONFIRM_PROMOTE.MESSAGE");
-            let subtitle = issue.subject;
+            const title = $translate.instant("ISSUES.CONFIRM_PROMOTE.TITLE");
+            const message = $translate.instant("ISSUES.CONFIRM_PROMOTE.MESSAGE");
+            const subtitle = issue.subject;
 
-            return $confirm.ask(title, subtitle, message).then(response => {
+            return $confirm.ask(title, subtitle, message).then((response) => {
                 return save(issue, response);
             });
         });
@@ -740,6 +740,6 @@ export let PromoteIssueToUsButtonDirective = function($rootScope, $repo, $confir
         restrict: "AE",
         require: "ngModel",
         templateUrl: "issue/promote-issue-to-us-button.html",
-        link
+        link,
     };
 };

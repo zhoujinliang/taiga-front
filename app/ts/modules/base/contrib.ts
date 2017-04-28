@@ -22,18 +22,18 @@
  * File: modules/base/contrib.coffee
  */
 
-import {Controller} from "../../classes"
-import * as _ from "lodash"
-import * as angular from "angular"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {Controller} from "../../classes";
 
 export class ContribController extends Controller {
-    rootScope: angular.IScope
-    scope: angular.IScope
-    params:any
-    repo:any
-    rs:any
-    confirm:any
-    projectService:any
+    rootScope: angular.IScope;
+    scope: angular.IScope;
+    params: any;
+    repo: any;
+    rs: any;
+    confirm: any;
+    projectService: any;
 
     static initClass() {
         this.$inject = [
@@ -43,12 +43,12 @@ export class ContribController extends Controller {
             "$tgRepo",
             "$tgResources",
             "$tgConfirm",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(rootScope, scope, params, repo, rs, confirm, projectService) {
-        super()
+        super();
         this.rootScope = rootScope;
         this.scope = scope;
         this.params = params;
@@ -56,19 +56,19 @@ export class ContribController extends Controller {
         this.rs = rs;
         this.confirm = confirm;
         this.projectService = projectService;
-        this.scope.currentPlugin = _.head(_.filter(this.rootScope.adminPlugins, {"slug": this.params.plugin}));
+        this.scope.currentPlugin = _.head(_.filter(this.rootScope.adminPlugins, {slug: this.params.plugin}));
         this.scope.projectSlug = this.params.pslug;
 
         this.loadInitialData();
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         this.scope.projectId = project.id;
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
-        this.scope.$broadcast('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
+        this.scope.$broadcast("project:loaded", project);
         return project;
     }
 
@@ -79,24 +79,24 @@ export class ContribController extends Controller {
 ContribController.initClass();
 
 export class ContribUserSettingsController extends Controller {
-    rootScope: angular.IScope
-    scope: angular.IScope
-    params:any
+    rootScope: angular.IScope;
+    scope: angular.IScope;
+    params: any;
 
     static initClass() {
         this.$inject = [
             "$rootScope",
             "$scope",
-            "$routeParams"
+            "$routeParams",
         ];
     }
 
     constructor(rootScope, scope, params) {
-        super()
+        super();
         this.rootScope = rootScope;
         this.scope = scope;
         this.params = params;
-        this.scope.currentPlugin = _.head(_.filter(this.rootScope.userSettingsPlugins, {"slug": this.params.plugin}));
+        this.scope.currentPlugin = _.head(_.filter(this.rootScope.userSettingsPlugins, {slug: this.params.plugin}));
     }
 }
 ContribUserSettingsController.initClass();

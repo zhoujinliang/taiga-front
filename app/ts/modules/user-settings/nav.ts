@@ -23,8 +23,8 @@
  */
 
 export let UserSettingsNavigationDirective = function() {
-    let link = function($scope, $el, $attrs) {
-        let section = $attrs.tgUserSettingsNavigation;
+    const link = function($scope, $el, $attrs) {
+        const section = $attrs.tgUserSettingsNavigation;
         $el.find(".active").removeClass("active");
         $el.find(`#usersettingsmenu-${section} a`).addClass("active");
 

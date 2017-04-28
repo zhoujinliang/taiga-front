@@ -22,29 +22,28 @@
  * File: modules/events.coffee
  */
 
-import {startswith, bindMethods} from "../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {bindMethods, startswith} from "../libs/utils";
 
-let module = angular.module("taigaEvents", []);
-
+const module = angular.module("taigaEvents", []);
 
 class EventsService {
-    win:any
-    log:any
-    config:any
-    auth:any
-    liveAnnouncementService:any
-    rootScope: angular.IScope
-    sessionId:any
-    subscriptions:any
-    connected:any
-    error:any
-    pendingMessages:any
-    missedHeartbeats:any
-    heartbeatInterval:any
-    ws:any
-    reconnectTryInterval:any
+    win: any;
+    log: any;
+    config: any;
+    auth: any;
+    liveAnnouncementService: any;
+    rootScope: angular.IScope;
+    sessionId: any;
+    subscriptions: any;
+    connected: any;
+    error: any;
+    pendingMessages: any;
+    missedHeartbeats: any;
+    heartbeatInterval: any;
+    ws: any;
+    reconnectTryInterval: any;
 
     constructor(win, log, config, auth, liveAnnouncementService, rootScope) {
         this.processMessage = this.processMessage.bind(this);
@@ -83,9 +82,9 @@ class EventsService {
 
         // This allows relative urls in configuration.
         if (!startswith(url, "ws:") && !startswith(url, "wss:")) {
-            let loc = this.win.location;
-            let scheme = loc.protocol === "https:" ? "wss:" : "ws:";
-            let path = _.trimStart(url, "/");
+            const loc = this.win.location;
+            const scheme = loc.protocol === "https:" ? "wss:" : "ws:";
+            const path = _.trimStart(url, "/");
             url = `${scheme}//${loc.host}/${path}`;
         }
 
@@ -113,7 +112,7 @@ class EventsService {
     }
 
     notifications() {
-        return this.subscribe(null, 'notifications', data => {
+        return this.subscribe(null, "notifications", (data) => {
             this.liveAnnouncementService.show(data.title, data.desc);
             return this.rootScope.$digest();
         });
@@ -127,9 +126,9 @@ class EventsService {
     startHeartBeatMessages() {
         if (this.heartbeatInterval) { return; }
 
-        let maxMissedHeartbeats =  this.config.get("eventsMaxMissedHeartbeats", 5);
-        let heartbeatIntervalTime = this.config.get("eventsHeartbeatIntervalTime", 60000);
-        let reconnectTryInterval = this.config.get("eventsReconnectTryInterval", 10000);
+        const maxMissedHeartbeats =  this.config.get("eventsMaxMissedHeartbeats", 5);
+        const heartbeatIntervalTime = this.config.get("eventsHeartbeatIntervalTime", 60000);
+        const reconnectTryInterval = this.config.get("eventsReconnectTryInterval", 10000);
 
         this.missedHeartbeats = 0;
         this.heartbeatInterval = setInterval(() => {
@@ -182,7 +181,7 @@ class EventsService {
             return;
         }
 
-        let messages = _.map(this.pendingMessages, this.serialize);
+        const messages = _.map(this.pendingMessages, this.serialize);
         this.pendingMessages = [];
 
         return messages.map((msg) =>
@@ -190,13 +189,13 @@ class EventsService {
     }
 
     processMessage(data) {
-        let routingKey = data.routing_key;
+        const routingKey = data.routing_key;
 
         if ((this.subscriptions[routingKey] == null)) {
             return;
         }
 
-        let subscription = this.subscriptions[routingKey];
+        const subscription = this.subscriptions[routingKey];
 
         if (subscription.scope) {
             return subscription.scope.$apply(() => subscription.callback(data.data));
@@ -215,15 +214,15 @@ class EventsService {
         }
 
         this.log.debug(`Subscribe to: ${routingKey}`);
-        let subscription = {
+        const subscription = {
             scope,
             routingKey,
-            callback: _.debounce(callback, 500, {"leading": true, "trailing": false})
+            callback: _.debounce(callback, 500, {leading: true, trailing: false}),
         };
 
-        let message = {
-            "cmd": "subscribe",
-            "routing_key": routingKey
+        const message = {
+            cmd: "subscribe",
+            routing_key: routingKey,
         };
 
         this.subscriptions[routingKey] = subscription;
@@ -239,9 +238,9 @@ class EventsService {
 
         this.log.debug(`Unsubscribe from: ${routingKey}`);
 
-        let message = {
-            "cmd": "unsubscribe",
-            "routing_key": routingKey
+        const message = {
+            cmd: "unsubscribe",
+            routing_key: routingKey,
         };
 
         return this.sendMessage(message);
@@ -255,11 +254,11 @@ class EventsService {
         this.startHeartBeatMessages();
 
         this.log.debug("WebSocket connection opened");
-        let token = this.auth.getToken();
+        const token = this.auth.getToken();
 
-        let message = {
+        const message = {
             cmd: "auth",
-            data: {token, sessionId: this.sessionId}
+            data: {token, sessionId: this.sessionId},
         };
 
         this.sendMessage(message);
@@ -269,7 +268,7 @@ class EventsService {
     onMessage(event) {
         this.log.debug(`WebSocket message received: ${event.data}`);
 
-        let data = JSON.parse(event.data);
+        const data = JSON.parse(event.data);
 
         if (data.cmd === "pong") {
             return this.processHeartBeatPongMessage(data);
@@ -292,9 +291,8 @@ class EventsService {
     }
 }
 
-
 class EventsProvider {
-    sessionId:any
+    sessionId: any;
 
     static initClass() {
         this.prototype.$get.$inject = [
@@ -303,7 +301,7 @@ class EventsProvider {
             "$tgConfig",
             "$tgAuth",
             "tgLiveAnnouncementService",
-            "$rootScope"
+            "$rootScope",
         ];
     }
     setSessionId(sessionId) {
@@ -311,7 +309,7 @@ class EventsProvider {
     }
 
     $get($win, $log, $conf, $auth, liveAnnouncementService, $rootScope) {
-        let service = new EventsService($win, $log, $conf, $auth, liveAnnouncementService, $rootScope);
+        const service = new EventsService($win, $log, $conf, $auth, liveAnnouncementService, $rootScope);
         service.initialize(this.sessionId);
         return service;
     }

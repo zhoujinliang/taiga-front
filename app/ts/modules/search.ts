@@ -22,30 +22,29 @@
  * File: modules/search.coffee
  */
 
-import {groupBy, bindOnce, debounceLeading, trim, debounce} from "../libs/utils"
-import {PageMixin} from "./controllerMixins"
-import * as angular from "angular"
+import * as angular from "angular";
+import {bindOnce, debounce, debounceLeading, groupBy, trim} from "../libs/utils";
+import {PageMixin} from "./controllerMixins";
 
-let module = angular.module("taigaSearch", []);
-
+const module = angular.module("taigaSearch", []);
 
 //############################################################################
 //# Search Controller
 //############################################################################
 
 class SearchController extends PageMixin {
-    scope: angular.IScope
-    repo:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    appMetaService:any
-    navUrls:any
-    translate:any
-    errorHandlingService:any
-    projectService:any
-    _promise:any
+    scope: angular.IScope;
+    repo: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    appMetaService: any;
+    navUrls: any;
+    translate: any;
+    errorHandlingService: any;
+    projectService: any;
+    _promise: any;
 
     static initClass() {
         this.$inject = [
@@ -59,12 +58,12 @@ class SearchController extends PageMixin {
             "$tgNavUrls",
             "$translate",
             "tgErrorHandlingService",
-            "tgProjectService"
+            "tgProjectService",
         ];
     }
 
     constructor(scope, repo, rs, params, q, location, appMetaService, navUrls, translate, errorHandlingService, projectService) {
-        super()
+        super();
         this.scope = scope;
         this.repo = repo;
         this.rs = rs;
@@ -80,25 +79,25 @@ class SearchController extends PageMixin {
 
         this.loadInitialData();
 
-        let title = this.translate.instant("SEARCH.PAGE_TITLE", {projectName: this.scope.project.name});
-        let description = this.translate.instant("SEARCH.PAGE_DESCRIPTION", {
+        const title = this.translate.instant("SEARCH.PAGE_TITLE", {projectName: this.scope.project.name});
+        const description = this.translate.instant("SEARCH.PAGE_DESCRIPTION", {
             projectName: this.scope.project.name,
-            projectDescription: this.scope.project.description
+            projectDescription: this.scope.project.description,
         });
 
         this.appMetaService.setAll(title, description);
 
         // Search input watcher
         this.scope.searchTerm = null;
-        let loadSearchData = debounceLeading(100, t => this.loadSearchData(t));
+        const loadSearchData = debounceLeading(100, (t) => this.loadSearchData(t));
 
-        bindOnce(this.scope, "projectId", projectId => {
+        bindOnce(this.scope, "projectId", (projectId) => {
             if (!this.scope.searchResults && this.scope.searchTerm) {
                 return this.loadSearchData();
             }
         });
 
-        this.scope.$watch("searchTerm", (term:string) => {
+        this.scope.$watch("searchTerm", (term: string) => {
             if ((term !== undefined) && this.scope.projectId) {
                 return this.loadSearchData(term);
             }
@@ -106,30 +105,30 @@ class SearchController extends PageMixin {
     }
 
     loadFilters() {
-        let defered = this.q.defer();
+        const defered = this.q.defer();
         defered.resolve();
         return defered.promise;
     }
 
     loadProject() {
-        let project = this.projectService.project.toJS();
+        const project = this.projectService.project.toJS();
 
         this.scope.project = project;
-        this.scope.$emit('project:loaded', project);
+        this.scope.$emit("project:loaded", project);
 
-        this.scope.epicStatusById = groupBy(project.epic_statuses, x => x.id);
-        this.scope.issueStatusById = groupBy(project.issue_statuses, x => x.id);
-        this.scope.taskStatusById = groupBy(project.task_statuses, x => x.id);
-        this.scope.severityById = groupBy(project.severities, x => x.id);
-        this.scope.priorityById = groupBy(project.priorities, x => x.id);
-        this.scope.usStatusById = groupBy(project.us_statuses, x => x.id);
+        this.scope.epicStatusById = groupBy(project.epic_statuses, (x) => x.id);
+        this.scope.issueStatusById = groupBy(project.issue_statuses, (x) => x.id);
+        this.scope.taskStatusById = groupBy(project.task_statuses, (x) => x.id);
+        this.scope.severityById = groupBy(project.severities, (x) => x.id);
+        this.scope.priorityById = groupBy(project.priorities, (x) => x.id);
+        this.scope.usStatusById = groupBy(project.us_statuses, (x) => x.id);
         return project;
     }
 
-    loadSearchData(term="") {
+    loadSearchData(term= "") {
         this.scope.loading = true;
 
-        return this._loadSearchData(term).then(data => {
+        return this._loadSearchData(term).then((data) => {
             this.scope.searchResults = data;
             return this.scope.loading = false;
         });
@@ -145,7 +144,7 @@ class SearchController extends PageMixin {
     }
 
     loadInitialData() {
-        let project = this.loadProject();
+        const project = this.loadProject();
 
         this.scope.projectId = project.id;
         return this.fillUsersAndRoles(project.members, project.roles);
@@ -155,26 +154,25 @@ SearchController.initClass();
 
 module.controller("SearchController", SearchController);
 
-
 //############################################################################
 //# Search box directive
 //############################################################################
 
-let SearchBoxDirective = function(projectService, $lightboxService, $navurls, $location, $route){
-    let link = function($scope, $el, $attrs) {
+const SearchBoxDirective = function(projectService, $lightboxService, $navurls, $location, $route){
+    const link = function($scope, $el, $attrs) {
         let project = null;
 
-        let submit = debounce(2000, event => {
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
-            let form = $el.find("form").checksley();
+            const form = $el.find("form").checksley();
             if (!form.validate()) {
                 return;
             }
 
-            let text = $el.find("#search-text").val();
+            const text = $el.find("#search-text").val();
 
-            let url = $navurls.resolve("project-search", {project: project.get("slug")});
+            const url = $navurls.resolve("project-search", {project: project.get("slug")});
 
             return $scope.$apply(function() {
                 $lightboxService.close($el);
@@ -185,8 +183,7 @@ let SearchBoxDirective = function(projectService, $lightboxService, $navurls, $l
             });
         });
 
-
-        let openLightbox = function() {
+        const openLightbox = function() {
             ({ project } = projectService);
 
             return $lightboxService.open($el).then(() => $el.find("#search-text").focus());
@@ -199,7 +196,7 @@ let SearchBoxDirective = function(projectService, $lightboxService, $navurls, $l
 
     return {
         templateUrl: "search/lightbox-search.html",
-        link
+        link,
     };
 };
 
@@ -208,26 +205,25 @@ SearchBoxDirective.$inject = [
     "lightboxService",
     "$tgNavUrls",
     "$tgLocation",
-    "$route"
+    "$route",
 ];
 
 module.directive("tgSearchBox", SearchBoxDirective);
-
 
 //############################################################################
 //# Search Directive
 //############################################################################
 
-let SearchDirective = function($log, $compile, $templatecache, $routeparams, $location) {
-    let linkTable = function($scope, $el, $attrs, $ctrl) {
+const SearchDirective = function($log, $compile, $templatecache, $routeparams, $location) {
+    const linkTable = function($scope, $el, $attrs, $ctrl) {
         let applyAutoTab = true;
         let activeSectionName = "userstories";
-        let tabsDom = $el.find(".search-filter");
+        const tabsDom = $el.find(".search-filter");
         let lastSearchResults = null;
 
-        let getActiveSection = function(data) {
+        const getActiveSection = function(data) {
             let maxVal = 0;
-            let selectedSection:any = {};
+            const selectedSection: any = {};
             selectedSection.name = "userstories";
             selectedSection.value = [];
 
@@ -239,8 +235,8 @@ let SearchDirective = function($log, $compile, $templatecache, $routeparams, $lo
             }
 
             if (data) {
-                for (let name of ["userstories", "epics", "issues", "tasks", "wikipages"]) {
-                    let value = data[name];
+                for (const name of ["userstories", "epics", "issues", "tasks", "wikipages"]) {
+                    const value = data[name];
 
                     if (value.length > maxVal) {
                         maxVal = value.length;
@@ -258,11 +254,11 @@ let SearchDirective = function($log, $compile, $templatecache, $routeparams, $lo
             return selectedSection;
         };
 
-        let renderFilterTabs = data =>
+        const renderFilterTabs = (data) =>
             (() => {
-                let result = [];
-                for (let name in data) {
-                    let value = data[name];
+                const result = [];
+                for (const name in data) {
+                    const value = data[name];
                     tabsDom.find(`li.${name}`).show();
                     result.push(tabsDom.find(`li.${name} .num`).html(value.length));
                 }
@@ -270,7 +266,7 @@ let SearchDirective = function($log, $compile, $templatecache, $routeparams, $lo
             })()
         ;
 
-        let markSectionTabActive = function(section) {
+        const markSectionTabActive = function(section) {
             // Mark as active the item with max amount of results
             tabsDom.find("a.active").removeClass("active");
             tabsDom.find(`li.${section.name} a`).addClass("active");
@@ -279,28 +275,28 @@ let SearchDirective = function($log, $compile, $templatecache, $routeparams, $lo
             return activeSectionName = section.name;
         };
 
-        let templates = {
+        const templates = {
             epics: $templatecache.get("search-epics"),
             issues: $templatecache.get("search-issues"),
             tasks: $templatecache.get("search-tasks"),
             userstories: $templatecache.get("search-userstories"),
-            wikipages: $templatecache.get("search-wikipages")
+            wikipages: $templatecache.get("search-wikipages"),
         };
 
-        let renderTableContent = function(section) {
-            let oldElements = $el.find(".search-result-table").children();
-            let oldScope = oldElements.scope();
+        const renderTableContent = function(section) {
+            const oldElements = $el.find(".search-result-table").children();
+            const oldScope = oldElements.scope();
 
             if (oldScope) {
                 oldScope.$destroy();
                 oldElements.remove();
             }
 
-            let scope = $scope.$new();
+            const scope = $scope.$new();
             scope[section.name] = section.value;
 
-            let template = angular.element.parseHTML(trim(templates[section.name]));
-            let element = $compile(template)(scope);
+            const template = angular.element.parseHTML(trim(templates[section.name]));
+            const element = $compile(template)(scope);
             return $el.find(".search-result-table").html(element);
         };
 
@@ -309,7 +305,7 @@ let SearchDirective = function($log, $compile, $templatecache, $routeparams, $lo
 
             if (!lastSearchResults) { return; }
 
-            let activeSection = getActiveSection(data);
+            const activeSection = getActiveSection(data);
 
             renderFilterTabs(data);
 
@@ -323,14 +319,14 @@ let SearchDirective = function($log, $compile, $templatecache, $routeparams, $lo
 
         return $el.on("click", ".search-filter li > a", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
-            let sectionName = target.parent().data("name");
-            let sectionData = !lastSearchResults ? [] : lastSearchResults[sectionName];
+            const sectionName = target.parent().data("name");
+            const sectionData = !lastSearchResults ? [] : lastSearchResults[sectionName];
 
-            let section = {
+            const section = {
                 name: sectionName,
-                value: sectionData
+                value: sectionData,
             };
 
             return $scope.$apply(function() {
@@ -340,11 +336,11 @@ let SearchDirective = function($log, $compile, $templatecache, $routeparams, $lo
         });
     };
 
-    let link = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
+    const link = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
         linkTable($scope, $el, $attrs, $ctrl);
 
-        let searchText = $routeparams.text;
+        const searchText = $routeparams.text;
         return $scope.$watch("projectId", function(projectId) {
             if (projectId != null) { return $scope.searchTerm =  searchText; }
         });

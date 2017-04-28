@@ -22,32 +22,32 @@
  * File: modules/admin/memberships.coffee
  */
 
-import {bindOnce, debounce, bindMethods} from "../../libs/utils"
-import {FiltersMixin} from "../controllerMixins"
+import {bindMethods, bindOnce, debounce} from "../../libs/utils";
+import {FiltersMixin} from "../controllerMixins";
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 //############################################################################
 //# Project Roles Controller
 //############################################################################
 
 export class RolesController extends FiltersMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    navUrls:any
-    model:any
-    appMetaService:any
-    translate:any
-    errorHandlingService:any
-    projectService:any
-    toggleComputable:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    navUrls: any;
+    model: any;
+    appMetaService: any;
+    translate: any;
+    errorHandlingService: any;
+    projectService: any;
+    toggleComputable: any;
 
     static initClass() {
         this.$inject = [
@@ -64,7 +64,7 @@ export class RolesController extends FiltersMixin {
             "tgAppMetaService",
             "$translate",
             "tgErrorHandlingService",
-            "tgProjectService"
+            "tgProjectService",
         ];
 
         this.prototype.toggleComputable = debounce(2000, function() {
@@ -77,8 +77,8 @@ export class RolesController extends FiltersMixin {
     }
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, navUrls,
-                  model, appMetaService, translate, errorHandlingService, projectService) {
-        super()
+                model, appMetaService, translate, errorHandlingService, projectService) {
+        super();
         this._enableComputable = this._enableComputable.bind(this);
         this._disableComputable = this._disableComputable.bind(this);
         this.scope = scope;
@@ -101,11 +101,11 @@ export class RolesController extends FiltersMixin {
         this.scope.project = {};
         this.scope.anyComputableRole = true;
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         promise.then(() => {
-            let title = this.translate.instant("ADMIN.ROLES.PAGE_TITLE", {projectName: this.scope.project.name});
-            let { description } = this.scope.project;
+            const title = this.translate.instant("ADMIN.ROLES.PAGE_TITLE", {projectName: this.scope.project.name});
+            const { description } = this.scope.project;
             return this.appMetaService.setAll(title, description);
         });
 
@@ -123,24 +123,24 @@ export class RolesController extends FiltersMixin {
         this.scope.projectId = project.id;
         this.scope.project = project;
 
-        this.scope.$emit('project:loaded', project);
-        this.scope.anyComputableRole = _.some(_.map(project.roles, (point:any) => point.computable));
+        this.scope.$emit("project:loaded", project);
+        this.scope.anyComputableRole = _.some(_.map(project.roles, (point: any) => point.computable));
 
         return project;
     }
 
     loadRoles() {
-        return this.rs.roles.list(this.scope.projectId).then(roles => {
+        return this.rs.roles.list(this.scope.projectId).then((roles) => {
             roles = roles.map(function(role) {
                 role.external_user = false;
 
                 return role;
             });
 
-            let public_permission = {
-                "name": this.translate.instant("ADMIN.ROLES.EXTERNAL_USER"),
-                "permissions": this.scope.project.public_permissions,
-                "external_user": true
+            const public_permission = {
+                name: this.translate.instant("ADMIN.ROLES.EXTERNAL_USER"),
+                permissions: this.scope.project.public_permissions,
+                external_user: true,
             };
 
             roles.push(public_permission);
@@ -169,8 +169,8 @@ export class RolesController extends FiltersMixin {
     }
 
     delete() {
-        let choices = {};
-        for (let role of this.scope.roles) {
+        const choices = {};
+        for (const role of this.scope.roles) {
             if (role.id !== this.scope.role.id) {
                 choices[role.id] = role.name;
             }
@@ -180,19 +180,19 @@ export class RolesController extends FiltersMixin {
             return this.confirm.error(this.translate.instant("ADMIN.ROLES.ERROR_DELETE_ALL"));
         }
 
-        let title = this.translate.instant("ADMIN.ROLES.TITLE_DELETE_ROLE");
-        let subtitle = this.scope.role.name;
-        let replacement = this.translate.instant("ADMIN.ROLES.REPLACEMENT_ROLE");
-        let warning = this.translate.instant("ADMIN.ROLES.WARNING_DELETE_ROLE");
-        return this.confirm.askChoice(title, subtitle, choices, replacement, warning).then(response => {
-            let onSuccess = () => {
+        const title = this.translate.instant("ADMIN.ROLES.TITLE_DELETE_ROLE");
+        const subtitle = this.scope.role.name;
+        const replacement = this.translate.instant("ADMIN.ROLES.REPLACEMENT_ROLE");
+        const warning = this.translate.instant("ADMIN.ROLES.WARNING_DELETE_ROLE");
+        return this.confirm.askChoice(title, subtitle, choices, replacement, warning).then((response) => {
+            const onSuccess = () => {
                 this.forceLoadProject();
                 return this.loadRoles().finally(() => {
                     return response.finish();
                 });
             };
-            let onError = () => {
-                return this.confirm.notify('error');
+            const onError = () => {
+                return this.confirm.notify("error");
             };
 
             return this.repo.remove(this.scope.role, {moveTo: response.selected}).then(onSuccess, onError);
@@ -200,12 +200,12 @@ export class RolesController extends FiltersMixin {
     }
 
     _enableComputable() {
-        let onSuccess = () => {
+        const onSuccess = () => {
             this.confirm.notify("success");
             return this.forceLoadProject();
         };
 
-        let onError = () => {
+        const onError = () => {
             this.confirm.notify("error");
             return this.scope.role.revert();
         };
@@ -214,13 +214,13 @@ export class RolesController extends FiltersMixin {
     }
 
     _disableComputable() {
-        let askOnSuccess = response => {
-            let onSuccess = () => {
+        const askOnSuccess = (response) => {
+            const onSuccess = () => {
                 response.finish();
                 this.confirm.notify("success");
                 return this.forceLoadProject();
             };
-            let onError = () => {
+            const onError = () => {
                 response.finish();
                 this.confirm.notify("error");
                 return this.scope.role.revert();
@@ -228,13 +228,13 @@ export class RolesController extends FiltersMixin {
             return this.repo.save(this.scope.role).then(onSuccess, onError);
         };
 
-        let askOnError = response => {
+        const askOnError = (response) => {
             return this.scope.role.revert();
         };
 
-        let title = this.translate.instant("ADMIN.ROLES.DISABLE_COMPUTABLE_ALERT_TITLE");
-        let subtitle = this.translate.instant("ADMIN.ROLES.DISABLE_COMPUTABLE_ALERT_SUBTITLE", {
-            roleName: this.scope.role.name
+        const title = this.translate.instant("ADMIN.ROLES.DISABLE_COMPUTABLE_ALERT_TITLE");
+        const subtitle = this.translate.instant("ADMIN.ROLES.DISABLE_COMPUTABLE_ALERT_SUBTITLE", {
+            roleName: this.scope.role.name,
         });
         return this.confirm.ask(title, subtitle, "").then(askOnSuccess, askOnError);
     }
@@ -242,20 +242,20 @@ export class RolesController extends FiltersMixin {
 RolesController.initClass();
 
 export let EditRoleDirective = function($repo, $confirm) {
-    let link = function($scope, $el, $attrs) {
-        let toggleView = function() {
-            $el.find('.total').toggle();
-            return $el.find('.edit-role').toggle();
+    const link = function($scope, $el, $attrs) {
+        const toggleView = function() {
+            $el.find(".total").toggle();
+            return $el.find(".edit-role").toggle();
         };
 
-        let submit = function() {
+        const submit = function() {
             $scope.role.name = $el.find("input").val();
 
-            let promise = $repo.save($scope.role);
+            const promise = $repo.save($scope.role);
 
             promise.then(() => $confirm.notify("success"));
 
-            promise.then(null, data => $confirm.notify("error"));
+            promise.then(null, (data) => $confirm.notify("error"));
 
             return toggleView();
         };
@@ -277,7 +277,7 @@ export let EditRoleDirective = function($repo, $confirm) {
         });
 
         $scope.$on("role:changed", function() {
-            if ($el.find('.edit-role').is(":visible")) {
+            if ($el.find(".edit-role").is(":visible")) {
                 return toggleView();
             }
         });
@@ -289,8 +289,8 @@ export let EditRoleDirective = function($repo, $confirm) {
 };
 
 export let RolesDirective =  function() {
-    let link = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
+    const link = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
 
         return $scope.$on("$destroy", () => $el.off());
     };
@@ -299,10 +299,10 @@ export let RolesDirective =  function() {
 };
 
 export let NewRoleDirective = function($tgrepo, $confirm) {
-    let DEFAULT_PERMISSIONS = ["view_project", "view_milestones", "view_us", "view_tasks", "view_issues"];
+    const DEFAULT_PERMISSIONS = ["view_project", "view_milestones", "view_us", "view_tasks", "view_issues"];
 
-    let link = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
+    const link = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
 
         $scope.$on("$destroy", () => $el.off());
 
@@ -318,33 +318,33 @@ export let NewRoleDirective = function($tgrepo, $confirm) {
             event.preventDefault();
             if (event.keyCode === 13) {  // Enter key
                 target = angular.element(event.currentTarget);
-                let newRole = {
+                const newRole = {
                     project: $scope.projectId,
                     name: target.val(),
                     permissions: DEFAULT_PERMISSIONS,
-                    order: _.maxBy($scope.roles, (r:any) => r.order).order + 1,
-                    computable: false
+                    order: _.maxBy($scope.roles, (r: any) => r.order).order + 1,
+                    computable: false,
                 };
 
                 $el.find(".new").addClass("hidden");
-                $el.find(".new").val('');
+                $el.find(".new").val("");
 
-                let onSuccess = function(role) {
-                    let insertPosition = $scope.roles.length - 1;
+                const onSuccess = function(role) {
+                    const insertPosition = $scope.roles.length - 1;
                     $scope.roles.splice(insertPosition, 0, role);
                     $ctrl.setRole(role);
                     $el.find(".add-button").show();
                     return $ctrl.forceLoadProject();
                 };
 
-                let onError = () => $confirm.notify("error");
+                const onError = () => $confirm.notify("error");
 
                 return $tgrepo.create("roles", newRole).then(onSuccess, onError);
 
             } else if (event.keyCode === 27) {  // ESC key
                 target = angular.element(event.currentTarget);
                 $el.find(".new").addClass("hidden");
-                $el.find(".new").val('');
+                $el.find(".new").val("");
                 return $el.find(".add-button").show();
             }
         });
@@ -353,10 +353,9 @@ export let NewRoleDirective = function($tgrepo, $confirm) {
     return {link};
 };
 
-
 // Use category-config.scss styles
 export let RolePermissionsDirective = function($rootscope, $repo, $confirm, $compile) {
-    let resumeTemplate = _.template(`\
+    const resumeTemplate = _.template(`\
 <div class="resume-title" translate="<%- category.name %>"></div>
 <div class="summary-role">
     <div class="count"><%- category.activePermissions %>/<%- category.permissions.length %></div>
@@ -368,7 +367,7 @@ export let RolePermissionsDirective = function($rootscope, $repo, $confirm, $com
 <tg-svg svg-icon="icon-arrow-right"></tg-svg>\
 `);
 
-    let categoryTemplate = _.template(`\
+    const categoryTemplate = _.template(`\
 <div class="category-config" data-id="<%- index %>">
     <div class="resume">
     </div>
@@ -392,17 +391,17 @@ export let RolePermissionsDirective = function($rootscope, $repo, $confirm, $com
 </div>\
 `);
 
-    let baseTemplate = _.template(`\
+    const baseTemplate = _.template(`\
 <div class="category-config-list"></div>\
 `);
 
-    let link = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
+    const link = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
 
-        let generateCategoriesFromRole = function(role) {
-            let setActivePermissions = permissions => _.map(permissions, x => _.extend({}, x, {active: role.permissions.includes(x["key"])}));
+        const generateCategoriesFromRole = function(role) {
+            const setActivePermissions = (permissions) => _.map(permissions, (x) => _.extend({}, x, {active: role.permissions.includes(x["key"])}));
 
-            let isPermissionEditable = function(permission, role, project) {
+            const isPermissionEditable = function(permission, role, project) {
                 if (role.external_user &&
                    !project.is_private &&
                    (permission.key.indexOf("view_") === 0)) {
@@ -412,8 +411,8 @@ export let RolePermissionsDirective = function($rootscope, $repo, $confirm, $com
                 }
             };
 
-            let setActivePermissionsPerCategory = category =>
-                _.map(category, function(cat:any) {
+            const setActivePermissionsPerCategory = (category) =>
+                _.map(category, function(cat: any) {
                     cat.permissions = cat.permissions.map(function(permission) {
                         permission.editable = isPermissionEditable(permission, role, $scope.project);
 
@@ -421,114 +420,114 @@ export let RolePermissionsDirective = function($rootscope, $repo, $confirm, $com
                     });
 
                     return _.extend({}, cat, {
-                        activePermissions: _.filter(cat["permissions"], "active").length
+                        activePermissions: _.filter(cat["permissions"], "active").length,
                     });
                 })
             ;
 
-            let categories = [];
+            const categories = [];
 
-            let epicPermissions = [
+            const epicPermissions = [
                 { key: "view_epics", name: "COMMON.PERMISIONS_CATEGORIES.EPICS.VIEW_EPICS"},
                 { key: "add_epic", name: "COMMON.PERMISIONS_CATEGORIES.EPICS.ADD_EPICS"},
                 { key: "modify_epic", name: "COMMON.PERMISIONS_CATEGORIES.EPICS.MODIFY_EPICS"},
                 { key: "comment_epic", name: "COMMON.PERMISIONS_CATEGORIES.EPICS.COMMENT_EPICS"},
-                { key: "delete_epic", name: "COMMON.PERMISIONS_CATEGORIES.EPICS.DELETE_EPICS"}
+                { key: "delete_epic", name: "COMMON.PERMISIONS_CATEGORIES.EPICS.DELETE_EPICS"},
             ];
             categories.push({
                 name: "COMMON.PERMISIONS_CATEGORIES.EPICS.NAME" ,
-                permissions: setActivePermissions(epicPermissions)
+                permissions: setActivePermissions(epicPermissions),
             });
 
-            let milestonePermissions = [
+            const milestonePermissions = [
                 { key: "view_milestones", name: "COMMON.PERMISIONS_CATEGORIES.SPRINTS.VIEW_SPRINTS"},
                 { key: "add_milestone", name: "COMMON.PERMISIONS_CATEGORIES.SPRINTS.ADD_SPRINTS"},
                 { key: "modify_milestone", name: "COMMON.PERMISIONS_CATEGORIES.SPRINTS.MODIFY_SPRINTS"},
-                { key: "delete_milestone", name: "COMMON.PERMISIONS_CATEGORIES.SPRINTS.DELETE_SPRINTS"}
+                { key: "delete_milestone", name: "COMMON.PERMISIONS_CATEGORIES.SPRINTS.DELETE_SPRINTS"},
             ];
             categories.push({
                 name: "COMMON.PERMISIONS_CATEGORIES.SPRINTS.NAME",
-                permissions: setActivePermissions(milestonePermissions)
+                permissions: setActivePermissions(milestonePermissions),
             });
 
-            let userStoryPermissions = [
+            const userStoryPermissions = [
                 { key: "view_us", name: "COMMON.PERMISIONS_CATEGORIES.USER_STORIES.VIEW_USER_STORIES"},
                 { key: "add_us", name: "COMMON.PERMISIONS_CATEGORIES.USER_STORIES.ADD_USER_STORIES"},
                 { key: "modify_us", name: "COMMON.PERMISIONS_CATEGORIES.USER_STORIES.MODIFY_USER_STORIES"},
                 { key: "comment_us", name: "COMMON.PERMISIONS_CATEGORIES.USER_STORIES.COMMENT_USER_STORIES"},
-                { key: "delete_us", name: "COMMON.PERMISIONS_CATEGORIES.USER_STORIES.DELETE_USER_STORIES"}
+                { key: "delete_us", name: "COMMON.PERMISIONS_CATEGORIES.USER_STORIES.DELETE_USER_STORIES"},
             ];
             categories.push({
                 name: "COMMON.PERMISIONS_CATEGORIES.USER_STORIES.NAME",
-                permissions: setActivePermissions(userStoryPermissions)
+                permissions: setActivePermissions(userStoryPermissions),
             });
 
-            let taskPermissions = [
+            const taskPermissions = [
                 { key: "view_tasks", name: "COMMON.PERMISIONS_CATEGORIES.TASKS.VIEW_TASKS"},
                 { key: "add_task", name: "COMMON.PERMISIONS_CATEGORIES.TASKS.ADD_TASKS"},
                 { key: "modify_task", name: "COMMON.PERMISIONS_CATEGORIES.TASKS.MODIFY_TASKS"},
                 { key: "comment_task", name: "COMMON.PERMISIONS_CATEGORIES.TASKS.COMMENT_TASKS"},
-                { key: "delete_task", name: "COMMON.PERMISIONS_CATEGORIES.TASKS.DELETE_TASKS"}
+                { key: "delete_task", name: "COMMON.PERMISIONS_CATEGORIES.TASKS.DELETE_TASKS"},
             ];
             categories.push({
                 name: "COMMON.PERMISIONS_CATEGORIES.TASKS.NAME" ,
-                permissions: setActivePermissions(taskPermissions)
+                permissions: setActivePermissions(taskPermissions),
             });
 
-            let issuePermissions = [
+            const issuePermissions = [
                 { key: "view_issues", name: "COMMON.PERMISIONS_CATEGORIES.ISSUES.VIEW_ISSUES"},
                 { key: "add_issue", name: "COMMON.PERMISIONS_CATEGORIES.ISSUES.ADD_ISSUES"},
                 { key: "modify_issue", name: "COMMON.PERMISIONS_CATEGORIES.ISSUES.MODIFY_ISSUES"},
                 { key: "comment_issue", name: "COMMON.PERMISIONS_CATEGORIES.ISSUES.COMMENT_ISSUES"},
-                { key: "delete_issue", name: "COMMON.PERMISIONS_CATEGORIES.ISSUES.DELETE_ISSUES"}
+                { key: "delete_issue", name: "COMMON.PERMISIONS_CATEGORIES.ISSUES.DELETE_ISSUES"},
             ];
             categories.push({
                 name: "COMMON.PERMISIONS_CATEGORIES.ISSUES.NAME",
-                permissions: setActivePermissions(issuePermissions)
+                permissions: setActivePermissions(issuePermissions),
             });
 
-            let wikiPermissions = [
+            const wikiPermissions = [
                 { key: "view_wiki_pages", name: "COMMON.PERMISIONS_CATEGORIES.WIKI.VIEW_WIKI_PAGES"},
                 { key: "add_wiki_page", name: "COMMON.PERMISIONS_CATEGORIES.WIKI.ADD_WIKI_PAGES"},
                 { key: "modify_wiki_page", name: "COMMON.PERMISIONS_CATEGORIES.WIKI.MODIFY_WIKI_PAGES"},
                 { key: "delete_wiki_page", name: "COMMON.PERMISIONS_CATEGORIES.WIKI.DELETE_WIKI_PAGES"},
                 { key: "view_wiki_links", name: "COMMON.PERMISIONS_CATEGORIES.WIKI.VIEW_WIKI_LINKS"},
                 { key: "add_wiki_link", name: "COMMON.PERMISIONS_CATEGORIES.WIKI.ADD_WIKI_LINKS"},
-                { key: "delete_wiki_link", name: "COMMON.PERMISIONS_CATEGORIES.WIKI.DELETE_WIKI_LINKS"}
+                { key: "delete_wiki_link", name: "COMMON.PERMISIONS_CATEGORIES.WIKI.DELETE_WIKI_LINKS"},
             ];
             categories.push({
                 name: "COMMON.PERMISIONS_CATEGORIES.WIKI.NAME",
-                permissions: setActivePermissions(wikiPermissions)
+                permissions: setActivePermissions(wikiPermissions),
             });
 
             return setActivePermissionsPerCategory(categories);
         };
 
-        let renderResume = (element, category) => element.find(".resume").html($compile(resumeTemplate({category}))($scope));
+        const renderResume = (element, category) => element.find(".resume").html($compile(resumeTemplate({category}))($scope));
 
-        let renderCategory = function(category, index) {
-            let html:any = categoryTemplate({category, index});
+        const renderCategory = function(category, index) {
+            let html: any = categoryTemplate({category, index});
             html = angular.element(html);
             renderResume(html, category);
             return $compile(html)($scope);
         };
 
-        let renderPermissions = function() {
+        const renderPermissions = function() {
             $el.off();
-            let html:any = baseTemplate();
+            let html: any = baseTemplate();
             _.each(generateCategoriesFromRole($scope.role), (category, index) => html = angular.element(html).append(renderCategory(category, index)));
 
             $el.html(html);
             $el.on("click", ".resume", function(event) {
                 event.preventDefault();
-                let target = angular.element(event.currentTarget);
+                const target = angular.element(event.currentTarget);
                 target.toggleClass("open-drawer");
                 return target.next().toggleClass("open");
             });
 
             return $el.on("change", ".category-item input", function(event) {
-                let getActivePermissions = function() {
-                    let activePermissions = _.filter($el.find(".category-item input"), t => angular.element(t).is(":checked"));
+                const getActivePermissions = function() {
+                    let activePermissions = _.filter($el.find(".category-item input"), (t) => angular.element(t).is(":checked"));
                     activePermissions = _.sortBy(_.map(activePermissions, function(t) {
                         let permission;
                         return permission = angular.element(t).parents(".category-item").data("id");
@@ -541,20 +540,20 @@ export let RolePermissionsDirective = function($rootscope, $repo, $confirm, $com
                     return activePermissions;
                 };
 
-                let target = angular.element(event.currentTarget);
+                const target = angular.element(event.currentTarget);
 
                 $scope.role.permissions = getActivePermissions();
 
-                let onSuccess = function() {
-                    let categories = generateCategoriesFromRole($scope.role);
-                    let categoryId = target.parents(".category-config").data("id");
+                const onSuccess = function() {
+                    const categories = generateCategoriesFromRole($scope.role);
+                    const categoryId = target.parents(".category-config").data("id");
                     renderResume(target.parents(".category-config"), categories[categoryId]);
                     $rootscope.$broadcast("projects:reload");
                     $confirm.notify("success");
                     return $ctrl.forceLoadProject();
                 };
 
-                let onError = function() {
+                const onError = function() {
                     $confirm.notify("error");
                     target.prop("checked", !target.prop("checked"));
                     return $scope.role.permissions = getActivePermissions();
@@ -562,7 +561,7 @@ export let RolePermissionsDirective = function($rootscope, $repo, $confirm, $com
 
                 if ($scope.role.external_user) {
                     $scope.project.public_permissions = $scope.role.permissions;
-                    $scope.project.anon_permissions = $scope.role.permissions.filter(permission => permission.indexOf("view_") === 0);
+                    $scope.project.anon_permissions = $scope.role.permissions.filter((permission) => permission.indexOf("view_") === 0);
 
                     return $repo.save($scope.project).then(onSuccess, onError);
                 } else {

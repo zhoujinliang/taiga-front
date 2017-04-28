@@ -22,10 +22,10 @@
  * File: utils.coffee
  */
 
-import * as utils from "./libs/utils"
-import * as _ from "lodash"
+import * as _ from "lodash";
+import * as utils from "./libs/utils";
 
-var taiga = {
+const taiga = {
     addClass: utils.addClass,
     nl2br: utils.nl2br,
     bindMethods: utils.bindMethods,
@@ -55,8 +55,8 @@ var taiga = {
     getRandomDefaultColor: utils.getRandomDefaultColor,
     getDefaulColorList: utils.getDefaulColorList,
     getMatches: utils.getMatches,
-    cartesianProduct: utils.cartesianProduct
+    cartesianProduct: utils.cartesianProduct,
 };
 
-(<any>window).taiga = taiga;
-(<any>window)._ = _;
+(window as any).taiga = taiga;
+(window as any)._ = _;

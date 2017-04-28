@@ -22,28 +22,28 @@
  * File: modules/user-settings/main.coffee
  */
 
-import {sizeFormat, debounce} from "../../libs/utils"
-import {PageMixin} from "../controllerMixins"
-import * as angular from "angular"
+import * as angular from "angular";
+import {debounce, sizeFormat} from "../../libs/utils";
+import {PageMixin} from "../controllerMixins";
 
 //############################################################################
 //# User settings Controller
 //############################################################################
 
 export class UserSettingsController extends PageMixin {
-    scope:angular.IScope
-    rootscope:angular.IScope
-    config:any
-    repo:any
-    confirm:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    navUrls:any
-    auth:any
-    translate:any
-    errorHandlingService:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    config: any;
+    repo: any;
+    confirm: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    navUrls: any;
+    auth: any;
+    translate: any;
+    errorHandlingService: any;
 
     static initClass() {
         this.$inject = [
@@ -59,13 +59,13 @@ export class UserSettingsController extends PageMixin {
             "$tgNavUrls",
             "$tgAuth",
             "$translate",
-            "tgErrorHandlingService"
+            "tgErrorHandlingService",
         ];
     }
 
     constructor(scope, rootscope, config, repo, confirm, rs, params, q, location, navUrls,
-                  auth, translate, errorHandlingService) {
-        super()
+                auth, translate, errorHandlingService) {
+        super();
         this.scope = scope;
         this.rootscope = rootscope;
         this.config = config;
@@ -91,13 +91,13 @@ export class UserSettingsController extends PageMixin {
         this.scope.lang = this.getLan();
         this.scope.theme = this.getTheme();
 
-        let maxFileSize = this.config.get("maxUploadFileSize", null);
+        const maxFileSize = this.config.get("maxUploadFileSize", null);
         if (maxFileSize) {
-            let text = this.translate.instant("USER_SETTINGS.AVATAR_MAX_SIZE", {"maxFileSize": sizeFormat(maxFileSize)});
+            const text = this.translate.instant("USER_SETTINGS.AVATAR_MAX_SIZE", {maxFileSize: sizeFormat(maxFileSize)});
             this.scope.maxFileSizeMsg = text;
         }
 
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
 
         promise.then(null, this.onInitialDataError.bind(this));
     }
@@ -105,7 +105,7 @@ export class UserSettingsController extends PageMixin {
     loadInitialData() {
         this.scope.availableThemes = this.config.get("themes", []);
 
-        return this.rs.locales.list().then(locales => {
+        return this.rs.locales.list().then((locales) => {
             this.scope.locales = locales;
             return locales;
         });
@@ -133,31 +133,31 @@ UserSettingsController.initClass();
 //############################################################################
 
 export let UserProfileDirective = function($confirm, $auth, $repo, $translate) {
-    let link = function($scope, $el, $attrs) {
-        let submit = debounce(2000, event => {
+    const link = function($scope, $el, $attrs) {
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
-            let form = $el.find("form").checksley();
+            const form = $el.find("form").checksley();
             if (!form.validate()) { return; }
 
-            let changeEmail = $scope.user.isAttributeModified("email");
+            const changeEmail = $scope.user.isAttributeModified("email");
             $scope.user.lang = $scope.lang;
             $scope.user.theme = $scope.theme;
 
-            let onSuccess = data => {
+            const onSuccess = (data) => {
                 $auth.setUser(data);
 
                 if (changeEmail) {
-                    let text = $translate.instant("USER_PROFILE.CHANGE_EMAIL_SUCCESS");
+                    const text = $translate.instant("USER_PROFILE.CHANGE_EMAIL_SUCCESS");
                     return $confirm.success(text);
                 } else {
-                    return $confirm.notify('success');
+                    return $confirm.notify("success");
                 }
             };
 
-            let onError = data => {
+            const onError = (data) => {
                 form.setErrors(data);
-                return $confirm.notify('error', data._error_message);
+                return $confirm.notify("error", data._error_message);
             };
 
             return $repo.save($scope.user).then(onSuccess, onError);
@@ -176,22 +176,22 @@ export let UserProfileDirective = function($confirm, $auth, $repo, $translate) {
 //############################################################################
 
 export let UserAvatarDirective = function($auth, $model, $rs, $confirm) {
-    let link = function($scope, $el, $attrs) {
-        let showSizeInfo = () => $el.find(".size-info").removeClass("hidden");
+    const link = function($scope, $el, $attrs) {
+        const showSizeInfo = () => $el.find(".size-info").removeClass("hidden");
 
-        let onSuccess = function(response) {
-            let user = $model.make_model("users", response.data);
+        const onSuccess = function(response) {
+            const user = $model.make_model("users", response.data);
             $auth.setUser(user);
             $scope.user = user;
 
-            $el.find('.loading-overlay').removeClass('active');
-            return $confirm.notify('success');
+            $el.find(".loading-overlay").removeClass("active");
+            return $confirm.notify("success");
         };
 
-        let onError = function(response) {
+        const onError = function(response) {
             if (response.status === 413) { showSizeInfo(); }
-            $el.find('.loading-overlay').removeClass('active');
-            return $confirm.notify('error', response.data._error_message);
+            $el.find(".loading-overlay").removeClass("active");
+            return $confirm.notify("error", response.data._error_message);
         };
 
         // Change photo
@@ -199,14 +199,14 @@ export let UserAvatarDirective = function($auth, $model, $rs, $confirm) {
 
         $el.on("change", "#avatar-field", function(event) {
             if ($scope.avatarAttachment) {
-                $el.find('.loading-overlay').addClass("active");
+                $el.find(".loading-overlay").addClass("active");
                 return $rs.userSettings.changeAvatar($scope.avatarAttachment).then(onSuccess, onError);
             }
         });
 
         // Use gravatar photo
         $el.on("click", "a.js-use-gravatar", function(event) {
-            $el.find('.loading-overlay').addClass("active");
+            $el.find(".loading-overlay").addClass("active");
             return $rs.userSettings.removeAvatar().then(onSuccess, onError);
         });
 
@@ -221,12 +221,12 @@ export let UserAvatarDirective = function($auth, $model, $rs, $confirm) {
 //############################################################################
 
 export let TaigaAvatarModelDirective = function($parse) {
-    let link = function($scope, $el, $attrs) {
-        let model = $parse($attrs.tgAvatarModel);
-        let modelSetter = model.assign;
+    const link = function($scope, $el, $attrs) {
+        const model = $parse($attrs.tgAvatarModel);
+        const modelSetter = model.assign;
 
-        return $el.bind('change', () =>
-            $scope.$apply(() => modelSetter($scope, $el[0].files[0]))
+        return $el.bind("change", () =>
+            $scope.$apply(() => modelSetter($scope, $el[0].files[0])),
         );
     };
 

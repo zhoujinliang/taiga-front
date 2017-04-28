@@ -22,30 +22,30 @@
  * File: modules/common/tags.coffee
  */
 
-import {bindOnce, trim} from "../../../libs/utils"
-import {Awesomplete} from "awesomplete"
-import * as angular from "angular"
-import * as _ from "lodash"
-import {Component, Input} from "@angular/core"
+import {Component, Input} from "@angular/core";
+import * as angular from "angular";
+import {Awesomplete} from "awesomplete";
+import * as _ from "lodash";
+import {bindOnce, trim} from "../../../libs/utils";
 
 // Directive that parses/format tags inputfield.
 
 export let TagsDirective = function() {
-    let formatter = function(v) {
+    const formatter = function(v) {
         if (_.isArray(v)) {
             return v.join(", ");
         }
         return "";
     };
 
-    let parser = function(v) {
+    const parser = function(v) {
         if (!v) { return []; }
-        let result = _(v.split(",")).map(x => _.trim(x));
+        const result = _(v.split(",")).map((x) => _.trim(x));
 
         return result.value();
     };
 
-    let link = function($scope, $el, $attrs, $ctrl) {
+    const link = function($scope, $el, $attrs, $ctrl) {
         $ctrl.$formatters.push(formatter);
         $ctrl.$parsers.push(parser);
 
@@ -54,7 +54,7 @@ export let TagsDirective = function() {
 
     return {
         require: "ngModel",
-        link
+        link,
     };
 };
 
@@ -63,42 +63,42 @@ export let TagsDirective = function() {
 //############################################################################
 
 export let LbTagLineDirective = function($rs, $template, $compile) {
-    let ENTER_KEY = 13;
-    let COMMA_KEY = 188;
+    const ENTER_KEY = 13;
+    const COMMA_KEY = 188;
 
-    let templateTags = $template.get("common/tag/lb-tag-line-tags.html", true);
+    const templateTags = $template.get("common/tag/lb-tag-line-tags.html", true);
 
     let autocomplete = null;
 
-    let link = function($scope, $el, $attrs, $model) {
-        let withoutColors = _.has($attrs, "withoutColors");
+    const link = function($scope, $el, $attrs, $model) {
+        const withoutColors = _.has($attrs, "withoutColors");
 
         //# Render
-        let renderTags = function(tags, tagsColors=[]) {
-            let color = !withoutColors ? tagsColors : [];
+        const renderTags = function(tags, tagsColors= []) {
+            const color = !withoutColors ? tagsColors : [];
 
-            let ctx = {
-                tags: _.map(tags, (t:string) => ({
+            const ctx = {
+                tags: _.map(tags, (t: string) => ({
                     name: t,
-                    style: tagsColors[t] ? `border-left: 5px solid ${tagsColors[t]}` : ""
-                }) )
+                    style: tagsColors[t] ? `border-left: 5px solid ${tagsColors[t]}` : "",
+                }) ),
             };
 
-            let html = $compile(templateTags(ctx))($scope);
+            const html = $compile(templateTags(ctx))($scope);
             return $el.find(".tags-container").html(html);
         };
 
-        let showSaveButton = () => $el.find(".save").removeClass("hidden");
+        const showSaveButton = () => $el.find(".save").removeClass("hidden");
 
-        let hideSaveButton = () => $el.find(".save").addClass("hidden");
+        const hideSaveButton = () => $el.find(".save").addClass("hidden");
 
-        let resetInput = function() {
+        const resetInput = function() {
             $el.find("input").val("");
             return autocomplete.close();
         };
 
         //# Aux methods
-        let addValue = function(value) {
+        const addValue = function(value) {
             value = trim(value.toLowerCase());
             if (value.length === 0) { return; }
 
@@ -111,7 +111,7 @@ export let LbTagLineDirective = function($rs, $template, $compile) {
             return hideSaveButton();
         };
 
-        let deleteValue = function(value) {
+        const deleteValue = function(value) {
             value = trim(value.toLowerCase());
             if (value.length === 0) { return; }
 
@@ -121,8 +121,8 @@ export let LbTagLineDirective = function($rs, $template, $compile) {
             return $scope.$apply(() => $model.$setViewValue(tags));
         };
 
-        let saveInputTag = function() {
-            let value = $el.find("input").val();
+        const saveInputTag = function() {
+            const value = $el.find("input").val();
 
             addValue(value);
             return resetInput();
@@ -130,12 +130,12 @@ export let LbTagLineDirective = function($rs, $template, $compile) {
 
         //# Events
         $el.on("keypress", "input", function(event) {
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
             if (event.keyCode === ENTER_KEY) {
                 event.preventDefault();
                 return saveInputTag();
-            } else if (String.fromCharCode(event.keyCode) === ',') {
+            } else if (String.fromCharCode(event.keyCode) === ",") {
                 event.preventDefault();
                 return saveInputTag();
             } else {
@@ -154,17 +154,17 @@ export let LbTagLineDirective = function($rs, $template, $compile) {
 
         $el.on("click", ".remove-tag", function(event) {
             event.preventDefault();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
-            let value = target.siblings(".tag-name").text();
+            const value = target.siblings(".tag-name").text();
             return deleteValue(value);
         });
 
         bindOnce($scope, "project", function(project) {
-            let input = $el.find("input");
+            const input = $el.find("input");
 
             autocomplete = new Awesomplete(input[0], {
-                list: _.keys(project.tags_colors)
+                list: _.keys(project.tags_colors),
             });
 
             return input.on("awesomplete-selectcomplete", function() {
@@ -174,7 +174,7 @@ export let LbTagLineDirective = function($rs, $template, $compile) {
         });
 
         $scope.$watch($attrs.ngModel, function(tags) {
-            let tagsColors = ($scope.project != null ? $scope.project.tags_colors : undefined) || [];
+            const tagsColors = ($scope.project != null ? $scope.project.tags_colors : undefined) || [];
             return renderTags(tags, tagsColors);
         });
 
@@ -183,7 +183,7 @@ export let LbTagLineDirective = function($rs, $template, $compile) {
 
     return {
         link,
-        require:"ngModel",
-        templateUrl: "common/tag/lb-tag-line.html"
+        require: "ngModel",
+        templateUrl: "common/tag/lb-tag-line.html",
     };
 };

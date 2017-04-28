@@ -22,12 +22,12 @@
  * File: modules/common/raven-logger.coffee
  */
 
-import * as angular from "angular"
-import * as Raven from "raven-js"
+import * as angular from "angular";
+import * as Raven from "raven-js";
 
 export let ExceptionHandlerFactory = function($log, config) {
     this.config = config;
-    let ravenConfig = this.config.get("ravenConfig", null);
+    const ravenConfig = this.config.get("ravenConfig", null);
     if (ravenConfig) {
       $log.debug("Using the RavenJS exception handler.");
       Raven.config(ravenConfig).install();

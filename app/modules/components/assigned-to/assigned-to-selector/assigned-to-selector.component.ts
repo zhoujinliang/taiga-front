@@ -22,6 +22,7 @@ import * as Immutable from "immutable";
 import {Component, EventEmitter, Input, OnChanges, Output} from "@angular/core";
 
 @Component({
+    host: {class: "lightbox-select-user"},
     selector: "tg-assigned-to-selector",
     template: require("./assigned-to-selector.jade")(),
 })

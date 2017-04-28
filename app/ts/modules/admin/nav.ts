@@ -23,8 +23,8 @@
  */
 
 export let AdminNavigationDirective = function() {
-    let link = function($scope, $el, $attrs) {
-        let section = $attrs.tgAdminNavigation;
+    const link = function($scope, $el, $attrs) {
+        const section = $attrs.tgAdminNavigation;
         $el.find(".active").removeClass("active");
         $el.find(`#adminmenu-${section} a`).addClass("active");
 

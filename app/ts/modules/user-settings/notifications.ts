@@ -22,28 +22,28 @@
  * File: modules/user-settings/notifications.coffee
  */
 
-import {bindOnce} from "../../libs/utils"
-import {PageMixin} from "../controllerMixins"
+import {bindOnce} from "../../libs/utils";
+import {PageMixin} from "../controllerMixins";
 
-import * as angular from "angular"
-import * as _ from "lodash"
+import * as angular from "angular";
+import * as _ from "lodash";
 
 //############################################################################
 //# User settings Controller
 //############################################################################
 
 export class UserNotificationsController extends PageMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    navUrls:any
-    auth:any
-    errorHandlingService:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    navUrls: any;
+    auth: any;
+    errorHandlingService: any;
 
     static initClass() {
         this.$inject = [
@@ -57,12 +57,12 @@ export class UserNotificationsController extends PageMixin {
             "$tgLocation",
             "$tgNavUrls",
             "$tgAuth",
-            "tgErrorHandlingService"
+            "tgErrorHandlingService",
         ];
     }
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, navUrls, auth, errorHandlingService) {
-        super()
+        super();
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -76,12 +76,12 @@ export class UserNotificationsController extends PageMixin {
         this.errorHandlingService = errorHandlingService;
         this.scope.sectionName = "USER_SETTINGS.NOTIFICATIONS.SECTION_NAME";
         this.scope.user = this.auth.getUser();
-        let promise = this.loadInitialData();
+        const promise = this.loadInitialData();
         promise.then(null, this.onInitialDataError.bind(this));
     }
 
     loadInitialData() {
-        return this.rs.notifyPolicies.list().then(notifyPolicies => {
+        return this.rs.notifyPolicies.list().then((notifyPolicies) => {
             this.scope.notifyPolicies = notifyPolicies;
             return notifyPolicies;
         });
@@ -94,7 +94,7 @@ UserNotificationsController.initClass();
 //############################################################################
 
 export let UserNotificationsDirective = function() {
-    let link = ($scope, $el, $attrs) =>
+    const link = ($scope, $el, $attrs) =>
         $scope.$on("$destroy", () => $el.off())
     ;
 
@@ -106,7 +106,7 @@ export let UserNotificationsDirective = function() {
 //############################################################################
 
 export let UserNotificationsListDirective = function($repo, $confirm, $compile) {
-    let template = _.template(`\
+    const template = _.template(`\
 <% _.each(notifyPolicies, function (notifyPolicy, index) { %>
 <div class="policy-table-row" data-index="<%- index %>">
   <div class="policy-table-project"><span><%- notifyPolicy.project_name %></span></div>
@@ -141,26 +141,26 @@ export let UserNotificationsListDirective = function($repo, $confirm, $compile) 
 <% }) %>\
 `);
 
-    let link = function($scope, $el, $attrs) {
-        let render = function() {
+    const link = function($scope, $el, $attrs) {
+        const render = function() {
             $el.off();
 
-            let ctx = {notifyPolicies: $scope.notifyPolicies};
-            let html = template(ctx);
+            const ctx = {notifyPolicies: $scope.notifyPolicies};
+            const html = template(ctx);
 
             $el.html($compile(html)($scope));
 
             return $el.on("change", "input[type=radio]", function(event) {
-                let target = angular.element(event.currentTarget);
+                const target = angular.element(event.currentTarget);
 
-                let policyIndex = target.parents(".policy-table-row").data('index');
-                let policy = $scope.notifyPolicies[policyIndex];
-                let prev_level = policy.notify_level;
+                const policyIndex = target.parents(".policy-table-row").data("index");
+                const policy = $scope.notifyPolicies[policyIndex];
+                const prev_level = policy.notify_level;
                 policy.notify_level = parseInt(target.val(), 10);
 
-                let onSuccess = () => $confirm.notify("success");
+                const onSuccess = () => $confirm.notify("success");
 
-                let onError = function() {
+                const onError = function() {
                     $confirm.notify("error");
                     return target.parents(".policy-table-row")
                           .find(`input[value=${prev_level}]`)

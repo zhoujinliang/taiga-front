@@ -17,27 +17,27 @@
  * File: kanban-userstories.service.coffee
  */
 
-import {Service} from "../../../ts/classes"
-import * as _ from "lodash"
-import * as Immutable from "immutable"
+import * as Immutable from "immutable";
+import * as _ from "lodash";
+import {Service} from "../../../ts/classes";
 
 export class KanbanUserstoriesService extends Service {
-    userstoriesRaw:any
-    archivedStatus:any
-    statusHide:any
-    foldStatusChanged:any
-    usByStatus:any
-    project:any
-    usersById:any
-    archived:any
-    order:any
+    userstoriesRaw: any;
+    archivedStatus: any;
+    statusHide: any;
+    foldStatusChanged: any;
+    usByStatus: any;
+    project: any;
+    usersById: any;
+    archived: any;
+    order: any;
 
     static initClass() {
         this.$inject = [];
     }
 
     constructor() {
-        super()
+        super();
         this.reset();
     }
 
@@ -81,7 +81,7 @@ export class KanbanUserstoriesService extends Service {
     }
 
     isUsInArchivedHiddenStatus(usId) {
-        let us:any = this.getUsModel(usId);
+        const us: any = this.getUsModel(usId);
 
         return (this.archivedStatus.indexOf(us.status) !== -1) &&
             (this.statusHide.indexOf(us.status) !== -1);
@@ -93,20 +93,20 @@ export class KanbanUserstoriesService extends Service {
     }
 
     showStatus(statusId) {
-        return _.remove(this.statusHide, it => it === statusId);
+        return _.remove(this.statusHide, (it) => it === statusId);
     }
 
     getStatus(statusId) {
-        return _.filter(this.userstoriesRaw, (us:any) => us.status === statusId);
+        return _.filter(this.userstoriesRaw, (us: any) => us.status === statusId);
     }
 
     deleteStatus(statusId) {
-        let toDelete = _.filter(this.userstoriesRaw, (us:any) => us.status === statusId);
-        toDelete = _.map(toDelete, it => it.id);
+        let toDelete = _.filter(this.userstoriesRaw, (us: any) => us.status === statusId);
+        toDelete = _.map(toDelete, (it) => it.id);
 
         this.archived = _.difference(this.archived, toDelete);
 
-        this.userstoriesRaw = _.filter(this.userstoriesRaw, (us:any) => us.status !== statusId);
+        this.userstoriesRaw = _.filter(this.userstoriesRaw, (us: any) => us.status !== statusId);
 
         return this.refresh();
     }
@@ -125,24 +125,24 @@ export class KanbanUserstoriesService extends Service {
     }
 
     move(id, statusId, index) {
-        let it:any;
-        let us:any = this.getUsModel(id);
+        let it: any;
+        const us: any = this.getUsModel(id);
 
-        let usByStatus = _.filter(this.userstoriesRaw, (it:any) => {
+        let usByStatus = _.filter(this.userstoriesRaw, (it: any) => {
             return it.status === statusId;
         });
 
-        usByStatus = _.sortBy(usByStatus, it => this.order[it.id]);
+        usByStatus = _.sortBy(usByStatus, (it) => this.order[it.id]);
 
-        let usByStatusWithoutMoved = _.filter(usByStatus, it => it.id !== id);
-        let beforeDestination = _.slice(usByStatusWithoutMoved, 0, index);
-        let afterDestination = _.slice(usByStatusWithoutMoved, index);
+        const usByStatusWithoutMoved = _.filter(usByStatus, (it) => it.id !== id);
+        const beforeDestination = _.slice(usByStatusWithoutMoved, 0, index);
+        const afterDestination = _.slice(usByStatusWithoutMoved, index);
 
-        let setOrders = {};
+        const setOrders = {};
 
-        let previous = beforeDestination[beforeDestination.length - 1];
+        const previous = beforeDestination[beforeDestination.length - 1];
 
-        let previousWithTheSameOrder = _.filter(beforeDestination, it => {
+        const previousWithTheSameOrder = _.filter(beforeDestination, (it) => {
             return this.order[it.id] === this.order[previous.id];
     });
 
@@ -168,12 +168,12 @@ export class KanbanUserstoriesService extends Service {
 
         this.refresh();
 
-        return {"us_id": us.id, "order": this.order[us.id], "set_orders": setOrders};
+        return {us_id: us.id, order: this.order[us.id], set_orders: setOrders};
     }
 
     replace(us) {
         return this.usByStatus = this.usByStatus.map(function(status) {
-            let findedIndex = status.findIndex(usItem => usItem.get('id') === us.get('id'));
+            const findedIndex = status.findIndex((usItem) => usItem.get("id") === us.get("id"));
 
             if (findedIndex !== -1) {
                 status = status.set(findedIndex, us);
@@ -184,7 +184,7 @@ export class KanbanUserstoriesService extends Service {
     }
 
     replaceModel(us) {
-        this.userstoriesRaw = _.map(this.userstoriesRaw, function(usItem:any) {
+        this.userstoriesRaw = _.map(this.userstoriesRaw, function(usItem: any) {
             if (us.id === usItem.id) {
                 return us;
             } else {
@@ -199,7 +199,7 @@ export class KanbanUserstoriesService extends Service {
         let findedUs = null;
 
         this.usByStatus.forEach(function(status) {
-            findedUs = status.find(us => us.get('id') === id);
+            findedUs = status.find((us) => us.get("id") === id);
 
             if (findedUs) { return false; }
         });
@@ -208,34 +208,34 @@ export class KanbanUserstoriesService extends Service {
     }
 
     getUsModel(id) {
-        return _.find(this.userstoriesRaw, (us:any) => us.id === id);
+        return _.find(this.userstoriesRaw, (us: any) => us.id === id);
     }
 
     refresh() {
         let model;
-        this.userstoriesRaw = _.sortBy(this.userstoriesRaw, (it:any) => this.order[it.id]);
+        this.userstoriesRaw = _.sortBy(this.userstoriesRaw, (it: any) => this.order[it.id]);
 
         let userstories = this.userstoriesRaw;
-        userstories = _.map(userstories, (usModel:any) => {
-            let us:any = {};
+        userstories = _.map(userstories, (usModel: any) => {
+            const us: any = {};
 
             model = usModel.getAttrs();
 
             us.foldStatusChanged = this.foldStatusChanged[usModel.id];
 
             us.model = model;
-            us.images = _.filter(model.attachments, (it:any) => !!it.thumbnail_card_url);
+            us.images = _.filter(model.attachments, (it: any) => !!it.thumbnail_card_url);
 
             us.id = usModel.id;
             us.assigned_to = this.usersById[usModel.assigned_to];
-            us.colorized_tags = _.map(us.model.tags, tag => {
+            us.colorized_tags = _.map(us.model.tags, (tag) => {
                 return {name: tag[0], color: tag[1]};
         });
 
             return us;
         });
 
-        let usByStatus = _.groupBy(userstories, (us:any) => us.model.status);
+        const usByStatus = _.groupBy(userstories, (us: any) => us.model.status);
 
         return this.usByStatus = Immutable.fromJS(usByStatus);
     }

@@ -22,13 +22,13 @@
  * File: modules/backlog.coffee
  */
 
-import * as angular from "angular"
-import * as main from "./main"
-import {CreateEditSprint} from "./lightboxes"
-import {BacklogSortableDirective} from "./sortable"
-import * as sprints from "./sprints"
+import * as angular from "angular";
+import {CreateEditSprint} from "./lightboxes";
+import * as main from "./main";
+import {BacklogSortableDirective} from "./sortable";
+import * as sprints from "./sprints";
 
-let module = angular.module("taigaBacklog", []);
+const module = angular.module("taigaBacklog", []);
 module.controller("BacklogController", main.BacklogController);
 module.directive("tgBacklog", ["$tgRepo", "$rootScope", "$translate", "$tgResources", main.BacklogDirective]);
 module.directive("tgUsRolePointsSelector", ["$rootScope", "$tgTemplate", "$compile", "$translate", main.UsRolePointsSelectorDirective]);

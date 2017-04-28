@@ -22,13 +22,13 @@
  * File: modules/common/components.coffee
  */
 
-import {bindOnce} from "../../../libs/utils"
-import * as Pikaday from "pikaday"
-import * as angular from "angular"
-import * as moment from "moment"
-import * as _ from "lodash"
-import {Component, OnChanges, Input} from "@angular/core"
-import {TranslateService} from "@ngx-translate/core"
+import {Component, Input, OnChanges} from "@angular/core";
+import {TranslateService} from "@ngx-translate/core";
+import * as angular from "angular";
+import * as _ from "lodash";
+import * as moment from "moment";
+import * as Pikaday from "pikaday";
+import {bindOnce} from "../../../libs/utils";
 
 //############################################################################
 //# Date Range Directive (used mainly for sprint date range)
@@ -39,40 +39,39 @@ import {TranslateService} from "@ngx-translate/core"
     template: "<span>{{formatedRange}}</span>",
 })
 export class DateRange implements OnChanges {
-    @Input() first:string;
-    @Input() second:string;
-    formatedRange:string;
+    @Input() first: string;
+    @Input() second: string;
+    formatedRange: string;
 
     constructor(private translate: TranslateService) {}
 
     ngOnChanges() {
-        let prettyDate = this.translate.instant("BACKLOG.SPRINTS.DATE");
-        let initDate = moment(this.first).format(prettyDate);
-        let endDate = moment(this.second).format(prettyDate);
+        const prettyDate = this.translate.instant("BACKLOG.SPRINTS.DATE");
+        const initDate = moment(this.first).format(prettyDate);
+        const endDate = moment(this.second).format(prettyDate);
         this.formatedRange = `${initDate}-${endDate}`;
     }
 }
-
 
 //############################################################################
 //# Date Selector Directive (using pikaday)
 //############################################################################
 
 export let DateSelectorDirective = function($rootscope, datePickerConfigService) {
-    let link = function($scope, $el, $attrs, $model) {
-        let selectedDate = null;
+    const link = function($scope, $el, $attrs, $model) {
+        const selectedDate = null;
 
-        let initialize = function() {
-            let datePickerConfig = datePickerConfigService.get();
+        const initialize = function() {
+            const datePickerConfig = datePickerConfigService.get();
 
             _.merge(datePickerConfig, {
-                field: $el[0]
+                field: $el[0],
             });
 
             return $el.picker = new Pikaday(datePickerConfig);
         };
 
-        let unbind = $rootscope.$on("$translateChangeEnd", ctx => {
+        const unbind = $rootscope.$on("$translateChangeEnd", (ctx) => {
             if ($el.picker) { $el.picker.destroy(); }
             return initialize();
         });
@@ -96,17 +95,16 @@ export let DateSelectorDirective = function($rootscope, datePickerConfigService)
     };
 
     return {
-        link
+        link,
     };
 };
-
 
 //############################################################################
 //# Sprint Progress Bar Directive
 //############################################################################
 
 export let SprintProgressBarDirective = function() {
-    let renderProgress = function($el, percentage, visual_percentage) {
+    const renderProgress = function($el, percentage, visual_percentage) {
         if ($el.hasClass(".current-progress")) {
             return $el.css("width", `${percentage}%`);
         } else {
@@ -115,15 +113,15 @@ export let SprintProgressBarDirective = function() {
         }
     };
 
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         bindOnce($scope, $attrs.tgSprintProgressbar, function(sprint) {
-            let closedPoints = sprint.closed_points;
-            let totalPoints = sprint.total_points;
+            const closedPoints = sprint.closed_points;
+            const totalPoints = sprint.total_points;
             let percentage = 0;
-            if (totalPoints !== 0) { percentage = Math.round(100 * (closedPoints/totalPoints)); }
+            if (totalPoints !== 0) { percentage = Math.round(100 * (closedPoints / totalPoints)); }
             let visual_percentage = 0;
             //Visual hack for .current-progress bar
-            if (totalPoints !== 0) { visual_percentage = Math.round(98 * (closedPoints/totalPoints)); }
+            if (totalPoints !== 0) { visual_percentage = Math.round(98 * (closedPoints / totalPoints)); }
 
             return renderProgress($el, percentage, visual_percentage);
         });
@@ -133,7 +131,6 @@ export let SprintProgressBarDirective = function() {
 
     return {link};
 };
-
 
 //############################################################################
 //# Created-by display directive
@@ -151,20 +148,19 @@ export let CreatedByDisplayDirective = function($template, $compile, $translate,
     //     'owner'(ng-model)
     //   - scope.usersById object is required.
 
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         bindOnce($scope, $attrs.ngModel, function(model) {
             if (model != null) {
 
-                let avatar = avatarService.getAvatar(model.owner_extra_info);
+                const avatar = avatarService.getAvatar(model.owner_extra_info);
                 $scope.owner = model.owner_extra_info || {
-                    full_name_display: $translate.instant("COMMON.EXTERNAL_USER")
+                    full_name_display: $translate.instant("COMMON.EXTERNAL_USER"),
                 };
 
                 $scope.owner.avatar = avatar.url;
                 $scope.owner.bg = avatar.bg;
 
                 $scope.url = ($scope.owner != null ? $scope.owner.is_active : undefined) ? $navUrls.resolve("user-profile", {username: $scope.owner.username}) : "";
-
 
                 return $scope.date =  moment(model.created_date).format($translate.instant("COMMON.DATETIME"));
             }
@@ -178,10 +174,9 @@ export let CreatedByDisplayDirective = function($template, $compile, $translate,
         restrict: "EA",
         require: "ngModel",
         scope: true,
-        templateUrl: "common/components/created-by.html"
+        templateUrl: "common/components/created-by.html",
     };
 };
-
 
 export let UserDisplayDirective = function($template, $compile, $translate, $navUrls, avatarService){
     // Display the user information (full name and photo).
@@ -192,13 +187,13 @@ export let UserDisplayDirective = function($template, $compile, $translate, $nav
     // Requirements:
     //   - scope.usersById object is required.
 
-    let link = function($scope, $el, $attrs) {
-        let id = $attrs.tgUserId;
+    const link = function($scope, $el, $attrs) {
+        const id = $attrs.tgUserId;
         $scope.user = $scope.usersById[id] || {
-            full_name_display: $translate.instant("COMMON.EXTERNAL_USER")
+            full_name_display: $translate.instant("COMMON.EXTERNAL_USER"),
         };
 
-        let avatar = avatarService.getAvatar($scope.usersById[id] || null);
+        const avatar = avatarService.getAvatar($scope.usersById[id] || null);
 
         $scope.user.avatar = avatar.url;
         $scope.user.bg = avatar.bg;
@@ -212,10 +207,9 @@ export let UserDisplayDirective = function($template, $compile, $translate, $nav
         link,
         restrict: "EA",
         scope: true,
-        templateUrl: "common/components/user-display.html"
+        templateUrl: "common/components/user-display.html",
     };
 };
-
 
 //############################################################################
 //# Watchers directive
@@ -225,18 +219,18 @@ export let WatchersDirective = function($rootscope, $confirm, $repo, $modelTrans
     // You have to include a div with the tg-lb-watchers directive in the page
     // where use this directive
 
-    let link = function($scope, $el, $attrs, $model) {
-        let isEditable = () => __guard__($scope.project != null ? $scope.project.my_permissions : undefined, x => x.indexOf($attrs.requiredPerm)) !== -1;
+    const link = function($scope, $el, $attrs, $model) {
+        const isEditable = () => __guard__($scope.project != null ? $scope.project.my_permissions : undefined, (x) => x.indexOf($attrs.requiredPerm)) !== -1;
 
-        let save = function(watchers) {
-            let transform = $modelTransform.save(function(item) {
+        const save = function(watchers) {
+            const transform = $modelTransform.save(function(item) {
                 item.watchers = watchers;
 
                 return item;
             });
 
             transform.then(function() {
-                watchers = _.map(watchers, (watcherId:number) => $scope.usersById[watcherId]);
+                watchers = _.map(watchers, (watcherId: number) => $scope.usersById[watcherId]);
                 renderWatchers(watchers);
                 return $rootscope.$broadcast("object:updated");
             });
@@ -244,16 +238,16 @@ export let WatchersDirective = function($rootscope, $confirm, $repo, $modelTrans
             return transform.then(null, () => $confirm.notify("error"));
         };
 
-        let deleteWatcher = function(watcherIds) {
-            let transform = $modelTransform.save(function(item) {
+        const deleteWatcher = function(watcherIds) {
+            const transform = $modelTransform.save(function(item) {
                 item.watchers = watcherIds;
 
                 return item;
             });
 
             transform.then(function() {
-                let item = $modelTransform.getObj();
-                let watchers = _.map(item.watchers, (watcherId:number) => $scope.usersById[watcherId]);
+                const item = $modelTransform.getObj();
+                const watchers = _.map(item.watchers, (watcherId: number) => $scope.usersById[watcherId]);
                 renderWatchers(watchers);
                 return $rootscope.$broadcast("object:updated");
             });
@@ -264,7 +258,7 @@ export let WatchersDirective = function($rootscope, $confirm, $repo, $modelTrans
             });
         };
 
-        var renderWatchers = function(watchers) {
+        const renderWatchers = function(watchers) {
             $scope.watchers = watchers;
             return $scope.isEditable = isEditable();
         };
@@ -272,13 +266,13 @@ export let WatchersDirective = function($rootscope, $confirm, $repo, $modelTrans
         $el.on("click", ".js-delete-watcher", function(event) {
             event.preventDefault();
             if (!isEditable()) { return; }
-            let target = angular.element(event.currentTarget);
-            let watcherId = target.data("watcher-id");
+            const target = angular.element(event.currentTarget);
+            const watcherId = target.data("watcher-id");
 
-            let title = $translate.instant("COMMON.WATCHERS.TITLE_LIGHTBOX_DELETE_WARTCHER");
-            let message = $scope.usersById[watcherId].full_name_display;
+            const title = $translate.instant("COMMON.WATCHERS.TITLE_LIGHTBOX_DELETE_WARTCHER");
+            const message = $scope.usersById[watcherId].full_name_display;
 
-            return $confirm.askOnDelete(title, message).then(askResponse => {
+            return $confirm.askOnDelete(title, message).then((askResponse) => {
                 askResponse.finish();
 
                 let watcherIds = _.clone($model.$modelValue.watchers);
@@ -298,8 +292,8 @@ export let WatchersDirective = function($rootscope, $confirm, $repo, $modelTrans
 
         $scope.$watch($attrs.ngModel, function(item) {
             if ((item == null)) { return; }
-            let watchers = _.map(item.watchers, (watcherId:number) => $scope.usersById[watcherId]);
-            watchers = _.filter(watchers, it => !!it);
+            let watchers = _.map(item.watchers, (watcherId: number) => $scope.usersById[watcherId]);
+            watchers = _.filter(watchers, (it) => !!it);
 
             return renderWatchers(watchers);
         });
@@ -311,10 +305,9 @@ export let WatchersDirective = function($rootscope, $confirm, $repo, $modelTrans
         scope: true,
         templateUrl: "common/components/watchers.html",
         link,
-        require:"ngModel"
+        require: "ngModel",
     };
 };
-
 
 //############################################################################
 //# Assigned to directive
@@ -323,20 +316,20 @@ export let WatchersDirective = function($rootscope, $confirm, $repo, $modelTrans
 export let AssignedToDirective = function($rootscope, $confirm, $repo, $loading, $modelTransform, $template, $translate, $compile, $currentUserService, avatarService) {
     // You have to include a div with the tg-lb-assignedto directive in the page
     // where use this directive
-    let template = $template.get("common/components/assigned-to.html", true);
+    const template = $template.get("common/components/assigned-to.html", true);
 
-    let link = function($scope, $el, $attrs, $model) {
-        let isEditable = () => __guard__($scope.project != null ? $scope.project.my_permissions : undefined, x => x.indexOf($attrs.requiredPerm)) !== -1;
+    const link = function($scope, $el, $attrs, $model) {
+        const isEditable = () => __guard__($scope.project != null ? $scope.project.my_permissions : undefined, (x) => x.indexOf($attrs.requiredPerm)) !== -1;
 
-        let save = function(userId) {
-            let item = $model.$modelValue.clone();
+        const save = function(userId) {
+            const item = $model.$modelValue.clone();
             item.assigned_to = userId;
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target($el)
                 .start();
 
-            let transform = $modelTransform.save(function(item) {
+            const transform = $modelTransform.save(function(item) {
                 item.assigned_to = userId;
 
                 return item;
@@ -356,9 +349,9 @@ export let AssignedToDirective = function($rootscope, $confirm, $repo, $loading,
             return transform;
         };
 
-        var renderAssignedTo = function(assignedObject) {
+        const renderAssignedTo = function(assignedObject) {
             let fullName, isUnassigned;
-            let avatar = avatarService.getAvatar(assignedObject != null ? assignedObject.assigned_to_extra_info : undefined);
+            const avatar = avatarService.getAvatar(assignedObject != null ? assignedObject.assigned_to_extra_info : undefined);
             let bg = null;
 
             if ((assignedObject != null ? assignedObject.assigned_to : undefined) != null) {
@@ -370,18 +363,18 @@ export let AssignedToDirective = function($rootscope, $confirm, $repo, $loading,
                 isUnassigned = true;
             }
 
-            let isIocaine = assignedObject != null ? assignedObject.is_iocaine : undefined;
+            const isIocaine = assignedObject != null ? assignedObject.is_iocaine : undefined;
 
-            let ctx = {
+            const ctx = {
                 fullName,
                 avatar: avatar.url,
                 bg,
                 isUnassigned,
                 isEditable: isEditable(),
                 isIocaine,
-                fullNameVisible: !(isUnassigned && !$currentUserService.isAuthenticated())
+                fullNameVisible: !(isUnassigned && !$currentUserService.isAuthenticated()),
             };
-            let html = $compile(template(ctx))($scope);
+            const html = $compile(template(ctx))($scope);
             return $el.html(html);
         };
 
@@ -394,16 +387,16 @@ export let AssignedToDirective = function($rootscope, $confirm, $repo, $loading,
         $el.on("click", ".assign-to-me", function(event) {
             event.preventDefault();
             if (!isEditable()) { return; }
-            $model.$modelValue.assigned_to = $currentUserService.getUser().get('id');
-            return save($currentUserService.getUser().get('id'));
+            $model.$modelValue.assigned_to = $currentUserService.getUser().get("id");
+            return save($currentUserService.getUser().get("id"));
         });
 
         $el.on("click", ".remove-user", function(event) {
             event.preventDefault();
             if (!isEditable()) { return; }
-            let title = $translate.instant("COMMON.ASSIGNED_TO.CONFIRM_UNASSIGNED");
+            const title = $translate.instant("COMMON.ASSIGNED_TO.CONFIRM_UNASSIGNED");
 
-            return $confirm.ask(title).then(response => {
+            return $confirm.ask(title).then((response) => {
                 response.finish();
                 $model.$modelValue.assigned_to  = null;
                 return save(null);
@@ -416,41 +409,40 @@ export let AssignedToDirective = function($rootscope, $confirm, $repo, $loading,
             return save(userId);
         });
 
-        $scope.$watch($attrs.ngModel, instance => renderAssignedTo(instance));
+        $scope.$watch($attrs.ngModel, (instance) => renderAssignedTo(instance));
 
         return $scope.$on("$destroy", () => $el.off());
     };
 
     return {
         link,
-        require:"ngModel"
+        require: "ngModel",
     };
 };
-
 
 //############################################################################
 //# Block Button directive
 //############################################################################
 
 export let BlockButtonDirective = function($rootscope, $loading, $template) {
-    let template = $template.get("common/components/block-button.html");
+    const template = $template.get("common/components/block-button.html");
 
-    let link = function($scope, $el, $attrs, $model) {
-        let isEditable = () => $scope.project.my_permissions.indexOf("modify_us") !== -1;
+    const link = function($scope, $el, $attrs, $model) {
+        const isEditable = () => $scope.project.my_permissions.indexOf("modify_us") !== -1;
 
         $scope.$watch($attrs.ngModel, function(item) {
             if (!item) { return; }
 
             if (isEditable()) {
-                $el.find('.item-block').addClass('editable');
+                $el.find(".item-block").addClass("editable");
             }
 
             if (item.is_blocked) {
-                $el.find('.item-block').removeClass('is-active');
-                return $el.find('.item-unblock').addClass('is-active');
+                $el.find(".item-block").removeClass("is-active");
+                return $el.find(".item-unblock").addClass("is-active");
             } else {
-                $el.find('.item-block').addClass('is-active');
-                return $el.find('.item-unblock').removeClass('is-active');
+                $el.find(".item-block").addClass("is-active");
+                return $el.find(".item-unblock").removeClass("is-active");
             }
         });
 
@@ -461,11 +453,11 @@ export let BlockButtonDirective = function($rootscope, $loading, $template) {
 
         $el.on("click", ".item-unblock", function(event) {
             event.preventDefault();
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target($el.find(".item-unblock"))
                 .start();
 
-            let finish = () => currentLoading.finish();
+            const finish = () => currentLoading.finish();
 
             return $rootscope.$broadcast("unblock", $model.$modelValue, finish);
         });
@@ -477,19 +469,18 @@ export let BlockButtonDirective = function($rootscope, $loading, $template) {
         link,
         restrict: "EA",
         require: "ngModel",
-        template
+        template,
     };
 };
-
 
 //############################################################################
 //# Delete Button directive
 //############################################################################
 
 export let DeleteButtonDirective = function($log, $repo, $confirm, $location, $template) {
-    let template = $template.get("common/components/delete-button.html");
+    const template = $template.get("common/components/delete-button.html");
 
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
         if (!$attrs.onDeleteGoToUrl) {
             return $log.error("DeleteButtonDirective requires on-delete-go-to-url set in scope.");
         }
@@ -498,14 +489,14 @@ export let DeleteButtonDirective = function($log, $repo, $confirm, $location, $t
         }
 
         $el.on("click", ".button-delete", function(event) {
-            let title = $attrs.onDeleteTitle;
-            let subtitle = $model.$modelValue.subject;
+            const title = $attrs.onDeleteTitle;
+            const subtitle = $model.$modelValue.subject;
 
-            return $confirm.askOnDelete(title, subtitle).then(askResponse => {
-                let promise = $repo.remove($model.$modelValue);
+            return $confirm.askOnDelete(title, subtitle).then((askResponse) => {
+                const promise = $repo.remove($model.$modelValue);
                 promise.then(() => {
                     askResponse.finish();
-                    let url = $scope.$eval($attrs.onDeleteGoToUrl);
+                    const url = $scope.$eval($attrs.onDeleteGoToUrl);
                     return $location.path(url);
                 });
                 return promise.then(null, () => {
@@ -522,33 +513,32 @@ export let DeleteButtonDirective = function($log, $repo, $confirm, $location, $t
         link,
         restrict: "EA",
         require: "ngModel",
-        template
+        template,
     };
 };
-
 
 //############################################################################
 //# Editable subject directive
 //############################################################################
 
 export let EditableSubjectDirective = function($rootscope, $repo, $confirm, $loading, $modelTransform, $template) {
-    let template = $template.get("common/components/editable-subject.html");
+    const template = $template.get("common/components/editable-subject.html");
 
-    let link = function($scope, $el, $attrs, $model) {
+    const link = function($scope, $el, $attrs, $model) {
 
         $scope.$on("object:updated", function() {
-            $el.find('.edit-subject').hide();
-            return $el.find('.view-subject').show();
+            $el.find(".edit-subject").hide();
+            return $el.find(".view-subject").show();
         });
 
-        let isEditable = () => $scope.project.my_permissions.indexOf($attrs.requiredPerm) !== -1;
+        const isEditable = () => $scope.project.my_permissions.indexOf($attrs.requiredPerm) !== -1;
 
-        let save = function(subject) {
-            let currentLoading = $loading()
-                .target($el.find('.save-container'))
+        const save = function(subject) {
+            const currentLoading = $loading()
+                .target($el.find(".save-container"))
                 .start();
 
-            let transform = $modelTransform.save(function(item) {
+            const transform = $modelTransform.save(function(item) {
 
                 item.subject  = subject;
 
@@ -558,8 +548,8 @@ export let EditableSubjectDirective = function($rootscope, $repo, $confirm, $loa
             transform.then(() => {
                 $confirm.notify("success");
                 $rootscope.$broadcast("object:updated");
-                $el.find('.edit-subject').hide();
-                return $el.find('.view-subject').show();
+                $el.find(".edit-subject").hide();
+                return $el.find(".view-subject").show();
             });
 
             transform.then(null, () => $confirm.notify("error"));
@@ -571,53 +561,51 @@ export let EditableSubjectDirective = function($rootscope, $repo, $confirm, $loa
 
         $el.click(function() {
             if (!isEditable()) { return; }
-            $el.find('.edit-subject').show();
-            $el.find('.view-subject').hide();
-            return $el.find('input').focus();
+            $el.find(".edit-subject").show();
+            $el.find(".view-subject").hide();
+            return $el.find("input").focus();
         });
 
         $el.on("click", ".save", function(e) {
             e.preventDefault();
 
-            let { subject } = $scope.item;
+            const { subject } = $scope.item;
             return save(subject);
         });
 
         $el.on("keyup", "input", function(event) {
             if (event.keyCode === 13) {
-                let { subject } = $scope.item;
+                const { subject } = $scope.item;
                 return save(subject);
             } else if (event.keyCode === 27) {
                 $scope.$apply(() => $model.$modelValue.revert());
 
-                $el.find('.edit-subject').hide();
-                return $el.find('.view-subject').show();
+                $el.find(".edit-subject").hide();
+                return $el.find(".view-subject").show();
             }
         });
 
-        $el.find('.edit-subject').hide();
+        $el.find(".edit-subject").hide();
 
         $scope.$watch($attrs.ngModel, function(value) {
             if (!value) { return; }
             $scope.item = value;
 
             if (!isEditable()) {
-                return $el.find('.view-subject .edit').remove();
+                return $el.find(".view-subject .edit").remove();
             }
         });
 
         return $scope.$on("$destroy", () => $el.off());
     };
 
-
     return {
         link,
         restrict: "EA",
         require: "ngModel",
-        template
+        template,
     };
 };
-
 
 //############################################################################
 //# Common list directives
@@ -627,49 +615,44 @@ export let EditableSubjectDirective = function($rootscope, $repo, $confirm, $loa
 //############################################################################
 
 export let ListItemEpicStatusDirective = function() {
-    let link = function($scope, $el, $attrs) {
-        let epic = $scope.$eval($attrs.tgListitemEpicStatus);
-        return bindOnce($scope, "epicStatusById", epicStatusById => $el.html(epicStatusById[epic.status].name));
+    const link = function($scope, $el, $attrs) {
+        const epic = $scope.$eval($attrs.tgListitemEpicStatus);
+        return bindOnce($scope, "epicStatusById", (epicStatusById) => $el.html(epicStatusById[epic.status].name));
     };
 
     return {link};
 };
-
 
 export let ListItemUsStatusDirective = function() {
-    let link = function($scope, $el, $attrs) {
-        let us = $scope.$eval($attrs.tgListitemUsStatus);
-        return bindOnce($scope, "usStatusById", usStatusById => $el.html(usStatusById[us.status].name));
+    const link = function($scope, $el, $attrs) {
+        const us = $scope.$eval($attrs.tgListitemUsStatus);
+        return bindOnce($scope, "usStatusById", (usStatusById) => $el.html(usStatusById[us.status].name));
     };
 
     return {link};
 };
-
-
 
 export let ListItemTaskStatusDirective = function() {
-    let link = function($scope, $el, $attrs) {
-        let task = $scope.$eval($attrs.tgListitemTaskStatus);
-        return bindOnce($scope, "taskStatusById", taskStatusById => $el.html(taskStatusById[task.status].name));
+    const link = function($scope, $el, $attrs) {
+        const task = $scope.$eval($attrs.tgListitemTaskStatus);
+        return bindOnce($scope, "taskStatusById", (taskStatusById) => $el.html(taskStatusById[task.status].name));
     };
 
     return {link};
 };
 
-
-
 export let ListItemAssignedtoDirective = function($template, $translate, avatarService) {
-    let template = $template.get("common/components/list-item-assigned-to-avatar.html", true);
+    const template = $template.get("common/components/list-item-assigned-to-avatar.html", true);
 
-    let link = ($scope, $el, $attrs) =>
+    const link = ($scope, $el, $attrs) =>
         bindOnce($scope, "usersById", function(usersById) {
-            let item = $scope.$eval($attrs.tgListitemAssignedto);
-            let ctx:any = {
+            const item = $scope.$eval($attrs.tgListitemAssignedto);
+            const ctx: any = {
                 name: $translate.instant("COMMON.ASSIGNED_TO.NOT_ASSIGNED"),
             };
 
-            let member = usersById[item.assigned_to];
-            let avatar = avatarService.getAvatar(member);
+            const member = usersById[item.assigned_to];
+            const avatar = avatarService.getAvatar(member);
 
             ctx.imgurl = avatar.url;
             ctx.bg = avatar.bg;
@@ -685,101 +668,95 @@ export let ListItemAssignedtoDirective = function($template, $translate, avatarS
     return {link};
 };
 
-
-
 export let ListItemIssueStatusDirective = function() {
-    let link = function($scope, $el, $attrs) {
-        let issue = $scope.$eval($attrs.tgListitemIssueStatus);
-        return bindOnce($scope, "issueStatusById", issueStatusById => $el.html(issueStatusById[issue.status].name));
+    const link = function($scope, $el, $attrs) {
+        const issue = $scope.$eval($attrs.tgListitemIssueStatus);
+        return bindOnce($scope, "issueStatusById", (issueStatusById) => $el.html(issueStatusById[issue.status].name));
     };
 
     return {link};
 };
 
-
 export let ListItemTypeDirective = function() {
-    let link = function($scope, $el, $attrs) {
-        let render = function(issueTypeById, issue) {
-            let type = issueTypeById[issue.type];
-            let domNode = $el.find(".level");
+    const link = function($scope, $el, $attrs) {
+        const render = function(issueTypeById, issue) {
+            const type = issueTypeById[issue.type];
+            const domNode = $el.find(".level");
             domNode.css("background-color", type.color);
             return domNode.attr("title", type.name);
         };
 
         bindOnce($scope, "issueTypeById", function(issueTypeById) {
-            let issue = $scope.$eval($attrs.tgListitemType);
+            const issue = $scope.$eval($attrs.tgListitemType);
             return render(issueTypeById, issue);
         });
 
-        return $scope.$watch($attrs.tgListitemType, issue => render($scope.issueTypeById, issue));
+        return $scope.$watch($attrs.tgListitemType, (issue) => render($scope.issueTypeById, issue));
     };
 
     return {
         link,
-        templateUrl: "common/components/level.html"
+        templateUrl: "common/components/level.html",
     };
 };
 
-
 export let ListItemPriorityDirective = function() {
-    let link = function($scope, $el, $attrs) {
-        let render = function(priorityById, issue) {
-            let priority = priorityById[issue.priority];
-            let domNode = $el.find(".level");
+    const link = function($scope, $el, $attrs) {
+        const render = function(priorityById, issue) {
+            const priority = priorityById[issue.priority];
+            const domNode = $el.find(".level");
             domNode.css("background-color", priority.color);
             return domNode.attr("title", priority.name);
         };
 
         bindOnce($scope, "priorityById", function(priorityById) {
-            let issue = $scope.$eval($attrs.tgListitemPriority);
+            const issue = $scope.$eval($attrs.tgListitemPriority);
             return render(priorityById, issue);
         });
 
-        return $scope.$watch($attrs.tgListitemPriority, issue => render($scope.priorityById, issue));
+        return $scope.$watch($attrs.tgListitemPriority, (issue) => render($scope.priorityById, issue));
     };
 
     return {
         link,
-        templateUrl: "common/components/level.html"
+        templateUrl: "common/components/level.html",
     };
 };
 
-
 export let ListItemSeverityDirective = function() {
-    let link = function($scope, $el, $attrs) {
-        let render = function(severityById, issue) {
-            let severity = severityById[issue.severity];
-            let domNode = $el.find(".level");
+    const link = function($scope, $el, $attrs) {
+        const render = function(severityById, issue) {
+            const severity = severityById[issue.severity];
+            const domNode = $el.find(".level");
             domNode.css("background-color", severity.color);
             return domNode.attr("title", severity.name);
         };
 
         bindOnce($scope, "severityById", function(severityById) {
-            let issue = $scope.$eval($attrs.tgListitemSeverity);
+            const issue = $scope.$eval($attrs.tgListitemSeverity);
             return render(severityById, issue);
         });
 
-        return $scope.$watch($attrs.tgListitemSeverity, issue => render($scope.severityById, issue));
+        return $scope.$watch($attrs.tgListitemSeverity, (issue) => render($scope.severityById, issue));
     };
 
     return {
         link,
-        templateUrl: "common/components/level.html"
+        templateUrl: "common/components/level.html",
     };
 };
-
 
 //############################################################################
 //# Progress bar directive
 //############################################################################
 
 export let TgProgressBarDirective = function($template) {
-    let template = $template.get("common/components/progress-bar.html", true);
+    const template = $template.get("common/components/progress-bar.html", true);
 
-    let render = (el, percentage) => el.html(template({percentage}));
+    const render = (el, percentage) => el.html(template({percentage}));
 
-    let link = function($scope, $el, $attrs) {
-        let element = angular.element($el);
+    const link = function($scope, $el, $attrs) {
+        const element = angular.element($el);
 
         $scope.$watch($attrs.tgProgressBar, function(percentage) {
             percentage = _.max([0 , percentage]);
@@ -793,7 +770,6 @@ export let TgProgressBarDirective = function($template) {
     return {link};
 };
 
-
 function __guard__(value, transform) {
-  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+  return (typeof value !== "undefined" && value !== null) ? transform(value) : undefined;
 }

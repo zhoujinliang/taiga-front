@@ -22,18 +22,18 @@
  * File: modules/base/conf.coffee
  */
 
-import * as _ from "lodash"
-import {Injectable} from "@angular/core"
+import {Injectable} from "@angular/core";
+import * as _ from "lodash";
 
 @Injectable()
 export class ConfigurationService {
     config: any;
 
     constructor() {
-        this.config = (<any>window).taigaConfig;
+        this.config = (window as any).taigaConfig;
     }
 
-    get(key, defaultValue=null) {
+    get(key, defaultValue= null) {
         if (_.has(this.config, key)) {
             return this.config[key];
         }

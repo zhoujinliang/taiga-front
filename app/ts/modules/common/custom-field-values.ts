@@ -22,67 +22,64 @@
  * File: modules/common/custom-field-values.coffee
  */
 
-import {bindOnce, debounce, bindMethods} from "../../../../../libs/utils"
-import {generateHash} from "../../../ts/app"
-import {Controller} from "../../../ts/classes"
-import * as Pikaday from "pikaday"
-import * as _ from "lodash"
-import * as angular from "angular"
-import * as moment from "moment"
+import * as angular from "angular";
+import * as _ from "lodash";
+import * as moment from "moment";
+import * as Pikaday from "pikaday";
+import {bindMethods, bindOnce, debounce} from "../../../../../libs/utils";
+import {generateHash} from "../../../ts/app";
+import {Controller} from "../../../ts/classes";
 
 // Custom attributes types (see taiga-back/taiga/projects/custom_attributes/choices.py)
-let TEXT_TYPE = "text";
-let RICHTEXT_TYPE = "url";
-let MULTILINE_TYPE = "multiline";
-let DATE_TYPE = "date";
-let URL_TYPE = "url";
+const TEXT_TYPE = "text";
+const RICHTEXT_TYPE = "url";
+const MULTILINE_TYPE = "multiline";
+const DATE_TYPE = "date";
+const URL_TYPE = "url";
 
-
-let TYPE_CHOICES = [
+const TYPE_CHOICES = [
     {
         key: TEXT_TYPE,
-        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_TEXT"
+        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_TEXT",
     },
     {
         key: MULTILINE_TYPE,
-        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_MULTI"
+        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_MULTI",
     },
     {
         key: DATE_TYPE,
-        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_DATE"
+        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_DATE",
     },
     {
         key: URL_TYPE,
-        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_URL"
+        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_URL",
     },
     {
         key: RICHTEXT_TYPE,
-        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_RICHTEXT"
-    }
+        name: "ADMIN.CUSTOM_FIELDS.FIELD_TYPE_RICHTEXT",
+    },
 ];
 
-
-
 class CustomAttributesValuesController extends Controller {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    rs:any
-    confirm:any
-    q:any
-    type:any
-    objectId:any
-    projectId:any
-    customAttributes:any
-    customAttributesValues:any
-    project:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    rs: any;
+    confirm: any;
+    q: any;
+    type: any;
+    objectId: any;
+    projectId: any;
+    customAttributes: any;
+    customAttributesValues: any;
+    project: any;
 
     static initClass() {
         this.$inject = ["$scope", "$rootScope", "$tgRepo", "$tgResources", "$tgConfirm", "$q"];
     }
 
     constructor(scope, rootscope, repo, rs, confirm, q) {
-        super()
+        super();
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -106,7 +103,7 @@ class CustomAttributesValuesController extends Controller {
 
     loadCustomAttributesValues() {
         if (!this.objectId) { return this.customAttributesValues; }
-        return this.rs.customAttributesValues[`get_${this.type}`](this.objectId).then(customAttributesValues => {
+        return this.rs.customAttributesValues[`get_${this.type}`](this.objectId).then((customAttributesValues) => {
             this.customAttributes = this.project[`${this.type}_custom_attributes`];
             this.customAttributesValues = customAttributesValues;
             return customAttributesValues;
@@ -114,23 +111,23 @@ class CustomAttributesValuesController extends Controller {
     }
 
     getAttributeValue(attribute) {
-        let attributeValue = _.clone(attribute);
+        const attributeValue = _.clone(attribute);
         attributeValue.value = this.customAttributesValues.attributes_values[attribute.id];
         return attributeValue;
     }
 
     updateAttributeValue(attributeValue) {
-        let onSuccess = () => {
+        const onSuccess = () => {
             return this.rootscope.$broadcast("custom-attributes-values:edit");
         };
 
-        let onError = response => {
+        const onError = (response) => {
             this.confirm.notify("error");
             return this.q.reject();
         };
 
         // We need to update the full array so angular understand the model is modified
-        let attributesValues = _.cloneDeep(this.customAttributesValues.attributes_values);
+        const attributesValues = _.cloneDeep(this.customAttributesValues.attributes_values);
         attributesValues[attributeValue.id] = attributeValue.value;
         this.customAttributesValues.attributes_values = attributesValues;
         this.customAttributesValues.id = this.objectId;
@@ -139,16 +136,15 @@ class CustomAttributesValuesController extends Controller {
 }
 CustomAttributesValuesController.initClass();
 
-
 export let CustomAttributesValuesDirective = function($templates, $storage) {
-    let template = $templates.get("custom-attributes/custom-attributes-values.html", true);
+    const template = $templates.get("custom-attributes/custom-attributes-values.html", true);
 
-    let collapsedHash = type => generateHash(["custom-attributes-collapsed", type]);
+    const collapsedHash = (type) => generateHash(["custom-attributes-collapsed", type]);
 
-    let link = function($scope, $el, $attrs, $ctrls) {
-        let $ctrl = $ctrls[0];
-        let $model = $ctrls[1];
-        let hash = collapsedHash($attrs.type);
+    const link = function($scope, $el, $attrs, $ctrls) {
+        const $ctrl = $ctrls[0];
+        const $model = $ctrls[1];
+        const hash = collapsedHash($attrs.type);
         $scope.collapsed = $storage.get(hash) || false;
 
         bindOnce($scope, $attrs.ngModel, function(value) {
@@ -164,9 +160,9 @@ export let CustomAttributesValuesDirective = function($templates, $storage) {
         return $scope.$on("$destroy", () => $el.off());
     };
 
-    let templateFn = ($el, $attrs) =>
+    const templateFn = ($el, $attrs) =>
         template({
-            requiredEditionPerm: $attrs.requiredEditionPerm
+            requiredEditionPerm: $attrs.requiredEditionPerm,
         })
     ;
 
@@ -177,37 +173,36 @@ export let CustomAttributesValuesDirective = function($templates, $storage) {
         restrict: "AE",
         scope: true,
         link,
-        template: templateFn
+        template: templateFn,
     };
 };
 
-
 export let CustomAttributeValueDirective = function($template, $selectedText, $compile, $translate, datePickerConfigService, wysiwygService) {
-    let template = $template.get("custom-attributes/custom-attribute-value.html", true);
-    let templateEdit = $template.get("custom-attributes/custom-attribute-value-edit.html", true);
+    const template = $template.get("custom-attributes/custom-attribute-value.html", true);
+    const templateEdit = $template.get("custom-attributes/custom-attribute-value-edit.html", true);
 
-    let link = function($scope, $el, $attrs, $ctrl) {
-        let prettyDate = $translate.instant("COMMON.PICKERDATE.FORMAT");
+    const link = function($scope, $el, $attrs, $ctrl) {
+        const prettyDate = $translate.instant("COMMON.PICKERDATE.FORMAT");
 
-        let render = function(attributeValue, edit=false) {
+        const render = function(attributeValue, edit= false) {
             let html, value;
             if ((attributeValue.type === DATE_TYPE) && attributeValue.value) {
                 value = moment(attributeValue.value, "YYYY-MM-DD").format(prettyDate);
             } else {
                 ({ value } = attributeValue);
             }
-            let editable = isEditable();
+            const editable = isEditable();
 
-            let ctx = {
+            const ctx = {
                 id: attributeValue.id,
                 name: attributeValue.name,
                 description: attributeValue.description,
                 value,
                 isEditable: editable,
-                type: attributeValue.type
+                type: attributeValue.type,
             };
 
-            let scope = $scope.$new();
+            const scope = $scope.$new();
             scope.attributeHtml = wysiwygService.getHTML(value);
 
             if (editable && (edit || !value)) {
@@ -218,15 +213,15 @@ export let CustomAttributeValueDirective = function($template, $selectedText, $c
 
                 if (attributeValue.type === DATE_TYPE) {
                     let selectedDate;
-                    let datePickerConfig = datePickerConfigService.get();
+                    const datePickerConfig = datePickerConfigService.get();
                     _.merge(datePickerConfig, {
                         field: $el.find("input[name=value]")[0],
-                        onSelect: date => {
+                        onSelect: (date) => {
                             return selectedDate = date;
                         },
                         onOpen: () => {
-                            if (typeof selectedDate !== 'undefined' && selectedDate !== null) { return $el.picker.setDate(selectedDate); }
-                        }
+                            if (typeof selectedDate !== "undefined" && selectedDate !== null) { return $el.picker.setDate(selectedDate); }
+                        },
                     });
                     return $el.picker = new Pikaday(datePickerConfig);
                 }
@@ -237,9 +232,9 @@ export let CustomAttributeValueDirective = function($template, $selectedText, $c
             }
         };
 
-        var isEditable = function() {
-            let permissions = $scope.project.my_permissions;
-            let { requiredEditionPerm } = $attrs;
+        const isEditable = function() {
+            const permissions = $scope.project.my_permissions;
+            const { requiredEditionPerm } = $attrs;
             return permissions.indexOf(requiredEditionPerm) > -1;
         };
 
@@ -251,19 +246,19 @@ export let CustomAttributeValueDirective = function($template, $selectedText, $c
             });
         };
 
-        $scope.cancelCustomRichText= () => {
+        $scope.cancelCustomRichText = () => {
             render(attributeValue, false);
 
             return null;
         };
 
-        let submit = debounce(2000, event => {
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
-            let form = $el.find("form").checksley();
+            const form = $el.find("form").checksley();
             if (!form.validate()) { return; }
 
-            let input = $el.find("input[name=value], textarea[name='value']");
+            const input = $el.find("input[name=value], textarea[name='value']");
             attributeValue.value = input.val();
             if (attributeValue.type === DATE_TYPE) {
                 if (moment(attributeValue.value, prettyDate).isValid()) {
@@ -272,14 +267,14 @@ export let CustomAttributeValueDirective = function($template, $selectedText, $c
             }
 
             return $scope.$apply(() =>
-                $ctrl.updateAttributeValue(attributeValue).then(() => render(attributeValue, false))
+                $ctrl.updateAttributeValue(attributeValue).then(() => render(attributeValue, false)),
             );
         });
 
-        let setFocusAndSelectOnInputField = () => $el.find("input[name='value'], textarea[name='value']").focus().select();
+        const setFocusAndSelectOnInputField = () => $el.find("input[name='value'], textarea[name='value']").focus().select();
 
         // Bootstrap
-        var attributeValue = $scope.$eval($attrs.tgCustomAttributeValue);
+        const attributeValue = $scope.$eval($attrs.tgCustomAttributeValue);
         if ((attributeValue.value === null) || (attributeValue.value === undefined)) {
             attributeValue.value = "";
         }
@@ -288,7 +283,7 @@ export let CustomAttributeValueDirective = function($template, $selectedText, $c
 
         //# Actions (on view mode)
 
-        $el.on("click", ".js-value-view-mode span a", event => event.stopPropagation());
+        $el.on("click", ".js-value-view-mode span a", (event) => event.stopPropagation());
 
         $el.on("click", ".js-value-view-mode", function() {
             if (!isEditable()) { return; }
@@ -322,6 +317,6 @@ export let CustomAttributeValueDirective = function($template, $selectedText, $c
     return {
         link,
         require: "^tgCustomAttributesValues",
-        restrict: "AE"
+        restrict: "AE",
     };
 };

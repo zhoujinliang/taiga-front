@@ -22,14 +22,14 @@
  * File: modules/taskboard.coffee
  */
 
-import * as angular from "angular"
-import * as main from "./main"
-import {SprintGraphDirective} from "./charts"
-import * as lightboxes from "./lightboxes"
-import {TaskboardSortableDirective} from "./sortable"
-import {TaskboardTasksService} from "./taskboard-tasks"
+import * as angular from "angular";
+import {SprintGraphDirective} from "./charts";
+import * as lightboxes from "./lightboxes";
+import * as main from "./main";
+import {TaskboardSortableDirective} from "./sortable";
+import {TaskboardTasksService} from "./taskboard-tasks";
 
-let module = angular.module("taigaTaskboard", []);
+const module = angular.module("taigaTaskboard", []);
 module.controller("TaskboardController", main.TaskboardController);
 module.directive("tgTaskboard", ["$rootScope", main.TaskboardDirective]);
 module.directive("tgTaskboardSquishColumn", ["$tgResources", main.TaskboardSquishColumnDirective]);

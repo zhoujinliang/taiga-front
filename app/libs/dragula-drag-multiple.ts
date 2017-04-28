@@ -1,92 +1,92 @@
-import * as _ from "lodash"
+import * as _ from "lodash";
 
-export var dragMultiple:any = {};
+export let dragMultiple: any = {};
 
-var multipleSortableClass = 'ui-multisortable-multiple';
-var mainClass = 'main-drag-item';
-var inProgress = false;
-var removeEventFn = null;
+const multipleSortableClass = "ui-multisortable-multiple";
+const mainClass = "main-drag-item";
+let inProgress = false;
+let removeEventFn = null;
 
-var reset = function(elm) {
+const reset = function(elm) {
     $(elm)
-        .removeAttr('style')
-        .removeClass('tg-backlog-us-mirror')
-        .removeClass('backlog-us-mirror')
-        .data('dragMultipleIndex', null)
-        .data('dragMultipleActive', false);
+        .removeAttr("style")
+        .removeClass("tg-backlog-us-mirror")
+        .removeClass("backlog-us-mirror")
+        .data("dragMultipleIndex", null)
+        .data("dragMultipleActive", false);
 };
 
-var sort = function(positions) {
-    var current = dragMultiple.items.elm;
+const sort = function(positions) {
+    const current = dragMultiple.items.elm;
 
     positions.after.reverse();
 
-    $.each(positions.after, function () {
+    $.each(positions.after, function() {
         reset(this);
         current.after(this);
     });
 
-    $.each(positions.before, function () {
+    $.each(positions.before, function() {
         reset(this);
         current.before(this);
     });
 };
 
-var drag = function() {
-    var current = dragMultiple.items.elm;
-    var container = dragMultiple.items.container;
+const drag = function() {
+    const current = dragMultiple.items.elm;
+    const container = dragMultiple.items.container;
 
-    var shadow = dragMultiple.items.shadow;
+    const shadow = dragMultiple.items.shadow;
 
     // following the drag element
-    var currentLeft = shadow.position().left;
-    var currentTop = shadow.position().top;
-    var height = shadow.outerHeight();
+    const currentLeft = shadow.position().left;
+    const currentTop = shadow.position().top;
+    const height = shadow.outerHeight();
 
     _.forEach(dragMultiple.items.draggingItems, function(elm, index) {
-        var elmIndex = parseInt(elm.data('dragMultipleIndex'), 10);
-        var top = currentTop + (elmIndex * height);
+        const elmIndex = parseInt(elm.data("dragMultipleIndex"), 10);
+        const top = currentTop + (elmIndex * height);
 
         elm
             .css({
-                top: top,
-                left: currentLeft
+                top,
+                left: currentLeft,
             });
     });
 };
 
-var stop = function() {
+const stop = function() {
     inProgress = false;
 
     refreshOriginal();
 
-    var current = dragMultiple.items.elm;
-    var container = dragMultiple.items.container;
+    const current = dragMultiple.items.elm;
+    const container = dragMultiple.items.container;
 
-    document.documentElement.removeEventListener('mousemove', removeEventFn);
+    document.documentElement.removeEventListener("mousemove", removeEventFn);
 
     // reset
     dragMultiple.items = {};
 
-    $('.' + mainClass).removeClass(mainClass);
-    $('.tg-backlog-us-mirror').remove();
-    $('.backlog-us-mirror').removeClass('backlog-us-mirror');
+    $("." + mainClass).removeClass(mainClass);
+    $(".tg-backlog-us-mirror").remove();
+    $(".backlog-us-mirror").removeClass("backlog-us-mirror");
 
-    $('.tg-backlog-us-dragging')
-        .removeClass('tg-backlog-us-dragging')
+    $(".tg-backlog-us-dragging")
+        .removeClass("tg-backlog-us-dragging")
         .show();
 
-    return $('.' + multipleSortableClass);
+    return $("." + multipleSortableClass);
 };
 
-var refreshOriginal = function() {
-    var index = parseInt(dragMultiple.items.elm.data('dragMultipleIndex'), 10);
+const refreshOriginal = function() {
+    const index = parseInt(dragMultiple.items.elm.data("dragMultipleIndex"), 10);
 
-    var after = [];
-    var before = [];
+    const after = [];
+    const before = [];
 
     _.forEach(dragMultiple.items.draggedItemsOriginal, function(item) {
-        if (parseInt($(item).data('dragMultipleIndex'), 10) > index) {
+        if (parseInt($(item).data("dragMultipleIndex"), 10) > index) {
             after.push(item);
         } else {
             before.push(item);
@@ -104,9 +104,8 @@ var refreshOriginal = function() {
     });
 };
 
-
-var isMultiple = function(elm, container) {
-    var items = $(container).find('.' + multipleSortableClass);
+const isMultiple = function(elm, container) {
+    const items = $(container).find("." + multipleSortableClass);
 
     if (!$(elm).hasClass(multipleSortableClass) || !(items.length > 1)) {
         return false;
@@ -115,12 +114,12 @@ var isMultiple = function(elm, container) {
     return true;
 };
 
-var setIndex = function(items) {
-    var before = [];
-    var after = [];
-    var mainFound = false;
+const setIndex = function(items) {
+    const before = [];
+    const after = [];
+    let mainFound = false;
     _.forEach(items, function(item, index) {
-        if ($(item).data('dragMultipleIndex') === 0) {
+        if ($(item).data("dragMultipleIndex") === 0) {
             mainFound = true;
             return;
         }
@@ -135,39 +134,39 @@ var setIndex = function(items) {
     before.reverse();
 
     _.forEach(after, function(item, index)  {
-        $(item).data('dragMultipleIndex', index + 1);
+        $(item).data("dragMultipleIndex", index + 1);
     });
 
     _.forEach(before, function(item, index)  {
-        $(item).data('dragMultipleIndex', -index - 1);
+        $(item).data("dragMultipleIndex", -index - 1);
     });
 };
 
 dragMultiple.prepare = function(elm, container) {
     inProgress = true;
 
-    var items:any = $(container).find('.' + multipleSortableClass);
+    let items: any = $(container).find("." + multipleSortableClass);
 
     _.forEach(items, function(item, index) {
         $(item)
-            .data('position', null)
-            .data('dragMultipleIndex', null);
+            .data("position", null)
+            .data("dragMultipleIndex", null);
     });
 
     $(elm)
-        .data('dragmultiple:originalPosition', $(elm).position())
-        .data('dragMultipleActive', true);
+        .data("dragmultiple:originalPosition", $(elm).position())
+        .data("dragMultipleActive", true);
 
     dragMultiple.items = {};
 
     dragMultiple.items.elm = $(elm);
     dragMultiple.items.container = $(container);
 
-    dragMultiple.items.elm.data('dragMultipleIndex', 0);
+    dragMultiple.items.elm.data("dragMultipleIndex", 0);
 
     setIndex(items);
 
-    dragMultiple.items.shadow = $('.gu-mirror');
+    dragMultiple.items.shadow = $(".gu-mirror");
 
     dragMultiple.items.elm.addClass(mainClass);
 
@@ -177,25 +176,25 @@ dragMultiple.prepare = function(elm, container) {
 
     dragMultiple.items.draggedItemsOriginal = items;
 
-    var itemsCloned = _.map(items, function (item) {
-        let clone = $(item).clone(true);
+    const itemsCloned = _.map(items, function(item) {
+        const clone = $(item).clone(true);
 
         clone
-            .addClass('backlog-us-mirror')
-            .addClass('tg-backlog-us-mirror')
-            .data('dragmultiple:originalPosition', $(item).position())
-            .data('dragMultipleActive', true)
+            .addClass("backlog-us-mirror")
+            .addClass("tg-backlog-us-mirror")
+            .data("dragmultiple:originalPosition", $(item).position())
+            .data("dragMultipleActive", true)
             .css({
-                zIndex: '9999',
-                opacity: '0.8',
-                position: 'fixed',
+                zIndex: "9999",
+                opacity: "0.8",
+                position: "fixed",
                 width: dragMultiple.items.elm.outerWidth(),
-                height: dragMultiple.items.elm.outerHeight()
+                height: dragMultiple.items.elm.outerHeight(),
             });
 
         $(item)
             .hide()
-            .addClass('tg-backlog-us-dragging');
+            .addClass("tg-backlog-us-dragging");
 
         return clone;
     });
@@ -207,7 +206,7 @@ dragMultiple.prepare = function(elm, container) {
 
 dragMultiple.start = function(item, container) {
     if (isMultiple(item, container)) {
-        document.documentElement.addEventListener('mousemove', function() {
+        document.documentElement.addEventListener("mousemove", function() {
             if (!inProgress) {
                 dragMultiple.prepare(item, container);
             }

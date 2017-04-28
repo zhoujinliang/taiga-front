@@ -22,27 +22,27 @@
  * File: modules/user-settings/main.coffee
  */
 
-import {debounce} from "../../libs/utils"
-import {checksley} from "../../libs/checksley"
-import {PageMixin} from "../controllerMixins"
-import * as angular from "angular"
+import * as angular from "angular";
+import {checksley} from "../../libs/checksley";
+import {debounce} from "../../libs/utils";
+import {PageMixin} from "../controllerMixins";
 
 //############################################################################
 //# User ChangePassword Controller
 //############################################################################
 
 export class UserChangePasswordController extends PageMixin {
-    scope: angular.IScope
-    rootscope: angular.IScope
-    repo:any
-    confirm:any
-    rs:any
-    params:any
-    q:any
-    location:any
-    navUrls:any
-    auth:any
-    translate:any
+    scope: angular.IScope;
+    rootscope: angular.IScope;
+    repo: any;
+    confirm: any;
+    rs: any;
+    params: any;
+    q: any;
+    location: any;
+    navUrls: any;
+    auth: any;
+    translate: any;
 
     static initClass() {
         this.$inject = [
@@ -56,13 +56,13 @@ export class UserChangePasswordController extends PageMixin {
             "$tgLocation",
             "$tgNavUrls",
             "$tgAuth",
-            "$translate"
+            "$translate",
         ];
     }
 
     constructor(scope, rootscope, repo, confirm, rs, params, q, location, navUrls,
-                  auth, translate) {
-        super()
+                auth, translate) {
+        super();
         this.scope = scope;
         this.rootscope = rootscope;
         this.repo = repo;
@@ -85,10 +85,10 @@ UserChangePasswordController.initClass();
 //############################################################################
 
 export let UserChangePasswordDirective = function($rs, $confirm, $loading, $translate) {
-    let link = function($scope, $el, $attrs, ctrl) {
-        let form = new checksley.Form($el.find("form"));
+    const link = function($scope, $el, $attrs, ctrl) {
+        const form = new checksley.Form($el.find("form"));
 
-        let submit = debounce(2000, event => {
+        const submit = debounce(2000, (event) => {
             event.preventDefault();
 
             if (!form.validate()) {
@@ -96,27 +96,27 @@ export let UserChangePasswordDirective = function($rs, $confirm, $loading, $tran
             }
 
             if ($scope.newPassword1 !== $scope.newPassword2) {
-                $confirm.notify('error', $translate.instant("CHANGE_PASSWORD.ERROR_PASSWORD_MATCH"));
+                $confirm.notify("error", $translate.instant("CHANGE_PASSWORD.ERROR_PASSWORD_MATCH"));
                 return;
             }
 
-            let currentLoading = $loading()
+            const currentLoading = $loading()
                 .target(submitButton)
                 .start();
 
-            let promise = $rs.userSettings.changePassword($scope.currentPassword, $scope.newPassword1);
+            const promise = $rs.userSettings.changePassword($scope.currentPassword, $scope.newPassword1);
             promise.then(() => {
                 currentLoading.finish();
-                return $confirm.notify('success');
+                return $confirm.notify("success");
             });
 
-            return promise.then(null, response => {
+            return promise.then(null, (response) => {
                 currentLoading.finish();
-                return $confirm.notify('error', response.data._error_message);
+                return $confirm.notify("error", response.data._error_message);
             });
         });
 
-        var submitButton = $el.find(".submit-button");
+        const submitButton = $el.find(".submit-button");
 
         $el.on("submit", "form", submit);
 
@@ -124,6 +124,6 @@ export let UserChangePasswordDirective = function($rs, $confirm, $loading, $tran
     };
 
     return {
-        link
+        link,
     };
 };

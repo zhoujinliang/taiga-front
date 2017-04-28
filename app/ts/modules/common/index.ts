@@ -22,35 +22,35 @@
  * File: modules/common.coffee
  */
 
-import {Injectable, Component, Input, Output, ElementRef, EventEmitter} from "@angular/core"
+import {Component, ElementRef, EventEmitter, Injectable, Input, Output} from "@angular/core";
 
-import {Service} from "../../classes"
-import * as angular from "angular"
-import * as _ from "lodash"
-declare var _version:string;
-import {AnalyticsService} from "./analytics"
-import {BindScope} from "./bind-scope"
-import {CompileHtmlDirective} from "./compile-html.directive"
-import * as commonComponents from "./components"
-import {ConfirmService } from "./confirm"
-import {CustomAttributesValuesDirective, CustomAttributeValueDirective} from "./custom-field-values"
-import {LbUsEstimationDirective, UsEstimationDirective, EstimationsService} from "./estimation"
-import * as commonFilters from "./filters"
-import * as commonLightboxes from "./lightboxes"
-import {LoaderDirective, Loader} from "./loader"
-import {TgLoadingService, LoadingDirective} from "./loading"
-import {UsStatusDirective, RelatedTaskStatusDirective} from "./popovers"
-import {ExceptionHandlerFactory} from "./raven-logger"
-import {TagsDirective, LbTagLineDirective} from "./tags"
-import {ColorizeBacklogTags} from "./tags.component"
-import {ProjectUrlService} from "./project-url.service"
+import * as angular from "angular";
+import * as _ from "lodash";
+import {Service} from "../../classes";
+declare var _version: string;
+import {AnalyticsService} from "./analytics";
+import {BindScope} from "./bind-scope";
+import {CompileHtmlDirective} from "./compile-html.directive";
+import * as commonComponents from "./components";
+import {ConfirmService } from "./confirm";
+import {CustomAttributesValuesDirective, CustomAttributeValueDirective} from "./custom-field-values";
+import {EstimationsService, LbUsEstimationDirective, UsEstimationDirective} from "./estimation";
+import * as commonFilters from "./filters";
+import * as commonLightboxes from "./lightboxes";
+import {Loader, LoaderDirective} from "./loader";
+import {LoadingDirective, TgLoadingService} from "./loading";
+import {RelatedTaskStatusDirective, UsStatusDirective} from "./popovers";
+import {ProjectUrlService} from "./project-url.service";
+import {ExceptionHandlerFactory} from "./raven-logger";
+import {LbTagLineDirective, TagsDirective} from "./tags";
+import {ColorizeBacklogTags} from "./tags.component";
 
 export let module = angular.module("taigaCommon", []);
 
 //############################################################################
 //# Default datepicker config
 //############################################################################
-let DataPickerConfig = $translate =>
+const DataPickerConfig = ($translate) =>
     ({
         get() {
             return {
@@ -69,7 +69,7 @@ let DataPickerConfig = $translate =>
                         $translate.instant("COMMON.PICKERDATE.MONTHS.SEP"),
                         $translate.instant("COMMON.PICKERDATE.MONTHS.OCT"),
                         $translate.instant("COMMON.PICKERDATE.MONTHS.NOV"),
-                        $translate.instant("COMMON.PICKERDATE.MONTHS.DEC")
+                        $translate.instant("COMMON.PICKERDATE.MONTHS.DEC"),
                     ],
                     weekdays: [
                         $translate.instant("COMMON.PICKERDATE.WEEK_DAYS.SUN"),
@@ -78,7 +78,7 @@ let DataPickerConfig = $translate =>
                         $translate.instant("COMMON.PICKERDATE.WEEK_DAYS.WED"),
                         $translate.instant("COMMON.PICKERDATE.WEEK_DAYS.THU"),
                         $translate.instant("COMMON.PICKERDATE.WEEK_DAYS.FRI"),
-                        $translate.instant("COMMON.PICKERDATE.WEEK_DAYS.SAT")
+                        $translate.instant("COMMON.PICKERDATE.WEEK_DAYS.SAT"),
                     ],
                     weekdaysShort: [
                         $translate.instant("COMMON.PICKERDATE.WEEK_DAYS_SHORT.SUN"),
@@ -87,14 +87,14 @@ let DataPickerConfig = $translate =>
                         $translate.instant("COMMON.PICKERDATE.WEEK_DAYS_SHORT.WED"),
                         $translate.instant("COMMON.PICKERDATE.WEEK_DAYS_SHORT.THU"),
                         $translate.instant("COMMON.PICKERDATE.WEEK_DAYS_SHORT.FRI"),
-                        $translate.instant("COMMON.PICKERDATE.WEEK_DAYS_SHORT.SAT")
-                    ]
+                        $translate.instant("COMMON.PICKERDATE.WEEK_DAYS_SHORT.SAT"),
+                    ],
                 },
                 isRTL: $translate.instant("COMMON.PICKERDATE.IS_RTL") === "true",
                 firstDay: parseInt($translate.instant("COMMON.PICKERDATE.FIRST_DAY_OF_WEEK"), 10),
-                format: $translate.instant("COMMON.PICKERDATE.FORMAT")
+                format: $translate.instant("COMMON.PICKERDATE.FORMAT"),
             };
-        }
+        },
     })
 ;
 
@@ -103,8 +103,8 @@ module.factory("tgDatePickerConfigService", ["$translate", DataPickerConfig]);
 //############################################################################
 //# Get the selected text
 //############################################################################
-let SelectedText = function($window, $document) {
-    let get = function() {
+const SelectedText = function($window, $document) {
+    const get = function() {
         if ($window.getSelection) {
             return $window.getSelection().toString();
         } else if ($document.selection) {
@@ -122,18 +122,18 @@ module.factory("$selectedText", ["$window", "$document", SelectedText]);
 //# Permission directive, hide elements when necessary
 //############################################################################
 
-let CheckPermissionDirective = function(projectService) {
-    let render = function($el, project, permission) {
+const CheckPermissionDirective = function(projectService) {
+    const render = function($el, project, permission) {
         if (project && permission) {
-            if (project.get('my_permissions').indexOf(permission) > -1) { return $el.removeClass('hidden'); }
+            if (project.get("my_permissions").indexOf(permission) > -1) { return $el.removeClass("hidden"); }
         }
     };
 
-    let link = function($scope, $el, $attrs) {
-        $el.addClass('hidden');
-        let permission = $attrs.tgCheckPermission;
+    const link = function($scope, $el, $attrs) {
+        $el.addClass("hidden");
+        const permission = $attrs.tgCheckPermission;
 
-        var unwatch = $scope.$watch(() => projectService.project
+        const unwatch = $scope.$watch(() => projectService.project
         , function() {
             if (!projectService.project) { return; }
 
@@ -141,7 +141,7 @@ let CheckPermissionDirective = function(projectService) {
             return unwatch();
         });
 
-        var unObserve = $attrs.$observe("tgCheckPermission", function(permission) {
+        const unObserve = $attrs.$observe("tgCheckPermission", function(permission) {
             if (!permission) { return; }
 
             render($el, projectService.project, permission);
@@ -155,7 +155,7 @@ let CheckPermissionDirective = function(projectService) {
 };
 
 CheckPermissionDirective.$inject = [
-    "tgProjectService"
+    "tgProjectService",
 ];
 
 module.directive("tgCheckPermission", CheckPermissionDirective);
@@ -164,13 +164,13 @@ module.directive("tgCheckPermission", CheckPermissionDirective);
 //# Add class based on permissions
 //############################################################################
 
-let ClassPermissionDirective = function() {
-    let name = "tgClassPermission";
+const ClassPermissionDirective = function() {
+    const name = "tgClassPermission";
 
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         let unbindWatcher;
-        let checkPermissions = function(project, className, permission) {
-            let negation = permission[0] === "!";
+        const checkPermissions = function(project, className, permission) {
+            const negation = permission[0] === "!";
 
             if (negation) { permission = permission.slice(1); }
 
@@ -183,23 +183,22 @@ let ClassPermissionDirective = function() {
             }
         };
 
-        let tgClassPermissionWatchAction = function(project) {
+        const tgClassPermissionWatchAction = function(project) {
             if (project) {
                 unbindWatcher();
 
-                let classes = $scope.$eval($attrs[name]);
+                const classes = $scope.$eval($attrs[name]);
 
                 return (() => {
-                    let result = [];
-                    for (let className in classes) {
-                        let permission = classes[className];
+                    const result = [];
+                    for (const className in classes) {
+                        const permission = classes[className];
                         result.push(checkPermissions(project, className, permission));
                     }
                     return result;
                 })();
             }
         };
-
 
         return unbindWatcher = $scope.$watch("project", tgClassPermissionWatchAction);
     };
@@ -212,14 +211,14 @@ module.directive("tgClassPermission", ClassPermissionDirective);
 //############################################################################
 //# Animation frame service, apply css changes in the next render frame
 //############################################################################
-let AnimationFrame = function() {
+const AnimationFrame = function() {
     let fn;
-    let animationFrame =
+    const animationFrame =
         window.requestAnimationFrame       ||
         window.webkitRequestAnimationFrame ||
-        (<any>window).mozRequestAnimationFrame;
+        (window as any).mozRequestAnimationFrame;
 
-    var performAnimation = time => {
+    const performAnimation = (time) => {
         fn = tail.shift();
         fn();
 
@@ -228,11 +227,11 @@ let AnimationFrame = function() {
         }
     };
 
-    var tail = [];
+    const tail = [];
 
-    let add = function(...args) {
+    const add = function(...args) {
         return (() => {
-            let result = [];
+            const result = [];
             for (fn of args) {
                 let item;
                 tail.push(fn);
@@ -255,8 +254,8 @@ module.factory("animationFrame", AnimationFrame);
 //# Open/close comment
 //############################################################################
 
-let ToggleCommentDirective = function() {
-    let link = ($scope, $el, $attrs) =>
+const ToggleCommentDirective = function() {
+    const link = ($scope, $el, $attrs) =>
         $el.find("textarea").on("focus", () => $el.addClass("active"))
     ;
 
@@ -265,30 +264,28 @@ let ToggleCommentDirective = function() {
 
 module.directive("tgToggleComment", ToggleCommentDirective);
 
-
 //############################################################################
 //# Get the appropiate section url for a project
 //# according to his enabled modules and user permisions
 //############################################################################
 
-
 //############################################################################
 //# Queue Q promises
 //############################################################################
 
-let Qqueue = function($q) {
-    let deferred = $q.defer();
+const Qqueue = function($q) {
+    const deferred = $q.defer();
     deferred.resolve();
 
     let lastPromise = deferred.promise;
 
-    var qqueue = {
-        bindAdd: fn => {
+    const qqueue = {
+        bindAdd: (fn) => {
             return (...args) => {
                 return lastPromise = lastPromise.then(() => fn.apply(this, args));
             };
         },
-        add: fn => {
+        add: (fn) => {
             if (!lastPromise) {
                 lastPromise = fn();
             } else {
@@ -296,7 +293,7 @@ let Qqueue = function($q) {
             }
 
             return qqueue;
-        }
+        },
     };
 
     return qqueue;
@@ -304,30 +301,29 @@ let Qqueue = function($q) {
 
 module.factory("$tgQqueue", ["$q", Qqueue]);
 
-
 //############################################################################
 //# Queue model transformation
 //############################################################################
 
 class QueueModelTransformation extends Service {
-    scope: angular.IScope
-    prop:any
-    qqueue:any
-    repo:any
-    q:any
-    model:any
+    scope: angular.IScope;
+    prop: any;
+    qqueue: any;
+    repo: any;
+    q: any;
+    model: any;
 
     static initClass() {
         this.$inject = [
             "$tgQqueue",
             "$tgRepo",
             "$q",
-            "$tgModel"
+            "$tgModel",
         ];
     }
 
     constructor(qqueue, repo, q, model) {
-        super()
+        super();
         this.qqueue = qqueue;
         this.repo = repo;
         this.q = q;
@@ -340,8 +336,8 @@ class QueueModelTransformation extends Service {
     }
 
     clone() {
-        let attrs = _.cloneDeep(this.scope[this.prop]._attrs);
-        let model = this.model.make_model(this.scope[this.prop]._name, attrs);
+        const attrs = _.cloneDeep(this.scope[this.prop]._attrs);
+        const model = this.model.make_model(this.scope[this.prop]._name, attrs);
 
         return model;
     }
@@ -351,17 +347,17 @@ class QueueModelTransformation extends Service {
     }
 
     save(transformation) {
-        let defered = this.q.defer();
+        const defered = this.q.defer();
 
         this.qqueue.add(() => {
-            let obj = this.getObj();
-            let { comment } = obj;
+            const obj = this.getObj();
+            const { comment } = obj;
 
-            obj.comment = '';
+            obj.comment = "";
 
             let clone = this.clone();
 
-            let modified = _.omit(obj._modifiedAttrs, ['version']);
+            const modified = _.omit(obj._modifiedAttrs, ["version"]);
             clone = _.assign(clone, modified);
 
             transformation(clone);
@@ -370,7 +366,7 @@ class QueueModelTransformation extends Service {
                 clone.comment = comment;
             }
 
-            let success = function() {
+            const success = function() {
                 this.scope[this.prop] = clone;
 
                 return defered.resolve.apply(null, arguments);
@@ -390,7 +386,7 @@ module.service("$tgQueueModelTransformation", QueueModelTransformation);
 //# Templates
 //############################################################################
 
-let Template = $templateCache =>
+const Template = ($templateCache) =>
     ({
         get: (name, lodash) => {
             if (lodash == null) { lodash = false; }
@@ -401,7 +397,7 @@ let Template = $templateCache =>
             }
 
             return tmp;
-        }
+        },
     })
 ;
 
@@ -411,13 +407,12 @@ module.factory("$tgTemplate", ["$templateCache", Template]);
 //# Permission directive, hide elements when necessary
 //############################################################################
 
-
-let Autofocus = ($timeout, $parse, animationFrame) =>
+const Autofocus = ($timeout, $parse, animationFrame) =>
   ({
-    restrict: 'A',
+    restrict: "A",
     link($scope, $element, attrs) {
         if (attrs.ngShow) {
-            let model = $parse(attrs.ngShow);
+            const model = $parse(attrs.ngShow);
 
             return $scope.$watch(model, function(value) {
                 if (value === true) {
@@ -428,23 +423,23 @@ let Autofocus = ($timeout, $parse, animationFrame) =>
         } else {
             return $timeout(() => $element[0].focus());
         }
-    }
+    },
   })
 ;
 
-module.directive('tgAutofocus', ['$timeout', '$parse', "animationFrame", Autofocus]);
+module.directive("tgAutofocus", ["$timeout", "$parse", "animationFrame", Autofocus]);
 
-module.directive('tgPreloadImage', function() {
-    let spinner = `<img class='loading-spinner' src='/${_version}/svg/spinner-circle.svg' alt='loading...' />`;
+module.directive("tgPreloadImage", function() {
+    const spinner = `<img class='loading-spinner' src='/${_version}/svg/spinner-circle.svg' alt='loading...' />`;
 
-    let template = `\
+    const template = `\
 <div>
     <ng-transclude></ng-transclude>
 </div>\
 `;
 
-    let preload = function(src, onLoad) {
-        let image = new Image();
+    const preload = function(src, onLoad) {
+        const image = new Image();
         image.onload = onLoad;
         image.src = src;
 
@@ -456,11 +451,11 @@ module.directive('tgPreloadImage', function() {
         transclude: true,
         replace: true,
         link(scope, el, attrs) {
-            let image = el.find('img:last');
+            const image = el.find("img:last");
             let timeout = null;
 
-            let onLoad = function() {
-                el.find('.loading-spinner').remove();
+            const onLoad = function() {
+                el.find(".loading-spinner").remove();
                 image.show();
 
                 if (timeout) {
@@ -469,12 +464,12 @@ module.directive('tgPreloadImage', function() {
                 }
             };
 
-            return attrs.$observe('preloadSrc', function(src) {
+            return attrs.$observe("preloadSrc", function(src) {
                 if (timeout) {
                     clearTimeout(timeout);
                 }
 
-                el.find('.loading-spinner').remove();
+                el.find(".loading-spinner").remove();
 
                 timeout = setTimeout(() => el.prepend(spinner)
                 , 200);
@@ -483,6 +478,6 @@ module.directive('tgPreloadImage', function() {
 
                 return preload(src, onLoad);
             });
-        }
+        },
     };
 });

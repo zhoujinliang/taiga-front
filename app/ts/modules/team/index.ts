@@ -22,10 +22,10 @@
  * File: modules/team.coffee
  */
 
-import * as angular from "angular"
-import * as main from "./main"
+import * as angular from "angular";
+import * as main from "./main";
 
-let module = angular.module("taigaTeam", []);
+const module = angular.module("taigaTeam", []);
 module.controller("TeamController", main.TeamController);
 module.directive("tgTeamFilters", [main.TeamFiltersDirective]);
 module.directive("tgTeamMemberStats", main.TeamMemberStatsDirective);
@@ -33,4 +33,4 @@ module.directive("tgTeamCurrentUser", main.TeamMemberCurrentUserDirective);
 module.directive("tgTeamMembers", main.TeamMembersDirective);
 module.directive("tgLeaveProject", ["$tgRepo", "$tgConfirm", "$tgLocation", "$tgResources", "$tgNavUrls", "$translate", "tgLightboxFactory", "tgCurrentUserService",
                                     main.LeaveProjectDirective]);
-module.filter('membersFilter', main.membersFilter);
+module.filter("membersFilter", main.membersFilter);

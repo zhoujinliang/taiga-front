@@ -22,8 +22,8 @@
  * File: modules/common/popovers.coffee
  */
 
-import {bindOnce, debounce} from "../../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {bindOnce, debounce} from "../../../libs/utils";
 
 //############################################################################
 //# UserStory status Directive (popover for change status)
@@ -42,15 +42,15 @@ export let UsStatusDirective = function($repo, $template) {
 
     NOTE: This directive need 'usStatusById' and 'project'.
     */
-    let template = $template.get("common/popover/popover-us-status.html", true);
+    const template = $template.get("common/popover/popover-us-status.html", true);
 
-    let link = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
+    const link = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
 
-        let render = function(us) {
-            let usStatusDomParent = $el.find(".us-status");
-            let usStatusDom = $el.find(".us-status .us-status-bind");
-            let { usStatusById } = $scope;
+        const render = function(us) {
+            const usStatusDomParent = $el.find(".us-status");
+            const usStatusDom = $el.find(".us-status .us-status-bind");
+            const { usStatusById } = $scope;
 
             if (usStatusById[us.status]) {
                 usStatusDom.text(usStatusById[us.status].name);
@@ -68,30 +68,29 @@ export let UsStatusDirective = function($repo, $template) {
             event.preventDefault();
             event.stopPropagation();
 
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
 
-            let us = $scope.$eval($attrs.tgUsStatus);
+            const us = $scope.$eval($attrs.tgUsStatus);
             us.status = target.data("status-id");
             render(us);
 
             $el.find(".pop-status").popover().close();
 
             return $scope.$apply(() =>
-                $repo.save(us).then(() => $scope.$eval($attrs.onUpdate))
+                $repo.save(us).then(() => $scope.$eval($attrs.onUpdate)),
             );
-        })
+        }),
         );
-
 
         $scope.$on("userstories:loaded", () => render($scope.$eval($attrs.tgUsStatus)));
         $scope.$on("$destroy", () => $el.off());
 
         // Bootstrap
-        let us = $scope.$eval($attrs.tgUsStatus);
+        const us = $scope.$eval($attrs.tgUsStatus);
         render(us);
 
         return bindOnce($scope, "project", function(project) {
-            let html = template({"statuses": project.us_statuses});
+            const html = template({statuses: project.us_statuses});
             $el.append(html);
 
             // If the user has not enough permissions the click events are unbinded
@@ -101,7 +100,6 @@ export let UsStatusDirective = function($repo, $template) {
             }
         });
     };
-
 
     return {link};
 };
@@ -123,23 +121,23 @@ export let RelatedTaskStatusDirective = function($repo, $template) {
 
     NOTE: This directive need 'taskStatusById' and 'project'.
     */
-    let selectionTemplate = $template.get("common/popover/popover-related-task-status.html", true);
+    const selectionTemplate = $template.get("common/popover/popover-related-task-status.html", true);
 
-    let updateTaskStatus = function($el, task, taskStatusById) {
-        let taskStatusDomParent = $el.find(".us-status");
-        let taskStatusDom = $el.find(".task-status .task-status-bind");
+    const updateTaskStatus = function($el, task, taskStatusById) {
+        const taskStatusDomParent = $el.find(".us-status");
+        const taskStatusDom = $el.find(".task-status .task-status-bind");
 
         if (taskStatusById[task.status]) {
             taskStatusDom.text(taskStatusById[task.status].name);
-            return taskStatusDomParent.css('color', taskStatusById[task.status].color);
+            return taskStatusDomParent.css("color", taskStatusById[task.status].color);
         }
     };
 
-    let link = function($scope, $el, $attrs) {
-        let $ctrl = $el.controller();
+    const link = function($scope, $el, $attrs) {
+        const $ctrl = $el.controller();
         let task = $scope.$eval($attrs.tgRelatedTaskStatus);
-        let notAutoSave = $scope.$eval($attrs.notAutoSave);
-        let autoSave = !notAutoSave;
+        const notAutoSave = $scope.$eval($attrs.notAutoSave);
+        const autoSave = !notAutoSave;
 
         $el.on("click", ".task-status", function(event) {
             event.preventDefault();
@@ -154,7 +152,7 @@ export let RelatedTaskStatusDirective = function($repo, $template) {
         $el.on("click", ".status", debounce(2000, function(event) {
             event.preventDefault();
             event.stopPropagation();
-            let target = angular.element(event.currentTarget);
+            const target = angular.element(event.currentTarget);
             task.status = target.data("status-id");
             $el.find(".pop-status").popover().close();
             updateTaskStatus($el, task, $scope.taskStatusById);
@@ -164,10 +162,10 @@ export let RelatedTaskStatusDirective = function($repo, $template) {
                     $repo.save(task).then(function() {
                         $scope.$eval($attrs.onUpdate);
                         return $scope.$emit("related-tasks:status-changed");
-                    })
+                    }),
                 );
             }
-        })
+        }),
         );
 
         $scope.$watch($attrs.tgRelatedTaskStatus, function() {
@@ -176,7 +174,7 @@ export let RelatedTaskStatusDirective = function($repo, $template) {
         });
 
         bindOnce($scope, "project", function(project) {
-            $el.append(selectionTemplate({ 'statuses':  project.task_statuses }));
+            $el.append(selectionTemplate({ statuses:  project.task_statuses }));
             updateTaskStatus($el, task, $scope.taskStatusById);
 
             // If the user has not enough permissions the click events are unbinded
@@ -197,37 +195,37 @@ export let RelatedTaskStatusDirective = function($repo, $template) {
 //############################################################################
 
 $.fn.popover = function() {
-    let $el = this;
+    const $el = this;
 
-    let isVisible = () => {
+    const isVisible = () => {
         $el.css({
-            "display": "block",
-            "visibility": "hidden"
+            display: "block",
+            visibility: "hidden",
         });
 
-        let docViewTop = $(window).scrollTop();
-        let docViewBottom = docViewTop + $(window).height();
+        const docViewTop = $(window).scrollTop();
+        const docViewBottom = docViewTop + $(window).height();
 
-        let docViewWidth = $(window).width();
-        let docViewRight = docViewWidth;
-        let docViewLeft = 0;
+        const docViewWidth = $(window).width();
+        const docViewRight = docViewWidth;
+        const docViewLeft = 0;
 
-        let elemTop = $el.offset().top;
-        let elemBottom = elemTop + $el.height();
+        const elemTop = $el.offset().top;
+        const elemBottom = elemTop + $el.height();
 
-        let elemWidth = $el.width();
-        let elemLeft = $el.offset().left;
-        let elemRight = $el.offset().left + elemWidth;
+        const elemWidth = $el.width();
+        const elemLeft = $el.offset().left;
+        const elemRight = $el.offset().left + elemWidth;
 
         $el.css({
-            "display": "none",
-            "visibility": "visible"
+            display: "none",
+            visibility: "visible",
         });
 
         return ((elemBottom <= docViewBottom) && (elemTop >= docViewTop) && (elemLeft >= docViewLeft) && (elemRight <= docViewRight));
     };
 
-    let closePopover = onClose => {
+    const closePopover = (onClose) => {
         if (onClose) { onClose.call($el); }
 
         $el.fadeOut(() => {
@@ -239,15 +237,14 @@ $.fn.popover = function() {
         return $el.off("popup:close");
     };
 
-
-    let closeAll = () => {
+    const closeAll = () => {
         return $(".popover.active").each(function(index, element) {
             $(this).trigger("popup:close");
             return true;
         });
     };
 
-    let open = onClose => {
+    const open = (onClose) => {
         if ($el.hasClass("active")) {
             return close();
         } else {
@@ -266,11 +263,11 @@ $.fn.popover = function() {
                 });
             });
 
-            return $el.on("popup:close", e => closePopover(onClose));
+            return $el.on("popup:close", (e) => closePopover(onClose));
         }
     };
 
-    var close = () => {
+    const close = () => {
         return $el.trigger("popup:close");
     };
 

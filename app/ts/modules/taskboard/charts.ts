@@ -22,41 +22,41 @@
  * File: modules/taskboard/charts.coffee
  */
 
-import {timeout} from "../../libs/utils"
-import * as angular from "angular"
-import * as _ from "lodash"
-import * as moment from "moment"
+import * as angular from "angular";
+import * as _ from "lodash";
+import * as moment from "moment";
+import {timeout} from "../../libs/utils";
 
 //############################################################################
 //# Sprint burndown graph directive
 //############################################################################
 
 export let SprintGraphDirective = function($translate){
-    let redrawChart = function(element, dataToDraw) {
-        let width = element.width();
+    const redrawChart = function(element, dataToDraw) {
+        const width = element.width();
         element.height(240);
 
-        let days = _.map(dataToDraw, (x:any) => moment(x.day));
+        const days = _.map(dataToDraw, (x: any) => moment(x.day));
 
-        let data = [];
+        const data = [];
         data.unshift({
-            data: _.zip(days, _.map(dataToDraw, (d:any) => d.optimal_points)),
+            data: _.zip(days, _.map(dataToDraw, (d: any) => d.optimal_points)),
             lines: {
-                fillColor : "rgba(120,120,120,0.2)"
-            }
+                fillColor : "rgba(120,120,120,0.2)",
+            },
         });
         data.unshift({
-            data: _.zip(days, _.map(dataToDraw, (d:any) => d.open_points)),
+            data: _.zip(days, _.map(dataToDraw, (d: any) => d.open_points)),
             lines: {
-                fillColor : "rgba(102,153,51,0.3)"
-            }
+                fillColor : "rgba(102,153,51,0.3)",
+            },
         });
 
-        let options = {
+        const options = {
             grid: {
-                borderWidth: { top: 0, right: 1, left:0, bottom: 0 },
-                borderColor: '#ccc',
-                hoverable: true
+                borderWidth: { top: 0, right: 1, left: 0, bottom: 0 },
+                borderColor: "#ccc",
+                hoverable: true,
             },
             xaxis: {
                 tickSize: [1, "day"],
@@ -67,66 +67,66 @@ export let SprintGraphDirective = function($translate){
                 axisLabel: $translate.instant("TASKBOARD.CHARTS.XAXIS_LABEL"),
                 axisLabelUseCanvas: true,
                 axisLabelFontSizePixels: 12,
-                axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-                axisLabelPadding: 5
+                axisLabelFontFamily: "Verdana, Arial, Helvetica, Tahoma, sans-serif",
+                axisLabelPadding: 5,
             },
             yaxis: {
                 min: 0,
                 axisLabel: $translate.instant("TASKBOARD.CHARTS.YAXIS_LABEL"),
                 axisLabelUseCanvas: true,
                 axisLabelFontSizePixels: 12,
-                axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-                axisLabelPadding: 5
+                axisLabelFontFamily: "Verdana, Arial, Helvetica, Tahoma, sans-serif",
+                axisLabelPadding: 5,
             },
             series: {
                 shadowSize: 0,
                 lines: {
                     show: true,
-                    fill: true
+                    fill: true,
                 },
                 points: {
                     show: true,
                     fill: true,
                     radius: 4,
-                    lineWidth: 2
-                }
+                    lineWidth: 2,
+                },
             },
             colors: ["rgba(102,153,51,1)", "rgba(120,120,120,0.2)"],
             tooltip: true,
             tooltipOpts: {
                 content(label, xval, yval, flotItem) {
-                    let formattedDate = moment(xval).format($translate.instant("TASKBOARD.CHARTS.DATE"));
-                    let roundedValue = Math.round(yval);
+                    const formattedDate = moment(xval).format($translate.instant("TASKBOARD.CHARTS.DATE"));
+                    const roundedValue = Math.round(yval);
 
                     if (flotItem.seriesIndex === 1) {
                         return $translate.instant("TASKBOARD.CHARTS.OPTIMAL", {
                             formattedDate,
-                            roundedValue
+                            roundedValue,
                         });
 
                     } else {
                         return $translate.instant("TASKBOARD.CHARTS.REAL", {
                             formattedDate,
-                            roundedValue
+                            roundedValue,
                         });
                     }
-                }
-            }
+                },
+            },
         };
 
         element.empty();
         return element.plot(data, options).data("plot");
     };
 
-    let link = function($scope, $el, $attrs) {
-        let element = angular.element($el);
+    const link = function($scope, $el, $attrs) {
+        const element = angular.element($el);
 
         $scope.$on("resize", function() {
             if ($scope.stats) { return redrawChart(element, $scope.stats.days); }
         });
 
         $scope.$on("taskboard:graph:toggle-visibility", function() {
-            $el.parent().toggleClass('open');
+            $el.parent().toggleClass("open");
 
             // fix chart overflow
             return timeout(100, function() {
@@ -134,7 +134,7 @@ export let SprintGraphDirective = function($translate){
             });
         });
 
-        $scope.$watch('stats', function(value) {
+        $scope.$watch("stats", function(value) {
             if (($scope.stats == null)) {
                 return;
             }

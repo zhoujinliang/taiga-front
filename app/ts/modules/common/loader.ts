@@ -25,11 +25,11 @@
 // FIXME: this code not follows any style and any good practices on coffeescript
 // and it should be rewritten in coffeescript style classes.
 
-import {timeout} from "../../../libs/utils"
-import * as angular from "angular"
+import * as angular from "angular";
+import {timeout} from "../../../libs/utils";
 
 export let LoaderDirective = function(tgLoader, $rootscope) {
-    let link = function($scope, $el, $attrs) {
+    const link = function($scope, $el, $attrs) {
         tgLoader.onStart(function() {
             $(document.body).addClass("loader-active");
             return $el.addClass("active");
@@ -42,13 +42,13 @@ export let LoaderDirective = function(tgLoader, $rootscope) {
     };
 
     return {
-        link
+        link,
     };
 };
 
 export let Loader = function($rootscope) {
-    let config = {
-        minTime: 300
+    const config = {
+        minTime: 300,
     };
 
     let open = false;
@@ -56,13 +56,13 @@ export let Loader = function($rootscope) {
     let requestCount = 0;
     let lastResponseDate = 0;
 
-    let pageLoaded = function(force=false) {
+    const pageLoaded = function(force= false) {
         if (startLoadTime) {
             let timeoutValue = 0;
 
             if (!force) {
-                let endTime = new Date().getTime();
-                let diff = endTime - startLoadTime;
+                const endTime = new Date().getTime();
+                const diff = endTime - startLoadTime;
 
                 if (diff < config.minTime) {
                     timeoutValue = config.minTime - diff;
@@ -72,7 +72,7 @@ export let Loader = function($rootscope) {
             timeout(timeoutValue, function() {
                 $rootscope.$broadcast("loader:end");
                 open = false;
-                return (<any>window).prerenderReady = true;
+                return (window as any).prerenderReady = true;
             }); // Needed by Prerender Server
         }
 
@@ -81,7 +81,7 @@ export let Loader = function($rootscope) {
         return lastResponseDate = 0;
     };
 
-    let autoClose = function() {
+    const autoClose = function() {
         let intervalAuto;
         return intervalAuto = setInterval((function() {
             if (lastResponseDate && (requestCount === 0)) {
@@ -92,7 +92,7 @@ export let Loader = function($rootscope) {
         }), 50);
     };
 
-    let start = function() {
+    const start = function() {
         startLoadTime = new Date().getTime();
         $rootscope.$broadcast("loader:start");
         return open = true;
@@ -123,7 +123,7 @@ export let Loader = function($rootscope) {
         logResponse() {
             requestCount--;
             return lastResponseDate = new Date().getTime();
-        }
+        },
     };
 };
 Loader.$inject = ["$rootScope"];

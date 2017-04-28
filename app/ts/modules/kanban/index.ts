@@ -22,12 +22,12 @@
  * File: modules/kanban.coffee
  */
 
-import * as angular from "angular"
-import * as main from "./main"
-import {KanbanUserstoriesService} from "./kanban-usertories"
-import {KanbanSortableDirective} from "./sortable"
+import * as angular from "angular";
+import {KanbanUserstoriesService} from "./kanban-usertories";
+import * as main from "./main";
+import {KanbanSortableDirective} from "./sortable";
 
-let module = angular.module("taigaKanban", []);
+const module = angular.module("taigaKanban", []);
 module.controller("KanbanController", main.KanbanController);
 module.directive("tgKanban", ["$tgRepo", "$rootScope", main.KanbanDirective]);
 module.directive("tgKanbanArchivedStatusHeader", [ "$rootScope", "$translate", "tgKanbanUserstories", main.KanbanArchivedStatusHeaderDirective]);

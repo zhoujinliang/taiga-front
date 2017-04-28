@@ -22,12 +22,12 @@
  * File: modules/wiki.coffee
  */
 
-import * as angular from "angular"
-import * as main from "./main"
-import {WikiNavDirective} from "./nav"
-import {WikiPagesListController} from "./pages-list"
+import * as angular from "angular";
+import * as main from "./main";
+import {WikiNavDirective} from "./nav";
+import {WikiPagesListController} from "./pages-list";
 
-let module = angular.module("taigaWiki", []);
+const module = angular.module("taigaWiki", []);
 module.controller("WikiDetailController", main.WikiDetailController);
 module.directive("tgWikiSummary", ["$log", "$tgTemplate", "$compile", "$translate",  "tgAvatarService", main.WikiSummaryDirective]);
 module.directive("tgWikiWysiwyg", ["$tgQueueModelTransformation", "$rootScope", "$tgConfirm", "tgAttachmentsFullService", "$tgQqueue",

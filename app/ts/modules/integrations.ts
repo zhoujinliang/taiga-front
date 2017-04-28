@@ -22,6 +22,6 @@
  * File: modules/integrations.coffee
  */
 
-import * as angular from "angular"
+import * as angular from "angular";
 
-let module = angular.module("taigaIntegrations", []);
+const module = angular.module("taigaIntegrations", []);

@@ -19,16 +19,16 @@
 
 export function BindScope(config) {
     if (!config.debugInfo) {
-        jQuery.fn.scope = function() { return this.data('scope'); };
+        jQuery.fn.scope = function() { return this.data("scope"); };
     }
 
-    let link = function($scope, $el) {
+    const link = function($scope, $el) {
         if (!config.debugInfo) {
             return $el
-                .data('scope', $scope)
-                .addClass('tg-scope');
+                .data("scope", $scope)
+                .addClass("tg-scope");
         }
     };
 
     return {link};
-};
+}

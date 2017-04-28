@@ -22,17 +22,17 @@
  * File: modules/base/model.coffee
  */
 
-import * as _ from "lodash"
-import {Injectable} from "@angular/core"
+import {Injectable} from "@angular/core";
+import * as _ from "lodash";
 
 export class Model {
-    _attrs:any
-    _name:any
-    _dataTypes:any
-    _modifiedAttrs:any
-    _isModified:any
+    _attrs: any;
+    _name: any;
+    _dataTypes: any;
+    _modifiedAttrs: any;
+    _isModified: any;
 
-    constructor(name, data, dataTypes=null) {
+    constructor(name, data, dataTypes= null) {
         this._attrs = data;
         this._name = name;
         this._dataTypes = dataTypes;
@@ -42,9 +42,9 @@ export class Model {
     }
 
     realClone() {
-        let attrs = _.cloneDeep(this._attrs);
+        const attrs = _.cloneDeep(this._attrs);
 
-        let instance =  new Model(this._name, attrs, this._dataTypes);
+        const instance =  new Model(this._name, attrs, this._dataTypes);
 
         instance._modifiedAttrs = _.cloneDeep(this._modifiedAttrs);
         instance._isModified = _.cloneDeep(this._isModified);
@@ -53,7 +53,7 @@ export class Model {
     }
 
     clone() {
-        let instance = new Model(this._name, this._attrs, this._dataTypes);
+        const instance = new Model(this._name, this._attrs, this._dataTypes);
         instance._modifiedAttrs = this._modifiedAttrs;
         instance._isModified = this._isModified;
         return instance;
@@ -61,9 +61,9 @@ export class Model {
 
     applyCasts() {
         return (() => {
-            let result = [];
-            for (let attrName in this._dataTypes) {
-                let castName = this._dataTypes[attrName];
+            const result = [];
+            for (const attrName in this._dataTypes) {
+                const castName = this._dataTypes[attrName];
                 // let castMethod = service.casts[castName];
                 // if (!castMethod) {
                 //     continue;
@@ -83,7 +83,7 @@ export class Model {
         return this._name;
     }
 
-    getAttrs(patch=false) {
+    getAttrs(patch= false) {
         if (this._attrs.version != null) {
             this._modifiedAttrs.version = this._attrs.version;
         }
@@ -108,11 +108,11 @@ export class Model {
     }
 
     initialize() {
-        let self = this;
+        const self = this;
 
-        let getter = name =>
+        const getter = (name) =>
             function() {
-                if ((typeof(name) === 'string') && (name.substr(0,2) === "__")) {
+                if ((typeof(name) === "string") && (name.substr(0, 2) === "__")) {
                     return self[name];
                 }
 
@@ -124,9 +124,9 @@ export class Model {
             }
         ;
 
-        let setter = name =>
+        const setter = (name) =>
             function(value) {
-                if ((typeof(name) === 'string') && (name.substr(0,2) === "__")) {
+                if ((typeof(name) === "string") && (name.substr(0, 2) === "__")) {
                     self[name] = value;
                     return;
                 }
@@ -142,11 +142,11 @@ export class Model {
         ;
 
         return _.each(this._attrs, function(value, name) {
-            let options = {
+            const options = {
                 get: getter(name),
                 set: setter(name),
                 enumerable: true,
-                configurable: true
+                configurable: true,
             };
 
             return Object.defineProperty(self, name, options);
@@ -154,9 +154,9 @@ export class Model {
     }
 
     serialize() {
-        let data = {
-            "data": _.clone(this._attrs),
-            "name": this._name
+        const data = {
+            data: _.clone(this._attrs),
+            name: this._name,
         };
 
         return JSON.stringify(data);
@@ -182,20 +182,19 @@ export class Model {
     }
 
     static desSerialize(sdata) {
-        let ddata = JSON.parse(sdata);
-        let model = new Model(ddata.url, ddata.data);
+        const ddata = JSON.parse(sdata);
+        const model = new Model(ddata.url, ddata.data);
         return model;
     }
 }
-
 
 @Injectable()
 export class ModelService {
     cls = Model;
 
-    make_model(name, data, cls=Model, dataTypes={}) {
+    make_model(name, data, cls= Model, dataTypes= {}) {
         return new cls(name, data, dataTypes);
-    };
+    }
 
     casts = {
         int(value) {
@@ -203,6 +202,6 @@ export class ModelService {
         },
         float(value) {
             return parseFloat(value);
-        }
+        },
     };
 }
