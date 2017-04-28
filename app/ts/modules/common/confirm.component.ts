@@ -332,7 +332,7 @@ export class Ask {
 //
 //     notify(type, message, title, time) {
 //         // NOTE: Typesi are: error, success, light-error
-//         //       See partials/components/notification-message.jade)
+//         //       See partials/components/notification-message.pug)
 //         //       Add default texts to NOTIFICATION_MSG for new notification types
 //
 //         let selector = `.notification-message-${type}`;

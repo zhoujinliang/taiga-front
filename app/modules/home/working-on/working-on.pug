@@ -10,7 +10,7 @@ section.working-on-container
         )
     .working-on-empty(*ngIf="assignedTo.size === 0")
         p([innerHTML]="'HOME.EMPTY_WORKING_ON' | translate")
-        include empty.jade
+        include empty.pug
 
 section.watching-container
     header
@@ -26,4 +26,4 @@ section.watching-container
 
     .watching-empty(*ngIf="watching.size === 0")
         p([innerHTML]="'HOME.EMPTY_WATCHING' | translate")
-        include empty.jade
+        include empty.pug

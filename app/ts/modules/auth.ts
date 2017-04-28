@@ -113,7 +113,7 @@ export class AuthService {
     }
 
     _getUserTheme() {
-        return (this.globalData.get("user") != null && this.globalData.get("user").theme) || this.config.get("defaultTheme") || "taiga"; // load on index.jade
+        return (this.globalData.get("user") != null && this.globalData.get("user").theme) || this.config.get("defaultTheme") || "taiga"; // load on index.pug
     }
 
     _setTheme() {

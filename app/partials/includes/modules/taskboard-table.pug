@@ -107,7 +107,7 @@ div.taskboard-table(
                         tg-svg.fold-action(svg-icon="icon-unfold-row")
                     h3.us-title
                         span(translate="TASKBOARD.TABLE.ROW_UNASSIGED_TASKS_TITLE")
-                    include ../components/addnewtask.jade
+                    include ../components/addnewtask.pug
 
                 div.taskboard-tasks-box.task-column(
                     ng-repeat="st in ::taskStatusList track by st.id",
