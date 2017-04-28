@@ -21,7 +21,7 @@ import {Component, EventEmitter, Input, Output} from "@angular/core";
 
 @Component({
     selector: "tg-board-zoom",
-    template: require("./board-zoom.jade")(),
+    template: require("./board-zoom.pug")(),
 })
 export class BoardZoom {
     @Input() levels: number;

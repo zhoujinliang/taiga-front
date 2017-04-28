@@ -29,7 +29,7 @@ import * as actions from "../discover.actions";
 
 @Component({
     selector: "tg-discover-home",
-    template: require("./discover-home.jade")(),
+    template: require("./discover-home.pug")(),
 })
 export class DiscoverHome implements OnInit {
     title: string;

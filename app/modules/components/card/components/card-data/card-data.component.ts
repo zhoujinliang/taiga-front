@@ -22,7 +22,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-card-data",
-    template: require("./card-data.jade")(),
+    template: require("./card-data.pug")(),
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardData {

@@ -22,7 +22,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-belong-to-epics",
-    template: require("./belong-to-epics.jade")(),
+    template: require("./belong-to-epics.pug")(),
 })
 export class BelongToEpics {
     @Input() epics: Immutable.List<Immutable.Map<string, string>>;

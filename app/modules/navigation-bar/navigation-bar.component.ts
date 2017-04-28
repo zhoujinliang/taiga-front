@@ -27,7 +27,7 @@ import { NavigationBarService } from "./navigation-bar.service";
 
 @Component({
     selector: "tg-navigation-bar",
-    template: require("./navigation-bar.jade")(),
+    template: require("./navigation-bar.pug")(),
 })
 export class NavigationBar implements OnInit{
     @Input() projects: any;

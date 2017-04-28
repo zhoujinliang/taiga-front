@@ -7,7 +7,7 @@ import {LoginData} from "../auth.model";
 
 @Component({
     selector: "tg-login-form",
-    template: require("./login-form.jade")(),
+    template: require("./login-form.pug")(),
 })
 export class LoginForm implements OnInit {
     @Output() login: EventEmitter<LoginData>;

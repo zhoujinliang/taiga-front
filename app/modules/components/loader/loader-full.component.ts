@@ -5,7 +5,7 @@ import { IState } from "../../../app.store";
 
 @Component({
     selector: "tg-loader-full",
-    template: require("./loader-full.jade")(),
+    template: require("./loader-full.pug")(),
 })
 export class LoaderFull {
     public isOpen: Observable<boolean>;

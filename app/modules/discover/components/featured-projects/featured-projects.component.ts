@@ -21,7 +21,7 @@ import {Component, Input} from "@angular/core";
 
 @Component({
     selector: "tg-featured-projects",
-    template: require("./featured-projects.jade")(),
+    template: require("./featured-projects.pug")(),
 })
 export class FeaturedProjects {
     @Input() projects: any = [];

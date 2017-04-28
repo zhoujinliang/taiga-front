@@ -21,7 +21,7 @@ import { Component, Input } from "@angular/core";
 
 @Component({
     selector: "tg-project-info",
-    template: require("./project-info.jade")(),
+    template: require("./project-info.pug")(),
 })
 export class ProjectInfo {
     @Input() project: any;

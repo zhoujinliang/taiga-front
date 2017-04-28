@@ -23,7 +23,7 @@ import { NavigationUrlsService } from "../../../ts/modules/base/navurls.service"
 
 @Component({
     selector: "tg-duty",
-    template: require("./duty.jade")(),
+    template: require("./duty.pug")(),
 })
 export class Duty {
     @Input() duty: any;

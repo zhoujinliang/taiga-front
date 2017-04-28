@@ -22,7 +22,7 @@ import {defineImmutableProperty} from "../../../../libs/utils";
 
 @Component({
     selector: "tg-most-active",
-    template: require("./most-active.jade")(),
+    template: require("./most-active.pug")(),
 })
 export class MostActive {
     @Input() projects;

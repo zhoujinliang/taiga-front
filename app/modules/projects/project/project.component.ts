@@ -27,7 +27,7 @@ import { FetchCurrentProjectAction } from "../projects.actions";
 
 @Component({
     selector: "tg-project-detail",
-    template: require("./project.jade")(),
+    template: require("./project.pug")(),
 })
 export class ProjectDetail implements OnInit {
     user: any;

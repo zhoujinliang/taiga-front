@@ -4,7 +4,7 @@ import * as Immutable from "immutable";
 @Component({
     host: {class: "lightbox-generic-bulk"},
     selector: "tg-kanban-bulk-create-lightbox",
-    template: require("./kanban-bulk-create-lightbox.jade")(),
+    template: require("./kanban-bulk-create-lightbox.pug")(),
 })
 export class KanbanBulkCreateLightbox {
     @Input() status: number;

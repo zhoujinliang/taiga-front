@@ -22,7 +22,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-card-slideshow",
-    template: require("./card-slideshow.jade")(),
+    template: require("./card-slideshow.pug")(),
 })
 export class CardSlideshow {
     @Input() images: Immutable.List<any>;

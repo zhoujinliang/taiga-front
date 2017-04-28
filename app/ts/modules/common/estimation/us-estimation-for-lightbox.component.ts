@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-us-estimation-for-lightbox",
-    template: require("./us-estimation-for-lightbox.jade")(),
+    template: require("./us-estimation-for-lightbox.pug")(),
 })
 export class UsEstimationForLightbox implements OnChanges {
     @Input() roles;

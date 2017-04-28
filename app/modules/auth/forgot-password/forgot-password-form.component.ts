@@ -7,7 +7,7 @@ import {LoginData} from "../auth.model";
 
 @Component({
     selector: "tg-forgot-password-form",
-    template: require("./forgot-password-form.jade")(),
+    template: require("./forgot-password-form.pug")(),
 })
 export class ForgotPasswordForm implements OnInit {
     @Output() submit: EventEmitter<LoginData>;

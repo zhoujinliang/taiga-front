@@ -25,7 +25,7 @@ import {IState} from "../../../../../app.store";
 
 @Component({
     selector: "tg-card-owner",
-    template: require("./card-owner.jade")(),
+    template: require("./card-owner.pug")(),
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardOwner {

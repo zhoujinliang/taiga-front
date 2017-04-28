@@ -32,7 +32,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
 
 @Component({
     selector: "tg-home",
-    template: require("./home.jade")(),
+    template: require("./home.pug")(),
 })
 export class Home implements OnInit {
     user;

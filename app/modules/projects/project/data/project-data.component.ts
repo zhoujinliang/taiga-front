@@ -21,7 +21,7 @@ import { Component, Input, OnChanges } from "@angular/core";
 
 @Component({
     selector: "tg-project-data",
-    template: require("./project-data.jade")(),
+    template: require("./project-data.pug")(),
 })
 export class ProjectData implements OnChanges {
     @Input() project: any;

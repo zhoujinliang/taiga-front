@@ -21,7 +21,7 @@ import {Component, EventEmitter, Input, Output} from "@angular/core";
 
 @Component({
     selector: "tg-like-project-button",
-    template: require("./like-project-button.jade")(),
+    template: require("./like-project-button.pug")(),
 })
 export class LikeProjectButton {
     @Input() project: any;

@@ -21,7 +21,7 @@ import {Component, EventEmitter, Input, Output} from "@angular/core";
 
 @Component({
     selector: "tg-filter-category",
-    template: require("./filter-category.jade")(),
+    template: require("./filter-category.pug")(),
 })
 export class FilterCategory {
     @Input() filter: any;

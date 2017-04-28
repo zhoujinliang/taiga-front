@@ -22,7 +22,7 @@ import {defineImmutableProperty} from "../../../../libs/utils";
 
 @Component({
     selector: "tg-most-liked",
-    template: require("./most-liked.jade")(),
+    template: require("./most-liked.pug")(),
 })
 export class MostLiked {
     @Input() projects;

@@ -22,7 +22,7 @@ import * as angular from "angular";
 
 @Component({
     selector: "tg-discover-search-list-header",
-    template: require("./discover-search-list-header.jade")(),
+    template: require("./discover-search-list-header.pug")(),
 })
 export class DiscoverSearchListHeader implements OnInit {
     @Input("order-by") orderBy: any;

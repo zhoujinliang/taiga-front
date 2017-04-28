@@ -29,7 +29,7 @@ import { GlobalDataService } from "../../services/global-data.service";
 
 @Component({
     selector: "tg-dropdown-user",
-    template: require("./dropdown-user.jade")(),
+    template: require("./dropdown-user.pug")(),
 })
 export class DropdownUser {
     @Input() user: any;

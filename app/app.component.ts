@@ -8,7 +8,7 @@ import { FetchUserProjectsAction } from "./modules/projects/projects.actions";
 
 @Component({
   selector: "tg-view",
-  template: require("./app.jade")(),
+  template: require("./app.pug")(),
 })
 export class AppComponent {
     user: any;

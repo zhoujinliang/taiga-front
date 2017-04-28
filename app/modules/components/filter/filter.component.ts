@@ -24,7 +24,7 @@ import {IState} from "../../../app.store";
 
 @Component({
     selector: "tg-filter",
-    template: require("./filter.jade")(),
+    template: require("./filter.pug")(),
 })
 export class Filter {
     @Input() appliedFilters: any;

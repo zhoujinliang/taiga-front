@@ -21,7 +21,7 @@ import {Component, Input} from "@angular/core";
 
 @Component({
     selector: "tg-assigned-item",
-    template: require("./assigned-item.jade")(),
+    template: require("./assigned-item.pug")(),
 })
 export class AssignedItem {
     @Input() member;

@@ -26,7 +26,7 @@ import { ChangeKanbanZoom } from "../../kanban.actions";
 @Component({
     host: {class: "lightbox-generic-form"},
     selector: "tg-kanban-us-edit-lightbox",
-    template: require("./kanban-us-edit-lightbox.jade")(),
+    template: require("./kanban-us-edit-lightbox.pug")(),
 })
 export class KanbanUsEditLightbox {
     @Input() us: any;

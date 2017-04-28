@@ -31,7 +31,7 @@ import {DiscoverProjectsService} from "../services/discover-projects.service";
 
 @Component({
     selector: "tg-discover-search-results",
-    template: require("./discover-search-results.jade")(),
+    template: require("./discover-search-results.pug")(),
 })
 export class DiscoverSearchResults {
     @Input() projects;

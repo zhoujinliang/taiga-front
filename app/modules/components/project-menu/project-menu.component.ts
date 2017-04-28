@@ -24,7 +24,7 @@ import {slugify} from "../../../libs/utils";
 
 @Component({
     selector: "tg-project-menu",
-    template: require("./project-menu.jade")(),
+    template: require("./project-menu.pug")(),
 })
 export class ProjectMenu implements OnChanges {
     @Input() project: any;

@@ -8,7 +8,7 @@ import { LoginData } from "../auth.model";
 
 @Component({
     selector: "tg-login-page",
-    template: require("./login.jade")(),
+    template: require("./login.pug")(),
 })
 export class LoginPage {
     nextUrl: string;

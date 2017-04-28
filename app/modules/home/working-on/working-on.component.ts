@@ -22,7 +22,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-working-on",
-    template: require("./working-on.jade")(),
+    template: require("./working-on.pug")(),
 })
 export class WorkingOn {
     @Input() assignedTo;

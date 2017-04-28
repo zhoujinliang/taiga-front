@@ -6,7 +6,7 @@ import { ConfigurationService } from "../../../ts/modules/base/conf";
 
 @Component({
     selector: "tg-forgot-password-page",
-    template: require("./forgot-password.jade")(),
+    template: require("./forgot-password.pug")(),
 })
 export class ForgotPasswordPage {
     nextUrl: string;

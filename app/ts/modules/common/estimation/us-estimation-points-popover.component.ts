@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-us-estimation-points-popover",
-    template: require("./us-estimation-points-popover.jade")(),
+    template: require("./us-estimation-points-popover.pug")(),
 })
 export class UsEstimationPointsPopover {
     @Input() points: Immutable.List<any>;

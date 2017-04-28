@@ -22,7 +22,7 @@ import {TranslateService} from "@ngx-translate/core";
 
 @Component({
     selector: "tg-discover-home-order-by",
-    template: require("./discover-home-order-by.jade")(),
+    template: require("./discover-home-order-by.pug")(),
 })
 export class DiscoverHomeOrderBy implements OnInit{
     @Output() order: EventEmitter<any>;

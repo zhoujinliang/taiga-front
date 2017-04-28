@@ -23,7 +23,7 @@ import * as _ from "lodash";
 
 @Component({
     selector: "tg-card",
-    template: require("./card.jade")(),
+    template: require("./card.pug")(),
 })
 export class Card {
     @Input() item: Immutable.Map<string, any>;

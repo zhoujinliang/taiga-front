@@ -26,7 +26,7 @@ import {Component, Input} from "@angular/core";
 
 @Component({
     selector: "tg-user-settings-navigation",
-    template: require("./navigation.jade")(),
+    template: require("./navigation.pug")(),
 })
 export class UserSettingsNavigation {
     @Input() active;

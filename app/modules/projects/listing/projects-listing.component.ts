@@ -25,7 +25,7 @@ import {IState} from "../../../app.store";
 
 @Component({
     selector: "tg-project-listing",
-    template: require("./projects-listing.jade")(),
+    template: require("./projects-listing.pug")(),
 })
 export class ProjectsListing {
     projects: any;

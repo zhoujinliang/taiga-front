@@ -30,7 +30,7 @@ import {ConfigurationService} from "../../modules/base/conf";
 
 @Component({
     selector: "tg-user-settings",
-    template: require("./user-settings.jade")(),
+    template: require("./user-settings.pug")(),
 })
 export class UserSettings {
     sectionName = "USER_SETTINGS.MENU.SECTION_TITLE";
