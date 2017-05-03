@@ -17,7 +17,7 @@ import {SprintsResource} from "./sprints";
 import {UserSettingsResource} from "./user-settings";
 import {WebhookLogsResource} from "./webhooklogs";
 import {WebhooksResource} from "./webhooks";
-import {WikiResource} from "./wiki";
+import {WikiResource} from "./wiki-resource.service";
 
 import {AttachmentsResource} from "./attachments-resource.service";
 import {EpicsResource} from "./epics-resource.service";
@@ -30,7 +30,6 @@ import {TasksResource} from "./tasks-resource.service";
 import {UserResource} from "./user-resource.service";
 import {UsersResource} from "./users-resource.service";
 import {UserstoriesResource} from "./userstories-resource.service";
-import {WikiHistoryResource} from "./wiki-history-resource.service";
 
 const api_urls = {
     // Auth
@@ -142,8 +141,11 @@ const api_urls = {
 
     // Wiki pages
     "wiki": "/wiki",
+    "wiki-by-slug": "/wiki/by_slug",
+    "wiki-page": "/wiki/%s",
     "wiki-restore": "/wiki/%s/restore",
     "wiki-links": "/wiki-links",
+    "wiki-link": "/wiki-links/%s",
 
     // History
     "history/epic": "/history/epic",
@@ -266,7 +268,6 @@ export class ResourcesService {
                 public user: UserResource,
                 public users: UsersResource,
                 public userstories: UserstoriesResource,
-                public wikiHistory: WikiHistoryResource,
                 private urls: UrlsService) {
         this.urls.update(api_urls);
     }

@@ -25,28 +25,48 @@ import {RepositoryService} from "../../ts/modules/base/repository";
 import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
-export class WikiHistoryResource {
+export class WikiResource {
     constructor(private repo: RepositoryService,
                 private urls: UrlsService,
                 private http: HttpService) {}
 
     get(wikiId) {
-        return this.repo.queryOne("wiki", wikiId);
+        const url = this.urls.resolve("wiki-page");
+        return this.http.get(url);
     }
 
     getBySlug(projectId, slug) {
-        return this.repo.queryOne("wiki", `by_slug?project=${projectId}&slug=${slug}`);
+        const url = this.urls.resolve("wiki-by-slug");
+        return this.http.get(url, {project: projectId, slug: slug});
     }
 
     list(projectId) {
-        return this.repo.queryMany("wiki", {project: projectId});
+        const url = this.urls.resolve("wiki");
+        return this.http.get(url, {project: projectId});
+    }
+
+    update(wikiId, content, version) {
+        const url = this.urls.resolve("wiki-page", wikiId);
+        const data = {content, version}
+        return this.http.patch(url, data);
+    }
+
+    delete(wikiId) {
+        const url = this.urls.resolve("wiki-page", wikiId);
+        return this.http.delete(url);
+    }
+
+    deleteLink(linkId) {
+        const url = this.urls.resolve("wiki-link", linkId);
+        return this.http.delete(url);
     }
 
     listLinks(projectId) {
-        return this.repo.queryMany("wiki-links", {project: projectId});
+        const url = this.urls.resolve("wiki-links");
+        return this.http.get(url, {project: projectId});
     }
 
-    getWikiHistory(wikiId) {
+    getHistory(wikiId) {
         const url = this.urls.resolve("history/wiki", wikiId);
 
         const httpOptions = {
@@ -55,7 +75,6 @@ export class WikiHistoryResource {
             },
         };
 
-        return this.http.get(url, null, httpOptions)
-            .map((result: any) => Immutable.fromJS(result.data));
+        return this.http.get(url, null, httpOptions);
     }
 }

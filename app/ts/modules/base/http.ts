@@ -25,8 +25,8 @@
 import {Injectable} from "@angular/core";
 import {Http} from "@angular/http";
 import {TranslateService} from "@ngx-translate/core";
-import * as Promise from "bluebird";
 import * as _ from "lodash";
+import * as Immutable from "immutable";
 import "rxjs/add/operator/toPromise";
 import {StorageService} from "./storage";
 
@@ -63,8 +63,8 @@ export class HttpService {
         }
 
         return this.http.request(options.url, options)
-                        .map(function(res) {
-                            (res as any).data = res.json();
+                        .map(function(res:any) {
+                            res.data = Immutable.fromJS(res.json());
                             return res;
                         });
     }
