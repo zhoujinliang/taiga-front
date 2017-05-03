@@ -15,7 +15,6 @@ import {SprintsResource} from "./sprints";
 import {UserSettingsResource} from "./user-settings";
 import {WebhookLogsResource} from "./webhooklogs";
 import {WebhooksResource} from "./webhooks";
-import {WikiResource} from "./wiki";
 
 import {AttachmentsResource} from "./attachments-resource.service";
 import {EpicsResource} from "./epics-resource.service";
@@ -28,7 +27,7 @@ import {TasksResource} from "./tasks-resource.service";
 import {UserResource} from "./user-resource.service";
 import {UsersResource} from "./users-resource.service";
 import {UserstoriesResource} from "./userstories-resource.service";
-import {WikiHistoryResource} from "./wiki-history-resource.service";
+import {WikiResource} from "./wiki-resource.service";
 
 import {ResourcesService} from "./resources.service";
 
@@ -65,7 +64,6 @@ import {ResourcesService} from "./resources.service";
         UserResource,
         UsersResource,
         UserstoriesResource,
-        WikiHistoryResource,
     ],
 })
 export class ResourcesModule {}

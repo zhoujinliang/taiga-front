@@ -30,7 +30,7 @@ export class WikiEffects {
         .map(toPayload)
         .switchMap((projectId) => {
           return this.rs.wiki.list(projectId).map((wikiPagesList) => {
-              return new actions.SetWikiPagesListAction(wikiPagesList);
+              return new actions.SetWikiPagesListAction(wikiPagesList.data);
           });
         });
 
@@ -50,7 +50,7 @@ export class WikiEffects {
         .map(toPayload)
         .switchMap((projectId) => {
           return this.rs.wiki.listLinks(projectId).map((links) => {
-              return new actions.SetWikiLinksAction(links);
+              return new actions.SetWikiLinksAction(links.data);
           });
         });
 
