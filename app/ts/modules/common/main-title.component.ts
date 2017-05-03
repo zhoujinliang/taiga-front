@@ -6,5 +6,6 @@ import {Component, Input} from "@angular/core";
 })
 export class MainTitle {
     @Input() sectionName;
-    @Input() projectName;
+    @Input() subsectionName;
+    @Input() project;
 }

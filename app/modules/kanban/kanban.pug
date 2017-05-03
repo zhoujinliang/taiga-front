@@ -33,7 +33,7 @@ div.wrapper
         )
 
         .kanban-header
-            tg-main-title([projectName]="(project | async)?.get('name')", [sectionName]="section")
+            tg-main-title([project]="project | async", [sectionName]="section")
             .taskboard-actions
                 // .zoom-loading(tg-loading="ctrl.zoomLoading")
                 tg-kanban-board-zoom([value]="(zoom | async).level")

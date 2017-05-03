@@ -22,6 +22,7 @@ import { ProjectsModule } from "./modules/projects/projects.module";
 import { ResourcesModule } from "./modules/resources/resources.module";
 import { TgServicesModule } from "./modules/services/services.module";
 import { TgBaseModule } from "./ts/modules/base/base.module";
+import { TgPipesModule } from "./modules/pipes/pipes.module";
 
 import { TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
@@ -60,6 +61,7 @@ export function HttpLoaderFactory(http: Http) {
     AuthModule,
     KanbanModule,
     WikiModule,
+    TgPipesModule,
     TranslateModule.forRoot({
         loader: {
             provide: TranslateLoader,

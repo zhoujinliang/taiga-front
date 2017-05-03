@@ -18,10 +18,10 @@ div.menu-secondary.extrabar.wiki-nav
             // TODO , *ngif="'addWikiLinkPermission"
             tg-svg.dragger(svg-icon="icon-drag")
 
-                a.link-title(
-                    [title]="link.get('title')",
-                    [routerLink]="['project', project?.get('slug'), 'wiki', link.get('url')]"
-                ) {{ link.get('title') }}
+            a.link-title(
+                [title]="link.get('title')",
+                [routerLink]="['project', project?.get('slug'), 'wiki', link.get('href')]"
+            ) {{ link.get('title') }}
 
             // TODO , *ngif="'deleteWikiLinkPermission"
             a.js-delete-link.remove-wiki-page([title]="'WIKI.DELETE_LINK_TITLE' | translate")

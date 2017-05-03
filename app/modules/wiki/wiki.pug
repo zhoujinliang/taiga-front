@@ -5,8 +5,7 @@ div.wrapper
     section.main.wiki
         header
             h1
-                span(tg-bo-bind="project.name")
-                span.green(translate="PROJECT.SECTION.WIKI")
+                tg-main-title([project]="project|async", sectionName="Wiki")
 
         // tg-wiki-wysiwyg([page]="page|async")
         //

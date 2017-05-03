@@ -32,6 +32,7 @@ import { ProjectLogoBig } from "./project-logo-big/project-logo-big.component";
 import { ProjectLogoSmall } from "./project-logo-small/project-logo-small.component";
 import { ProjectMenu } from "./project-menu/project-menu.component";
 import { TermsOfServiceAndPrivacyPolicyNotice } from "./terms-of-service-and-privacy-policy-notice/terms-of-service-and-privacy-policy-notice.component";
+import { UserDisplay} from "./user-display/user-display.component";
 
 @NgModule({
     imports: [
@@ -56,6 +57,7 @@ import { TermsOfServiceAndPrivacyPolicyNotice } from "./terms-of-service-and-pri
         AssignedToSelector,
         AssignedItem,
         LoaderFull,
+        UserDisplay,
     ],
     declarations: [
         Card,
@@ -81,6 +83,7 @@ import { TermsOfServiceAndPrivacyPolicyNotice } from "./terms-of-service-and-pri
         AssignedToSelector,
         AssignedItem,
         LoaderFull,
+        UserDisplay,
     ],
     providers: [
         AvatarService,

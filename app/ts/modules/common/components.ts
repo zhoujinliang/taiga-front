@@ -178,39 +178,6 @@ export let CreatedByDisplayDirective = function($template, $compile, $translate,
     };
 };
 
-export let UserDisplayDirective = function($template, $compile, $translate, $navUrls, avatarService){
-    // Display the user information (full name and photo).
-    //
-    // Example:
-    //     div.creator(tg-user-display, tg-user-id="{{ user.id }}")
-    //
-    // Requirements:
-    //   - scope.usersById object is required.
-
-    const link = function($scope, $el, $attrs) {
-        const id = $attrs.tgUserId;
-        $scope.user = $scope.usersById[id] || {
-            full_name_display: $translate.instant("COMMON.EXTERNAL_USER"),
-        };
-
-        const avatar = avatarService.getAvatar($scope.usersById[id] || null);
-
-        $scope.user.avatar = avatar.url;
-        $scope.user.bg = avatar.bg;
-
-        $scope.url = $scope.user.is_active ? $navUrls.resolve("user-profile", {username: $scope.user.username}) : "";
-
-        return $scope.$on("$destroy", () => $el.off());
-    };
-
-    return {
-        link,
-        restrict: "EA",
-        scope: true,
-        templateUrl: "common/components/user-display.html",
-    };
-};
-
 //############################################################################
 //# Watchers directive
 //############################################################################
