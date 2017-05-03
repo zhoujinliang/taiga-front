@@ -20,7 +20,7 @@ export class WikiEffects {
         .map(toPayload)
         .switchMap((payload) => {
           return this.rs.wiki.getBySlug(payload.projectId, payload.slug).map((wikiPage) => {
-              return new actions.SetWikiPageAction(wikiPage);
+              return new actions.SetWikiPageAction(wikiPage.data);
           });
         });
 
@@ -41,6 +41,16 @@ export class WikiEffects {
         .switchMap((wikiId) => {
           return this.rs.wiki.getHistory(wikiId).map((wikiPageHistory) => {
               return new actions.SetWikiPageHistoryAction(wikiPageHistory);
+          });
+        });
+
+    @Effect()
+    fetchWikiPageAttachments: Observable<Action> = this.actions$
+        .ofType("FETCH_WIKI_PAGE_ATTACHMENTS")
+        .map(toPayload)
+        .switchMap((payload) => {
+          return this.rs.attachments.list("wiki_page", payload.wikiId, payload.projectId).map((attachments) => {
+              return new actions.SetWikiPageAttachmentsAction(attachments.data);
           });
         });
 

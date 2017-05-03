@@ -25,6 +25,15 @@ export class FetchWikiPageHistoryAction implements Action {
   }
 }
 
+export class FetchWikiPageAttachmentsAction implements Action {
+  readonly type = "FETCH_WIKI_PAGE_ATTACHMENTS";
+  payload:any;
+
+  constructor(projectId: number, wikiId: string) {
+      this.payload = {projectId, wikiId};
+  }
+}
+
 export class FetchWikiLinksAction implements Action {
   readonly type = "FETCH_WIKI_LINKS";
 
@@ -63,6 +72,12 @@ export class SetWikiPagesListAction implements Action {
 
 export class SetWikiPageHistoryAction implements Action {
   readonly type = "SET_WIKI_PAGE_HISTORY";
+
+  constructor(public payload: Immutable.List<any>) {}
+}
+
+export class SetWikiPageAttachmentsAction implements Action {
+  readonly type = "SET_WIKI_PAGE_ATTACHMENTS";
 
   constructor(public payload: Immutable.List<any>) {}
 }

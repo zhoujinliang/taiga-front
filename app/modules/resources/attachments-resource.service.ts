@@ -53,8 +53,7 @@ export class AttachmentsResource {
 
         const url = this.urls.resolve(urlname);
 
-        return this.http.get(url, params, httpOptions)
-            .map((result: any) => Immutable.fromJS(result.data));
+        return this.http.get(url, params, httpOptions);
     }
 
     delete(type, id) {

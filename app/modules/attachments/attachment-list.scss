@@ -25,6 +25,11 @@
         flex-shrink: 0;
         padding-right: 1rem;
     }
+    .editable-attachment {
+        align-items: center;
+        display: flex;
+        width: 100%;
+    }
     .attachment-comments,
     .editable-attachment-comment {
         flex: 2;

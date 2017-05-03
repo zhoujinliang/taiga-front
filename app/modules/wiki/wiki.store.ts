@@ -5,6 +5,7 @@ export const wikiInitialState = {
     "pages": [],
     "history": [],
     "links": [],
+    "page-attachments": [],
 };
 
 export const wikiReducer = (state, action) => {
@@ -15,6 +16,8 @@ export const wikiReducer = (state, action) => {
             return state.set("pages", action.payload);
         case "SET_WIKI_PAGE_HISTORY":
             return state.set("history", action.payload);
+        case "SET_WIKI_PAGE_ATTACHMENTS":
+            return state.set("page-attachments", action.payload);
         case "SET_WIKI_LINKS":
             return state.set("links", action.payload);
         default:

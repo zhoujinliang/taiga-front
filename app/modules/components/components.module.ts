@@ -6,6 +6,7 @@ import {TranslateModule} from "@ngx-translate/core";
 
 import {TgBaseModule} from "../../ts/modules/base/base.module";
 import {TgCommonModule} from "../../ts/modules/common/common.module";
+import {TgPipesModule} from "../pipes/pipes.module";
 
 import { AssignedItem } from "./assigned-to/assigned-item/assigned-item.component";
 import { AssignedToSelector } from "./assigned-to/assigned-to-selector/assigned-to-selector.component";
@@ -33,10 +34,13 @@ import { ProjectLogoSmall } from "./project-logo-small/project-logo-small.compon
 import { ProjectMenu } from "./project-menu/project-menu.component";
 import { TermsOfServiceAndPrivacyPolicyNotice } from "./terms-of-service-and-privacy-policy-notice/terms-of-service-and-privacy-policy-notice.component";
 import { UserDisplay} from "./user-display/user-display.component";
+import { AttachmentsFull } from "./attachments-full/attachments-full.component";
+import { Attachment } from "./attachment/attachment.component";
 
 @NgModule({
     imports: [
         CommonModule,
+        TgPipesModule,
         TgCommonModule,
         TgBaseModule,
         RouterModule.forChild([]),
@@ -58,6 +62,8 @@ import { UserDisplay} from "./user-display/user-display.component";
         AssignedItem,
         LoaderFull,
         UserDisplay,
+        AttachmentsFull,
+        Attachment,
     ],
     declarations: [
         Card,
@@ -84,6 +90,8 @@ import { UserDisplay} from "./user-display/user-display.component";
         AssignedItem,
         LoaderFull,
         UserDisplay,
+        AttachmentsFull,
+        Attachment,
     ],
     providers: [
         AvatarService,

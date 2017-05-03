@@ -7,10 +7,10 @@ import * as Immutable from "immutable";
     template: require("./wiki-summary.pug")(),
 })
 export class WikiSummary {
-    @Input() page: Immutable.List<any>;
+    @Input() page: Immutable.Map<string, any>;
+    @Input() project: Immutable.Map<string, any>;
 
-    constructor() {
-    }
+    constructor() {}
 
     delete() {
         console.log("delete");

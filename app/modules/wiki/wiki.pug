@@ -9,9 +9,9 @@ div.wrapper
 
         // tg-wiki-wysiwyg([page]="page|async")
         //
-        // tg-wiki-summary([page]="page|async")
-        //
-        // tg-attachments-full([page]="page|async")
+        tg-wiki-summary([page]="page|async", [project]="project|async")
+
+        tg-attachments-full([attachments]="pageAttachments|async")
         // //     ng-if="wiki.id",
         // //     obj-id="wiki.id",
         // //     type="wiki_page",
