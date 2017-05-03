@@ -6,6 +6,7 @@ import {homeInitialState, homeReducer} from "./modules/home/home.store";
 import {kanbanInitialState, kanbanReducer} from "./modules/kanban/kanban.store";
 import {projectsInitialState, projectsReducer} from "./modules/projects/projects.store";
 import {commonInitialState, commonReducer} from "./ts/modules/common/common.store";
+import {wikiInitialState, wikiReducer} from "./modules/wiki/wiki.store";
 
 export type IState = Immutable.Map<string, any>;
 
@@ -21,6 +22,7 @@ const initialState = Immutable.fromJS({
     discover: discoverInitialState,
     common: commonInitialState,
     auth: authInitialState,
+    wiki: wikiInitialState,
     projects: projectsInitialState,
     router: {
         path: window.location.pathname + window.location.search
@@ -50,5 +52,6 @@ export const rootReducer = (state= initialState, action) => {
                 .set("projects", projectsReducer(state.get("projects"), action))
                 .set("discover", discoverReducer(state.get("discover"), action))
                 .set("auth", authReducer(state.get("auth"), action))
+                .set("wiki", wikiReducer(state.get("wiki"), action))
                 .set("common", commonReducer(state.get("common"), action));
 };
