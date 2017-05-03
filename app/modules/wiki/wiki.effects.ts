@@ -13,7 +13,7 @@ import * as actions from "./wiki.actions";
 // TODO: Add derivated effects like success messages
 
 @Injectable()
-export class DiscoverEffects {
+export class WikiEffects {
     @Effect()
     fetchWikiPage$: Observable<Action> = this.actions$
         .ofType("FETCH_WIKI_PAGE")

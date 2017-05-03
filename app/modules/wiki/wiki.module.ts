@@ -11,6 +11,7 @@ import {TgComponentsModule} from "../components/components.module";
 import {TgServicesModule} from "../services/services.module";
 import {WikiPage} from "./wiki.component";
 import {WikiNav} from "./wiki-nav/wiki-nav.component";
+import {WikiEffects} from "./wiki.effects";
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import {WikiNav} from "./wiki-nav/wiki-nav.component";
             { path: "project/:slug/wiki", redirectTo: "project/:slug/wiki/home"},
             { path: "project/:slug/wiki/:page", component: WikiPage },
         ]),
+        EffectsModule.run(WikiEffects),
     ],
     providers: [
     ],
