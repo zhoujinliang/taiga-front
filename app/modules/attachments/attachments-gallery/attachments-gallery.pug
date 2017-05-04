@@ -1,8 +1,9 @@
 .attachment-gallery
     tg-attachment-gallery(
-        *ngFor="let attachment of attachments",
+        *ngFor="let attachment of visibleAttachments",
         [attachment]="attachment",
         (delete)="delete.emit($event)",
+        (preview)="preview.emit($event)",
         type="type"
     )
 

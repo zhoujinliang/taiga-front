@@ -12,12 +12,15 @@ section.attachments
         *ngIf="mode == 'list'",
         (preview)="previewAttachment($event)",
         [attachments]="attachments",
-        [uploadingAttachments]="uploadingAttachments")
+        [uploadingAttachments]="uploadingAttachments",
+        [isDeprecatedVisible]="isDeprecatedVisible",
+        (showDeprecateds)="isDeprecatedVisible = $event")
 
     tg-attachments-gallery(
         *ngIf="mode == 'gallery'",
         (preview)="previewAttachment($event)",
         [attachments]="attachments",
+        [isDeprecatedVisible]="isDeprecatedVisible",
         [uploadingAttachments]="uploadingAttachments")
 
 

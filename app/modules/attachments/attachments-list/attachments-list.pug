@@ -3,7 +3,7 @@
     div
       div(*ngFor="let attachment of attachments")
         tg-attachment(
-            *ngIf="deprecatedsVisible || !attachment.get('is_deprecated') ",
+            *ngIf="isDeprecatedVisible || !attachment.get('is_deprecated') ",
             [attachment]="attachment",
             (delete)="delete.emit($event)",
             (update)="update.emit($event)",
@@ -27,11 +27,11 @@
       (click)="toggleDeprecatedsVisible()"
     )
         span.text(
-          *ngIf="!deprecatedsVisible",
+          *ngIf="!isDeprecatedVisible",
           translate="ATTACHMENT.SHOW_DEPRECATED"
         )
         span.text(
-          *ngIf="deprecatedsVisible",
+          *ngIf="isDeprecatedVisible",
           translate="ATTACHMENT.HIDE_DEPRECATED"
         )
         span.more-attachments-num(

@@ -1,6 +1,6 @@
 .single-attachment(
     [class.deprecated]="attachment.get('is_deprecated')",
-    *ngIf="attachment.get('id') && !attachment.get('is_deprecated')"
+    *ngIf="attachment.get('id')"
 )
     tg-attachment-link.attachment-image([attachment]="attachment", (preview)="preview.emit($event)")
         img(

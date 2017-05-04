@@ -49,7 +49,6 @@ export class AttachmentsPreviewLightbox implements OnChanges {
     }
 
     next() {
-        console.log("NEXT");
         if (this.currentPosition === (this.images.size - 1)) {
             this.currentPosition = 0
         } else {
@@ -59,7 +58,6 @@ export class AttachmentsPreviewLightbox implements OnChanges {
     }
 
     previous() {
-        console.log("PREV");
         if (this.currentPosition === 0) {
             this.currentPosition = (this.images.size - 1)
         } else {

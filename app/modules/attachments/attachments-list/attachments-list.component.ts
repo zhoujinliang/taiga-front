@@ -8,16 +8,18 @@ import * as Immutable from "immutable";
 export class AttachmentsList implements OnChanges {
     @Input() attachments: Immutable.List<any>;
     @Input() uploadingAttachments: Immutable.List<any>;
+    @Input() isDeprecatedVisible: boolean = false;
     @Output() delete: EventEmitter<number>;
     @Output() update: EventEmitter<any>;
     @Output() preview: EventEmitter<any>;
+    @Output() showDeprecateds: EventEmitter<boolean>;
     deprecateds: Immutable.List<any>;
-    deprecatedsVisible: boolean = false;
 
     constructor() {
         this.delete = new EventEmitter();
         this.update = new EventEmitter();
         this.preview = new EventEmitter();
+        this.showDeprecateds = new EventEmitter();
     }
 
     ngOnChanges() {
@@ -25,6 +27,6 @@ export class AttachmentsList implements OnChanges {
     }
 
     toggleDeprecatedsVisible() {
-        this.deprecatedsVisible = !this.deprecatedsVisible;
+        this.showDeprecateds.emit(!this.isDeprecatedVisible);
     }
 }
