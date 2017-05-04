@@ -22,6 +22,9 @@ import * as Immutable from "immutable"
 import {sizeFormat} from "../../../libs/utils";
 import {ConfigurationService} from "../../../ts/modules/base/conf";
 import {StorageService} from "../../../ts/modules/base/storage";
+import {Store} from "@ngrx/store";
+import {IState} from "../../../app.store";
+import {OpenLightboxAction} from "../../../app.actions";
 
 import {Component, Input, OnChanges} from "@angular/core";
 
@@ -30,9 +33,9 @@ import {Component, Input, OnChanges} from "@angular/core";
     selector: "tg-attachments-full",
     template: require("./attachments-full.pug")(),
 })
-export class AttachmentsFull implements OnChanges {
+export class AttachmentsFull {
     @Input() attachments: Immutable.List<any>;
-    deprecateds: Immutable.List<any>;
+    uploadingAttachments: Immutable.List<any>;
     mode: any = "list";
     maxFileSize: any;
     maxFileSizeMsg: any;
@@ -40,16 +43,13 @@ export class AttachmentsFull implements OnChanges {
     objId: any;
     type: any;
     editPermission: any;
-    deprecatedsVisible: boolean;
+    attachmentPreview: Immutable.Map<string, any>;
 
-    constructor(private config: ConfigurationService, private storage: StorageService) {
+    constructor(private store: Store<IState>, private config: ConfigurationService, private storage: StorageService) {
+        this.uploadingAttachments = Immutable.List();
         // this.maxFileSize = this.config.get("maxUploadFileSize", null);
         // if (this.maxFileSize) { this.maxFileSize = sizeFormat(this.maxFileSize); }
         // this.maxFileSizeMsg = this.maxFileSize ? this.translate.instant("ATTACHMENT.MAX_UPLOAD_SIZE", {maxFileSize: this.maxFileSize}) : "";
-    }
-
-    ngOnChanges() {
-        this.deprecateds = this.attachments.filter((att) => att.get('is_deprecated')).toList();
     }
 
     // uploadingAttachments() {
@@ -68,8 +68,9 @@ export class AttachmentsFull implements OnChanges {
         return this.storage.set("attachment-mode", mode);
     }
 
-    toggleDeprecatedsVisible() {
-        this.deprecatedsVisible = !this.deprecatedsVisible;
+    previewAttachment(attachment) {
+        this.attachmentPreview = attachment;
+        this.store.dispatch(new OpenLightboxAction("attachments.preview"));
     }
 
     // addAttachments(files) {

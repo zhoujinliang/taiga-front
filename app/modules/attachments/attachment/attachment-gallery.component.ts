@@ -14,19 +14,26 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: attachments-preview.service.coffee
+ * File: attachment-gallery.directive.coffee
  */
 
-import * as angular from "angular";
-import {Service} from "../../../ts/classes";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
+import * as Immutable from "immutable";
 
-export class AttachmentsPreviewService extends Service {
-    static initClass() {
-        this.$inject = [];
-    }
+@Component({
+    host: {class: "attachment-gallery-container"},
+    selector: "tg-attachment-gallery",
+    template: require("./attachment-gallery.pug")(),
+})
+export class AttachmentGallery {
+    @Input() attachment: Immutable.Map<string, any>;
+    @Output() update: EventEmitter<any>;
+    @Output() delete: EventEmitter<number>;
+    @Output() preview: EventEmitter<any>;
 
     constructor() {
-        super();
+        this.update = new EventEmitter();
+        this.delete = new EventEmitter();
+        this.preview = new EventEmitter();
     }
 }
-AttachmentsPreviewService.initClass();

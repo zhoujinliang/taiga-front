@@ -34,8 +34,7 @@ import { ProjectLogoSmall } from "./project-logo-small/project-logo-small.compon
 import { ProjectMenu } from "./project-menu/project-menu.component";
 import { TermsOfServiceAndPrivacyPolicyNotice } from "./terms-of-service-and-privacy-policy-notice/terms-of-service-and-privacy-policy-notice.component";
 import { UserDisplay} from "./user-display/user-display.component";
-import { AttachmentsFull } from "./attachments-full/attachments-full.component";
-import { Attachment } from "./attachment/attachment.component";
+import { PreloadImage} from "./preload-image/preload-image.component";
 
 @NgModule({
     imports: [
@@ -62,8 +61,7 @@ import { Attachment } from "./attachment/attachment.component";
         AssignedItem,
         LoaderFull,
         UserDisplay,
-        AttachmentsFull,
-        Attachment,
+        PreloadImage,
     ],
     declarations: [
         Card,
@@ -90,8 +88,7 @@ import { Attachment } from "./attachment/attachment.component";
         AssignedItem,
         LoaderFull,
         UserDisplay,
-        AttachmentsFull,
-        Attachment,
+        PreloadImage,
     ],
     providers: [
         AvatarService,

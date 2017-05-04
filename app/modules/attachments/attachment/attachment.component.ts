@@ -29,11 +29,13 @@ export class Attachment {
     @Input() attachment: Immutable.Map<string, any>;
     @Output() update: EventEmitter<any>;
     @Output() delete: EventEmitter<number>;
+    @Output() preview: EventEmitter<any>;
     editable: boolean;
 
     constructor() {
         this.update = new EventEmitter();
         this.delete = new EventEmitter();
+        this.preview = new EventEmitter();
     }
 
     editMode(mode) {

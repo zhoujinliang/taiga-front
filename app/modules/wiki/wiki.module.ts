@@ -9,6 +9,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {TgCommonModule} from "../../ts/modules/common/common.module";
 import {TgPipesModule} from "../pipes/pipes.module";
 import {TgComponentsModule} from "../components/components.module";
+import {TgAttachmentsModule} from "../attachments/attachments.module";
 import {TgServicesModule} from "../services/services.module";
 import {WikiPage} from "./wiki.component";
 import {WikiListPage} from "./wiki-list.component";
@@ -33,6 +34,7 @@ import {WikiSummary} from "./wiki-summary/wiki-summary.component";
         CommonModule,
         TgCommonModule,
         TgComponentsModule,
+        TgAttachmentsModule,
         TgServicesModule,
         TgPipesModule,
         FormsModule,

@@ -4,13 +4,7 @@ div.single-attachment(
 )
 
     .attachment-name
-        // tg-attachment-link="vm.attachment",
-        a.e2e-attachment-link(
-            href="{{attachment.get('url')}}",
-            title="{{attachment.get('name')}}",
-            target="_blank",
-            download="{{attachment.get('name')}}"
-        )
+        tg-attachment-link([attachment]="attachment", (preview)="preview.emit($event)")
             tg-svg(svg-icon="icon-attachment")
             span {{attachment.get('name')}}
 
