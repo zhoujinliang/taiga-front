@@ -45,4 +45,7 @@ export class WikiPage {
             }
         });
     }
+
+    onDelete(page) {
+    }
 }

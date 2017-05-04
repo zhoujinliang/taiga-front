@@ -26,6 +26,7 @@ import { ProjectMenu } from "./project-menu/project-menu.component";
 import { TermsOfServiceAndPrivacyPolicyNotice } from "./terms-of-service-and-privacy-policy-notice/terms-of-service-and-privacy-policy-notice.component";
 import { UserDisplay} from "./user-display/user-display.component";
 import { PreloadImage} from "./preload-image/preload-image.component";
+import {ConfirmAsk} from "./confirm/confirm-ask.component";
 
 @NgModule({
     imports: [
@@ -52,6 +53,7 @@ import { PreloadImage} from "./preload-image/preload-image.component";
         LoaderFull,
         UserDisplay,
         PreloadImage,
+        ConfirmAsk,
     ],
     declarations: [
         BoardZoom,
@@ -70,6 +72,7 @@ import { PreloadImage} from "./preload-image/preload-image.component";
         LoaderFull,
         UserDisplay,
         PreloadImage,
+        ConfirmAsk,
     ],
     providers: [
         AvatarService,

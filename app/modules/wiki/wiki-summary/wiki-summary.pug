@@ -18,6 +18,15 @@
     tg-svg.remove(
         *ngIf="page.get('id')",
         [title]="'WIKI.REMOVE' | translate",
-        (click)="delete()",
+        (click)="onDeleteClicked()",
         svg-icon="icon-trash"
+    )
+
+tg-lightbox(key="wiki.delete-confirm", *ngIf="page")
+    tg-lightbox-close
+    tg-confirm-ask(
+        [title]="'WIKI.DELETE_LIGHTBOX_TITLE' | translate",
+        [subtitle]="'NOTIFICATION.ASK_DELETE' | translate",
+        [message]="page.get('slug')",
+        (response)="onResponse($event)"
     )

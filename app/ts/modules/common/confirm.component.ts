@@ -22,7 +22,7 @@
  * File: modules/base/confirm.coffee
  */
 
-import { Component } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { Store } from "@ngrx/store";
 import * as _ from "lodash";
 import { IState } from "../../../app.store";
@@ -81,12 +81,6 @@ export class NotificationMessages {
         }
         return this.currentState.get(0);
     }
-}
-
-@Component({
-    selector: "tg-ask",
-})
-export class Ask {
 }
 
 // export class ConfirmService extends Service {
