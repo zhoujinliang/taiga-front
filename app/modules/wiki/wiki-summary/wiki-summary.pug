@@ -4,15 +4,15 @@
             tg-avatar([user]="project.getIn(['membersById', page.get('last_modifier')])")
         .wiki-user-modification
             span.description(translate="WIKI.SUMMARY.LAST_MODIFICATION")
-            span.username {{ project.getIn(['membersById', page.get('last_modifier'), 'name']) }}
+            span.username {{ project.getIn(['membersById', page.get('last_modifier'), 'full_name_display']) }}
 
     .wiki-last-modified
-        span.number {{ page.get('last_modified_date') }}
-        span.description(translate="WIKI.SUMMARY.LAST_EDIT")
+        span.number {{ page.get('modified_date')|momentFormat:('WIKI.DATETIME'|translate)}}
+        span.description([innerHTML]="'WIKI.SUMMARY.LAST_EDIT' | translate")
 
     .wiki-times-edited
-        span.number {{ page.get('total_editions') }}
-        span.description(translate="WIKI.SUMMARY.TIMES_EDITED")
+        span.number {{ page.get('editions') }}
+        span.description([innerHTML]="'WIKI.SUMMARY.TIMES_EDITED' | translate")
 
     // tg-check-permission="delete_wiki_page"
     tg-svg.remove(
