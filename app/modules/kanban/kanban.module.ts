@@ -7,6 +7,7 @@ import { StoreModule } from "@ngrx/store";
 import {TranslateModule} from "@ngx-translate/core";
 
 import {TgCommonModule} from "../../ts/modules/common/common.module";
+import {TgCardsModule} from "../cards/cards.module";
 import {TgComponentsModule} from "../components/components.module";
 import {TgServicesModule} from "../services/services.module";
 import {KanbanArchivedStatusIntro} from "./components/kanban-archived-status-intro/kanban-archived-status-intro.component";
