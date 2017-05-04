@@ -1,42 +1,38 @@
-
 //- New attachment added
 .diff-attachments-new(
-    ng-if="diff.new.length"
-    ng-repeat="newAttachment in diff.new"
+    *ngFor="let newAttachment of diff.get('new')"
 )
     span.key(translate="ACTIVITY.NEW_ATTACHMENT")
-    span.diff {{newAttachment.filename}}
+    span.diff {{newAttachment.get('filename')}}
 
 //- Attachment updated
 .diff-attachments-update(
-    ng-if="diff.changed.length"
-    ng-repeat="editAttachment in diff.changed"
+    *ngFor="let editAttachment of diff.get('changed')"
 )
     span.key(
-        translate="ACTIVITY.UPDATED_ATTACHMENT"
-        translate-values="{filename: editAttachment.filename}"
+        translate="ACTIVITY.UPDATED_ATTACHMENT",
+        [translateParams]="{filename: editAttachment.get('filename')}"
     )
-    span.diff(ng-if="editAttachment.changes.is_deprecated")
+    span.diff(*ngIf="editAttachment.getIn(['changes', 'is_deprecated'])")
         span(
-            ng-if="editAttachment.changes.is_deprecated[1] == false"
+            *ngIf="editAttachment.getIn(['changes', 'is_deprecated', 1]) == false",
             translate="ACTIVITY.BECAME_UNDEPRECATED"
         )
         span(
-            ng-if="editAttachment.changes.is_deprecated[1] == true"
+            *ngIf="editAttachment.getIn(['changes', 'is_deprecated', 1]) == true",
             translate="ACTIVITY.BECAME_DEPRECATED"
         )
-    span.diff(ng-if="editAttachment.changes.description")
-        span(ng-if='editAttachment.changes.description[0].length') {{editAttachment.changes.description[0]}}
-        span(ng-if='!editAttachment.changes.description[0].length') ...
+    span.diff(*ngIf="editAttachment.getIn(['changes', 'description'])")
+        span(*ngIf="editAttachment.getIn(['changes', 'description', 0]).length") {{editAttachment.getIn(['changes', 'description', 0])}}
+        span(*ngIf="!editAttachment.getIn(['changes', 'description', 0]).length") ...
         tg-svg(
             svg-icon="icon-arrow-right"
         )
-        span {{editAttachment.changes.description[1]}}
+        span {{editAttachment.getIn(['changes', 'description', 1])}}
 
 //- Attachment deleted
 .diff-attachments-deleted(
-    ng-if="diff.deleted.length"
-    ng-repeat="deletedAttachment in diff.deleted"
+    *ngFor="let deletedAttachment of diff.get('deleted')"
 )
     span.key(translate="ACTIVITY.DELETED_ATTACHMENT")
-    span.diff {{deletedAttachment.filename}}
+    span.diff {{deletedAttachment.get('filename')}}

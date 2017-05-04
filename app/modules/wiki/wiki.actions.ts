@@ -18,11 +18,8 @@ export class FetchWikiPagesListAction implements Action {
 
 export class FetchWikiPageHistoryAction implements Action {
   readonly type = "FETCH_WIKI_PAGE_HISTORY";
-  payload:any;
 
-  constructor(projectId: number, slug: string) {
-      this.payload = {projectId, slug};
-  }
+  constructor(public payload: number) {}
 }
 
 export class FetchWikiPageAttachmentsAction implements Action {

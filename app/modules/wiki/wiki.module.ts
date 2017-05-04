@@ -17,6 +17,9 @@ import {WikiListRow} from "./wiki-list-row/wiki-list-row.component";
 import {WikiNav} from "./wiki-nav/wiki-nav.component";
 import {WikiEffects} from "./wiki.effects";
 import {WikiSummary} from "./wiki-summary/wiki-summary.component";
+import {WikiHistory} from "./history/wiki-history.component";
+import {WikiHistoryEntry} from "./history/wiki-history-entry.component";
+import {WikiHistoryDiff} from "./history/wiki-history-diff.component";
 
 @NgModule({
     declarations: [
@@ -25,6 +28,9 @@ import {WikiSummary} from "./wiki-summary/wiki-summary.component";
         WikiNav,
         WikiListRow,
         WikiSummary,
+        WikiHistory,
+        WikiHistoryEntry,
+        WikiHistoryDiff,
     ],
     exports: [
         WikiPage,

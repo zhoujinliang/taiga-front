@@ -40,7 +40,7 @@ export class WikiEffects {
         .map(toPayload)
         .switchMap((wikiId) => {
           return this.rs.wiki.getHistory(wikiId).map((wikiPageHistory) => {
-              return new actions.SetWikiPageHistoryAction(wikiPageHistory);
+              return new actions.SetWikiPageHistoryAction(wikiPageHistory.data);
           });
         });
 

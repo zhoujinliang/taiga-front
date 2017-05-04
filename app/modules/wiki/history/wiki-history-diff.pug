@@ -1,16 +1,12 @@
-.diff-status-wrapper(
-    ng-if="key === 'attachments'"
-)
+.diff-status-wrapper(*ngIf="key === 'attachments'")
     include history-templates/history-attachments
 
-.diff-status-wrapper(
-    ng-if="key === 'content_diff'"
-)
+.diff-status-wrapper(*ngIf="key === 'content_diff'")
     p.diff(
-        ng-if="diff[0]"
-        ng-bind-html="diff[0]"
+        *ngIf="diff.get(0)",
+        [innerHTML]="diff.get(0)"
     )
     p.diff(
-        ng-if="diff[1]"
-        ng-bind-html="diff[1]"
+        *ngIf="diff.get(1)",
+        [innerHTML]="diff.get(1)"
     )
