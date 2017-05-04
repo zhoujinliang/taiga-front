@@ -39,6 +39,7 @@ import {KanbanSortableDirective} from "./sortable.directive";
     imports: [
         CommonModule,
         TgCommonModule,
+        TgCardsModule,
         TgComponentsModule,
         TgServicesModule,
         FormsModule,

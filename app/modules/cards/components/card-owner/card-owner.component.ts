@@ -20,8 +20,8 @@
 import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
 import {Store} from "@ngrx/store";
 import * as Immutable from "immutable";
-import {OpenLightboxAction} from "../../../../../app.actions";
-import {IState} from "../../../../../app.store";
+import {OpenLightboxAction} from "../../../../app.actions";
+import {IState} from "../../../../app.store";
 
 @Component({
     selector: "tg-card-owner",
