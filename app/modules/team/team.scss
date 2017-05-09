@@ -57,6 +57,12 @@
         @include font-type(text);
         @include font-type(bold);
         border-bottom: 0;
+        .popover {
+            display: none;
+            &:hover {
+                display: block;
+            }
+        }
     }
     .hero {
         width: 100%;
