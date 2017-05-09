@@ -24,38 +24,30 @@
 
 import {Component } from "@angular/core";
 import {Store} from "@ngrx/store";
-import {TranslateService} from "@ngx-translate/core";
 import {IState} from "../../app.store";
-import {ConfigurationService} from "../../modules/base/conf";
+import {OpenLightboxAction, CloseLightboxAction} from "../../app.actions";
 
 @Component({
     selector: "tg-user-settings",
     template: require("./user-settings.pug")(),
 })
-export class UserSettings {
-    sectionName = "USER_SETTINGS.MENU.SECTION_TITLE";
+export class UserSettingsPage {
     user: any;
-    availableLanguages;
-    availableThemes;
-    defaultLanguage;
-    defaultTheme;
 
-    constructor(private store: Store<IState>,
-                private config: ConfigurationService,
-                private translate: TranslateService) {
+    constructor(private store: Store<IState>) {
         this.user = this.store.select((state) => state.getIn(["auth", "user"]));
-        this.availableLanguages =  this.store.select((state) => state.getIn(["user-settings", "languages"]));
-
-        this.availableThemes = this.config.get("themes", []);
-        this.defaultTheme = this.config.get("defaultTheme", []);
-        // this.defaultLanguage = this.translate.preferredLanguage();
     }
 
-    openDeleteLightbox(user) {
-        this.store.dispatch({
-            type: "USER_SETTINGS_OPEN_LB_DELETE",
-            payload: user,
-        });
+    onDeleteAccount(user) {
+        console.log("DELETE ACOUNT");
+        this.store.dispatch(new OpenLightboxAction("user-settings.delete-account"));
+    }
+
+    onDeleteAccountConfirm(confirm) {
+        if (confirm) {
+            console.log("BORRANDO CUENTA");
+        }
+        this.store.dispatch(new CloseLightboxAction());
     }
 
     onSubmitForm() {
@@ -90,60 +82,60 @@ export class UserSettings {
 //# User Avatar Directive
 //############################################################################
 
-export let UserAvatarDirective = function($auth, $model, $rs, $confirm) {
-    const link = function($scope, $el, $attrs) {
-        const showSizeInfo = () => $el.find(".size-info").removeClass("hidden");
-
-        const onSuccess = function(response) {
-            const user = $model.make_model("users", response.data);
-            $auth.setUser(user);
-            $scope.user = user;
-
-            $el.find(".loading-overlay").removeClass("active");
-            return $confirm.notify("success");
-        };
-
-        const onError = function(response) {
-            if (response.status === 413) { showSizeInfo(); }
-            $el.find(".loading-overlay").removeClass("active");
-            return $confirm.notify("error", response.data._error_message);
-        };
-
-        // Change photo
-        $el.on("click", ".js-change-avatar", () => $el.find("#avatar-field").click());
-
-        $el.on("change", "#avatar-field", function(event) {
-            if ($scope.avatarAttachment) {
-                $el.find(".loading-overlay").addClass("active");
-                return $rs.userSettings.changeAvatar($scope.avatarAttachment).then(onSuccess, onError);
-            }
-        });
-
-        // Use gravatar photo
-        $el.on("click", "a.js-use-gravatar", function(event) {
-            $el.find(".loading-overlay").addClass("active");
-            return $rs.userSettings.removeAvatar().then(onSuccess, onError);
-        });
-
-        return $scope.$on("$destroy", () => $el.off());
-    };
-
-    return {link};
-};
-
-//############################################################################
-//# User Avatar Model Directive
-//############################################################################
-
-export let TaigaAvatarModelDirective = function($parse) {
-    const link = function($scope, $el, $attrs) {
-        const model = $parse($attrs.tgAvatarModel);
-        const modelSetter = model.assign;
-
-        return $el.bind("change", () =>
-            $scope.$apply(() => modelSetter($scope, $el[0].files[0])),
-        );
-    };
-
-    return {link};
-};
+// export let UserAvatarDirective = function($auth, $model, $rs, $confirm) {
+//     const link = function($scope, $el, $attrs) {
+//         const showSizeInfo = () => $el.find(".size-info").removeClass("hidden");
+//
+//         const onSuccess = function(response) {
+//             const user = $model.make_model("users", response.data);
+//             $auth.setUser(user);
+//             $scope.user = user;
+//
+//             $el.find(".loading-overlay").removeClass("active");
+//             return $confirm.notify("success");
+//         };
+//
+//         const onError = function(response) {
+//             if (response.status === 413) { showSizeInfo(); }
+//             $el.find(".loading-overlay").removeClass("active");
+//             return $confirm.notify("error", response.data._error_message);
+//         };
+//
+//         // Change photo
+//         $el.on("click", ".js-change-avatar", () => $el.find("#avatar-field").click());
+//
+//         $el.on("change", "#avatar-field", function(event) {
+//             if ($scope.avatarAttachment) {
+//                 $el.find(".loading-overlay").addClass("active");
+//                 return $rs.userSettings.changeAvatar($scope.avatarAttachment).then(onSuccess, onError);
+//             }
+//         });
+//
+//         // Use gravatar photo
+//         $el.on("click", "a.js-use-gravatar", function(event) {
+//             $el.find(".loading-overlay").addClass("active");
+//             return $rs.userSettings.removeAvatar().then(onSuccess, onError);
+//         });
+//
+//         return $scope.$on("$destroy", () => $el.off());
+//     };
+//
+//     return {link};
+// };
+//
+// //############################################################################
+// //# User Avatar Model Directive
+// //############################################################################
+//
+// export let TaigaAvatarModelDirective = function($parse) {
+//     const link = function($scope, $el, $attrs) {
+//         const model = $parse($attrs.tgAvatarModel);
+//         const modelSetter = model.assign;
+//
+//         return $el.bind("change", () =>
+//             $scope.$apply(() => modelSetter($scope, $el[0].files[0])),
+//         );
+//     };
+//
+//     return {link};
+// };

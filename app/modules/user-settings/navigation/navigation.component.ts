@@ -29,5 +29,5 @@ import {Component, Input} from "@angular/core";
     template: require("./navigation.pug")(),
 })
 export class UserSettingsNavigation {
-    @Input() active;
+    @Input() active: string;
 }

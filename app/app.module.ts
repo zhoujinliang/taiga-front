@@ -19,6 +19,7 @@ import { HomeModule } from "./modules/home/home.module";
 import { KanbanModule } from "./modules/kanban/kanban.module";
 import { WikiModule } from "./modules/wiki/wiki.module";
 import { TeamModule } from "./modules/team/team.module";
+import { UserSettingsModule } from "./modules/user-settings/user-settings.module";
 import { ProjectsModule } from "./modules/projects/projects.module";
 import { ResourcesModule } from "./modules/resources/resources.module";
 import { TgServicesModule } from "./modules/services/services.module";
@@ -63,6 +64,7 @@ export function HttpLoaderFactory(http: Http) {
     KanbanModule,
     WikiModule,
     TeamModule,
+    UserSettingsModule,
     TgPipesModule,
     TranslateModule.forRoot({
         loader: {
