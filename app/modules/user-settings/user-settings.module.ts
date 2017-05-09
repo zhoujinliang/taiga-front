@@ -15,6 +15,8 @@ import {UserSettingsPage} from "./user-settings.component";
 import {UserSettingsNavigation} from "./navigation/navigation.component";
 import {UserSettingsForm} from "./user-settings-form/user-settings-form.component";
 import {DeleteAccountLightbox} from "./delete-account-lightbox/delete-account-lightbox.component";
+import {ChangePasswordPage} from "./change-password.component";
+import {ChangePasswordForm} from "./change-password-form/change-password-form.component";
 
 @NgModule({
     declarations: [
@@ -22,9 +24,12 @@ import {DeleteAccountLightbox} from "./delete-account-lightbox/delete-account-li
         UserSettingsNavigation,
         UserSettingsForm,
         DeleteAccountLightbox,
+        ChangePasswordPage,
+        ChangePasswordForm,
     ],
     exports: [
         UserSettingsPage,
+        ChangePasswordPage,
     ],
     imports: [
         CommonModule,
@@ -38,6 +43,7 @@ import {DeleteAccountLightbox} from "./delete-account-lightbox/delete-account-li
         TranslateModule.forChild({}),
         RouterModule.forChild([
             { path: "user-settings/user-profile", component: UserSettingsPage},
+            { path: "user-settings/user-change-password", component: ChangePasswordPage},
         ]),
         // EffectsModule.run(TeamEffects),
     ],
