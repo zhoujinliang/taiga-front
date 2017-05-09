@@ -107,7 +107,8 @@ export class ProjectsResource {
     }
 
     memberStats(projectId: number): any {
-        return this.repo.queryOneRaw("projects", `${projectId}/member_stats`);
+        const url = `${this.urls.resolve("projects")}/${projectId}/member_stats`;
+        return this.http.get(url);
     }
 
     tagsColors(projectId: number): any {

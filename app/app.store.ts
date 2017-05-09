@@ -5,6 +5,7 @@ import {discoverInitialState, discoverReducer} from "./modules/discover/discover
 import {homeInitialState, homeReducer} from "./modules/home/home.store";
 import {kanbanInitialState, kanbanReducer} from "./modules/kanban/kanban.store";
 import {projectsInitialState, projectsReducer} from "./modules/projects/projects.store";
+import {teamInitialState, teamReducer} from "./modules/team/team.store";
 import {commonInitialState, commonReducer} from "./ts/modules/common/common.store";
 import {wikiInitialState, wikiReducer} from "./modules/wiki/wiki.store";
 
@@ -24,6 +25,7 @@ const initialState = Immutable.fromJS({
     auth: authInitialState,
     wiki: wikiInitialState,
     projects: projectsInitialState,
+    team: teamInitialState,
     router: {
         path: window.location.pathname + window.location.search
     }
@@ -50,6 +52,7 @@ export const rootReducer = (state= initialState, action) => {
                 .set("global", globalReducer(state.get("global"), action))
                 .set("kanban", kanbanReducer(state.get("kanban"), action))
                 .set("projects", projectsReducer(state.get("projects"), action))
+                .set("team", teamReducer(state.get("team"), action))
                 .set("discover", discoverReducer(state.get("discover"), action))
                 .set("auth", authReducer(state.get("auth"), action))
                 .set("wiki", wikiReducer(state.get("wiki"), action))

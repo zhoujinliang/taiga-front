@@ -9,8 +9,8 @@ div.wrapper
 
         // tg-wiki-wysiwyg([page]="page|async")
 
-        tg-wiki-summary([page]="page|async", [project]="project|async", (delete)="onDelete($event)")
+        tg-wiki-summary([page]="page|async", [project]="project|async", (delete)="onDelete($event)", *ngIf="page|async")
 
-        tg-attachments-full([attachments]="pageAttachments|async")
+        tg-attachments-full([attachments]="pageAttachments|async", *ngIf="page|async")
 
-        tg-wiki-history([historyEntries]="historyEntries|async")
+        tg-wiki-history([historyEntries]="historyEntries|async", *ngIf="page|async")

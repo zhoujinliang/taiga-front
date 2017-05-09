@@ -20,6 +20,13 @@ export const wikiReducer = (state, action) => {
             return state.set("page-attachments", action.payload);
         case "SET_WIKI_LINKS":
             return state.set("links", action.payload);
+        case "ADD_WIKI_LINK":
+            return state.update("links", (links) => links.push(action.payload));
+        case "REMOVE_WIKI_LINK":
+            let linkId = action.payload;
+            return state.update("links", (links) =>
+                links.filter((link) => link.get('id') != linkId)
+            );
         default:
             return state;
     }

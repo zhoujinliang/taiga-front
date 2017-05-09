@@ -24,7 +24,7 @@ export class WikiSummary {
 
     onResponse(response) {
         if (response === true) {
-            this.delete.emit(this.page);
+            this.delete.emit({projectSlug: this.project.get('slug'), wikiPageId: this.page.get('id')});
         }
         this.store.dispatch(new CloseLightboxAction());
     }

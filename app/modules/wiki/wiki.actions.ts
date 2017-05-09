@@ -50,10 +50,21 @@ export class DeleteWikiPageAction implements Action {
   readonly type = "DELETE_WIKI_PAGE";
   payload:any;
 
-  constructor(projectId: number, slug: string) {
-      this.payload = {projectId, slug};
+  constructor(projectSlug: number, wikiPageId: string) {
+      this.payload = {projectSlug, wikiPageId};
   }
 }
+
+export class CreateWikiLinkAction implements Action {
+  readonly type = "CREATE_WIKI_LINK";
+  public payload: any;
+
+  constructor(projectId: number, title: string) {
+      this.payload = {projectId, title};
+  }
+
+}
+
 
 export class SetWikiPageAction implements Action {
   readonly type = "SET_WIKI_PAGE";
@@ -87,9 +98,19 @@ export class SetWikiLinksAction implements Action {
 
 export class DeleteWikiLinkAction implements Action {
   readonly type = "DELETE_WIKI_LINK";
-  payload: any;
 
-  constructor(projectId: number, slug: string) {
-      this.payload = {projectId, slug};
-  }
+  constructor(public payload: number) {}
 }
+
+export class RemoveWikiLinkAction implements Action {
+  readonly type = "REMOVE_WIKI_LINK";
+
+  constructor(public payload: number) {}
+}
+
+export class AddWikiLinkAction implements Action {
+  readonly type = "ADD_WIKI_LINK";
+
+  constructor(public payload: Immutable.Map<string, any>) {}
+}
+

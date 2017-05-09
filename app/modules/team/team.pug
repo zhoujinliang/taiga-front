@@ -1,0 +1,42 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="team")
+
+    sidebar.menu-secondary
+        section.team-filters
+            div.team-filters-inner
+                header
+                    h1(translate="COMMON.FILTERS.TITLE")
+
+                tg-team-filters([project]="project|async", [(role)]="filtersRole", [(query)]="filtersQ")
+    section.main.team
+        header
+            h1
+                tg-main-title([project]="project|async", sectionName="Wiki")
+
+        section.table-team.basic-table
+            tg-team-header([project]="project|async")
+
+            tg-team-current-user([user]="user|async", [project]="project|async", [stats]="stats|async")
+            // div.hero(
+            //     tg-team-current-user
+            //     stats="stats"
+            //     currentuser="currentUser"
+            //     project="project"
+            //     issuesEnabled="issuesEnabled"
+            //     tasksenabled="tasksEnabled"
+            //     wikienabled="wikiEnabled"
+            //     owner="owner"
+            //     *ngIf="::currentUser"
+            // )
+
+        h2(*ngIf="memberships|async")
+            span(translate="TEAM.SECTION_TITLE_TEAM")
+            // span  {{filtersRole.name || ("TEAM.SECTION_FILTER_ALL" | translate)}}
+
+        tg-team-members.table-team.basic-table(
+            [project]="project|async",
+            [memberships]="memberships|async",
+            [stats]="stats|async",
+            [filtersQ]="filtersQ",
+            [filtersRole]="filtersRole"
+        )

@@ -61,6 +61,11 @@ export class WikiResource {
         return this.http.delete(url);
     }
 
+    createLink(projectId, title) {
+        const url = this.urls.resolve("wiki-links");
+        return this.http.post(url, {project: projectId, title});
+    }
+
     listLinks(projectId) {
         const url = this.urls.resolve("wiki-links");
         return this.http.get(url, {project: projectId});

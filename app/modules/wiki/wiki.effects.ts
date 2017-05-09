@@ -7,6 +7,7 @@ import "rxjs/add/operator/switchMap";
 import { Observable } from "rxjs/Observable";
 import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
+import { go } from '@ngrx/router-store';
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./wiki.actions";
 
@@ -21,6 +22,8 @@ export class WikiEffects {
         .switchMap((payload) => {
           return this.rs.wiki.getBySlug(payload.projectId, payload.slug).map((wikiPage) => {
               return new actions.SetWikiPageAction(wikiPage.data);
+          }).catch(() => {
+              return Observable.of(new actions.SetWikiPageAction(null));
           });
         });
 
@@ -78,10 +81,12 @@ export class WikiEffects {
     deleteWikiPage$: Observable<Action> = this.actions$
         .ofType("DELETE_WIKI_PAGE")
         .map(toPayload)
-        .switchMap((wikiPageId) => {
-           return this.rs.wiki.delete(wikiPageId).map((result) => {
-               // TODO Redirect? Is posible that the set null redirects automatically
-               return new actions.SetWikiPageAction(null);
+        .switchMap(({projectSlug, wikiPageId}) => {
+           return this.rs.wiki.delete(wikiPageId).switchMap((result) => {
+               return Observable.of(
+                   new actions.SetWikiPageAction(null),
+                   go(["/project", projectSlug, "wiki"])
+               )
            });
         });
 
@@ -90,7 +95,19 @@ export class WikiEffects {
         .ofType("DELETE_WIKI_LINK")
         .map(toPayload)
         .switchMap((wikiLinkId) => {
-           return this.rs.wiki.deleteLink(wikiLinkId);
+           return this.rs.wiki.deleteLink(wikiLinkId).map(() => {
+               return new actions.RemoveWikiLinkAction(wikiLinkId);
+           });
+        });
+
+    @Effect()
+    createWikiLink$: Observable<Action> = this.actions$
+        .ofType("CREATE_WIKI_LINK")
+        .map(toPayload)
+        .switchMap(({projectId, title}) => {
+           return this.rs.wiki.createLink(projectId, title).map((wikiLink) => {
+               return new actions.AddWikiLinkAction(wikiLink.data);
+           });
         });
 
     constructor(private actions$: Actions, private rs: ResourcesService) { }
