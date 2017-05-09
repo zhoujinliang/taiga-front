@@ -11,7 +11,7 @@ import { of } from "rxjs/observable/of";
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./team.actions";
 import {AddNotificationMessageAction} from "../../ts/modules/common/common.actions";
-import {LogoutAction} from "../auth/auth.actions";
+import {go} from "@ngrx/router-store";
 
 @Injectable()
 export class TeamEffects {
@@ -32,7 +32,7 @@ export class TeamEffects {
         .switchMap((projectId) => {
           return this.rs.projects.leave(projectId).switchMap((result) => {
               return Observable.from([
-                  new LogoutAction(),
+                  go(["/"]),
                   new AddNotificationMessageAction("success"),
               ])
           }).catch((error) => {
