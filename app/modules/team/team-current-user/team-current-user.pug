@@ -14,14 +14,10 @@
 
                 .position {{user?.get('role_name')}}
 
-                // div(
-                //     tg-leave-project=""
-                //     project="project"
-                //     user="currentUser"
-                // )
+                tg-leave-project([project]="project", [user]="user")
 
     tg-team-member-stats(
         [stats]="stats",
         [userId]="user.get('id')",
-        [project]="project",
+        [project]="project"
     )

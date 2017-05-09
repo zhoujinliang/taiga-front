@@ -101,15 +101,3 @@ export class TeamPage implements OnInit, OnDestroy {
     }
 
 }
-
-//
-// //############################################################################
-// //# Team Filters
-// //############################################################################
-//
-// export let membersFilter = () =>
-//     (members, filtersQ, filtersRole) =>
-//         _.filter(members, (m: any) => (!filtersRole || (m.role === filtersRole.id)) &&
-//                                         (!filtersQ || (m.full_name.search(new RegExp(filtersQ, "i")) >= 0)),
-//          )
-// ;

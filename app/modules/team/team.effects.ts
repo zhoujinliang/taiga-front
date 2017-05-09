@@ -10,6 +10,8 @@ import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./team.actions";
+import {AddNotificationMessageAction} from "../../ts/modules/common/common.actions";
+import {LogoutAction} from "../auth/auth.actions";
 
 @Injectable()
 export class TeamEffects {
@@ -20,6 +22,27 @@ export class TeamEffects {
         .switchMap((projectId) => {
           return this.rs.projects.memberStats(projectId).map((result) => {
               return new actions.SetTeamStatsAction(result.data);
+          });
+        });
+
+    @Effect()
+    teamLeaveProject$: Observable<Action> = this.actions$
+        .ofType("TEAM_LEAVE_PROJECT")
+        .map(toPayload)
+        .switchMap((projectId) => {
+          return this.rs.projects.leave(projectId).switchMap((result) => {
+              return Observable.from([
+                  new LogoutAction(),
+                  new AddNotificationMessageAction("success"),
+              ])
+          }).catch((error) => {
+              let errorMsg = null;
+              try {
+                  errorMsg = error.json()._error_message;
+              } catch(e) {}
+              return Observable.of(
+                  new AddNotificationMessageAction("error", errorMsg),
+              );
           });
         });
 

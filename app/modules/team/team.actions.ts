@@ -1,6 +1,12 @@
 import { Action } from "@ngrx/store";
 import * as Immutable from "immutable";
 
+export class TeamLeaveProjectAction implements Action {
+  readonly type = "TEAM_LEAVE_PROJECT";
+
+  constructor(public payload: number) { }
+}
+
 export class FetchTeamStatsAction implements Action {
   readonly type = "FETCH_TEAM_STATS";
 

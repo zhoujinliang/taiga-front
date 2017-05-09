@@ -17,6 +17,7 @@ import {TeamFilters} from "./team-filters/team-filters.component";
 import {TeamCurrentUser} from "./team-current-user/team-current-user.component";
 import {TeamMembers} from "./team-members/team-members.component";
 import {TeamMemberStats} from "./team-member-stats/team-member-stats.component";
+import {LeaveProject} from "./leave-project/leave-project.component";
 import {TeamEffects} from "./team.effects";
 
 @NgModule({
@@ -27,6 +28,7 @@ import {TeamEffects} from "./team.effects";
         TeamCurrentUser,
         TeamMemberStats,
         TeamMembers,
+        LeaveProject,
     ],
     exports: [
         TeamPage,

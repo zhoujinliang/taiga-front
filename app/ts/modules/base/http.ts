@@ -64,7 +64,11 @@ export class HttpService {
 
         return this.http.request(options.url, options)
                         .map(function(res:any) {
-                            res.data = Immutable.fromJS(res.json());
+                            try {
+                                res.data = Immutable.fromJS(res.json());
+                            } catch(e) {
+                                res.data = null;
+                            }
                             return res;
                         });
     }
