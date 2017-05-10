@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {EmailValidators} from 'ngx-validators';
 import {UniversalValidators} from 'ngx-validators';
 import {UsernameValidator} from "../../utils/validators";
+import {getDirtyValues, setServerErrors} from "../../utils/forms";
 
 @Component({
     selector: "tg-user-settings-form",
@@ -13,8 +14,10 @@ import {UsernameValidator} from "../../utils/validators";
 })
 export class UserSettingsForm implements OnChanges {
     @Input() user: Immutable.Map<string, any>;
+    @Input() languages: Immutable.List<any>;
+    @Input() formErrors: Immutable.Map<string, any>;
     @Output() deleteAccount: EventEmitter<number>;
-    // availableLanguages;
+    @Output() submitForm: EventEmitter<any>;
     availableThemes;
     defaultLanguage;
     defaultTheme;
@@ -23,11 +26,10 @@ export class UserSettingsForm implements OnChanges {
     constructor(private config: ConfigurationService,
                 private translate: TranslateService,
                 private fb: FormBuilder) {
-        // this.availableLanguages =  this.store.select((state) => state.getIn(["user-settings", "languages"]));
         this.deleteAccount = new EventEmitter();
+        this.submitForm = new EventEmitter();
         this.availableThemes = this.config.get("themes", []);
-        this.defaultTheme = this.config.get("defaultTheme", []);
-        // this.defaultLanguage = this.translate.preferredLanguage();
+
         this.form = this.fb.group({
             username: ['', Validators.compose([
                 Validators.required,
@@ -50,7 +52,7 @@ export class UserSettingsForm implements OnChanges {
     }
 
     ngOnChanges(changes) {
-        if(this.user) {
+        if (changes.user && this.user) {
             this.form.setValue({
                 username: this.user.get('username'),
                 email: this.user.get('email'),
@@ -60,10 +62,18 @@ export class UserSettingsForm implements OnChanges {
                 bio: this.user.get('bio'),
             });
         }
+
+        if (changes.formErrors) {
+            setServerErrors(this.form, this.formErrors);
+        }
     }
 
-    onSubmit(values) {
-        console.log(values);
-        console.log(this.form);
+    onSubmit() {
+        if (this.form.valid) {
+            this.submitForm.emit({
+                userId: this.user.get('id'),
+                userData: getDirtyValues(this.form)
+            })
+        }
     }
 }

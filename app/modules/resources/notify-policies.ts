@@ -25,20 +25,19 @@
 import {Injectable} from "@angular/core";
 import * as _ from "lodash";
 import {HttpService} from "../../ts/modules/base/http";
-import {RepositoryService} from "../../ts/modules/base/repository";
 import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class NotifyPoliciesResource {
-    constructor(private repo: RepositoryService,
-                private http: HttpService,
+    constructor(private http: HttpService,
                 private urls: UrlsService) {}
     get(id) {
-        return this.repo.queryOne("notify-policies", id);
+        let url = this.urls.resolve("notify-policies", id);
+        return this.http.get(url);
     }
 
-    list(filters) {
-        const params = _.extend({}, params, filters || {});
-        return this.repo.queryMany("notify-policies", params);
+    list() {
+        let url = this.urls.resolve("notify-policies");
+        return this.http.get(url);
     }
 }

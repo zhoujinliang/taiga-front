@@ -19,6 +19,8 @@ import {DeleteAccountLightbox} from "./delete-account-lightbox/delete-account-li
 import {ChangePasswordPage} from "./change-password.component";
 import {ChangePasswordForm} from "./change-password-form/change-password-form.component";
 import {MailNotificationsPage} from "./mail-notifications.component";
+import {MailNotificationPolicy} from "./mail-notification-policy/mail-notification-policy.component";
+import {UserSettingsEffects} from "./user-settings.effects";
 
 @NgModule({
     declarations: [
@@ -29,6 +31,7 @@ import {MailNotificationsPage} from "./mail-notifications.component";
         ChangePasswordPage,
         ChangePasswordForm,
         MailNotificationsPage,
+        MailNotificationPolicy,
     ],
     exports: [
         UserSettingsPage,
@@ -51,7 +54,7 @@ import {MailNotificationsPage} from "./mail-notifications.component";
             { path: "user-settings/user-change-password", component: ChangePasswordPage},
             { path: "user-settings/mail-notifications", component: MailNotificationsPage},
         ]),
-        // EffectsModule.run(TeamEffects),
+        EffectsModule.run(UserSettingsEffects),
     ],
     providers: [
     ],

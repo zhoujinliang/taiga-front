@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-mail-notification-policy",
-    template: require("./mail-notification.pug")(),
+    template: require("./mail-notification-policy.pug")(),
 })
 export class MailNotificationPolicy {
     @Input() policy: Immutable.Map<string, any>;

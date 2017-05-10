@@ -73,4 +73,9 @@ export class UserResource {
                             return Rx.Observable.throw(err);
                         });
     }
+
+    update(userId, userData) {
+        const url = this.urls.resolve("user", userId);
+        return this.http.patch(url, userData);
+    }
 }

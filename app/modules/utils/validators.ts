@@ -11,9 +11,12 @@ export function RegexValidator(regex, regexFlag="") {
 }
 
 export function UsernameValidator(c: FormControl): {[key: string]: any} {
-    let regex = new RegExp("^\\w[\\w.-]*$")
+    let regex = new RegExp("^\\w[\\w.-]*$");
     if (c.value === "") {
-        return {"username": false};
+        return null;
     }
-    return {"username": !regex.test(c.value)};
+    if (regex.test(c.value)) {
+        return null;
+    }
+    return {"username": true};
 }

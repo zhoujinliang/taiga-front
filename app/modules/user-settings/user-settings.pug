@@ -7,8 +7,12 @@ div.wrapper()
         header
             tg-main-title([sectionName]="'USER_SETTINGS.MENU.SECTION_TITLE' | translate")
 
-        tg-user-settings-form([user]="user|async", (deleteAccount)="onDeleteAccount($event)")
-
+        tg-user-settings-form(
+            [user]="user|async",
+            [languages]="languages|async",
+            [formErrors]="formErrors|async",
+            (deleteAccount)="onDeleteAccount($event)",
+            (submitForm)="onSubmitForm($event)")
 
 // div.lightbox.lightbox-delete-account(tg-lb-delete-user)
 tg-lightbox(key="user-settings.delete-account")

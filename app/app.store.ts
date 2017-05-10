@@ -8,6 +8,7 @@ import {projectsInitialState, projectsReducer} from "./modules/projects/projects
 import {teamInitialState, teamReducer} from "./modules/team/team.store";
 import {commonInitialState, commonReducer} from "./ts/modules/common/common.store";
 import {wikiInitialState, wikiReducer} from "./modules/wiki/wiki.store";
+import {userSettingsInitialState, userSettingsReducer} from "./modules/user-settings/user-settings.store";
 
 export type IState = Immutable.Map<string, any>;
 
@@ -26,6 +27,7 @@ const initialState = Immutable.fromJS({
     wiki: wikiInitialState,
     projects: projectsInitialState,
     team: teamInitialState,
+    "user-settings": userSettingsInitialState,
     router: {
         path: window.location.pathname + window.location.search
     }
@@ -56,5 +58,6 @@ export const rootReducer = (state= initialState, action) => {
                 .set("discover", discoverReducer(state.get("discover"), action))
                 .set("auth", authReducer(state.get("auth"), action))
                 .set("wiki", wikiReducer(state.get("wiki"), action))
+                .set("user-settings", userSettingsReducer(state.get("user-settings"), action))
                 .set("common", commonReducer(state.get("common"), action));
 };

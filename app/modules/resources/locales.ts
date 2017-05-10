@@ -23,13 +23,16 @@
  */
 
 import {Injectable} from "@angular/core";
-import {RepositoryService} from "../../ts/modules/base/repository";
+import {HttpService} from "../../ts/modules/base/http";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class LocalesResource {
-    constructor(private repo: RepositoryService) {}
+    constructor(private http: HttpService,
+                private urls: UrlsService) {}
 
     list() {
-        return this.repo.queryMany("locales");
+        let url = this.urls.resolve("locales");
+        return this.http.get(url);
     }
 }

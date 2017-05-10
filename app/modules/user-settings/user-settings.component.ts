@@ -26,16 +26,24 @@ import {Component } from "@angular/core";
 import {Store} from "@ngrx/store";
 import {IState} from "../../app.store";
 import {OpenLightboxAction, CloseLightboxAction} from "../../app.actions";
+import {FetchLanguagesAction, UpdateUserSettingsDataAction} from "./user-settings.actions";
+import * as Immutable from "immutable";
+import {Observable} from "rxjs";
 
 @Component({
     selector: "tg-user-settings",
     template: require("./user-settings.pug")(),
 })
 export class UserSettingsPage {
-    user: any;
+    user: Observable<Immutable.Map<string, any>>;
+    formErrors: Observable<Immutable.Map<string, any>>;
+    languages: Observable<Immutable.List<any>>;
 
     constructor(private store: Store<IState>) {
         this.user = this.store.select((state) => state.getIn(["auth", "user"]));
+        this.languages = this.store.select((state) => state.getIn(["user-settings", "languages"]));
+        this.formErrors = this.store.select((state) => state.getIn(["user-settings", "form-errors"]));
+        this.store.dispatch(new FetchLanguagesAction());
     }
 
     onDeleteAccount(user) {
@@ -47,95 +55,9 @@ export class UserSettingsPage {
         if (confirm) {
             console.log("BORRANDO CUENTA");
         }
-        this.store.dispatch(new CloseLightboxAction());
     }
 
-    onSubmitForm() {
-        // let form = $el.find("form").checksley();
-        // if (!form.validate()) { return; }
-        //
-        // let changeEmail = this.user.isAttributeModified("email");
-        // this.user.lang = this.lang;
-        // this.user.theme = this.theme;
-        //
-        // let onSuccess = data => {
-        //     $auth.setUser(data);
-        //
-        //     if (changeEmail) {
-        //         let text = $translate.instant("USER_PROFILE.CHANGE_EMAIL_SUCCESS");
-        //         return $confirm.success(text);
-        //     } else {
-        //         return $confirm.notify('success');
-        //     }
-        // };
-        //
-        // let onError = data => {
-        //     form.setErrors(data);
-        //     return $confirm.notify('error', data._error_message);
-        // };
-        //
-        // return $repo.save($scope.user).then(onSuccess, onError);
+    onSubmitForm(data) {
+        this.store.dispatch(new UpdateUserSettingsDataAction(data.userId, data.userData));
     }
 }
-
-//############################################################################
-//# User Avatar Directive
-//############################################################################
-
-// export let UserAvatarDirective = function($auth, $model, $rs, $confirm) {
-//     const link = function($scope, $el, $attrs) {
-//         const showSizeInfo = () => $el.find(".size-info").removeClass("hidden");
-//
-//         const onSuccess = function(response) {
-//             const user = $model.make_model("users", response.data);
-//             $auth.setUser(user);
-//             $scope.user = user;
-//
-//             $el.find(".loading-overlay").removeClass("active");
-//             return $confirm.notify("success");
-//         };
-//
-//         const onError = function(response) {
-//             if (response.status === 413) { showSizeInfo(); }
-//             $el.find(".loading-overlay").removeClass("active");
-//             return $confirm.notify("error", response.data._error_message);
-//         };
-//
-//         // Change photo
-//         $el.on("click", ".js-change-avatar", () => $el.find("#avatar-field").click());
-//
-//         $el.on("change", "#avatar-field", function(event) {
-//             if ($scope.avatarAttachment) {
-//                 $el.find(".loading-overlay").addClass("active");
-//                 return $rs.userSettings.changeAvatar($scope.avatarAttachment).then(onSuccess, onError);
-//             }
-//         });
-//
-//         // Use gravatar photo
-//         $el.on("click", "a.js-use-gravatar", function(event) {
-//             $el.find(".loading-overlay").addClass("active");
-//             return $rs.userSettings.removeAvatar().then(onSuccess, onError);
-//         });
-//
-//         return $scope.$on("$destroy", () => $el.off());
-//     };
-//
-//     return {link};
-// };
-//
-// //############################################################################
-// //# User Avatar Model Directive
-// //############################################################################
-//
-// export let TaigaAvatarModelDirective = function($parse) {
-//     const link = function($scope, $el, $attrs) {
-//         const model = $parse($attrs.tgAvatarModel);
-//         const modelSetter = model.assign;
-//
-//         return $el.bind("change", () =>
-//             $scope.$apply(() => modelSetter($scope, $el[0].files[0])),
-//         );
-//     };
-//
-//     return {link};
-// };
