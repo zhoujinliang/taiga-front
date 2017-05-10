@@ -1,4 +1,4 @@
-form
+form([formGroup]="form", novalidate, (ngSubmit)="onSubmit($event)")
     .project-details-image(tg-user-avatar)
         fieldset.image-container
             tg-avatar.image([user]="user")
@@ -27,48 +27,45 @@ form
         fieldset
             label(for="username", translate="USER_PROFILE.FIELD.USERNAME")
             input(
+                formControlName="username",
                 type="text",
                 autocorrect="off",
                 autocapitalize="none",
                 name="username",
                 id="username",
-                [value]="user?.get('username')",
-                data-required="true",
-                data-maxlength="255",
                 data-regexp="^[\\w.-]+$",
                 placeholder="{{'USER_PROFILE.FIELD.USERNAME' | translate}}"
             )
+            tg-field-error([control]="form.controls.username")
 
         fieldset
             label(for="email", translate="USER_PROFILE.FIELD.EMAIL")
             input(
+                formControlName="email",
                 type="email",
                 name="email",
                 id="email",
-                [value]="user?.get('email')",
-                data-type="email",
-                data-required="true",
-                data-maxlength="255",
                 placeholder="{{'USER_PROFILE.FIELD.EMAIL' | translate}}"
             )
+            tg-field-error([control]="form.controls.email")
 
         fieldset
             label(for="full-name", translate="USER_PROFILE.FIELD.FULL_NAME")
             input(
+                formControlName="full_name",
                 type="text",
                 name="full_name",
                 id="full-name",
-                [value]="user?.get('full_name')",
-                data-required="true",
-                data-maxlength="256",
                 placeholder="{{'USER_PROFILE.FIELD.PLACEHOLDER_FULL_NAME' | translate}}"
             )
+            tg-field-error([control]="form.controls.full_name")
 
         fieldset
             label(for="lang", translate="USER_PROFILE.FIELD.LANGUAGE")
             select(
                 name="lang",
-                id="lang"
+                id="lang",
+                formControlName="lang"
             )
                 option(value="", translate="USER_PROFILE.FIELD.LANGUAGE_DEFAULT")
                 option(
@@ -80,7 +77,8 @@ form
             label(for="theme", translate="USER_PROFILE.FIELD.THEME")
             select(
                 name="theme",
-                id="theme"
+                id="theme",
+                formControlName="theme"
             )
                 option(value="", translate="USER_PROFILE.FIELD.THEME_DEFAULT")
                 option(
@@ -91,13 +89,13 @@ form
         fieldset
             label(for="bio", translate="USER_PROFILE.FIELD.BIO")
             textarea(
+                formControlName="bio",
                 name="bio",
                 id="bio",
-                [value]="user?.get('bio')",
-                ng-attr-placeholder="{{'USER_PROFILE.FIELD.PLACEHOLDER_BIO' | translate}}",
-                ng-maxlength="210",
+                [placeholder]="'USER_PROFILE.FIELD.PLACEHOLDER_BIO' | translate",
                 maxlength="210"
             )
+            tg-field-error([control]="form.controls.bio")
 
         fieldset.submit
             button.button-green.submit-button(

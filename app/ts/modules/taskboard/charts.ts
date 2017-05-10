@@ -36,7 +36,7 @@ export let SprintGraphDirective = function($translate){
         const width = element.width();
         element.height(240);
 
-        const days = _.map(dataToDraw, (x: any) => moment(x.day));
+        const days = _.map(dataToDraw, (x: any) => moment(new Date(x.day).getTime()));
 
         const data = [];
         data.unshift({

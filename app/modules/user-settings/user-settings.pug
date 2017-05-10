@@ -5,7 +5,7 @@ div.wrapper()
 
     section.main.user-profile
         header
-            tg-main-title([project]="project|async", [sectionName]="'USER_SETTINGS.MENU.SECTION_TITLE' | translate")
+            tg-main-title([sectionName]="'USER_SETTINGS.MENU.SECTION_TITLE' | translate")
 
         tg-user-settings-form([user]="user|async", (deleteAccount)="onDeleteAccount($event)")
 

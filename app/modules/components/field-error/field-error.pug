@@ -1,0 +1,7 @@
+ul(class="error-list", *ngIf="control.dirty && control.invalid")
+    li(class="required", translate="COMMON.FORM_ERRORS.REQUIRED", *ngIf="control._errors.required")
+    li(class="required", translate="COMMON.FORM_ERRORS.TYPE_EMAIL", *ngIf="control._errors.normalEmailRule")
+    li(class="required", translate="COMMON.FORM_ERRORS.REGEXP", *ngIf="control._errors.regex")
+    li(class="required", translate="COMMON.FORM_ERRORS.USERNAME", *ngIf="control._errors.username")
+    li(class="required", translate="COMMON.FORM_ERRORS.MAX_LENGTH", [translateParams]="{max: control._errors.maxLength?.requiredMaxLength}", *ngIf="control._errors.maxLength")
+    li(class="required", translate="COMMON.FORM_ERRORS.MIN_LENGTH", [translateParams]="{min: control._errors.minLength?.requiredMinLength}", *ngIf="control._errors.minLength")

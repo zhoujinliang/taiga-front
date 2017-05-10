@@ -27,6 +27,7 @@ import { TermsOfServiceAndPrivacyPolicyNotice } from "./terms-of-service-and-pri
 import { UserDisplay} from "./user-display/user-display.component";
 import { PreloadImage} from "./preload-image/preload-image.component";
 import {ConfirmAsk} from "./confirm/confirm-ask.component";
+import {FieldError} from "./field-error/field-error.component";
 
 @NgModule({
     imports: [
@@ -54,6 +55,7 @@ import {ConfirmAsk} from "./confirm/confirm-ask.component";
         UserDisplay,
         PreloadImage,
         ConfirmAsk,
+        FieldError,
     ],
     declarations: [
         BoardZoom,
@@ -73,6 +75,7 @@ import {ConfirmAsk} from "./confirm/confirm-ask.component";
         UserDisplay,
         PreloadImage,
         ConfirmAsk,
+        FieldError,
     ],
     providers: [
         AvatarService,

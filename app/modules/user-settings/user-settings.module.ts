@@ -5,6 +5,7 @@ import {RouterModule} from "@angular/router";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
 import {TranslateModule} from "@ngx-translate/core";
+import { ReactiveFormsModule } from '@angular/forms';
 
 import {TgCommonModule} from "../../ts/modules/common/common.module";
 import {TgPipesModule} from "../pipes/pipes.module";
@@ -17,6 +18,7 @@ import {UserSettingsForm} from "./user-settings-form/user-settings-form.componen
 import {DeleteAccountLightbox} from "./delete-account-lightbox/delete-account-lightbox.component";
 import {ChangePasswordPage} from "./change-password.component";
 import {ChangePasswordForm} from "./change-password-form/change-password-form.component";
+import {MailNotificationsPage} from "./mail-notifications.component";
 
 @NgModule({
     declarations: [
@@ -26,10 +28,12 @@ import {ChangePasswordForm} from "./change-password-form/change-password-form.co
         DeleteAccountLightbox,
         ChangePasswordPage,
         ChangePasswordForm,
+        MailNotificationsPage,
     ],
     exports: [
         UserSettingsPage,
         ChangePasswordPage,
+        MailNotificationsPage,
     ],
     imports: [
         CommonModule,
@@ -39,11 +43,13 @@ import {ChangePasswordForm} from "./change-password-form/change-password-form.co
         TgServicesModule,
         TgPipesModule,
         FormsModule,
+        ReactiveFormsModule,
         StoreModule,
         TranslateModule.forChild({}),
         RouterModule.forChild([
             { path: "user-settings/user-profile", component: UserSettingsPage},
             { path: "user-settings/user-change-password", component: ChangePasswordPage},
+            { path: "user-settings/mail-notifications", component: MailNotificationsPage},
         ]),
         // EffectsModule.run(TeamEffects),
     ],
