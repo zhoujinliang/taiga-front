@@ -14,7 +14,6 @@ div.wrapper()
             (deleteAccount)="onDeleteAccount($event)",
             (submitForm)="onSubmitForm($event)")
 
-// div.lightbox.lightbox-delete-account(tg-lb-delete-user)
 tg-lightbox(key="user-settings.delete-account")
   tg-lightbox-close
   tg-delete-account-lightbox((response)="onDeleteAccountConfirm($event)")

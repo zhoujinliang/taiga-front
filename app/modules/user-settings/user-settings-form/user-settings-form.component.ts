@@ -52,7 +52,7 @@ export class UserSettingsForm implements OnChanges {
     }
 
     ngOnChanges(changes) {
-        if (changes.user && this.user) {
+        if ((changes.user || changes.languages) && this.user && this.languages) {
             this.form.setValue({
                 username: this.user.get('username'),
                 email: this.user.get('email'),

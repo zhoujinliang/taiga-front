@@ -55,6 +55,7 @@ export class UserSettingsPage {
         if (confirm) {
             console.log("BORRANDO CUENTA");
         }
+        this.store.dispatch(new CloseLightboxAction());
     }
 
     onSubmitForm(data) {

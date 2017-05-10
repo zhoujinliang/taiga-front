@@ -1,3 +1,7 @@
+tg-lightbox(key="user-settings.email-changed")
+    tg-lightbox-close
+    tg-generic-success-lightbox([title]="'USER_PROFILE.CHANGE_EMAIL_SUCCESS'|translate")
+
 form([formGroup]="form", novalidate, (ngSubmit)="onSubmit()")
     .project-details-image(tg-user-avatar)
         fieldset.image-container
@@ -108,3 +112,5 @@ form([formGroup]="form", novalidate, (ngSubmit)="onSubmit()")
                 (click)="deleteAccount.emit(user.get('id'))",
                 translate="USER_PROFILE.ACTION_DELETE_ACCOUNT"
             )
+
+

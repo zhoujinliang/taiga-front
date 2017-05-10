@@ -10,7 +10,8 @@ import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./user-settings.actions";
-import {SetUserAction} from "../auth/auth.actions";
+import {StoreUserAction} from "../auth/auth.actions";
+import {OpenLightboxAction} from "../../app.actions";
 import {AddNotificationMessageAction} from "../../ts/modules/common/common.actions";
 
 @Injectable()
@@ -38,8 +39,18 @@ export class UserSettingsEffects {
         .ofType("UPDATE_USER_SETTINGS_DATA")
         .map(toPayload)
         .switchMap((payload) => {
-          return this.rs.user.update(payload.userId, payload.userData).map((result) => {
-              return new SetUserAction(result.data);
+          return this.rs.user.update(payload.userId, payload.userData).switchMap((result): Observable<Action> => {
+              if (payload.userData.email) {
+                  return Observable.from([
+                      new StoreUserAction(result.data),
+                      new OpenLightboxAction("user-settings.email-changed")
+                  ]);
+              } else {
+                  return Observable.from([
+                      new StoreUserAction(result.data),
+                      new AddNotificationMessageAction("success")
+                  ]);
+              }
           }).catch((err): Observable<Action> => {
               if (err.status == 400) {
                   let errData = Immutable.fromJS(err.json());

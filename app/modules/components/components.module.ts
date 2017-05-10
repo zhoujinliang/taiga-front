@@ -19,6 +19,7 @@ import {FiltersRemoteStorageService} from "./filter/filter-remote.service";
 import {Filter} from "./filter/filter.component";
 import { LightboxClose } from "./lightbox/lightbox-close.component";
 import { Lightbox } from "./lightbox/lightbox.component";
+import { GenericSuccessLightbox } from "./lightbox/generic-success-lightbox/generic-success-lightbox.component";
 import {LoaderFull} from "./loader/loader-full.component";
 import { ProjectLogoBig } from "./project-logo-big/project-logo-big.component";
 import { ProjectLogoSmall } from "./project-logo-small/project-logo-small.component";
@@ -49,6 +50,7 @@ import {FieldError} from "./field-error/field-error.component";
         Filter,
         Lightbox,
         LightboxClose,
+        GenericSuccessLightbox,
         AssignedToSelector,
         AssignedItem,
         LoaderFull,
@@ -69,6 +71,7 @@ import {FieldError} from "./field-error/field-error.component";
         FilterCategory,
         Lightbox,
         LightboxClose,
+        GenericSuccessLightbox,
         AssignedToSelector,
         AssignedItem,
         LoaderFull,
