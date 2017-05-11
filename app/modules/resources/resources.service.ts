@@ -30,6 +30,7 @@ import {TasksResource} from "./tasks-resource.service";
 import {UserResource} from "./user-resource.service";
 import {UsersResource} from "./users-resource.service";
 import {UserstoriesResource} from "./userstories-resource.service";
+import {FeedbackResource} from "./feedback-resource.service";
 
 const api_urls = {
     // Auth
@@ -246,6 +247,7 @@ export class ResourcesService {
                 public invitations: InvitationsResource,
                 public kanban: KanbanResource,
                 public locales: LocalesResource,
+                public feedback: FeedbackResource,
                 public memberships: MembershipsResource,
                 public modules: ModulesResource,
                 public notifyPolicies: NotifyPoliciesResource,

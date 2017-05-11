@@ -34,6 +34,7 @@ export class NavigationBar implements OnInit{
     @Input() user: any;
     @Output() logout: EventEmitter<any>;
     @Output() login: EventEmitter<any>;
+    @Output() feedback: EventEmitter<any>;
     isAuthenticated: any = true;
     isEnabledHeader: any = true;
     // publicRegisterEnabled: any;
@@ -42,6 +43,7 @@ export class NavigationBar implements OnInit{
     constructor() {
         this.login = new EventEmitter();
         this.logout = new EventEmitter();
+        this.feedback = new EventEmitter();
     }
     // constructor(private navigationBarService: NavigationBarService,
     //             private router: Router,
@@ -62,15 +64,5 @@ export class NavigationBar implements OnInit{
         // } else {
         //     return this.active = false;
         // }
-    }
-
-    onLogout() {
-        this.logout.emit();
-        return false;
-    }
-
-    onLogin() {
-        this.login.emit();
-        return false;
     }
 }

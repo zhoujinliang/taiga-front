@@ -1,10 +1,17 @@
+tg-lightbox(key="feedback")
+    tg-lightbox-close
+    tg-feedback-lightbox((feedback)="onFeedbackFilled($event)")
+
 tg-loader-full
 tg-notification-messages
-tg-navigation-bar(*ngIf="!errorHandling.showingError",
-                  [user]="user | async",
-                  [projects]="projects | async",
-                  (login)="onLogin()",
-                  (logout)="onLogout()")
+tg-navigation-bar(
+    *ngIf="!errorHandling.showingError",
+    [user]="user | async",
+    [projects]="projects | async",
+    (login)="onLogin()",
+    (logout)="onLogout()",
+    (feedback)="onFeedback()"
+)
 
 div(*ngIf="!errorHandling.showingError")
     <router-outlet></router-outlet>

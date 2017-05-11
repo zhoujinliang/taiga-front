@@ -24,7 +24,7 @@ nav.navbar(*ngIf="isEnabledHeader")
 
     div.nav-right(*ngIf="!user")
         a.login(
-            (click)="onLogin()",
+            (click)="login.emit()",
             href="#",
             title="{{ 'LOGIN_COMMON.ACTION_SIGN_IN' | translate }}",
             translate="LOGIN_COMMON.ACTION_SIGN_IN"
@@ -52,4 +52,4 @@ nav.navbar(*ngIf="isEnabledHeader")
             tg-svg(svg-icon="icon-discover")
 
         tg-dropdown-project-list.topnav-dropdown-wrapper(*ngIf="projects.size", [projects]="projects")
-        tg-dropdown-user.topnav-dropdown-wrapper([user]="user", (logout)="onLogout()")
+        tg-dropdown-user.topnav-dropdown-wrapper([user]="user", (logout)="logout.emit()", (feedback)="feedback.emit()")

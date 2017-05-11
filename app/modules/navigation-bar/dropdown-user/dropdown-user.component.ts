@@ -34,6 +34,7 @@ import { GlobalDataService } from "../../services/global-data.service";
 export class DropdownUser {
     @Input() user: any;
     @Output() logout: EventEmitter<any>;
+    @Output() feedback: EventEmitter<any>;
     isFeedbackEnabled: boolean;
     // userSettingsPlugins:any;
 
@@ -43,6 +44,7 @@ export class DropdownUser {
                  // private globalData: GlobalDataService) {
                  // private feedback: FeedbackService) {
         this.logout = new EventEmitter();
+        this.feedback = new EventEmitter();
         this.isFeedbackEnabled = this.config.get("feedbackEnabled");
         // this.userSettingsPlugins = _.filter(globalData.get('userSettingsPlugins'), {userMenu: true});
     }
@@ -53,7 +55,6 @@ export class DropdownUser {
     }
 
     sendFeedback() {
-        // TODO: Implement feedback service that depends on lightbox factory
-        // this.feedback.sendFeedback();
+        this.feedback.emit();
     }
 }

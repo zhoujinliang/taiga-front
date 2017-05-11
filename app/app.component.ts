@@ -4,6 +4,7 @@ import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
 import { IState } from "./app.store";
 import { LogoutAction, RestoreUserAction } from "./modules/auth/auth.actions";
+import { OpenLightboxAction, SendFeedbackAction } from "./app.actions";
 import { FetchCurrentProjectAction, FetchUserProjectsAction } from "./modules/projects/projects.actions";
 import { Subscription } from "rxjs";
 
@@ -53,6 +54,14 @@ export class AppComponent {
 
     onLogout() {
         this.store.dispatch(new LogoutAction());
+    }
+
+    onFeedback() {
+        this.store.dispatch(new OpenLightboxAction("feedback"));
+    }
+
+    onFeedbackFilled(feedback) {
+        this.store.dispatch(new SendFeedbackAction(feedback));
     }
 
     onLogin() {

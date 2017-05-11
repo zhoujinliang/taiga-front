@@ -6,6 +6,7 @@ import {HistoryResource} from "./history";
 import {InvitationsResource} from "./invitations";
 import {KanbanResource} from "./kanban";
 import {LocalesResource} from "./locales";
+import {FeedbackResource} from "./feedback-resource.service";
 import {MembershipsResource} from "./memberships";
 import {ModulesResource} from "./modules";
 import {NotifyPoliciesResource} from "./notify-policies";
@@ -40,6 +41,7 @@ import {ResourcesService} from "./resources.service";
         InvitationsResource,
         KanbanResource,
         LocalesResource,
+        FeedbackResource,
         MembershipsResource,
         ModulesResource,
         NotifyPoliciesResource,
