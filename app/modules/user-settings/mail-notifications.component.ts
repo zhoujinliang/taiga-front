@@ -27,7 +27,7 @@ import {Store} from "@ngrx/store";
 import {IState} from "../../app.store";
 import {Observable} from "rxjs";
 import * as Immutable from "immutable";
-import {FetchNotifyPoliciesAction} from "./user-settings.actions";
+import * as actions from "./user-settings.actions";
 
 @Component({
     template: require("./mail-notifications.pug")(),
@@ -37,9 +37,10 @@ export class MailNotificationsPage {
 
     constructor(private store: Store<IState>) {
         this.notifyPolicies = this.store.select((state) => state.getIn(["user-settings", "notify-policies"]))
-        this.store.dispatch(new FetchNotifyPoliciesAction());
+        this.store.dispatch(new actions.FetchNotifyPoliciesAction());
     }
 
-    onChangeNotification(data) {
+    onPolicyChanged(policy, level) {
+        this.store.dispatch(new actions.UpdateNotifyPolicyLevelAction(policy.get('id'), level));
     }
 }

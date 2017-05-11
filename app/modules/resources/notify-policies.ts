@@ -31,8 +31,14 @@ import {UrlsService} from "../../ts/modules/base/urls";
 export class NotifyPoliciesResource {
     constructor(private http: HttpService,
                 private urls: UrlsService) {}
+
+    update(id, level) {
+        let url = this.urls.resolve("notify-policy", id);
+        return this.http.patch(url, {notify_level: level});
+    }
+
     get(id) {
-        let url = this.urls.resolve("notify-policies", id);
+        let url = this.urls.resolve("notify-policy", id);
         return this.http.get(url);
     }
 

@@ -54,3 +54,21 @@ export class SetLoadingAvatarAction implements Action {
 
   constructor(public payload: boolean) { }
 }
+
+export class ChangePasswordAction implements Action {
+  readonly type = "CHANGE_PASSWORD";
+  public payload: any;
+
+  constructor(currentPassword: string, newPassword: string) {
+      this.payload = {currentPassword, newPassword}
+  }
+}
+
+export class UpdateNotifyPolicyLevelAction implements Action {
+  readonly type = "UPDATE_NOTIFY_POLICY_LEVEL";
+  public payload: any;
+
+  constructor(policyId: number, level: number) {
+      this.payload = {policyId, level}
+  }
+}

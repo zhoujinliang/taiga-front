@@ -72,7 +72,15 @@ export class HttpService {
                                 res.data = null;
                             }
                             return res;
-                        });
+                        }).catch((err) => {
+                            try {
+                                err.data = Immutable.fromJS(err.json());
+                            } catch(e) {
+                                err.data = Immutable.Map();
+                            }
+                            throw err;
+                        })
+
     }
 
     get(url, params= null, options: any= {}) {

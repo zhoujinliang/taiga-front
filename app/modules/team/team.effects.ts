@@ -12,6 +12,7 @@ import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./team.actions";
 import {AddNotificationMessageAction} from "../../ts/modules/common/common.actions";
 import {go} from "@ngrx/router-store";
+import {genericErrorManagement} from "../utils/effects";
 
 @Injectable()
 export class TeamEffects {
@@ -35,15 +36,7 @@ export class TeamEffects {
                   go(["/"]),
                   new AddNotificationMessageAction("success"),
               ])
-          }).catch((error) => {
-              let errorMsg = null;
-              try {
-                  errorMsg = error.json()._error_message;
-              } catch(e) {}
-              return Observable.of(
-                  new AddNotificationMessageAction("error", errorMsg),
-              );
-          });
+          }).catch(genericErrorManagement);
         });
 
     constructor(private actions$: Actions, private rs: ResourcesService) { }

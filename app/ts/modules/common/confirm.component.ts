@@ -59,17 +59,19 @@ export class NotificationMessages {
         this.messages$ = this.store.select((state) => state.getIn(["common", "notification-messages"]));
         this.messages$.subscribe((state) => {
             this.currentState = state;
-            console.log(state);
+            console.log(state.toJS());
             if (!this.msg && this.currentState.size > 0) {
                 this.msg = this.getNextMessage(state);
-                console.log(this.msg);
                 let time = this.msg.time;
                 if (!time) {
                     time = (this.msg.type === "error") || (this.msg.type === "light-error") ? 3500 : 1500;
                 }
+                // Render the remove of message before start the next message
                 timeout(time, () => {
+                    this.msg = null;
+                });
+                timeout(time+10, () => {
                     this.store.dispatch(new DiscardNotificationMessageAction());
-                    this.msg = this.getNextMessage(state);
                 });
             }
         });

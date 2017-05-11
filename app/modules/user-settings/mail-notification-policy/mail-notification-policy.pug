@@ -9,6 +9,7 @@
                 name="policy-{{ policy.get('id') }}",
                 id="policy-all-{{ policy.get('id') }}",
                 value="2",
+                (click)="changedLevel.emit(2)",
                 [checked]="policy.get('notify_level') === 2"
             )
             label(
@@ -23,6 +24,7 @@
                 name="policy-{{ policy.get('id') }}",
                 id="policy-involved-{{ policy.get('id') }}",
                 value="1",
+                (click)="changedLevel.emit(1)",
                 [checked]="policy.get('notify_level') === 1"
             )
             label(
@@ -37,6 +39,7 @@
                 name="policy-{{ policy.get('id') }}",
                 id="policy-none-{{ policy.get('id') }}",
                 value="3",
+                (click)="changedLevel.emit(3)",
                 [checked]="policy.get('notify_level') === 3"
             )
             label(

@@ -56,6 +56,7 @@ const api_urls = {
     // User - Notification
     "permissions": "/permissions",
     "notify-policies": "/notify-policies",
+    "notify-policy": "/notify-policies/%s",
 
     // User - Storage
     "user-storage": "/user-storage",

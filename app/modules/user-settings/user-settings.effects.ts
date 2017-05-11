@@ -13,6 +13,7 @@ import * as actions from "./user-settings.actions";
 import {StoreUserAction} from "../auth/auth.actions";
 import {OpenLightboxAction} from "../../app.actions";
 import {AddNotificationMessageAction} from "../../ts/modules/common/common.actions";
+import {genericErrorManagement, genericSuccessManagement} from "../utils/effects";
 
 @Injectable()
 export class UserSettingsEffects {
@@ -100,6 +101,26 @@ export class UserSettingsEffects {
               ]);
           });
           return Observable.of(new actions.SetLoadingAvatarAction(true)).concat(queryObservable);
+        });
+
+    @Effect()
+    changePassword$: Observable<Action> = this.actions$
+        .ofType("CHANGE_PASSWORD")
+        .map(toPayload)
+        .switchMap((payload) => {
+          return this.rs.userSettings.changePassword(payload.currentPassword, payload.newPassword)
+                     .map(genericSuccessManagement)
+                     .catch(genericErrorManagement);
+        });
+
+    @Effect()
+    updateNotifyPolicyLevel$: Observable<Action> = this.actions$
+        .ofType("UPDATE_NOTIFY_POLICY_LEVEL")
+        .map(toPayload)
+        .switchMap((payload) => {
+          return this.rs.notifyPolicies.update(payload.policyId, payload.level)
+                     .map(genericSuccessManagement)
+                     .catch(genericErrorManagement);
         });
 
     constructor(private actions$: Actions, private rs: ResourcesService) { }

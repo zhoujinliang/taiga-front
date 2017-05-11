@@ -1,4 +1,6 @@
 import {Component, Output, EventEmitter} from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {PasswordValidators} from 'ngx-validators';
 
 @Component({
     selector: "tg-change-password-form",
@@ -6,8 +8,21 @@ import {Component, Output, EventEmitter} from "@angular/core";
 })
 export class ChangePasswordForm {
     @Output() changePassword: EventEmitter<any>;
+    form: FormGroup;
 
-    constructor() {
+    constructor(private fb: FormBuilder) {
         this.changePassword = new EventEmitter();
+        this.form = this.fb.group({
+            currentPassword: ['', Validators.required],
+            newPassword: ['', Validators.required],
+            repeatPassword: ['', Validators.required],
+        }, {validator: PasswordValidators.mismatchedPasswords('newPassword', 'repeatPassword')});
+    }
+
+    onSubmit($event) {
+        $event.preventDefault()
+        if (this.form.valid) {
+            this.changePassword.emit(this.form.value);
+        }
     }
 }

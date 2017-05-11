@@ -2,7 +2,7 @@ import * as Immutable from "immutable";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/reduce";
 import "rxjs/add/operator/switchMap";
-import * as Rx from "rxjs/Rx";
+import {Observable} from "rxjs";
 
 import { go } from "@ngrx/router-store";
 
@@ -10,7 +10,6 @@ import { Injectable } from "@angular/core";
 import { Actions, Effect, toPayload } from "@ngrx/effects";
 import { Action } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
-import { Observable } from "rxjs/Observable";
 import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
 import { ConfigurationService } from "../../ts/modules/base/conf";
@@ -56,7 +55,7 @@ export class AuthEffects {
                     "error",
                     this.translate.instant("LOGIN_FORM.ERROR_AUTH_INCORRECT"),
                 );
-                return Rx.Observable.of(newError);
+                return Observable.of(newError);
             });
         });
 

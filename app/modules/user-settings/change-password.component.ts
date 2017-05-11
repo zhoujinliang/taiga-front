@@ -25,14 +25,15 @@
 import {Component} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {IState} from "../../app.store";
+import {ChangePasswordAction} from "./user-settings.actions";
 
 @Component({
     template: require("./change-password.pug")(),
 })
 export class ChangePasswordPage {
-    constructor(private store: Store<IState>) {
-    }
+    constructor(private store: Store<IState>) {}
 
     onChangePassword(data) {
+        this.store.dispatch(new ChangePasswordAction(data.currentPassword, data.newPassword));
     }
 }
