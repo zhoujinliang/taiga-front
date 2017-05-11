@@ -59,7 +59,6 @@ export class NotificationMessages {
         this.messages$ = this.store.select((state) => state.getIn(["common", "notification-messages"]));
         this.messages$.subscribe((state) => {
             this.currentState = state;
-            console.log(state.toJS());
             if (!this.msg && this.currentState.size > 0) {
                 this.msg = this.getNextMessage(state);
                 let time = this.msg.time;
