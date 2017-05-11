@@ -70,4 +70,14 @@ export class UserSettingsResource {
         };
         return this.http.post(url, data);
     }
+
+    cancelAccount(userId) {
+        const url = this.urls.resolve("user", userId);
+        return this.http.delete(url);
+    }
+
+    cancelAccountWithToken(token) {
+        const url = this.urls.resolve("users-cancel-account");
+        return this.http.post(url, {token: token});
+    }
 }

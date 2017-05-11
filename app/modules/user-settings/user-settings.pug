@@ -19,4 +19,4 @@ div.wrapper()
 
 tg-lightbox(key="user-settings.delete-account")
   tg-lightbox-close
-  tg-delete-account-lightbox((response)="onDeleteAccountConfirm($event)")
+  tg-delete-account-lightbox((response)="onDeleteAccountConfirm($event)", [user]="user|async")

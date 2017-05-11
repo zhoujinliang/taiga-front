@@ -52,9 +52,9 @@ export class UserSettingsPage {
         this.store.dispatch(new OpenLightboxAction("user-settings.delete-account"));
     }
 
-    onDeleteAccountConfirm(confirm) {
-        if (confirm) {
-            console.log("BORRANDO CUENTA");
+    onDeleteAccountConfirm(userId) {
+        if (userId) {
+            this.store.dispatch(new actions.CancelAccountAction(userId));
         }
         this.store.dispatch(new CloseLightboxAction());
     }

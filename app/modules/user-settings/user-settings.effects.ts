@@ -14,6 +14,7 @@ import {StoreUserAction} from "../auth/auth.actions";
 import {OpenLightboxAction} from "../../app.actions";
 import {AddNotificationMessageAction} from "../../ts/modules/common/common.actions";
 import {genericErrorManagement, genericSuccessManagement} from "../utils/effects";
+import {LogoutAction} from "../auth/auth.actions";
 
 @Injectable()
 export class UserSettingsEffects {
@@ -121,6 +122,16 @@ export class UserSettingsEffects {
           return this.rs.notifyPolicies.update(payload.policyId, payload.level)
                      .map(genericSuccessManagement)
                      .catch(genericErrorManagement);
+        });
+
+    @Effect()
+    cancelAccount$: Observable<Action> = this.actions$
+        .ofType("CANCEL_ACCOUNT")
+        .map(toPayload)
+        .switchMap((payload) => {
+          return this.rs.userSettings.cancelAccount(payload).map((result) => {
+              return new LogoutAction();
+          }).catch(genericErrorManagement);
         });
 
     constructor(private actions$: Actions, private rs: ResourcesService) { }

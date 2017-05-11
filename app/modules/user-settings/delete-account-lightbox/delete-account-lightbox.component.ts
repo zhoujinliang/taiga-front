@@ -1,4 +1,5 @@
-import {Component, Output, EventEmitter} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
+import * as Immutable from "immutable";
 
 @Component({
     host: {"class": "lightbox-delete-account"},
@@ -6,7 +7,8 @@ import {Component, Output, EventEmitter} from "@angular/core";
     template: require("./delete-account-lightbox.pug")(),
 })
 export class DeleteAccountLightbox {
-    @Output() response: EventEmitter<boolean>;
+    @Input() user: Immutable.Map<string, any>;
+    @Output() response: EventEmitter<number>;
 
     constructor() {
         this.response = new EventEmitter();

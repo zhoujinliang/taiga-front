@@ -13,11 +13,11 @@ div.wrapper.cancel-account
                 div.options
                     a.button-green(
                         [title]="'LIGHTBOX.DELETE_ACCOUNT.CANCEL' | translate",
-                        (click)="response.emit(false)"
+                        (click)="response.emit(null)"
                     )
                         span(translate="LIGHTBOX.DELETE_ACCOUNT.CANCEL")
                     a.button-red(
                         [title]="'LIGHTBOX.DELETE_ACCOUNT.ACCEPT' | translate",
-                        (click)="response.emit(true)"
+                        (click)="response.emit(user.get('id'))"
                     )
                         span(translate="LIGHTBOX.DELETE_ACCOUNT.ACCEPT")

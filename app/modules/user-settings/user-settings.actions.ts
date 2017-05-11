@@ -72,3 +72,9 @@ export class UpdateNotifyPolicyLevelAction implements Action {
       this.payload = {policyId, level}
   }
 }
+
+export class CancelAccountAction implements Action {
+  readonly type = "CANCEL_ACCOUNT";
+
+  constructor(public payload: number) { }
+}
