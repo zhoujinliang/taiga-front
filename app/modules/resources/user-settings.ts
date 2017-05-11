@@ -24,12 +24,12 @@
 
 import {Injectable} from "@angular/core";
 import * as angular from "angular";
-import * as Promise from "bluebird";
 import {sizeFormat} from "../../libs/utils";
 import {ConfigurationService} from "../../ts/modules/base/conf";
 import {HttpService} from "../../ts/modules/base/http";
 import {RepositoryService} from "../../ts/modules/base/repository";
 import {UrlsService} from "../../ts/modules/base/urls";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class UserSettingsResource {
@@ -43,21 +43,18 @@ export class UserSettingsResource {
         if (maxFileSize && (file.size > maxFileSize)) {
             const response = {
                 status: 413,
-                data: { _error_message: `'${file.name}' (${sizeFormat(file.size)}) is too heavy for our oompa \
-loompas, try it with a smaller than (${sizeFormat(maxFileSize)})`,
-            },
+                data: {
+                    _error_message: `'${file.name}' (${sizeFormat(file.size)}) is too heavy for our oompa
+                                     loompas, try it with a smaller than (${sizeFormat(maxFileSize)})`,
+                },
             };
-            return Promise.reject(response);
+            Observable.throw(response);
         }
 
-        const data = new FormData();
+        let data = new FormData();
         data.append("avatar", file);
-        const options = {
-            transformRequest: angular.identity,
-            headers: {"Content-Type": undefined},
-        };
         const url = `${this.urls.resolve("users")}/change_avatar`;
-        return this.http.post(url, data, {}, options);
+        return this.http.post(url, data);
     }
 
     removeAvatar() {

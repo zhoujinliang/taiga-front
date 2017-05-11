@@ -11,8 +11,11 @@ div.wrapper()
             [user]="user|async",
             [languages]="languages|async",
             [formErrors]="formErrors|async",
+            [loadingAvatar]="loadingAvatar|async",
             (deleteAccount)="onDeleteAccount($event)",
-            (submitForm)="onSubmitForm($event)")
+            (submitForm)="onSubmitForm($event)",
+            (photoChanged)="onPhotoChanged($event)"
+        )
 
 tg-lightbox(key="user-settings.delete-account")
   tg-lightbox-close

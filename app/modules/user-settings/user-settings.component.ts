@@ -26,7 +26,7 @@ import {Component } from "@angular/core";
 import {Store} from "@ngrx/store";
 import {IState} from "../../app.store";
 import {OpenLightboxAction, CloseLightboxAction} from "../../app.actions";
-import {FetchLanguagesAction, UpdateUserSettingsDataAction} from "./user-settings.actions";
+import * as actions from "./user-settings.actions";
 import * as Immutable from "immutable";
 import {Observable} from "rxjs";
 
@@ -38,16 +38,17 @@ export class UserSettingsPage {
     user: Observable<Immutable.Map<string, any>>;
     formErrors: Observable<Immutable.Map<string, any>>;
     languages: Observable<Immutable.List<any>>;
+    loadingAvatar: Observable<boolean>;
 
     constructor(private store: Store<IState>) {
         this.user = this.store.select((state) => state.getIn(["auth", "user"]));
         this.languages = this.store.select((state) => state.getIn(["user-settings", "languages"]));
         this.formErrors = this.store.select((state) => state.getIn(["user-settings", "form-errors"]));
-        this.store.dispatch(new FetchLanguagesAction());
+        this.loadingAvatar = this.store.select((state) => state.getIn(["user-settings", "loading-avatar"]));
+        this.store.dispatch(new actions.FetchLanguagesAction());
     }
 
     onDeleteAccount(user) {
-        console.log("DELETE ACOUNT");
         this.store.dispatch(new OpenLightboxAction("user-settings.delete-account"));
     }
 
@@ -59,6 +60,14 @@ export class UserSettingsPage {
     }
 
     onSubmitForm(data) {
-        this.store.dispatch(new UpdateUserSettingsDataAction(data.userId, data.userData));
+        this.store.dispatch(new actions.UpdateUserSettingsDataAction(data.userId, data.userData));
+    }
+
+    onPhotoChanged(file: File) {
+        if (file === null) {
+            this.store.dispatch(new actions.RemoveUserAvatarAction());
+        } else {
+            this.store.dispatch(new actions.UploadUserAvatarAction(file));
+        }
     }
 }

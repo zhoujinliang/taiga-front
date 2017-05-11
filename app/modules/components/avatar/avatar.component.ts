@@ -17,7 +17,7 @@
  * File: avatar.directive.coffee
  */
 
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, Input, OnChanges} from "@angular/core";
 import * as Immutable from "immutable";
 import {AvatarService} from "./avatar.service";
 
@@ -29,15 +29,16 @@ import {AvatarService} from "./avatar.service";
                     [attr.title]="fullname" />
     `,
 })
-export class Avatar implements OnInit{
+export class Avatar implements OnChanges {
     @Input() user: any;
+    @Input() type: string = "normal";
     avatar: any;
     fullname: string;
 
     constructor(private avatarService: AvatarService) {}
 
-    ngOnInit() {
-        this.avatar = this.avatarService.getAvatar(this.user);
+    ngOnChanges() {
+        this.avatar = this.avatarService.getAvatar(this.user, this.type);
         if (this.user instanceof Immutable.Map) {
             this.fullname = this.user.get("full_name_display");
         } else if (this.user) {

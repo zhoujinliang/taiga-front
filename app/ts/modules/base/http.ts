@@ -37,10 +37,7 @@ export class HttpService {
                 private translate: TranslateService) {}
 
     headers() {
-        const headers = {
-            "Content-Type": "application/json",
-        };
-
+        let headers = {};
         // Authorization
         const token = this.storage.get("token");
         if (token) {
@@ -57,9 +54,14 @@ export class HttpService {
     }
 
     request(options) {
-        options.headers = _.assign({}, options.headers || {}, this.headers());
+        options.headers = _.assign({}, this.headers(), options.headers || {});
         if (options.data) {
-            options.body = JSON.stringify(options.data);
+            if (options.data instanceof FormData) {
+                options.body = options.data;
+            } else {
+                options.headers["Content-Type"] = "application/json";
+                options.body = JSON.stringify(options.data);
+            }
         }
 
         return this.http.request(options.url, options)

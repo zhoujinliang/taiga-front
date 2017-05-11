@@ -16,8 +16,10 @@ export class UserSettingsForm implements OnChanges {
     @Input() user: Immutable.Map<string, any>;
     @Input() languages: Immutable.List<any>;
     @Input() formErrors: Immutable.Map<string, any>;
+    @Input() loadingAvatar: boolean = false;
     @Output() deleteAccount: EventEmitter<number>;
     @Output() submitForm: EventEmitter<any>;
+    @Output() photoChanged: EventEmitter<File>;
     availableThemes;
     defaultLanguage;
     defaultTheme;
@@ -28,6 +30,7 @@ export class UserSettingsForm implements OnChanges {
                 private fb: FormBuilder) {
         this.deleteAccount = new EventEmitter();
         this.submitForm = new EventEmitter();
+        this.photoChanged = new EventEmitter();
         this.availableThemes = this.config.get("themes", []);
 
         this.form = this.fb.group({

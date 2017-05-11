@@ -38,3 +38,19 @@ export class SetUserSettingsFormErrorsAction implements Action {
   constructor(public payload: Immutable.Map<string, any>) { }
 }
 
+export class RemoveUserAvatarAction implements Action {
+  readonly type = "REMOVE_USER_AVATAR";
+  public payload = null;
+}
+
+export class UploadUserAvatarAction implements Action {
+  readonly type = "UPLOAD_USER_AVATAR";
+
+  constructor(public payload: File) { }
+}
+
+export class SetLoadingAvatarAction implements Action {
+  readonly type = "SET_LOADING_AVATAR";
+
+  constructor(public payload: boolean) { }
+}

@@ -64,17 +64,16 @@ export class AvatarService {
         };
     }
 
-    getAvatar(user) {
+    getAvatar(user, type="normal") {
         let gravatar, logo, root, photo;
 
         if (!user) { return this.getUnnamed(); }
 
-        if (user instanceof Immutable.Map) {
-            gravatar = user.get("gravatar_id");
+        gravatar = user.get("gravatar_id");
+        if (type == "normal") {
             photo = user.get("photo");
         } else {
-            gravatar = user.gravatar_id;
-            photo = user.photo;
+            photo = user.get("big_photo");
         }
 
         if (!gravatar) { return this.getUnnamed(); }

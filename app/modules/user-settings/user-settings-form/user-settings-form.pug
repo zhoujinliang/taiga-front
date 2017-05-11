@@ -3,28 +3,28 @@ tg-lightbox(key="user-settings.email-changed")
     tg-generic-success-lightbox([title]="'USER_PROFILE.CHANGE_EMAIL_SUCCESS'|translate")
 
 form([formGroup]="form", novalidate, (ngSubmit)="onSubmit()")
-    .project-details-image(tg-user-avatar)
+    .project-details-image
         fieldset.image-container
-            tg-avatar.image([user]="user")
-            .loading-overlay
+            tg-avatar.image([user]="user", type="big")
+            .loading-overlay.active(*ngIf="loadingAvatar")
                 img.loading-spinner(
-                    src="/#{v}/svg/spinner-circle.svg",
-                    alt="{{'COMMON.LOADING' | translate}}"
+                    src="/" + _version + "/svg/spinner-circle.svg",
+                    [alt]="'COMMON.LOADING' | translate"
                 )
             input.hidden(
                 type="file",
                 id="avatar-field",
-                tg-avatar-model="avatarAttachment"
+                (change)="photoChanged.emit($event.target.files[0])"
             )
 
-        a.button-green.change-image.js-change-avatar(
-            href="#",
-            title="{{'USER_PROFILE.CHANGE_PHOTO' | translate}}"
+        label.button-green.change-image(
+            for="avatar-field",
+            [title]="'USER_PROFILE.CHANGE_PHOTO' | translate"
         ) {{'USER_PROFILE.CHANGE_PHOTO' | translate}}
 
-        a.use-default-image.js-use-gravatar(
-            href="#",
-            title="{{ 'USER_PROFILE.ACTION_USE_GRAVATAR' | translate }}"
+        a.use-default-image(
+            [title]=" 'USER_PROFILE.ACTION_USE_GRAVATAR' | translate",
+            (click)="photoChanged.emit(null)"
         ) {{ 'USER_PROFILE.ACTION_USE_GRAVATAR' | translate }}
 
     .project-details-form-data

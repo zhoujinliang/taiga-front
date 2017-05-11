@@ -65,5 +65,42 @@ export class UserSettingsEffects {
           });
         });
 
+    @Effect()
+    uploadUserAvatar$: Observable<Action> = this.actions$
+        .ofType("UPLOAD_USER_AVATAR")
+        .map(toPayload)
+        .switchMap((payload) => {
+          let queryObservable = this.rs.userSettings.changeAvatar(payload).switchMap((result): Observable<Action> => {
+              return Observable.from([
+                  new StoreUserAction(result.data),
+                  new actions.SetLoadingAvatarAction(false)
+              ]);
+          }).catch((err): Observable<Action> => {
+              return Observable.from([
+                  new actions.SetLoadingAvatarAction(false),
+                  new AddNotificationMessageAction("error")
+              ]);
+          });
+          return Observable.of(new actions.SetLoadingAvatarAction(true)).concat(queryObservable);
+        });
+
+    @Effect()
+    removeUserAvatar$: Observable<Action> = this.actions$
+        .ofType("REMOVE_USER_AVATAR")
+        .switchMap(() => {
+          let queryObservable = this.rs.userSettings.removeAvatar().switchMap((result): Observable<Action> => {
+              return Observable.from([
+                  new StoreUserAction(result.data),
+                  new actions.SetLoadingAvatarAction(false)
+              ]);
+          }).catch((err): Observable<Action> => {
+              return Observable.from([
+                  new actions.SetLoadingAvatarAction(false),
+                  new AddNotificationMessageAction("error")
+              ]);
+          });
+          return Observable.of(new actions.SetLoadingAvatarAction(true)).concat(queryObservable);
+        });
+
     constructor(private actions$: Actions, private rs: ResourcesService) { }
 }
