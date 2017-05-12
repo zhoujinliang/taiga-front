@@ -17,137 +17,122 @@
  * File: user-timeline-item-title.service.coffee
  */
 
-import * as angular from "angular";
+import {Injectable} from "@angular/core";
+import {TranslateService} from "@ngx-translate/core";
 import * as _ from "lodash";
 import {unslugify} from "../../../libs/utils";
 
-export class UserTimelineItemTitle {
-    _fieldTranslationKey: any;
-    _params: any;
-    translate: any;
-    sce: any;
+@Injectable()
+export class UserTimelineItemTitleService {
+    _fieldTranslationKey: any = {
+        status: "COMMON.FIELDS.STATUS",
+        subject: "COMMON.FIELDS.SUBJECT",
+        description_diff: "COMMON.FIELDS.DESCRIPTION",
+        points: "COMMON.FIELDS.POINTS",
+        assigned_to: "COMMON.FIELDS.ASSIGNED_TO",
+        severity: "ISSUES.FIELDS.SEVERITY",
+        priority: "ISSUES.FIELDS.PRIORITY",
+        type: "ISSUES.FIELDS.TYPE",
+        is_iocaine: "TASK.FIELDS.IS_IOCAINE",
+        is_blocked: "COMMON.FIELDS.IS_BLOCKED",
+        color: "COMMON.FIELDS.COLOR",
+    };
+    _params: any = {
+        username(timeline, event) {
+            const user = timeline.getIn(["data", "user"]);
 
-    static initClass() {
-        this.$inject = [
-            "$translate",
-            "$sce",
-        ];
+            if (user.get("is_profile_visible")) {
+                const title_attr = this.translate.instant("COMMON.SEE_USER_PROFILE", {username: user.get("username")});
+                const url = "user-profile:username=timeline.getIn(['data', 'user', 'username'])";
 
-        this.prototype._fieldTranslationKey = {
-            status: "COMMON.FIELDS.STATUS",
-            subject: "COMMON.FIELDS.SUBJECT",
-            description_diff: "COMMON.FIELDS.DESCRIPTION",
-            points: "COMMON.FIELDS.POINTS",
-            assigned_to: "COMMON.FIELDS.ASSIGNED_TO",
-            severity: "ISSUES.FIELDS.SEVERITY",
-            priority: "ISSUES.FIELDS.PRIORITY",
-            type: "ISSUES.FIELDS.TYPE",
-            is_iocaine: "TASK.FIELDS.IS_IOCAINE",
-            is_blocked: "COMMON.FIELDS.IS_BLOCKED",
-            color: "COMMON.FIELDS.COLOR",
-        };
+                return this._getLink(url, user.get("name"), title_attr);
+            } else {
+                return this._getUsernameSpan(user.get("name"));
+            }
+        },
 
-        this.prototype._params = {
-            username(timeline, event) {
-                const user = timeline.getIn(["data", "user"]);
+        field_name(timeline, event) {
+            const field_name = timeline.getIn(["data", "value_diff", "key"]);
 
-                if (user.get("is_profile_visible")) {
-                    const title_attr = this.translate.instant("COMMON.SEE_USER_PROFILE", {username: user.get("username")});
-                    const url = "user-profile:username=timeline.getIn(['data', 'user', 'username'])";
+            return this.translate.instant(this._fieldTranslationKey[field_name]);
+        },
 
-                    return this._getLink(url, user.get("name"), title_attr);
-                } else {
-                    return this._getUsernameSpan(user.get("name"));
-                }
-            },
+        project_name(timeline, event) {
+            const url = "project:project=timeline.getIn(['data', 'project', 'slug'])";
 
-            field_name(timeline, event) {
-                const field_name = timeline.getIn(["data", "value_diff", "key"]);
+            return this._getLink(url, timeline.getIn(["data", "project", "name"]));
+        },
 
-                return this.translate.instant(this._fieldTranslationKey[field_name]);
-            },
+        new_value(timeline, event) {
+            let new_value;
+            if (_.isArray(timeline.getIn(["data", "value_diff", "value"]).toJS())) {
+                let value = timeline.getIn(["data", "value_diff", "value"]).get(1);
 
-            project_name(timeline, event) {
-                const url = "project:project=timeline.getIn(['data', 'project', 'slug'])";
-
-                return this._getLink(url, timeline.getIn(["data", "project", "name"]));
-            },
-
-            new_value(timeline, event) {
-                let new_value;
-                if (_.isArray(timeline.getIn(["data", "value_diff", "value"]).toJS())) {
-                    let value = timeline.getIn(["data", "value_diff", "value"]).get(1);
-
-                    // assigned to unasigned
-                    if ((value === null) && (timeline.getIn(["data", "value_diff", "key"]) === "assigned_to")) {
-                        value = this.translate.instant("ACTIVITY.VALUES.UNASSIGNED");
-                    }
-
-                    new_value = value;
-                } else {
-                    new_value = timeline.getIn(["data", "value_diff", "value"]).first().get(1);
+                // assigned to unasigned
+                if ((value === null) && (timeline.getIn(["data", "value_diff", "key"]) === "assigned_to")) {
+                    value = this.translate.instant("ACTIVITY.VALUES.UNASSIGNED");
                 }
 
-                return _.escape(new_value);
-            },
+                new_value = value;
+            } else {
+                new_value = timeline.getIn(["data", "value_diff", "value"]).first().get(1);
+            }
 
-            sprint_name(timeline, event) {
-                const url = "project-taskboard:project=timeline.getIn(['data', 'project', 'slug']),sprint=timeline.getIn(['data', 'milestone', 'slug'])";
+            return _.escape(new_value);
+        },
 
-                return this._getLink(url, timeline.getIn(["data", "milestone", "name"]));
-            },
+        sprint_name(timeline, event) {
+            const url = "project-taskboard:project=timeline.getIn(['data', 'project', 'slug']),sprint=timeline.getIn(['data', 'milestone', 'slug'])";
 
-            us_name(timeline, event) {
-                const obj = this._getTimelineObj(timeline, event).get("userstory");
+            return this._getLink(url, timeline.getIn(["data", "milestone", "name"]));
+        },
 
-                const event_us = {obj: "parent_userstory"};
-                const url = this._getDetailObjUrl(event_us);
+        us_name(timeline, event) {
+            const obj = this._getTimelineObj(timeline, event).get("userstory");
 
-                const text = `#${obj.get("ref")} ${obj.get("subject")}`;
+            const event_us = {obj: "parent_userstory"};
+            const url = this._getDetailObjUrl(event_us);
 
-                return this._getLink(url, text);
-            },
+            const text = `#${obj.get("ref")} ${obj.get("subject")}`;
 
-            related_us_name(timeline, event) {
-                const obj = timeline.getIn(["data", "userstory"]);
-                const url = "project-userstories-detail:project=timeline.getIn(['data', 'userstory', 'project', 'slug']),ref=timeline.getIn(['data', 'userstory', 'ref'])";
-                const text = `#${obj.get("ref")} ${obj.get("subject")}`;
-                return this._getLink(url, text);
-            },
+            return this._getLink(url, text);
+        },
 
-            epic_name(timeline, event) {
-                const obj = timeline.getIn(["data", "epic"]);
-                const url = "project-epics-detail:project=timeline.getIn(['data', 'project', 'slug']),ref=timeline.getIn(['data', 'epic', 'ref'])";
-                const text = `#${obj.get("ref")} ${obj.get("subject")}`;
-                return this._getLink(url, text);
-            },
+        related_us_name(timeline, event) {
+            const obj = timeline.getIn(["data", "userstory"]);
+            const url = "project-userstories-detail:project=timeline.getIn(['data', 'userstory', 'project', 'slug']),ref=timeline.getIn(['data', 'userstory', 'ref'])";
+            const text = `#${obj.get("ref")} ${obj.get("subject")}`;
+            return this._getLink(url, text);
+        },
 
-            obj_name(timeline, event) {
-                let text;
-                const obj = this._getTimelineObj(timeline, event);
-                const url = this._getDetailObjUrl(event);
+        epic_name(timeline, event) {
+            const obj = timeline.getIn(["data", "epic"]);
+            const url = "project-epics-detail:project=timeline.getIn(['data', 'project', 'slug']),ref=timeline.getIn(['data', 'epic', 'ref'])";
+            const text = `#${obj.get("ref")} ${obj.get("subject")}`;
+            return this._getLink(url, text);
+        },
 
-                if (event.obj === "wikipage") {
-                    text = unslugify(obj.get("slug"));
-                } else if (event.obj === "milestone") {
-                    text = obj.get("name");
-                } else {
-                    text = `#${obj.get("ref")} ${obj.get("subject")}`;
-                }
+        obj_name(timeline, event) {
+            let text;
+            const obj = this._getTimelineObj(timeline, event);
+            const url = this._getDetailObjUrl(event);
 
-                return this._getLink(url, text);
-            },
+            if (event.obj === "wikipage") {
+                text = unslugify(obj.get("slug"));
+            } else if (event.obj === "milestone") {
+                text = obj.get("name");
+            } else {
+                text = `#${obj.get("ref")} ${obj.get("subject")}`;
+            }
 
-            role_name(timeline, event) {
-                return _.escape(timeline.getIn(["data", "value_diff", "value"]).keySeq().first());
-            },
-        };
-    }
+            return this._getLink(url, text);
+        },
 
-    constructor(translate, sce) {
-        this.translate = translate;
-        this.sce = sce;
-    }
+        role_name(timeline, event) {
+            return _.escape(timeline.getIn(["data", "value_diff", "value"]).keySeq().first());
+        },
+    };
+    constructor(private translate: TranslateService) {}
 
     _translateTitleParams(param, timeline, event) {
         return this._params[param].call(this, timeline, event);
@@ -185,8 +170,6 @@ export class UserTimelineItemTitle {
     }
 
     _getUsernameSpan(text) {
-        const title = title || text;
-
         return $("<span>")
             .addClass("username")
             .text(text)
@@ -218,4 +201,3 @@ export class UserTimelineItemTitle {
         return translation;
     }
 }
-UserTimelineItemTitle.initClass();

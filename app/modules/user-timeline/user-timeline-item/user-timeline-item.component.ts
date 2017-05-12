@@ -14,19 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: user-timeline.directive.coffee
+ * File: user-timeline-item.component.ts
  */
 
-export let UserTimelineDirective = () =>
-    ({
-        templateUrl: "user-timeline/user-timeline/user-timeline.html",
-        controller: "UserTimeline",
-        controllerAs: "vm",
-        scope: {
-            projectId: "=projectid",
-            user: "=",
-            currentUser: "=",
-        },
-        bindToController: true,
-    })
-;
+import {Component, Input} from "@angular/core";
+import * as Immutable from "immutable";
+
+@Component({
+    selector: "tg-user-timeline-item",
+    template: require("./user-timeline-item.pug")(),
+})
+export class UserTimelineItem {
+    @Input() item: Immutable.Map<string, any>
+}

@@ -7,8 +7,11 @@ import {TranslateModule} from "@ngx-translate/core";
 
 import { TgCommonModule } from "../../ts/modules/common/common.module";
 import { TgComponentsModule } from "../components/components.module";
+import { TgUserTimelineModule } from "../user-timeline/user-timeline.module";
 
 import { LikeProjectButton } from "./components/like-project-button/like-project-button.component";
+import { WatchProjectButton } from "./components/watch-project-button/watch-project-button.component";
+import { ContactProjectButton } from "./components/contact-project-button/contact-project-button.component";
 import { ProjectsListing } from "./listing/projects-listing.component";
 import { ProjectData } from "./project/data/project-data.component";
 import { ProjectInfo } from "./project/info/project-info.component";
@@ -21,6 +24,7 @@ import { CurrentProjectsEffects } from "./projects.effects";
         CommonModule,
         TgCommonModule,
         TgComponentsModule,
+        TgUserTimelineModule,
         TranslateModule.forChild({}),
         RouterModule.forChild([
             {path: "project/:slug", component: ProjectDetail},
@@ -39,6 +43,8 @@ import { CurrentProjectsEffects } from "./projects.effects";
         ProjectData,
         ProjectTags,
         LikeProjectButton,
+        WatchProjectButton,
+        ContactProjectButton,
     ],
     providers: [
     ],

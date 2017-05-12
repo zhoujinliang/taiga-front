@@ -1,0 +1,13 @@
+section.profile-timeline
+    div(*ngIf="!timelineList.size")
+         div.spin
+            img(
+                src="/" + _version + "/svg/spinner-circle.svg",
+                [alt]="'COMMON.LOADING' | translate"
+            )
+
+    div(infiniteScroll,
+        (scrolled)="loadTimeline()",
+        [infiniteScrollDisabled]="scrollDisabled"
+    )
+        tg-user-timeline-item(*ngFor="let item of timelineList", [item]=item)

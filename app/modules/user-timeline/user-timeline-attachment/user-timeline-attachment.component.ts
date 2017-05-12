@@ -14,14 +14,25 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: user-timeline-item.directive.coffee
+ * File: user-timeline-attachment.directive.coffee
  */
 
-export let UserTimelineItemDirective = () =>
-    ({
-        templateUrl: "user-timeline/user-timeline-item/user-timeline-item.html",
-        scope: {
-            timeline: "=tgUserTimelineItem",
-        },
-    })
-;
+import {Component, Input, OnChanges} from "@angular/core";
+import * as Immutable from "immutable";
+import {isImage} from "../../../libs/utils";
+
+@Component({
+    selector: "tg-user-timeline-attachment",
+    template: require("./user-timeline-attachment.pug")(),
+})
+export class UserTimelineAttachment implements OnChanges {
+    @Input() attachment: Immutable.Map<string, any>;
+    isImage: boolean;
+
+    ngOnChanges() {
+        this.isImage = isImage(this.attachment.get('url'));
+    }
+
+    // TODO: Remove broken image links
+    // return el.find("img").error(function() { return this.remove(); });
+}

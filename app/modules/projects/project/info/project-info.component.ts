@@ -18,11 +18,13 @@
  */
 
 import { Component, Input } from "@angular/core";
+import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-project-info",
     template: require("./project-info.pug")(),
 })
 export class ProjectInfo {
-    @Input() project: any;
+    @Input() project: Immutable.Map<string, any>;
+    @Input() user: Immutable.Map<string, any>;
 }

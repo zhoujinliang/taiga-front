@@ -17,22 +17,21 @@ section.single-project-intro(*ngIf="project")
 
             div.track-buttons-container(*ngIf="user")
                 tg-like-project-button([project]="project")
-                // tg-watch-project-button([project]="project")
-                // tg-contact-project-button(
-                //     *ngIf="project.get('is_contact_activated')",
-                //     [project]="project"
-                // )
+                tg-watch-project-button([project]="project")
+                tg-contact-project-button(
+                    *ngIf="project.get('is_contact_activated')"
+                )
 
-            div.track-container(ng-if="!user")
+            div.track-container(*ngIf="!user")
                 .list-itemtype-track
                     span.list-itemtype-track-likers(
-                        title="{{ 'PROJECT.LIKE_BUTTON.COUNTER_TITLE'|translate:{total:project.get(\"total_fans\")||0}:'messageformat' }}"
+                        [title]="'PROJECT.LIKE_BUTTON.COUNTER_TITLE'|translate:{total:project.get(\"total_fans\")||0}:'messageformat'"
                     )
                         tg-svg(svg-icon="icon-like")
                         span {{ project.get('total_fans') }}
 
                     span.list-itemtype-track-watchers(
-                        title="{{ 'PROJECT.WATCH_BUTTON.COUNTER_TITLE'|translate:{total:project.get(\"total_watchers\")||0}:'messageformat' }}"
+                        [title]="'PROJECT.WATCH_BUTTON.COUNTER_TITLE'|translate:{total:project.get(\"total_watchers\")||0}:'messageformat'"
                     )
                         tg-svg(svg-icon="icon-watch")
                         span {{ project.get('total_watchers') }}

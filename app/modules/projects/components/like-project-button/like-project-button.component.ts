@@ -32,14 +32,6 @@ export class LikeProjectButton {
         this.click = new EventEmitter();
     }
 
-    showTextWhenMouseIsOver() {
-        return this.isMouseOver = true;
-    }
-
-    showTextWhenMouseIsLeave() {
-        return this.isMouseOver = false;
-    }
-
     onClick() {
         this.click.emit(this.project.get("id"));
     }

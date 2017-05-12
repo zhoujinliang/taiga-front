@@ -14,32 +14,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: like-project-button.controller.coffee
+ * File: watch-project-button.controller.coffee
  */
 
-export class ContactProjectButtonController {
-    lightboxFactory: any;
-    project: any;
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 
-    static initClass() {
-        this.$inject = ["tgLightboxFactory"];
-    }
+@Component({
+    selector: "tg-watch-project-button",
+    template: require("./watch-project-button.pug")(),
+})
+export class WatchProjectButton {
+    @Input() project: any;
+    @Output() changed: EventEmitter<number>;
+    showWatchOptions: boolean;
 
-    constructor(lightboxFactory){
-        this.lightboxFactory = lightboxFactory;
-    }
-
-    launchContactForm() {
-        return this.lightboxFactory.create(
-            "tg-lb-contact-project",
-            {
-                class: "lightbox lightbox-contact-project e2e-lightbox-contact-project",
-                project: "project",
-            },
-            {
-                project: this.project,
-            },
-        );
+    constructor() {
+        this.changed = new EventEmitter();
     }
 }
-ContactProjectButtonController.initClass();

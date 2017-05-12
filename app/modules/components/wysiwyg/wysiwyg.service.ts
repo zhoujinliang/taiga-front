@@ -31,41 +31,27 @@ import {markdownitLazyHeaders} from "../../../libs/markdown-it-lazy-headers";
 import {getMatches, slugify} from "../../../libs/utils";
 declare var _version: string;
 
+@Injectable()
 export class WysiwygService {
-    wysiwygCodeHightlighterService: any;
-    projectService: any;
-    navurls: any;
     emojis: any;
     tagBuilder: any;
-
-    static initClass() {
-        this.$inject = [
-            "tgWysiwygCodeHightlighterService",
-            "tgProjectService",
-            "$tgNavUrls",
-        ];
-    }
-    constructor(wysiwygCodeHightlighterService, projectService, navurls) {
-        this.wysiwygCodeHightlighterService = wysiwygCodeHightlighterService;
-        this.projectService = projectService;
-        this.navurls = navurls;
-    }
 
     searchEmojiByName(name) {
         return _.filter(this.emojis, (it: any) => it.name.indexOf(name) !== -1);
     }
 
-    setEmojiImagePath(emojis) {
-        return this.emojis = _.map(emojis, function(it: any) {
-            it.image = `/${_version}/emojis/` + it.image;
-
-            return it;
-        });
-    }
-
-    loadEmojis() {
-        return $.getJSON(`/${_version}/emojis/emojis-data.json`).then(this.setEmojiImagePath.bind(this));
-    }
+    // TODO: Move to the Redux flux
+    // setEmojiImagePath(emojis) {
+    //     return this.emojis = _.map(emojis, function(it: any) {
+    //         it.image = `/${_version}/emojis/` + it.image;
+    //
+    //         return it;
+    //     });
+    // }
+    //
+    // loadEmojis() {
+    //     return $.getJSON(`/${_version}/emojis/emojis-data.json`).then(this.setEmojiImagePath.bind(this));
+    // }
 
     getEmojiById(id) {
         return _.find(this.emojis, (it: any) => it.id === id);
@@ -292,4 +278,3 @@ export class WysiwygService {
         return result;
     }
 }
-WysiwygService.initClass();

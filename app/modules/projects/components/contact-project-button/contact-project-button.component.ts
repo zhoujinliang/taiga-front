@@ -14,18 +14,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
- * File: contact-project-button.directive.coffee
+ * File: like-project-button.controller.coffee
  */
 
-export let ContactProjectButtonDirective = () =>
-    ({
-        scope: {},
-        controller: "ContactProjectButtonCtrl",
-        bindToController: {
-            project: "=",
-            layout: "@",
-        },
-        controllerAs: "vm",
-        templateUrl: "projects/components/contact-project-button/contact-project-button.html",
-    })
-;
+import {Component, Input} from "@angular/core";
+
+@Component({
+    selector: "tg-contact-project-button",
+    template: require("./contact-project-button.pug")(),
+})
+export class ContactProjectButton {
+    @Input() layout: string;
+}
