@@ -189,9 +189,9 @@ const api_urls = {
     "issues-csv": "/issues/csv?uuid=%s",
 
     // Timeline
-    "timeline-profile": "/timeline/profile",
+    "timeline-profile": "/timeline/profile/%s",
     "timeline-user": "/timeline/user",
-    "timeline-project": "/timeline/project",
+    "timeline-project": "/timeline/project/%s",
 
     // Search
     "search": "/search",

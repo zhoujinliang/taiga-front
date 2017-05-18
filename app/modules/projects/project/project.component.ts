@@ -23,16 +23,18 @@ import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
 import { IState } from "../../../app.store";
 import { AppMetaService } from "../../services/app-meta.service";
-import { FetchCurrentProjectAction } from "../projects.actions";
+import { FetchCurrentProjectAction, FetchProjectTimelineAction } from "../projects.actions";
+import * as Immutable from "immutable";
+import {Observable} from "rxjs";
 
 @Component({
     selector: "tg-project-detail",
     template: require("./project.pug")(),
 })
 export class ProjectDetail implements OnInit {
-    user: any;
-    project: any;
-    members: any;
+    user: Observable<Immutable.Map<string, any>>;
+    project: Observable<Immutable.Map<string, any>>;
+    timeline: Observable<Immutable.List<any>>;
 
     constructor(private appMeta: AppMetaService,
                 private translate: TranslateService,
@@ -40,12 +42,14 @@ export class ProjectDetail implements OnInit {
                 private route: ActivatedRoute) {
         this.user = this.store.select((state) => state.getIn(["auth", "user"]));
         this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
+        this.timeline = this.store.select((state) => state.getIn(["projects", "timeline"]));
 
         this.project.subscribe((project) => {
             if (project) {
                 const title = this.translate.instant("PROJECT.PAGE_TITLE", {projectName: project.get("name")});
                 this.appMeta.setTitle(title);
                 this.appMeta.setDescription(project.get("description"));
+                this.store.dispatch(new FetchProjectTimelineAction(project.get('id'), 1));
             }
         });
     }

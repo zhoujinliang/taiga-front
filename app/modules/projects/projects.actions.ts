@@ -24,3 +24,18 @@ export class SetCurrentProjectAction implements Action {
 
   constructor(public payload: Immutable.Map<string, any>) { }
 }
+
+export class FetchProjectTimelineAction implements Action {
+  readonly type = "FETCH_PROJECT_TIMELINE";
+  public payload: any;
+
+  constructor(projectId: number, page: number) {
+      this.payload = {projectId, page}
+  }
+}
+
+export class SetProjectTimelineAction implements Action {
+  readonly type = "SET_PROJECT_TIMELINE";
+
+  constructor(public payload: Immutable.List<any>) { }
+}

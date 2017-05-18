@@ -15,6 +15,8 @@ export const projectsReducer = (state, action) => {
                                             Immutable.Map());
             return state.set("current-project", action.payload)
                         .setIn(["current-project", "membersById"], membersById);
+        case "SET_PROJECT_TIMELINE":
+            return state.set("timeline", action.payload)
         default:
             return state;
     }

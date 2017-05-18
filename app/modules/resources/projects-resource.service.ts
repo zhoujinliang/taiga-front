@@ -327,19 +327,13 @@ loompas, try it with a smaller than (${sizeFormat(maxFileSize)})`,
             only_relevant: true,
         };
 
-        let url = this.urls.resolve("timeline-project");
-        url = `${url}/${projectId}`;
+        let url = this.urls.resolve("timeline-project", projectId);
 
         return this.http.get(url, params, {
             headers: {
                 "x-lazy-pagination": true,
             },
-        }).map(function(result) {
-            return this.paginateResponse.paginate(Immutable.fromJS({
-                data: result.data,
-                headers: result.headers,
-            }));
-        }.bind(this));
+        });
     }
 
     likeProject(projectId) {

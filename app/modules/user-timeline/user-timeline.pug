@@ -1,5 +1,5 @@
 section.profile-timeline
-    div(*ngIf="!timelineList.size")
+    div(*ngIf="!timelineList")
          div.spin
             img(
                 src="/" + _version + "/svg/spinner-circle.svg",
@@ -10,4 +10,4 @@ section.profile-timeline
         (scrolled)="loadTimeline()",
         [infiniteScrollDisabled]="scrollDisabled"
     )
-        tg-user-timeline-item(*ngFor="let item of timelineList", [item]=item)
+        tg-user-timeline-item(*ngFor="let item of timelineList", [item]="item")

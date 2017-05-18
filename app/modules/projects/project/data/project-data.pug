@@ -1,6 +1,6 @@
 div.project-data(*ngIf="project")
     section.timeline
-        // div(tg-user-timeline, projectId="project.get('id')")
+        tg-user-timeline([timeline]="timeline", [scrollDisabled]="false")
 
     section.involved-data
         .looking-for-people(*ngIf="project.get('is_looking_for_people')")

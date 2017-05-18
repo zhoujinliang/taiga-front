@@ -25,6 +25,7 @@ import { Component, Input, OnChanges } from "@angular/core";
 })
 export class ProjectData implements OnChanges {
     @Input() project: any;
+    @Input() timeline: any;
     members: any;
 
     ngOnChanges() {

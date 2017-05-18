@@ -22,7 +22,7 @@
  * File: modules/profile/profile-timeline/profile-timeline.controller.coffee
  */
 
-import {Component, Input, Output, EventEmitter} from "@angular/core";
+import {Component, Input, Output, EventEmitter, OnChanges} from "@angular/core";
 import * as Immutable from "immutable";
 import {UserTimelineService} from "./user-timeline.service";
 
@@ -30,7 +30,7 @@ import {UserTimelineService} from "./user-timeline.service";
     selector: "tg-user-timeline",
     template: require("./user-timeline.pug")(),
 })
-export class UserTimeline {
+export class UserTimeline implements OnChanges{
     @Input() timeline: Immutable.List<any>;
     @Input() scrollDisabled: any = false;
     @Output() needMore: EventEmitter<boolean>;
@@ -40,13 +40,11 @@ export class UserTimeline {
         this.needMore = new EventEmitter();
     }
 
-    onNgChanges(changes) {
-        if (changes.timeline) {
-            this.timelineList = this.timeline.filter(this.timelineService.filterInvalid)
-                                             .map(this.timelineService.parseTimelineItem).toList();
+    ngOnChanges(changes) {
+        if (changes.timeline && this.timeline) {
+            this.timelineList = this.timeline.filter(this.timelineService.filterInvalid.bind(this.timelineService))
+                                             .map(this.timelineService.parseTimelineItem)
+                                             .map(this.timelineService.attachExtraInfoToTimelineEntry.bind(this.timelineService)).toList();
         }
-    }
-
-    loadTimeline() {
     }
 }

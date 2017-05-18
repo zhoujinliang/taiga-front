@@ -54,7 +54,10 @@ export class UserTimelineItemTitleService {
         field_name(timeline, event) {
             const field_name = timeline.getIn(["data", "value_diff", "key"]);
 
-            return this.translate.instant(this._fieldTranslationKey[field_name]);
+            if (this._fieldTranslationKey[field_name]) {
+                return this.translate.instant(this._fieldTranslationKey[field_name]);
+            }
+            return field_name
         },
 
         project_name(timeline, event) {
@@ -178,8 +181,9 @@ export class UserTimelineItemTitleService {
 
     _getParams(timeline, event, timeline_type) {
         const params = {};
+        const translateParams = timeline_type.translate_params || [];
 
-        timeline_type.translate_params.forEach((param) => {
+        translateParams.forEach((param) => {
             return params[param] = this._translateTitleParams(param, timeline, event);
         });
         return params;

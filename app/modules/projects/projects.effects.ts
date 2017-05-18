@@ -29,5 +29,14 @@ export class CurrentProjectsEffects {
         .switchMap((userId) => this.rs.projects.getProjectsByUserId(userId))
         .map((projects) => new SetUserProjectsAction(projects));
 
+    @Effect()
+    fetchProjectTimeline$: Observable<Action> = this.actions$
+        .ofType("FETCH_PROJECT_TIMELINE")
+        .map(toPayload)
+        .switchMap((payload) => {
+          return this.rs.projects.getTimeline(payload.projectId, payload.page)
+              .map((response:any) => new actions.SetProjectTimelineAction(response.data));
+        });
+
     constructor(private actions$: Actions, private rs: ResourcesService) { }
 }

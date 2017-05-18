@@ -30,11 +30,11 @@ interface TimelineType {
 }
 
 class NewMember implements TimelineType {
-    key: "TIMELINE.NEW_MEMBER";
-    translate_params: ["project_name"];
+    key = "TIMELINE.NEW_MEMBER";
+    translate_params = ["project_name"];
 
     check(timeline, event) {
-        return event.get('obj') === 'membership';
+        return event.obj === 'membership';
     }
 
     member(timeline) {
@@ -46,11 +46,11 @@ class NewMember implements TimelineType {
 }
 
 class NewProject implements TimelineType {
-    key: "TIMELINE.NEW_PROJECT";
-    translate_params: ["username", "project_name"];
+    key = "TIMELINE.NEW_PROJECT";
+    translate_params = ["username", "project_name"];
 
     check(timeline, event) {
-        return (event.get('obj') === "project") && (event.get('type') === "create");
+        return (event.obj === "project") && (event.type === "create");
     }
 
     description(timeline) {
@@ -59,8 +59,8 @@ class NewProject implements TimelineType {
 }
 
 class NewAttachment implements TimelineType {
-    key: "TIMELINE.UPLOAD_ATTACHMENT";
-    translate_params: ["username", "obj_name"];
+    key = "TIMELINE.UPLOAD_ATTACHMENT";
+    translate_params = ["username", "obj_name"];
 
     check(timeline, event) {
         return (event.type === "change") &&
@@ -70,8 +70,8 @@ class NewAttachment implements TimelineType {
 }
 
 class NewUs implements TimelineType {
-    key: "TIMELINE.US_CREATED";
-    translate_params: ["username", "project_name", "obj_name"];
+    key = "TIMELINE.US_CREATED";
+    translate_params = ["username", "project_name", "obj_name"];
 
     check(timeline, event) {
         return (event.obj === "userstory") && (event.type === "create");
@@ -79,8 +79,8 @@ class NewUs implements TimelineType {
 }
 
 class NewIssue implements TimelineType {
-    key: "TIMELINE.ISSUE_CREATED";
-    translate_params: ["username", "project_name", "obj_name"];
+    key = "TIMELINE.ISSUE_CREATED";
+    translate_params = ["username", "project_name", "obj_name"];
 
     check(timeline, event) {
         return (event.obj === "issue") && (event.type === "create");
@@ -88,8 +88,8 @@ class NewIssue implements TimelineType {
 }
 
 class NewWiki implements TimelineType {
-    key: "TIMELINE.WIKI_CREATED";
-    translate_params: ["username", "project_name", "obj_name"];
+    key = "TIMELINE.WIKI_CREATED";
+    translate_params = ["username", "project_name", "obj_name"];
 
     check(timeline, event) {
         return (event.obj === "wikipage") && (event.type === "create");
@@ -97,8 +97,8 @@ class NewWiki implements TimelineType {
 }
 
 class NewTask implements TimelineType {
-    key: "TIMELINE.TASK_CREATED";
-    translate_params: ["username", "project_name", "obj_name"];
+    key = "TIMELINE.TASK_CREATED";
+    translate_params = ["username", "project_name", "obj_name"];
 
     check(timeline, event) {
         return (event.obj === "task") && (event.type === "create") && !timeline.getIn(["data", "task", "userstory"]);
@@ -106,8 +106,8 @@ class NewTask implements TimelineType {
 }
 
 class NewTaskWithUs implements TimelineType {
-    key: "TIMELINE.TASK_CREATED_WITH_US";
-    translate_params: ["username", "project_name", "obj_name", "us_name"];
+    key = "TIMELINE.TASK_CREATED_WITH_US";
+    translate_params = ["username", "project_name", "obj_name", "us_name"];
 
     check(timeline, event) {
         return (event.obj === "task") && (event.type === "create") && timeline.getIn(["data", "task", "userstory"]);
@@ -115,8 +115,8 @@ class NewTaskWithUs implements TimelineType {
 }
 
 class NewMilestone implements TimelineType {
-    key: "TIMELINE.MILESTONE_CREATED";
-    translate_params: ["username", "project_name", "obj_name"];
+    key = "TIMELINE.MILESTONE_CREATED";
+    translate_params = ["username", "project_name", "obj_name"];
 
     check(timeline, event) {
         return (event.obj === "milestone") && (event.type === "create");
@@ -124,8 +124,8 @@ class NewMilestone implements TimelineType {
 }
 
 class NewEpic implements TimelineType {
-    key: "TIMELINE.EPIC_CREATED";
-    translate_params: ["username", "project_name", "obj_name"];
+    key = "TIMELINE.EPIC_CREATED";
+    translate_params = ["username", "project_name", "obj_name"];
 
     check(timeline, event) {
         return (event.obj === "epic") && (event.type === "create");
@@ -133,8 +133,8 @@ class NewEpic implements TimelineType {
 }
 
 class NewEpicRelatedUserstory implements TimelineType {
-    key: "TIMELINE.EPIC_RELATED_USERSTORY_CREATED";
-    translate_params: ["username", "project_name", "related_us_name", "epic_name"];
+    key = "TIMELINE.EPIC_RELATED_USERSTORY_CREATED";
+    translate_params = ["username", "project_name", "related_us_name", "epic_name"];
 
     check(timeline, event) {
         return (event.obj === "relateduserstory") && (event.type === "create");
@@ -142,8 +142,8 @@ class NewEpicRelatedUserstory implements TimelineType {
 }
 
 class NewUsComment implements TimelineType {
-    key: "TIMELINE.NEW_COMMENT_US";
-    translate_params: ["username", "obj_name"];
+    key = "TIMELINE.NEW_COMMENT_US";
+    translate_params = ["username", "obj_name"];
 
     check(timeline, event) {
         return timeline.getIn(["data", "comment"]) && (event.obj === "userstory");
@@ -156,8 +156,8 @@ class NewUsComment implements TimelineType {
 }
 
 class NewIssueComment implements TimelineType {
-    key: "TIMELINE.NEW_COMMENT_ISSUE";
-    translate_params: ["username", "obj_name"];
+    key = "TIMELINE.NEW_COMMENT_ISSUE";
+    translate_params = ["username", "obj_name"];
 
     check(timeline, event) {
         return timeline.getIn(["data", "comment"]) && (event.obj === "issue");
@@ -170,8 +170,8 @@ class NewIssueComment implements TimelineType {
 }
 
 class NewTaskComment implements TimelineType {
-    key: "TIMELINE.NEW_COMMENT_TASK";
-    translate_params: ["username", "obj_name"];
+    key = "TIMELINE.NEW_COMMENT_TASK";
+    translate_params = ["username", "obj_name"];
 
     check(timeline, event) {
         return timeline.getIn(["data", "comment"]) && (event.obj === "task");
@@ -184,8 +184,8 @@ class NewTaskComment implements TimelineType {
 }
 
 class NewEpicComment implements TimelineType {
-    key: "TIMELINE.NEW_COMMENT_EPIC";
-    translate_params: ["username", "obj_name"];
+    key = "TIMELINE.NEW_COMMENT_EPIC";
+    translate_params = ["username", "obj_name"];
 
     check(timeline, event) {
         return timeline.getIn(["data", "comment"]) && (event.obj === "epic");
@@ -198,8 +198,8 @@ class NewEpicComment implements TimelineType {
 }
 
 class UsMove implements TimelineType {
-    key: "TIMELINE.US_MOVED";
-    translate_params: ["username", "obj_name"];
+    key = "TIMELINE.US_MOVED";
+    translate_params = ["username", "obj_name"];
 
     check(timeline, event) {
         return timeline.hasIn(["data", "value_diff"]) &&
@@ -210,8 +210,8 @@ class UsMove implements TimelineType {
 }
 
 class UsToBacklog implements TimelineType {
-    key: "TIMELINE.US_REMOVED_FROM_MILESTONE";
-    translate_params: ["username", "obj_name"];
+    key = "TIMELINE.US_REMOVED_FROM_MILESTONE";
+    translate_params = ["username", "obj_name"];
 
     check(timeline, event) {
         if (timeline.hasIn(["data", "value_diff"]) &&
@@ -227,8 +227,8 @@ class UsToBacklog implements TimelineType {
 }
 
 class UsToMilestone implements TimelineType {
-    key: "TIMELINE.US_ADDED_MILESTONE";
-    translate_params: ["username", "obj_name", "sprint_name"];
+    key = "TIMELINE.US_ADDED_MILESTONE";
+    translate_params = ["username", "obj_name", "sprint_name"];
 
     check(timeline, event) {
         return timeline.hasIn(["data", "value_diff"]) &&
@@ -239,8 +239,8 @@ class UsToMilestone implements TimelineType {
 }
 
 class Blocked implements TimelineType {
-    key: "TIMELINE.BLOCKED";
-    translate_params: ["username", "obj_name"];
+    key = "TIMELINE.BLOCKED";
+    translate_params = ["username", "obj_name"];
 
     check(timeline, event) {
         if (timeline.hasIn(["data", "value_diff"]) &&
@@ -262,8 +262,8 @@ class Blocked implements TimelineType {
 }
 
 class UnBlocked implements TimelineType {
-    key: "TIMELINE.UNBLOCKED";
-    translate_params: ["username", "obj_name"];
+    key = "TIMELINE.UNBLOCKED";
+    translate_params = ["username", "obj_name"];
 
     check(timeline, event) {
         if (timeline.hasIn(["data", "value_diff"]) &&
@@ -277,8 +277,8 @@ class UnBlocked implements TimelineType {
 }
 
 class MilestoneUpdated implements TimelineType {
-    key: "TIMELINE.MILESTONE_UPDATED";
-    translate_params: ["username", "obj_name"];
+    key = "TIMELINE.MILESTONE_UPDATED";
+    translate_params = ["username", "obj_name"];
 
     check(timeline, event) {
         return (event.obj === "milestone") && (event.type === "change");
@@ -286,8 +286,8 @@ class MilestoneUpdated implements TimelineType {
 }
 
 class WikiUpdated implements TimelineType {
-    key: "TIMELINE.WIKI_UPDATED";
-    translate_params: ["username", "obj_name"];
+    key = "TIMELINE.WIKI_UPDATED";
+    translate_params = ["username", "obj_name"];
 
     check(timeline, event) {
         return (event.obj === "wikipage") && (event.type === "change");
@@ -295,8 +295,8 @@ class WikiUpdated implements TimelineType {
 }
 
 class UsUpdatedPoints implements TimelineType {
-    key: "TIMELINE.US_UPDATED_POINTS";
-    translate_params: ["username", "field_name", "obj_name", "new_value", "role_name"];
+    key = "TIMELINE.US_UPDATED_POINTS";
+    translate_params = ["username", "field_name", "obj_name", "new_value", "role_name"];
 
     check(timeline, event) {
         return (event.obj === "userstory") &&
@@ -307,8 +307,8 @@ class UsUpdatedPoints implements TimelineType {
 }
 
 class UsUpdatedDescription implements TimelineType {
-    key: "TIMELINE.US_UPDATED";
-    translate_params: ["username", "field_name", "obj_name"];
+    key = "TIMELINE.US_UPDATED";
+    translate_params = ["username", "field_name", "obj_name"];
 
     check(timeline, event) {
         return (event.obj === "userstory") &&
@@ -319,8 +319,8 @@ class UsUpdatedDescription implements TimelineType {
 }
 
 class UsUpdatedGeneral implements TimelineType {
-    key: "TIMELINE.US_UPDATED_WITH_NEW_VALUE";
-    translate_params: ["username", "field_name", "obj_name", "new_value"];
+    key = "TIMELINE.US_UPDATED_WITH_NEW_VALUE";
+    translate_params = ["username", "field_name", "obj_name", "new_value"];
 
     check(timeline, event) {
         return (event.obj === "userstory") &&
@@ -329,8 +329,8 @@ class UsUpdatedGeneral implements TimelineType {
 }
 
 class IssueUpdatedDescription implements TimelineType {
-    key: "TIMELINE.ISSUE_UPDATED";
-    translate_params: ["username", "field_name", "obj_name"];
+    key = "TIMELINE.ISSUE_UPDATED";
+    translate_params = ["username", "field_name", "obj_name"];
 
     check(timeline, event) {
         return (event.obj === "issue") &&
@@ -341,8 +341,8 @@ class IssueUpdatedDescription implements TimelineType {
 }
 
 class IssueUpdatedGeneral implements TimelineType {
-    key: "TIMELINE.ISSUE_UPDATED_WITH_NEW_VALUE";
-    translate_params: ["username", "field_name", "obj_name", "new_value"];
+    key = "TIMELINE.ISSUE_UPDATED_WITH_NEW_VALUE";
+    translate_params = ["username", "field_name", "obj_name", "new_value"];
 
     check(timeline, event) {
         return (event.obj === "issue") &&
@@ -351,8 +351,8 @@ class IssueUpdatedGeneral implements TimelineType {
 }
 
 class TaskUpdatedDescription implements TimelineType {
-    key: "TIMELINE.TASK_UPDATED";
-    translate_params: ["username", "field_name", "obj_name"];
+    key = "TIMELINE.TASK_UPDATED";
+    translate_params = ["username", "field_name", "obj_name"];
 
     check(timeline, event) {
         return (event.obj === "task") &&
@@ -364,8 +364,8 @@ class TaskUpdatedDescription implements TimelineType {
 }
 
 class TaskUpdatedWithUsDescription implements TimelineType {
-    key: "TIMELINE.TASK_UPDATED_WITH_US";
-    translate_params: ["username", "field_name", "obj_name", "us_name"];
+    key = "TIMELINE.TASK_UPDATED_WITH_US";
+    translate_params = ["username", "field_name", "obj_name", "us_name"];
 
     check(timeline, event) {
         return (event.obj === "task") &&
@@ -377,8 +377,8 @@ class TaskUpdatedWithUsDescription implements TimelineType {
 }
 
 class TaskUpdatedGeneral implements TimelineType {
-    key: "TIMELINE.TASK_UPDATED_WITH_NEW_VALUE";
-    translate_params: ["username", "field_name", "obj_name", "new_value"];
+    key = "TIMELINE.TASK_UPDATED_WITH_NEW_VALUE";
+    translate_params = ["username", "field_name", "obj_name", "new_value"];
 
     check(timeline, event) {
         return (event.obj === "task") &&
@@ -388,8 +388,8 @@ class TaskUpdatedGeneral implements TimelineType {
 }
 
 class TaskUpdatedWithUs implements TimelineType {
-    key: "TIMELINE.TASK_UPDATED_WITH_US_NEW_VALUE";
-    translate_params: ["username", "field_name", "obj_name", "us_name", "new_value"];
+    key = "TIMELINE.TASK_UPDATED_WITH_US_NEW_VALUE";
+    translate_params = ["username", "field_name", "obj_name", "us_name", "new_value"];
 
     check(timeline, event) {
         return (event.obj === "task") &&
@@ -399,8 +399,8 @@ class TaskUpdatedWithUs implements TimelineType {
 }
 
 class EpicUpdatedDescription implements TimelineType {
-    key: "TIMELINE.EPIC_UPDATED";
-    translate_params: ["username", "field_name", "obj_name"];
+    key = "TIMELINE.EPIC_UPDATED";
+    translate_params = ["username", "field_name", "obj_name"];
 
     check(timeline, event) {
         return (event.obj === "epic") &&
@@ -411,8 +411,8 @@ class EpicUpdatedDescription implements TimelineType {
 }
 
 class EpicUpdatedColor implements TimelineType {
-    key: "TIMELINE.EPIC_UPDATED_WITH_NEW_COLOR";
-    translate_params: ["username", "field_name", "obj_name", "new_value"];
+    key = "TIMELINE.EPIC_UPDATED_WITH_NEW_COLOR";
+    translate_params = ["username", "field_name", "obj_name", "new_value"];
 
     check(timeline, event) {
         return (event.obj === "epic") &&
@@ -423,8 +423,8 @@ class EpicUpdatedColor implements TimelineType {
 }
 
 class EpicUpdatedGeneral implements TimelineType {
-    key: "TIMELINE.EPIC_UPDATED_WITH_NEW_VALUE";
-    translate_params: ["username", "field_name", "obj_name", "new_value"];
+    key = "TIMELINE.EPIC_UPDATED_WITH_NEW_VALUE";
+    translate_params = ["username", "field_name", "obj_name", "new_value"];
 
     check(timeline, event) {
         return (event.obj === "epic") &&
@@ -433,8 +433,8 @@ class EpicUpdatedGeneral implements TimelineType {
 }
 
 class NewUser implements TimelineType {
-    key: "TIMELINE.NEW_USER";
-    translate_params: ["username"];
+    key = "TIMELINE.NEW_USER";
+    translate_params = ["username"];
 
     check(timeline, event) {
         return (event.obj === "user") && (event.type === "create");
