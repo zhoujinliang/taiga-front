@@ -17,7 +17,7 @@
  * File: project.controller.coffee
  */
 
-import { Component, Input, OnChanges } from "@angular/core";
+import { Component, Input, OnChanges, Output, EventEmitter } from "@angular/core";
 
 @Component({
     selector: "tg-project-data",
@@ -26,7 +26,12 @@ import { Component, Input, OnChanges } from "@angular/core";
 export class ProjectData implements OnChanges {
     @Input() project: any;
     @Input() timeline: any;
+    @Output() nextTimelineNeeded: EventEmitter<number[]>;
     members: any;
+
+    constructor() {
+        this.nextTimelineNeeded = new EventEmitter();
+    }
 
     ngOnChanges() {
         if (this.project) {

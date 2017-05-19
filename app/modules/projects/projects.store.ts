@@ -3,6 +3,11 @@ import * as Immutable from "immutable";
 export const projectsInitialState = {
     "user-projects": [],
     "current-project": null,
+    "timeline": {
+        "items": [],
+        "has-next": true,
+        "current-page": 0,
+    }
 };
 
 export const projectsReducer = (state, action) => {
@@ -16,7 +21,13 @@ export const projectsReducer = (state, action) => {
             return state.set("current-project", action.payload)
                         .setIn(["current-project", "membersById"], membersById);
         case "SET_PROJECT_TIMELINE":
-            return state.set("timeline", action.payload)
+            return state.setIn(["timeline", "items"], action.payload.timeline)
+                        .setIn(["timeline", "has-next"], action.payload.hasNext)
+                        .setIn(["timeline", "current-page"], action.payload.currentPage);
+        case "APPEND_PROJECT_TIMELINE":
+            return state.updateIn(["timeline", "items"], (current) => current.concat(action.payload.timeline))
+                        .setIn(["timeline", "has-next"], action.payload.hasNext)
+                        .setIn(["timeline", "current-page"], action.payload.currentPage);
         default:
             return state;
     }

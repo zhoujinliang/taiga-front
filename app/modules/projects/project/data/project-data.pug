@@ -1,6 +1,10 @@
 div.project-data(*ngIf="project")
     section.timeline
-        tg-user-timeline([timeline]="timeline", [scrollDisabled]="false")
+        tg-user-timeline(
+            [timeline]="timeline?.get('items')",
+            [scrollDisabled]="!timeline?.get('has-next')",
+            (needMore)="nextTimelineNeeded.emit([project.get('id'), timeline.get('current-page')])"
+        )
 
     section.involved-data
         .looking-for-people(*ngIf="project.get('is_looking_for_people')")

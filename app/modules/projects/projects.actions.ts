@@ -36,6 +36,18 @@ export class FetchProjectTimelineAction implements Action {
 
 export class SetProjectTimelineAction implements Action {
   readonly type = "SET_PROJECT_TIMELINE";
+  public payload: any;
 
-  constructor(public payload: Immutable.List<any>) { }
+  constructor(timeline: Immutable.List<any>, currentPage: number, hasNext: boolean) {
+      this.payload = {timeline, currentPage, hasNext}
+  }
+}
+
+export class AppendProjectTimelineAction implements Action {
+  readonly type = "APPEND_PROJECT_TIMELINE";
+  public payload: any;
+
+  constructor(timeline: Immutable.List<any>, currentPage: number, hasNext: boolean) {
+      this.payload = {timeline, currentPage, hasNext}
+  }
 }

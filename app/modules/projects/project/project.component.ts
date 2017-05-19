@@ -23,7 +23,7 @@ import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
 import { IState } from "../../../app.store";
 import { AppMetaService } from "../../services/app-meta.service";
-import { FetchCurrentProjectAction, FetchProjectTimelineAction } from "../projects.actions";
+import { FetchCurrentProjectAction, FetchProjectTimelineAction, SetProjectTimelineAction} from "../projects.actions";
 import * as Immutable from "immutable";
 import {Observable} from "rxjs";
 
@@ -34,7 +34,7 @@ import {Observable} from "rxjs";
 export class ProjectDetail implements OnInit {
     user: Observable<Immutable.Map<string, any>>;
     project: Observable<Immutable.Map<string, any>>;
-    timeline: Observable<Immutable.List<any>>;
+    timeline: Observable<Immutable.Map<string, any>>;
 
     constructor(private appMeta: AppMetaService,
                 private translate: TranslateService,
@@ -49,11 +49,16 @@ export class ProjectDetail implements OnInit {
                 const title = this.translate.instant("PROJECT.PAGE_TITLE", {projectName: project.get("name")});
                 this.appMeta.setTitle(title);
                 this.appMeta.setDescription(project.get("description"));
+                this.store.dispatch(new SetProjectTimelineAction(Immutable.List(), 0, true));
                 this.store.dispatch(new FetchProjectTimelineAction(project.get('id'), 1));
             }
         });
     }
 
     ngOnInit() {
+    }
+
+    nextTimelinePage([projectId, currentPage]) {
+        this.store.dispatch(new FetchProjectTimelineAction(projectId, currentPage + 1));
     }
 }

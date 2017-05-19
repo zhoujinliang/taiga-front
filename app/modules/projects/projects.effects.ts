@@ -35,7 +35,11 @@ export class CurrentProjectsEffects {
         .map(toPayload)
         .switchMap((payload) => {
           return this.rs.projects.getTimeline(payload.projectId, payload.page)
-              .map((response:any) => new actions.SetProjectTimelineAction(response.data));
+              .map((response:any) => new actions.AppendProjectTimelineAction(
+                  response.data,
+                  parseInt(response.headers.get('x-pagination-current'), 10),
+                  response.headers.get('x-pagination-next') != null
+              ));
         });
 
     constructor(private actions$: Actions, private rs: ResourcesService) { }
