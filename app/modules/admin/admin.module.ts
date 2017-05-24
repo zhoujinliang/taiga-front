@@ -23,6 +23,10 @@ import {AdminModulesForm} from "./pages/project/modules/modules-form.component";
 import {AdminExportPage} from "./pages/project/export/export.component";
 import {AdminReportsPage} from "./pages/project/reports/reports.component";
 import {AdminReportsItem} from "./pages/project/reports/reports-item.component";
+import {AdminPermissionsPage} from "./pages/permissions/permissions.component";
+import {AdminEditRole} from "./pages/permissions/permissions-edit-role.component";
+import {AdminEditRolePermissions} from "./pages/permissions/permissions-edit-role-permissions.component";
+import {AdminRolesNav} from "./pages/permissions/permissions-roles-nav.component";
 
 @NgModule({
     declarations: [
@@ -34,6 +38,10 @@ import {AdminReportsItem} from "./pages/project/reports/reports-item.component";
         AdminExportPage,
         AdminReportsPage,
         AdminReportsItem,
+        AdminPermissionsPage,
+        AdminEditRole,
+        AdminEditRolePermissions,
+        AdminRolesNav,
         AdminNav,
         AdminSubnavProject,
     ],
@@ -43,6 +51,7 @@ import {AdminReportsItem} from "./pages/project/reports/reports-item.component";
         AdminModulesPage,
         AdminExportPage,
         AdminReportsPage,
+        AdminPermissionsPage,
     ],
     imports: [
         CommonModule,
@@ -61,6 +70,7 @@ import {AdminReportsItem} from "./pages/project/reports/reports-item.component";
             { path: "project/:slug/admin/project-profile/modules", component: AdminModulesPage },
             { path: "project/:slug/admin/project-profile/export", component: AdminExportPage },
             { path: "project/:slug/admin/project-profile/reports", component: AdminReportsPage },
+            { path: "project/:slug/admin/roles", component: AdminPermissionsPage },
         ]),
         // EffectsModule.run(AdminEffects),
     ],
