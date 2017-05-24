@@ -12,7 +12,6 @@ export class AdminEditRolePermissions implements OnChanges {
     categories: any[] = [];
 
     ngOnChanges(changes) {
-        console.log(this.project, this.role);
         if (this.project && this.role) {
             this.categories = this.generateCategoriesFromRole(this.role, this.project);
         }
@@ -119,9 +118,7 @@ export class AdminEditRolePermissions implements OnChanges {
             name: "COMMON.PERMISIONS_CATEGORIES.WIKI.NAME",
             permissions: setActivePermissions(wikiPermissions),
         });
-        console.log(setActivePermissionsPerCategory(categories));
 
         return setActivePermissionsPerCategory(categories);
     };
-
 }

@@ -2,7 +2,8 @@ import {Component, OnDestroy} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {IState} from "../../../../app.store";
 import {Observable, Subscription} from "rxjs";
-import * as Immutable from "immutable";
+import {TranslateService} from "@ngx-translate/core";
+import * as Immutable from "immutable"
 
 @Component({
     template: require("./permissions.pug")(),
@@ -13,8 +14,9 @@ export class AdminPermissionsPage implements OnDestroy {
     noEstimableRoles: boolean;
     subscriptions: Subscription[];
 
-    constructor(private store: Store<IState>) {
-        this.project = this.store.select((state) => state.getIn(['projects', 'current-project']));
+    constructor(private store: Store<IState>, private translate: TranslateService) {
+        this.project = this.store.select((state) => state.getIn(['projects', 'current-project']))
+                                 .map(this.insertExternalRole.bind(this))
 
         this.subscriptions = [
             this.project.subscribe((project) => {
@@ -24,6 +26,19 @@ export class AdminPermissionsPage implements OnDestroy {
                 }
             })
         ]
+    }
+
+    insertExternalRole(project) {
+         if (!project) { return project; }
+
+         return project.update('roles', (roles) => {
+             return roles.map((role) => role.set('external_user', false))
+                         .push(Immutable.fromJS({
+                             name: this.translate.instant("ADMIN.ROLES.EXTERNAL_USER"),
+                             permissions: project.get('public_permissions').toJS(),
+                             external_user: true,
+                         }));
+         })
     }
 
     ngOnDestroy() {

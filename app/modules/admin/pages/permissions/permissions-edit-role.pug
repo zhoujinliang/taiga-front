@@ -16,7 +16,7 @@ div(*ngIf="role")
     div.any-computable-role(*ngIf="noEstimableRoles", translate="ADMIN.ROLES.WARNING_NO_ROLE")
 
     div.general-category.external-user(*ngIf="role.get('external_user')")
-        span(translate="ADMIN.ROLES.NOTE_EXTERNAL_USERS")
+        span([innerHTML]="'ADMIN.ROLES.NOTE_EXTERNAL_USERS' | translate")
 
     div.general-category(*ngIf="!role.get('external_user')")
         span(translate="ADMIN.ROLES.HELP_ROLE_ENABLED")
