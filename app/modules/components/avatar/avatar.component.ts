@@ -40,9 +40,9 @@ export class Avatar implements OnChanges {
     ngOnChanges() {
         this.avatar = this.avatarService.getAvatar(this.user, this.type);
         if (this.user instanceof Immutable.Map) {
-            this.fullname = this.user.get("full_name_display");
+            this.fullname = this.user.get("full_name_display") || this.user.get("full_name");
         } else if (this.user) {
-            this.fullname = this.user.full_name_display;
+            this.fullname = this.user.full_name_display || this.user.full_name;
         } else {
             this.fullname = "";
         }

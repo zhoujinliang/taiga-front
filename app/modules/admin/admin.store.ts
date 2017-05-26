@@ -1,13 +1,13 @@
 import * as Immutable from "immutable";
 
-export const teamInitialState = {
-    "stats": null,
+export const adminInitialState = {
+    "memberships": null,
 };
 
-export const teamReducer = (state, action) => {
+export const adminReducer = (state, action) => {
     switch (action.type){
-        case "SET_TEAM_STATS":
-            return state.set("stats", action.payload);
+        case "SET_ADMIN_MEMBERSHIPS":
+            return state.set("memberships", action.payload);
         default:
             return state;
     }

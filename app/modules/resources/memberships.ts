@@ -39,15 +39,9 @@ export class MembershipsResource {
         return this.repo.queryOne("memberships", id);
     }
 
-    list(projectId, filters, enablePagination= true) {
-        let options;
-        let params = {project: projectId};
-        params = _.extend({}, params, filters || {});
-        if (enablePagination) {
-            return this.repo.queryPaginated("memberships", params);
-        }
-
-        return this.repo.queryMany("memberships", params, (options = {enablePagination}));
+    list(projectId, filters={}, enablePagination=true) {
+        let url = this.urls.resolve("memberships")
+        return this.http.get(url, {project: projectId})
     }
 
     listByUser(userId, filters) {

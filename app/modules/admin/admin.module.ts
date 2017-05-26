@@ -15,6 +15,8 @@ import {TgServicesModule} from "../services/services.module";
 import {AdminNav} from "./components/admin-nav/admin-nav.component";
 import {AdminSubnavProject} from "./components/admin-subnav-project/admin-subnav-project.component";
 
+import {AdminEffects} from "./admin.effects";
+
 import {AdminProjectDetailsPage} from "./pages/project/project-details/project-details.component";
 import {AdminDefaultValuesPage} from "./pages/project/default-values/default-values.component";
 import {AdminDefaultValuesForm} from "./pages/project/default-values/default-values-form.component";
@@ -27,6 +29,12 @@ import {AdminPermissionsPage} from "./pages/permissions/permissions.component";
 import {AdminEditRole} from "./pages/permissions/permissions-edit-role.component";
 import {AdminEditRolePermissions} from "./pages/permissions/permissions-edit-role-permissions.component";
 import {AdminRolesNav} from "./pages/permissions/permissions-roles-nav.component";
+import {AdminMembershipsPage} from "./pages/memberships/memberships.component";
+import {AdminMembershipsTable} from "./pages/memberships/memberships-table.component";
+import {AdminMembershipsRowRoleSelector} from "./pages/memberships/memberships-row-role-selector.component";
+import {AdminMembershipsRowAvatar} from "./pages/memberships/memberships-row-avatar.component";
+import {AdminMembershipsRowAdminCheckbox} from "./pages/memberships/memberships-row-admin-checkbox.component";
+import {AdminMembershipsRowActions} from "./pages/memberships/memberships-row-actions.component";
 
 @NgModule({
     declarations: [
@@ -44,6 +52,12 @@ import {AdminRolesNav} from "./pages/permissions/permissions-roles-nav.component
         AdminRolesNav,
         AdminNav,
         AdminSubnavProject,
+        AdminMembershipsPage,
+        AdminMembershipsTable,
+        AdminMembershipsRowRoleSelector,
+        AdminMembershipsRowAvatar,
+        AdminMembershipsRowAdminCheckbox,
+        AdminMembershipsRowActions,
     ],
     exports: [
         AdminProjectDetailsPage,
@@ -71,8 +85,9 @@ import {AdminRolesNav} from "./pages/permissions/permissions-roles-nav.component
             { path: "project/:slug/admin/project-profile/export", component: AdminExportPage },
             { path: "project/:slug/admin/project-profile/reports", component: AdminReportsPage },
             { path: "project/:slug/admin/roles", component: AdminPermissionsPage },
+            { path: "project/:slug/admin/memberships", component: AdminMembershipsPage },
         ]),
-        // EffectsModule.run(AdminEffects),
+        EffectsModule.run(AdminEffects),
     ],
     providers: [
     ],

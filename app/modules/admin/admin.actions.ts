@@ -1,20 +1,14 @@
 import { Action } from "@ngrx/store";
 import * as Immutable from "immutable";
 
-export class TeamLeaveProjectAction implements Action {
-  readonly type = "TEAM_LEAVE_PROJECT";
+export class FetchAdminMembershipsAction implements Action {
+  readonly type = "FETCH_ADMIN_MEMBERSHIPS";
 
   constructor(public payload: number) { }
 }
 
-export class FetchTeamStatsAction implements Action {
-  readonly type = "FETCH_TEAM_STATS";
-
-  constructor(public payload: number) { }
-}
-
-export class SetTeamStatsAction implements Action {
-  readonly type = "SET_TEAM_STATS";
+export class SetAdminMembershipsAction implements Action {
+  readonly type = "SET_ADMIN_MEMBERSHIPS";
 
   constructor(public payload: Immutable.Map<string, any>) { }
 }

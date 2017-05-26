@@ -9,34 +9,21 @@ import { Observable } from "rxjs/Observable";
 import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
 import { ResourcesService } from "../resources/resources.service";
-import * as actions from "./team.actions";
+import * as actions from "./admin.actions";
 import {AddNotificationMessageAction} from "../../ts/modules/common/common.actions";
 import {go} from "@ngrx/router-store";
 import {genericErrorManagement} from "../utils/effects";
 
 @Injectable()
-export class TeamEffects {
+export class AdminEffects {
     @Effect()
-    fetchTeamStats$: Observable<Action> = this.actions$
-        .ofType("FETCH_TEAM_STATS")
+    fetchAdminMemberships$: Observable<Action> = this.actions$
+        .ofType("FETCH_ADMIN_MEMBERSHIPS")
         .map(toPayload)
         .switchMap((projectId) => {
-          return this.rs.projects.memberStats(projectId).map((result) => {
-              return new actions.SetTeamStatsAction(result.data);
+          return this.rs.memberships.list(projectId).map((result) => {
+              return new actions.SetAdminMembershipsAction(result.data);
           });
-        });
-
-    @Effect()
-    teamLeaveProject$: Observable<Action> = this.actions$
-        .ofType("TEAM_LEAVE_PROJECT")
-        .map(toPayload)
-        .switchMap((projectId) => {
-          return this.rs.projects.leave(projectId).switchMap((result) => {
-              return Observable.from([
-                  go(["/"]),
-                  new AddNotificationMessageAction("success"),
-              ])
-          }).catch(genericErrorManagement);
         });
 
     constructor(private actions$: Actions, private rs: ResourcesService) { }
