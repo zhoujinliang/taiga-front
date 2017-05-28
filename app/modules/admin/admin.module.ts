@@ -35,6 +35,10 @@ import {AdminMembershipsRowRoleSelector} from "./pages/memberships/memberships-r
 import {AdminMembershipsRowAvatar} from "./pages/memberships/memberships-row-avatar.component";
 import {AdminMembershipsRowAdminCheckbox} from "./pages/memberships/memberships-row-admin-checkbox.component";
 import {AdminMembershipsRowActions} from "./pages/memberships/memberships-row-actions.component";
+import {AdminAttributesStatusPage} from "./pages/attributes/attributes-status.component";
+import {AdminAttributesNav} from "./pages/attributes/attributes-nav.component";
+import {AdminAttributesStatusEditor} from "./pages/attributes/attributes-status-editor.component";
+import {AdminAttributesStatusRow} from "./pages/attributes/attributes-status-row.component";
 
 @NgModule({
     declarations: [
@@ -58,6 +62,10 @@ import {AdminMembershipsRowActions} from "./pages/memberships/memberships-row-ac
         AdminMembershipsRowAvatar,
         AdminMembershipsRowAdminCheckbox,
         AdminMembershipsRowActions,
+        AdminAttributesStatusPage,
+        AdminAttributesNav,
+        AdminAttributesStatusEditor,
+        AdminAttributesStatusRow,
     ],
     exports: [
         AdminProjectDetailsPage,
@@ -66,6 +74,7 @@ import {AdminMembershipsRowActions} from "./pages/memberships/memberships-row-ac
         AdminExportPage,
         AdminReportsPage,
         AdminPermissionsPage,
+        AdminAttributesStatusPage,
     ],
     imports: [
         CommonModule,
@@ -86,6 +95,8 @@ import {AdminMembershipsRowActions} from "./pages/memberships/memberships-row-ac
             { path: "project/:slug/admin/project-profile/reports", component: AdminReportsPage },
             { path: "project/:slug/admin/roles", component: AdminPermissionsPage },
             { path: "project/:slug/admin/memberships", component: AdminMembershipsPage },
+            { path: "project/:slug/admin/project-values", redirectTo: "project/:slug/admin/attributes/status"},
+            { path: "project/:slug/admin/project-values/status", component: AdminAttributesStatusPage },
         ]),
         EffectsModule.run(AdminEffects),
     ],

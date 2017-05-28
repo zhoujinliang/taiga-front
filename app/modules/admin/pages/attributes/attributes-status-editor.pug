@@ -1,0 +1,23 @@
+section.colors-table.admin-status-table
+    div.project-values-title
+        h2 {{ name }}
+        a.button.button-gray.show-add-new(href="", [title]="'ADMIN.US_STATUS.ACTION_ADD_STATUS' | translate")
+            span(translate="ADMIN.US_STATUS.ACTION_ADD_STATUS")
+
+    div.table-header
+        div.row
+            div.color-column(translate="COMMON.FIELDS.COLOR")
+            div.status-name(translate="COMMON.FIELDS.NAME")
+            div.status-slug(translate="COMMON.FIELDS.SLUG")
+            div.is-closed-column(translate="COMMON.FIELDS.IS_CLOSED")
+            div.is-archived-column(translate="ADMIN.US_STATUS.IS_ARCHIVED_COLUMN", *ngIf="type === 'userstory-statuses'")
+            div.status-wip-limit(translate="ADMIN.US_STATUS.WIP_LIMIT_COLUMN", *ngIf="type === 'userstory-statuses'")
+            div.options-column
+
+    div.table-main
+        div.sortable
+            div(*ngFor="let value of values")
+                tg-admin-attributes-status-row([status]="value", [type]="type")
+                // tg-admin-attributes-status-form([status]="value")
+
+        // tg-admin-attributes-status-form([status]="value", type="new")
