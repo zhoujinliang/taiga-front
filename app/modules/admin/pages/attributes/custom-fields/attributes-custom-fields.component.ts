@@ -6,12 +6,11 @@ import {TranslateService} from "@ngx-translate/core";
 import * as Immutable from "immutable"
 
 @Component({
-    template: require("./attributes-tags.pug")(),
+    template: require("./attributes-custom-fields.pug")(),
 })
-export class AdminAttributesTagsPage {
+export class AdminAttributesCustomFieldsPage {
     project: Observable<Immutable.Map<string, any>>;
     currentAttribute: Immutable.Map<string, any> = null;
-    newStatusOpen: boolean = false;
 
     constructor(private store: Store<IState>, private translate: TranslateService) {
         this.project = this.store.select((state) => state.getIn(['projects', 'current-project']))

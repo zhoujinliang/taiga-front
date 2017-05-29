@@ -50,6 +50,10 @@ import {AdminAttributesTagsPage} from "./pages/attributes/tags/attributes-tags.c
 import {AdminAttributesTagsEditor} from "./pages/attributes/tags/attributes-tags-editor.component";
 import {AdminAttributesTagsRow} from "./pages/attributes/tags/attributes-tags-row.component";
 import {AdminAttributesTagsForm} from "./pages/attributes/tags/attributes-tags-form.component";
+import {AdminAttributesCustomFieldsPage} from "./pages/attributes/custom-fields/attributes-custom-fields.component";
+import {AdminAttributesCustomFieldsEditor} from "./pages/attributes/custom-fields/attributes-custom-fields-editor.component";
+import {AdminAttributesCustomFieldsRow} from "./pages/attributes/custom-fields/attributes-custom-fields-row.component";
+import {AdminAttributesCustomFieldsForm} from "./pages/attributes/custom-fields/attributes-custom-fields-form.component";
 
 @NgModule({
     declarations: [
@@ -88,6 +92,10 @@ import {AdminAttributesTagsForm} from "./pages/attributes/tags/attributes-tags-f
         AdminAttributesTagsEditor,
         AdminAttributesTagsRow,
         AdminAttributesTagsForm,
+        AdminAttributesCustomFieldsPage,
+        AdminAttributesCustomFieldsEditor,
+        AdminAttributesCustomFieldsRow,
+        AdminAttributesCustomFieldsForm,
     ],
     exports: [
         AdminProjectDetailsPage,
@@ -123,6 +131,7 @@ import {AdminAttributesTagsForm} from "./pages/attributes/tags/attributes-tags-f
             { path: "project/:slug/admin/project-values/severities", component: AdminAttributesIssuesSeveritiesPage },
             { path: "project/:slug/admin/project-values/types", component: AdminAttributesIssuesTypesPage },
             { path: "project/:slug/admin/project-values/tags", component: AdminAttributesTagsPage },
+            { path: "project/:slug/admin/project-values/custom-fields", component: AdminAttributesCustomFieldsPage },
         ]),
         EffectsModule.run(AdminEffects),
     ],
