@@ -17,38 +17,37 @@
  * File: color-selector.controller.coffee
  */
 
-import * as angular from "angular";
+import {Component, Input, Output, EventEmitter, OnChanges} from "@angular/core";
 import * as Immutable from "immutable";
 import * as _ from "lodash";
 import {getDefaulColorList} from "../../../libs/utils";
 
-export class ColorSelectorController {
-    projectService: any;
-    colorList: any;
-    displayColorList: any;
-    requiredPerm: any;
-    isColorRequired: any;
-    color: any;
-    customColor: any;
-    initColor: any;
-    onSelectColor: any;
+@Component({
+    selector: "tg-color-selector",
+    template: require("./color-selector.pug")(),
+})
+export class ColorSelector implements OnChanges{
+    @Input() initColor: string;
+    @Input() isColorRequired: boolean;
+    @Input() requiredPerm: string;
+    @Input() project: Immutable.Map<string, any>;
+    @Output() colorSelected: EventEmitter<string>;
+    displayColorList: boolean = false;
+    colorList: any[];
+    customColor: string = "";
+    color: string;
 
-    static initClass() {
-        this.$inject = [
-            "tgProjectService",
-        ];
+    constructor() {
+        this.colorList = getDefaulColorList();
     }
 
-    constructor(projectService) {
-        this.projectService = projectService;
-        this.colorList = getDefaulColorList();
-        this.checkIsColorRequired();
-        this.displayColorList = false;
+    ngOnChanges() {
+        this.color = this.initColor;
     }
 
     userCanChangeColor() {
         if (!this.requiredPerm) { return true; }
-        return this.projectService.hasPermission(this.requiredPerm);
+        return this.project.get("my_permissions").indexOf(this.requiredPerm) !== -1;
     }
 
     checkIsColorRequired() {
@@ -76,11 +75,12 @@ export class ColorSelectorController {
 
     onSelectDropdownColor(color) {
         this.color = color;
-        this.onSelectColor({color});
+        this.colorSelected.emit(color);
         return this.toggleColorList();
     }
 
     onKeyDown(event) {
+        this.customColor = event.target.value;
         if (event.which === 13) { // ENTER
             if (this.customColor || !this.isColorRequired) {
                 this.onSelectDropdownColor(this.customColor);
@@ -88,5 +88,5 @@ export class ColorSelectorController {
             return event.preventDefault();
         }
     }
+
 }
-ColorSelectorController.initClass();

@@ -35,10 +35,21 @@ import {AdminMembershipsRowRoleSelector} from "./pages/memberships/memberships-r
 import {AdminMembershipsRowAvatar} from "./pages/memberships/memberships-row-avatar.component";
 import {AdminMembershipsRowAdminCheckbox} from "./pages/memberships/memberships-row-admin-checkbox.component";
 import {AdminMembershipsRowActions} from "./pages/memberships/memberships-row-actions.component";
-import {AdminAttributesStatusPage} from "./pages/attributes/attributes-status.component";
 import {AdminAttributesNav} from "./pages/attributes/attributes-nav.component";
-import {AdminAttributesStatusEditor} from "./pages/attributes/attributes-status-editor.component";
-import {AdminAttributesStatusRow} from "./pages/attributes/attributes-status-row.component";
+import {AdminAttributesStatusPage} from "./pages/attributes/status/attributes-status.component";
+import {AdminAttributesStatusEditor} from "./pages/attributes/status/attributes-status-editor.component";
+import {AdminAttributesStatusRow} from "./pages/attributes/status/attributes-status-row.component";
+import {AdminAttributesStatusForm} from "./pages/attributes/status/attributes-status-form.component";
+import {AdminAttributesIssuesPrioritiesPage} from "./pages/attributes/issues/attributes-issues-priorities.component";
+import {AdminAttributesIssuesSeveritiesPage} from "./pages/attributes/issues/attributes-issues-severities.component";
+import {AdminAttributesIssuesTypesPage} from "./pages/attributes/issues/attributes-issues-types.component";
+import {AdminAttributesIssuesEditor} from "./pages/attributes/issues/attributes-issues-editor.component";
+import {AdminAttributesIssuesRow} from "./pages/attributes/issues/attributes-issues-row.component";
+import {AdminAttributesIssuesForm} from "./pages/attributes/issues/attributes-issues-form.component";
+import {AdminAttributesTagsPage} from "./pages/attributes/tags/attributes-tags.component";
+import {AdminAttributesTagsEditor} from "./pages/attributes/tags/attributes-tags-editor.component";
+import {AdminAttributesTagsRow} from "./pages/attributes/tags/attributes-tags-row.component";
+import {AdminAttributesTagsForm} from "./pages/attributes/tags/attributes-tags-form.component";
 
 @NgModule({
     declarations: [
@@ -62,10 +73,21 @@ import {AdminAttributesStatusRow} from "./pages/attributes/attributes-status-row
         AdminMembershipsRowAvatar,
         AdminMembershipsRowAdminCheckbox,
         AdminMembershipsRowActions,
-        AdminAttributesStatusPage,
         AdminAttributesNav,
+        AdminAttributesStatusPage,
         AdminAttributesStatusEditor,
         AdminAttributesStatusRow,
+        AdminAttributesStatusForm,
+        AdminAttributesIssuesPrioritiesPage,
+        AdminAttributesIssuesSeveritiesPage,
+        AdminAttributesIssuesTypesPage,
+        AdminAttributesIssuesEditor,
+        AdminAttributesIssuesRow,
+        AdminAttributesIssuesForm,
+        AdminAttributesTagsPage,
+        AdminAttributesTagsEditor,
+        AdminAttributesTagsRow,
+        AdminAttributesTagsForm,
     ],
     exports: [
         AdminProjectDetailsPage,
@@ -97,6 +119,10 @@ import {AdminAttributesStatusRow} from "./pages/attributes/attributes-status-row
             { path: "project/:slug/admin/memberships", component: AdminMembershipsPage },
             { path: "project/:slug/admin/project-values", redirectTo: "project/:slug/admin/attributes/status"},
             { path: "project/:slug/admin/project-values/status", component: AdminAttributesStatusPage },
+            { path: "project/:slug/admin/project-values/priorities", component: AdminAttributesIssuesPrioritiesPage },
+            { path: "project/:slug/admin/project-values/severities", component: AdminAttributesIssuesSeveritiesPage },
+            { path: "project/:slug/admin/project-values/types", component: AdminAttributesIssuesTypesPage },
+            { path: "project/:slug/admin/project-values/tags", component: AdminAttributesTagsPage },
         ]),
         EffectsModule.run(AdminEffects),
     ],

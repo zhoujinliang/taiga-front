@@ -10,6 +10,7 @@ export class AdminAttributesStatusEditor implements OnChanges {
     @Input() name: string;
     @Input() project: Immutable.Map<string, any>;
     values: Immutable.List<any>;
+    editing: any = {};
 
     ngOnChanges(changes) {
         if (this.project) {

@@ -32,6 +32,7 @@ import {FieldError} from "./field-error/field-error.component";
 import {FeedbackLightbox} from "./feedback/feedback-lightbox.component";
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from "@angular/forms";
+import { ColorSelector } from "./color-selector/color-selector.component";
 
 @NgModule({
     imports: [
@@ -64,6 +65,7 @@ import { FormsModule } from "@angular/forms";
         ConfirmAsk,
         FieldError,
         FeedbackLightbox,
+        ColorSelector,
     ],
     declarations: [
         BoardZoom,
@@ -86,6 +88,7 @@ import { FormsModule } from "@angular/forms";
         ConfirmAsk,
         FieldError,
         FeedbackLightbox,
+        ColorSelector,
     ],
     providers: [
         AvatarService,
