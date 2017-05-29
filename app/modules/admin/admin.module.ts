@@ -54,6 +54,10 @@ import {AdminAttributesCustomFieldsPage} from "./pages/attributes/custom-fields/
 import {AdminAttributesCustomFieldsEditor} from "./pages/attributes/custom-fields/attributes-custom-fields-editor.component";
 import {AdminAttributesCustomFieldsRow} from "./pages/attributes/custom-fields/attributes-custom-fields-row.component";
 import {AdminAttributesCustomFieldsForm} from "./pages/attributes/custom-fields/attributes-custom-fields-form.component";
+import {AdminAttributesPointsPage} from "./pages/attributes/points/attributes-points.component";
+import {AdminAttributesPointsEditor} from "./pages/attributes/points/attributes-points-editor.component";
+import {AdminAttributesPointsRow} from "./pages/attributes/points/attributes-points-row.component";
+import {AdminAttributesPointsForm} from "./pages/attributes/points/attributes-points-form.component";
 
 @NgModule({
     declarations: [
@@ -96,6 +100,10 @@ import {AdminAttributesCustomFieldsForm} from "./pages/attributes/custom-fields/
         AdminAttributesCustomFieldsEditor,
         AdminAttributesCustomFieldsRow,
         AdminAttributesCustomFieldsForm,
+        AdminAttributesPointsPage,
+        AdminAttributesPointsEditor,
+        AdminAttributesPointsRow,
+        AdminAttributesPointsForm,
     ],
     exports: [
         AdminProjectDetailsPage,
@@ -132,6 +140,7 @@ import {AdminAttributesCustomFieldsForm} from "./pages/attributes/custom-fields/
             { path: "project/:slug/admin/project-values/types", component: AdminAttributesIssuesTypesPage },
             { path: "project/:slug/admin/project-values/tags", component: AdminAttributesTagsPage },
             { path: "project/:slug/admin/project-values/custom-fields", component: AdminAttributesCustomFieldsPage },
+            { path: "project/:slug/admin/project-values/points", component: AdminAttributesPointsPage },
         ]),
         EffectsModule.run(AdminEffects),
     ],
