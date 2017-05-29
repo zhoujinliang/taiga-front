@@ -15,14 +15,16 @@ section.colors-table.tags-table
                 input.e2e-tags-filter(
                     id="filter-tags-input",
                     type="text",
-                    name="name"
+                    name="name",
+                    #filterInput,
+                    (keyup)="filter = filterInput.value"
                 )
                 label(for="filter-tags-input")
                     tg-svg(svg-icon="icon-search")
 
     div.table-main
         div.sortable
-            div(*ngFor="let value of values")
+            div(*ngFor="let value of filteredValues()")
                 tg-admin-attributes-tags-row(
                     [value]="value",
                     [type]="type",

@@ -13,12 +13,19 @@ export class AdminAttributesTagsEditor implements OnChanges {
     values: Immutable.List<any> = Immutable.List();
     editing: any = {};
     merging: any = {to: null, from: {}};
+    filter: string = "";
 
     ngOnChanges(changes) {
         if (this.project) {
             this.values = this.project.get("tags_colors").map(
                 (value, key) => Immutable.fromJS({id: key, name: key, color: value})
-            ).toList().sortBy((item) => item.get('id'));
+            )
+            .toList()
+            .sortBy((item) => item.get('id'))
         }
+    }
+
+    filteredValues() {
+        return this.values.filter((item) => item.get('id').indexOf(this.filter) !== -1);
     }
 }
