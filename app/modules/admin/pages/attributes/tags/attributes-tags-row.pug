@@ -1,4 +1,8 @@
-div.row.table-main.visualization
+div.row.table-main.visualization(
+    [class.mixing-tags-to]="merging?.to === value.get('name')",
+    [class.mixing-tags-from]="merging?.from[value.get('name')]",
+    (click)="addTagToMerge(value.get('name'))"
+)
     tg-svg(svg-icon="icon-drag")
     div.color-column
         div.current-color.tag-color(
@@ -9,7 +13,12 @@ div.row.table-main.visualization
     div.status-name
         span {{ value.get('name') }}
 
-    div.options-column
+    div.options-column(*ngIf="!merging?.to")
+        a.mixing-options-column((click)="startMerging.emit(value.get('name'))")
+            tg-svg.mixing-selected(
+                [title]="'ADMIN.PROJECT_VALUES_TAGS.SELECTED' | translate",
+                svg-icon="icon-merge"
+            )
         a.edit-value((click)="edit.emit(value.get('id'))")
             tg-svg(
                 [title]="'ADMIN.COMMON.TITLE_ACTION_EDIT_VALUE' | translate",
@@ -21,4 +30,21 @@ div.row.table-main.visualization
                 svg-icon="icon-trash"
             )
 
+    .mixing-options-column(*ngIf="merging?.to === value.get('name')")
+        .mixing-help-text(
+            translate="ADMIN.PROJECT_VALUES_TAGS.MIXING_HELP_TEXT"
+        )
+        a.mixing-confirm.button-green(
+            *ngIf="hasTagsToMerge()",
+            translate="ADMIN.PROJECT_VALUES_TAGS.MIXING_MERGE"
+        )
+        a.mixing-cancel.button-gray(
+            translate="COMMON.CANCEL",
+            (click)="cancelMerge.emit()"
+        )
 
+    div.mixing-options-column(*ngIf="merging?.from[value.get('name')]")
+        tg-svg.mixing-selected(
+            [title]="'ADMIN.PROJECT_VALUES_TAGS.SELECTED' | translate",
+            svg-icon="icon-merge"
+        )

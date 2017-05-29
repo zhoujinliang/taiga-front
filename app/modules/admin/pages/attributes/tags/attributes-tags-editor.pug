@@ -26,12 +26,16 @@ section.colors-table.tags-table
                 tg-admin-attributes-tags-row(
                     [value]="value",
                     [type]="type",
-                    *ngIf="!editing[value.get('id')]",
-                    (edit)="editing[value.get('id')]=true"
+                    [merging]="merging",
+                    *ngIf="!editing[value.get('id')] || merging?.to",
+                    (edit)="editing[value.get('id')]=true",
+                    (startMerging)="merging = {to: $event, from: {}}",
+                    (merge)="merging.from[$event] = !merging.from[$event]",
+                    (cancelMerge)="merging = {to: null, from: {}}"
                 )
                 tg-admin-attributes-tags-form(
                     [value]="value",
-                    [visible]="editing[value.get('id')]",
+                    [visible]="editing[value.get('id')] && !merging?.to",
                     (cancel)="editing[$event]=false"
                 )
 

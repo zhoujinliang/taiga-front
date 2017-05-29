@@ -12,6 +12,7 @@ export class AdminAttributesTagsEditor implements OnChanges {
     @Input() project: Immutable.Map<string, any>;
     values: Immutable.List<any> = Immutable.List();
     editing: any = {};
+    merging: any = {to: null, from: {}};
 
     ngOnChanges(changes) {
         if (this.project) {
