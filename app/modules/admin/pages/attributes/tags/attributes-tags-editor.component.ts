@@ -1,4 +1,7 @@
 import {Component, Input, OnChanges} from "@angular/core";
+import {IState} from "../../../../../app.store";
+import {OpenLightboxAction, CloseLightboxAction} from "../../../../../app.actions";
+import {Store} from "@ngrx/store";
 import * as Immutable from "immutable";
 
 @Component({
@@ -14,6 +17,9 @@ export class AdminAttributesTagsEditor implements OnChanges {
     editing: any = {};
     merging: any = {to: null, from: {}};
     filter: string = "";
+    deletingItem: Immutable.Map<string, any>;
+
+    constructor(private store: Store<IState>) {}
 
     ngOnChanges(changes) {
         if (this.project) {
@@ -27,5 +33,14 @@ export class AdminAttributesTagsEditor implements OnChanges {
 
     filteredValues() {
         return this.values.filter((item) => item.get('id').indexOf(this.filter) !== -1);
+    }
+
+    deleteItem(item) {
+        this.deletingItem = item;
+        this.store.dispatch(new OpenLightboxAction('admin.delete-tag'))
+    }
+
+    confirmDelete(response) {
+        this.store.dispatch(new CloseLightboxAction())
     }
 }

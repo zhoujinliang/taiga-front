@@ -34,7 +34,7 @@ div.row.single-custom-field
                 [title]="'ADMIN.CUSTOM_ATTRIBUTES.EDIT' | translate",
                 svg-icon="icon-edit"
             )
-        a.delete-value(href="")
+        a.delete-value((click)="delete.emit(value.get('id'))")
             tg-svg(
                 [title]="'ADMIN.CUSTOM_ATTRIBUTES.DELETE' | translate",
                 svg-icon="icon-trash"

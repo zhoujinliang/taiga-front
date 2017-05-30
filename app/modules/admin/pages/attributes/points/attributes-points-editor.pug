@@ -1,3 +1,13 @@
+tg-lightbox(key="admin.delete-points")
+    tg-lightbox-close
+    tg-confirm-ask-choice(
+        [title]="'ADMIN.COMMON.TITLE_ACTION_DELETE_VALUE' | translate",
+        [subtitle]="deletingItem?.get('name')",
+        [message]="'ADMIN.PROJECT_VALUES.REPLACEMENT' | translate",
+        [options]="otherItems(deletingItem)",
+        (response)="confirmDelete($event)"
+    )
+
 section.colors-table.admin-status-table
     div.project-values-title
         h2 {{ name }}
@@ -20,7 +30,8 @@ section.colors-table.admin-status-table
                     [value]="value",
                     [type]="type",
                     *ngIf="!editing[value.get('id')]",
-                    (edit)="editing[value.get('id')]=true"
+                    (edit)="editing[value.get('id')]=true",
+                    (delete)="deleteItem(value)"
                 )
                 tg-admin-attributes-points-form(
                     [value]="value",

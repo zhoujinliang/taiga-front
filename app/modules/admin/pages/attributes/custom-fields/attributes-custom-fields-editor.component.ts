@@ -1,4 +1,7 @@
 import {Component, Input, OnChanges} from "@angular/core";
+import {IState} from "../../../../../app.store";
+import {OpenLightboxAction, CloseLightboxAction} from "../../../../../app.actions";
+import {Store} from "@ngrx/store";
 import * as Immutable from "immutable";
 
 @Component({
@@ -11,6 +14,9 @@ export class AdminAttributesCustomFieldsEditor implements OnChanges {
     @Input() project: Immutable.Map<string, any>;
     values: Immutable.List<any>;
     editing: any = {};
+    deletingItem: Immutable.Map<string, any>;
+
+    constructor(private store: Store<IState>) {}
 
     ngOnChanges(changes) {
         if (this.project) {
@@ -25,5 +31,14 @@ export class AdminAttributesCustomFieldsEditor implements OnChanges {
             }
             this.values = this.values.sortBy((item) => item.get('order')).toList();
         }
+    }
+
+    deleteItem(item) {
+        this.deletingItem = item;
+        this.store.dispatch(new OpenLightboxAction('admin.delete-custom-field-' + this.type))
+    }
+
+    confirmDelete(response) {
+        this.store.dispatch(new CloseLightboxAction())
     }
 }

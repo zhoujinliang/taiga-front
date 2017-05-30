@@ -1,3 +1,13 @@
+tg-lightbox([key]="'admin.delete-statuses-' + type")
+    tg-lightbox-close
+    tg-confirm-ask-choice(
+        [title]="'ADMIN.COMMON.TITLE_ACTION_DELETE_VALUE' | translate",
+        [subtitle]="deletingStatus?.get('name')",
+        [message]="'ADMIN.PROJECT_VALUES.REPLACEMENT' | translate",
+        [options]="otherStatuses(deletingStatus)",
+        (response)="confirmDelete($event)"
+    )
+
 section.colors-table.admin-status-table
     div.project-values-title
         h2 {{ name }}
@@ -24,7 +34,8 @@ section.colors-table.admin-status-table
                     [status]="value",
                     [type]="type",
                     *ngIf="!editing[value.get('id')]",
-                    (edit)="editing[value.get('id')]=true"
+                    (edit)="editing[value.get('id')]=true",
+                    (delete)="deleteStatus(value)"
                 )
                 tg-admin-attributes-status-form(
                     [status]="value",

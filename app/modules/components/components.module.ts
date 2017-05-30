@@ -28,6 +28,7 @@ import { TermsOfServiceAndPrivacyPolicyNotice } from "./terms-of-service-and-pri
 import { UserDisplay} from "./user-display/user-display.component";
 import { PreloadImage} from "./preload-image/preload-image.component";
 import {ConfirmAsk} from "./confirm/confirm-ask.component";
+import {ConfirmAskChoice} from "./confirm/confirm-ask-choice.component";
 import {FieldError} from "./field-error/field-error.component";
 import {FeedbackLightbox} from "./feedback/feedback-lightbox.component";
 import { ReactiveFormsModule } from '@angular/forms';
@@ -63,6 +64,7 @@ import { ColorSelector } from "./color-selector/color-selector.component";
         UserDisplay,
         PreloadImage,
         ConfirmAsk,
+        ConfirmAskChoice,
         FieldError,
         FeedbackLightbox,
         ColorSelector,
@@ -86,6 +88,7 @@ import { ColorSelector } from "./color-selector/color-selector.component";
         UserDisplay,
         PreloadImage,
         ConfirmAsk,
+        ConfirmAskChoice,
         FieldError,
         FeedbackLightbox,
         ColorSelector,

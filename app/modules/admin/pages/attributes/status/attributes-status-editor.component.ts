@@ -1,4 +1,7 @@
 import {Component, Input, OnChanges} from "@angular/core";
+import {IState} from "../../../../../app.store";
+import {OpenLightboxAction, CloseLightboxAction} from "../../../../../app.actions";
+import {Store} from "@ngrx/store";
 import * as Immutable from "immutable";
 
 @Component({
@@ -11,6 +14,9 @@ export class AdminAttributesStatusEditor implements OnChanges {
     @Input() project: Immutable.Map<string, any>;
     values: Immutable.List<any>;
     editing: any = {};
+    deletingStatus: Immutable.Map<string, any>;
+
+    constructor(private store: Store<IState>) {}
 
     ngOnChanges(changes) {
         if (this.project) {
@@ -24,5 +30,20 @@ export class AdminAttributesStatusEditor implements OnChanges {
                 this.values = this.project.get('issue_statuses')
             }
         }
+    }
+
+    deleteStatus(status) {
+        this.deletingStatus = status;
+        this.store.dispatch(new OpenLightboxAction('admin.delete-statuses-' + this.type))
+    }
+
+    otherStatuses(status) {
+        if (this.values && status) {
+            return this.values.filter((item) => item.get('id') != status.get('id'));
+        }
+    }
+
+    confirmDelete(response) {
+        this.store.dispatch(new CloseLightboxAction())
     }
 }

@@ -1,3 +1,11 @@
+tg-lightbox(key="admin.delete-tag")
+    tg-lightbox-close
+    tg-confirm-ask(
+        [title]="'ADMIN.COMMON.TITLE_ACTION_DELETE_VALUE' | translate",
+        [subtitle]="deletingItem?.get('name')",
+        (response)="confirmDelete($event)"
+    )
+
 section.colors-table.tags-table
     div.project-values-title
         h2 {{ name }}
@@ -33,7 +41,8 @@ section.colors-table.tags-table
                     (edit)="editing[value.get('id')]=true",
                     (startMerging)="merging = {to: $event, from: {}}",
                     (merge)="merging.from[$event] = !merging.from[$event]",
-                    (cancelMerge)="merging = {to: null, from: {}}"
+                    (cancelMerge)="merging = {to: null, from: {}}",
+                    (delete)="deleteItem(value)"
                 )
                 tg-admin-attributes-tags-form(
                     [value]="value",

@@ -14,12 +14,14 @@ export class AdminAttributesTagsRow {
     @Output() startMerging: EventEmitter<string>;
     @Output() merge: EventEmitter<string>;
     @Output() cancelMerge: EventEmitter<string>;
+    @Output() delete: EventEmitter<Immutable.Map<string, any>>;
 
     constructor() {
         this.edit = new EventEmitter();
         this.startMerging = new EventEmitter();
         this.merge = new EventEmitter();
         this.cancelMerge = new EventEmitter();
+        this.delete = new EventEmitter();
     }
 
     addTagToMerge(tag) {
