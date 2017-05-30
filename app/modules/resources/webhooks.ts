@@ -29,8 +29,8 @@ export class WebhooksResource {
                 private http: HttpService) {}
 
     list(projectId) {
-        const params = {project: projectId};
-        return this.repo.queryMany("webhooks", params);
+        const url = this.urls.resolve("webhooks");
+        return this.http.get(url, {"project": projectId});
     }
 
     test(webhookId) {

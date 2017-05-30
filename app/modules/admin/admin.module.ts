@@ -29,12 +29,14 @@ import {AdminPermissionsPage} from "./pages/permissions/permissions.component";
 import {AdminEditRole} from "./pages/permissions/permissions-edit-role.component";
 import {AdminEditRolePermissions} from "./pages/permissions/permissions-edit-role-permissions.component";
 import {AdminRolesNav} from "./pages/permissions/permissions-roles-nav.component";
+
 import {AdminMembershipsPage} from "./pages/memberships/memberships.component";
 import {AdminMembershipsTable} from "./pages/memberships/memberships-table.component";
 import {AdminMembershipsRowRoleSelector} from "./pages/memberships/memberships-row-role-selector.component";
 import {AdminMembershipsRowAvatar} from "./pages/memberships/memberships-row-avatar.component";
 import {AdminMembershipsRowAdminCheckbox} from "./pages/memberships/memberships-row-admin-checkbox.component";
 import {AdminMembershipsRowActions} from "./pages/memberships/memberships-row-actions.component";
+
 import {AdminAttributesNav} from "./pages/attributes/attributes-nav.component";
 import {AdminAttributesStatusPage} from "./pages/attributes/status/attributes-status.component";
 import {AdminAttributesStatusEditor} from "./pages/attributes/status/attributes-status-editor.component";
@@ -59,6 +61,12 @@ import {AdminAttributesPointsEditor} from "./pages/attributes/points/attributes-
 import {AdminAttributesPointsRow} from "./pages/attributes/points/attributes-points-row.component";
 import {AdminAttributesPointsForm} from "./pages/attributes/points/attributes-points-form.component";
 
+import {AdminIntegrationsNav} from "./pages/integrations/integrations-nav.component";
+import {AdminIntegrationsWebhooksPage} from "./pages/integrations/webhooks/webhooks.component";
+import {AdminIntegrationsWebhooksEditor} from "./pages/integrations/webhooks/webhooks-editor.component";
+import {AdminIntegrationsWebhooksRow} from "./pages/integrations/webhooks/webhooks-row.component";
+import {AdminIntegrationsWebhooksForm} from "./pages/integrations/webhooks/webhooks-form.component";
+
 @NgModule({
     declarations: [
         AdminProjectDetailsPage,
@@ -75,12 +83,14 @@ import {AdminAttributesPointsForm} from "./pages/attributes/points/attributes-po
         AdminRolesNav,
         AdminNav,
         AdminSubnavProject,
+
         AdminMembershipsPage,
         AdminMembershipsTable,
         AdminMembershipsRowRoleSelector,
         AdminMembershipsRowAvatar,
         AdminMembershipsRowAdminCheckbox,
         AdminMembershipsRowActions,
+
         AdminAttributesNav,
         AdminAttributesStatusPage,
         AdminAttributesStatusEditor,
@@ -104,6 +114,12 @@ import {AdminAttributesPointsForm} from "./pages/attributes/points/attributes-po
         AdminAttributesPointsEditor,
         AdminAttributesPointsRow,
         AdminAttributesPointsForm,
+
+        AdminIntegrationsNav,
+        AdminIntegrationsWebhooksPage,
+        AdminIntegrationsWebhooksEditor,
+        AdminIntegrationsWebhooksRow,
+        AdminIntegrationsWebhooksForm,
     ],
     exports: [
         AdminProjectDetailsPage,
@@ -141,6 +157,8 @@ import {AdminAttributesPointsForm} from "./pages/attributes/points/attributes-po
             { path: "project/:slug/admin/project-values/tags", component: AdminAttributesTagsPage },
             { path: "project/:slug/admin/project-values/custom-fields", component: AdminAttributesCustomFieldsPage },
             { path: "project/:slug/admin/project-values/points", component: AdminAttributesPointsPage },
+            { path: "project/:slug/admin/third-parties", redirectTo: "project/:slug/admin/third-parties/webhooks"},
+            { path: "project/:slug/admin/third-parties/webhooks", component: AdminIntegrationsWebhooksPage},
         ]),
         EffectsModule.run(AdminEffects),
     ],

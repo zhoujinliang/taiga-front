@@ -26,5 +26,15 @@ export class AdminEffects {
           });
         });
 
+    @Effect()
+    fetchAdminWebhooks$: Observable<Action> = this.actions$
+        .ofType("FETCH_ADMIN_WEBHOOKS")
+        .map(toPayload)
+        .switchMap((projectId) => {
+          return this.rs.webhooks.list(projectId).map((result) => {
+              return new actions.SetAdminWebhooksAction(result.data);
+          });
+        });
+
     constructor(private actions$: Actions, private rs: ResourcesService) { }
 }
