@@ -17,25 +17,25 @@
  * File: check-permissions.service.coffee
  */
 
-import * as angular from "angular";
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs";
+import {Store} from "@ngrx/store";
+import {IState} from "../../app.store";
+import * as Immutable from "immutable";
 
+@Injectable()
 export class CheckPermissionsService {
-    projectService: any;
+    project$: Observable<Immutable.Map<string, any>>;
+    project: Immutable.Map<string, any>;
 
-    static initClass() {
-        this.$inject = [
-            "tgProjectService",
-        ];
-    }
-
-    constructor(projectService) {
-        this.projectService = projectService;
+    constructor(private store: Store<IState>) {
+        this.project$ = this.store.select((data) => data.getIn(['projects', 'current-project']))
+        this.project$.subscribe((p) => this.project = p)
     }
 
     check(permission) {
-        if (!this.projectService.project) { return false; }
+        if (!this.project) { return false; }
 
-        return this.projectService.project.get("my_permissions").indexOf(permission) !== -1;
+        return this.project.get("my_permissions").indexOf(permission) !== -1;
     }
 }
-CheckPermissionsService.initClass();

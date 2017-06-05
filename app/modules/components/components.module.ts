@@ -34,6 +34,9 @@ import {FeedbackLightbox} from "./feedback/feedback-lightbox.component";
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from "@angular/forms";
 import { ColorSelector } from "./color-selector/color-selector.component";
+import { CheckPermissionsService } from "./check-permissions/check-permissions.service";
+import { IfPermDirective } from "./check-permissions/check-permissions.directive";
+import { LoadingDirective, LoadingAux } from "./loading.directive";
 
 @NgModule({
     imports: [
@@ -68,6 +71,8 @@ import { ColorSelector } from "./color-selector/color-selector.component";
         FieldError,
         FeedbackLightbox,
         ColorSelector,
+        IfPermDirective,
+        LoadingDirective,
     ],
     declarations: [
         BoardZoom,
@@ -92,10 +97,17 @@ import { ColorSelector } from "./color-selector/color-selector.component";
         FieldError,
         FeedbackLightbox,
         ColorSelector,
+        IfPermDirective,
+        LoadingDirective,
+        LoadingAux,
     ],
     providers: [
         AvatarService,
         FiltersRemoteStorageService,
+        CheckPermissionsService,
     ],
+    entryComponents: [
+        LoadingAux,
+    ]
 })
 export class TgComponentsModule {}

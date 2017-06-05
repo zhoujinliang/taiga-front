@@ -14,13 +14,13 @@
         span.number {{ page.get('editions') }}
         span.description([innerHTML]="'WIKI.SUMMARY.TIMES_EDITED' | translate")
 
-    // tg-check-permission="delete_wiki_page"
-    tg-svg.remove(
-        *ngIf="page.get('id')",
-        [title]="'WIKI.REMOVE' | translate",
-        (click)="onDeleteClicked()",
-        svg-icon="icon-trash"
-    )
+    ng-container(*tgIfPerm="'delete_wiki_page'")
+        tg-svg.remove(
+            *ngIf="page.get('id')",
+            [title]="'WIKI.REMOVE' | translate",
+            (click)="onDeleteClicked()",
+            svg-icon="icon-trash"
+        )
 
 tg-lightbox(key="wiki.delete-confirm", *ngIf="page")
     tg-lightbox-close
