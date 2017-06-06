@@ -1,0 +1,40 @@
+tg-lightbox(key="issues.assign-to")
+    tg-lightbox-close
+    tg-assigned-to-selector([members]="members|async", [assigned]="assignedOnAssignedTo|async")
+
+// div.lightbox.lightbox-create-issue(tg-lb-create-issue)
+//     include ../includes/modules/lightbox-create-issue
+//
+// div.lightbox.lightbox-generic-bulk(tg-lb-create-bulk-issues)
+//     include ../includes/modules/lightbox-issue-bulk
+
+div.wrapper.issues.lightbox-generic-form
+    tg-project-menu([project]="project|async", active="issues")
+
+    .filters-bar
+        // q="ctrl.filterQ"
+        // filters="ctrl.filters"
+        // custom-filters="ctrl.customFilters"
+        // selected-filters="ctrl.selectedFilters"
+        // customFilters="ctl.customFilters"
+        // on-save-custom-filter="ctrl.saveCustomFilter(name)"
+        // on-add-filter="ctrl.addFilter(filter)"
+        // on-select-custom-filter="ctrl.selectCustomFilter(filter)"
+        // on-remove-custom-filter="ctrl.removeCustomFilter(filter)"
+        // on-remove-filter="ctrl.removeFilter(filter)"
+        // on-change-q="ctrl.changeQ(q)"
+        tg-filter(
+            [class.open]="filtersOpen",
+            section="issues",
+            [appliedFilters]="appliedFilters|async",
+            [filters]="filters|async"
+        )
+
+    section.main.issues-page
+        header
+            tg-main-title([project]="project | async", [sectionName]="Issues")
+
+        tg-issues-table([project]="project | async", [issues]="issues | async")
+
+        // Paginator is rendered using js.
+        div.paginator.issues-paginator
