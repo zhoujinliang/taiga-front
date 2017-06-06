@@ -24,6 +24,7 @@ export class IssuesPage implements OnInit, OnDestroy {
     selectedFiltersCount: number = 0;
     members: Observable<any>;
     assignedOnAssignedTo: Observable<Immutable.List<number>>;
+    filters: Observable<any>;
     filtersOpen: boolean = false;
     subscriptions: Subscription[];
     bulkCreateState: Observable<number>;
@@ -35,6 +36,8 @@ export class IssuesPage implements OnInit, OnDestroy {
         this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
         this.issues = this.store.select((state) => state.getIn(["issues", "issues"]));
+        this.filters = this.store.select((state) => state.getIn(["issues", "filtersData"]))
+                                 .map(this.filtersDataToFilters.bind(this));
         this.appliedFilters = this.store.select((state) => state.getIn([this.section, "appliedFilters"]));
     }
 
@@ -58,5 +61,52 @@ export class IssuesPage implements OnInit, OnDestroy {
         for (const subs of this.subscriptions) {
             subs.unsubscribe();
         }
+    }
+
+    filtersDataToFilters(filtersData) {
+        if (filtersData === null) {
+            return null;
+        }
+        const statuses = filtersData.get("statuses")
+                                  .map((status) => status.update("id", (id) => id.toString()));
+
+        const tags = filtersData.get("tags")
+                              .map((tag) => tag.update("id", () => tag.get("name")));
+        const tagsWithAtLeastOneElement = tags.filter((tag) => tag.count > 0);
+
+        const assignedTo = filtersData.get("assigned_to").map((user) => {
+            return user.update("id", (id) => id ? id.toString() : "null")
+                       .update("name", () => user.get("full_name") || "Undefined");
+        });
+
+        const owners = filtersData.get("owners").map((owner) => {
+            return owner.update("id", (id) => id.toString())
+                        .update("name", () => owner.get("full_name"));
+        });
+
+        let filters = Immutable.List();
+        filters = filters.push(Immutable.Map({
+            content: statuses,
+            dataType: "status",
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.STATUS"),
+        }));
+        filters = filters.push(Immutable.Map({
+            content: tags,
+            dataType: "tags",
+            hideEmpty: true,
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.TAGS"),
+            totalTaggedElements: tagsWithAtLeastOneElement.size,
+        }));
+        filters = filters.push(Immutable.Map({
+            content: assignedTo,
+            dataType: "assigned_to",
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.ASSIGNED_TO"),
+        }));
+        filters = filters.push(Immutable.Map({
+            content: owners,
+            dataType: "owner",
+            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.CREATED_BY"),
+        }));
+        return filters;
     }
 }
