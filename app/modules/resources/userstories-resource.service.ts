@@ -76,8 +76,9 @@ export class UserstoriesResource {
         let params = {project: projectId};
         params = _.extend({}, params, filters || {});
         this.storeQueryParams(projectId, params);
+        const url = this.urls.resolve("userstories");
 
-        return this.repo.queryMany("userstories", params);
+        return this.http.get(url, params);
     }
 
     bulkCreate(projectId, status, bulk) {

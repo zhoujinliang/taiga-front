@@ -16,33 +16,3 @@
  *
  * File: wiki-history.module.coffee
  */
-
-import {downgradeInjectable} from "@angular/upgrade/static";
-import * as angular from "angular";
-import {module} from "../../ts/modules/common";
-
-import {AppMetaService} from "./app-meta.service";
-import {AttachmentsService} from "./attachments.service";
-import {CheckPermissionsService} from "./check-permissions.service";
-import {CurrentUserService} from "./current-user.service";
-import {ErrorHandlingService} from "./error-handling.service";
-import {LightboxFactory} from "./lightbox-factory.service";
-import {ProjectLogoService} from "./project-logo.service";
-import {ProjectService} from "./project.service";
-import {ThemeService} from "./theme.service";
-import {UserActivityService} from "./user-activity.service";
-import {UserService} from "./user.service";
-import {xhrError} from "./xhrError.service";
-
-module.service("tgAppMetaService", downgradeInjectable(AppMetaService));
-module.service("tgAttachmentsService", AttachmentsService);
-module.service("tgCheckPermissionsService", CheckPermissionsService);
-module.service("tgCurrentUserService", downgradeInjectable(CurrentUserService));
-module.service("tgErrorHandlingService", downgradeInjectable(ErrorHandlingService));
-module.service("tgLightboxFactory", LightboxFactory);
-module.service("tgProjectLogoService", downgradeInjectable(ProjectLogoService));
-module.service("tgProjectService", ProjectService);
-module.service("tgThemeService", downgradeInjectable(ThemeService));
-module.service("tgUserActivityService", UserActivityService);
-module.service("tgUserService", UserService);
-module.service("tgXhrErrorService", downgradeInjectable(xhrError));

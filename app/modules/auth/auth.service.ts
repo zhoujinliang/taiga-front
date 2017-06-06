@@ -2,7 +2,6 @@ import * as Immutable from "immutable";
 import * as _ from "lodash";
 
 import {Injectable} from "@angular/core";
-import {downgradeInjectable} from "@angular/upgrade/static";
 import {TranslateService} from "@ngx-translate/core";
 import {ConfigurationService} from "../../ts/modules/base/conf";
 import {HttpService} from "../../ts/modules/base/http";

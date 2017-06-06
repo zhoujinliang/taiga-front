@@ -37,6 +37,7 @@ import { ColorSelector } from "./color-selector/color-selector.component";
 import { CheckPermissionsService } from "./check-permissions/check-permissions.service";
 import { IfPermDirective } from "./check-permissions/check-permissions.directive";
 import { LoadingDirective, LoadingAux } from "./loading.directive";
+import { IssuesBullet } from "./issues-bullet.component";
 
 @NgModule({
     imports: [
@@ -73,6 +74,7 @@ import { LoadingDirective, LoadingAux } from "./loading.directive";
         ColorSelector,
         IfPermDirective,
         LoadingDirective,
+        IssuesBullet,
     ],
     declarations: [
         BoardZoom,
@@ -100,6 +102,7 @@ import { LoadingDirective, LoadingAux } from "./loading.directive";
         IfPermDirective,
         LoadingDirective,
         LoadingAux,
+        IssuesBullet,
     ],
     providers: [
         AvatarService,

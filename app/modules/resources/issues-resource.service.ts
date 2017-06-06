@@ -50,11 +50,13 @@ export class IssuesResource {
         return this.repo.queryOne("issues", "by_ref", params);
     }
 
-    list(projectId, filters, options) {
+    list(projectId, filters) {
         let params = {project: projectId};
         params = _.extend({}, params, filters || {});
         this.storeQueryParams(projectId, params);
-        return this.repo.queryPaginated("issues", params, options);
+        const url = this.urls.resolve("issues");
+
+        return this.http.get(url, params);
     }
 
     bulkCreate(projectId, data) {

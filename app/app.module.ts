@@ -3,7 +3,6 @@ import { NgModule } from "@angular/core";
 import { Http, HttpModule } from "@angular/http";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule, UrlHandlingStrategy, UrlTree } from "@angular/router";
-import { UpgradeModule } from "@angular/upgrade/static";
 
 // NGRX MODULES
 import { EffectsModule } from "@ngrx/effects";
@@ -17,6 +16,7 @@ import { TgComponentsModule } from "./modules/components/components.module";
 import { DiscoverModule } from "./modules/discover/discover.module";
 import { HomeModule } from "./modules/home/home.module";
 import { KanbanModule } from "./modules/kanban/kanban.module";
+import { IssuesModule } from "./modules/issues/issues.module";
 import { WikiModule } from "./modules/wiki/wiki.module";
 import { TeamModule } from "./modules/team/team.module";
 import { AdminModule } from "./modules/admin/admin.module";
@@ -49,7 +49,6 @@ export function HttpLoaderFactory(http: Http) {
 @NgModule({
   imports: [
     BrowserModule,
-    UpgradeModule,
     HttpModule,
     HomeModule,
     RouterModule.forRoot([]),
@@ -63,6 +62,7 @@ export function HttpLoaderFactory(http: Http) {
     NavigationBarModule,
     AuthModule,
     KanbanModule,
+    IssuesModule,
     WikiModule,
     TeamModule,
     AdminModule,
