@@ -17,9 +17,6 @@
  * File: projects.service.coffee
  */
 
-import {Service} from "../../libs/classes";
-import {groupBy} from "../../libs/utils";
-
 import {Injectable} from "@angular/core";
 import {ProjectUrlService} from "../../ts/modules/common/project-url.service";
 import {ResourcesService} from "../resources/resources.service";

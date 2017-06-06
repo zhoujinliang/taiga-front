@@ -20,7 +20,7 @@
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {Store} from "@ngrx/store";
-import {IState} from "../../app.store";
+import {IState} from "../../../app.store";
 import * as Immutable from "immutable";
 
 @Injectable()

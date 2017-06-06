@@ -26,7 +26,6 @@ import { IState } from "../../app.store";
 import { NavigationUrlsService } from "../../ts/modules/base/navurls.service";
 import { CurrentUserService } from "../services/current-user.service";
 import { FetchAssignedToAction, FetchWatchingAction } from "./home.actions";
-import { IHomeState } from "./home.store";
 
 import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
 

@@ -18,13 +18,11 @@
  */
 
 import * as _ from "lodash";
-import {Service} from "../../ts/classes";
 
-export class NavigationBarService extends Service {
+export class NavigationBarService {
     enabledHeader: boolean;
 
     constructor() {
-        super();
         this.disableHeader();
     }
 
