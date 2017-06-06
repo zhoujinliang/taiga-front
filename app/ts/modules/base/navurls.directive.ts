@@ -27,7 +27,6 @@ import {Router} from "@angular/router";
 import * as _ from "lodash";
 import {bindOnce, trim} from "../../../libs/utils";
 import {AuthService} from "../../../modules/auth/auth.service";
-import {LightboxService} from "../common/lightboxes";
 import {NavigationUrlsService} from "./navurls.service";
 
 //############################################################################
