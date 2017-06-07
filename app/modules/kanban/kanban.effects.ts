@@ -25,7 +25,7 @@ export class KanbanEffects {
               include_tasks: 1,
           }, payload.appliedFilters.toJS());
           return this.rs.userstories.listAll(payload.projectId, params).map((userstories) => {
-              return new actions.SetKanbanUserStoriesAction(userstories);
+              return new actions.SetKanbanUserStoriesAction(userstories.data);
           });
         });
 
