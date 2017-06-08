@@ -33,7 +33,7 @@ div.wrapper
     section.main.backlog
         tg-main-title([project]="project | async", [sectionName]="section")
 
-        tg-backlog-summary([stats]="stats | async")
+        tg-backlog-summary([project]="project | async", [stats]="stats | async")
 
         tg-backlog-menu([userstories]="userstories | async", [stats]="stats | async")
 

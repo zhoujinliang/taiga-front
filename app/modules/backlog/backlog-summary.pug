@@ -22,15 +22,19 @@ div.backlog-summary
 
         div.stats.js-toggle-burndown-visibility-button(
             [title]="'BACKLOG.SPRINT_SUMMARY.TOGGLE_BAKLOG_GRAPH' | translate",
-            *ngIf="!showGraphPlaceholder"
+            *ngIf="showGraph()",
+            (click)="graphOpen = !graphOpen"
         )
             tg-svg(svg-icon="icon-graph")
 
-    div.empty-burndown(ng-if="showGraphPlaceholder && project.i_am_admin")
+    div.empty-burndown(*ngIf="showGraphPlaceholder()")
         tg-svg(svg-icon="icon-graph")
         div.empty-text
             p.title(translate="BACKLOG.CUSTOMIZE_GRAPH")
             p {{'BACKLOG.CUSTOMIZE_GRAPH_TEXT' | translate}} #[a(href="", tg-nav="project-admin-project-profile-modules:project=project.slug", title="{{'BACKLOG.CUSTOMIZE_GRAPH_TITLE' | translate}}") {{'BACKLOG.CUSTOMIZE_GRAPH_ADMIN' | translate}}]
 
-    div.graphics-container.js-burndown-graph
-        tg-backlog-burndown-graph
+    div.graphics-container(
+        [class.open]="graphOpen",
+        *ngIf="showGraph()"
+    )
+        tg-backlog-burndown-graph([stats]="stats")

@@ -17,6 +17,7 @@ import {BacklogMenu} from "./backlog-menu.component";
 import {BacklogTable} from "./backlog-table.component";
 import {BacklogRow} from "./backlog-row.component";
 import {BacklogProgressBar} from "./backlog-progress-bar.component";
+import {BacklogBurndownGraph} from "./backlog-burndown-graph.component";
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import {BacklogProgressBar} from "./backlog-progress-bar.component";
         BacklogTable,
         BacklogRow,
         BacklogProgressBar,
+        BacklogBurndownGraph,
     ],
     exports: [
         BacklogPage,
