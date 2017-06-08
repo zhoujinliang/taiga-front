@@ -73,7 +73,8 @@ export class ProjectsResource {
     }
 
     stats(projectId: number): any {
-        return this.repo.queryOneRaw("projects", `${projectId}/stats`);
+        const url = `${this.urls.resolve("projects")}/${projectId}/stats`;
+        return this.http.get(url);
     }
 
     bulkUpdateOrder(bulkData: any): any {

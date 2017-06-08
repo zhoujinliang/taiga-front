@@ -1,0 +1,42 @@
+// div.lightbox.lightbox-generic-form.lb-create-edit-userstory(tg-lb-create-edit-userstory)
+//     include ../includes/modules/lightbox-us-create-edit
+//
+// div.lightbox.lightbox-generic-bulk(tg-lb-create-bulk-userstories)
+//     include ../includes/modules/lightbox-us-bulk
+//
+// div.lightbox.lightbox-sprint-add-edit(tg-lb-create-edit-sprint)
+//     include ../includes/modules/lightbox-sprint-add-edit
+
+div.wrapper
+    tg-project-menu([project]="project|async", active="backlog")
+
+    sidebar.backlog-filter
+        // tg-filter(
+        //     q="ctrl.filterQ"
+        //     filters="ctrl.filters"
+        //     custom-filters="ctrl.customFilters"
+        //     selected-filters="ctrl.selectedFilters"
+        //     customFilters="ctl.customFilters"
+        //     on-save-custom-filter="ctrl.saveCustomFilter(name)"
+        //     on-add-filter="ctrl.addFilter(filter)"
+        //     on-select-custom-filter="ctrl.selectCustomFilter(filter)"
+        //     on-remove-custom-filter="ctrl.removeCustomFilter(filter)"
+        //     on-remove-filter="ctrl.removeFilter(filter)"
+        //     on-change-q="ctrl.changeQ(q)"
+        // )
+        tg-filter(
+            [class.open]="filtersOpen",
+            section="backlog",
+            [appliedFilters]="appliedFilters|async",
+            [filters]="filters|async"
+        )
+    section.main.backlog
+        tg-main-title([project]="project | async", [sectionName]="section")
+
+        tg-backlog-summary([stats]="stats | async")
+
+        tg-backlog-menu([userstories]="userstories | async", [stats]="stats | async")
+
+        tg-backlog-table([userstories]="userstories | async")
+
+    tg-backlog-sprints

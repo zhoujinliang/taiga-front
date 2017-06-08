@@ -1,0 +1,36 @@
+div.backlog-summary
+    div.summary
+        tg-backlog-progress-bar([stats]="stats")
+        // div.summary-progress-bar(tg-backlog-progress-bar="stats")
+
+        div.data
+            span.number {{ completedPercentage() | number }}%
+
+        div.summary-stats(*ngIf="stats.get('total_points')")
+            span.number {{ stats.get('total_points') | number }}
+            span.description([innerHTML]="'BACKLOG.SUMMARY.PROJECT_POINTS' | translate")
+        div.summary-stats
+            span.number {{ stats.get('defined_points') | number }}
+            span.description([innerHTML]="'BACKLOG.SUMMARY.DEFINED_POINTS' | translate")
+        div.summary-stats
+            span.number {{ stats.get('closed_points') | number }}
+            span.description([innerHTML]="'BACKLOG.SUMMARY.CLOSED_POINTS' | translate")
+        div.summary-stats
+            span.number {{ stats.get('speed') | number:0 }}
+            span.description([innerHTML]="'BACKLOG.SUMMARY.POINTS_PER_SPRINT' | translate")
+
+
+        div.stats.js-toggle-burndown-visibility-button(
+            [title]="'BACKLOG.SPRINT_SUMMARY.TOGGLE_BAKLOG_GRAPH' | translate",
+            *ngIf="!showGraphPlaceholder"
+        )
+            tg-svg(svg-icon="icon-graph")
+
+    div.empty-burndown(ng-if="showGraphPlaceholder && project.i_am_admin")
+        tg-svg(svg-icon="icon-graph")
+        div.empty-text
+            p.title(translate="BACKLOG.CUSTOMIZE_GRAPH")
+            p {{'BACKLOG.CUSTOMIZE_GRAPH_TEXT' | translate}} #[a(href="", tg-nav="project-admin-project-profile-modules:project=project.slug", title="{{'BACKLOG.CUSTOMIZE_GRAPH_TITLE' | translate}}") {{'BACKLOG.CUSTOMIZE_GRAPH_ADMIN' | translate}}]
+
+    div.graphics-container.js-burndown-graph
+        tg-backlog-burndown-graph

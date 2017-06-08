@@ -1,0 +1,48 @@
+section.backlog-table([class.hidden]="!userstories || !userstories.size")
+    div.backlog-table-header
+        div.row.backlog-table-title
+            div.input(tg-check-permission="modify_us")
+            div.votes(translate="COMMON.FIELDS.VOTES")
+            div.user-stories(translate="BACKLOG.TABLE.COLUMN_US")
+            div.status(translate="COMMON.FIELDS.STATUS")
+            div.points(tg-us-role-points-selector, title="{{'BACKLOG.TABLE.TITLE_COLUMN_POINTS' | translate}}")
+                span.header-points(translate="COMMON.FIELDS.POINTS")
+                tg-svg(svg-icon="icon-arrow-down")
+
+    div.backlog-table-body(
+        tg-backlog-sortable,
+        ng-class="{'show-tags': ctrl.showTags, 'active-filters': ctrl.activeFilters, 'forecasted-stories': ctrl.displayVelocity}"
+        infinite-scroll="ctrl.loadUserstories()"
+        infinite-scroll-disabled="ctrl.disablePagination || !ctrl.firstLoadComplete"
+        infinite-scroll-immediate-check='false'
+    )
+        tg-backlog-row(
+            *ngFor="let us of userstories",
+            [us]="us"
+        )
+
+        div(tg-loading="ctrl.loadingUserstories")
+
+.forecasting-add-sprint.e2e-velocity-forecasting-add(*ngIf="displayVelocity")
+    tg-svg(svg-icon="icon-add")
+    span(
+        *ngIf="!currentSprint"
+        translate="BACKLOG.FORECASTING.NEW_SPRINT"
+    )
+    span(
+        *ngIf="currentSprint"
+        translate="BACKLOG.FORECASTING.CURRENT_SPRINT"
+    )
+
+.empty-large.js-empty-backlog([class.hidden]="userstories && userstories.size")
+    img(
+        src="/#{_version}/images/empty/empty_mex.png",
+        [alt]="'BACKLOG.EMPTY' | translate"
+    )
+    p.title(translate="BACKLOG.EMPTY")
+    a(
+        *tgIfPerm="'add_us'",
+        [title]="'BACKLOG.CREATE_NEW_US' | translate",
+        (click)="addNewUs('standard')",
+        translate="BACKLOG.CREATE_NEW_US_EMPTY_HELP"
+    )

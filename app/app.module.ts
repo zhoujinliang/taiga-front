@@ -16,6 +16,7 @@ import { TgComponentsModule } from "./modules/components/components.module";
 import { DiscoverModule } from "./modules/discover/discover.module";
 import { HomeModule } from "./modules/home/home.module";
 import { KanbanModule } from "./modules/kanban/kanban.module";
+import { BacklogModule } from "./modules/backlog/backlog.module";
 import { IssuesModule } from "./modules/issues/issues.module";
 import { WikiModule } from "./modules/wiki/wiki.module";
 import { TeamModule } from "./modules/team/team.module";
@@ -62,6 +63,7 @@ export function HttpLoaderFactory(http: Http) {
     NavigationBarModule,
     AuthModule,
     KanbanModule,
+    BacklogModule,
     IssuesModule,
     WikiModule,
     TeamModule,
