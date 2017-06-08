@@ -7,4 +7,5 @@ import * as Immutable from "immutable";
 })
 export class BacklogRow {
     @Input() us: Immutable.Map<string, any>;
+    @Input() showTags: boolean;
 }

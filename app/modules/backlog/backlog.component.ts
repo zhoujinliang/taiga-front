@@ -18,6 +18,8 @@ import * as actions from "./backlog.actions";
 })
 export class BacklogPage implements OnInit, OnDestroy {
     section = "backlog";
+    showFilters: boolean = false;
+    showTags: boolean = false;
     project: Observable<any>;
     userstories: Observable<any[]>;
     zoom: Observable<any>;
@@ -26,7 +28,6 @@ export class BacklogPage implements OnInit, OnDestroy {
     filters: Observable<any>;
     members: Observable<any>;
     assignedOnAssignedTo: Observable<Immutable.List<number>>;
-    filtersOpen: boolean = false;
     subscriptions: Subscription[];
     bulkCreateState: Observable<number>;
     stats: Observable<Immutable.Map<string, any>>;
@@ -74,10 +75,6 @@ export class BacklogPage implements OnInit, OnDestroy {
                 }
             }),
         ];
-    }
-
-    toggleFiltersOpen() {
-        this.filtersOpen = !this.filtersOpen;
     }
 
     addFilter({category, filter}) {

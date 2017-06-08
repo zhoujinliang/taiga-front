@@ -8,4 +8,5 @@ import * as Immutable from "immutable";
 export class BacklogTable {
     @Input() userstories: Immutable.List<any>;
     @Input() currentSprint: Immutable.Map<string, any>;
+    @Input() showTags: boolean;
 }

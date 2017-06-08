@@ -15,13 +15,15 @@ div.backlog-menu
             tg-svg(svg-icon="icon-move")
             span.text(translate="BACKLOG.MOVE_US_TO_LATEST_SPRINT")
         a.menu-button.e2e-open-filter.ng-animate-disabled(
-            *ngIf="!activeFilters",
+            *ngIf="!showFilters",
+            (click)="showFiltersChange.emit(true)",
             [title]="'BACKLOG.FILTERS.TOGGLE' | translate",
             id="show-filters-button",
             translate="BACKLOG.FILTERS.SHOW"
         )
         a.menu-button.active.e2e-open-filter.ng-animate-disabled(
-            *ngIf="activeFilters",
+            *ngIf="showFilters",
+            (click)="showFiltersChange.emit(false)",
             [title]="'BACKLOG.FILTERS.HIDE' | translate",
             id="show-filters-button",
             translate="BACKLOG.FILTERS.HIDE"

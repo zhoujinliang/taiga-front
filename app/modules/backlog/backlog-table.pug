@@ -11,14 +11,17 @@ section.backlog-table([class.hidden]="!userstories || !userstories.size")
 
     div.backlog-table-body(
         tg-backlog-sortable,
-        ng-class="{'show-tags': ctrl.showTags, 'active-filters': ctrl.activeFilters, 'forecasted-stories': ctrl.displayVelocity}"
-        infinite-scroll="ctrl.loadUserstories()"
-        infinite-scroll-disabled="ctrl.disablePagination || !ctrl.firstLoadComplete"
-        infinite-scroll-immediate-check='false'
+        [class.show-tags]="showTags",
+        [class.active-filters]="activeFilters",
+        [class.forecasted-stories]="displayVelocity",
+        infinite-scroll="loadUserstories()",
+        infinite-scroll-disabled="disablePagination || !firstLoadComplete",
+        infinite-scroll-immediate-check='false',
     )
         tg-backlog-row(
             *ngFor="let us of userstories",
-            [us]="us"
+            [us]="us",
+            [showTags]="showTags"
         )
 
         div(tg-loading="ctrl.loadingUserstories")

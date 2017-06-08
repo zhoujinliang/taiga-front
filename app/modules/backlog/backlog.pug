@@ -10,7 +10,7 @@
 div.wrapper
     tg-project-menu([project]="project|async", active="backlog")
 
-    sidebar.backlog-filter
+    sidebar.backlog-filter([class.active]="showFilters")
         // tg-filter(
         //     q="ctrl.filterQ"
         //     filters="ctrl.filters"
@@ -35,8 +35,8 @@ div.wrapper
 
         tg-backlog-summary([project]="project | async", [stats]="stats | async")
 
-        tg-backlog-menu([userstories]="userstories | async", [stats]="stats | async")
+        tg-backlog-menu([userstories]="userstories | async", [stats]="stats | async", [(showFilters)]="showFilters", [(showTags)]="showTags")
 
-        tg-backlog-table([userstories]="userstories | async")
+        tg-backlog-table([userstories]="userstories | async", [showTags]="showTags")
 
     tg-backlog-sprints
