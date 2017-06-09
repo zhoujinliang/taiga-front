@@ -14,6 +14,7 @@ export const backlogInitialState = {
     "stats": {},
     "sprints": {
         "sprints": [],
+        "closed-sprints": [],
         "closed": 0,
         "open": 0,
     },
@@ -26,7 +27,11 @@ export const backlogReducer = (state, action) => {
         case "APPEND_BACKLOG_USER_STORIES":
             return state.update("userstories", (stories) => stories.concat(action.payload));
         case "SET_BACKLOG_SPRINTS":
-            return state.set("sprints", action.payload);
+            return state.setIn(["sprints", "sprints"], action.payload.get('sprints'))
+                        .setIn(["sprints", "open"], action.payload.get('open'))
+                        .setIn(["sprints", "closed"], action.payload.get('closed'));
+        case "SET_BACKLOG_CLOSED_SPRINTS":
+            return state.setIn(["sprints", "closed-sprints"], action.payload);
         case "SET_BACKLOG_FILTERS_DATA":
             return state.set("filtersData", action.payload);
         case "SET_BACKLOG_APPLIED_FILTERS":

@@ -5,6 +5,7 @@ import {discoverInitialState, discoverReducer} from "./modules/discover/discover
 import {homeInitialState, homeReducer} from "./modules/home/home.store";
 import {kanbanInitialState, kanbanReducer} from "./modules/kanban/kanban.store";
 import {backlogInitialState, backlogReducer} from "./modules/backlog/backlog.store";
+import {epicsInitialState, epicsReducer} from "./modules/epics/epics.store";
 import {issuesInitialState, issuesReducer} from "./modules/issues/issues.store";
 import {projectsInitialState, projectsReducer} from "./modules/projects/projects.store";
 import {teamInitialState, teamReducer} from "./modules/team/team.store";
@@ -25,6 +26,7 @@ const initialState = Immutable.fromJS({
     home: homeInitialState,
     kanban: kanbanInitialState,
     backlog: backlogInitialState,
+    epics: epicsInitialState,
     issues: issuesInitialState,
     discover: discoverInitialState,
     common: commonInitialState,
@@ -60,6 +62,7 @@ export const rootReducer = (state= initialState, action) => {
                 .set("global", globalReducer(state.get("global"), action))
                 .set("kanban", kanbanReducer(state.get("kanban"), action))
                 .set("backlog", backlogReducer(state.get("backlog"), action))
+                .set("epics", epicsReducer(state.get("epics"), action))
                 .set("issues", issuesReducer(state.get("issues"), action))
                 .set("projects", projectsReducer(state.get("projects"), action))
                 .set("team", teamReducer(state.get("team"), action))

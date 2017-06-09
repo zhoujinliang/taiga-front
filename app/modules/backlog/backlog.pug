@@ -39,4 +39,4 @@ div.wrapper
 
         tg-backlog-table([userstories]="userstories | async", [showTags]="showTags")
 
-    tg-backlog-sprints.menu-secondary.sidebar([sprints]="sprints | async")
+    tg-backlog-sprints.menu-secondary.sidebar([sprints]="sprints | async", [project]="project |async", (loadClosed)="loadClosedSprints()")

@@ -12,10 +12,10 @@ export class LoadingDirective {
                 private componentFactoryResolver: ComponentFactoryResolver) {}
 
 	@Input() set tgLoading(condition: boolean) {
-	    if (condition) {
+	    if (!condition) {
             this.viewContainer.clear()
             this.viewContainer.createEmbeddedView(this.templateRef);
-	    } else if (!condition) {
+	    } else if (condition) {
             let loadingFactory = this.componentFactoryResolver.resolveComponentFactory(LoadingAux);
             this.viewContainer.clear()
             this.viewContainer.createComponent(loadingFactory)

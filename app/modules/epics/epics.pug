@@ -1,0 +1,17 @@
+div.wrapper
+    tg-project-menu([project]="project|async", active="epics")
+
+    section.main.epics
+        header.header-with-actions
+            tg-main-title([project]="project | async", [sectionName]="section")
+
+            .action-buttons(ng-if="vm.epics.size && vm.canCreateEpics()")
+                button.button-green.e2e-create-epic(
+                    translate="EPICS.DASHBOARD.ADD",
+                    [title]="'EPICS.DASHBOARD.ADD_TITLE' | translate",
+                    ng-click="vm.onCreateEpic()"
+                )
+
+        tg-epics-table([epics]="epics|async")
+
+        tg-epics-empty([epics]="epics|async")

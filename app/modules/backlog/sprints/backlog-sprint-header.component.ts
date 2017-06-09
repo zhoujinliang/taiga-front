@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import * as moment from "moment";
 import * as Immutable from "immutable";
@@ -9,8 +9,12 @@ import * as Immutable from "immutable";
 })
 export class BacklogSprintHeader {
     @Input() sprint: Immutable.Map<string, any>;
+    @Input() compactSprint: boolean;
+    @Output() compactSprintChange: EventEmitter<boolean>;
 
-    constructor(private translate: TranslateService) {}
+    constructor(private translate: TranslateService) {
+        this.compactSprintChange = new EventEmitter();
+    }
 
     estimatedDateRange() {
         const prettyDate = this.translate.instant("BACKLOG.SPRINTS.DATE");

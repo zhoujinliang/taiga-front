@@ -52,18 +52,12 @@ export class EpicsResource {
             .map((result: any) => Immutable.fromJS(result.data));
     }
 
-    list(projectId, page) {
-        if (page == null) { page = 0; }
+    list(projectId, page = 1) {
         const url = this.urls.resolve("epics");
 
         const params = {project: projectId, page};
 
-        return this.http.get(url, params)
-            .map((result: any) =>
-                ({
-                    list: Immutable.fromJS(result.data),
-                    headers: result.headers,
-                }));
+        return this.http.get(url, params);
     }
 
     patch(id, patch) {

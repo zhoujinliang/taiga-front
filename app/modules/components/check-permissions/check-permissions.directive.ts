@@ -20,6 +20,9 @@ export class IfPermDirective implements OnDestroy {
 
 	@Input() set tgIfPerm(perm: string) {
         this.perm = perm;
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
         this.subscription = this.store.select((data) => data.getIn(["projects", "current-project"])).subscribe((project) => {
             let condition = this.checkPermissions.check(this.perm);
             if (condition && !this.hasView) {
@@ -33,6 +36,8 @@ export class IfPermDirective implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 }

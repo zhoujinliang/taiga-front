@@ -167,4 +167,8 @@ export class BacklogPage implements OnInit, OnDestroy {
         }
         this.store.dispatch(new actions.CleanBacklogDataAction());
     }
+
+    loadClosedSprints(projectId) {
+        this.store.dispatch(new actions.FetchBacklogClosedSprintsAction(projectId));
+    }
 }

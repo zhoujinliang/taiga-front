@@ -25,18 +25,21 @@ section.sprints(*ngIf="sprints")
         )
 
     tg-backlog-sprint.sprint-open(
-        *ngFor="let sprint of openSprints()",
+        *ngFor="let sprint of sprints.get('sprints')",
         [sprint]="sprint",
         tg-sprint-sortable
     )
 
-    a.filter-closed-sprints(tg-backlog-toggle-closed-sprints-visualization,
-                            *ngIf="totalClosedMilestones")
-        tg-svg(svg-icon="icon-archive")
-        span.text(translate="BACKLOG.SPRINTS.ACTION_SHOW_CLOSED_SPRINTS")
+    ng-container(*ngIf="sprints.get('closed') && sprints.get('closed-sprints').size === 0")
+        a.filter-closed-sprints(
+                (click)="loadClosedSprints()",
+                *tgLoading="loadingClosed"
+            )
+            tg-svg(svg-icon="icon-archive")
+            span.text(translate="BACKLOG.SPRINTS.ACTION_SHOW_CLOSED_SPRINTS")
 
     tg-backlog-sprint.sprint-closed(
-        *ngFor="let sprint of closedSprints()",
+        *ngFor="let sprint of sprints.get('closed-sprints')",
         [sprint]="sprint",
         tg-sprint-sortable
     )

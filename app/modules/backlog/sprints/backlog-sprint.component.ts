@@ -8,4 +8,5 @@ import * as Immutable from "immutable";
 })
 export class BacklogSprint {
     @Input() sprint: Immutable.Map<string, any>;
+    compactSprint: boolean = false;
 }

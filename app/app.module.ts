@@ -17,6 +17,7 @@ import { DiscoverModule } from "./modules/discover/discover.module";
 import { HomeModule } from "./modules/home/home.module";
 import { KanbanModule } from "./modules/kanban/kanban.module";
 import { BacklogModule } from "./modules/backlog/backlog.module";
+import { EpicsModule } from "./modules/epics/epics.module";
 import { IssuesModule } from "./modules/issues/issues.module";
 import { WikiModule } from "./modules/wiki/wiki.module";
 import { TeamModule } from "./modules/team/team.module";
@@ -64,6 +65,7 @@ export function HttpLoaderFactory(http: Http) {
     AuthModule,
     KanbanModule,
     BacklogModule,
+    EpicsModule,
     IssuesModule,
     WikiModule,
     TeamModule,

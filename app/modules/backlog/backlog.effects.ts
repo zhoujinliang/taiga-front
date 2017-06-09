@@ -63,8 +63,18 @@ export class BacklogEffects {
         .ofType("FETCH_BACKLOG_SPRINTS")
         .map(toPayload)
         .switchMap((projectId) => {
-          return this.rs.sprints.list(projectId).map((sprints) => {
+          return this.rs.sprints.list(projectId, {"closed": false}).map((sprints) => {
               return new actions.SetBacklogSprintsAction(sprints.data);
+          });
+        });
+
+    @Effect()
+    fetchBacklogClosedSprints$: Observable<Action> = this.actions$
+        .ofType("FETCH_BACKLOG_CLOSED_SPRINTS")
+        .map(toPayload)
+        .switchMap((projectId) => {
+          return this.rs.sprints.list(projectId, {"closed": true}).map((sprints) => {
+              return new actions.SetBacklogClosedSprintsAction(sprints.data.get('sprints'));
           });
         });
 

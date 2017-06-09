@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
@@ -7,16 +7,20 @@ import * as Immutable from "immutable";
 })
 export class BacklogSprints {
     @Input() sprints: Immutable.Map<string, any>;
+    @Input() project: Immutable.Map<string, any>;
+    @Output() loadClosed: EventEmitter<boolean>;
+    loadingClosed: boolean = false;
 
-    openSprints() {
-        return this.sprints.get('sprints').filter((sprint:any) => sprint.get('closed') === false).toList();
-    }
-
-    closedSprints() {
-        return this.sprints.get('sprints').filter((sprint:any) => sprint.get('closed') === true).toList();
+    constructor() {
+        this.loadClosed = new EventEmitter();
     }
 
     totalSprints() {
         return this.sprints.get('closed') + this.sprints.get('open');
+    }
+
+    loadClosedSprints() {
+        this.loadClosed.emit(this.project.get('id'))
+        this.loadingClosed = true;
     }
 }
