@@ -61,11 +61,11 @@ export class SprintsResource {
                                    .set('sprints', result.data)
                                    .set(
                                        'closed',
-                                       parseInt(result.headers["Taiga-Info-Total-Closed-Milestones"], 10),
+                                       parseInt(result.headers.get("Taiga-Info-Total-Closed-Milestones"), 10),
                                    )
                                    .set(
                                        'open',
-                                       parseInt(result.headers["Taiga-Info-Total-Opened-Milestones"], 10),
+                                       parseInt(result.headers.get("Taiga-Info-Total-Opened-Milestones"), 10),
                                    )
             return result
         });

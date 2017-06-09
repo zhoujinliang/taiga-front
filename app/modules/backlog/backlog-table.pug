@@ -40,7 +40,7 @@ section.backlog-table([class.hidden]="!userstories || !userstories.size")
 
 .empty-large.js-empty-backlog([class.hidden]="userstories && userstories.size")
     img(
-        src="/#{_version}/images/empty/empty_mex.png",
+        src="/" + _version + "/images/empty/empty_mex.png",
         [alt]="'BACKLOG.EMPTY' | translate"
     )
     p.title(translate="BACKLOG.EMPTY")
