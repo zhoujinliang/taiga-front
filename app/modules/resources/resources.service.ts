@@ -13,12 +13,12 @@ import {ModulesResource} from "./modules";
 import {NotifyPoliciesResource} from "./notify-policies";
 import {RolesResource} from "./roles";
 import {SearchResource} from "./search";
-import {SprintsResource} from "./sprints";
 import {UserSettingsResource} from "./user-settings";
 import {WebhookLogsResource} from "./webhooklogs";
 import {WebhooksResource} from "./webhooks";
 import {WikiResource} from "./wiki-resource.service";
 
+import {SprintsResource} from "./sprints-resource.service";
 import {AttachmentsResource} from "./attachments-resource.service";
 import {EpicsResource} from "./epics-resource.service";
 import {ExternalAppsResource} from "./external-apps-resource.service";

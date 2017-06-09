@@ -12,7 +12,6 @@ import { MainTitle } from "./main-title.component";
 import { MessageFormatPipe } from "./message-format.pipe";
 import { ProjectUrlService } from "./project-url.service";
 import { Svg } from "./svg.component";
-import { ColorizeBacklogTag, ColorizeBacklogTags } from "./tags.component";
 
 @NgModule({
     imports: [
@@ -20,7 +19,6 @@ import { ColorizeBacklogTag, ColorizeBacklogTags } from "./tags.component";
         TranslateModule.forChild({}),
     ],
     exports: [
-        ColorizeBacklogTags,
         DateRange,
         Svg,
         MainTitle,
@@ -33,8 +31,6 @@ import { ColorizeBacklogTag, ColorizeBacklogTags } from "./tags.component";
         UsEstimationPointsPopover,
     ],
     declarations: [
-        ColorizeBacklogTag,
-        ColorizeBacklogTags,
         DateRange,
         Svg,
         MainTitle,

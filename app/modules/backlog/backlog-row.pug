@@ -1,59 +1,54 @@
-.row.us-item-row(
-    [class.blocked]="us.get('is_blocked')",
-    tg-class-permission="{'readonly': '!modify_us'}"
+.input(*tgIfPerm="'modify_us'")
+    input(type="checkbox", name="")
+
+.votes(
+    [class.inactive]="!us.get('total_voters')",
+    [class.is-voted]="us.get('is_voter')",
+    [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate:{total:us.total_voters||0}:'messageformat'"
 )
+    tg-svg(svg-icon="icon-upvote")
+    span {{ us.get('total_voters') }}
 
-    .input(*tgIfPerm="'modify_us'")
-        input(type="checkbox", name="")
-
-    .votes(
-        [class.inactive]="!us.get('total_voters')",
-        [class.is-voted]="us.get('is_voter')",
-        [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate:{total:us.total_voters||0}:'messageformat'"
-    )
-        tg-svg(svg-icon="icon-upvote")
-        span {{ us.get('total_voters') }}
-
-    .user-stories
-        tg-colorize-backlog-tags.tags-block([tags]="us.get('tags')")
-        .user-story-name
-            a.clickable(
-                tg-nav="project-userstories-detail:project=project.slug,ref=us.ref",
-                tg-nav-get-params="{\"no-milestone\": 1}",
-                title="#{{ us.get('ref') }} {{ us.get('subject') }}"
+.user-stories
+    tg-backlog-colorize-tags.tags-block([tags]="us.get('tags')")
+    .user-story-name
+        a.clickable(
+            tg-nav="project-userstories-detail:project=project.slug,ref=us.ref",
+            tg-nav-get-params="{\"no-milestone\": 1}",
+            title="#{{ us.get('ref') }} {{ us.get('subject') }}"
+        )
+            span {{'#' + us.get('ref')}}
+            span {{us.get('subject')}}
+            tg-belong-to-epics(
+                format="pill",
+                *ngIf="us.get('epics')",
+                [epics]="us.get('epics')"
             )
-                span {{'#' + us.get('ref')}}
-                span {{us.get('subject')}}
-                tg-belong-to-epics(
-                    format="pill",
-                    *ngIf="us.get('epics')",
-                    [epics]="us.get('epics')"
-                )
-            .us-settings
-                a.e2e-edit.edit-story(
-                    *tgIfPerm="'modify_us'",
-                    (click)="editUserStory(us.project, us.ref, $event)",
-                    [title]="'COMMON.EDIT' | translate"
-                )
-                    tg-svg(svg-icon="icon-edit")
-
-                a.e2e-delete(
-                    *tgIfPerm="'delete_us'",
-                    (click)="deleteUserStory(us)",
-                    [title]="'COMMON.DELETE' | translate"
-                )
-                    tg-svg(svg-icon="icon-trash")
-
-    div.status(tg-us-status="us" on-update="ctrl.updateUserStoryStatus()")
-        a.us-status(href="", [title]="'BACKLOG.STATUS_NAME' | translate")
-            span.us-status-bind
-            tg-svg(
+        .us-settings
+            a.e2e-edit.edit-story(
                 *tgIfPerm="'modify_us'",
-                svg-icon="icon-arrow-down"
+                (click)="editUserStory(us.project, us.ref, $event)",
+                [title]="'COMMON.EDIT' | translate"
             )
+                tg-svg(svg-icon="icon-edit")
 
-    div.points(tg-backlog-us-points="us")
-        a.us-points(href="", [title]="'COMMON.FIELDS.POINTS' | translate")
+            a.e2e-delete(
+                *tgIfPerm="'delete_us'",
+                (click)="deleteUserStory(us)",
+                [title]="'COMMON.DELETE' | translate"
+            )
+                tg-svg(svg-icon="icon-trash")
 
-    a.e2e-drag(*tgIfPerm="'modify_us'", href="", [title]="'COMMON.DRAG' | translate")
-        tg-svg(svg-icon="icon-drag")
+div.status(tg-us-status="us" on-update="ctrl.updateUserStoryStatus()")
+    a.us-status(href="", [title]="'BACKLOG.STATUS_NAME' | translate")
+        span.us-status-bind
+        tg-svg(
+            *tgIfPerm="'modify_us'",
+            svg-icon="icon-arrow-down"
+        )
+
+div.points(tg-backlog-us-points="us")
+    a.us-points(href="", [title]="'COMMON.FIELDS.POINTS' | translate")
+
+a.e2e-drag(*tgIfPerm="'modify_us'", href="", [title]="'COMMON.DRAG' | translate")
+    tg-svg(svg-icon="icon-drag")

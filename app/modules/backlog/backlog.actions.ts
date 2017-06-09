@@ -28,6 +28,19 @@ export class SetBacklogUserStoriesAction implements Action {
   constructor(public payload: Immutable.List<any>) { }
 }
 
+export class FetchBacklogSprintsAction implements Action {
+  readonly type = "FETCH_BACKLOG_SPRINTS";
+
+  constructor(public payload: number) {}
+}
+
+export class SetBacklogSprintsAction implements Action {
+  readonly type = "SET_BACKLOG_SPRINTS";
+
+  constructor(public payload: Immutable.List<any>) { }
+}
+
+
 export class AppendBacklogUserStoriesAction implements Action {
   readonly type = "APPEND_BACKLOG_USER_STORIES";
 

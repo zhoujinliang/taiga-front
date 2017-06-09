@@ -31,6 +31,7 @@ div.backlog-menu
         a.menu-button(
             *ngIf="userstories?.size",
             [title]="'BACKLOG.TAGS.TOGGLE' | translate",
+            (click)="showTagsChange.emit(!showTags)",
             id="show-tags",
             translate="BACKLOG.TAGS.SHOW"
         )

@@ -38,6 +38,7 @@ import { CheckPermissionsService } from "./check-permissions/check-permissions.s
 import { IfPermDirective } from "./check-permissions/check-permissions.directive";
 import { LoadingDirective, LoadingAux } from "./loading.directive";
 import { IssuesBullet } from "./issues-bullet.component";
+import { ProgressBar } from "./progress-bar.component";
 
 @NgModule({
     imports: [
@@ -75,6 +76,7 @@ import { IssuesBullet } from "./issues-bullet.component";
         IfPermDirective,
         LoadingDirective,
         IssuesBullet,
+        ProgressBar,
     ],
     declarations: [
         BoardZoom,
@@ -103,6 +105,7 @@ import { IssuesBullet } from "./issues-bullet.component";
         LoadingDirective,
         LoadingAux,
         IssuesBullet,
+        ProgressBar,
     ],
     providers: [
         AvatarService,

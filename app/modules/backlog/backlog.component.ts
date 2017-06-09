@@ -31,6 +31,7 @@ export class BacklogPage implements OnInit, OnDestroy {
     subscriptions: Subscription[];
     bulkCreateState: Observable<number>;
     stats: Observable<Immutable.Map<string, any>>;
+    sprints: Observable<Immutable.Map<string, any>>;
 
     constructor(private store: Store<IState>,
                 private route: ActivatedRoute,
@@ -40,6 +41,7 @@ export class BacklogPage implements OnInit, OnDestroy {
         this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
         this.stats = this.store.select((state) => state.getIn(["backlog", "stats"]));
+        this.sprints = this.store.select((state) => state.getIn(["backlog", "sprints"]));
         this.userstories = this.store.select((state) => state.getIn(["backlog", "userstories"]))
                                             .do((userstories) => {
                                                 this.store.dispatch(new StopLoadingAction());
@@ -66,6 +68,7 @@ export class BacklogPage implements OnInit, OnDestroy {
                 if (project) {
                     this.store.dispatch(new actions.FetchBacklogAppliedFiltersAction(project.get("id")));
                     this.store.dispatch(new actions.FetchBacklogStatsAction(project.get("id")));
+                    this.store.dispatch(new actions.FetchBacklogSprintsAction(project.get("id")));
                 }
             }),
             Observable.zip(this.project, this.appliedFilters).subscribe(([project, appliedFilters]: any[]) => {

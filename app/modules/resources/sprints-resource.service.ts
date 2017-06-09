@@ -24,14 +24,19 @@
 
 import {Injectable} from "@angular/core";
 import * as _ from "lodash";
+import * as Immutable from "immutable";
 import {ModelService} from "../../ts/modules/base/model";
 import {RepositoryService} from "../../ts/modules/base/repository";
+import {UrlsService} from "../../ts/modules/base/urls";
+import {HttpService} from "../../ts/modules/base/http";
 import {StorageService} from "../../ts/modules/base/storage";
 
 @Injectable()
 export class SprintsResource {
     constructor(private repo: RepositoryService,
                 private model: ModelService,
+                private urls: UrlsService,
+                private http: HttpService,
                 private storage: StorageService) {}
 
     get(projectId, sprintId) {
@@ -47,24 +52,22 @@ export class SprintsResource {
         this.repo.queryOneRaw("milestones", `${sprintId}/stats`);
     }
 
-    list(projectId, filters) {
+    list(projectId, filters = {}) {
+        const url = this.urls.resolve("milestones");
         let params = {project: projectId};
         params = _.extend({}, params, filters || {});
-        return this.repo.queryMany("milestones", params, {}, true).map((result) => {
-            const milestones = result[0];
-            const headers = result[1];
-
-            for (const m of milestones) {
-                let uses = m.user_stories;
-                uses = _.map(uses, (u) => this.model.make_model("userstories", u));
-                m._attrs.user_stories = uses;
-            }
-
-            return {
-                milestones,
-                closed: parseInt(headers["Taiga-Info-Total-Closed-Milestones"], 10),
-                open: parseInt(headers["Taiga-Info-Total-Opened-Milestones"], 10),
-            };
+        return this.http.get(url, params).map((result) => {
+            result.data = Immutable.Map()
+                                   .set('sprints', result.data)
+                                   .set(
+                                       'closed',
+                                       parseInt(result.headers["Taiga-Info-Total-Closed-Milestones"], 10),
+                                   )
+                                   .set(
+                                       'open',
+                                       parseInt(result.headers["Taiga-Info-Total-Opened-Milestones"], 10),
+                                   )
+            return result
         });
     }
 }

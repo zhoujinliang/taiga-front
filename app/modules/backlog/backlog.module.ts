@@ -18,6 +18,10 @@ import {BacklogTable} from "./backlog-table.component";
 import {BacklogRow} from "./backlog-row.component";
 import {BacklogProgressBar} from "./backlog-progress-bar.component";
 import {BacklogBurndownGraph} from "./backlog-burndown-graph.component";
+import {BacklogColorizeTag, BacklogColorizeTags} from "./backlog-colorize-tags.component";
+import {BacklogSprints} from "./sprints/backlog-sprints.component";
+import {BacklogSprint} from "./sprints/backlog-sprint.component";
+import {BacklogSprintHeader} from "./sprints/backlog-sprint-header.component";
 
 @NgModule({
     declarations: [
@@ -28,6 +32,11 @@ import {BacklogBurndownGraph} from "./backlog-burndown-graph.component";
         BacklogRow,
         BacklogProgressBar,
         BacklogBurndownGraph,
+        BacklogColorizeTag,
+        BacklogColorizeTags,
+        BacklogSprints,
+        BacklogSprint,
+        BacklogSprintHeader,
     ],
     exports: [
         BacklogPage,

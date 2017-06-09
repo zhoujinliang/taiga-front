@@ -21,7 +21,8 @@ section.backlog-table([class.hidden]="!userstories || !userstories.size")
         tg-backlog-row(
             *ngFor="let us of userstories",
             [us]="us",
-            [showTags]="showTags"
+            [class.blocked]="us.get('is_blocked')",
+            tg-class-permission="{'readonly': '!modify_us'}"
         )
 
         div(tg-loading="ctrl.loadingUserstories")

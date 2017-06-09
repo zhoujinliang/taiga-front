@@ -59,6 +59,16 @@ export class BacklogEffects {
         });
 
     @Effect()
+    fetchBacklogSprints$: Observable<Action> = this.actions$
+        .ofType("FETCH_BACKLOG_SPRINTS")
+        .map(toPayload)
+        .switchMap((projectId) => {
+          return this.rs.sprints.list(projectId).map((sprints) => {
+              return new actions.SetBacklogSprintsAction(sprints.data);
+          });
+        });
+
+    @Effect()
     changeBacklogZoom$: Observable<Action> = this.actions$
         .ofType("CHANGE_BACKLOG_ZOOM")
         .map(toPayload)
