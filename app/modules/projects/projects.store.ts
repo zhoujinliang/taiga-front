@@ -4,7 +4,7 @@ export const projectsInitialState = {
     "user-projects": [],
     "current-project": null,
     "timeline": {
-        "items": [],
+        "items": null,
         "has-next": true,
         "current-page": 0,
     }

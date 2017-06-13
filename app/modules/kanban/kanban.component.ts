@@ -38,12 +38,11 @@ export class KanbanPage implements OnInit, OnDestroy {
         this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
         this.userstoriesByState = this.store.select((state) => state.getIn(["kanban", "userstories"]))
+                                            .filter((uss) => uss !== null)
+                                            .do(() => this.store.dispatch(new StopLoadingAction()))
                                             .map((userstories) => {
-                                                if (userstories.size > 0) {
-                                                    this.store.dispatch(new StopLoadingAction());
-                                                }
                                                 return userstories.groupBy((us) => us.get("status").toString());
-                                            });
+                                            })
         this.zoom = this.store.select((state) => state.getIn(["kanban", "zoomLevel"])).map((level) => {
             return {
                 level,
@@ -65,7 +64,7 @@ export class KanbanPage implements OnInit, OnDestroy {
                     this.store.dispatch(new actions.FetchKanbanAppliedFiltersAction(project.get("id")));
                 }
             }),
-            Observable.zip(this.project, this.appliedFilters).subscribe(([project, appliedFilters]: any[]) => {
+            Observable.combineLatest(this.project, this.appliedFilters).subscribe(([project, appliedFilters]: any[]) => {
                 if (project && appliedFilters) {
                     this.store.dispatch(new actions.FetchKanbanFiltersDataAction(project.get("id"), appliedFilters));
                     this.store.dispatch(new actions.FetchKanbanUserStoriesAction(project.get("id"), appliedFilters));

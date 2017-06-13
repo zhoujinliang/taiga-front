@@ -1,7 +1,7 @@
 import * as Immutable from "immutable";
 
 export const epicsInitialState = {
-    "epics": [],
+    "epics": null,
     "user-stories": {},
 };
 

@@ -33,22 +33,27 @@ export class IssuesPage implements OnInit, OnDestroy {
                 private route: ActivatedRoute,
                 private translate: TranslateService,
                 private zoomLevel: ZoomLevelService) {
+
         this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
-        this.issues = this.store.select((state) => state.getIn(["issues", "issues"]));
+        this.issues = this.store.select((state) => state.getIn(["issues", "issues"]))
+                                .filter((issues) => issues !== null)
+                                .do(() => this.store.dispatch(new StopLoadingAction()));
         this.filters = this.store.select((state) => state.getIn(["issues", "filtersData"]))
                                  .map(this.filtersDataToFilters.bind(this));
         this.appliedFilters = this.store.select((state) => state.getIn([this.section, "appliedFilters"]));
     }
 
     ngOnInit() {
+        this.store.dispatch(new StartLoadingAction());
+
         this.subscriptions = [
             this.project.subscribe((project) => {
                 if (project) {
                     this.store.dispatch(new actions.FetchIssuesAppliedFiltersAction(project.get("id")));
                 }
             }),
-            Observable.zip(this.project, this.appliedFilters).subscribe(([project, appliedFilters]: any[]) => {
+            Observable.combineLatest(this.project, this.appliedFilters).subscribe(([project, appliedFilters]: any[]) => {
                 if (project && appliedFilters) {
                     this.store.dispatch(new actions.FetchIssuesFiltersDataAction(project.get("id"), appliedFilters));
                     this.store.dispatch(new actions.FetchIssuesAction(project.get("id"), appliedFilters));
@@ -61,6 +66,7 @@ export class IssuesPage implements OnInit, OnDestroy {
         for (const subs of this.subscriptions) {
             subs.unsubscribe();
         }
+        this.store.dispatch(new actions.CleanIssuesDataAction());
     }
 
     filtersDataToFilters(filtersData) {

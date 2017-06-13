@@ -37,16 +37,14 @@ export class BacklogPage implements OnInit, OnDestroy {
                 private route: ActivatedRoute,
                 private translate: TranslateService,
                 private zoomLevel: ZoomLevelService) {
-        // this.store.dispatch(new StartLoadingAction());
+        this.store.dispatch(new StartLoadingAction());
         this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
         this.stats = this.store.select((state) => state.getIn(["backlog", "stats"]));
         this.sprints = this.store.select((state) => state.getIn(["backlog", "sprints"]));
         this.userstories = this.store.select((state) => state.getIn(["backlog", "userstories"]))
-                                            .do((userstories) => {
-                                                this.store.dispatch(new StopLoadingAction());
-                                                return userstories;
-                                            });
+                                     .filter((uss) => uss !== null)
+                                     .do(() => this.store.dispatch(new StopLoadingAction()));
         this.zoom = this.store.select((state) => state.getIn(["backlog", "zoomLevel"])).map((level) => {
             return {
                 level,
@@ -71,7 +69,7 @@ export class BacklogPage implements OnInit, OnDestroy {
                     this.store.dispatch(new actions.FetchBacklogSprintsAction(project.get("id")));
                 }
             }),
-            Observable.zip(this.project, this.appliedFilters).subscribe(([project, appliedFilters]: any[]) => {
+            Observable.combineLatest(this.project, this.appliedFilters).subscribe(([project, appliedFilters]: any[]) => {
                 if (project && appliedFilters) {
                     this.store.dispatch(new actions.FetchBacklogFiltersDataAction(project.get("id"), appliedFilters));
                     this.store.dispatch(new actions.FetchBacklogUserStoriesAction(project.get("id"), appliedFilters));

@@ -9,7 +9,7 @@ export const issuesInitialState = {
     "current-userstory": null,
     "filtersData": null,
     "folds": {},
-    "issues": [],
+    "issues": null,
     "zoomLevel": 4,
 };
 
@@ -21,6 +21,8 @@ export const issuesReducer = (state, action) => {
             return state.set("filtersData", action.payload);
         case "SET_ISSUES_APPLIED_FILTERS":
             return state.set("appliedFilters", action.payload);
+        case "CLEAN_ISSUES_DATA":
+            return Immutable.fromJS(issuesInitialState);
         default:
             return state;
     }

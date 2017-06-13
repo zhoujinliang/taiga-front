@@ -17,34 +17,41 @@
  * File: project.controller.coffee
  */
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
 import { IState } from "../../../app.store";
+import { StartLoadingAction, StopLoadingAction } from "../../../app.actions";
 import { AppMetaService } from "../../services/app-meta.service";
 import { FetchCurrentProjectAction, FetchProjectTimelineAction, SetProjectTimelineAction} from "../projects.actions";
 import * as Immutable from "immutable";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
     selector: "tg-project-detail",
     template: require("./project.pug")(),
 })
-export class ProjectDetail implements OnInit {
+export class ProjectDetail implements OnInit, OnDestroy {
     user: Observable<Immutable.Map<string, any>>;
     project: Observable<Immutable.Map<string, any>>;
     timeline: Observable<Immutable.Map<string, any>>;
+    subscription: Subscription;
 
     constructor(private appMeta: AppMetaService,
                 private translate: TranslateService,
                 private store: Store<IState>,
                 private route: ActivatedRoute) {
+        this.store.dispatch(new StartLoadingAction());
         this.user = this.store.select((state) => state.getIn(["auth", "user"]));
-        this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
-        this.timeline = this.store.select((state) => state.getIn(["projects", "timeline"]));
+        this.project = this.store.select((state) => state.getIn(["projects", "current-project"]))
+                                 .filter((p) => p !== null)
+                                 .do(() => this.store.dispatch(new StopLoadingAction()));
+        this.timeline = this.store.select((state) => state.getIn(["projects", "timeline"]))
+    }
 
-        this.project.subscribe((project) => {
+    ngOnInit() {
+        this.subscription = this.project.subscribe((project) => {
             if (project) {
                 const title = this.translate.instant("PROJECT.PAGE_TITLE", {projectName: project.get("name")});
                 this.appMeta.setTitle(title);
@@ -55,7 +62,8 @@ export class ProjectDetail implements OnInit {
         });
     }
 
-    ngOnInit() {
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     nextTimelinePage([projectId, currentPage]) {

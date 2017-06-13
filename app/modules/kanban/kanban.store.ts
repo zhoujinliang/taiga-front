@@ -9,7 +9,7 @@ export const kanbanInitialState = {
     "current-userstory": null,
     "filtersData": null,
     "folds": {},
-    "userstories": [],
+    "userstories": null,
     "zoomLevel": 4,
 };
 

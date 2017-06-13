@@ -28,18 +28,16 @@ export class EpicsPage implements OnInit, OnDestroy {
                 private route: ActivatedRoute,
                 private translate: TranslateService,
                 private zoomLevel: ZoomLevelService) {
-        // this.store.dispatch(new StartLoadingAction());
         this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
         this.userStories = this.store.select((state) => state.getIn(["epics", "user-stories"]));
         this.epics = this.store.select((state) => state.getIn(["epics", "epics"]))
-                                            .do((epics) => {
-                                                this.store.dispatch(new StopLoadingAction());
-                                                return epics;
-                                            });
+                               .filter((epics) => epics !== null)
+                               .do(() => this.store.dispatch(new StopLoadingAction()));
     }
 
     ngOnInit() {
+        this.store.dispatch(new StartLoadingAction());
         this.subscriptions = [
             this.project.subscribe((project) => {
                 if (project) {
