@@ -130,6 +130,7 @@ var DeployBrowserifyApp = browserify({
 })).plugin(tsify);
 
 var watchedBrowserifyApp = watchify(BrowserifyApp);
+watchedBrowserifyApp.on("update", function() { gutil.log("Change detected") });
 watchedBrowserifyApp.on("update", bundleApp);
 watchedBrowserifyApp.on("log", gutil.log);
 

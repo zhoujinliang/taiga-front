@@ -16,12 +16,27 @@ import * as actions from "./epics.actions";
 @Injectable()
 export class EpicsEffects {
     @Effect()
-    fetchEpicsUserStories$: Observable<Action> = this.actions$
+    fetchEpics$: Observable<Action> = this.actions$
         .ofType("FETCH_EPICS")
         .map(toPayload)
         .switchMap((payload) => {
           return this.rs.epics.list(payload).map((epics) => {
               return new actions.SetEpicsAction(epics.data);
+          });
+        });
+
+    @Effect()
+    fetchEpicUserStories$: Observable<Action> = this.actions$
+        .ofType("FETCH_EPIC_USER_STORIES")
+        .map(toPayload)
+        .switchMap((payload) => {
+          let params = {
+              epic: payload,
+              include_tasks: true,
+              order_by: 'epic_order'
+          }
+          return this.rs.userstories.listInAllProjects(params).map((userstories) => {
+              return new actions.SetEpicUserStoriesAction(payload, userstories.data);
           });
         });
 

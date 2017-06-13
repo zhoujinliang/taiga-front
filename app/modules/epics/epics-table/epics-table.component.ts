@@ -7,6 +7,8 @@ import * as Immutable from "immutable";
 })
 export class EpicsTable {
     @Input() epics: Immutable.List<any>;
+    @Input() userStories: Immutable.Map<string, any>;
+    @Input() project: Immutable.Map<string, any>;
     columns: any;
     displayOptions: boolean = false;
 

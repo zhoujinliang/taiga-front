@@ -12,6 +12,6 @@ div.wrapper
                     ng-click="vm.onCreateEpic()"
                 )
 
-        tg-epics-table([epics]="epics|async")
+        tg-epics-table([epics]="epics|async", [project]="project|async", [userStories]="userStories|async")
 
         tg-epics-empty([epics]="epics|async")

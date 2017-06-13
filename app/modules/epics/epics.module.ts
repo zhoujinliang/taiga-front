@@ -14,6 +14,8 @@ import {EpicsPage} from "./epics.component";
 import {EpicsEmpty} from "./epics-empty.component";
 import {EpicsTable} from "./epics-table/epics-table.component";
 import {EpicsTableColumnToggle} from "./epics-table/epics-table-column-toggle.component";
+import {EpicRow} from "./epics-table/epic-row.component";
+import {EpicsStoryRow} from "./epics-table/epics-story-row.component";
 import {EpicsEffects} from "./epics.effects";
 
 @NgModule({
@@ -22,6 +24,8 @@ import {EpicsEffects} from "./epics.effects";
         EpicsEmpty,
         EpicsTable,
         EpicsTableColumnToggle,
+        EpicRow,
+        EpicsStoryRow,
     ],
     exports: [
         EpicsPage,

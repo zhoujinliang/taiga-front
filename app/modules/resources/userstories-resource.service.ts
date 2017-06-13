@@ -158,6 +158,7 @@ export class UserstoriesResource {
         const hash = generateHash([projectId, "showTags"]);
         return this.storage.get(hash) || null;
     }
+
     listInAllProjects(params) {
         const url = this.urls.resolve("userstories");
 
@@ -167,8 +168,7 @@ export class UserstoriesResource {
             },
         };
 
-        return this.http.get(url, params, httpOptions)
-            .map((result: any) => Immutable.fromJS(result.data));
+        return this.http.get(url, params, httpOptions);
     }
 
     listAllInProject(projectId) {

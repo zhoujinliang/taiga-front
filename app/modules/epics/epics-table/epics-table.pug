@@ -48,6 +48,6 @@
         infinite-scroll-immediate-check="false"
     )
         .epics-table-body-row(*ngFor="let epic of epics")
-            tg-epic-row.e2e-epic([epic]="epic", [columns]="columns")
+            tg-epic-row.e2e-epic([epic]="epic", [columns]="columns", [project]="project", [userStories]="userStories?.get(epic.get('id'))")
 
-        div(tg-loading="vm.loadingEpics")
+        div(*tgLoading="loadingEpics")
