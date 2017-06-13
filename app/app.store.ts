@@ -57,7 +57,7 @@ export const globalReducer = (state, action) => {
 };
 
 export const rootReducer = (state= initialState, action) => {
-    return state.set("router", routerReducer(state.get("router"), action))
+    return state.set("router", Immutable.fromJS(routerReducer(state.get("router").toJS(), action)))
                 .set("home", homeReducer(state.get("home"), action))
                 .set("global", globalReducer(state.get("global"), action))
                 .set("kanban", kanbanReducer(state.get("kanban"), action))

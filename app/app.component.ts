@@ -35,7 +35,6 @@ export class AppComponent {
                 const splitted_path = path.split("/");
 
                 if (splitted_path.length < 3) { return }
-                console.log(splitted_path);
                 if (splitted_path[1] !== "project") { return }
 
                 const slug = splitted_path[2];
