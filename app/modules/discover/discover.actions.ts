@@ -67,3 +67,8 @@ export class UpdateDiscoverSearchNextPage implements Action {
 
   constructor(public payload: boolean) {}
 }
+
+export class CleanDiscoverDataAction implements Action {
+  readonly type = "CLEAN_DISCOVER_DATA";
+  public payload = null;
+}

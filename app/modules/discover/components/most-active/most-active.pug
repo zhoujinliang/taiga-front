@@ -1,4 +1,4 @@
-.most-active(*ngIf="projects.size")
+.most-active(*ngIf="projects?.size")
     .header
         .title-wrapper
             tg-svg(svg-icon="icon-activity")
@@ -12,6 +12,6 @@
         [highlighted]="projects"
     )
 
-.empty-highlighted-project(*ngIf="!projects.size")
+.empty-highlighted-project(*ngIf="!projects?.size")
     tg-svg(svg-icon="icon-activity")
     span(translate="DISCOVER.MOST_ACTIVE_EMPTY")

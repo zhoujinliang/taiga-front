@@ -14,7 +14,7 @@ import {FeaturedProjects} from "./components/featured-projects/featured-projects
 import {Highlighted} from "./components/highlighted/highlighted.component";
 import {MostActive} from "./components/most-active/most-active.component";
 import {MostLiked} from "./components/most-liked/most-liked.component";
-import {DiscoverHome} from "./discover-home/discover-home.component";
+import {DiscoverHome} from "./discover-home.component";
 import {DiscoverSearchResults} from "./discover-search/discover-search-results.component";
 import {DiscoverSearch} from "./discover-search/discover-search.component";
 import {DiscoverEffects} from "./discover.effects";

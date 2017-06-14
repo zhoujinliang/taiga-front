@@ -18,3 +18,8 @@ export class SetTeamStatsAction implements Action {
 
   constructor(public payload: Immutable.Map<string, any>) { }
 }
+
+export class CleanTeamDataAction implements Action {
+  readonly type = "CLEAN_TEAM_DATA";
+  public payload = null
+}

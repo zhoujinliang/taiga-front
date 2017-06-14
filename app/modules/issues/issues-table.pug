@@ -81,7 +81,7 @@ section.issues-table.basic-table([class.empty]="!issues?.size")
 
 section.empty-large(*ngIf="!issues?.size")
     img(
-        src="/#{_version}/images/empty/empty_moon.png",
+        src="/" + _version + "/images/empty/empty_moon.png",
         [alt]="'ISSUES.TABLE.EMPTY.TITLE' | translate"
     )
     p.title(translate="ISSUES.TABLE.EMPTY.TITLE")

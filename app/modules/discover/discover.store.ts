@@ -1,12 +1,12 @@
 import * as Immutable from "immutable";
 
 export const discoverInitialState = {
-    "most-active": [],
-    "most-liked": [],
-    "featured": [],
-    "search-results": [],
+    "most-active": null,
+    "most-liked": null,
+    "featured": null,
+    "search-results": null,
     "results-next-page": 0,
-    "projects-count": 0,
+    "projects-count": null,
 };
 
 export const discoverReducer = (state, action) => {
@@ -28,6 +28,8 @@ export const discoverReducer = (state, action) => {
                 }
                 return null;
             });
+        case "CLEAN_DISCOVER_DATA":
+            return Immutable.fromJS(discoverInitialState);
         default:
             return state;
     }

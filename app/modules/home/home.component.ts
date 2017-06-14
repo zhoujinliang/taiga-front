@@ -63,11 +63,11 @@ export class Home implements OnInit {
     }
 
     ngOnInit() {
-        Rx.Observable.zip(this.user, this.projects).subscribe(([user, projects]: any) => {
-            if (!this.user || this.user.isEmpty()) {
-                this.router.navigate(["/discover"]);
-                return;
-            }
+        Rx.Observable.combineLatest(this.user, this.projects).subscribe(([user, projects]: any) => {
+            // if (!user || user.isEmpty()) {
+            //     this.router.navigate(["/discover"]);
+            //     return;
+            // }
             this.store.dispatch(new FetchAssignedToAction(user.get("id"), projects));
             this.store.dispatch(new FetchWatchingAction(user.get("id"), projects));
         });

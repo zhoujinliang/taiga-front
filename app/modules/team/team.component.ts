@@ -25,6 +25,7 @@
 import {Component, OnInit, OnDestroy, OnChanges} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {IState} from "../../app.store";
+import {StartLoadingAction, StopLoadingAction} from "../../app.actions";
 import {Observable, Subscription} from "rxjs";
 import * as Immutable from "immutable";
 import * as actions from "./team.actions";
@@ -46,37 +47,37 @@ export class TeamPage implements OnInit, OnDestroy {
     subscription: Subscription;
 
     constructor(private store: Store<IState>) {
+        this.store.dispatch(new StartLoadingAction());
         this.project = this.store.select((state) => state.getIn(['projects', 'current-project']));
         this.user = this.store.select((state) => state.getIn(['auth', 'user']));
-        this.stats = this.store.select((state) => state.getIn(['team', 'stats'])).map((stats) => {
-            if (stats === null) {
-                return null;
-            }
+        this.stats = this.store.select((state) => state.getIn(['team', 'stats']))
+                               .filter((stats) => stats !== null)
+                               .do(() => this.store.dispatch(new StopLoadingAction()))
+                               .map((stats) => {
+                                   let limits = stats.map((entry) => {
+                                       return Immutable.fromJS({max: entry.max(), min: entry.min()})
+                                   });
 
-            let limits = stats.map((entry) => {
-                return Immutable.fromJS({max: entry.max(), min: entry.min()})
-            });
-
-            let totals = stats.reduce((acc, entry) => {
-                if (acc === null) {
-                    return entry;
-                }
-                return acc.map((tot, key) => {
-                    return tot + entry.get(key)
-                })
-            }, null)
-            return stats.map((entry, key) => {
-                    return entry.map((value) => {
-                        if (value === limits.getIn([key, 'max'])) {
-                            return 1
-                        } else if (value === limits.getIn([key, 'min'])) {
-                            return 0.1
-                        } else {
-                            return (value * 0.5) / limits.getIn([key, 'max'])
-                        }
-                });
-            }).set('totals', totals);
-        });
+                                   let totals = stats.reduce((acc, entry) => {
+                                       if (acc === null) {
+                                           return entry;
+                                       }
+                                       return acc.map((tot, key) => {
+                                           return tot + entry.get(key)
+                                       })
+                                   }, null)
+                                   return stats.map((entry, key) => {
+                                           return entry.map((value) => {
+                                               if (value === limits.getIn([key, 'max'])) {
+                                                   return 1
+                                               } else if (value === limits.getIn([key, 'min'])) {
+                                                   return 0.1
+                                               } else {
+                                                   return (value * 0.5) / limits.getIn([key, 'max'])
+                                               }
+                                       });
+                                   }).set('totals', totals);
+                               });
         this.memberships = this.store.select((state) => state.getIn(['projects', 'current-project', 'members']))
                                      .combineLatest(this.user)
                                      .map(([memberships, user]) => {
@@ -98,6 +99,7 @@ export class TeamPage implements OnInit, OnDestroy {
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();
+        this.store.dispatch(new actions.CleanTeamDataAction())
     }
 
 }

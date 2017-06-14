@@ -22,10 +22,12 @@ import {Router} from "@angular/router";
 import {go} from "@ngrx/router-store";
 import {Store} from "@ngrx/store";
 import {TranslateService} from "@ngx-translate/core";
-import {IState} from "../../../app.store";
-import {NavigationUrlsService} from "../../../ts/modules/base/navurls.service";
-import {AppMetaService} from "../../services/app-meta.service";
-import * as actions from "../discover.actions";
+import {IState} from "../../app.store";
+import {StartLoadingAction, StopLoadingAction} from "../../app.actions";
+import {NavigationUrlsService} from "../../ts/modules/base/navurls.service";
+import {AppMetaService} from "../services/app-meta.service";
+import * as actions from "./discover.actions";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
     selector: "tg-discover-home",
@@ -34,16 +36,19 @@ import * as actions from "../discover.actions";
 export class DiscoverHome implements OnInit {
     title: string;
     description: string;
-    mostLikedProjects: any;
-    mostActiveProjects: any;
-    featuredProjects: any;
+    mostLikedProjects: Observable<any>;
+    mostActiveProjects: Observable<any>;
+    featuredProjects: Observable<any>;
     projectsCount: any;
+    subscription: Subscription;
 
     constructor(private store: Store<IState>,
                 private router: Router,
                 private navUrls: NavigationUrlsService,
                 private appMetaService: AppMetaService,
                 private translate: TranslateService) {
+        this.store.dispatch(new StartLoadingAction());
+
         const title = this.translate.instant("DISCOVER.PAGE_TITLE");
         const description = this.translate.instant("DISCOVER.PAGE_DESCRIPTION");
         this.appMetaService.setAll(title, description);
@@ -55,6 +60,17 @@ export class DiscoverHome implements OnInit {
     }
 
     ngOnInit() {
+        this.subscription = Observable.combineLatest(
+            this.mostLikedProjects,
+            this.mostActiveProjects,
+            this.featuredProjects,
+            this.projectsCount,
+            (liked, active, featured, count) => {
+                if (liked && active && featured && count !== null) {
+                    this.store.dispatch(new StopLoadingAction());
+                }
+            }
+        ).subscribe();
         this.store.dispatch(new actions.FetchMostActiveAction("last_week"));
         this.store.dispatch(new actions.FetchMostLikedAction("last_week"));
         this.store.dispatch(new actions.FetchProjectsStatsAction());
@@ -71,5 +87,10 @@ export class DiscoverHome implements OnInit {
 
     onSearch(searchData) {
         return this.store.dispatch(go(["/discover", "search"], {text: searchData.q}));
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+        this.store.dispatch(new actions.CleanDiscoverDataAction());
     }
 }
