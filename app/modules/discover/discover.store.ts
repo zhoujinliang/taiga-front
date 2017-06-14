@@ -20,7 +20,12 @@ export const discoverReducer = (state, action) => {
         case "SET_PROJECTS_STATS":
             return state.set("projects-count", action.payload);
         case "APPEND_DISCOVER_SEARCH_RESULTS":
-            return state.update("search-results", (projects) => projects.concat(action.payload));
+            return state.update("search-results", (projects) => {
+                if (projects !== null) {
+                    return projects.concat(action.payload);
+                }
+                return action.payload;
+            })
         case "UPDATE_DISCOVER_SEARCH_NEXT_PAGE":
             return state.update("results-next-page", (value) => {
                 if (action.payload) {

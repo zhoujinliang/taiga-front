@@ -6,7 +6,7 @@
     p.title(translate="DISCOVER.EMPTY")
 
 .discover-results(*ngIf="(projects && projects.size) || loadingGlobal || loadingList")
-    // .spin(tg-loading="vm.loadingGlobal")
+    // .spin(tg-loading="loadingGlobal")
 
     .discover-results-inner(*ngIf="!loadingGlobal")
         tg-discover-search-list-header(
@@ -14,54 +14,14 @@
             order-by="orderBy"
         )
 
-        .spin(ng-show="loadingList", tg-loading="vm.loadingList")
+        .spin(ng-show="loadingList", tg-loading="loadingList")
 
-        // ul.project-list(ng-if="!vm.loadingList && vm.projects.size")
-        //     li.list-itemtype-project(tg-repeat="project in vm.projects track by project.get('id')")
-        //         .list-itemtype-project-left
-        //             a.list-itemtype-project-image(
-        //                 href="#"
-        //                 tg-nav="project:project=project.get('slug')"
-        //                 title="{{ ::project.get('name') }}"
-        //             )
-        //                 tg-project-logo-small([project]="project")
-        //             .list-itemtype-project-data
-        //                 h2
-        //                     a(
-        //                         href="#"
-        //                         tg-nav="project:project=project.get('slug')"
-        //                         title="{{ ::project.get('name') }}"
-        //                     ) {{project.get('name')}}
-        //                     tg-svg.look-for-people(
-        //                         ng-if="project.get('is_looking_for_people')"
-        //                         svg-icon="icon-recruit"
-        //                         svg-title="{{ ::project.get('looking_for_people_note') }}"
-        //                     )
-        //                 p {{ ::project.get('description') | limitTo:300 }}
-        //                     span(ng-if="::project.get('description').length > 300") ...
-        //         .list-itemtype-project-right.project-statistics
-        //             span.statistic(
-        //                 ng-class="{'active': project.get('is_fan')}"
-        //                 title="{{ 'PROJECT.FANS_COUNTER_TITLE'|translate:{total:project.get('total_fans')||0}:'messageformat' }}"
-        //             )
-        //                 tg-svg(svg-icon="icon-like")
-        //                 span {{::project.get('total_fans')}}
-        //             span.statistic(
-        //                 ng-class="{'active': project.get('is_watcher')}"
-        //                 title="{{ 'PROJECT.WATCHERS_COUNTER_TITLE'|translate:{total:project.get('total_watchers')||0}:'messageformat' }}"
-        //             )
-        //                 tg-svg(svg-icon="icon-watch")
-        //                 span {{::project.get('total_watchers')}}
-        //             span.statistic(
-        //                 ng-class="{'active': project.get('i_am_member')}"
-        //                 title="{{ 'PROJECT.MEMBERS_COUNTER_TITLE'|translate:{total:project.get('members').size||0}:'messageformat' }}"
-        //             )
-        //                 tg-svg(svg-icon="icon-team")
-        //                 span.statistics-num {{ ::project.get('members').size }}
+        ul.project-list(*ngIf="!loadingList && projects.size")
+            tg-discover-search-result(*ngFor="let project of projects", [project]="project")
 
-        // tg-loading="vm.loadingPagination"
+        // tg-loading="loadingPagination"
         a.button-green.more-results(
             (click)="showMore()",
-            *ngIf="nextSearchPage"
+            *ngIf="nextSearchPage",
             translage="DISCOVER.VIEW_MORE"
         )

@@ -19,6 +19,7 @@
 
 import * as angular from "angular";
 import {truncate} from "../../libs/utils";
+import {Observable} from "rxjs";
 
 import {Injectable} from "@angular/core";
 
@@ -84,14 +85,23 @@ export class AppMetaService {
         this._set("og:title", title);
         this._set("og:description", truncate(description, 300));
         this._set("og:image", `${window.location.origin}/${_version}/images/logo-color.png`);
-        return this._set("og:url", window.location.href);
+        this._set("og:url", window.location.href);
     }
 
     setAll(title, description) {
         this.setTitle(title);
         this.setDescription(description);
         this.setTwitterMetas(title, description);
-        return this.setOpenGraphMetas(title, description);
+        this.setOpenGraphMetas(title, description);
+    }
+
+    setAsync(title, description) {
+        Observable.zip(title, description).take(1).subscribe(([title, description]: any) => {
+            this.setTitle(title);
+            this.setDescription(description);
+            this.setTwitterMetas(title, description);
+            this.setOpenGraphMetas(title, description);
+        })
     }
 
     addMobileViewport() {

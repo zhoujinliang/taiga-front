@@ -16,6 +16,7 @@ import {MostActive} from "./components/most-active/most-active.component";
 import {MostLiked} from "./components/most-liked/most-liked.component";
 import {DiscoverHome} from "./discover-home.component";
 import {DiscoverSearchResults} from "./discover-search/discover-search-results.component";
+import {DiscoverSearchResult} from "./discover-search/discover-search-result.component";
 import {DiscoverSearch} from "./discover-search/discover-search.component";
 import {DiscoverEffects} from "./discover.effects";
 import {DiscoverProjectsService} from "./services/discover-projects.service";
@@ -47,6 +48,7 @@ import {DiscoverProjectsService} from "./services/discover-projects.service";
         DiscoverHome,
         DiscoverSearch,
         DiscoverSearchResults,
+        DiscoverSearchResult,
         FeaturedProjects,
     ],
     providers: [

@@ -27,3 +27,12 @@ export class SendFeedbackAction implements Action {
 
   constructor(public payload: string) {}
 }
+
+export class SetMetadataAction implements Action {
+  readonly type = "SET_METADATA";
+  public payload: any;
+
+  constructor(title: string, description: string) {
+      this.payload = {title, description};
+  }
+}

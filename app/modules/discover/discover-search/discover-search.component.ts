@@ -27,7 +27,7 @@ import { search } from "@ngrx/router-store";
 import { Store } from "@ngrx/store";
 import {TranslateService} from "@ngx-translate/core";
 import { IState } from "../../../app.store";
-import {AppMetaService} from "../../services/app-meta.service";
+import { SetMetadataAction } from "../../../app.actions";
 import { SearchDiscoverProjects } from "../discover.actions";
 import {DiscoverProjectsService} from "../services/discover-projects.service";
 
@@ -49,8 +49,8 @@ export class DiscoverSearch implements OnInit {
                 private store: Store<IState>,
                 private router: Router,
                 private discoverProjects: DiscoverProjectsService,
-                private appMetaService: AppMetaService,
                 private translate: TranslateService) {
+        this.store.dispatch(new SetMetadataAction("DISCOVER.SEARCH.PAGE_TITLE", "DISCOVER.SEARCH.PAGE_DESCRIPTION"));
     }
 
     ngOnInit() {
@@ -66,9 +66,6 @@ export class DiscoverSearch implements OnInit {
         // this.loadingList = false;
         // this.loadingPagination = false;
 
-        const title = this.translate.instant("DISCOVER.SEARCH.PAGE_TITLE");
-        const description = this.translate.instant("DISCOVER.SEARCH.PAGE_DESCRIPTION");
-        this.appMetaService.setAll(title, description);
     }
 
     onSearchCriteriaChange() {

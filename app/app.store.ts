@@ -19,6 +19,10 @@ export type IState = Immutable.Map<string, any>;
 const globalInitialState = {
     "open-lightbox": "",
     "loading": false,
+    "page-metadata": {
+        "title": null,
+        "description": null,
+    },
 };
 
 const initialState = Immutable.fromJS({
@@ -51,6 +55,9 @@ export const globalReducer = (state, action) => {
             return state.set("open-lightbox", "");
         case "OPEN_LIGHTBOX":
             return state.set("open-lightbox", action.payload);
+        case "SET_METADATA":
+            return state.setIn(["page-metadata", "title"], action.payload.title)
+                        .setIn(["page-metadata", "description"], action.payload.description);
         default:
             return state;
     }

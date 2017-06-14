@@ -23,9 +23,8 @@ import {go} from "@ngrx/router-store";
 import {Store} from "@ngrx/store";
 import {TranslateService} from "@ngx-translate/core";
 import {IState} from "../../app.store";
-import {StartLoadingAction, StopLoadingAction} from "../../app.actions";
+import {StartLoadingAction, StopLoadingAction, SetMetadataAction} from "../../app.actions";
 import {NavigationUrlsService} from "../../ts/modules/base/navurls.service";
-import {AppMetaService} from "../services/app-meta.service";
 import * as actions from "./discover.actions";
 import {Observable, Subscription} from "rxjs";
 
@@ -45,13 +44,9 @@ export class DiscoverHome implements OnInit {
     constructor(private store: Store<IState>,
                 private router: Router,
                 private navUrls: NavigationUrlsService,
-                private appMetaService: AppMetaService,
                 private translate: TranslateService) {
         this.store.dispatch(new StartLoadingAction());
-
-        const title = this.translate.instant("DISCOVER.PAGE_TITLE");
-        const description = this.translate.instant("DISCOVER.PAGE_DESCRIPTION");
-        this.appMetaService.setAll(title, description);
+        this.store.dispatch(new SetMetadataAction("DISCOVER.PAGE_TITLE", "DISCOVER.PAGE_DESCRIPTION"))
 
         this.mostLikedProjects = this.store.select((state) => state.getIn(["discover", "most-liked"]));
         this.mostActiveProjects = this.store.select((state) => state.getIn(["discover", "most-active"]));

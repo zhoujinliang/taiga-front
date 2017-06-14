@@ -6,25 +6,30 @@ import { IState } from "./app.store";
 import { LogoutAction, RestoreUserAction } from "./modules/auth/auth.actions";
 import { OpenLightboxAction, SendFeedbackAction } from "./app.actions";
 import { FetchCurrentProjectAction, FetchUserProjectsAction } from "./modules/projects/projects.actions";
-import { Subscription } from "rxjs";
+import { AppMetaService } from "./modules/services/app-meta.service";
+import { Observable, Subscription } from "rxjs";
+import * as Immutable from "immutable";
 
 @Component({
   selector: "tg-view",
   template: require("./app.pug")(),
 })
 export class AppComponent {
-    user: any;
-    projects: any;
+    user: Observable<Immutable.Map<string, any>>;
+    projects: Observable<Immutable.List<any>>;
     errorHandling: any = {};
     currentProject: string = "";
+    pageMetadata: Observable<Immutable.Map<string, any>>;
     subscriptions: Subscription[];
 
     constructor(private store: Store<IState>,
                 private router: Router,
                 private activatedRoute: ActivatedRoute,
-                private translate: TranslateService) {
+                private translate: TranslateService,
+                private appMeta: AppMetaService) {
         this.user = this.store.select((state) => state.getIn(["auth", "user"]));
         this.projects = this.store.select((state) => state.getIn(["projects", "user-projects"]));
+        this.pageMetadata = this.store.select((state) => state.getIn(["global", "page-metadata"]));
         this.store.dispatch(new RestoreUserAction());
         this.translate.use("en");
 
@@ -47,6 +52,12 @@ export class AppComponent {
                 if (user) {
                     this.store.dispatch(new FetchUserProjectsAction(user.get("id")));
                 }
+            }),
+            this.pageMetadata.subscribe((metadata) => {
+                this.appMeta.setAsync(
+                    this.translate.get(metadata.get('title') || 'Taiga'),
+                    this.translate.get(metadata.get('description') || 'Taiga')
+                );
             }),
         ]
     }
