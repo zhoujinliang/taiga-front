@@ -30,3 +30,8 @@ export class SetWatchingAction implements Action {
 
   constructor(public payload: Immutable.Map<string, any>) { }
 }
+
+export class CleanHomeDataAction implements Action {
+  readonly type = "CLEAN_HOME_DATA";
+  public payload: any = null;
+}

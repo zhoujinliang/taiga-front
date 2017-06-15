@@ -13,10 +13,10 @@ import { LikeProjectButton } from "./components/like-project-button/like-project
 import { WatchProjectButton } from "./components/watch-project-button/watch-project-button.component";
 import { ContactProjectButton } from "./components/contact-project-button/contact-project-button.component";
 import { ProjectsListing } from "./listing/projects-listing.component";
-import { ProjectData } from "./project/data/project-data.component";
-import { ProjectInfo } from "./project/info/project-info.component";
-import { ProjectDetail } from "./project/project.component";
-import { ProjectTags } from "./project/tags/project-tags.component";
+import { ProjectData } from "./project-detail/data/project-data.component";
+import { ProjectInfo } from "./project-detail/info/project-info.component";
+import { ProjectDetailPage } from "./project-detail/project.component";
+import { ProjectTags } from "./project-detail/tags/project-tags.component";
 import { CurrentProjectsEffects } from "./projects.effects";
 
 @NgModule({
@@ -27,18 +27,18 @@ import { CurrentProjectsEffects } from "./projects.effects";
         TgUserTimelineModule,
         TranslateModule.forChild({}),
         RouterModule.forChild([
-            {path: "project/:slug", component: ProjectDetail},
+            {path: "project/:slug", component: ProjectDetailPage},
             {path: "projects", component: ProjectsListing},
         ]),
         EffectsModule.run(CurrentProjectsEffects),
     ],
     exports: [
         ProjectsListing,
-        ProjectDetail,
+        ProjectDetailPage,
     ],
     declarations: [
         ProjectsListing,
-        ProjectDetail,
+        ProjectDetailPage,
         ProjectInfo,
         ProjectData,
         ProjectTags,

@@ -1,18 +1,8 @@
 import * as Immutable from "immutable";
 
 export const homeInitialState = {
-    "assigned-to": {
-        epics: [],
-        userstories: [],
-        tasks: [],
-        issues: [],
-    },
-    "watching": {
-        epics: [],
-        userstories: [],
-        tasks: [],
-        issues: [],
-    },
+    "assigned-to": null,
+    "watching": null,
 };
 
 export const homeReducer = (state, action) => {
@@ -21,6 +11,8 @@ export const homeReducer = (state, action) => {
             return state.set("assigned-to", action.payload);
         case "SET_WATCHING":
             return state.set("watching", action.payload);
+        case "CLEAN_HOME_DATA":
+            return Immutable.fromJS(homeInitialState);
         default:
             return state;
     }

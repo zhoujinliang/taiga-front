@@ -21,55 +21,74 @@ import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import * as Immutable from "immutable";
 import "rxjs/add/operator/map";
-import * as Rx from "rxjs/Rx";
 import { IState } from "../../app.store";
+import { StartLoadingAction, StopLoadingAction } from "../../app.actions";
 import { NavigationUrlsService } from "../../ts/modules/base/navurls.service";
 import { CurrentUserService } from "../services/current-user.service";
-import { FetchAssignedToAction, FetchWatchingAction } from "./home.actions";
+import { FetchAssignedToAction, FetchWatchingAction, CleanHomeDataAction } from "./home.actions";
 
-import {ChangeDetectionStrategy, Component, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, OnInit, OnDestroy} from "@angular/core";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
     selector: "tg-home",
     template: require("./home.pug")(),
 })
-export class Home implements OnInit {
-    user;
-    projects;
-    assignedTo;
-    watching;
+export class Home implements OnInit, OnDestroy {
+    user: Observable<Immutable.Map<string, any>>;
+    projects: Observable<Immutable.List<any>>;
+    assignedTo: Observable<Immutable.List<any>>;
+    watching: Observable<Immutable.List<any>>;
+    subscriptions: Subscription[];
 
     constructor(private router: Router,
                 private store: Store<IState>,
                 private navurls: NavigationUrlsService) {
-      this.user = this.store.select((state) => state.getIn(["auth", "user"]));
-      this.projects = this.store.select((state) => state.getIn(["projects", "user-projects"]));
-      this.assignedTo = this.store
-                            .select((state) => state.getIn(["home", "assigned-to"]))
+        this.store.dispatch(new StartLoadingAction());
+        this.user = this.store.select((state) => state.getIn(["auth", "user"]));
+        this.projects = this.store.select((state) => state.getIn(["projects", "user-projects"]));
+        this.assignedTo = this.store
+                              .select((state) => state.getIn(["home", "assigned-to"]))
+                              .filter((state) => state !== null)
+                              .map((state) =>
+                                      state.get("epics")
+                                      .concat(state.get("userstories"))
+                                      .concat(state.get("tasks"))
+                                      .concat(state.get("issues"))
+                                      .sortBy((i: any) => i.get("modified_date")));
+        this.watching = this.store
+                            .select((state) => state.getIn(["home", "watching"]))
+                            .filter((state) => state !== null)
                             .map((state) =>
                                     state.get("epics")
                                     .concat(state.get("userstories"))
                                     .concat(state.get("tasks"))
                                     .concat(state.get("issues"))
                                     .sortBy((i: any) => i.get("modified_date")));
-      this.watching = this.store
-                          .select((state) => state.getIn(["home", "watching"]))
-                          .map((state) =>
-                                  state.get("epics")
-                                  .concat(state.get("userstories"))
-                                  .concat(state.get("tasks"))
-                                  .concat(state.get("issues"))
-                                  .sortBy((i: any) => i.get("modified_date")));
     }
 
     ngOnInit() {
-        Rx.Observable.combineLatest(this.user, this.projects).subscribe(([user, projects]: any) => {
-            // if (!user || user.isEmpty()) {
-            //     this.router.navigate(["/discover"]);
-            //     return;
-            // }
-            this.store.dispatch(new FetchAssignedToAction(user.get("id"), projects));
-            this.store.dispatch(new FetchWatchingAction(user.get("id"), projects));
-        });
+        this.subscriptions = [
+            this.user.combineLatest(this.projects).subscribe(([user, projects]: any) => {
+                if (user && user.isEmpty()) {
+                    this.router.navigate(["/discover"]);
+                    return;
+                }
+                this.store.dispatch(new FetchAssignedToAction(user.get("id"), projects));
+                this.store.dispatch(new FetchWatchingAction(user.get("id"), projects));
+            }),
+            this.assignedTo.combineLatest(this.watching).subscribe(([assignedTo, watching]) => {
+                if (assignedTo && watching) {
+                    this.store.dispatch(new StopLoadingAction());
+                }
+            }),
+        ];
+    }
+
+    ngOnDestroy() {
+        for (let sub of this.subscriptions) {
+            sub.unsubscribe()
+        }
+        this.store.dispatch(new CleanHomeDataAction());
     }
 }

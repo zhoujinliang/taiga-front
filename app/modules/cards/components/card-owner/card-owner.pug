@@ -7,7 +7,7 @@
             tg-card-title([item]="item", [zoom]="zoom", [project]="project")
 
     .card-owner-info(*ngIf="!item?.get('assigned_to')")
-        img(src="/#{_version}/images/unnamed.png")
+        img(src="/" + _version + "/images/unnamed.png")
         span.card-owner-name(
             *ngIf='zoom.visibility.owner',
             translate="COMMON.ASSIGNED_TO.NOT_ASSIGNED"

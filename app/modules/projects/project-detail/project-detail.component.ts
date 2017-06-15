@@ -28,10 +28,9 @@ import * as Immutable from "immutable";
 import {Observable, Subscription} from "rxjs";
 
 @Component({
-    selector: "tg-project-detail",
-    template: require("./project.pug")(),
+    template: require("./project-detail.pug")(),
 })
-export class ProjectDetail implements OnInit, OnDestroy {
+export class ProjectDetailPage implements OnInit, OnDestroy {
     user: Observable<Immutable.Map<string, any>>;
     project: Observable<Immutable.Map<string, any>>;
     timeline: Observable<Immutable.Map<string, any>>;
