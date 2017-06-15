@@ -15,7 +15,7 @@ import { ContactProjectButton } from "./components/contact-project-button/contac
 import { ProjectsListing } from "./listing/projects-listing.component";
 import { ProjectData } from "./project-detail/data/project-data.component";
 import { ProjectInfo } from "./project-detail/info/project-info.component";
-import { ProjectDetailPage } from "./project-detail/project.component";
+import { ProjectDetailPage } from "./project-detail/project-detail.component";
 import { ProjectTags } from "./project-detail/tags/project-tags.component";
 import { CurrentProjectsEffects } from "./projects.effects";
 

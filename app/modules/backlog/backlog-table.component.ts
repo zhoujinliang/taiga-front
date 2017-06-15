@@ -6,6 +6,7 @@ import * as Immutable from "immutable";
     template: require("./backlog-table.pug")(),
 })
 export class BacklogTable {
+    @Input() project: Immutable.Map<string, any>;
     @Input() userstories: Immutable.List<any>;
     @Input() currentSprint: Immutable.Map<string, any>;
     @Input() showTags: boolean;

@@ -13,8 +13,8 @@
     tg-backlog-colorize-tags.tags-block([tags]="us.get('tags')")
     .user-story-name
         a.clickable(
-            tg-nav="project-userstories-detail:project=project.slug,ref=us.ref",
-            tg-nav-get-params="{\"no-milestone\": 1}",
+            [routerLink]="['/project', project.get('slug'), 'us', us.get('ref')]",
+            [queryParams]="{'no-milestone': 1}",
             title="#{{ us.get('ref') }} {{ us.get('subject') }}"
         )
             span {{'#' + us.get('ref')}}

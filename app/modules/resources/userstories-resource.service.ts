@@ -45,14 +45,15 @@ export class UserstoriesResource {
         return this.repo.queryOne("userstories", usId, params);
     }
 
-    getByRef(projectId, ref, extraParams) {
-        if (extraParams == null) { extraParams = {}; }
+    getByRef(projectId, ref, extraParams={}) {
         let params = this.getQueryParams(projectId);
         params.project = projectId;
         params.ref = ref;
         params = _.extend({}, params, extraParams);
 
-        return this.repo.queryOne("userstories", "by_ref", params);
+        let url = this.urls.resolve("userstories") + "/by_ref";
+
+        return this.http.get(url, params);
     }
 
     filtersData(params) {

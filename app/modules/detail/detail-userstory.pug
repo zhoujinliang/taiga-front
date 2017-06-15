@@ -1,0 +1,131 @@
+// div.lightbox.lightbox-block(
+//     tg-lb-block
+//     title="{{ 'US.LIGHTBOX_TITLE_BLOKING_US' | translate }}"
+//     ng-model="us"
+// )
+// div.lightbox.lightbox-select-user(tg-lb-assignedto)
+// div.lightbox.lightbox-select-user(tg-lb-watchers)
+
+div.wrapper(*ngIf="project && us")
+    tg-project-menu([project]="project", active="backlog-kanban")
+
+    div.main.us-detail
+        div.us-detail-header.header-with-actions
+            tg-main-title([project]="project", [sectionName]="")
+
+            .action-buttons
+                ng-container(*tgIfPerm="'view_milestones'")
+                    a.button-gray(
+                        *ngIf="sprint && project.get('is_backlog_activated')",
+                        tg-nav="project-taskboard:project=project.slug,sprint=sprint.slug",
+                        [title]="'US.TITLE_LINK_TASKBOARD' | translate",
+                        translate="US.LINK_TASKBOARD"
+                    )
+
+        section.us-story-main-data
+            header
+                tg-vote-button.upvote-btn(
+                    [item]="us",
+                    (upvote)="onUpvote",
+                    (downvote)="onDownvote",
+                )
+                tg-detail-header.detail-header-container(
+                    [item]="us",
+                    [project]="project",
+                    [required-perm]="modify_us",
+                    [class.blocked]="us.get('is_blocked')",
+                    *ngIf="project && us",
+                    type="text"
+                )
+            .subheader
+                tg-tag-line.tags-block(
+                    *ngIf="us && project",
+                    [project]="project",
+                    [item]="us",
+                    [permissions]="modify_us"
+                )
+                tg-created-by-display.ticket-created-by([item]="us")
+
+        section.duty-content
+            tg-item-wysiwyg(
+                type="us",
+                model="us",
+                required-perm="modify_us"
+            )
+
+        // Custom Fields
+        tg-custom-attributes-values(
+            [item]="us",
+            type="userstory",
+            [project]="project",
+            required-edition-perm="modify_us"
+        )
+
+        tg-related-tasks([item]="us")
+
+        tg-attachments-full(
+            [objId]="us.get('id')",
+            type="us",
+            [projectId]="project.get('id')",
+            edit-permission="modify_us"
+        )
+
+        tg-history-section(
+            *ngIf="us",
+            type="us",
+            name="us",
+            [id]="us.get('id')",
+            [projectId]="project.get('id')"
+        )
+
+    sidebar.menu-secondary.sidebar.ticket-data
+
+        section.ticket-header
+            tg-us-status-display.ticket-title([item]="us")
+            tg-us-status-button.detail-status([item]="us")
+            tg-tribe-linked(
+                *ngIf="tribeEnabled && us.get('tribe_gig')",
+                [gig-title]="us.getIn(['tribe_gig', 'title'])",
+                [gig-id]="us.getIn(['tribe_gig', 'id'])"
+            )
+
+        tg-us-estimation.ticket-estimation([item]="us")
+
+        tg-assigned-to.ticket-assigned-to(
+            [item]="us",
+            required-perm="modify_us"
+        )
+
+        section.ticket-watch-buttons
+            tg-watch-button.ticket-watch(
+                [item]="us",
+                data-environment="ticket",
+                (watch)="onWatch($event)",
+                (unwatch)="onUnwatch($event)"
+            )
+            tg-watchersdiv.ticket-watchers(
+                [item]="us",
+                required-perm="modify_us"
+            )
+
+        section.ticket-to-tribe(*ngIf="tribeEnabled && !us.get('tribe_gig')")
+            tg-tribe-button([usId]="us.get('id')", [project-slug]="project.get('slug')")
+            a.tribe-more-info(
+                [title]="'US.TRIBE.PUBLISH_TITLE' | translate",
+                (click)="onTribeInfo()",
+                translate="US.TRIBE.PUBLISH_INFO"
+            )
+
+        section.ticket-detail-settings
+            tg-us-team-requirement-button([item]="us")
+            tg-us-client-requirement-button([item]="us")
+            tg-block-button(
+                *tgIfPerm="'modify_us'",
+                [item]="us"
+            )
+            tg-delete-button(
+                *tgIfPerm="'delete_us'",
+                [delete-title]="'Delete User Story' | translate",
+                [redirect-url]="onDeleteGoToUrl",
+                [item]="us"
+            )
