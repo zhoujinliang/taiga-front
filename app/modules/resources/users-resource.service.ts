@@ -102,21 +102,11 @@ export class UsersResource {
     }
 
     getProfileTimeline(userId, page) {
-        const params = {
-            page,
-        };
+        const params = { page, };
 
-        let url = this.urls.resolve("timeline-profile");
-        url = `${url}/${userId}`;
+        let url = this.urls.resolve("timeline-profile", userId);
 
-        return this.http.get(url, params, {
-            headers: {
-                "x-lazy-pagination": true,
-            },
-        }).map(function(result) {
-            result = Immutable.fromJS(result);
-            return this.paginateResponse.paginate(result);
-        }.bind(this));
+        return this.http.get(url, params, {headers: {"x-lazy-pagination": true}});
     }
 
     getUserTimeline(userId, page) {
@@ -125,16 +115,12 @@ export class UsersResource {
             only_relevant: true,
         };
 
-        let url = this.urls.resolve("timeline-user");
-        url = `${url}/${userId}`;
+        let url = `${this.urls.resolve("timeline-user")}/${userId}`;
 
         return this.http.get(url, params, {
             headers: {
                 "x-lazy-pagination": true,
             },
-        }).map(function(result) {
-            result = Immutable.fromJS(result);
-            return this.paginateResponse.paginate(result);
-        }.bind(this));
+        });
     }
 }

@@ -9,6 +9,7 @@ export class ProfileTabs {
     @Input() contacts: Immutable.List<any>;
     @Input() projects: Immutable.List<any>;
     @Input() items: Immutable.List<any>;
+    @Input() timeline: Immutable.List<any>;
     @Input() user: Immutable.Map<string, any>;
     @Input() isCurrentUser: boolean;
 

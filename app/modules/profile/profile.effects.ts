@@ -56,6 +56,16 @@ export class ProfileEffects {
         });
 
     @Effect()
+    fetchProfileTimeline: Observable<Action> = this.actions$
+        .ofType("FETCH_PROFILE_TIMELINE")
+        .map(toPayload)
+        .switchMap(({userId, page}) => {
+          return this.rs.users.getUserTimeline(userId, page).map((timeline) => {
+              return new actions.SetProfileTimelineAction(timeline.data);
+          });
+        });
+
+    @Effect()
     fetchProfileItems: Observable<Action> = this.actions$
         .ofType("FETCH_PROFILE_ITEMS")
         .map(toPayload)

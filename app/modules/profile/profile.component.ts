@@ -15,6 +15,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     contacts: Observable<Immutable.List<any>>;
     projects: Observable<Immutable.List<any>>;
     items: Observable<Immutable.List<any>>;
+    timeline: Observable<Immutable.List<any>>;
     myUser: Observable<Immutable.Map<string,any>>;
     isCurrentUser: boolean = false;
     subscriptions: Subscription[];
@@ -26,6 +27,7 @@ export class ProfilePage implements OnInit, OnDestroy {
         this.contacts = this.store.select((state) => state.getIn(['profile', 'contacts']));
         this.projects = this.store.select((state) => state.getIn(['profile', 'projects']));
         this.items = this.store.select((state) => state.getIn(['profile', 'items']));
+        this.timeline = this.store.select((state) => state.getIn(['profile', 'timeline']));
     }
 
     ngOnInit() {

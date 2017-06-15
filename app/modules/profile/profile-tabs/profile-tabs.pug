@@ -55,7 +55,7 @@ div
             [name]="'USER.PROFILE.TABS.CONTACTS_TAB' | translate"
         )
 
-    tg-user-timeline(*ngIf="activeTab == 'timeline'", [user]="user", [isCurrentUser]="isCurrentUser")
+    tg-profile-timeline(*ngIf="activeTab == 'timeline'", [timeline]="timeline", [user]="user")
     tg-profile-projects(*ngIf="activeTab == 'projects' && isCurrentUser", [user]="user", [projects]="projects", [contacts]="contacts")
     tg-profile-favs(*ngIf="activeTab == 'likes'", [user]="user", [items]="items", type="likes")
     tg-profile-favs(*ngIf="activeTab == 'votes'", [user]="user", [items]="items", type="votes")

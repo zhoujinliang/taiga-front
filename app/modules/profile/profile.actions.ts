@@ -68,3 +68,24 @@ export class SetProfileProjectsAction implements Action {
 
   constructor(public payload: Immutable.List<any>) {}
 }
+
+export class FetchProfileTimelineAction implements Action {
+  readonly type = "FETCH_PROFILE_TIMELINE";
+  public payload: any;
+
+  constructor(userId: number, page: number) {
+      this.payload = {userId, page}
+  }
+}
+
+export class SetProfileTimelineAction implements Action {
+  readonly type = "SET_PROFILE_TIMELINE";
+
+  constructor(public payload: Immutable.List<any>) {}
+}
+
+export class AppendProfileTimelineAction implements Action {
+  readonly type = "APPEND_PROFILE_TIMELINE";
+
+  constructor(public payload: Immutable.List<any>) {}
+}

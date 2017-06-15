@@ -6,6 +6,7 @@ export const profileInitialState = {
     "contacts": null,
     "items": null,
     "projects": null,
+    "timeline": null,
 };
 
 export const profileReducer = (state, action) => {
@@ -20,6 +21,10 @@ export const profileReducer = (state, action) => {
             return state.set("items", action.payload);
         case "SET_PROFILE_PROJECTS":
             return state.set("projects", action.payload);
+        case "SET_PROFILE_TIMELINE":
+            return state.set("timeline", action.payload);
+        case "APPEND_PROFILE_TIMELINE":
+            return state.update("timeline", (timeline) => timeline.concat(action.payload));
         case "CLEAN_PROFILE_DATA":
             return Immutable.fromJS(profileInitialState);
         default:

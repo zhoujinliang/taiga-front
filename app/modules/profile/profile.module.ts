@@ -10,7 +10,9 @@ import {TgCommonModule} from "../../ts/modules/common/common.module";
 import {TgCardsModule} from "../cards/cards.module";
 import {TgComponentsModule} from "../components/components.module";
 import {TgServicesModule} from "../services/services.module";
+import {TgUserTimelineModule} from "../user-timeline/user-timeline.module";
 import {ProfilePage} from "./profile.component";
+import {ProfileTimeline} from "./profile-timeline.component";
 import {ProfileBar} from "./profile-bar/profile-bar.component";
 import {ProfileTabs} from "./profile-tabs/profile-tabs.component";
 import {ProfileTab} from "./profile-tabs/profile-tab.component";
@@ -33,6 +35,7 @@ import {ProfileEffects} from "./profile.effects";
         ProfileFavsFilter,
         ProfileFavsItemTicket,
         ProfileFavsItemProject,
+        ProfileTimeline,
         ProfileSidebar,
         ProfileContacts,
         ProfileProjects,
@@ -46,6 +49,7 @@ import {ProfileEffects} from "./profile.effects";
         TgCardsModule,
         TgComponentsModule,
         TgServicesModule,
+        TgUserTimelineModule,
         FormsModule,
         StoreModule,
         TranslateModule.forChild({}),
