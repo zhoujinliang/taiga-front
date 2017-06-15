@@ -120,7 +120,6 @@ export class IssuesResource {
             },
         };
 
-        return this.http.get(url, params, httpOptions)
-            .map((result: any) => Immutable.fromJS(result.data));
+        return this.http.get(url, params, httpOptions);
     }
 }

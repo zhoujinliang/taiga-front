@@ -155,7 +155,6 @@ export class TasksResource {
             },
         };
 
-        return this.http.get(url, params, httpOptions)
-            .map((result: any) => Immutable.fromJS(result.data));
+        return this.http.get(url, params, httpOptions);
     }
 }

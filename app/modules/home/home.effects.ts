@@ -44,28 +44,28 @@ export class HomeEffects {
                 status__is_closed: false,
                 assigned_to: userId,
             }).map((epics) => {
-                return filterAndAddInfoDuties.bind(this)(epics, "epics", projectsById);
+                return filterAndAddInfoDuties.bind(this)(epics.data, "epics", projectsById);
             }).map((epics) => ({key: "epics", values: epics}));
 
             const userstories = this.rs.userstories.listInAllProjects({
                 is_closed: false,
                 assigned_to: userId,
             }).map((userstories) => {
-                return filterAndAddInfoDuties.bind(this)(userstories, "userstories", projectsById);
+                return filterAndAddInfoDuties.bind(this)(userstories.data, "userstories", projectsById);
             }).map((userstories) => ({key: "userstories", values: userstories}));
 
             const tasks = this.rs.tasks.listInAllProjects({
                 status__is_closed: false,
                 assigned_to: userId,
             }).map((tasks) => {
-                return filterAndAddInfoDuties.bind(this)(tasks, "tasks", projectsById);
+                return filterAndAddInfoDuties.bind(this)(tasks.data, "tasks", projectsById);
             }).map((tasks) => ({key: "tasks", values: tasks}));
 
             const issues = this.rs.issues.listInAllProjects({
                 status__is_closed: false,
                 assigned_to: userId,
             }).map((issues) => {
-                return filterAndAddInfoDuties.bind(this)(issues, "issues", projectsById);
+                return filterAndAddInfoDuties.bind(this)(issues.data, "issues", projectsById);
             }).map((issues) => ({key: "issues", values: issues}));
 
             return Rx.Observable.concat(epics, userstories, tasks, issues)
@@ -91,28 +91,28 @@ export class HomeEffects {
                 status__is_closed: false,
                 watchers: userId,
             }).map((epics) => {
-                return filterAndAddInfoDuties.bind(this)(epics, "epics", projectsById);
+                return filterAndAddInfoDuties.bind(this)(epics.data, "epics", projectsById);
             }).map((epics) => ({key: "epics", values: epics}));
 
             const userstories = this.rs.userstories.listInAllProjects({
                 is_closed: false,
                 watchers: userId,
             }).map((userstories) => {
-                return filterAndAddInfoDuties.bind(this)(userstories, "userstories", projectsById);
+                return filterAndAddInfoDuties.bind(this)(userstories.data, "userstories", projectsById);
             }).map((userstories) => ({key: "userstories", values: userstories}));
 
             const tasks = this.rs.tasks.listInAllProjects({
                 status__is_closed: false,
                 watchers: userId,
             }).map((tasks) => {
-                return filterAndAddInfoDuties.bind(this)(tasks, "tasks", projectsById);
+                return filterAndAddInfoDuties.bind(this)(tasks.data, "tasks", projectsById);
             }).map((tasks) => ({key: "tasks", values: tasks}));
 
             const issues = this.rs.issues.listInAllProjects({
                 status__is_closed: false,
                 watchers: userId,
             }).map((issues) => {
-                return filterAndAddInfoDuties.bind(this)(issues, "issues", projectsById);
+                return filterAndAddInfoDuties.bind(this)(issues.data, "issues", projectsById);
             }).map((issues) => ({key: "issues", values: issues}));
 
             return Rx.Observable.concat(epics, userstories, tasks, issues)
