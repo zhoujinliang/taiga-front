@@ -24,7 +24,13 @@ export const profileReducer = (state, action) => {
         case "SET_PROFILE_TIMELINE":
             return state.set("timeline", action.payload);
         case "APPEND_PROFILE_TIMELINE":
-            return state.update("timeline", (timeline) => timeline.concat(action.payload));
+            return state.update("timeline", (timeline) => {
+                if (timeline === null) {
+                    return action.payload;
+                }
+                return timeline.update('timeline', (t) => t.concat(action.payload.get('timeline')))
+                               .set('hasNext', action.payload.get('hasNext'));
+            });
         case "CLEAN_PROFILE_DATA":
             return Immutable.fromJS(profileInitialState);
         default:

@@ -61,7 +61,9 @@ export class ProfileEffects {
         .map(toPayload)
         .switchMap(({userId, page}) => {
           return this.rs.users.getUserTimeline(userId, page).map((timeline) => {
-              return new actions.SetProfileTimelineAction(timeline.data);
+              let data = Immutable.Map<string,any>().set("timeline", timeline.data)
+                                                    .set("hasNext", !!timeline.headers.get('X-Pagination-Next'));
+              return new actions.AppendProfileTimelineAction(data);
           });
         });
 

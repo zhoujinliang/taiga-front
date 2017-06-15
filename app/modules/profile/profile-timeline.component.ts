@@ -6,17 +6,23 @@ import * as actions from "./profile.actions";
 
 @Component({
     selector: "tg-profile-timeline",
-    template: `<tg-user-timeline [timeline]="timeline" (needMore)="loadMore()" (scrollDisabled)="scrollDisabled">
+    template: `<tg-user-timeline [timeline]="timeline?.get('timeline')" (needMore)="loadMore()" [scrollDisabled]="!timeline?.get('hasNext')">
                </tg-user-timeline>`,
 })
 export class ProfileTimeline implements OnInit, OnDestroy {
     @Input() user: Immutable.Map<string, any>;
-    @Input() timeline: Immutable.List<any>;
+    @Input() timeline: Immutable.Map<string, any>;
+    page:number = 1;
 
     constructor(private store: Store<IState>) {}
 
     ngOnInit() {
-        this.store.dispatch(new actions.FetchProfileTimelineAction(this.user.get('id'), 1));
+        this.store.dispatch(new actions.FetchProfileTimelineAction(this.user.get('id'), this.page));
+    }
+
+    loadMore() {
+        this.page++;
+        this.store.dispatch(new actions.FetchProfileTimelineAction(this.user.get('id'), this.page));
     }
 
     ngOnDestroy() {

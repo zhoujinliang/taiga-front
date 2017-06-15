@@ -81,11 +81,11 @@ export class FetchProfileTimelineAction implements Action {
 export class SetProfileTimelineAction implements Action {
   readonly type = "SET_PROFILE_TIMELINE";
 
-  constructor(public payload: Immutable.List<any>) {}
+  constructor(public payload: Immutable.Map<string, any>) {}
 }
 
 export class AppendProfileTimelineAction implements Action {
   readonly type = "APPEND_PROFILE_TIMELINE";
 
-  constructor(public payload: Immutable.List<any>) {}
+  constructor(public payload: Immutable.Map<string, any>) {}
 }
