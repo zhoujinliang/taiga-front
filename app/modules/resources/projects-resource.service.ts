@@ -54,8 +54,9 @@ export class ProjectsResource {
     }
 
     listByMember(memberId: number): any {
+        const url = this.urls.resolve("projects");
         const params = {member: memberId, order_by: "user_order"};
-        return this.repo.queryMany("projects", params);
+        return this.http.get(url, params);
     }
 
     templates(): any {

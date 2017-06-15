@@ -17,22 +17,13 @@
  * File: discover-search.controller.coffee
  */
 
-import * as _ from "lodash";
-
 import {Component, Input} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import { search } from "@ngrx/router-store";
-import { Store } from "@ngrx/store";
-import {TranslateService} from "@ngx-translate/core";
-import { IState } from "../../../app.store";
-import {AppMetaService} from "../../services/app-meta.service";
-import { SearchDiscoverProjects } from "../discover.actions";
-import {DiscoverProjectsService} from "../services/discover-projects.service";
+import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-discover-search-results",
     template: require("./discover-search-results.pug")(),
 })
 export class DiscoverSearchResults {
-    @Input() projects;
+    @Input() projects: Immutable.List<any>;
 }

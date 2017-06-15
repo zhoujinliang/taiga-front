@@ -32,7 +32,7 @@ export class SetMetadataAction implements Action {
   readonly type = "SET_METADATA";
   public payload: any;
 
-  constructor(title: string, description: string) {
-      this.payload = {title, description};
+  constructor(title: string, title_args: any, description: string, description_args: any) {
+      this.payload = {title, title_args, description, description_args};
   }
 }

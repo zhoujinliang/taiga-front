@@ -1,21 +1,25 @@
-section.profile-bar
-    div.profile-image-wrapper(ng-class="::{'is-current-user': vm.isCurrentUser}")
-        tg-avatar.profile-img([user]="vm.user")
-        a.profile-edition(title="{{ 'USER.PROFILE.EDIT' | translate }}", tg-nav="user-settings-user-profile", translate="USER.PROFILE.EDIT")
+section.profile-bar(*ngIf="user")
+    div.profile-image-wrapper([class.is-current-user]="isCurrentUser")
+        tg-avatar.profile-img([user]="user")
+        a.profile-edition(
+            [title]="'USER.PROFILE.EDIT' | translate",
+            tg-nav="user-settings-user-profile",
+            translate="USER.PROFILE.EDIT"
+        )
     div.profile-data
-        h1(ng-class="{'not-full-name': !vm.user.get('full_name')}") {{::vm.user.get("full_name_display")}}
-        .username @{{::vm.user.get("username")}}
-        h2 {{::vm.stats.get('roles').join(", ")}}
+        h1([class.not-full-name]="!user.get('full_name')") {{user.get("full_name_display")}}
+        .username @{{user.get("username")}}
+        h2 {{stats?.get('roles').join(", ")}}
     div.profile-stats
         div.stat
-            span.stat-number {{::vm.stats.get('total_num_projects')}}
+            span.stat-number {{stats?.get('total_num_projects')}}
             span.stat-name(translate="USER.PROFILE.PROJECTS")
         div.stat
-            span.stat-number {{::vm.stats.get('total_num_closed_userstories')}}
+            span.stat-number {{stats?.get('total_num_closed_userstories')}}
             span.stat-name(translate="USER.PROFILE.CLOSED_US")
         div.stat
-            span.stat-number {{::vm.stats.get('total_num_contacts')}}
+            span.stat-number {{stats?.get('total_num_contacts')}}
             span.stat-name(translate="USER.PROFILE.CONTACTS")
 
-    div.profile-quote(ng-if="::vm.user.get('bio')")
-        span {{::vm.user.get("bio") | limitTo:210 }}{{vm.user.get("bio").length < 210 ? '' : '...'}}
+    div.profile-quote(*ngIf="user.get('bio')")
+        span {{user.get("bio").slice(0, 210) }}{{user.get("bio").length < 210 ? '' : '...'}}

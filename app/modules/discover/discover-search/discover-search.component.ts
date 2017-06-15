@@ -25,7 +25,6 @@ import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import { search } from "@ngrx/router-store";
 import { Store } from "@ngrx/store";
-import {TranslateService} from "@ngx-translate/core";
 import { IState } from "../../../app.store";
 import { SetMetadataAction } from "../../../app.actions";
 import { SearchDiscoverProjects } from "../discover.actions";
@@ -48,9 +47,8 @@ export class DiscoverSearch implements OnInit {
     constructor(private route: ActivatedRoute,
                 private store: Store<IState>,
                 private router: Router,
-                private discoverProjects: DiscoverProjectsService,
-                private translate: TranslateService) {
-        this.store.dispatch(new SetMetadataAction("DISCOVER.SEARCH.PAGE_TITLE", "DISCOVER.SEARCH.PAGE_DESCRIPTION"));
+                private discoverProjects: DiscoverProjectsService) {
+        this.store.dispatch(new SetMetadataAction("DISCOVER.SEARCH.PAGE_TITLE", {}, "DISCOVER.SEARCH.PAGE_DESCRIPTION", {}));
     }
 
     ngOnInit() {

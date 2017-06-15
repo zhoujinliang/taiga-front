@@ -45,48 +45,25 @@ export class UsersResource {
 
     getUserByUsername(username) {
         const url = this.urls.resolve("by_username");
-
-        const httpOptions = {
-            headers: {
-                "x-disable-pagination": "1",
-            },
-        };
-
         const params = {
             username,
         };
 
-        return this.http.get(url, params, httpOptions)
-            .map((result: any) => Immutable.fromJS(result.data));
+        return this.http.get(url, params);
     }
 
     getStats(userId) {
         const url = this.urls.resolve("user-stats", userId);
-
-        const httpOptions = {
-            headers: {
-                "x-disable-pagination": "1",
-            },
-        };
-
-        return this.http.get(url, {}, httpOptions)
-            .map((result: any) => Immutable.fromJS(result.data));
+        return this.http.get(url);
     }
 
-    getContacts(userId, excludeProjectId) {
+    getContacts(userId, excludeProjectId=null) {
         const url = this.urls.resolve("user-contacts", userId);
 
         const params: any = {};
         if (excludeProjectId != null) { params.exclude_project = excludeProjectId; }
 
-        const httpOptions = {
-            headers: {
-                "x-disable-pagination": "1",
-            },
-        };
-
-        return this.http.get(url, params, httpOptions)
-            .map((result: any) => Immutable.fromJS(result.data));
+        return this.http.get(url, params)
     }
 
     getLiked(userId, page, type, q) {
@@ -99,14 +76,7 @@ export class UsersResource {
 
         params.only_relevant = true;
 
-        return this.http.get(url, params, {
-            headers: {
-                "x-lazy-pagination": true,
-            },
-        }).map(function(result) {
-            result = Immutable.fromJS(result);
-            return this.paginateResponse.paginate(result);
-        }.bind(this));
+        return this.http.get(url, params, {headers: {"x-lazy-pagination": true}});
     }
 
     getVoted(userId, page, type, q) {
@@ -117,14 +87,7 @@ export class UsersResource {
         if (type != null) { params.type = type; }
         if (q != null) { params.q = q; }
 
-        return this.http.get(url, params, {
-            headers: {
-                "x-lazy-pagination": true,
-            },
-        }).map(function(result) {
-            result = Immutable.fromJS(result);
-            return this.paginateResponse.paginate(result);
-        }.bind(this));
+        return this.http.get(url, params, {headers: {"x-lazy-pagination": true}});
     }
 
     getWatched(userId, page, type, q) {
@@ -135,14 +98,7 @@ export class UsersResource {
         if (type != null) { params.type = type; }
         if (q != null) { params.q = q; }
 
-        return this.http.get(url, params, {
-            headers: {
-                "x-lazy-pagination": true,
-            },
-        }).map(function(result) {
-            result = Immutable.fromJS(result);
-            return this.paginateResponse.paginate(result);
-        }.bind(this));
+        return this.http.get(url, params, {headers: {"x-lazy-pagination": true}});
     }
 
     getProfileTimeline(userId, page) {

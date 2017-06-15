@@ -15,6 +15,7 @@ import { AuthModule } from "./modules/auth/auth.module";
 import { TgComponentsModule } from "./modules/components/components.module";
 import { DiscoverModule } from "./modules/discover/discover.module";
 import { HomeModule } from "./modules/home/home.module";
+import { ProfileModule } from "./modules/profile/profile.module";
 import { KanbanModule } from "./modules/kanban/kanban.module";
 import { BacklogModule } from "./modules/backlog/backlog.module";
 import { EpicsModule } from "./modules/epics/epics.module";
@@ -63,6 +64,7 @@ export function HttpLoaderFactory(http: Http) {
     TgComponentsModule,
     NavigationBarModule,
     AuthModule,
+    ProfileModule,
     KanbanModule,
     BacklogModule,
     EpicsModule,

@@ -3,6 +3,7 @@ import * as Immutable from "immutable";
 import {authInitialState, authReducer} from "./modules/auth/auth.store";
 import {discoverInitialState, discoverReducer} from "./modules/discover/discover.store";
 import {homeInitialState, homeReducer} from "./modules/home/home.store";
+import {profileInitialState, profileReducer} from "./modules/profile/profile.store";
 import {kanbanInitialState, kanbanReducer} from "./modules/kanban/kanban.store";
 import {backlogInitialState, backlogReducer} from "./modules/backlog/backlog.store";
 import {epicsInitialState, epicsReducer} from "./modules/epics/epics.store";
@@ -21,13 +22,16 @@ const globalInitialState = {
     "loading": false,
     "page-metadata": {
         "title": null,
+        "title_args": {},
         "description": null,
+        "description_args": {},
     },
 };
 
 const initialState = Immutable.fromJS({
     global: globalInitialState,
     home: homeInitialState,
+    profile: profileInitialState,
     kanban: kanbanInitialState,
     backlog: backlogInitialState,
     epics: epicsInitialState,
@@ -56,8 +60,7 @@ export const globalReducer = (state, action) => {
         case "OPEN_LIGHTBOX":
             return state.set("open-lightbox", action.payload);
         case "SET_METADATA":
-            return state.setIn(["page-metadata", "title"], action.payload.title)
-                        .setIn(["page-metadata", "description"], action.payload.description);
+            return state.set("page-metadata", Immutable.fromJS(action.payload))
         default:
             return state;
     }
@@ -67,6 +70,7 @@ export const rootReducer = (state= initialState, action) => {
     return state.set("router", Immutable.fromJS(routerReducer(state.get("router").toJS(), action)))
                 .set("home", homeReducer(state.get("home"), action))
                 .set("global", globalReducer(state.get("global"), action))
+                .set("profile", profileReducer(state.get("profile"), action))
                 .set("kanban", kanbanReducer(state.get("kanban"), action))
                 .set("backlog", backlogReducer(state.get("backlog"), action))
                 .set("epics", epicsReducer(state.get("epics"), action))

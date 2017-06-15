@@ -54,9 +54,10 @@ export class AppComponent {
                 }
             }),
             this.pageMetadata.subscribe((metadata) => {
+                let metadataJs = metadata.toJS();
                 this.appMeta.setAsync(
-                    this.translate.get(metadata.get('title') || 'Taiga'),
-                    this.translate.get(metadata.get('description') || 'Taiga')
+                    this.translate.get(metadataJs.title || 'Taiga', metadataJs.title_args || {}),
+                    this.translate.get(metadataJs.description || 'Taiga', metadataJs.description_args || {})
                 );
             }),
         ]

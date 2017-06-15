@@ -22,8 +22,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
 import { IState } from "../../../app.store";
-import { StartLoadingAction, StopLoadingAction } from "../../../app.actions";
-import { AppMetaService } from "../../services/app-meta.service";
+import { StartLoadingAction, StopLoadingAction, SetMetadataAction } from "../../../app.actions";
 import { FetchCurrentProjectAction, FetchProjectTimelineAction, SetProjectTimelineAction} from "../projects.actions";
 import * as Immutable from "immutable";
 import {Observable, Subscription} from "rxjs";
@@ -38,8 +37,7 @@ export class ProjectDetail implements OnInit, OnDestroy {
     timeline: Observable<Immutable.Map<string, any>>;
     subscription: Subscription;
 
-    constructor(private appMeta: AppMetaService,
-                private translate: TranslateService,
+    constructor(private translate: TranslateService,
                 private store: Store<IState>,
                 private route: ActivatedRoute) {
         this.store.dispatch(new StartLoadingAction());
@@ -53,9 +51,12 @@ export class ProjectDetail implements OnInit, OnDestroy {
     ngOnInit() {
         this.subscription = this.project.subscribe((project) => {
             if (project) {
-                const title = this.translate.instant("PROJECT.PAGE_TITLE", {projectName: project.get("name")});
-                this.appMeta.setTitle(title);
-                this.appMeta.setDescription(project.get("description"));
+                this.store.dispatch(new SetMetadataAction(
+                    "PROJECT.PAGE_TITLE",
+                    {projectName: project.get("name")},
+                    project.get('description'),
+                    {}
+                ));
                 this.store.dispatch(new SetProjectTimelineAction(Immutable.List(), 0, true));
                 this.store.dispatch(new FetchProjectTimelineAction(project.get('id'), 1));
             }
