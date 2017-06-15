@@ -11,7 +11,7 @@ div.wrapper(*ngIf="project && us")
 
     div.main.us-detail
         div.us-detail-header.header-with-actions
-            tg-main-title([project]="project", [sectionName]="")
+            tg-main-title([project]="project", [sectionName]="'US.SECTION_NAME' | translate")
 
             .action-buttons
                 ng-container(*tgIfPerm="'view_milestones'")
@@ -24,8 +24,9 @@ div.wrapper(*ngIf="project && us")
 
         section.us-story-main-data
             header
-                tg-vote-button.upvote-btn(
+                tg-detail-vote-button.upvote-btn(
                     [item]="us",
+                    [user]="user",
                     (upvote)="onUpvote",
                     (downvote)="onDownvote",
                 )

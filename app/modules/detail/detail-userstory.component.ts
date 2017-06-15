@@ -12,6 +12,7 @@ import * as actions from "./detail.actions";
 })
 export class DetailUserstoryPage implements OnInit, OnDestroy {
     us: Immutable.Map<string,any>;
+    user: Immutable.Map<string,any>;
     project: Immutable.Map<string,any>;
     subscriptions: Subscription[];
 
@@ -28,6 +29,8 @@ export class DetailUserstoryPage implements OnInit, OnDestroy {
                       }),
             this.store.select((state) => state.getIn(["projects", "current-project"]))
                       .subscribe((state) => this.project = state),
+            this.store.select((state) => state.getIn(["auth", "user"]))
+                      .subscribe((state) => this.user = state),
             this.store.select((state) => state.getIn(["projects", "current-project"]))
                       .combineLatest(this.route.params)
                       .subscribe(([project, params]) => {

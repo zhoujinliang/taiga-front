@@ -11,11 +11,13 @@ import {TgCardsModule} from "../cards/cards.module";
 import {TgComponentsModule} from "../components/components.module";
 import {TgServicesModule} from "../services/services.module";
 import {DetailUserstoryPage} from "./detail-userstory.component";
+import {DetailVoteButton} from "./components/detail-vote-button.component";
 import {DetailEffects} from "./detail.effects";
 
 @NgModule({
     declarations: [
         DetailUserstoryPage,
+        DetailVoteButton,
     ],
     exports: [
         DetailUserstoryPage,
