@@ -41,6 +41,13 @@ export class DetailUserstoryPage implements OnInit, OnDestroy {
         ];
     }
 
+    canEdit() {
+        if (this.project && this.project.get('my_permissions').contains(`modify_us`)) {
+            return true;
+        }
+        return false;
+    }
+
     ngOnDestroy() {
         for (let sub of this.subscriptions) {
             sub.unsubscribe();

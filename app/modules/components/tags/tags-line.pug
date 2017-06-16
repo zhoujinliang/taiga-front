@@ -1,0 +1,24 @@
+.tags-container
+    ng-container(*ngFor="let tag of tags")
+        .tag(
+            *ngIf="tag.get(1) && !disableColorSelection",
+            [style.border-left]="'.3rem solid' + tag.get(1)"
+        )
+            tg-tag(
+                [tag]="tag",
+                [canEdit]="canEdit",
+                (delete)="onDeleteTag($event)"
+            )
+
+        .tag(
+            *ngIf="!tag.get(1) || disableColorSelection"
+        )
+            tg-tag(
+                [tag]="tag",
+                [canEdit]="canEdit",
+                (delete)="onDeleteTag($event)",
+            )
+
+tg-tags-add-button(*ngIf="!addTag && canEdit", (click)="addTag = true")
+
+tg-tags-add-input(*ngIf="addTag && canEdit")

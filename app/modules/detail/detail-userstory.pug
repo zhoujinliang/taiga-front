@@ -33,17 +33,17 @@ div.wrapper(*ngIf="project && us")
                 tg-detail-header.detail-header-container(
                     [item]="us",
                     [project]="project",
-                    [required-perm]="modify_us",
+                    [canEdit]="canEdit",
                     [class.blocked]="us.get('is_blocked')",
                     *ngIf="project && us",
-                    type="text"
+                    type="us"
                 )
+
             .subheader
-                tg-tag-line.tags-block(
+                tg-tags-line.tags-block(
                     *ngIf="us && project",
-                    [project]="project",
-                    [item]="us",
-                    [permissions]="modify_us"
+                    [tags]="us.get('tags')",
+                    [canEdit]="canEdit()"
                 )
                 tg-created-by-display.ticket-created-by([item]="us")
 
@@ -118,9 +118,9 @@ div.wrapper(*ngIf="project && us")
             )
 
         section.ticket-detail-settings
-            tg-us-team-requirement-button([item]="us")
-            tg-us-client-requirement-button([item]="us")
-            tg-block-button(
+            tg-detail-team-requirement-button([item]="us")
+            tg-detail-client-requirement-button([item]="us")
+            tg-detail-block-button(
                 *tgIfPerm="'modify_us'",
                 [item]="us"
             )

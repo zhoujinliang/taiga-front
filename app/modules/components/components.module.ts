@@ -39,6 +39,11 @@ import { IfPermDirective } from "./check-permissions/check-permissions.directive
 import { LoadingDirective, LoadingAux } from "./loading.directive";
 import { IssuesBullet } from "./issues-bullet.component";
 import { ProgressBar } from "./progress-bar.component";
+import { TagsLine } from "./tags/tags-line.component";
+import { TagsAddButton } from "./tags/tags-add-button/tags-add-button.component";
+import { TagsAddInput } from "./tags/tags-add-input/tags-add-input.component";
+import { TagsDropdown } from "./tags/tags-dropdown/tags-dropdown.component";
+import { Tag } from "./tags/tag/tag.component";
 
 @NgModule({
     imports: [
@@ -77,6 +82,7 @@ import { ProgressBar } from "./progress-bar.component";
         LoadingDirective,
         IssuesBullet,
         ProgressBar,
+        TagsLine,
     ],
     declarations: [
         BoardZoom,
@@ -106,6 +112,11 @@ import { ProgressBar } from "./progress-bar.component";
         LoadingAux,
         IssuesBullet,
         ProgressBar,
+        TagsLine,
+        Tag,
+        TagsAddButton,
+        TagsAddInput,
+        TagsDropdown,
     ],
     providers: [
         AvatarService,
