@@ -45,7 +45,11 @@ div.wrapper(*ngIf="project && us")
                     [tags]="us.get('tags')",
                     [canEdit]="canEdit()"
                 )
-                tg-created-by-display.ticket-created-by([item]="us")
+                tg-detail-created-by-display.ticket-created-by(
+                    *ngIf="us.get('owner_extra_info')",
+                    [user]="us.get('owner_extra_info')",
+                    [date]="us.get('created_date')"
+                )
 
         section.duty-content
             tg-item-wysiwyg(
@@ -55,11 +59,10 @@ div.wrapper(*ngIf="project && us")
             )
 
         // Custom Fields
-        tg-custom-attributes-values(
-            [item]="us",
-            type="userstory",
-            [project]="project",
-            required-edition-perm="modify_us"
+        tg-detail-custom-attributes-values(
+            [attrs]="project.get('userstory_custom_attributes')",
+            [values]="customAttributesValues",
+            [canEdit]="canEdit()",
         )
 
         tg-related-tasks([item]="us")

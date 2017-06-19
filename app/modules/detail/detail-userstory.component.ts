@@ -14,6 +14,7 @@ export class DetailUserstoryPage implements OnInit, OnDestroy {
     us: Immutable.Map<string,any>;
     user: Immutable.Map<string,any>;
     project: Immutable.Map<string,any>;
+    customAttributesValues: Immutable.Map<string,any>;
     subscriptions: Subscription[];
 
     constructor(private store: Store<IState>, private route: ActivatedRoute) {
@@ -25,6 +26,13 @@ export class DetailUserstoryPage implements OnInit, OnDestroy {
             this.store.select((state) => state.getIn(["detail", "userstory"]))
                       .subscribe((state) => {
                           this.us = state;
+                          if (state) {
+                              this.store.dispatch(new actions.FetchDetailUserStoryCustomAttributesAction(state.get('id')));
+                          }
+                      }),
+            this.store.select((state) => state.getIn(["detail", "userstory-custom-attributes"]))
+                      .subscribe((state) => {
+                          this.customAttributesValues = state;
                           this.store.dispatch(new StopLoadingAction());
                       }),
             this.store.select((state) => state.getIn(["projects", "current-project"]))

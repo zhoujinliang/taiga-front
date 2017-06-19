@@ -23,14 +23,17 @@
  */
 
 import {Injectable} from "@angular/core";
-import {RepositoryService} from "../../ts/modules/base/repository";
+import {HttpService} from "../../ts/modules/base/http";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class CustomAttributesValuesResource {
-    constructor(private repo: RepositoryService) {}
+    constructor(private http: HttpService,
+                private urls: UrlsService) {}
 
     _get(objectId: number, resource: string) {
-        return this.repo.queryOne(resource, objectId);
+        let url = `${this.urls.resolve(resource)}/${objectId}`
+        return this.http.get(url);
     }
 
     get_epic(objectId) {

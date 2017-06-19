@@ -25,6 +25,16 @@ export class DetailEffects {
           });
         });
 
+    @Effect()
+    fetchDetailUserStoryCustomAttributes$: Observable<Action> = this.actions$
+        .ofType("FETCH_DETAIL_USER_STORY_CUSTOM_ATTRIBUTES")
+        .map(toPayload)
+        .switchMap((usId) => {
+          return this.rs.customAttributesValues.get_userstory(usId).map((values) => {
+              return new actions.SetDetailUserStoryCustomAttributesAction(values.data.get('attributes_values'));
+          });
+        });
+
     constructor(private actions$: Actions,
                 private rs: ResourcesService,
                 private storage: StorageService,
