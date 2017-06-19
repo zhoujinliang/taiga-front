@@ -39,6 +39,7 @@ export class ColorSelector implements OnChanges{
 
     constructor() {
         this.colorList = getDefaulColorList();
+        this.colorSelected = new EventEmitter();
     }
 
     ngOnChanges() {
