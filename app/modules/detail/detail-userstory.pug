@@ -84,11 +84,14 @@ div.wrapper(*ngIf="project && us")
 
         section.ticket-header
             tg-detail-status-display.ticket-title([item]="us")
-            tg-detail-status-button.detail-status([status]="us.get('status_extra_info')", [statuses]="project.get('us_statuses')", canEdit="canEdit()")
+            tg-detail-status-button.detail-status(
+                [status]="us.get('status_extra_info')",
+                [statuses]="project.get('us_statuses')",
+                canEdit="canEdit()"
+            )
             tg-detail-tribe-linked(
-                *ngIf="tribeEnabled && us.get('tribe_gig')",
-                [gig-title]="us.getIn(['tribe_gig', 'title'])",
-                [gig-id]="us.getIn(['tribe_gig', 'id'])"
+                *ngIf="us.get('tribe_gig')",
+                [item]="us",
             )
 
         tg-us-estimation.ticket-estimation([item]="us")
