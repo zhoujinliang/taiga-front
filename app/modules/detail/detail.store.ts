@@ -5,6 +5,9 @@ export const detailInitialState = {
     "userstory": null,
     "task": null,
     "issue": null,
+    "userstory-tasks": null,
+    "userstory-attachments": null,
+    "userstory-custom-attributes": null,
 };
 
 export const detailReducer = (state, action) => {
@@ -13,6 +16,10 @@ export const detailReducer = (state, action) => {
             return state.set("userstory", action.payload);
         case "SET_DETAIL_USER_STORY_CUSTOM_ATTRIBUTES":
             return state.set("userstory-custom-attributes", action.payload);
+        case "SET_DETAIL_USER_STORY_TASKS":
+            return state.set("userstory-tasks", action.payload);
+        case "SET_DETAIL_USER_STORY_ATTACHMENTS":
+            return state.set("userstory-attachments", action.payload);
         case "SET_DETAIL_EPIC":
             return state.set("epic", action.payload);
         case "SET_DETAIL_TASK":

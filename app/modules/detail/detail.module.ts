@@ -11,12 +11,17 @@ import {TgCardsModule} from "../cards/cards.module";
 import {TgComponentsModule} from "../components/components.module";
 import {TgServicesModule} from "../services/services.module";
 import {TgPipesModule} from "../pipes/pipes.module";
+import {TgAttachmentsModule} from "../attachments/attachments.module";
 import {DetailUserstoryPage} from "./detail-userstory.component";
 import {DetailVoteButton} from "./components/detail-vote-button.component";
+import {DetailRelatedTasks} from "./components/detail-related-tasks.component";
+import {DetailRelatedTaskRow} from "./components/detail-related-task-row.component";
 import {DetailCreatedByDisplay} from "./components/detail-created-by-display.component";
 import {DetailCustomAttributesValues} from "./components/detail-custom-attributes-values.component";
 import {DetailCustomAttributesValue} from "./components/detail-custom-attributes-value.component";
 import {DetailHeader} from "./components/detail-header.component";
+import {DetailStatusDisplay} from "./components/detail-status-display.component";
+import {DetailStatusButton} from "./components/detail-status-button.component";
 import {DetailEffects} from "./detail.effects";
 
 @NgModule({
@@ -27,6 +32,10 @@ import {DetailEffects} from "./detail.effects";
         DetailCreatedByDisplay,
         DetailCustomAttributesValues,
         DetailCustomAttributesValue,
+        DetailRelatedTasks,
+        DetailRelatedTaskRow,
+        DetailStatusDisplay,
+        DetailStatusButton,
     ],
     exports: [
         DetailUserstoryPage,
@@ -41,6 +50,7 @@ import {DetailEffects} from "./detail.effects";
         StoreModule,
         TranslateModule.forChild({}),
         TgPipesModule,
+        TgAttachmentsModule,
         RouterModule.forChild([
             { path: "project/:slug/us/:ref", component: DetailUserstoryPage },
         ]),

@@ -15,6 +15,8 @@ export class DetailUserstoryPage implements OnInit, OnDestroy {
     user: Immutable.Map<string,any>;
     project: Immutable.Map<string,any>;
     customAttributesValues: Immutable.Map<string,any>;
+    tasks: Immutable.List<any>;
+    attachments: Immutable.List<any>;
     subscriptions: Subscription[];
 
     constructor(private store: Store<IState>, private route: ActivatedRoute) {
@@ -22,19 +24,34 @@ export class DetailUserstoryPage implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        let customAttributes = this.store.select((state) => state.getIn(["detail", "userstory-custom-attributes"]));
+        let tasks = this.store.select((state) => state.getIn(["detail", "userstory-tasks"]));
+        let attachments = this.store.select((state) => state.getIn(["detail", "userstory-attachments"]));
+
         this.subscriptions = [
             this.store.select((state) => state.getIn(["detail", "userstory"]))
                       .subscribe((state) => {
                           this.us = state;
                           if (state) {
                               this.store.dispatch(new actions.FetchDetailUserStoryCustomAttributesAction(state.get('id')));
+                              this.store.dispatch(new actions.FetchDetailUserStoryTasksAction(this.project.get('id'), state.get('id')));
+                              this.store.dispatch(new actions.FetchDetailUserStoryAttachmentsAction(this.project.get('id'), state.get('id')));
                           }
                       }),
-            this.store.select((state) => state.getIn(["detail", "userstory-custom-attributes"]))
-                      .subscribe((state) => {
-                          this.customAttributesValues = state;
-                          this.store.dispatch(new StopLoadingAction());
-                      }),
+            customAttributes.subscribe((state) => {
+                this.customAttributesValues = state;
+            }),
+            tasks.subscribe((state) => {
+                this.tasks = state;
+            }),
+            attachments.subscribe((state) => {
+                this.attachments = state;
+            }),
+            customAttributes.combineLatest(tasks, attachments).subscribe((state) => {
+                if(state[0] && state[1] && state[2]) {
+                    this.store.dispatch(new StopLoadingAction());
+                }
+            }),
             this.store.select((state) => state.getIn(["projects", "current-project"]))
                       .subscribe((state) => this.project = state),
             this.store.select((state) => state.getIn(["auth", "user"]))

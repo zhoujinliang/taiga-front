@@ -61,14 +61,13 @@ export class TasksResource {
         return this.repo.queryOneRaw("task-filters", null, params);
     }
 
-    list(projectId, sprintId, userStoryId, params) {
-        if (sprintId == null) { sprintId = null; }
-        if (userStoryId == null) { userStoryId = null; }
+    list(projectId: number, sprintId: number=null, userStoryId: number=null, params: any={}) {
+        let url = this.urls.resolve("tasks");
         params = _.merge(params, {project: projectId});
         if (sprintId) { params.milestone = sprintId; }
         if (userStoryId) { params.user_story = userStoryId; }
         this.storeQueryParams(projectId, params);
-        return this.repo.queryMany("tasks", params);
+        return this.http.get(url, params);
     }
 
     bulkCreate(projectId, sprintId, usId, data) {

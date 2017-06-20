@@ -22,6 +22,36 @@ export class SetDetailUserStoryCustomAttributesAction implements Action {
   constructor(public payload: Immutable.Map<string, any>) { }
 }
 
+export class FetchDetailUserStoryTasksAction implements Action {
+  readonly type = "FETCH_DETAIL_USER_STORY_TASKS";
+  public payload: any;
+
+  constructor(projectId: number, usId: number) {
+      this.payload = {projectId, usId};
+  }
+}
+
+export class SetDetailUserStoryTasksAction implements Action {
+  readonly type = "SET_DETAIL_USER_STORY_TASKS";
+
+  constructor(public payload: Immutable.Map<string, any>) { }
+}
+
+export class FetchDetailUserStoryAttachmentsAction implements Action {
+  readonly type = "FETCH_DETAIL_USER_STORY_ATTACHMENTS";
+  public payload: any;
+
+  constructor(projectId: number, usId: number) {
+      this.payload = {projectId, usId};
+  }
+}
+
+export class SetDetailUserStoryAttachmentsAction implements Action {
+  readonly type = "SET_DETAIL_USER_STORY_ATTACHMENTS";
+
+  constructor(public payload: Immutable.Map<string, any>) { }
+}
+
 export class SetDetailUserStoryAction implements Action {
   readonly type = "SET_DETAIL_USER_STORY";
 

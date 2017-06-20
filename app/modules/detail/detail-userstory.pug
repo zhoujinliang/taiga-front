@@ -65,13 +65,11 @@ div.wrapper(*ngIf="project && us")
             [canEdit]="canEdit()",
         )
 
-        tg-related-tasks([item]="us")
+        tg-detail-related-tasks([tasks]="tasks")
 
         tg-attachments-full(
-            [objId]="us.get('id')",
-            type="us",
-            [projectId]="project.get('id')",
-            edit-permission="modify_us"
+            *ngIf="attachments",
+            [attachments]="attachments",
         )
 
         tg-history-section(
@@ -85,9 +83,9 @@ div.wrapper(*ngIf="project && us")
     sidebar.menu-secondary.sidebar.ticket-data
 
         section.ticket-header
-            tg-us-status-display.ticket-title([item]="us")
-            tg-us-status-button.detail-status([item]="us")
-            tg-tribe-linked(
+            tg-detail-status-display.ticket-title([item]="us")
+            tg-detail-status-button.detail-status([status]="us.get('status_extra_info')", [statuses]="project.get('us_statuses')", canEdit="canEdit()")
+            tg-detail-tribe-linked(
                 *ngIf="tribeEnabled && us.get('tribe_gig')",
                 [gig-title]="us.getIn(['tribe_gig', 'title'])",
                 [gig-id]="us.getIn(['tribe_gig', 'id'])"

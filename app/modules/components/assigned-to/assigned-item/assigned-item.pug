@@ -1,4 +1,4 @@
 .assignable-member-single
     tg-avatar.assignable-member-avatar.avatar([user]="member")
-    .assignable-member-name(*ngIf="member") {{member.get('full_name')}}
+    .assignable-member-name(*ngIf="member") {{member.get('full_name_display')}}
     .assignable-member-name(*ngIf="!member", translate="COMMON.ASSIGNED_TO.NOT_ASSIGNED")
