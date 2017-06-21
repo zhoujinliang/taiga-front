@@ -18,6 +18,7 @@ export class DetailUserstoryPage implements OnInit, OnDestroy {
     tasks: Immutable.List<any>;
     attachments: Immutable.List<any>;
     subscriptions: Subscription[];
+    canEdit: boolean;
 
     constructor(private store: Store<IState>, private route: ActivatedRoute) {
         this.store.dispatch(new StartLoadingAction());
@@ -53,7 +54,10 @@ export class DetailUserstoryPage implements OnInit, OnDestroy {
                 }
             }),
             this.store.select((state) => state.getIn(["projects", "current-project"]))
-                      .subscribe((state) => this.project = state),
+                      .subscribe((state) => {
+                          this.project = state;
+                          this.canEdit = this.canEditCheck();
+                      }),
             this.store.select((state) => state.getIn(["auth", "user"]))
                       .subscribe((state) => this.user = state),
             this.store.select((state) => state.getIn(["projects", "current-project"]))
@@ -66,7 +70,7 @@ export class DetailUserstoryPage implements OnInit, OnDestroy {
         ];
     }
 
-    canEdit() {
+    canEditCheck() {
         if (this.project && this.project.get('my_permissions').contains(`modify_us`)) {
             return true;
         }

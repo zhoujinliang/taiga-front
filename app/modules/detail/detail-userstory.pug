@@ -43,7 +43,7 @@ div.wrapper(*ngIf="project && us")
                 tg-tags-line.tags-block(
                     *ngIf="us && project",
                     [tags]="us.get('tags')",
-                    [canEdit]="canEdit()"
+                    [canEdit]="canEdit"
                 )
                 tg-detail-created-by-display.ticket-created-by(
                     *ngIf="us.get('owner_extra_info')",
@@ -62,7 +62,7 @@ div.wrapper(*ngIf="project && us")
         tg-detail-custom-attributes-values(
             [attrs]="project.get('userstory_custom_attributes')",
             [values]="customAttributesValues",
-            [canEdit]="canEdit()",
+            [canEdit]="canEdit",
         )
 
         tg-detail-related-tasks([tasks]="tasks")
@@ -87,7 +87,7 @@ div.wrapper(*ngIf="project && us")
             tg-detail-status-button.detail-status(
                 [status]="us.get('status_extra_info')",
                 [statuses]="project.get('us_statuses')",
-                canEdit="canEdit()"
+                canEdit="canEdit"
             )
             tg-detail-tribe-linked(
                 *ngIf="us.get('tribe_gig')",
@@ -98,7 +98,7 @@ div.wrapper(*ngIf="project && us")
             [item]="us",
             [points]="project.get('points')",
             [roles]="project.get('roles')",
-            [canEdit]="canEdit()",
+            [canEdit]="canEdit",
         )
 
         tg-assigned-item.ticket-assigned-to(
@@ -115,7 +115,7 @@ div.wrapper(*ngIf="project && us")
             tg-detail-watchers.ticket-watchers(
                 [item]="us",
                 [members]="project.get('membersById')",
-                [canEdit]="canEdit()",
+                [canEdit]="canEdit",
                 [logged]="!!user"
             )
 
@@ -128,10 +128,11 @@ div.wrapper(*ngIf="project && us")
             )
 
         section.ticket-detail-settings
-            tg-detail-team-requirement-button([item]="us")
-            tg-detail-client-requirement-button([item]="us")
-            tg-detail-block-button(
+            tg-detail-team-requirement([item]="us", [canEdit]="canEdit")
+            tg-detail-client-requirement([item]="us", [canEdit]="canEdit")
+            tg-detail-block(
                 *tgIfPerm="'modify_us'",
+                [canEdit]="canEdit",
                 [item]="us"
             )
             tg-delete-button(

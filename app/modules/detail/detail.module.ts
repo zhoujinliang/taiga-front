@@ -25,6 +25,9 @@ import {DetailStatusButton} from "./components/detail-status-button.component";
 import {DetailTribeLinked} from "./components/detail-tribe-linked.component";
 import {DetailUsEstimation} from "./components/detail-us-estimation.component";
 import {DetailWatchers} from "./components/detail-watchers.component";
+import {DetailTeamRequirement} from "./components/detail-team-requirement.component";
+import {DetailClientRequirement} from "./components/detail-client-requirement.component";
+import {DetailBlock} from "./components/detail-block.component";
 import {DetailEffects} from "./detail.effects";
 
 @NgModule({
@@ -42,6 +45,9 @@ import {DetailEffects} from "./detail.effects";
         DetailTribeLinked,
         DetailUsEstimation,
         DetailWatchers,
+        DetailTeamRequirement,
+        DetailClientRequirement,
+        DetailBlock,
     ],
     exports: [
         DetailUserstoryPage,
