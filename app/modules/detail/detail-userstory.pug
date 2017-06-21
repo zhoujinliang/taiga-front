@@ -94,11 +94,15 @@ div.wrapper(*ngIf="project && us")
                 [item]="us",
             )
 
-        tg-us-estimation.ticket-estimation([item]="us")
-
-        tg-assigned-to.ticket-assigned-to(
+        tg-detail-us-estimation.ticket-estimation(
             [item]="us",
-            required-perm="modify_us"
+            [points]="project.get('points')",
+            [roles]="project.get('roles')",
+            [canEdit]="canEdit()",
+        )
+
+        tg-assigned-item.ticket-assigned-to(
+            [member]="us.get('assigned_to_extra_info')",
         )
 
         section.ticket-watch-buttons
@@ -108,9 +112,11 @@ div.wrapper(*ngIf="project && us")
                 (watch)="onWatch($event)",
                 (unwatch)="onUnwatch($event)"
             )
-            tg-watchersdiv.ticket-watchers(
+            tg-detail-watchers.ticket-watchers(
                 [item]="us",
-                required-perm="modify_us"
+                [members]="project.get('membersById')",
+                [canEdit]="canEdit()",
+                [logged]="!!user"
             )
 
         section.ticket-to-tribe(*ngIf="tribeEnabled && !us.get('tribe_gig')")

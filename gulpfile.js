@@ -145,7 +145,8 @@ function watchBundleApp() {
     return watchedBrowserifyApp
         .bundle().on('error', gutil.log)
         .pipe(source('js/app.js'))
-        .pipe(gulp.dest(paths.distVersion));
+        .pipe(gulp.dest(paths.distVersion))
+        .pipe(livereload());
 }
 
 function deployBundleApp() {

@@ -23,6 +23,8 @@ import {DetailHeader} from "./components/detail-header.component";
 import {DetailStatusDisplay} from "./components/detail-status-display.component";
 import {DetailStatusButton} from "./components/detail-status-button.component";
 import {DetailTribeLinked} from "./components/detail-tribe-linked.component";
+import {DetailUsEstimation} from "./components/detail-us-estimation.component";
+import {DetailWatchers} from "./components/detail-watchers.component";
 import {DetailEffects} from "./detail.effects";
 
 @NgModule({
@@ -38,6 +40,8 @@ import {DetailEffects} from "./detail.effects";
         DetailStatusDisplay,
         DetailStatusButton,
         DetailTribeLinked,
+        DetailUsEstimation,
+        DetailWatchers,
     ],
     exports: [
         DetailUserstoryPage,
