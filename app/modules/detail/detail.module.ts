@@ -28,6 +28,7 @@ import {DetailWatchers} from "./components/detail-watchers.component";
 import {DetailTeamRequirement} from "./components/detail-team-requirement.component";
 import {DetailClientRequirement} from "./components/detail-client-requirement.component";
 import {DetailBlock} from "./components/detail-block.component";
+import {DetailDelete} from "./components/detail-delete.component";
 import {DetailEffects} from "./detail.effects";
 
 @NgModule({
@@ -48,6 +49,7 @@ import {DetailEffects} from "./detail.effects";
         DetailTeamRequirement,
         DetailClientRequirement,
         DetailBlock,
+        DetailDelete,
     ],
     exports: [
         DetailUserstoryPage,

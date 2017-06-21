@@ -11,6 +11,7 @@ export class DetailUsEstimation {
     @Input() roles: Immutable.List<any>;
     @Input() points: Immutable.List<any>;
     @Input() canEdit: boolean;
+    open: number = null;
 
     rolePoints(role: Immutable.Map<string, any>) {
         if (this.item && this.points && role) {
@@ -22,6 +23,14 @@ export class DetailUsEstimation {
             return points.get('name');
         }
         return "";
+    }
+
+    toggleRole(roleId) {
+        if (this.open == roleId) {
+            this.open = null;
+        } else {
+            this.open = roleId;
+        }
     }
 
     computableRoles() {

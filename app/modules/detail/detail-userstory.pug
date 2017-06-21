@@ -135,9 +135,4 @@ div.wrapper(*ngIf="project && us")
                 [canEdit]="canEdit",
                 [item]="us"
             )
-            tg-delete-button(
-                *tgIfPerm="'delete_us'",
-                [delete-title]="'Delete User Story' | translate",
-                [redirect-url]="onDeleteGoToUrl",
-                [item]="us"
-            )
+            tg-delete-button(*tgIfPerm="'delete_us'")
