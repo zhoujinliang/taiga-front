@@ -44,6 +44,10 @@ import { TagsAddButton } from "./tags/tags-add-button/tags-add-button.component"
 import { TagsAddInput } from "./tags/tags-add-input/tags-add-input.component";
 import { TagsDropdown } from "./tags/tags-dropdown/tags-dropdown.component";
 import { Tag } from "./tags/tag/tag.component";
+import { Wysiwyg } from "./wysiwyg/wysiwyg.component";
+import { WysiwygService } from "./wysiwyg/wysiwyg.service";
+import { WysiwygCodeHightlighterService } from "./wysiwyg/wysiwyg-code-hightlighter.service";
+import { MediumEditor } from "./wysiwyg/medium/medium.component";
 
 @NgModule({
     imports: [
@@ -83,6 +87,8 @@ import { Tag } from "./tags/tag/tag.component";
         IssuesBullet,
         ProgressBar,
         TagsLine,
+        Wysiwyg,
+        MediumEditor,
     ],
     declarations: [
         BoardZoom,
@@ -117,11 +123,15 @@ import { Tag } from "./tags/tag/tag.component";
         TagsAddButton,
         TagsAddInput,
         TagsDropdown,
+        Wysiwyg,
+        MediumEditor,
     ],
     providers: [
         AvatarService,
         FiltersRemoteStorageService,
         CheckPermissionsService,
+        WysiwygService,
+        WysiwygCodeHightlighterService,
     ],
     entryComponents: [
         LoadingAux,

@@ -27,7 +27,8 @@ const refreshCodeBlocks = function(mediumInstance) {
             let item;
             pre.setAttribute("contenteditable", false);
 
-            pre.setAttribute("title", $translate.instant("COMMON.WYSIWYG.DB_CLICK"));
+            // TODO: Pass it in any way
+            // pre.setAttribute("title", $translate.instant("COMMON.WYSIWYG.DB_CLICK"));
 
             // prevent text selection in firefox
             pre.addEventListener("mousedown", (e) => e.preventDefault());

@@ -22,12 +22,10 @@
  * File: modules/components/wysiwyg/wysiwyg.directive.coffee
  */
 
-import * as angular from "angular";
-import * as _ from "lodash";
-import * as MediumEditor from "medium-editor";
-import * as AutoList from "medium-editor-autolist";
-import {MentionExtension} from "../../../libs/medium-mention";
-import {bindOnce, isImage} from "../../../libs/utils";
+import {Component, Input} from "@angular/core";
+import {WysiwygService} from "./wysiwyg.service";
+import {StorageService} from "../../../ts/modules/base/storage";
+import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-wysiwyg",
@@ -36,12 +34,36 @@ import {bindOnce, isImage} from "../../../libs/utils";
 export class Wysiwyg {
     @Input() text: string;
     @Input() placeholder: string;
+    @Input() project: Immutable.Map<string, any>;
     mode: string;
-    editMode: boolean;
+    editMode: boolean = true;
+
+    constructor(private storage: StorageService, private wysiwygService: WysiwygService) {}
 
     setMode(mode) {
+        this.storage.set("editor-mode", mode);
+        if (mode === "markdown") {
+            // updateMarkdownWithCurrentHtml();
+        } else {
+            // this.setHtmlMedium($scope.markdown);
+            this.setHtmlMedium(this.text);
+        }
         this.mode = mode;
+
+        // TODO
+        // mediumInstance.trigger("editableBlur", {}, editorMedium[0]);
     }
+
+    setHtmlMedium(markdown) {
+        console.log(this.wysiwygService.getHTML(markdown, this.project));
+        // const html = wysiwygService.getHTML(markdown);
+        // editorMedium.html(html);
+        // wysiwygCodeHightlighterService.addHightlighter(mediumInstance.elements[0]);
+        //
+        // if ($scope.editMode) {
+        //     return refreshCodeBlocks(mediumInstance);
+        // }
+    };
 
 //     const removeSelections = function() {
 //         if (window.getSelection) {

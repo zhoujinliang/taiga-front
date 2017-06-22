@@ -22,13 +22,11 @@
  * File: modules/components/wysiwyg/wysiwyg-code-hightlighter.service.coffee
  */
 
-import * as angular from "angular";
+import {Injectable} from "@angular/core";
 import * as Promise from "bluebird";
 import * as _ from "lodash";
-import * as Prism from "prismjs";
-declare var _version: string;
-declare var ljs: any;
 
+@Injectable()
 export class WysiwygCodeHightlighterService {
     languages: any;
     loadPromise: any;
@@ -39,6 +37,7 @@ export class WysiwygCodeHightlighterService {
     }
 
     getLanguages() {
+        // TODO: Convert it to use a ngrx
         return new Promise((resolve, reject) => {
             if (this.languages) {
                 return resolve(this.languages);

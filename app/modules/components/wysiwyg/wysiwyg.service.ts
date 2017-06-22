@@ -22,19 +22,22 @@
  * File: modules/components/wysiwyg/wysiwyg.service.coffee
  */
 
-import * as angular from "angular";
+import {Injectable} from "@angular/core";
 import * as Autolinker from "autolinker";
 import * as _ from "lodash";
 import * as markdownit from "markdown-it";
 import * as toMarkdown from "to-markdown";
 import {markdownitLazyHeaders} from "../../../libs/markdown-it-lazy-headers";
 import {getMatches, slugify} from "../../../libs/utils";
+import {WysiwygCodeHightlighterService} from "./wysiwyg-code-hightlighter.service";
 declare var _version: string;
 
 @Injectable()
 export class WysiwygService {
     emojis: any;
     tagBuilder: any;
+
+    constructor(private wysiwygCodeHightlighterService: WysiwygCodeHightlighterService) {}
 
     searchEmojiByName(name) {
         return _.filter(this.emojis, (it: any) => it.name.indexOf(name) !== -1);
@@ -128,7 +131,7 @@ export class WysiwygService {
         return el.innerHTML;
     }
 
-    searchWikiLinks(html) {
+    searchWikiLinks(html, project) {
         const el = document.createElement( "html" );
         el.innerHTML = html;
 
@@ -136,10 +139,8 @@ export class WysiwygService {
 
         for (const link of [].slice.call(links)) {
             if (link.getAttribute("href").indexOf("/") === -1) {
-                const url = this.navurls.resolve("project-wiki-page", {
-                    project: this.projectService.project.get("slug"),
-                    slug: link.getAttribute("href"),
-                });
+                // TODO: Build it with the angular 2 routing system
+                const url = "/project/" + project.get('slug') + "/wiki/" + link.getAttribute("href")
 
                 link.setAttribute("href", url);
             }
@@ -220,7 +221,7 @@ export class WysiwygService {
         return matches;
     }
 
-    autoLinkHTML(html) {
+    autoLinkHTML(html, project) {
         // override Autolink parser
         let matchRegexStr = String(Autolinker.matcher.Mention.prototype.matcherRegexes.twitter);
         if (matchRegexStr.indexOf(".") === -1) {
@@ -232,18 +233,12 @@ export class WysiwygService {
             hashtag: "twitter",
             replaceFn: (match) => {
                 if  (match.getType() === "mention") {
-                    const profileUrl = this.navurls.resolve("user-profile", {
-                        project: this.projectService.project.get("slug"),
-                        username: match.getMention(),
-                    });
-
+                    // TODO: Build it with the angular 2 routing system
+                    const profileUrl = "/profile/" + match.getMention();
                     return `<a class="autolink" href="${profileUrl}">@${match.getMention()}</a>`;
                 } else if (match.getType() === "hashtag") {
-                    const url = this.navurls.resolve("project-detail-ref", {
-                        project: this.projectService.project.get("slug"),
-                        ref: match.getHashtag(),
-                    });
-
+                    // TODO: Build it with the angular 2 routing system
+                    const url = "/project/" + project.get('slug') + "/t/" + match.getHashtag();
                     return `<a class="autolink" href="${url}">#${match.getHashtag()}</a>`;
                 }
             },
@@ -254,7 +249,7 @@ export class WysiwygService {
         return autolinker.link(html);
     }
 
-    getHTML(text) {
+    getHTML(text, project) {
         if (!text || !text.length) { return ""; }
 
         const options = {
@@ -271,9 +266,9 @@ export class WysiwygService {
 
         md.use(markdownitLazyHeaders);
         let result = md.render(text);
-        result = this.searchWikiLinks(result);
+        result = this.searchWikiLinks(result, project);
 
-        result = this.autoLinkHTML(result);
+        result = this.autoLinkHTML(result, project);
 
         return result;
     }

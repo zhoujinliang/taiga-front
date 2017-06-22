@@ -1,19 +1,21 @@
 import {getIcon} from "./medium.utils";
 import {Component, Input, ElementRef} from "@angular/core";
 import {MentionExtension} from "../../../../libs/medium-mention";
+import * as Medium from "medium-editor"
 import * as AutoList from "medium-editor-autolist";
 import * as extensions from "./medium.extensions";
 
 @Component({
-    selector: "tg-medium",
-    template: "",
+    selector: "tg-medium-editor",
+    template: "<div></div>",
 })
 export class MediumEditor {
+    @Input() text: string;
     @Input() placeholder: string;
-    instance: MediumEditor;
+    instance: Medium;
 
     constructor(private el: ElementRef) {
-        this.instance = new MediumEditor(this.el.nativeElement, {
+        this.instance = new Medium(this.el.nativeElement, {
             imageDragging: false,
             placeholder: {
                 text: this.placeholder,
@@ -85,11 +87,10 @@ export class MediumEditor {
                 alignright: new extensions.AlignRightButton(),
                 mediumMention: new MentionExtension({
                     getItems(mention, mentionCb) {
-                        return wysiwygMentionService.search(mention).then(mentionCb);
+                        // return wysiwygMentionService.search(mention).then(mentionCb);
                     },
                 }),
             },
         });
-
     }
 }

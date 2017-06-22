@@ -1,34 +1,36 @@
-.editor([class.edit-mode]="editMode"
+.editor([class.edit-mode]="editMode",
         [class.read-mode]="!editMode")
-    div(*ngIf="outdated")
-        p.outdated {{'COMMON.WYSIWYG.OUTDATED' | translate}}
 
-    .medium.wysiwyg(
-        type="text",
-        ng-show="mode == 'html' || !editMode"
+    div(*ngIf="outdated")
+        p.outdated(translate="COMMON.WYSIWYG.OUTDATED")
+
+    tg-medium-editor.medium.wysiwyg(
+        [text]="text",
+         *ngIf="mode == 'html' || !editMode",
     )
 
     textarea.markdown.e2e-markdown-textarea(
-        [placeholder]="placeholder"
-        (change)="changeMarkdown(markdown)"
-        ng-show="mode == 'markdown' && editMode"
+        [placeholder]="placeholder",
+        (change)="changeMarkdown(markdown)",
+        *ngIf="mode == 'markdown' && editMode",
+        [value]="text",
     )
 
     .mode-editor(*ngIf="editMode")
         span.e2e-markdown-mode(
-            *ngIf="mode=='html'"
-            (click)="setMode('markdown')"
+            *ngIf="mode =='html'",
+            (click)="mode = 'markdown'"
         ) Markdown Mode
 
         span.e2e-html-mode(
-            *ngIf="mode=='markdown'"
-            (click)="setMode('html')"
+            *ngIf="mode =='markdown'",
+            (click)="mode = 'html'"
         ) HTML Mode
 
         a.help-markdown(
-            *ngIf="mode=='markdown'"
-            href="https://tree.taiga.io/support/misc/taiga-markdown-syntax/"
-            target="_blank"
+            *ngIf="mode == 'markdown'",
+            href="https://tree.taiga.io/support/misc/taiga-markdown-syntax/",
+            target="_blank",
             [title]="'COMMON.WYSIWYG.MARKDOWN_HELP' | translate"
         )
             tg-svg(svg-icon="icon-question")
@@ -37,14 +39,14 @@
 .tools([class.visible]="editMode")
     //tg-loading="saving"
     a.e2e-save-editor(
-        [class.disabled]="required && !markdown.length"
+        [class.disabled]="required && !markdown.length",
         href="#",
         (click)="save($event)"
     )
         tg-svg(svg-icon="icon-save")
     a.e2e-cancel-editor(
         href="#",
-        (click)="cancel($event)"
+        (click)="cancel($event)",
         [title]="'COMMON.CANCEL' | translate"
     )
         tg-svg(svg-icon="icon-close")
