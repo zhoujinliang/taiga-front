@@ -5,7 +5,8 @@
         p.outdated(translate="COMMON.WYSIWYG.OUTDATED")
 
     tg-medium-editor.medium.wysiwyg(
-        [text]="text",
+        [(html)]="html",
+        (click)="editMode = true",
          *ngIf="mode == 'html' || !editMode",
     )
 
@@ -13,18 +14,18 @@
         [placeholder]="placeholder",
         (change)="changeMarkdown(markdown)",
         *ngIf="mode == 'markdown' && editMode",
-        [value]="text",
+        [(ngModel)]="text",
     )
 
     .mode-editor(*ngIf="editMode")
         span.e2e-markdown-mode(
-            *ngIf="mode =='html'",
-            (click)="mode = 'markdown'"
+            *ngIf="mode == 'html'",
+            (click)="setMode('markdown')"
         ) Markdown Mode
 
         span.e2e-html-mode(
             *ngIf="mode =='markdown'",
-            (click)="mode = 'html'"
+            (click)="setMode('html')"
         ) HTML Mode
 
         a.help-markdown(
@@ -46,7 +47,7 @@
         tg-svg(svg-icon="icon-save")
     a.e2e-cancel-editor(
         href="#",
-        (click)="cancel($event)",
+        (click)="editMode = false",
         [title]="'COMMON.CANCEL' | translate"
     )
         tg-svg(svg-icon="icon-close")

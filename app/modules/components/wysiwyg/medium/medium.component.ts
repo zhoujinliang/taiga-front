@@ -1,5 +1,5 @@
 import {getIcon} from "./medium.utils";
-import {Component, Input, ElementRef} from "@angular/core";
+import {Component, Input, ElementRef, HostBinding, HostListener, Output, EventEmitter} from "@angular/core";
 import {MentionExtension} from "../../../../libs/medium-mention";
 import * as Medium from "medium-editor"
 import * as AutoList from "medium-editor-autolist";
@@ -7,14 +7,20 @@ import * as extensions from "./medium.extensions";
 
 @Component({
     selector: "tg-medium-editor",
-    template: "<div></div>",
+    template: "",
 })
 export class MediumEditor {
-    @Input() text: string;
-    @Input() placeholder: string;
+    @HostBinding("innerHTML") @Input() html: string;
+    @Output() htmlChange: EventEmitter<string>;
+    @Input() placeholder: string = "";
     instance: Medium;
 
+    onChange(event) {
+        this.htmlChange.emit(this.el.nativeElement.innerHTML)
+    }
+
     constructor(private el: ElementRef) {
+        this.htmlChange = new EventEmitter();
         this.instance = new Medium(this.el.nativeElement, {
             imageDragging: false,
             placeholder: {
@@ -92,5 +98,6 @@ export class MediumEditor {
                 }),
             },
         });
+        this.instance.subscribe('editableChange', this.onChange.bind(this));
     }
 }

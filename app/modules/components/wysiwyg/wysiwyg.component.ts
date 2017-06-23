@@ -22,7 +22,7 @@
  * File: modules/components/wysiwyg/wysiwyg.directive.coffee
  */
 
-import {Component, Input} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {WysiwygService} from "./wysiwyg.service";
 import {StorageService} from "../../../ts/modules/base/storage";
 import * as Immutable from "immutable";
@@ -31,21 +31,26 @@ import * as Immutable from "immutable";
     selector: "tg-wysiwyg",
     template: require("./wysiwyg.pug")(),
 })
-export class Wysiwyg {
+export class Wysiwyg implements OnInit {
     @Input() text: string;
     @Input() placeholder: string;
     @Input() project: Immutable.Map<string, any>;
     mode: string;
-    editMode: boolean = true;
+    html: string;
+    editMode: boolean = false;
 
     constructor(private storage: StorageService, private wysiwygService: WysiwygService) {}
+
+    ngOnInit() {
+        this.mode = this.storage.get('editor-mode', 'html');
+        this.setHtmlMedium(this.text);
+    }
 
     setMode(mode) {
         this.storage.set("editor-mode", mode);
         if (mode === "markdown") {
-            // updateMarkdownWithCurrentHtml();
+            this.updateMarkdownWithCurrentHtml();
         } else {
-            // this.setHtmlMedium($scope.markdown);
             this.setHtmlMedium(this.text);
         }
         this.mode = mode;
@@ -54,9 +59,15 @@ export class Wysiwyg {
         // mediumInstance.trigger("editableBlur", {}, editorMedium[0]);
     }
 
+    updateMarkdownWithCurrentHtml() {
+        let element = $(this.html);
+        element.find("code br").replaceWith("\n");
+        let html = element.html();
+        this.text = this.wysiwygService.getMarkdown(html);
+    };
+
     setHtmlMedium(markdown) {
-        console.log(this.wysiwygService.getHTML(markdown, this.project));
-        // const html = wysiwygService.getHTML(markdown);
+        this.html = this.wysiwygService.getHTML(markdown, this.project);
         // editorMedium.html(html);
         // wysiwygCodeHightlighterService.addHightlighter(mediumInstance.elements[0]);
         //
