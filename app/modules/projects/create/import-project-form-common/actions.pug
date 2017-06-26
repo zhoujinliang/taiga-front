@@ -1,8 +1,8 @@
 .create-project-action
     button.trans-button.create-project-action-cancel(
-        type="button"
-        ng-click="vm.onCancelForm()"
-        title="{{'PROJECT.CREATE.BACK' | translate}}"
+        type="button",
+        ng-click="vm.onCancelForm()",
+        [title]="'PROJECT.CREATE.BACK' | translate",
         translate="PROJECT.CREATE.BACK"
     )
     button.button-green.create-project-action-submit.e2e-create-project-action-submit(

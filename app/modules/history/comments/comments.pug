@@ -4,11 +4,11 @@ section.comments
             ng-repeat="comment in vm.comments track by comment.id"
             ng-class="{'deleted-comment': comment.delete_comment_date}"
             comment="comment"
-            name="{{vm.name}}"
+            [name]="vm.name"
             loading="vm.loading"
             editing="vm.editing"
             deleting="vm.deleting"
-            object="{{vm.object}}"
+            [object]="vm.object"
             edit-mode="vm.editMode[comment.id]"
             on-edit-mode="vm.onEditMode({commentId: commentId})"
             on-delete-comment="vm.onDeleteComment({commentId: commentId})"
@@ -17,7 +17,7 @@ section.comments
         )
 
     tg-comment-wysiwyg(
-        tg-check-permission="{{::vm.canAddCommentPermission}}"
+        *tgIfPerm="canAddCommentPermission",
         on-update="updateComment(text)"
         type="vm.type"
     )

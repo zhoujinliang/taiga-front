@@ -15,7 +15,7 @@
         div(*ngIf='!zoom.visibility.owner')
             tg-card-title([item]="item", [zoom]="zoom", [project]="project")
 
-    //tg-check-permission="{{getPermissionsKey()}}"
+    //*tgIfPerm="getPermissionsKey()"
     .card-owner-actions(*ngIf='zoom.visibility.owner')
         a.e2e-assign.card-owner-assign((click)="onClickAssignTo()")
             tg-svg(svg-icon="icon-add-user")

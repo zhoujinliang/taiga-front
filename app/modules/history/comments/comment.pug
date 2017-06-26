@@ -9,8 +9,8 @@
                 span {{vm.comment.edit_comment_date | momentFormat:'DD MMM YYYY HH:mm'}}
                 span.separator -
                 a(
-                    href=""
-                    title="{{'COMMENTS.SHOW_HISTORY' | translate}}"
+                    href="",
+                    [title]="'COMMENTS.SHOW_HISTORY' | translate"
                     ng-click="vm.displayCommentHistory()"
                 )
                     span(translate="COMMENTS.SHOW_HISTORY")
@@ -51,8 +51,8 @@
         )
         span - {{vm.comment.delete_comment_date | momentFormat:'DD MMM YYYY HH:mm'}}
         a.toggle-deleted-comment(
-            href=""
-            title="{{ 'COMMENTS.SHOW_DELETED' | translate }}"
+            href="",
+            [title]="'COMMENTS.SHOW_DELETED' | translate"
             ng-click="vm.showDeletedComment()"
             ng-if="vm.hiddenDeletedComment"
         )
@@ -62,8 +62,8 @@
                 svg-title-translate="COMMENTS.SHOW_DELETED"
             )
         a.toggle-deleted-comment(
-            href=""
-            title="{{'COMMENTS.HIDE_DELETED' | translate}}"
+            href="",
+            [title]="'COMMENTS.HIDE_DELETED' | translate"
             ng-click="vm.hideDeletedComment()"
             ng-if="!vm.hiddenDeletedComment"
         )
@@ -73,8 +73,8 @@
                 svg-title-translate="COMMENTS.HIDE_DELETED"
             )
         a.restore-comment(
-            href=""
-            title="{{'COMMENTS.RESTORE' | translate}}"
+            href="",
+            [title]="'COMMENTS.RESTORE' | translate"
             ng-click="vm.onRestoreDeletedComment({commentId: vm.comment.id})"
             tg-loading="vm.editing == vm.comment.id"
         )

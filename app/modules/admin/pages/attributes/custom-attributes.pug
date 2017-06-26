@@ -3,7 +3,7 @@ section.custom-fields-table.basic-table
         h2 {{ customFieldSectionTitle | translate }}
         a.button.button-gray.show-add-new.js-add-custom-field-button(
             href=""
-            title="{{ customFieldButtonTitle | translate }}"
+            [title]="customFieldButtonTitle | translate"
             translate="ADMIN.CUSTOM_ATTRIBUTES.ADD"
         )
 
@@ -50,13 +50,13 @@ section.custom-fields-table.basic-table
                             .custom-options-wrapper
                                 a.js-edit-custom-field-button(
                                     href="",
-                                    title="{{'ADMIN.CUSTOM_ATTRIBUTES.EDIT' | translate}}"
+                                    [title]="'ADMIN.CUSTOM_ATTRIBUTES.EDIT' | translate"
                                 )
                                     tg-svg(svg-icon="icon-edit")
 
                                 a.js-delete-custom-field-button(
                                     href="",
-                                    title="{{'ADMIN.CUSTOM_ATTRIBUTES.DELETE' | translate}}"
+                                    [title]="'ADMIN.CUSTOM_ATTRIBUTES.DELETE' | translate"
                                 )
                                     tg-svg(svg-icon="icon-trash")
 
@@ -65,7 +65,7 @@ section.custom-fields-table.basic-table
                             input(
                                 type="text"
                                 name="name"
-                                placeholder="{{'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_NAME' | translate}}"
+                                [placeholder]="'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_NAME' | translate"
                                 ng-model="attr.name"
                                 data-required="true"
                                 data-maxlength="64"
@@ -74,7 +74,7 @@ section.custom-fields-table.basic-table
                             input(
                                 type="text"
                                 name="description"
-                                placeholder="{{'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_DESCRIPTION' | translate}}"
+                                [placeholder]="'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_DESCRIPTION' | translate"
                                 ng-model="attr.description"
                             )
                         fieldset.custom-field-type
@@ -86,13 +86,13 @@ section.custom-fields-table.basic-table
                             div.custom-options-wrapper
                                 a.js-update-custom-field-button(
                                     href="",
-                                    title="{{'ADMIN.CUSTOM_ATTRIBUTES.ACTION_UPDATE' | translate}}"
+                                    [title]="'ADMIN.CUSTOM_ATTRIBUTES.ACTION_UPDATE' | translate"
                                 )
                                     tg-svg(svg-icon="icon-save")
 
                                 a.js-cancel-edit-custom-field-button(
                                     href="",
-                                    title="{{'ADMIN.CUSTOM_ATTRIBUTES.ACTION_CANCEL_EDITION' | translate}}"
+                                    [title]="'ADMIN.CUSTOM_ATTRIBUTES.ACTION_CANCEL_EDITION' | translate"
                                 )
                                     tg-svg(svg-icon="icon-close")
 
@@ -101,7 +101,7 @@ section.custom-fields-table.basic-table
                 input(
                     type="text"
                     name="name"
-                    placeholder="{{'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_NAME' | translate}}"
+                    [placeholder]="'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_NAME' | translate"
                     ng-model="newAttr.name"
                     data-required="true"
                     data-maxlength="64"
@@ -110,7 +110,7 @@ section.custom-fields-table.basic-table
                 input(
                     type="text"
                     name="description"
-                    placeholder="{{'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_DESCRIPTION' | translate}}"
+                    [placeholder]="'ADMIN.CUSTOM_ATTRIBUTES.SET_FIELD_DESCRIPTION' | translate"
                     ng-model="newAttr.description"
                 )
             fieldset.custom-field-type
@@ -124,12 +124,12 @@ section.custom-fields-table.basic-table
                 div.custom-options-wrapper
                     a.js-create-custom-field-button(
                         href="",
-                        title="{{'ADMIN.CUSTOM_ATTRIBUTES.SAVE_TITLE' | translate}}"
+                        [title]="'ADMIN.CUSTOM_ATTRIBUTES.SAVE_TITLE' | translate"
                     )
                         tg-svg(svg-icon="icon-save")
 
                     a.js-cancel-new-custom-field-button(
                         href="",
-                        title="{{'ADMIN.CUSTOM_ATTRIBUTES.CANCEL_TITLE' | translate}}"
+                        [title]="'ADMIN.CUSTOM_ATTRIBUTES.CANCEL_TITLE' | translate"
                     )
                         tg-svg(svg-icon="icon-close")

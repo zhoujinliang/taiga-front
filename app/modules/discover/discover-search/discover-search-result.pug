@@ -3,7 +3,7 @@ li.list-itemtype-project
         a.list-itemtype-project-image(
             href="#"
             tg-nav="project:project=project.get('slug')"
-            title="{{ project.get('name') }}"
+            [title]="project.get('name')"
         )
             tg-project-logo-small([project]="project")
         .list-itemtype-project-data

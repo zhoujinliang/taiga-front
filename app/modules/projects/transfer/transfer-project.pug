@@ -2,8 +2,8 @@
     h2.transfer-title(translate="ADMIN.PROJECT_TRANSFER.DO_YOU_ACCEPT_PROJECT_OWNERNSHIP")
     .transfer-project-detail
         img.transfer-project-image(
-            tg-project-logo-small-src="vm.project"
-            alt="{{vm.project.get('name')}}"
+            tg-project-logo-small-src="project",
+            [alt]="project.get('name')"
         )
         .transfer-project-data
             h3.transfer-project-title {{::vm.project.get("name")}}
@@ -23,8 +23,8 @@
     div(ng-if="vm.canBeOwnedByUser.valid")
 
         p(
-            translate="{{vm.ownerMessage}}"
-            translate-values="{maxProjects: vm.maxProjects, currentProjects: vm.currentProjects}"
+            [translate]="ownerMessage",
+            [translateParams]="{maxProjects: maxProjects, currentProjects: currentProjects}"
         )
 
         a.transfer-project-comment-link.ng-animate-disabled(
@@ -55,7 +55,7 @@
             a.button.button-gray.e2e-transfer-reject(
                 ng-click="vm.transferReject(vm.token, vm.reason, $event)"
                 href="#"
-                title="{{'ADMIN.PROJECT_TRANSFER.REJECT' | translate}}"
+                [title]="'ADMIN.PROJECT_TRANSFER.REJECT' | translate"
                 translate="ADMIN.PROJECT_TRANSFER.REJECT"
                 tg-loading="vm.loadingReject"
             )
@@ -63,7 +63,7 @@
             a.button.button-green.e2e-transfer-accept(
                 ng-click="vm.transferAccept(vm.token, vm.reason, $event)"
                 href="#"
-                title="{{'ADMIN.PROJECT_TRANSFER.ACCEPT' | translate}}"
+                [title]="'ADMIN.PROJECT_TRANSFER.ACCEPT' | translate"
                 translate="ADMIN.PROJECT_TRANSFER.ACCEPT"
                 tg-loading="vm.loadingAccept"
             )

@@ -20,7 +20,7 @@ div.wrapper
                     .loading-overlay
                         img.loading-spinner(
                             src="/#{v}/svg/spinner-circle.svg",
-                            alt="{{'COMMON.LOADING' | translate}}"
+                            [alt]="'COMMON.LOADING' | translate"
                         )
                     input.hidden(
                         type="file",
@@ -30,12 +30,12 @@ div.wrapper
 
                 a.button-green.change-image.js-change-logo(
                     href="#",
-                    title="{{'ADMIN.PROJECT_PROFILE.CHANGE_LOGO' | translate}}"
+                    [title]="'ADMIN.PROJECT_PROFILE.CHANGE_LOGO' | translate"
                 ) {{'ADMIN.PROJECT_PROFILE.CHANGE_LOGO' | translate}}
 
                 a.use-default-image.js-use-default-logo(
                     href="#",
-                    title="{{ 'ADMIN.PROJECT_PROFILE.ACTION_USE_DEFAULT_LOGO' | translate }}"
+                    [title]="'ADMIN.PROJECT_PROFILE.ACTION_USE_DEFAULT_LOGO' | translate"
                 ) {{ 'ADMIN.PROJECT_PROFILE.ACTION_USE_DEFAULT_LOGO' | translate }}
 
 
@@ -46,7 +46,7 @@ div.wrapper
                     input(
                         type="text",
                         name="name",
-                        placeholder="{{'ADMIN.PROJECT_PROFILE.PROJECT_NAME' | translate}}",
+                        [placeholder]="'ADMIN.PROJECT_PROFILE.PROJECT_NAME' | translate",
                         id="project-name",
                         ng-model="project.name",
                         data-required="true",
@@ -57,7 +57,7 @@ div.wrapper
                     label(for="project-description") {{ 'ADMIN.PROJECT_PROFILE.DESCRIPTION' | translate }}
                     textarea(
                         name="description",
-                        ng-attr-placeholder="{{'ADMIN.PROJECT_PROFILE.DESCRIPTION' | translate}}",
+                        [placeholder]="'ADMIN.PROJECT_PROFILE.DESCRIPTION' | translate",
                         id="project-description",
                         ng-model="project.description",
                         data-required="true"
@@ -109,7 +109,7 @@ div.wrapper
                             type="text",
                             maxlength="200",
                             ng-model="project.looking_for_people_note",
-                            placeholder="{{ 'ADMIN.PROJECT_PROFILE.RECRUITING_PLACEHOLDER' | translate }}"
+                            [placeholder]="'ADMIN.PROJECT_PROFILE.RECRUITING_PLACEHOLDER' | translate"
                         )
 
                 fieldset.get-feedback
@@ -161,12 +161,12 @@ div.wrapper
                         span {{'ADMIN.PROJECT_PROFILE.PRIVATE_OR_PUBLIC' | translate }}
                 button.button-green.submit-button(
                     type="submit",
-                    title="{{'COMMON.SAVE' | translate}}",
+                    [title]="'COMMON.SAVE' | translate",
                     translate="COMMON.SAVE"
                 )
                 a.delete-project(
                     href="",
-                    title="{{'ADMIN.PROJECT_PROFILE.DELETE' | translate}}",
+                    [title]="'ADMIN.PROJECT_PROFILE.DELETE' | translate",
                     ng-click="ctrl.openDeleteLightbox()"
                 ) {{ 'ADMIN.PROJECT_PROFILE.DELETE' | translate }}
 

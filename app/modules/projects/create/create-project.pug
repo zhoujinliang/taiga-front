@@ -5,7 +5,7 @@
         ul.create-project-selector.e2e-create-project-selector
             li
                 a.e2e-create-project-scrum(
-                    title="{{'PROJECT.CREATE.TEMPLATE_SCRUM' | translate}}",
+                    [title]="'PROJECT.CREATE.TEMPLATE_SCRUM' | translate",
                     tg-nav="create-project-scrum"
                     href=""
                 )
@@ -24,7 +24,7 @@
             li
                 a.e2e-create-project-kanban(
                     tg-nav="create-project-kanban"
-                    title="{{'PROJECT.CREATE.TEMPLATE_KANBAN' | translate}}",
+                    [title]="'PROJECT.CREATE.TEMPLATE_KANBAN' | translate",
                     href=""
                 )
                     .create-project-selector-icon
@@ -43,7 +43,7 @@
             li
                 a.e2e-duplicate-project(
                     tg-nav="create-project-duplicate"
-                    title="{{'PROJECT.CREATE.DUPLICATE' | translate}}",
+                    [title]="'PROJECT.CREATE.DUPLICATE' | translate",
                     href=""
                 )
                     .create-project-selector-icon
@@ -55,7 +55,7 @@
             li
                 a(
                     tg-nav="create-project-import"
-                    title="{{'PROJECT.CREATE.IMPORT' | translate}}",
+                    [title]="'PROJECT.CREATE.IMPORT' | translate",
                     href=""
                 )
                     .create-project-selector-icon
@@ -63,7 +63,7 @@
                     .create-project-selector-template-wrapper
                         p.create-project-selector-template(
                             href="#"
-                            title="{{'PROJECT.CREATE.IMPORT' | translate}}",
+                            [title]="'PROJECT.CREATE.IMPORT' | translate",
                             translate="PROJECT.CREATE.IMPORT"
                         )
                         p.create-project-selector-description(translate="PROJECT.CREATE.IMPORT_DESC")

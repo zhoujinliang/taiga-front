@@ -1,8 +1,8 @@
 a.list-itemtype-ticket(
-    href="{{ duty.get('url') }}"
-    title="{{ duty.get('subject') }}"
-    "[class.blocked]"="duty.get('is_blocked')"
-    "[class.blocked-project]"="duty.getIn(['project', 'blocked_code'])"
+    [href]="duty.get('url')",
+    [title]="duty.get('subject')",
+    [class.blocked]="duty.get('is_blocked')",
+    [class.blocked-project]="duty.getIn(['project', 'blocked_code'])"
 )
     div.list-itemtype-avatar(*ngIf="type == 'working-on'")
         tg-project-logo-small([project]="duty.get('project')")
@@ -14,14 +14,16 @@ a.list-itemtype-ticket(
         tg-avatar(
             *ngIf="!duty.get('assigned_to_extra_info')",
             [user]="false",
-            title="{{'ACTIVITY.VALUES.UNASSIGNED' | translate}}"
+            [title]="'ACTIVITY.VALUES.UNASSIGNED' | translate"
         )
     div.list-itemtype-ticket-data
         p
             span.ticket-project {{ duty.getIn(['project', 'name']) }}
 
             span.ticket-type {{ getDutyType() }}
-            span.ticket-status("[style.color]"="duty.getIn(['status_extra_info','color'])") {{ duty.getIn(['status_extra_info', 'name']) }}
+            span.ticket-status(
+                [style.color]="duty.getIn(['status_extra_info','color'])"
+            ) {{ duty.getIn(['status_extra_info', 'name']) }}
 
             tg-svg(
                 *ngIf="duty.getIn(['project', 'blocked_code'])"
@@ -33,7 +35,7 @@ a.list-itemtype-ticket(
             span.ticket-id
             span.ticket-title
                 span.ticket-blocked(
-                    *ngIf="duty.get('is_blocked')"
-                    title="{{duty.get('blocked_note')}}"
+                    *ngIf="duty.get('is_blocked')",
+                    [title]="duty.get('blocked_note')"
                 ) {{ 'COMMON.BLOCKED' | translate }}
                 span {{ duty.get('subject') }}

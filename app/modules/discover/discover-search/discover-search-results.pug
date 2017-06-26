@@ -1,7 +1,7 @@
 .empty-large(*ngIf="projects && !projects.size === 0 && !loadingGlobal && !loadingList")
     img(
         src="/#{v}/images/empty/empty_tex.png",
-        alt="{{ DISCOVER.EMPTY | translate }}"
+        [alt]="'DISCOVER.EMPTY' | translate"
     )
     p.title(translate="DISCOVER.EMPTY")
 

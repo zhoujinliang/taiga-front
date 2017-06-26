@@ -4,19 +4,17 @@
     .import-project-selector
 
         .import-project-selector-service
-            img(
-                ng-src="{{vm.logo}}"
-            )
+            img([src]="vm.logo")
 
         .import-project-selector-boards
             form.import-project-selector-filter(ng-if="vm.projects.size > 5")
                 input(
-                    ng-model="vm.searchText"
-                    placeholder="{{ vm.search }}"
+                    ng-model="vm.searchText",
+                    [placeholder]="vm.search"
                 )
                 tg-svg(
-                    svg-icon="icon-search"
-                    title="{{ 'PROJECT.IMPORT.PROJECT_SELECTOR.ACTION_SEARCH' | translate }}"
+                    svg-icon="icon-search",
+                    [title]="'PROJECT.IMPORT.PROJECT_SELECTOR.ACTION_SEARCH' | translate"
                 )
 
             ul.import-project-board-list
@@ -28,7 +26,7 @@
             .import-project-board-no-projects.empty-large(ng-if="vm.projects.size == 0")
                 img(
                     src="/#{v}/images/empty/empty_tex.png",
-                    alt="{{ vm.noProjectsMsg }}"
+                    [alt]="vm.noProjectsMsg"
                     aria-hidden="true"
                     role="presentation"
                 )
@@ -41,6 +39,6 @@
                 button.trans-button.create-project-action-cancel(
                     type="button"
                     ng-click="vm.onCancel()"
-                    title="{{'PROJECT.IMPORT.PROJECT_SELECTOR.ACTION_BACK' | translate}}"
+                    [title]="'PROJECT.IMPORT.PROJECT_SELECTOR.ACTION_BACK' | translate"
                     translate="PROJECT.IMPORT.PROJECT_SELECTOR.ACTION_BACK"
                 )

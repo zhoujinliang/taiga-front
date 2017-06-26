@@ -7,7 +7,7 @@ tg-svg.icon-drag(
     - var hash = "#";
     a(
         tg-nav="project-userstories-detail:project=vm.userstory.getIn(['project_extra_info', 'slug']),ref=vm.userstory.get('ref')"
-        ng-attr-title="{{vm.userstory.get('subject')}}"
+        [title]="vm.userstory.get('subject')"
     ) #{hash}{{vm.userstory.get('ref')}} {{vm.userstory.get('subject')}}
 
     tg-belong-to-epics(
@@ -19,7 +19,7 @@ tg-svg.icon-drag(
 .userstory-settings
     a.delete-userstory.e2e-delete-userstory(
         tg-check-permission="modify_epic"
-        title="{{'COMMON.UNLINK' | translate}}"
+        [title]="'COMMON.UNLINK' | translate"
         href=""
         ng-click="vm.onDeleteRelatedUserstory()"
     )
@@ -30,7 +30,7 @@ tg-svg.icon-drag(
 )
     img(
         tg-project-logo-small-src="::vm.userstory.get('project_extra_info')"
-        alt="{{::vm.userstory.getIn(['project_extra_info', 'name'])}}"
+        [alt]="vm.userstory.getIn(['project_extra_info', 'name'])"
     )
 
 .status
@@ -41,9 +41,9 @@ tg-svg.icon-drag(
 .assigned-to-column
     figure.avatar
         img(
-            style="background-color: {{ vm.avatar.bg }}"
-            src="{{ vm.avatar.url }}"
-            alt="{{ vm.avatar.full_name_display }}"
+            [style.background-color]="vm.avatar.bg"
+            [src]="vm.avatar.url"
+            [alt]="vm.avatar.full_name_display"
         )
 
         figcaption {{ vm.getAssignedToFullNameDisplay() }}

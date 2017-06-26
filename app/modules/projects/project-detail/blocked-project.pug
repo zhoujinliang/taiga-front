@@ -3,8 +3,8 @@
         .blocked-project-title
             .project-image
                 img(
-                    tg-project-logo-small-src="vm.project"
-                    alt="{{::vm.project.get('name')}}"
+                    tg-project-logo-small-src="vm.project",
+                    [alt]="vm.project.get('name')"
                 )
                 tg-svg(
                     svg-icon="icon-blocked-project"

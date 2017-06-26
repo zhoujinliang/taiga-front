@@ -7,7 +7,7 @@ import {Component, Input} from "@angular/core";
       <span
           class="tag"
           [style.border-left]="getBorder()"
-          title="{{name}}">
+          [title]="name">
           {{name}}
       </span>
   `,

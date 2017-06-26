@@ -3,8 +3,8 @@ tg-lightbox-close(on-close="vm.onClose()")
 .form(ng-if="vm.visible")
     .candidate-user
         .avatar.empty(ng-if="!vm.user.get('avatar')") {{vm.user.get('full_name')[0].toUpperCase() || vm.user.get('username')[0].toUpperCase()}}
-        .avatar(ng-if="vm.user.get('avatar')") 
-            img(ng-src="{{vm.user.get('avatar')}}")
+        .avatar(ng-if="vm.user.get('avatar')")
+            img([src]="vm.user.get('avatar')")
         span.candidate-user-name {{vm.user.get('full_name') || vm.user.get('username')}}
 
     h2.title(translate="PROJECT.IMPORT.WHO_IS")
@@ -46,7 +46,7 @@ tg-lightbox-close(on-close="vm.onClose()")
                 )
                 button.button-green.submit-button(
                     type="submit",
-                    title="{{'PROJECT.IMPORT.ASSIGN' | translate}}",
+                    [title]="'PROJECT.IMPORT.ASSIGN' | translate",
                     translate="PROJECT.IMPORT.ASSIGN"
                 )
 
@@ -59,7 +59,7 @@ tg-lightbox-close(on-close="vm.onClose()")
             input(
                 type="text",
                 data-maxlength="500",
-                placeholder="{{'LIGHTBOX.ASSIGNED_TO.SEARCH' | translate}}",
+                [placeholder]="'LIGHTBOX.ASSIGNED_TO.SEARCH' | translate",
                 ng-model="vm.usersSearch"
             )
 
@@ -71,12 +71,12 @@ tg-lightbox-close(on-close="vm.onClose()")
                 .user-list-avatar
                     a(
                         href="#"
-                        title="{{'COMMON.ASSIGNED_TO.TITLE' | translate}}"
+                        [title]="'COMMON.ASSIGNED_TO.TITLE' | translate"
                     )
                         tg-avatar([user]="user")
                 a.user-list-name(
                     href=""
-                    title="{{user.full_name_display || user.full_name || user}}"
+                    [title]="user.full_name_display || user.full_name || user"
                 ) {{user.full_name_display || user.full_name || user}}
 
             .more-users(ng-if="filteredCollection.length > 5")

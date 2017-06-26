@@ -11,7 +11,7 @@ div.discover-header
                 input(
                     name="search",
                     type="text",
-                    placeholder="{{ 'DISCOVER.SEARCH.INPUT_PLACEHOLDER' | translate }}",
+                    [placeholder]="'DISCOVER.SEARCH.INPUT_PLACEHOLDER' | translate",
                     [(ngModel)]="q"
                 )
                 tg-svg.search-button(
@@ -29,7 +29,7 @@ div.discover-header
                 )
                 label(
                     for="filter-all",
-                    "[class.active]"="filter == 'all'",
+                    [class.active]="filter == 'all'",
                     (click)="filter = 'all'"
                 ) {{ 'DISCOVER.FILTERS.ALL' | translate }}
 
@@ -41,7 +41,7 @@ div.discover-header
                 )
                 label(
                     for="filter-kanban",
-                    "[class.active]"="filter == 'kanban'",
+                    [class.active]="filter == 'kanban'",
                     (click)="filter = 'kanban'"
                 ) {{ 'DISCOVER.FILTERS.KANBAN' | translate }}
 
@@ -53,7 +53,7 @@ div.discover-header
                 )
                 label(
                     for="filter-scrum",
-                    "[class.active]"="filter == 'scrum'",
+                    [class.active]="filter == 'scrum'",
                     (click)="filter = 'scrum'"
                 ) {{ 'DISCOVER.FILTERS.SCRUM' | translate }}
 
@@ -65,6 +65,6 @@ div.discover-header
                 )
                 label(
                     for="filter-people",
-                    "[class.active]"="filter == 'people'",
+                    [class.active]="filter == 'people'",
                     (click)="filter = 'people'"
                 ) {{ 'DISCOVER.FILTERS.PEOPLE' | translate }}

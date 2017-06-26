@@ -38,7 +38,7 @@ form([formGroup]="form", novalidate, (ngSubmit)="onSubmit()")
                 name="username",
                 id="username",
                 data-regexp="^[\\w.-]+$",
-                placeholder="{{'USER_PROFILE.FIELD.USERNAME' | translate}}"
+                [placeholder]="'USER_PROFILE.FIELD.USERNAME' | translate"
             )
             tg-field-error([control]="form.controls.username")
 
@@ -49,7 +49,7 @@ form([formGroup]="form", novalidate, (ngSubmit)="onSubmit()")
                 type="email",
                 name="email",
                 id="email",
-                placeholder="{{'USER_PROFILE.FIELD.EMAIL' | translate}}"
+                [placeholder]="'USER_PROFILE.FIELD.EMAIL' | translate"
             )
             tg-field-error([control]="form.controls.email")
 
@@ -60,7 +60,7 @@ form([formGroup]="form", novalidate, (ngSubmit)="onSubmit()")
                 type="text",
                 name="full_name",
                 id="full-name",
-                placeholder="{{'USER_PROFILE.FIELD.PLACEHOLDER_FULL_NAME' | translate}}"
+                [placeholder]="'USER_PROFILE.FIELD.PLACEHOLDER_FULL_NAME' | translate"
             )
             tg-field-error([control]="form.controls.full_name")
 

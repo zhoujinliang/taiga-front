@@ -13,5 +13,5 @@
     ng-container(*ngFor="let image of images; let i = $index")
         .card-slideshow-wrapper(*ngIf="i == index")
             // TODO
-            // tg-preload-image(preload-src="{{image.get('thumbnail_card_url')}}")
+            // tg-preload-image([preload-src]="image.get('thumbnail_card_url')")
             img([src]="image.get('thumbnail_card_url')")

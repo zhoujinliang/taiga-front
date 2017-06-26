@@ -18,13 +18,13 @@
                 h2.project-title
                     // tg-nav="project:project=project.get('slug')"
                     a(
-                        href="#"
-                        title="{{project.get('name')}}"
+                        href="#",
+                        [title]="project.get('name')"
                     ) {{project.get('name')}}
                     tg-svg.look-for-people(
                         *ngIf="project.get('is_looking_for_people')",
                         svg-icon="icon-recruit"
-                        svg-title="{{ project.get('looking_for_people_note') }}"
+                        [svg-title]="project.get('looking_for_people_note')"
                     )
                 .project-statistics
                     span.statistic(

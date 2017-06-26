@@ -20,7 +20,7 @@ tg-lightbox-close
                         name="subject"
                         ng-model="vm.newEpic.subject"
                         tg-auto-select
-                        placeholder="{{'COMMON.FIELDS.SUBJECT' | translate}}"
+                        [placeholder]="'COMMON.FIELDS.SUBJECT' | translate"
                         data-required="true"
                         data-maxlength="140"
                     )
@@ -41,7 +41,7 @@ tg-lightbox-close
             )
         fieldset
             textarea.e2e-create-epic-description(
-                ng-attr-placeholder="{{'EPICS.CREATE.PLACEHOLDER_DESCRIPTION' | translate}}"
+                [placeholder]="'EPICS.CREATE.PLACEHOLDER_DESCRIPTION' | translate"
                 ng-model="vm.newEpic.description"
             )
         fieldset
@@ -90,12 +90,12 @@ tg-lightbox-close
                 name="blocked_note"
                 maxlength="140"
                 ng-model="vm.newEpic.blocked_note"
-                placeholder="{{'EPICS.CREATE.BLOCKED_NOTE_PLACEHOLDER' | translate}}"
+                [placeholder]="'EPICS.CREATE.BLOCKED_NOTE_PLACEHOLDER' | translate"
             )
         fieldset
             button.button-green.create-epic-button.e2e-create-epic-button(
                 type="submit"
                 tg-loading="vm.loading"
-                title="{{ 'EPICS.CREATE.CREATE_EPIC' | translate }}"
+                [title]="'EPICS.CREATE.CREATE_EPIC' | translate"
                 translate="EPICS.CREATE.CREATE_EPIC"
             )

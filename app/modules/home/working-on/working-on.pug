@@ -21,7 +21,7 @@ section.watching-container
             *ngFor="let duty of watching",
             [duty]="duty",
             type="watching",
-            "[class.blocked]"="duty.is_blocked"
+            [class.blocked]="duty.is_blocked"
         )
 
     .watching-empty(*ngIf="!watching?.size")

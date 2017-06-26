@@ -124,7 +124,7 @@ a.add-button.e2e-add-userstory-button(
             input.userstory-filter.e2e-filter-userstories-input(
                 id="userstory-filter"
                 type="text"
-                placeholder="{{'EPIC.FILTER_USERSTORIES' | translate}}"
+                [placeholder]="'EPIC.FILTER_USERSTORIES' | translate"
                 ng-model="searchUserstory"
                 ng-change="onUpdateSearchUserstory()"
             )
@@ -141,7 +141,7 @@ a.add-button.e2e-add-userstory-button(
                     )
                     option(
                         ng-repeat="us in vm.projectUserstories | toMutable  | byRef:searchUserstory track by us.id"
-                        value="{{ ::us.id }}"
+                        [value]="us.id"
                     ) #{hash}{{::us.ref}} {{::us.subject}}
 
             button.button-green.e2e-select-related-userstory-button(

@@ -3,7 +3,7 @@
         input.add-member-suggest-filter-input(
             type="text"
             ng-model="vm.contactQuery"
-            placeholder="{{'LIGHTBOX.ADD_MEMBER.PLACEHOLDER' | translate}}"
+            [placeholder]="'LIGHTBOX.ADD_MEMBER.PLACEHOLDER' | translate"
             ng-keyup="vm.filterContacts()"
         )
 

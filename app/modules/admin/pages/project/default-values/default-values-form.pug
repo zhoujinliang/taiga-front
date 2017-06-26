@@ -44,5 +44,5 @@ form(*ngIf="project")
             option(*ngFor="let status of project.get('severities')") {{ status.get('name') }}
 
     fieldset
-        button.button-green.submit-button(type="submit", title="{{'COMMON.SAVE' | translate}}")
+        button.button-green.submit-button(type="submit", [title]="'COMMON.SAVE' | translate")
             span(translate="COMMON.SAVE")

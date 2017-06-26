@@ -19,9 +19,9 @@ section.history(
         on-edit-comment="vm.editComment(commentId, commentData, callback)"
         edit-mode="vm.editMode"
 
-        object="{{vm.id}}"
+        [object]="vm.id"
         type="vm.type"
-        name="{{vm.name}}"
+        [name]="vm.name"
         loading="vm.loading"
         editing="vm.editing"
         deleting="vm.deleting"

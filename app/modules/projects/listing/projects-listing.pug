@@ -3,17 +3,17 @@
         h1(translate="PROJECTS.MY_PROJECTS")
         .create-options
             a.create-project-btn.button-green(
-                routerLink="/project/new"
-                title="{{'PROJECT.NAVIGATION.ACTION_CREATE_PROJECT' | translate}}"
-                translate="PROJECT.NAVIGATION.ACTION_CREATE_PROJECT"
+                routerLink="/project/new",
+                [title]="'PROJECT.NAVIGATION.ACTION_CREATE_PROJECT' | translate",
+                translate="PROJECT.NAVIGATION.ACTION_CREATE_PROJECT",
             )
 
     section.project-list-section
         .project-list
             ul
                 li.list-itemtype-project(
-                    *ngFor="let project of projects | async"
-                    "[class.blocked-project]"="project.get('blocked_code')"
+                    *ngFor="let project of projects | async",
+                    [class.blocked-project]="project.get('blocked_code')"
                 )
                     .list-itemtype-project-left
 
@@ -26,8 +26,8 @@
                             .list-itemtype-project-data
                                 h2
                                     a.project-title(
-                                        [routerLink]="['project', project.get('slug')]"
-                                        title="{{ project.get('name') }}"
+                                        [routerLink]="['project', project.get('slug')]",
+                                        [title]=" project.get('name')"
                                     ) {{project.get('name')}}
                                     tg-svg(
                                         *ngIf="project.get('is_private')",

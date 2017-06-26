@@ -3,7 +3,7 @@ nav.navbar(*ngIf="isEnabledHeader")
         a.logo(
             *ngIf="!user",
             href="https://taiga.io/",
-            title="{{'PROJECT.NAVIGATION.HOMEPAGE' | translate}}"
+            [title]="'PROJECT.NAVIGATION.HOMEPAGE' | translate"
         )
             include ../../assets/svg/logo.svg
 
@@ -11,14 +11,14 @@ nav.navbar(*ngIf="isEnabledHeader")
             routerLink="/",
             *ngIf="user",
             href="#",
-            title="{{'PROJECT.NAVIGATION.HOMEPAGE' | translate}}"
+            [title]="'PROJECT.NAVIGATION.HOMEPAGE' | translate"
         )
             include ../../assets/svg/logo.svg
 
         a(
             href="https://tree.taiga.io/support/",
             target="_blank",
-            title="{{'PROJECT.NAVIGATION.HELP_TITLE' | translate}}",
+            [title]="'PROJECT.NAVIGATION.HELP_TITLE' | translate",
             translate="PROJECT.NAVIGATION.HELP"
         )
 
@@ -26,28 +26,28 @@ nav.navbar(*ngIf="isEnabledHeader")
         a.login(
             (click)="login.emit()",
             href="#",
-            title="{{ 'LOGIN_COMMON.ACTION_SIGN_IN' | translate }}",
+            [title]="'LOGIN_COMMON.ACTION_SIGN_IN' | translate",
             translate="LOGIN_COMMON.ACTION_SIGN_IN"
         )
         a.register(
             routerLink="/register",
             *ngIf="publicRegisterEnabled",
             href="#",
-            title="{{ 'REGISTER_FORM.ACTION_SIGN_UP' | translate }}",
+            [title]="'REGISTER_FORM.ACTION_SIGN_UP' | translate",
             translate="REGISTER_FORM.ACTION_SIGN_UP"
         )
 
     div.nav-right(*ngIf="user")
         a(
             routerLink="/",
-            "[class.active]"="active",
-            title="{{'PROJECT.NAVIGATION.DASHBOARD_TITLE' | translate}}"
+            [class.active]="active",
+            [title]="'PROJECT.NAVIGATION.DASHBOARD_TITLE' | translate"
         )
             tg-svg(svg-icon="icon-dashboard")
 
         a(
             routerLink="/discover",
-            title="{{'PROJECT.NAVIGATION.DISCOVER_TITLE' | translate}}",
+            [title]="'PROJECT.NAVIGATION.DISCOVER_TITLE' | translate",
         )
             tg-svg(svg-icon="icon-discover")
 

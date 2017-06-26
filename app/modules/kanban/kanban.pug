@@ -40,7 +40,7 @@ div.wrapper
 
                 button.button-filter.e2e-open-filter(
                     (click)="toggleFiltersOpen()",
-                    title="{{selectedFiltersCount}} {{'COMMON.FILTERS.APPLIED_FILTERS_NUM' | translate}}"
+                    [title]="selectedFiltersCount + ('COMMON.FILTERS.APPLIED_FILTERS_NUM' | translate)"
                 )
                     span.filter-num(*ngIf="selectedFiltersCount") {{selectedFiltersCount}}
                     tg-svg(svg-icon="icon-filters")

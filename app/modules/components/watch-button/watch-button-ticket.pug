@@ -6,7 +6,7 @@ div.ticket-watch-title(
 div.ticket-watch-inner
     a.ticket-watch-button(
         href=""
-        title="{{ 'COMMON.WATCH_BUTTON.BUTTON_TITLE' | translate }}"
+        [title]="'COMMON.WATCH_BUTTON.BUTTON_TITLE' | translate"
         ng-if="::vm.user"
         ng-click="vm.toggleWatch()"
         ng-class="{'active': vm.item.is_watcher, 'is-hover': vm.item.is_watcher && vm.isMouseOver}"
@@ -25,8 +25,8 @@ div.ticket-watch-inner
 
     a.add-watcher(
         href=""
-        title="{{'COMMON.WATCHERS.TITLE_ADD' | translate}}"
+        [title]="'COMMON.WATCHERS.TITLE_ADD' | translate"
         ng-click="vm.openWatchers()"
-        tg-check-permission="{{vm.getPerms()}}"
+        *tgIfPerm="getPerms()"
     )
         span + {{'COMMON.WATCHERS.ADD' | translate}}

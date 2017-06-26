@@ -5,23 +5,27 @@
         .featured-project(*ngFor="let project of projects")
             .tags-container
                 .project-tag(
-                    *ngFor="let tag of project.get('colorized_tags')"
-                    "[style.background]"="tag.get('color')"
-                    title="{{tag.get('name')}}"
+                    *ngFor="let tag of project.get('colorized_tags')",
+                    [style.background]="tag.get('color')",
+                    [title]="tag.get('name')"
                 )
             .project-card-inner
                 .project-card-header
                     a.project-card-logo(
-                        tg-nav [name]="project" [params]="{project: project.get('slug')}"
-                        href="#"
-                        title="{{project.get('name')}}"
+                        tg-nav,
+                        [name]="project",
+                        [params]="{project: project.get('slug')}",
+                        href="#",
+                        [title]="project.get('name')"
                     )
                         tg-project-logo-small([project]="project")
                     h2.project-card-name
                         a(
+                            tg-nav,
                             href="#"
-                            tg-nav [name]="project" [params]="{project: project.get('slug')}"
-                            title="{{project.get('name')}}"
+                            [name]="project",
+                            [params]="{project: project.get('slug')}"
+                            [title]="project.get('name')"
                         ) {{project.get('name')}}
                         tg-svg.look-for-people(
                             *ngIf="project.get('is_looking_for_people')"

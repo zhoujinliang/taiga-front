@@ -1,7 +1,7 @@
 section.single-project-intro(*ngIf="project")
     .project-logo(
         [routerLink]="['/project', project.get('slug')]",
-        title="{{project.get('name')}}"
+        [title]="project.get('name')"
     )
         tg-project-logo-big([project]="project")
     .single-project-title-wrapper

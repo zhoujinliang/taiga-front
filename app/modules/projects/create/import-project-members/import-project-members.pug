@@ -15,7 +15,7 @@
 
     .import-project-members-system(ng-if="vm.members.size")
         .import-project-members-logo
-            img(ng-src="{{vm.logo}}")
+            img([src]="vm.logo")
         .import-project-members-logo
             img(
                 src="/#{v}/images/logo-color.png"
@@ -26,8 +26,8 @@
         li.import-project-members-row(tg-repeat="member in vm.members track by member.get('id')")
             .import-project-members-single
                 .avatar.empty(ng-if="!member.get('avatar')") {{member.get('full_name')[0].toUpperCase()}}
-                .avatar(ng-if="member.get('avatar')") 
-                    img(ng-src="{{member.get('avatar')}}")
+                .avatar(ng-if="member.get('avatar')")
+                    img([src]="member.get('avatar')")
                 span.import-project-members-username {{member.get('full_name') || member.get('username') }}
 
             .import-project-members-actions
@@ -58,7 +58,7 @@
         button.trans-button.create-project-action-cancel(
             type="button"
             ng-click="vm.onCancel()"
-            title="{{'PROJECT.CREATE.BACK' | translate}}"
+            [title]="'PROJECT.CREATE.BACK' | translate"
             translate="PROJECT.CREATE.BACK"
         )
         button.button.button-green.create-project-action-submit(

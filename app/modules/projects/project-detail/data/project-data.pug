@@ -11,7 +11,7 @@ div.project-data(*ngIf="project")
         .looking-for-people(*ngIf="project.get('is_looking_for_people')")
             img(
                 src="/" + _version + "/images/looking-for-people.png",
-                title="{{'PROJECT.LOOKING_FOR_PEOPLE' | translate}}"
+                [title]="'PROJECT.LOOKING_FOR_PEOPLE' | translate"
             )
             h3(
                 [class.is-empty]="!project.get('looking_for_people_note')",

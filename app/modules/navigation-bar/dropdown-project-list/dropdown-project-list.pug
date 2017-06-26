@@ -9,7 +9,7 @@ div.navbar-dropdown.dropdown-project-list
       li(*ngFor="let project of projects")
         a(
             [routerLink]='["/project", project.get("slug")]',
-            "[class.blocked-project]"="project.get('blocked_code')"
+            [class.blocked-project]="project.get('blocked_code')"
         )
             span {{project.get("name")}}
             tg-svg(
@@ -20,11 +20,11 @@ div.navbar-dropdown.dropdown-project-list
 
     a.see-more-projects-btn.button-gray(
         routerLink="/projects",
-        title="{{'PROJECT.NAVIGATION.MANAGE_PROJECTS' | translate}}",
+        [title]="'PROJECT.NAVIGATION.MANAGE_PROJECTS' | translate",
         translate="PROJECT.NAVIGATION.MANAGE_PROJECTS")
 
     div.create-options
         a.create-project-btn.button-green(
             routerLink="/project/new",
-            title="{{'PROJECT.NAVIGATION.ACTION_CREATE_PROJECT' | translate}}",
+            [title]="'PROJECT.NAVIGATION.ACTION_CREATE_PROJECT' | translate",
             translate="PROJECT.NAVIGATION.ACTION_CREATE_PROJECT")

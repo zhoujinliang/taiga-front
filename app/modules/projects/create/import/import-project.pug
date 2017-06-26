@@ -35,8 +35,8 @@
                         ng-model="vm.jiraUrl"
                     )
                     button.button-green.import-project-button(
-                        ng-click="vm.select('jira')"
-                        title="{{'PROJECT.IMPORT.ACCEEDE' | translate}}"
+                        ng-click="vm.select('jira')",
+                        [title]="'PROJECT.IMPORT.ACCEEDE' | translate",
                         translate="PROJECT.IMPORT.ACCEEDE"
                     )
         li.import-project-from-site(
@@ -78,9 +78,9 @@
 
     .create-project-action
         button.trans-button.create-project-action-cancel(
-            type="button"
-            ng-click="vm.backToCreate()"
-            title="{{'PROJECT.CREATE.BACK' | translate}}"
+            type="button",
+            ng-click="vm.backToCreate()",
+            [title]="'PROJECT.CREATE.BACK' | translate",
             translate="PROJECT.CREATE.BACK"
         )
 

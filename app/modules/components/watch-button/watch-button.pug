@@ -8,7 +8,7 @@ mixin counter
 //- Registered user button
 a.track-button.watch-button.watch-container(
     href=""
-    title="{{ 'COMMON.WATCH_BUTTON.BUTTON_TITLE' | translate }}"
+    [title]="'COMMON.WATCH_BUTTON.BUTTON_TITLE' | translate"
     ng-if="::vm.user"
     ng-click="vm.toggleWatch()"
     ng-class="{'active': vm.item.is_watcher, 'is-hover': vm.item.is_watcher && vm.isMouseOver}"

@@ -3,7 +3,7 @@ section
     p.message([innerHTML]="message")
     .options
         a.button-green(
-            title="{{'COMMON.ACCEPT' | translate}}",
+            [title]="'COMMON.ACCEPT' | translate",
             (click)="onAccept()"
         )
             span(translate="COMMON.ACCEPT")

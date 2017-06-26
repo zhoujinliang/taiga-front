@@ -54,8 +54,8 @@ form.invite-members-form(ng-submit="vm.sendInvites(vm.inviteContacts)")
         project="vm.project"
     )
     textarea.invite-members-single-msg(
-        ng-model="vm.inviteContactsMessage"
-        placeholder="{{'LIGHTBOX.ADD_MEMBER.PLACEHOLDER_INVITATION_TEXT' | translate}}"
+        ng-model="vm.inviteContactsMessage",
+        [placeholder]="'LIGHTBOX.ADD_MEMBER.PLACEHOLDER_INVITATION_TEXT' | translate"
         maxlength="250"
     )
     button.button-green.invite-members-single-send.e2e-invite-members-single-send(

@@ -5,7 +5,7 @@ form
 
     p(ng-bind-html="'LIGHTBOX.DELETE_ACCOUNT.BLOCK_PROJECT' | translate")
     div.options
-        a.button-green(href="", title="{{'LIGHTBOX.DELETE_ACCOUNT.CANCEL' | translate}}")
+        a.button-green(href="", [title]="'LIGHTBOX.DELETE_ACCOUNT.CANCEL' | translate")
             span(translate="LIGHTBOX.DELETE_ACCOUNT.CANCEL")
-        a.button-red(href="", title="{{'LIGHTBOX.DELETE_ACCOUNT.ACCEPT' | translate}}")
+        a.button-red(href="", [title]="'LIGHTBOX.DELETE_ACCOUNT.ACCEPT' | translate")
             span(translate="LIGHTBOX.DELETE_ACCOUNT.ACCEPT")
