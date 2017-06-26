@@ -2,20 +2,20 @@ import { Injectable } from "@angular/core";
 
 import {UrlsService} from "../../ts/modules/base/urls";
 
-import {CustomAttributesResource} from "./custom-attributes";
-import {CustomAttributesValuesResource} from "./custom-attributes-values";
-import {HistoryResource} from "./history";
-import {InvitationsResource} from "./invitations";
-import {KanbanResource} from "./kanban";
-import {LocalesResource} from "./locales";
-import {MembershipsResource} from "./memberships";
-import {ModulesResource} from "./modules";
-import {NotifyPoliciesResource} from "./notify-policies";
-import {RolesResource} from "./roles";
-import {SearchResource} from "./search";
-import {UserSettingsResource} from "./user-settings";
-import {WebhookLogsResource} from "./webhooklogs";
-import {WebhooksResource} from "./webhooks";
+import {CustomAttributesResource} from "./custom-attributes-resource.service";
+import {CustomAttributesValuesResource} from "./custom-attributes-values-resource.service";
+import {HistoryResource} from "./history-resource.service";
+import {InvitationsResource} from "./invitations-resource.service";
+import {KanbanResource} from "./kanban-resource.service";
+import {LocalesResource} from "./locales-resource.service";
+import {MembershipsResource} from "./memberships-resource.service";
+import {ModulesResource} from "./modules-resource.service";
+import {NotifyPoliciesResource} from "./notify-policies-resource.service";
+import {RolesResource} from "./roles-resource.service";
+import {SearchResource} from "./search-resource.service";
+import {UserSettingsResource} from "./user-settings-resource.service";
+import {WebhookLogsResource} from "./webhooklogs-resource.service";
+import {WebhooksResource} from "./webhooks-resource.service";
 import {WikiResource} from "./wiki-resource.service";
 
 import {SprintsResource} from "./sprints-resource.service";
