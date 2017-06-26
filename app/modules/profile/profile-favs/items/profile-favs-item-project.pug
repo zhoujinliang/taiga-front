@@ -2,7 +2,7 @@
     .list-itemtype-project-left
         .list-itemtype-project-data-wrapper
             a.list-itemtype-project-image(
-                tg-nav="project:project=item.get('slug')"
+                [routerLink]="['/project', item.get('slug')]",
                 [title]="item.get('name')"
             )
                 tg-project-logo-small([project]="item")
@@ -10,7 +10,7 @@
             .list-itemtype-project-data
                 h2
                     a.list-itemtype-project-name(
-                        tg-nav="project:project=item.get('slug')",
+                        [routerLink]="['/project', item.get('slug')]",
                         [title]="item.get('name')"
                     ) {{ item.get('name') }}
 

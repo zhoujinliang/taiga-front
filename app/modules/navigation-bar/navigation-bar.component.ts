@@ -21,7 +21,6 @@ import {Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import {defineImmutableProperty} from "../../libs/utils";
 import { ConfigurationService } from "../../ts/modules/base/conf";
-import { NavigationUrlsService } from "../../ts/modules/base/navurls.service";
 import { CurrentUserService } from "../services/current-user.service";
 import { NavigationBarService } from "./navigation-bar.service";
 
@@ -47,7 +46,6 @@ export class NavigationBar implements OnInit{
     }
     // constructor(private navigationBarService: NavigationBarService,
     //             private router: Router,
-    //             private navurls: NavigationUrlsService,
     //             private config: ConfigurationService) {
     //    }
 

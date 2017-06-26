@@ -3,7 +3,7 @@ section.profile-bar(*ngIf="user")
         tg-avatar.profile-img([user]="user")
         a.profile-edition(
             [title]="'USER.PROFILE.EDIT' | translate",
-            tg-nav="user-settings-user-profile",
+            routerLink="/user-settings/user-profile",
             translate="USER.PROFILE.EDIT"
         )
     div.profile-data

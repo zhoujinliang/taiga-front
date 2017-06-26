@@ -17,7 +17,7 @@ div.wrapper(*ngIf="project && us")
                 ng-container(*tgIfPerm="'view_milestones'")
                     a.button-gray(
                         *ngIf="sprint && project.get('is_backlog_activated')",
-                        tg-nav="project-taskboard:project=project.slug,sprint=sprint.slug",
+                        [routerLink]="['/project', project.get('slug'), 'taskboard', sprint.get('slug')]",
                         [title]="'US.TITLE_LINK_TASKBOARD' | translate",
                         translate="US.LINK_TASKBOARD"
                     )

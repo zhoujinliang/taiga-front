@@ -1,7 +1,7 @@
 .list-itemtype-ticket([class.blocked-project]="item.get('project_blocked_code')")
     a.list-itemtype-avatar(
-        *ngIf="item.get('assigned_to')"
-        tg-nav="user-profile:username=item.get('assigned_to_username')"
+        *ngIf="item.get('assigned_to')",
+        [routerLink]="['/profile', item.get('assigned_to_username')]",
         [title]="item.getIn(['assigned_to_extra_info', 'full_name_display'])"
     )
         tg-avatar([user]="item.get('assigned_to_extra_info')")
@@ -44,22 +44,22 @@
             span.ticket-id {{'#' + item.get('ref')}}
             a.ticket-title(
                 *ngIf="item.get('type') === 'epic'",
-                tg-nav="project-epics-detail:project=item.get('project_slug'),ref=item.get('ref')",
+                [routerLink]="['/project', item.get('project_slug'), 'epic', item.get('ref')]",
                 [title]="'#' + item.get('ref') + ' ' + item.get('subject')"
             ) {{ item.get('subject') }}
             a.ticket-title(
                 *ngIf="item.get('type') === 'userstory'",
-                tg-nav="project-userstories-detail:project=item.get('project_slug'),ref=item.get('ref')",
+                [routerLink]="['/project', item.get('project_slug'), 'us', item.get('ref')]",
                 [title]="'#' + item.get('ref') + ' ' + item.get('subject')"
             ) {{ item.get('subject') }}
             a.ticket-title(
                 *ngIf="item.get('type') === 'task'",
-                tg-nav="project-tasks-detail:project=item.get('project_slug'),ref=item.get('ref')",
+                [routerLink]="['/project', item.get('project_slug'), 'task', item.get('ref')]",
                 [title]="'#' + item.get('ref') + ' ' + item.get('subject')"
             ) {{ item.get('subject') }}
             a.ticket-title(
                 *ngIf="item.get('type') === 'issue'",
-                tg-nav="project-issues-detail:project=item.get('project_slug'),ref=item.get('ref')",
+                [routerLink]="['/project', item.get('project_slug'), 'issue', item.get('ref')]",
                 [title]="'#' + item.get('ref') + ' ' + item.get('subject')"
             ) {{ item.get('subject') }}
 

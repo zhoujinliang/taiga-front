@@ -20,6 +20,7 @@
 import {Injectable} from "@angular/core";
 import {ProjectUrlService} from "../../ts/modules/common/project-url.service";
 import {ResourcesService} from "../resources/resources.service";
+import * as Immutable from "immutable";
 
 @Injectable()
 export class ProjectsService {
@@ -52,8 +53,8 @@ export class ProjectsService {
         });
     }
 
-    _decorate(project) {
-        const url = this.projectUrl.get(project.toJS());
+    _decorate(project: Immutable.Map<string, any>) {
+        const url = this.projectUrl.get(project);
 
         project = project.set("url", url);
 

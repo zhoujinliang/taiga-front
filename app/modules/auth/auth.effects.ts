@@ -13,7 +13,6 @@ import { TranslateService } from "@ngx-translate/core";
 import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
 import { ConfigurationService } from "../../ts/modules/base/conf";
-import { NavigationUrlsService } from "../../ts/modules/base/navurls.service";
 import { AddNotificationMessageAction } from "../../ts/modules/common/common.actions";
 import { ResourcesService } from "../resources/resources.service";
 import {StorageService} from "./../../ts/modules/base/storage";
@@ -90,6 +89,5 @@ export class AuthEffects {
                 private storage: StorageService,
                 private config: ConfigurationService,
                 private rs: ResourcesService,
-                private navurls: NavigationUrlsService,
                 private translate: TranslateService) { }
 }

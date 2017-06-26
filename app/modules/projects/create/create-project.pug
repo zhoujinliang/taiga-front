@@ -6,8 +6,7 @@
             li
                 a.e2e-create-project-scrum(
                     [title]="'PROJECT.CREATE.TEMPLATE_SCRUM' | translate",
-                    tg-nav="create-project-scrum"
-                    href=""
+                    routerLink="/project/new/scrum"
                 )
                     .create-project-selector-icon
                         tg-svg(svg-icon="icon-scrum")
@@ -23,9 +22,8 @@
                             p(translate="PROJECT.CREATE.TEMPLATE_SCRUM_LONGDESC")
             li
                 a.e2e-create-project-kanban(
-                    tg-nav="create-project-kanban"
                     [title]="'PROJECT.CREATE.TEMPLATE_KANBAN' | translate",
-                    href=""
+                    routerLink="/project/new/kanban"
                 )
                     .create-project-selector-icon
                         tg-svg(svg-icon="icon-kanban")
@@ -42,9 +40,8 @@
                             p(translate="PROJECT.CREATE.TEMPLATE_KANBAN_LONGDESC")
             li
                 a.e2e-duplicate-project(
-                    tg-nav="create-project-duplicate"
                     [title]="'PROJECT.CREATE.DUPLICATE' | translate",
-                    href=""
+                    routerLink="/project/new/duplicate"
                 )
                     .create-project-selector-icon
                         tg-svg(svg-icon="icon-duplicate")
@@ -54,9 +51,8 @@
 
             li
                 a(
-                    tg-nav="create-project-import"
                     [title]="'PROJECT.CREATE.IMPORT' | translate",
-                    href=""
+                    routerLink="/project/new/import"
                 )
                     .create-project-selector-icon
                         tg-svg(svg-icon="icon-upload")

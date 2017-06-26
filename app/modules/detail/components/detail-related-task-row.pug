@@ -5,7 +5,8 @@
 )
     .task-name
         a.clickable(
-            tg-nav="project-tasks-detail:project=project.slug,ref=task.ref")
+            [routerLink]="['/project/', project.slug, 'task', task.ref]"
+        )
             span {{'#' + task.get('ref') }}
             span {{ task.get('subject') }}
 

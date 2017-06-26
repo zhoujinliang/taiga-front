@@ -2,7 +2,7 @@ li.list-itemtype-project
     .list-itemtype-project-left
         a.list-itemtype-project-image(
             href="#"
-            tg-nav="project:project=project.get('slug')"
+            [routerLink]="['/project', project.get('slug')]",
             [title]="project.get('name')"
         )
             tg-project-logo-small([project]="project")
@@ -10,7 +10,7 @@ li.list-itemtype-project
             h2
                 a(
                     href="#"
-                    tg-nav="project:project=project.get('slug')"
+                    [routerLink]="['/project', project.get('slug')]",
                     [title]="project.get('name')"
                 ) {{project.get('name')}}
                 tg-svg.look-for-people(

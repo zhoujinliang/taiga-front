@@ -26,7 +26,7 @@ tg-svg.icon-drag(
         tg-svg(svg-icon="icon-broken-link")
 
 .project(
-    tg-nav="project:project=vm.userstory.getIn(['project_extra_info', 'slug'])"
+    [routerLink]="['/project', vm.userstory.getIn(['project_extra_info', 'slug'])]",
 )
     img(
         tg-project-logo-small-src="::vm.userstory.get('project_extra_info')"

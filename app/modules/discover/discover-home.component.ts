@@ -23,7 +23,6 @@ import {go} from "@ngrx/router-store";
 import {Store} from "@ngrx/store";
 import {IState} from "../../app.store";
 import {StartLoadingAction, StopLoadingAction, SetMetadataAction} from "../../app.actions";
-import {NavigationUrlsService} from "../../ts/modules/base/navurls.service";
 import * as actions from "./discover.actions";
 import {Observable, Subscription} from "rxjs";
 
@@ -41,8 +40,7 @@ export class DiscoverHome implements OnInit {
     subscription: Subscription;
 
     constructor(private store: Store<IState>,
-                private router: Router,
-                private navUrls: NavigationUrlsService) {
+                private router: Router) {
         this.store.dispatch(new StartLoadingAction());
         this.store.dispatch(new SetMetadataAction("DISCOVER.PAGE_TITLE", {}, "DISCOVER.PAGE_DESCRIPTION", {}))
 

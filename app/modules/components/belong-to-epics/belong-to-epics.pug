@@ -8,8 +8,7 @@ ng-container(*ngIf="format !== 'text'")
 ng-container(*ngIf="format === 'text'")
     span.belong-to-epic-text-wrapper(*ngFor="let epic of epics")
         a.belong-to-epic-text(
-            href=""
-            tg-nav="project-epics-detail:project=epic.getIn(['project', 'slug']),ref=epic.get('ref')"
+            [routerLink]="['/project', epic.getIn(['project', 'slug']), 'epic', epic.get('ref')]"
         ) {{getTitle(epic)}}
         span.belong-to-epic-label(
             [style.background-color]="epic.get('color')"

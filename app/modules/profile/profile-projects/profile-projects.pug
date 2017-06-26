@@ -18,7 +18,7 @@ section.profile-projects
         .list-itemtype-project-left
             .project-list-single-title-wrapper
                 a.list-itemtype-project-image(
-                    tg-nav="project:project=project.get('slug')",
+                    [routerLink]="['/project', project.get('slug')]",
                     [title]="project.get('name')"
                 )
                     tg-project-logo-small([project]="project")
@@ -26,7 +26,7 @@ section.profile-projects
                 .project-list-single-title
                     h2
                         a.project-title(
-                            tg-nav="project:project=project.get('slug')",
+                            [routerLink]="['/project', project.get('slug')]",
                             [title]="project.get('name')"
                         ) {{project.get('name')}}
 
@@ -58,7 +58,7 @@ section.profile-projects
                 ng-container(*ngFor="let contact of contacts")
                     a(
                         *ngIf="project.get('members').contains(contact.get('id'))"
-                        tg-nav="user-profile:username=contact.get('username')",
+                        [routerLink]="['/profile', contact.get('username')]",
                         [title]="contact.get('full_name')"
                     )
                         tg-avatar([user]="contact")

@@ -22,7 +22,6 @@ import { Router } from "@angular/router";
 import * as _ from "lodash";
 import {defineImmutableProperty} from "../../../libs/utils";
 import { ConfigurationService } from "../../../ts/modules/base/conf";
-import { NavigationUrlsService } from "../../../ts/modules/base/navurls.service";
 import { AuthService } from "../../auth/auth.service";
 import { GlobalDataService } from "../../services/global-data.service";
 // import { FeedbackService } from "../../feedback/feedback.service";
@@ -39,8 +38,7 @@ export class DropdownUser {
     // userSettingsPlugins:any;
 
     constructor(private config: ConfigurationService,
-                private router: Router,
-                private navurls: NavigationUrlsService) {
+                private router: Router) {
                  // private globalData: GlobalDataService) {
                  // private feedback: FeedbackService) {
         this.logout = new EventEmitter();

@@ -12,19 +12,13 @@
             .project-card-inner
                 .project-card-header
                     a.project-card-logo(
-                        tg-nav,
-                        [name]="project",
-                        [params]="{project: project.get('slug')}",
-                        href="#",
+                        [routerLink]="['/project/', project.get('slug')]",
                         [title]="project.get('name')"
                     )
                         tg-project-logo-small([project]="project")
                     h2.project-card-name
                         a(
-                            tg-nav,
-                            href="#"
-                            [name]="project",
-                            [params]="{project: project.get('slug')}"
+                            [routerLink]="['/project/', project.get('slug')]",
                             [title]="project.get('name')"
                         ) {{project.get('name')}}
                         tg-svg.look-for-people(

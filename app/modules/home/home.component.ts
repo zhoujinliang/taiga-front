@@ -23,7 +23,6 @@ import * as Immutable from "immutable";
 import "rxjs/add/operator/map";
 import { IState } from "../../app.store";
 import { StartLoadingAction, StopLoadingAction } from "../../app.actions";
-import { NavigationUrlsService } from "../../ts/modules/base/navurls.service";
 import { CurrentUserService } from "../services/current-user.service";
 import { FetchAssignedToAction, FetchWatchingAction, CleanHomeDataAction } from "./home.actions";
 
@@ -42,8 +41,7 @@ export class Home implements OnInit, OnDestroy {
     subscriptions: Subscription[];
 
     constructor(private router: Router,
-                private store: Store<IState>,
-                private navurls: NavigationUrlsService) {
+                private store: Store<IState>) {
         this.store.dispatch(new StartLoadingAction());
         this.user = this.store.select((state) => state.getIn(["auth", "user"]));
         this.projects = this.store.select((state) => state.getIn(["projects", "user-projects"]));

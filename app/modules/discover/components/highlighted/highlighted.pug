@@ -7,18 +7,16 @@
     .highlighted-project(
         *ngFor="let project of highlighted"
     )
-        // tg-nav="project:project=project.get('slug')"
         a.project-logo(
-            href="#"
+            [routerLink]="['/project', project.get('slug')]",
             [title]="project.get('name')"
         )
             tg-project-logo-small([project]='project')
         .project-data-container
             .single-project-header
                 h2.project-title
-                    // tg-nav="project:project=project.get('slug')"
                     a(
-                        href="#",
+                        [routerLink]="['/project', project.get('slug')]",
                         [title]="project.get('name')"
                     ) {{project.get('name')}}
                     tg-svg.look-for-people(
