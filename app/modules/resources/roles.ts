@@ -24,19 +24,19 @@
 
 import {Injectable} from "@angular/core";
 import {HttpService} from "../../ts/modules/base/http";
-import {RepositoryService} from "../../ts/modules/base/repository";
 import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class RolesResource {
-    constructor(private repo: RepositoryService,
-                private http: HttpService,
+    constructor(private http: HttpService,
                 private urls: UrlsService) {}
     get(id) {
-        return this.repo.queryOne("roles", id);
+        const url = this.urls.resolve("roles", id);
+        return this.http.get(url);
     }
 
     list(projectId) {
-        return this.repo.queryMany("roles", {project: projectId});
+        const url = this.urls.resolve("roles");
+        return this.http.get(url, {project: projectId});
     }
 }

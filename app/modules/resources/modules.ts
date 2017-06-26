@@ -18,13 +18,19 @@
  */
 
 import {Injectable} from "@angular/core";
-import {RepositoryService} from "../../ts/modules/base/repository";
+import {HttpService} from "../../ts/modules/base/http";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class ModulesResource {
-    constructor(private repo: RepositoryService) {}
+    constructor(private http: HttpService,
+                private urls: UrlsService) {}
 
     list(projectId, module) {
-        this.repo.queryOneAttribute("project-modules", projectId, module);
+        const url = this.urls.resolve("project-modules", projectId)
+        return this.http.get(url).map((response) => {
+            response.data = response.data.get(module);
+            return response;
+        });
     }
 }

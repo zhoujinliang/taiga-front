@@ -26,17 +26,16 @@ import * as _ from "lodash";
 
 import {Injectable} from "@angular/core";
 import {HttpService} from "../../ts/modules/base/http";
-import {RepositoryService} from "../../ts/modules/base/repository";
 import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class MembershipsResource {
-    constructor(private repo: RepositoryService,
-                private http: HttpService,
+    constructor(private http: HttpService,
                 private urls: UrlsService) {}
 
     get(id) {
-        return this.repo.queryOne("memberships", id);
+        let url = this.urls.resolve("memberships", id)
+        return this.http.get(url);
     }
 
     list(projectId, filters={}, enablePagination=true) {
@@ -45,9 +44,10 @@ export class MembershipsResource {
     }
 
     listByUser(userId, filters) {
+        let url = this.urls.resolve("memberships")
         let params = {user: userId};
         params = _.extend({}, params, filters || {});
-        return this.repo.queryPaginated("memberships", params);
+        return this.http.get("memberships", params);
     }
 
     resendInvitation(id) {

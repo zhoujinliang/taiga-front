@@ -27,14 +27,12 @@ import * as angular from "angular";
 import {sizeFormat} from "../../libs/utils";
 import {ConfigurationService} from "../../ts/modules/base/conf";
 import {HttpService} from "../../ts/modules/base/http";
-import {RepositoryService} from "../../ts/modules/base/repository";
 import {UrlsService} from "../../ts/modules/base/urls";
 import {Observable} from "rxjs";
 
 @Injectable()
 export class UserSettingsResource {
     constructor(private config: ConfigurationService,
-                private repo: RepositoryService,
                 private http: HttpService,
                 private urls: UrlsService) {}
 

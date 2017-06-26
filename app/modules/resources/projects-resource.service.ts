@@ -26,15 +26,13 @@ import {Injectable} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {ConfigurationService} from "../../ts/modules/base/conf";
 import {HttpService} from "../../ts/modules/base/http";
-import {RepositoryService} from "../../ts/modules/base/repository";
 import {StorageService} from "../../ts/modules/base/storage";
 import {UrlsService} from "../../ts/modules/base/urls";
 import {PaginateResponseService} from "../services/paginate-response.service";
 
 @Injectable()
 export class ProjectsResource {
-    constructor(private repo: RepositoryService,
-                private translate: TranslateService,
+    constructor(private translate: TranslateService,
                 private urls: UrlsService,
                 private http: HttpService,
                 private storage: StorageService,
@@ -42,15 +40,18 @@ export class ProjectsResource {
                 private paginateResponse: PaginateResponseService) {}
 
     get(projectId: number): any {
-        return this.repo.queryOne("projects", projectId);
+        const url = this.urls.resolve("projects", projectId);
+        return this.http.get(url);
     }
 
     getBySlug(projectSlug: string): any {
-        return this.repo.queryOne("projects", `by_slug?slug=${projectSlug}`);
+        const url = this.urls.resolve("projects", "by_slug");
+        return this.http.get(url, {slug: projectSlug});
     }
 
     list(): any {
-        return this.repo.queryMany("projects");
+        const url = this.urls.resolve("projects");
+        return this.http.get(url);
     }
 
     listByMember(memberId: number): any {
@@ -60,17 +61,20 @@ export class ProjectsResource {
     }
 
     templates(): any {
-        return this.repo.queryMany("project-templates");
+        const url = this.urls.resolve("project-templates");
+        return this.http.get(url);
     }
 
     usersList(projectId: number): any {
+        const url = this.urls.resolve("users");
         const params = {project: projectId};
-        return this.repo.queryMany("users", params);
+        return this.http.get(url, params);
     }
 
     rolesList(projectId: number): any {
+        const url = this.urls.resolve("roles");
         const params = {project: projectId};
-        return this.repo.queryMany("roles", params);
+        return this.http.get(url, params);
     }
 
     stats(projectId: number): any {
@@ -114,7 +118,8 @@ export class ProjectsResource {
     }
 
     tagsColors(projectId: number): any {
-        return this.repo.queryOne("projects", `${projectId}/tags_colors`);
+        const url = `${this.urls.resolve("projects")}/${projectId}/tags_colors`;
+        return this.http.get(url);
     }
 
     deleteTag(projectId: number, tag: string): any {

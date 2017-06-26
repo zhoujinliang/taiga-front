@@ -34,8 +34,6 @@ import { TgPipesModule } from "./modules/pipes/pipes.module";
 import { TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
-import { AuthService } from "./modules/auth/auth.service";
-
 import { NavigationBarModule } from "./modules/navigation-bar/navigation-bar.module";
 import { ProjectsService } from "./modules/projects/projects.service";
 import { TgCommonModule } from "./ts/modules/common/common.module";
@@ -92,7 +90,6 @@ export function HttpLoaderFactory(http: Http) {
     AppComponent,
   ],
   providers: [
-    AuthService,
     ProjectsService,
     ProjectUrlService,
   ],

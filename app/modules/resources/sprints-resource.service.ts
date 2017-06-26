@@ -25,31 +25,24 @@
 import {Injectable} from "@angular/core";
 import * as _ from "lodash";
 import * as Immutable from "immutable";
-import {ModelService} from "../../ts/modules/base/model";
-import {RepositoryService} from "../../ts/modules/base/repository";
 import {UrlsService} from "../../ts/modules/base/urls";
 import {HttpService} from "../../ts/modules/base/http";
 import {StorageService} from "../../ts/modules/base/storage";
 
 @Injectable()
 export class SprintsResource {
-    constructor(private repo: RepositoryService,
-                private model: ModelService,
-                private urls: UrlsService,
+    constructor(private urls: UrlsService,
                 private http: HttpService,
                 private storage: StorageService) {}
 
     get(projectId, sprintId) {
-        return this.repo.queryOne("milestones", sprintId).map((sprint: any) => {
-            let uses = sprint.user_stories;
-            uses = _.map(uses, (u) => this.model.make_model("userstories", u));
-            sprint._attrs.user_stories = uses;
-            return sprint;
-        });
+        const url = this.urls.resolve("milestones", sprintId)
+        return this.http.get(url);
     }
 
     stats(projectId, sprintId) {
-        this.repo.queryOneRaw("milestones", `${sprintId}/stats`);
+        const url = this.urls.resolve("milestones", `${sprintId}/stats`)
+        return this.http.get(url);
     }
 
     list(projectId, filters = {}) {

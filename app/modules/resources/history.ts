@@ -24,17 +24,16 @@
 
 import {Injectable} from "@angular/core";
 import {HttpService} from "../../ts/modules/base/http";
-import {RepositoryService} from "../../ts/modules/base/repository";
 import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class HistoryResource {
-    constructor(private repo: RepositoryService,
-                private http: HttpService,
+    constructor(private http: HttpService,
                 private urls: UrlsService) {}
 
     get(type: string, objectId: number): any {
-        return this.repo.queryOneRaw(`history/${type}`, objectId);
+        let url = this.urls.resolve(`history/${type}`);
+        return this.http.get(url + "/" + objectId);
     }
 
     editComment(type: string, objectId: number, activityId: number, comment: string): any {

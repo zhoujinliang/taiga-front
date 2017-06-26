@@ -23,7 +23,6 @@ import {generateHash} from "../../libs/utils";
 
 import {Injectable} from "@angular/core";
 import {HttpService} from "../../ts/modules/base/http";
-import {RepositoryService} from "../../ts/modules/base/repository";
 import {StorageService} from "../../ts/modules/base/storage";
 import {UrlsService} from "../../ts/modules/base/urls";
 
@@ -33,32 +32,34 @@ export class TasksResource {
     hashSuffixStatusColumnModes = "tasks-statuscolumnmodels";
     hashSuffixUsRowModes = "tasks-usrowmodels";
 
-    constructor(private repo: RepositoryService,
-                private http: HttpService,
+    constructor(private http: HttpService,
                 private urls: UrlsService,
                 private storage: StorageService) {}
 
     get(projectId, taskId, extraParams) {
+        const url = this.urls.resolve('tasks', taskId);
         let params = this.getQueryParams(projectId);
         params.project = projectId;
 
         params = _.extend({}, params, extraParams);
 
-        return this.repo.queryOne("tasks", taskId, params);
+        return this.http.get(url, params);
     }
 
     getByRef(projectId, ref, extraParams) {
+        const url = this.urls.resolve('tasks', "by_ref");
         let params = this.getQueryParams(projectId);
         params.project = projectId;
         params.ref = ref;
 
         params = _.extend({}, params, extraParams);
 
-        return this.repo.queryOne("tasks", "by_ref", params);
+        return this.http.get(url, params);
     }
 
     filtersData(params) {
-        return this.repo.queryOneRaw("task-filters", null, params);
+        const url = this.urls.resolve('task-filters');
+        return this.http.get(url, params);
     }
 
     list(projectId: number, sprintId: number=null, userStoryId: number=null, params: any={}) {
@@ -103,8 +104,9 @@ export class TasksResource {
     }
 
     listValues(projectId, type) {
+        const url = this.urls.resolve(type);
         const params = {project: projectId};
-        return this.repo.queryMany(type, params);
+        return this.http.get(url, params);
     }
 
     storeQueryParams(projectId, params) {

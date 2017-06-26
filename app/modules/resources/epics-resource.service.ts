@@ -25,8 +25,6 @@ import * as Immutable from "immutable";
 
 import {Injectable} from "@angular/core";
 import {HttpService} from "../../ts/modules/base/http";
-// TODO: Remove repository usage
-import {RepositoryService} from "../../ts/modules/base/repository";
 import {StorageService} from "../../ts/modules/base/storage";
 import {UrlsService} from "../../ts/modules/base/urls";
 
@@ -34,8 +32,7 @@ import {UrlsService} from "../../ts/modules/base/urls";
 export class EpicsResource {
     hashSuffix: string = "epics-queryparams";
 
-    constructor(private repo: RepositoryService,
-                private urls: UrlsService,
+    constructor(private urls: UrlsService,
                 private http: HttpService,
                 private storage: StorageService) {}
 
@@ -119,16 +116,18 @@ export class EpicsResource {
     }
 
     getByRef(projectId: number, ref: number): any {
+        const url = this.urls.resolve("epics", "by_ref");
         const params = this.getQueryParams(projectId);
         params.project = projectId;
         params.ref = ref;
-        return this.repo.queryOne("epics", "by_ref", params);
+        return this.http.get(url, params);
     }
 
     listValues(projectId: number, type: string): any {
+        const url = this.urls.resolve(type);
         const params = {project: projectId};
         this.storeQueryParams(projectId, params);
-        return this.repo.queryMany(type, params);
+        return this.http.get(url, params);
     }
 
     storeQueryParams(projectId: number, params: any): void {

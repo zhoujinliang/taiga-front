@@ -24,18 +24,18 @@
 
 import {Injectable} from "@angular/core";
 import {sizeFormat} from "../../libs/utils";
-import {RepositoryService} from "../../ts/modules/base/repository";
+import {HttpService} from "../../ts/modules/base/http";
 
 @Injectable()
 export class CustomAttributesResource {
-    constructor(private repo: RepositoryService) {}
+    constructor(private http: HttpService) {}
 
-    private _list(projectId: number, resource: string) {
-        return this.repo.queryMany(resource, {project: projectId});
+    private _list(projectId: number, url: string) {
+        return this.http.get(url, {project: projectId});
     }
 
-    epic = { list(projectId) { return this._list(projectId, "custom-attributes/epic"); } };
-    userstory = { list(projectId) { return this._list(projectId, "custom-attributes/userstory"); } };
-    task = { list(projectId) { return this._list(projectId, "custom-attributes/task"); } };
-    issue = { list(projectId) { return this._list(projectId, "custom-attributes/issue"); } };
+    epic = { list(projectId) { return this._list(projectId, "/epic-custom-attributes"); } };
+    userstory = { list(projectId) { return this._list(projectId, "/userstory-custom-attributes"); } };
+    task = { list(projectId) { return this._list(projectId, "/task-custom-attributes"); } };
+    issue = { list(projectId) { return this._list(projectId, "/issue-custom-attributes"); } };
 }

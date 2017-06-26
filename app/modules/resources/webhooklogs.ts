@@ -19,18 +19,17 @@
 
 import {Injectable} from "@angular/core";
 import {HttpService} from "../../ts/modules/base/http";
-import {RepositoryService} from "../../ts/modules/base/repository";
 import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class WebhookLogsResource {
-    constructor(private repo: RepositoryService,
-                private urls: UrlsService,
+    constructor(private urls: UrlsService,
                 private http: HttpService) {}
 
     list(webhookId) {
+        const url = this.urls.resolve("webhooklogs");
         const params = {webhook: webhookId};
-        return this.repo.queryMany("webhooklogs", params);
+        return this.http.get(url, params);
     }
 
     resend(webhooklogId) {

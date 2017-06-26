@@ -23,7 +23,6 @@ import {generateHash} from "../../libs/utils";
 
 import {Injectable} from "@angular/core";
 import {HttpService} from "../../ts/modules/base/http";
-import {RepositoryService} from "../../ts/modules/base/repository";
 import {StorageService} from "../../ts/modules/base/storage";
 import {UrlsService} from "../../ts/modules/base/urls";
 
@@ -31,18 +30,18 @@ import {UrlsService} from "../../ts/modules/base/urls";
 export class UserstoriesResource {
     hashSuffix = "userstories-queryparams";
 
-    constructor(private repo: RepositoryService,
-                private http: HttpService,
+    constructor(private http: HttpService,
                 private urls: UrlsService,
                 private storage: StorageService) {}
 
     get(projectId, usId, extraParams) {
+        let url = this.urls.resolve("userstories", usId);
         let params = this.getQueryParams(projectId);
         params.project = projectId;
 
         params = _.extend({}, params, extraParams);
 
-        return this.repo.queryOne("userstories", usId, params);
+        return this.http.get(url, params);
     }
 
     getByRef(projectId, ref, extraParams={}) {
@@ -57,20 +56,19 @@ export class UserstoriesResource {
     }
 
     filtersData(params) {
-        return this.repo.queryOneRaw("userstories-filters", null, params)
-                        .map((data) => Immutable.fromJS(data));
+        let url = this.urls.resolve("userstories-filters");
+        return this.http.get(url, params);
     }
 
     listUnassigned(projectId, filters, pageSize) {
+        let url = this.urls.resolve("userstories");
         let params = {project: projectId, milestone: "null"};
         params = _.extend({}, params, filters || {});
         this.storeQueryParams(projectId, params);
 
-        return this.repo.queryMany("userstories", _.extend(params, {
+        return this.http.get(url, _.extend(params, {
             page_size: pageSize,
-        }), {
-            enablePagination: true,
-        }, true);
+        }));
     }
 
     listAll(projectId, filters) {
@@ -133,9 +131,10 @@ export class UserstoriesResource {
     }
 
     listValues(projectId, type) {
+        let url = this.urls.resolve(type);
         const params = {project: projectId};
         this.storeQueryParams(projectId, params);
-        return this.repo.queryMany(type, params);
+        return this.http.get(url, params);
     }
 
     storeQueryParams(projectId, params) {

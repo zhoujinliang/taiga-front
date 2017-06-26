@@ -19,13 +19,11 @@
 
 import {Injectable} from "@angular/core";
 import {HttpService} from "../../ts/modules/base/http";
-import {RepositoryService} from "../../ts/modules/base/repository";
 import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class WebhooksResource {
-    constructor(private repo: RepositoryService,
-                private urls: UrlsService,
+    constructor(private urls: UrlsService,
                 private http: HttpService) {}
 
     list(projectId) {

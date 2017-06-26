@@ -23,13 +23,16 @@
  */
 
 import {Injectable} from "@angular/core";
-import {RepositoryService} from "../../ts/modules/base/repository";
+import {HttpService} from "../../ts/modules/base/http";
+import {UrlsService} from "../../ts/modules/base/urls";
 
 @Injectable()
 export class InvitationsResource {
-    constructor(private repo: RepositoryService) {}
+    constructor(private urls: UrlsService,
+                private http: HttpService) {}
 
     get(token) {
-        return this.repo.queryOne("invitations", token);
+        const url = this.urls.resolve("invitations") + "/" + token;
+        return this.http.get(url);
     }
 }

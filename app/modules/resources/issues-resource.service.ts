@@ -23,8 +23,6 @@ import {generateHash} from "../../libs/utils";
 
 import {Injectable} from "@angular/core";
 import {HttpService} from "../../ts/modules/base/http";
-// TODO: Remove repository usage
-import {RepositoryService} from "../../ts/modules/base/repository";
 import {StorageService} from "../../ts/modules/base/storage";
 import {UrlsService} from "../../ts/modules/base/urls";
 
@@ -32,22 +30,23 @@ import {UrlsService} from "../../ts/modules/base/urls";
 export class IssuesResource {
     hashSuffix = "issues-queryparams";
 
-    constructor(private repo: RepositoryService,
-                private http: HttpService,
+    constructor(private http: HttpService,
                 private urls: UrlsService,
                 private storage: StorageService) {}
 
     get(projectId, issueId) {
+        const url = this.urls.resolve("issues", issueId);
         const params = this.getQueryParams(projectId);
         params.project = projectId;
-        return this.repo.queryOne("issues", issueId, params);
+        return this.http.get(url, params);
     }
 
     getByRef(projectId, ref) {
+        const url = this.urls.resolve("issues", "by_ref");
         const params = this.getQueryParams(projectId);
         params.project = projectId;
         params.ref = ref;
-        return this.repo.queryOne("issues", "by_ref", params);
+        return this.http.get(url, params);
     }
 
     list(projectId, filters) {
@@ -86,17 +85,20 @@ export class IssuesResource {
     }
 
     stats(projectId) {
-        return this.repo.queryOneRaw("projects", `${projectId}/issues_stats`);
+        const url = `${this.urls.resolve("projects")}${projectId}/issues_stats`;
+        return this.http.get(url);
     }
 
     filtersData(params) {
-        return this.repo.queryOneRaw("issues-filters", null, params);
+        const url = this.urls.resolve("issue-filters");
+        return this.http.get(url, params);
     }
 
     listValues(projectId, type) {
+        const url = this.urls.resolve(type);
         const params = {project: projectId};
         this.storeQueryParams(projectId, params);
-        return this.repo.queryMany(type, params);
+        return this.http.get(url, params);
     }
 
     storeQueryParams(projectId, params) {
