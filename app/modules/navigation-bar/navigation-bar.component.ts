@@ -17,7 +17,7 @@
  * File: navigation-bar.directive.coffee
  */
 
-import {Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {Component, EventEmitter, Input, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import {defineImmutableProperty} from "../../libs/utils";
 import { ConfigurationService } from "../../ts/modules/base/conf";
@@ -28,7 +28,7 @@ import { NavigationBarService } from "./navigation-bar.service";
     selector: "tg-navigation-bar",
     template: require("./navigation-bar.pug")(),
 })
-export class NavigationBar implements OnInit{
+export class NavigationBar {
     @Input() projects: any;
     @Input() user: any;
     @Output() logout: EventEmitter<any>;
@@ -36,31 +36,12 @@ export class NavigationBar implements OnInit{
     @Output() feedback: EventEmitter<any>;
     isAuthenticated: any = true;
     isEnabledHeader: any = true;
-    // publicRegisterEnabled: any;
-    // active: boolean;
+    publicRegisterEnabled: boolean;
 
-    constructor() {
+    constructor(conf: ConfigurationService) {
         this.login = new EventEmitter();
         this.logout = new EventEmitter();
         this.feedback = new EventEmitter();
-    }
-    // constructor(private navigationBarService: NavigationBarService,
-    //             private router: Router,
-    //             private config: ConfigurationService) {
-    //    }
-
-    ngOnInit() {
-        // console.log("INIT")
-        // defineImmutableProperty(this, "projects", () => this.currentUser.projects.get("recents"));
-        // defineImmutableProperty(this, "isAuthenticated", () => this.currentUser.isAuthenticated());
-        // defineImmutableProperty(this, "isEnabledHeader", () => this.navigationBarService.isEnabledHeader());
-        // this.publicRegisterEnabled = this.config.get("publicRegisterEnabled");
-        //
-        // // TODO: React to url change
-        // if (this.router.url === "/") {
-        //     return this.active = true;
-        // } else {
-        //     return this.active = false;
-        // }
+        this.publicRegisterEnabled = conf.get("publicRegisterEnabled", false);
     }
 }

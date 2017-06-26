@@ -40,7 +40,6 @@ nav.navbar(*ngIf="isEnabledHeader")
     div.nav-right(*ngIf="user")
         a(
             routerLink="/",
-            [class.active]="active",
             [title]="'PROJECT.NAVIGATION.DASHBOARD_TITLE' | translate"
         )
             tg-svg(svg-icon="icon-dashboard")
