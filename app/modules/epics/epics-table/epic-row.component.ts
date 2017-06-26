@@ -30,11 +30,11 @@ export class EpicRow {
     }
 
     percentage() {
-        let opened = this.epic.getIn(['user_stories_counts', 'opened']);
-        let closed = this.epic.getIn(['user_stories_counts', 'closed']);
+        let progress= this.epic.getIn(['user_stories_counts', 'progress']);
+        let total = this.epic.getIn(['user_stories_counts', 'total']);
 
-        if (opened && closed) {
-            return (100 * closed) / (opened + closed);
+        if (total) {
+            return (100 * progress) / total;
         }
         return 0;
     }

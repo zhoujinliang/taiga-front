@@ -28,7 +28,7 @@
         )
         tg-svg(
             svg-icon="icon-arrow-down",
-            *ngIf="epic.getIn(['user_stories_counts', 'opened']) || epic.getIn(['user_stories_counts', 'closed'])"
+            *ngIf="epic.getIn(['user_stories_counts', 'total'])"
         )
 
     .project(*ngIf="columns.project")
