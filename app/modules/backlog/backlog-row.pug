@@ -4,7 +4,7 @@
 .votes(
     [class.inactive]="!us.get('total_voters')",
     [class.is-voted]="us.get('is_voter')",
-    [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate:{total:us.total_voters||0}:'messageformat'"
+    [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:us.total_voters||0}"
 )
     tg-svg(svg-icon="icon-upvote")
     span {{ us.get('total_voters') }}

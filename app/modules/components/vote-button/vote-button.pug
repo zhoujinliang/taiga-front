@@ -10,7 +10,7 @@ a.vote-inner(
 )
     tg-svg(svg-icon="icon-upvote")
     span(
-        title="{{ 'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate:{total:vm.item.total_voters||0}:'messageformat' }}",
+        [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:vm.item.total_voters||0}",
         tg-loading="vm.loading"
     ) {{ vm.item.total_voters }}
 
@@ -18,5 +18,5 @@ a.vote-inner(
 span.vote-inner(ng-if="::!vm.user")
     tg-svg(svg-icon="icon-upvote")
     span(
-        title="{{ 'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate:{total:vm.item.total_voters||0}:'messageformat' }}"
+        [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:vm.item.total_voters||0}"
     ) {{ ::vm.item.total_voters }}

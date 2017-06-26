@@ -30,14 +30,14 @@
     .list-itemtype-track
         span.list-itemtype-track-likers(
             [class.active]="item.get('is_fan')"
-            [title]="'PROJECT.LIKE_BUTTON.COUNTER_TITLE'|translate:{total:item.get(\"total_fans\")||0}:'messageformat'"
+            [title]="'PROJECT.LIKE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:item.get(\"total_fans\")||0}"
          )
             tg-svg(svg-icon="icon-like")
             span {{ item.get('total_fans') }}
 
         span.list-itemtype-track-watchers(
             [class.active]="item.get('is_watcher')"
-            [title]="'PROJECT.WATCH_BUTTON.COUNTER_TITLE'|translate:{total:item.get(\"total_watchers\")||0}:'messageformat'"
+            [title]="'PROJECT.WATCH_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:item.get(\"total_watchers\")||0}"
         )
             tg-svg(svg-icon="icon-watch")
             span {{ item.get('total_watchers') }}

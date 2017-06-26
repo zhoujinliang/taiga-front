@@ -18,7 +18,7 @@ button.track-button.watch-button(
 
     // tg-loading="vm.loading"
     span.track-button-counter(
-        [title]="'PROJECT.WATCH_BUTTON.COUNTER_TITLE'|translate:{total:project.get(\"total_watchers\")||0}:'messageformat'"
+        [title]="'PROJECT.WATCH_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:project.get(\"total_watchers\")||0}"
     ) {{ project.get('total_watchers') }}
 
 ul.watch-options(

@@ -11,12 +11,12 @@ a.vote-inner(
     tg-svg(svg-icon="icon-upvote")
     //*tgLoading="loading",
     span(
-        [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate:{total:item.get('total_voters')||0}:'messageformat'",
+        [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:item.get('total_voters')||0}",
     ) {{ item.get('total_voters') }}
 
 //- Anonymous user button
 span.vote-inner(*ngIf="!user")
     tg-svg(svg-icon="icon-upvote")
     span(
-        [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate:{total:vm.item.total_voters||0}:'messageformat'"
+        [title]="'COMMON.VOTE_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:vm.item.total_voters||0}"
     ) {{ item.get('total_voters') }}

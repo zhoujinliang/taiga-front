@@ -1,6 +1,6 @@
 .ticket-watch-title(
     *ngIf="item",
-    [title]="'COMMON.WATCH_BUTTON.COUNTER_TITLE'|translate:{total:item.get('watchers').size||0}:'messageformat'",
+    [title]="'COMMON.WATCH_BUTTON.COUNTER_TITLE'|translate|messageformat:{total:item.get('watchers').size||0}",
 ) {{ item.get('watchers').size }} {{'COMMON.WATCHERS.WATCHERS' | translate}}
 
 div.ticket-watch-inner(*ngIf="item")

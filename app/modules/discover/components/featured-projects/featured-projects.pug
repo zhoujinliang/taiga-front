@@ -31,20 +31,20 @@
                 p.project-card-description {{ project.get('description').slice(0,100) }}{{ project.get('description').length < 100 ? '' : '...'}}
                 .project-card-statistics
                     span.statistic(
-                        "[class.active]"="project.get('is_fan')"
-                        title="{{ 'PROJECT.FANS_COUNTER_TITLE'|translate:{total:project.get('total_fans')||0}:'messageformat' }}"
+                        [class.active]="project.get('is_fan')",
+                        [title]="'PROJECT.FANS_COUNTER_TITLE'|translate|messageformat:{total:project.get('total_fans')||0}"
                     )
                         tg-svg(svg-icon="icon-like")
                         span {{project.get('total_fans')}}
                     span.statistic(
-                        "[class.active]"="project.get('is_watcher')"
-                        title="{{ 'PROJECT.WATCHERS_COUNTER_TITLE'|translate:{total:project.get('total_watchers')||0}:'messageformat' }}"
+                        [class.active]="project.get('is_watcher')",
+                        [title]="'PROJECT.WATCHERS_COUNTER_TITLE'|translate|messageformat:{total:project.get('total_watchers')||0}"
                     )
                         tg-svg(svg-icon="icon-watch")
                         span {{project.get('total_watchers')}}
                     span.statistic(
-                        "[class.active]"="project.get('i_am_member')"
-                        title="{{ 'PROJECT.MEMBERS_COUNTER_TITLE'|translate:{total:project.get('members').size||0}:'messageformat' }}"
+                        [class.active]="project.get('i_am_member')",
+                        [title]="'PROJECT.MEMBERS_COUNTER_TITLE'|translate|messageformat:{total:project.get('members').size||0}"
                     )
                         tg-svg(svg-icon="icon-team")
                         span.statistics-num {{ project.get('members').size }}
