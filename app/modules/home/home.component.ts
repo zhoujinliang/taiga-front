@@ -68,7 +68,7 @@ export class Home implements OnInit, OnDestroy {
     ngOnInit() {
         this.subscriptions = [
             this.user.combineLatest(this.projects).subscribe(([user, projects]: any) => {
-                if (user && user.isEmpty()) {
+                if (!user || user.isEmpty()) {
                     this.router.navigate(["/discover"]);
                     return;
                 }
