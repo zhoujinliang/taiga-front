@@ -50,26 +50,30 @@
             margin-top: 4rem;
         }
     }
-    .list-itemtype-project {
-        border-bottom: 1px solid $gray-light;
-        display: flex;
-        padding: 1rem 0;
+    tg-discover-search-result {
         &:last-child {
-            border-bottom: 0;
+            .list-itemtype-project {
+                border-bottom: 0;
+            }
         }
-    }
-    .list-itemtype-project-left {
-        align-items: flex-start;
-        display: flex;
-        width: 100%;
-    }
-    .list-itemtype-project-image {
-        flex-shrink: 0;
-        margin-right: 1rem;
-    }
-    .list-itemtype-project-data {
-        flex: 1;
-        vertical-align: middle;
+        .list-itemtype-project {
+            border-bottom: 1px solid $gray-light;
+            display: flex;
+            padding: 1rem 0;
+        }
+        .list-itemtype-project-left {
+            align-items: flex-start;
+            display: flex;
+            width: 100%;
+        }
+        .list-itemtype-project-image {
+            flex-shrink: 0;
+            margin-right: 1rem;
+        }
+        .list-itemtype-project-data {
+            flex: 1;
+            vertical-align: middle;
+        }
     }
     .project-statistics {
         display: flex;
