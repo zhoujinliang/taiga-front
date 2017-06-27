@@ -17,18 +17,15 @@
  * File: discover-search.controller.coffee
  */
 
-import * as angular from "angular";
-import * as _ from "lodash";
-import {defineImmutableProperty} from "../../../libs/utils";
-
-import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { search } from "@ngrx/router-store";
 import { Store } from "@ngrx/store";
 import { IState } from "../../../app.store";
 import { SetMetadataAction } from "../../../app.actions";
-import { SearchDiscoverProjects } from "../discover.actions";
-import {DiscoverProjectsService} from "../services/discover-projects.service";
+import { SearchDiscoverProjects, SetDiscoverSearchResults } from "../discover.actions";
+
+import * as Immutable from "immutable"
 
 @Component({
     selector: "tg-discover-search",
@@ -37,36 +34,32 @@ import {DiscoverProjectsService} from "../services/discover-projects.service";
 export class DiscoverSearch implements OnInit {
     q: any;
     filter: any;
-    orderBy: any;
-    loadingGlobal: boolean;
-    loadingList: boolean;
-    loadingPagination: boolean;
+    order: any;
     searchResults: any;
     projectsCount: any;
 
     constructor(private route: ActivatedRoute,
-                private store: Store<IState>,
-                private router: Router,
-                private discoverProjects: DiscoverProjectsService) {
+                private store: Store<IState>) {
         this.store.dispatch(new SetMetadataAction("DISCOVER.SEARCH.PAGE_TITLE", {}, "DISCOVER.SEARCH.PAGE_DESCRIPTION", {}));
     }
 
     ngOnInit() {
         this.route.queryParams.subscribe((params) => {
-            this.q = params.text;
+            this.q = params.text || "";
             this.filter = params.filter || "all";
-            this.orderBy = params.order_by || "";
-            this.store.dispatch(new SearchDiscoverProjects(this.q, this.filter, this.orderBy));
+            this.order = params.order_by || "";
+            this.store.dispatch(new SetDiscoverSearchResults(Immutable.List()));
+            this.store.dispatch(new SearchDiscoverProjects(this.q, this.filter, this.order));
         });
         this.searchResults = this.store.select((state) => state.getIn(["discover", "search-results"]));
         this.projectsCount = this.store.select((state) => state.getIn(["discover", "projects-count"]));
-        // this.loadingGlobal = false;
-        // this.loadingList = false;
-        // this.loadingPagination = false;
-
     }
 
     onSearchCriteriaChange() {
-        this.store.dispatch(search({filter: this.filter, text: this.q, order_by: this.orderBy}));
+        this.store.dispatch(search({filter: this.filter, text: this.q, order_by: this.order}));
+    }
+
+    setOrder(newOrder) {
+        this.store.dispatch(search({filter: this.filter, text: this.q, order_by: newOrder}));
     }
 }

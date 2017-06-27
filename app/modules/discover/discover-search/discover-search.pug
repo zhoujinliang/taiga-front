@@ -1,4 +1,4 @@
 .discover-search
     tg-discover-search-bar((search)="onSearch($event)", [projectsCount]="projectsCount|async", [withFilters]="true")
 
-tg-discover-search-results([projects]="searchResults | async")
+tg-discover-search-results([projects]="searchResults | async", [order]="order", (orderChange)="setOrder($event)")

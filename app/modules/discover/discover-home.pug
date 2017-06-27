@@ -3,8 +3,16 @@ section.discover
         tg-discover-search-bar((search)="onSearch($event)", [projectsCount]="projectsCount|async")
 
     section.highlighted
-        tg-most-liked([projects]="mostLikedProjects | async", (order)="onMostLikedOrder($event)")
-        tg-most-active([projects]="mostActiveProjects | async", (order)="onMostActiveOrder($event)")
+        tg-most-liked(
+            [projects]="mostLikedProjects | async",
+            (orderChange)="onMostLikedOrder($event)",
+            [order]="likedOrder"
+        )
+        tg-most-active(
+            [projects]="mostActiveProjects | async",
+            (orderChange)="onMostActiveOrder($event)",
+            [order]="activeOrder"
+        )
 
     section.featured-projects
         tg-featured-projects([projects]="featuredProjects | async")

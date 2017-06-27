@@ -26,13 +26,10 @@ import {defineImmutableProperty} from "../../../../libs/utils";
 })
 export class MostLiked {
     @Input() projects;
-    @Output() order: EventEmitter<string>;
+    @Input() order: string;
+    @Output() orderChange: EventEmitter<string>;
 
     constructor() {
-        this.order = new EventEmitter();
-    }
-
-    orderBy(type) {
-        this.order.emit(type);
+        this.orderChange = new EventEmitter();
     }
 }

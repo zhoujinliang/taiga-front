@@ -25,41 +25,20 @@ import {TranslateService} from "@ngx-translate/core";
     template: require("./discover-home-order-by.pug")(),
 })
 export class DiscoverHomeOrderBy implements OnInit{
-    @Output() order: EventEmitter<any>;
-    currentOrderBy: any;
+    @Input() order: string = "week";
+    @Output() orderChange: EventEmitter<any>;
     isOpen: boolean;
-    texts: any;
 
     constructor(private translate: TranslateService) {
-        this.order = new EventEmitter();
-        this.texts = {
-            week: this.translate.instant("DISCOVER.FILTERS.WEEK"),
-            month: this.translate.instant("DISCOVER.FILTERS.MONTH"),
-            year: this.translate.instant("DISCOVER.FILTERS.YEAR"),
-            all: this.translate.instant("DISCOVER.FILTERS.ALL_TIME"),
-        };
+        this.orderChange = new EventEmitter();
     }
 
     ngOnInit() {
         this.isOpen = false;
-        this.currentOrderBy = "week";
-    }
-
-    currentText() {
-        return this.texts[this.currentOrderBy];
-    }
-
-    open() {
-        return this.isOpen = true;
-    }
-
-    close() {
-        return this.isOpen = false;
     }
 
     orderBy(type) {
-        this.currentOrderBy = type;
         this.isOpen = false;
-        this.order.emit(type);
+        this.orderChange.emit(type);
     }
 }

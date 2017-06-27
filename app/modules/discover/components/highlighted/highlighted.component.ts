@@ -26,4 +26,13 @@ import {Component, Input} from "@angular/core";
 export class Highlighted {
     @Input() loading: any;
     @Input() highlighted: any;
+    @Input() order: string;
+    @Input() orderField: string;
+
+    orderString(order) {
+        if (order === "all") {
+            return `-${this.orderField}`;
+        }
+        return `-${this.orderField}_last_${order}`;
+    }
 }

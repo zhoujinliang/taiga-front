@@ -56,6 +56,12 @@ export class SetFeaturedProjectsAction implements Action {
   constructor(public payload: Immutable.List<any>) { }
 }
 
+export class SetDiscoverSearchResults implements Action {
+  readonly type = "SET_DISCOVER_SEARCH_RESULTS";
+
+  constructor(public payload: Immutable.List<any>) { }
+}
+
 export class AppendDiscoverSearchResults implements Action {
   readonly type = "APPEND_DISCOVER_SEARCH_RESULTS";
 

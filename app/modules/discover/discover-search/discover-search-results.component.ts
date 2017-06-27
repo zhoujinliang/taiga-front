@@ -17,7 +17,7 @@
  * File: discover-search.controller.coffee
  */
 
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
@@ -26,4 +26,10 @@ import * as Immutable from "immutable";
 })
 export class DiscoverSearchResults {
     @Input() projects: Immutable.List<any>;
+    @Input() order: string;
+    @Output() orderChange: EventEmitter<string>;
+
+    constructor() {
+        this.orderChange = new EventEmitter();
+    }
 }

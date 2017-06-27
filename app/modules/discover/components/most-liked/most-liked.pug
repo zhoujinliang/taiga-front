@@ -4,12 +4,15 @@
             tg-svg(svg-icon="icon-like")
             h1.title(translate="DISCOVER.MOST_LIKED")
         tg-discover-home-order-by(
-            (order)="orderBy($event)"
+            [order]="order",
+            (orderChange)="orderChange.emit($event)"
         )
 
     tg-highlighted(
         [loading]="false",
-        [highlighted]="projects"
+        [highlighted]="projects",
+        [order]="order",
+        orderField="total_fans"
     )
 
 .empty-highlighted-project(*ngIf="!projects?.size")

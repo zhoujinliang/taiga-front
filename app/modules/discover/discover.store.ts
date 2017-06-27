@@ -26,6 +26,8 @@ export const discoverReducer = (state, action) => {
                 }
                 return action.payload;
             })
+        case "SET_DISCOVER_SEARCH_RESULTS":
+            return state.set("search-results", action.payload);
         case "UPDATE_DISCOVER_SEARCH_NEXT_PAGE":
             return state.update("results-next-page", (value) => {
                 if (action.payload) {

@@ -17,52 +17,27 @@
  * File: discover-search-list-header.controller.coffee
  */
 
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {Component, EventEmitter, Input, OnChanges, Output} from "@angular/core";
 import * as angular from "angular";
 
 @Component({
     selector: "tg-discover-search-list-header",
     template: require("./discover-search-list-header.pug")(),
 })
-export class DiscoverSearchListHeader implements OnInit {
-    @Input("order-by") orderBy: any;
-    @Output("order-by") orderByChange: EventEmitter<string>;
-    like_is_open: boolean;
-    activity_is_open: boolean;
+export class DiscoverSearchListHeader implements OnChanges {
+    @Input() order: string;
+    @Output() orderChange: EventEmitter<string>;
+    likeIsOpen: boolean;
+    activityIsOpen: boolean;
 
     constructor() {
-        this.orderByChange = new EventEmitter();
+        this.orderChange = new EventEmitter();
     }
 
-    ngOnInit() {
-        this.like_is_open = this.orderBy.indexOf("-total_fans") === 0;
-        this.activity_is_open = this.orderBy.indexOf("-total_activity") === 0;
-    }
-
-    openLike() {
-        this.activity_is_open = false;
-        this.like_is_open = true;
-
-        this.orderByChange.emit("-total_fans_last_week");
-        return false;
-    }
-
-    openActivity() {
-        this.activity_is_open = true;
-        this.like_is_open = false;
-
-        this.orderByChange.emit("-total_activity_last_week");
-        return false;
-    }
-
-    setOrder(order) {
-        this.orderByChange.emit(order);
-    }
-
-    clearOrder() {
-        this.activity_is_open = false;
-        this.like_is_open = false;
-
-        this.orderByChange.emit(null);
+    ngOnChanges(changes) {
+        if(changes.order) {
+            this.likeIsOpen = this.order.indexOf("-total_fans") === 0;
+            this.activityIsOpen = this.order.indexOf("-total_activity") === 0;
+        }
     }
 }

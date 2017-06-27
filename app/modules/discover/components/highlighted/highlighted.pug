@@ -21,7 +21,7 @@
                     ) {{project.get('name')}}
                     tg-svg.look-for-people(
                         *ngIf="project.get('is_looking_for_people')",
-                        svg-icon="icon-recruit"
+                        svg-icon="icon-recruit",
                         [svg-title]="project.get('looking_for_people_note')"
                     )
                 .project-statistics
@@ -46,9 +46,8 @@
             p.project-description {{ project.get('description').slice(0,150) }}{{ project.get('description').length < 150 ? '' : '...'}}
 
     div(*ngIf="!loading")
-        // tg-nav="discover-search"
-        // tg-nav-get-params="{\"order_by\": \"{{orderBy}}\"}"
         a.view-more-projects.button-green(
-            *ngIf="highlighted"
-            href="#"
+            *ngIf="highlighted",
+            routerLink="/discover/search",
+            [queryParams]="{'order_by': orderString(order)}"
         ) {{ 'DISCOVER.VIEW_MORE' | translate }}

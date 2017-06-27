@@ -6,80 +6,80 @@
 
         .filter-discover-search()
             a.discover-search-filter(
-                (click)="openLike()",
-                [class.active]="like_is_open"
+                (click)="orderChange.emit('-total_fans_last_week')",
+                [class.active]="likeIsOpen"
             )
                 tg-svg(svg-icon="icon-like")
                 span(translate='DISCOVER.MOST_LIKED')
             a.discover-search-filter(
-                (click)="openActivity()",
-                [class.active]="activity_is_open"
+                (click)="orderChange.emit('-total_activity_last_week')",
+                [class.active]="activityIsOpen"
             )
                 tg-svg(svg-icon="icon-activity")
                 span(translate='DISCOVER.MOST_ACTIVE')
 
-    .discover-search-subfilter.most-liked-subfilter(*ngIf="like_is_open")
+    .discover-search-subfilter.most-liked-subfilter(*ngIf="likeIsOpen")
         a.results(
             [title]="'DISCOVER.FILTERS.CLEAR' | translate",
-            (click)="setOrder()",
+            (click)="orderChange.emit('')",
             translate='DISCOVER.FILTERS.CLEAR'
         )
 
         ul.filter-list
             li
                 a(
-                    [class.active]="orderBy == '-total_fans_last_week'",
-                    (click)="setOrder('-total_fans_last_week')",
+                    [class.active]="order == '-total_fans_last_week'",
+                    (click)="orderChange.emit('-total_fans_last_week')",
                     translate='DISCOVER.FILTERS.WEEK'
                 )
             li
                 a(
-                    [class.active]="orderBy == '-total_fans_last_month'",
-                    (click)="setOrder('-total_fans_last_month')",
+                    [class.active]="order == '-total_fans_last_month'",
+                    (click)="orderChange.emit('-total_fans_last_month')",
                     translate='DISCOVER.FILTERS.MONTH'
                 )
             li
                 a(
-                    [class.active]="orderBy == '-total_fans_last_year'",
-                    (click)="setOrder('-total_fans_last_year')",
+                    [class.active]="order == '-total_fans_last_year'",
+                    (click)="orderChange.emit('-total_fans_last_year')",
                     translate='DISCOVER.FILTERS.YEAR'
                 )
             li
                 a(
-                    [class.active]="orderBy == '-total_fans'",
-                    (click)="setOrder('-total_fans')",
+                    [class.active]="order == '-total_fans'",
+                    (click)="orderChange.emit('-total_fans')",
                     translate='DISCOVER.FILTERS.ALL_TIME'
                 )
 
-    .discover-search-subfilter.most-active-subfilter(*ngIf="activity_is_open")
+    .discover-search-subfilter.most-active-subfilter(*ngIf="activityIsOpen")
         a.results(
             [title]="'DISCOVER.FILTERS.CLEAR' | translate",
-            (click)="clearOrder()",
+            (click)="orderChange.emit('')",
             translate='DISCOVER.FILTERS.CLEAR'
         )
 
         ul.filter-list
             li
                 a(
-                    [class.active]="orderBy == '-total_activity_last_week'",
-                    (click)="setOrder('-total_activity_last_week')",
+                    [class.active]="order == '-total_activity_last_week'",
+                    (click)="orderChange.emit('-total_activity_last_week')",
                     translate='DISCOVER.FILTERS.WEEK'
                 )
             li
                 a(
-                    [class.active]="orderBy == '-total_activity_last_month'",
-                    (click)="setOrder('-total_activity_last_month')",
+                    [class.active]="order == '-total_activity_last_month'",
+                    (click)="orderChange.emit('-total_activity_last_month')",
                     translate='DISCOVER.FILTERS.MONTH'
                 )
             li
                 a(
-                    [class.active]="orderBy == '-total_activity_last_year'",
-                    (click)="setOrder('-total_activity_last_year')",
+                    [class.active]="order == '-total_activity_last_year'",
+                    (click)="orderChange.emit('-total_activity_last_year')",
                     translate='DISCOVER.FILTERS.YEAR'
                 )
             li
                 a(
-                    [class.active]="orderBy == '-total_activity'",
-                    (click)="setOrder('-total_activity')",
+                    [class.active]="order == '-total_activity'",
+                    (click)="orderChange.emit('-total_activity')",
                     translate='DISCOVER.FILTERS.ALL_TIME'
                 )

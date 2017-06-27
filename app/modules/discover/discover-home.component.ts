@@ -38,6 +38,8 @@ export class DiscoverHome implements OnInit {
     featuredProjects: Observable<any>;
     projectsCount: any;
     subscription: Subscription;
+    likedOrder: string = "week";
+    activeOrder: string = "week";
 
     constructor(private store: Store<IState>,
                 private router: Router) {
@@ -69,10 +71,12 @@ export class DiscoverHome implements OnInit {
     }
 
     onMostActiveOrder(newOrder) {
+        this.activeOrder = newOrder;
         this.store.dispatch(new actions.FetchMostActiveAction(`last_${newOrder}`));
     }
 
     onMostLikedOrder(newOrder) {
+        this.likedOrder = newOrder;
         this.store.dispatch(new actions.FetchMostLikedAction(`last_${newOrder}`));
     }
 

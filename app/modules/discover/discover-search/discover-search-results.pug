@@ -1,6 +1,6 @@
 .empty-large(*ngIf="projects && !projects.size === 0 && !loadingGlobal && !loadingList")
     img(
-        src="/#{v}/images/empty/empty_tex.png",
+        src="/" + _version + "/images/empty/empty_tex.png",
         [alt]="'DISCOVER.EMPTY' | translate"
     )
     p.title(translate="DISCOVER.EMPTY")
@@ -10,8 +10,8 @@
 
     .discover-results-inner(*ngIf="!loadingGlobal")
         tg-discover-search-list-header(
-            (change)="onChangeOrder(orderBy)",
-            order-by="orderBy"
+            (orderChange)="orderChange.emit($event)",
+            [order]="order"
         )
 
         .spin(ng-show="loadingList", tg-loading="loadingList")

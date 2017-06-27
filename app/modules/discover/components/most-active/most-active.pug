@@ -4,12 +4,15 @@
             tg-svg(svg-icon="icon-activity")
             h1.title(translate="DISCOVER.MOST_ACTIVE")
         tg-discover-home-order-by(
-            (order)="orderBy($event)",
+            [order]="order",
+            (orderChange)="orderChange.emit($event)"
         )
 
     tg-highlighted(
         [loading]="false",
-        [highlighted]="projects"
+        [highlighted]="projects",
+        [order]="order",
+        orderField="total_activity"
     )
 
 .empty-highlighted-project(*ngIf="!projects?.size")

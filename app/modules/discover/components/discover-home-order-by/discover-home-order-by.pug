@@ -1,7 +1,12 @@
-.filter-highlighted((mouseleave)="close()")
+.filter-highlighted((mouseleave)="isOpen = false")
     a.current-filter(
-        (click)="open()"
-    ) {{currentText()}}
+        (click)="isOpen = true",
+        [ngSwitch]="order"
+    )
+        span(*ngSwitchCase="'week'", translate="DISCOVER.FILTERS.WEEK")
+        span(*ngSwitchCase="'month'", translate="DISCOVER.FILTERS.MONTH")
+        span(*ngSwitchCase="'year'", translate="DISCOVER.FILTERS.YEAR")
+        span(*ngSwitchCase="'all'", translate="DISCOVER.FILTERS.ALL_TIME")
         tg-svg(svg-icon="icon-arrow-down")
 
     ul.filter-list(*ngIf="isOpen")
