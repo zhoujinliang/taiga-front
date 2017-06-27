@@ -48,19 +48,15 @@ export class DiscoverSearch implements OnInit {
             this.q = params.text || "";
             this.filter = params.filter || "all";
             this.order = params.order_by || "";
-            this.store.dispatch(new SetDiscoverSearchResults(Immutable.List()));
+            this.store.dispatch(new SetDiscoverSearchResults(null));
             this.store.dispatch(new SearchDiscoverProjects(this.q, this.filter, this.order));
         });
         this.searchResults = this.store.select((state) => state.getIn(["discover", "search-results"]));
         this.projectsCount = this.store.select((state) => state.getIn(["discover", "projects-count"]));
     }
 
-    onSearchCriteriaChange() {
-        this.store.dispatch(search({filter: this.filter, text: this.q, order_by: this.order}));
-    }
-
     setFilter({filter, q}) {
-        this.store.dispatch(search({filter: filter, text: q, order_by: this.order}));
+        this.store.dispatch(search({filter: filter, text: q, order_by: ""}));
     }
 
     setOrder(newOrder) {

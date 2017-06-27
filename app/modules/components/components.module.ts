@@ -36,7 +36,7 @@ import { FormsModule } from "@angular/forms";
 import { ColorSelector } from "./color-selector/color-selector.component";
 import { CheckPermissionsService } from "./check-permissions/check-permissions.service";
 import { IfPermDirective } from "./check-permissions/check-permissions.directive";
-import { LoadingDirective, LoadingAux } from "./loading.directive";
+import { LoadingDirective, BigLoadingAux, SmallLoadingAux, MediumLoadingAux, LoadingAux } from "./loading.directive";
 import { IssuesBullet } from "./issues-bullet.component";
 import { ProgressBar } from "./progress-bar.component";
 import { TagsLine } from "./tags/tags-line.component";
@@ -115,6 +115,9 @@ import { MediumEditor } from "./wysiwyg/medium/medium.component";
         ColorSelector,
         IfPermDirective,
         LoadingDirective,
+        BigLoadingAux,
+        SmallLoadingAux,
+        MediumLoadingAux,
         LoadingAux,
         IssuesBullet,
         ProgressBar,
@@ -134,6 +137,9 @@ import { MediumEditor } from "./wysiwyg/medium/medium.component";
         WysiwygCodeHightlighterService,
     ],
     entryComponents: [
+        BigLoadingAux,
+        SmallLoadingAux,
+        MediumLoadingAux,
         LoadingAux,
     ]
 })
