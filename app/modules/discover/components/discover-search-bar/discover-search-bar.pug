@@ -6,65 +6,42 @@ div.discover-header
         p.project-number(
             *ngIf="projectsCount",
         ) {{ 'DISCOVER.DISCOVER_SUBTITLE' | translate | messageformat:{projects: projectsCount} }}
-        form((submit)="submitFilter()", #searchForm="ngForm")
+        form((submit)="search.emit({filter: filter, q: qField.value}) && false")
             div.searchbox
                 input(
+                    #qField,
                     name="search",
                     type="text",
                     [placeholder]="'DISCOVER.SEARCH.INPUT_PLACEHOLDER' | translate",
-                    [(ngModel)]="q"
+                    [value]="q"
                 )
                 tg-svg.search-button(
-                    ng-click="submitFilter()",
+                    (click)="submitFilter()",
                     svg-icon="icon-search",
                     svg-title-translate="DISCOVER.SEARCH.ACTION_TITLE"
                 )
 
             fieldset.searchbox-filters(*ngIf="withFilters")
-                input(
-                    type='radio',
-                    id="filter-all",
-                    name="filter-search",
-                    [(ngModel)]="filter"
-                )
                 label(
                     for="filter-all",
                     [class.active]="filter == 'all'",
-                    (click)="filter = 'all'"
+                    (click)="search.emit({filter: 'all', q: q})"
                 ) {{ 'DISCOVER.FILTERS.ALL' | translate }}
 
-                input(
-                    type='radio',
-                    id="filter-kanban",
-                    name="filter-search",
-                    [(ngModel)]="filter"
-                )
                 label(
                     for="filter-kanban",
                     [class.active]="filter == 'kanban'",
-                    (click)="filter = 'kanban'"
+                    (click)="search.emit({filter: 'kanban', q: q})"
                 ) {{ 'DISCOVER.FILTERS.KANBAN' | translate }}
 
-                input(
-                    type='radio',
-                    id="filter-scrum",
-                    name="filter-search",
-                    [(ngModel)]="filter"
-                )
                 label(
                     for="filter-scrum",
                     [class.active]="filter == 'scrum'",
-                    (click)="filter = 'scrum'"
+                    (click)="search.emit({filter: 'scrum', q: q})"
                 ) {{ 'DISCOVER.FILTERS.SCRUM' | translate }}
 
-                input(
-                    type='radio',
-                    id="filter-people",
-                    name="filter-search",
-                    [(ngModel)]="filter"
-                )
                 label(
                     for="filter-people",
                     [class.active]="filter == 'people'",
-                    (click)="filter = 'people'"
+                    (click)="search.emit({filter: 'people', q: q})"
                 ) {{ 'DISCOVER.FILTERS.PEOPLE' | translate }}

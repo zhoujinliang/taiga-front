@@ -59,6 +59,10 @@ export class DiscoverSearch implements OnInit {
         this.store.dispatch(search({filter: this.filter, text: this.q, order_by: this.order}));
     }
 
+    setFilter({filter, q}) {
+        this.store.dispatch(search({filter: filter, text: q, order_by: this.order}));
+    }
+
     setOrder(newOrder) {
         this.store.dispatch(search({filter: this.filter, text: this.q, order_by: newOrder}));
     }

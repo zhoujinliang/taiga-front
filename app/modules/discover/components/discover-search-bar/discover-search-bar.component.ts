@@ -31,8 +31,8 @@ export class DiscoverSearchBar {
     @Output() search: EventEmitter<any>;
     @Input() projectsCount: number = 0;
     @Input() withFilters: boolean = false;
-    q: any;
-    filter: any;
+    @Input() q: any;
+    @Input() filter: any;
 
     constructor(private store: Store<IState>) {
         this.search = new EventEmitter();
