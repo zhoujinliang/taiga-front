@@ -1,6 +1,6 @@
 section.discover
     header
-        tg-discover-search-bar((search)="onSearch($event)", [projectsCount]="projectsCount|async")
+        tg-discover-search-bar((search)="onSearch($event)", [projectsCount]="projectsCount|async", q="")
 
     section.highlighted
         tg-most-liked(

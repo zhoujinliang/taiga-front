@@ -23,7 +23,7 @@ import { search } from "@ngrx/router-store";
 import { Store } from "@ngrx/store";
 import { IState } from "../../../app.store";
 import { SetMetadataAction } from "../../../app.actions";
-import { SearchDiscoverProjects, SetDiscoverSearchResults } from "../discover.actions";
+import * as actions from "../discover.actions";
 
 import * as Immutable from "immutable"
 
@@ -48,11 +48,12 @@ export class DiscoverSearch implements OnInit {
             this.q = params.text || "";
             this.filter = params.filter || "all";
             this.order = params.order_by || "";
-            this.store.dispatch(new SetDiscoverSearchResults(null));
-            this.store.dispatch(new SearchDiscoverProjects(this.q, this.filter, this.order));
+            this.store.dispatch(new actions.SetDiscoverSearchResults(null));
+            this.store.dispatch(new actions.SearchDiscoverProjects(this.q, this.filter, this.order));
         });
         this.searchResults = this.store.select((state) => state.getIn(["discover", "search-results"]));
         this.projectsCount = this.store.select((state) => state.getIn(["discover", "projects-count"]));
+        this.store.dispatch(new actions.FetchProjectsStatsAction());
     }
 
     setFilter({filter, q}) {

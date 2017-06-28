@@ -1,18 +1,24 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { IState } from "../../../app.store";
 import { ConfigurationService } from "../../../ts/modules/base/conf";
 import { LoginAction } from "../auth.actions";
 import { LoginData } from "../auth.model";
+import { Observable, Subscription } from "rxjs"
+import { go } from "@ngrx/router-store";
+
+import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-login-page",
     template: require("./login.pug")(),
 })
-export class LoginPage {
+export class LoginPage implements OnInit, OnDestroy {
     nextUrl: string;
-    loginErrors: any;
+    loginErrors: Observable<Immutable.Map<string, any>>;
+    currentUser: Observable<Immutable.Map<string, any>>;
+    subscriptions: Subscription[];
 
     constructor(private config: ConfigurationService,
                 private store: Store<IState>,
@@ -20,40 +26,41 @@ export class LoginPage {
                 private router: Router) {
         this.nextUrl = "/";
         this.loginErrors = this.store.select((state) => state.getIn(["auth", "login-errors"]));
-        // if (currentUserService.isAuthenticated()) {
-        //     if (!$routeParams['force_login']) {
-        //         let url = $navUrls.resolve("home");
-        //         if ($routeParams['next']) {
-        //             url = decodeURIComponent($routeParams['next']);
-        //             $location.search('next', null);
-        //         }
-        //
-        //         if ($routeParams['unauthorized']) {
-        //             $auth.clear();
-        //             $auth.removeToken();
-        //         } else {
-        //             $location.url(url);
-        //         }
-        //     }
-        // }
+        this.currentUser = this.store.select((state) => state.getIn(["auth", "user"]));
+    }
+
+    calculateNextUrl(next, forceNext) {
+        if (forceNext && forceNext !== "/login") {
+            return forceNext;
+        }
+
+        if (next && next !== "/login") {
+            return next;
+        }
+
+        return "/";
     }
 
     ngOnInit() {
-        this.activeRoute.queryParams.subscribe((params) => {
-            if (!params["next"] || params["next"] === "/login") {
-                this.nextUrl = "/";
-            } else {
-                this.nextUrl = params["next"];
-            }
-
-            if (params["force_next"] && params["force_next"] !== "/login") {
-                this.nextUrl = params["force_next"];
-            }
-        });
+        this.subscriptions = [
+            this.currentUser.combineLatest(this.activeRoute.queryParams).subscribe(([currentUser, params]) => {
+                this.nextUrl = this.calculateNextUrl(params['next'], params['force_next']);
+                if (currentUser) {
+                    this.store.dispatch(go(this.nextUrl));
+                }
+                return this.nextUrl
+            }),
+        ]
     }
 
     login(loginData: LoginData) {
         this.store.dispatch(new LoginAction(loginData, this.nextUrl));
         return false;
+    }
+
+    ngOnDestroy() {
+        for (let sub of this.subscriptions) {
+            sub.unsubscribe();
+        }
     }
 }

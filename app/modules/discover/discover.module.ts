@@ -19,7 +19,6 @@ import {DiscoverSearchResults} from "./discover-search/discover-search-results.c
 import {DiscoverSearchResult} from "./discover-search/discover-search-result.component";
 import {DiscoverSearch} from "./discover-search/discover-search.component";
 import {DiscoverEffects} from "./discover.effects";
-import {DiscoverProjectsService} from "./services/discover-projects.service";
 
 @NgModule({
     imports: [
@@ -50,9 +49,6 @@ import {DiscoverProjectsService} from "./services/discover-projects.service";
         DiscoverSearchResults,
         DiscoverSearchResult,
         FeaturedProjects,
-    ],
-    providers: [
-        DiscoverProjectsService,
     ],
 })
 export class DiscoverModule {}
