@@ -103,7 +103,7 @@ export function groupBy(coll, pred) {
 }
 
 export function timeout(wait, continuation) {
-    window.setTimeout(continuation, wait);
+    return window.setTimeout(continuation, wait);
 }
 
 export function cancelTimeout(timeoutVar) {

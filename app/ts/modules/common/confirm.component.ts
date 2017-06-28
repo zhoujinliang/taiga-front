@@ -22,39 +22,44 @@
  * File: modules/base/confirm.coffee
  */
 
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnDestroy } from "@angular/core";
 import { Store } from "@ngrx/store";
 import * as _ from "lodash";
 import { IState } from "../../../app.store";
 import {addClass, bindMethods, cancelTimeout, debounce, timeout} from "../../../libs/utils";
 import { DiscardNotificationMessageAction } from "./common.actions";
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
+import { Subscription } from "rxjs";
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
     selector: "tg-notification-messages",
     template: `<div *ngIf="msg" [@state]="'active'" class="notification-message notification-message-{{msg.type}}" [class.active]="msg">
-                  <h4>{{msg.title || NOTIFICATION_MSG[msg.type].title | translate}}</h4>
-                  <p>{{msg.message || NOTIFICATION_MSG[msg.type].message | translate}}</p>
+                 <div class="text">
+                    <h4>{{msg.title || NOTIFICATION_MSG[msg.type].title | translate}}</h4>
+                    <p>{{msg.message || NOTIFICATION_MSG[msg.type].message | translate}}</p>
+                 </div>
+                 <a
+                    [title]="'NOTIFICATION.CLOSE' | translate"
+                    (click)="closeNotification()"
+                    class="close">
+                   <tg-svg svg-icon="icon-close"></tg-svg>
+                 </a>
                </div>`,
     animations: [
         trigger('state', [
             state('active', style({transform: 'translateY(0)', opacity: 1})),
             state('void', style({transform: 'translateY(-100%)', opacity: 0})),
-			transition('void => *', [ animate(200) ]),
-			transition('* => void', [ animate(200) ])
+            transition('void => *', [ animate(200) ]),
+            transition('* => void', [ animate(200) ])
         ])
     ]
 })
-export class NotificationMessages {
-    messages$: any;
+export class NotificationMessages implements OnDestroy {
+    messages: any;
     currentState: any;
     msg: any;
+    timeouts: any[];
+    subscription: Subscription;
     NOTIFICATION_MSG = {
         "success": {
             title: "NOTIFICATION.OK",
@@ -71,8 +76,8 @@ export class NotificationMessages {
     };
 
     constructor(private store: Store<IState>) {
-        this.messages$ = this.store.select((state) => state.getIn(["common", "notification-messages"]));
-        this.messages$.subscribe((state) => {
+        this.messages = this.store.select((state) => state.getIn(["common", "notification-messages"]));
+        let subscription = this.messages.subscribe((state) => {
             this.currentState = state;
             if (!this.msg && this.currentState.size > 0) {
                 this.msg = this.getNextMessage(state);
@@ -80,14 +85,27 @@ export class NotificationMessages {
                 if (!time) {
                     time = (this.msg.type === "error") || (this.msg.type === "light-error") ? 3500 : 1500;
                 }
+                time = 5000;
                 // Render the remove of message before start the next message
-                timeout(time, () => {
-                    this.msg = null;
-                });
-                timeout(time+10, () => {
-                    this.store.dispatch(new DiscardNotificationMessageAction());
-                });
+                this.timeouts = [
+                    timeout(time, () => {
+                        this.msg = null;
+                    }),
+                    timeout(time+100, () => {
+                        this.store.dispatch(new DiscardNotificationMessageAction());
+                    }),
+                ]
             }
+        });
+    }
+
+    closeNotification() {
+        for (let tout of this.timeouts) {
+            cancelTimeout(tout);
+        }
+        this.msg = null;
+        timeout(100, () => {
+            this.store.dispatch(new DiscardNotificationMessageAction());
         });
     }
 
@@ -96,6 +114,10 @@ export class NotificationMessages {
             return null;
         }
         return this.currentState.get(0);
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }
 
