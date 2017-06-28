@@ -13,6 +13,8 @@ import { ForgotPasswordForm } from "./forgot-password/forgot-password-form.compo
 import { ForgotPasswordPage } from "./forgot-password/forgot-password.component";
 import { LoginForm } from "./login/login-form.component";
 import { LoginPage } from "./login/login.component";
+import { RegisterForm } from "./register/register-form.component";
+import { RegisterPage } from "./register/register.component";
 import { PublicRegisterMessage} from "./login/public-register-message.component";
 
 import {AuthEffects} from "./auth.effects";
@@ -25,6 +27,7 @@ import {AuthEffects} from "./auth.effects";
         TgComponentsModule,
         TranslateModule.forChild({}),
         RouterModule.forChild([
+            {path: "register", component: RegisterPage},
             {path: "login", component: LoginPage},
             {path: "forgot-password", component: ForgotPasswordPage},
         ]),
@@ -32,11 +35,14 @@ import {AuthEffects} from "./auth.effects";
     ],
     exports: [
         LoginPage,
+        RegisterPage,
         ForgotPasswordPage,
     ],
     declarations: [
         LoginPage,
         LoginForm,
+        RegisterPage,
+        RegisterForm,
         ForgotPasswordPage,
         ForgotPasswordForm,
         PublicRegisterMessage,

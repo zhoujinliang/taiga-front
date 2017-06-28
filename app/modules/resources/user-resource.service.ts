@@ -83,4 +83,21 @@ export class UserResource {
         let url = this.urls.resolve("users-password-recovery");
         return this.http.post(url, {username: username});
     }
+
+    register(registerData, type=null, existing=false) {
+        const url = this.urls.resolve("auth-register");
+
+        registerData.type = type ? type : "public"
+        if (type == "private") {
+            registerData.existing = existing
+        }
+
+        return this.http.post(url, registerData)
+                        .map((data: any) => {
+                            return Immutable.fromJS(data.data);
+                        })
+                        .catch((err) => {
+                            return Rx.Observable.throw(err);
+                        });
+    }
 }

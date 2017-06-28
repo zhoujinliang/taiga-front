@@ -11,8 +11,7 @@
                 formControlName="username",
                 [placeholder]="'LOGIN_COMMON.PLACEHOLDER_AUTH_NAME' | translate"
             )
-            ul(class="error-list", *ngIf="loginForm.controls.username.dirty && loginForm.controls.username.invalid")
-                li(class="required", translate="COMMON.FORM_ERRORS.REQUIRED")
+            tg-field-error([control]="loginForm.controls.username")
 
         fieldset.login-password
             input(
@@ -23,8 +22,7 @@
                 formControlName="password",
                 [placeholder]="'LOGIN_COMMON.PLACEHOLDER_AUTH_PASSWORD' | translate",
             )
-            ul(class="error-list", *ngIf="loginForm.controls.password.dirty && loginForm.controls.password.invalid")
-                li(class="required", translate="COMMON.FORM_ERRORS.REQUIRED")
+            tg-field-error([control]="loginForm.controls.password")
 
             a.forgot-pass(
                 routerLink="/forgot-password",

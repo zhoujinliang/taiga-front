@@ -29,9 +29,7 @@ import {ConfigurationService} from "../../../ts/modules/base/conf";
     selector: "tg-terms-of-service-and-privacy-policy-notice",
     template: `
         <p class="register-text" *ngIf="privacyPolicyUrl && termsOfServiceUrl"
-           translate
-           [translateParams]="{termsOfServiceUrl: termsOfServiceUrl, privacyPolicyUrl: privacyPolicyUrl}">
-           LEGAL.TERMS_OF_SERVICE_AND_PRIVACY_POLICY_AD
+           [innerHTML]="'LEGAL.TERMS_OF_SERVICE_AND_PRIVACY_POLICY_AD'|translate:{termsOfServiceUrl: termsOfServiceUrl, privacyPolicyUrl: privacyPolicyUrl}">
         </p>`,
 })
 export class TermsOfServiceAndPrivacyPolicyNotice {

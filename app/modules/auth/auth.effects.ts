@@ -73,10 +73,21 @@ export class AuthEffects {
     @Effect()
     register$: Observable<Action> = this.actions$
         .ofType("REGISTER")
-        .map(toPayload);
-        // TODO
-        // .switchMap((registerInfo:any) => {
-        // })
+        .map(toPayload)
+        .switchMap((payload) => {
+            return this.rs.user.register(payload.data).flatMap((user: any) => {
+                return [
+                    new actions.StoreUserAction(user),
+                    go([payload.next]),
+                ];
+            }).catch( (err) => {
+                const newError = new AddNotificationMessageAction(
+                    "error",
+                    this.translate.instant(err.data.get('_error_message')),
+                );
+                return Observable.of(newError);
+            });
+        });
 
     @Effect()
     passwordRecover$: Observable<Action> = this.actions$
@@ -96,9 +107,6 @@ export class AuthEffects {
                 return Observable.of(newError);
             });
         });
-        // TODO
-        // .switchMap((registerInfo:any) => {
-        // })
 
     constructor(private actions$: Actions,
                 private storage: StorageService,

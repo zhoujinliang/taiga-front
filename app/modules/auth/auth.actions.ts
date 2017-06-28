@@ -35,8 +35,11 @@ export class LoginAction implements Action {
 
 export class RegisterAction implements Action {
   readonly type = "REGISTER";
+  public payload: any;
 
-  constructor(public payload: RegisterData) { }
+  constructor(data: RegisterData, next: string) {
+      this.payload = {data, next};
+  }
 }
 
 export class PasswordRecoverAction implements Action {
