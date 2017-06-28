@@ -78,4 +78,9 @@ export class UserResource {
         const url = this.urls.resolve("user", userId);
         return this.http.patch(url, userData);
     }
+
+    passwordRecover(username) {
+        let url = this.urls.resolve("users-password-recovery");
+        return this.http.post(url, {username: username});
+    }
 }

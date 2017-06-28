@@ -28,13 +28,28 @@ import * as _ from "lodash";
 import { IState } from "../../../app.store";
 import {addClass, bindMethods, cancelTimeout, debounce, timeout} from "../../../libs/utils";
 import { DiscardNotificationMessageAction } from "./common.actions";
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 
 @Component({
     selector: "tg-notification-messages",
-    template: `<div *ngIf="msg" class="notification-message notification-message-{{msg.type}}" [class.active]="msg">
+    template: `<div *ngIf="msg" [@state]="'active'" class="notification-message notification-message-{{msg.type}}" [class.active]="msg">
                   <h4>{{msg.title || NOTIFICATION_MSG[msg.type].title | translate}}</h4>
                   <p>{{msg.message || NOTIFICATION_MSG[msg.type].message | translate}}</p>
                </div>`,
+    animations: [
+        trigger('state', [
+            state('active', style({transform: 'translateY(0)', opacity: 1})),
+            state('void', style({transform: 'translateY(-100%)', opacity: 0})),
+			transition('void => *', [ animate(200) ]),
+			transition('* => void', [ animate(200) ])
+        ])
+    ]
 })
 export class NotificationMessages {
     messages$: any;

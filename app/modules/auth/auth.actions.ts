@@ -29,10 +29,7 @@ export class LoginAction implements Action {
   payload: any;
 
   constructor(data: LoginData, next: string) {
-      this.payload = {
-          data,
-          next,
-      };
+      this.payload = {data, next};
   }
 }
 

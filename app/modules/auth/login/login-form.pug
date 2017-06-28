@@ -28,6 +28,7 @@
 
             a.forgot-pass(
                 routerLink="/forgot-password",
+                [queryParams]="queryParams",
                 [title]="'LOGIN_COMMON.TITLE_LINK_FORGOT_PASSWORD' | translate",
                 translate="LOGIN_COMMON.LINK_FORGOT_PASSWORD"
             )

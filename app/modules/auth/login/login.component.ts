@@ -6,7 +6,9 @@ import { ConfigurationService } from "../../../ts/modules/base/conf";
 import { LoginAction } from "../auth.actions";
 import { LoginData } from "../auth.model";
 import { Observable, Subscription } from "rxjs"
+import { CloseLightboxAction, SetMetadataAction } from "../../../app.actions";
 import { go } from "@ngrx/router-store";
+import { calculateNextUrl } from "../utils";
 
 import * as Immutable from "immutable";
 
@@ -27,24 +29,13 @@ export class LoginPage implements OnInit, OnDestroy {
         this.nextUrl = "/";
         this.loginErrors = this.store.select((state) => state.getIn(["auth", "login-errors"]));
         this.currentUser = this.store.select((state) => state.getIn(["auth", "user"]));
-    }
-
-    calculateNextUrl(next, forceNext) {
-        if (forceNext && forceNext !== "/login") {
-            return forceNext;
-        }
-
-        if (next && next !== "/login") {
-            return next;
-        }
-
-        return "/";
+        this.store.dispatch(new SetMetadataAction("LOGIN.PAGE_TITLE", {}, "LOGIN.PAGE_DESCRIPTION", {}))
     }
 
     ngOnInit() {
         this.subscriptions = [
             this.currentUser.combineLatest(this.activeRoute.queryParams).subscribe(([currentUser, params]) => {
-                this.nextUrl = this.calculateNextUrl(params['next'], params['force_next']);
+                this.nextUrl = calculateNextUrl(params['next'], params['force_next']);
                 if (currentUser) {
                     this.store.dispatch(go(this.nextUrl));
                 }
@@ -56,6 +47,10 @@ export class LoginPage implements OnInit, OnDestroy {
     login(loginData: LoginData) {
         this.store.dispatch(new LoginAction(loginData, this.nextUrl));
         return false;
+    }
+
+    closeLightbox() {
+        this.store.dispatch(new CloseLightboxAction());
     }
 
     ngOnDestroy() {

@@ -2,6 +2,7 @@ declare var _version: string;
 import { NgModule } from "@angular/core";
 import { Http, HttpModule } from "@angular/http";
 import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, UrlHandlingStrategy, UrlTree } from "@angular/router";
 
 // NGRX MODULES
@@ -51,6 +52,7 @@ export function HttpLoaderFactory(http: Http) {
 @NgModule({
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpModule,
     HomeModule,
     RouterModule.forRoot([]),

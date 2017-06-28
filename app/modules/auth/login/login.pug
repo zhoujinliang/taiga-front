@@ -1,3 +1,11 @@
+tg-lightbox(key="auth.password-recover")
+    section
+        h2.title(translate="FORGOT_PASSWORD_FORM.SUCCESS_TITLE")
+        p.message(translate="FORGOT_PASSWORD_FORM.SUCCESS_TEXT")
+        .options
+            a.button-green((click)="closeLightbox()")
+                span(translate="COMMON.ACCEPT")
+
 div.wrapper
     div.auth
         div.auth-container

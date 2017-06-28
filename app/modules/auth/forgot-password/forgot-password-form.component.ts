@@ -1,37 +1,50 @@
-import {Component, EventEmitter, OnInit, Output} from "@angular/core";
+import {Component, EventEmitter, OnInit, OnDestroy, Output} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 
 import { ConfigurationService } from "../../../ts/modules/base/conf";
 import {LoginData} from "../auth.model";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: "tg-forgot-password-form",
     template: require("./forgot-password-form.pug")(),
 })
-export class ForgotPasswordForm implements OnInit {
-    @Output() submit: EventEmitter<LoginData>;
+export class ForgotPasswordForm implements OnInit, OnDestroy {
+    @Output() recover: EventEmitter<LoginData>;
     forgotPasswordForm: FormGroup;
-    private queryParams: any;
+    queryParams: any;
+    subscriptions: Subscription[];
 
     constructor(private config: ConfigurationService,
                 private fb: FormBuilder,
                 private activeRoute: ActivatedRoute) {
-        this.submit = new EventEmitter();
+        this.recover = new EventEmitter();
         this.forgotPasswordForm = this.fb.group({
             username: ["", Validators.required],
         });
-        console.log(this.forgotPasswordForm);
     }
 
     ngOnInit() {
-        this.activeRoute.queryParams.subscribe((params) => {
-            this.queryParams = params;
-        });
+        this.subscriptions = [
+            this.activeRoute.queryParams.subscribe((params) => {
+                this.queryParams = params;
+            })
+        ]
     }
 
     onSubmit(): boolean {
-        this.submit.emit(this.forgotPasswordForm.value.username);
+        if (this.forgotPasswordForm.valid) {
+            this.recover.emit(this.forgotPasswordForm.value.username);
+        } else {
+            this.forgotPasswordForm.controls.username.markAsDirty();
+        }
         return false;
+    }
+
+    ngOnDestroy() {
+        for (let sub of this.subscriptions) {
+            sub.unsubscribe();
+        }
     }
 }

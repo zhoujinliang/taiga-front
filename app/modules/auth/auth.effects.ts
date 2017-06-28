@@ -5,6 +5,7 @@ import "rxjs/add/operator/switchMap";
 import {Observable} from "rxjs";
 
 import { go } from "@ngrx/router-store";
+import { OpenLightboxAction } from "../../app.actions";
 
 import { Injectable } from "@angular/core";
 import { Actions, Effect, toPayload } from "@ngrx/effects";
@@ -80,7 +81,21 @@ export class AuthEffects {
     @Effect()
     passwordRecover$: Observable<Action> = this.actions$
         .ofType("PASSWORD_RECOVER")
-        .map(toPayload);
+        .map(toPayload)
+        .switchMap((username) => {
+            return this.rs.user.passwordRecover(username).flatMap(() => {
+                return [
+                    new OpenLightboxAction("auth.password-recover"),
+                    go(["/login"]),
+                ];
+            }).catch( (err) => {
+                const newError = new AddNotificationMessageAction(
+                    "error",
+                    this.translate.instant("FORGOT_PASSWORD_FORM.ERROR"),
+                );
+                return Observable.of(newError);
+            });
+        });
         // TODO
         // .switchMap((registerInfo:any) => {
         // })

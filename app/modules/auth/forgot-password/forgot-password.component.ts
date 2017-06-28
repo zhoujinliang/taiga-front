@@ -3,6 +3,9 @@ import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { IState } from "../../../app.store";
 import { ConfigurationService } from "../../../ts/modules/base/conf";
+import { calculateNextUrl } from "../utils";
+import { SetMetadataAction } from "../../../app.actions";
+import { PasswordRecoverAction } from "../auth.actions";
 
 @Component({
     selector: "tg-forgot-password-page",
@@ -15,26 +18,16 @@ export class ForgotPasswordPage {
                 private store: Store<IState>,
                 private activeRoute: ActivatedRoute) {
         this.nextUrl = "/";
+        this.store.dispatch(new SetMetadataAction("FORGOT_PASSWORD.PAGE_TITLE", {}, "FORGOT_PASSWORD.PAGE_DESCRIPTION", {}))
     }
 
     ngOnInit() {
         this.activeRoute.queryParams.subscribe((params) => {
-            if (!params["next"] || params["next"] === "/login") {
-                this.nextUrl = "/";
-            } else {
-                this.nextUrl = params["next"];
-            }
-
-            if (params["force_next"] && params["force_next"] !== "/login") {
-                this.nextUrl = params["force_next"];
-            }
+            this.nextUrl = calculateNextUrl(params["next"], params["force_next"]);
         });
     }
 
     passwordRecover(email: string) {
-        this.store.dispatch({
-            type: "PASSWORD_RECOVER",
-            payload: email,
-        });
+        this.store.dispatch(new PasswordRecoverAction(email));
     }
 }
