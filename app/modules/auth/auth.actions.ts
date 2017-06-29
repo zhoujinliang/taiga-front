@@ -86,3 +86,9 @@ export class SetInvitationAction implements Action {
 
   constructor(public payload: Immutable.Map<string, any>) { }
 }
+
+export class ChangeEmailAcceptAction implements Action {
+  readonly type = "CHANGE_EMAIL_ACCEPT";
+
+  constructor(public payload: string) { }
+}

@@ -16,6 +16,7 @@ import { LoginPage } from "./login/login.component";
 import { RegisterForm } from "./register/register-form.component";
 import { RegisterPage } from "./register/register.component";
 import { InvitationPage} from "./invitation/invitation.component";
+import { ChangeEmailPage} from "./change-email/change-email.component";
 import { ChangePasswordFromRecoveryForm } from "./change-password-from-recovery/change-password-from-recovery-form.component";
 import { ChangePasswordFromRecoveryPage } from "./change-password-from-recovery/change-password-from-recovery.component";
 import { PublicRegisterMessage} from "./login/public-register-message.component";
@@ -32,6 +33,7 @@ import {AuthEffects} from "./auth.effects";
         RouterModule.forChild([
             {path: "invitation/:uuid", component: InvitationPage},
             {path: "change-password/:uuid", component: ChangePasswordFromRecoveryPage},
+            {path: "change-email/:uuid", component: ChangeEmailPage},
             {path: "register", component: RegisterPage},
             {path: "login", component: LoginPage},
             {path: "forgot-password", component: ForgotPasswordPage},
@@ -43,6 +45,7 @@ import {AuthEffects} from "./auth.effects";
         RegisterPage,
         ForgotPasswordPage,
         InvitationPage,
+        ChangeEmailPage,
         ChangePasswordFromRecoveryPage,
     ],
     declarations: [
@@ -53,6 +56,7 @@ import {AuthEffects} from "./auth.effects";
         ForgotPasswordPage,
         ForgotPasswordForm,
         InvitationPage,
+        ChangeEmailPage,
         ChangePasswordFromRecoveryPage,
         ChangePasswordFromRecoveryForm,
         PublicRegisterMessage,

@@ -102,8 +102,12 @@ export class UserResource {
     }
 
     changePasswordFromRecovery(password, uuid) {
-        const url = this.urls.resolve("users-change-password-from-recovery")
-        return this.http.post(url, {password: password, password2: password, token: uuid})
+        const url = this.urls.resolve("users-change-password-from-recovery");
+        return this.http.post(url, {password: password, password2: password, token: uuid});
     }
 
+    changeEmail(email_token) {
+        const url = this.urls.resolve("users-change-email");
+        return this.http.post(url, {email_token});
+    }
 }

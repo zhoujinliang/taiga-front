@@ -119,7 +119,7 @@ export class AuthEffects {
         });
 
     @Effect()
-    changePasswordFromRecovery: Observable<Action> = this.actions$
+    changePasswordFromRecovery$: Observable<Action> = this.actions$
         .ofType("CHANGE_PASSWORD_FROM_RECOVERY")
         .map(toPayload)
         .switchMap(({password, uuid}) => {
@@ -132,6 +132,25 @@ export class AuthEffects {
                 const newError = new AddNotificationMessageAction(
                     "error",
                     this.translate.instant("CHANGE_PASSWORD_RECOVERY_FORM.ERROR"),
+                );
+                return Observable.of(newError);
+            });
+        });
+
+    @Effect()
+    changeEmailAccept$: Observable<Action> = this.actions$
+        .ofType("CHANGE_EMAIL_ACCEPT")
+        .map(toPayload)
+        .switchMap((uuid) => {
+            return this.rs.user.changeEmail(uuid).flatMap(() => {
+                return [
+                    new OpenLightboxAction("auth.change-email-success"),
+                    go(["/user-settings/user-profile"]),
+                ];
+            }).catch( (err) => {
+                const newError = new AddNotificationMessageAction(
+                    "error",
+                    err.data.get('_error_message'),
                 );
                 return Observable.of(newError);
             });
