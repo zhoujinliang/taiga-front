@@ -10,5 +10,5 @@ div.wrapper
                 p.project-name {{ invitation.get('project_name') }}
 
             div.invitation-form
-                tg-login-form([title]="'LOGIN_COMMON.HEADER' | translate")
-                tg-register-form([title]="'REGISTER_FORM.TITLE' | translate")
+                tg-login-form([title]="'LOGIN_COMMON.HEADER' | translate", (login)="onLogin($event)")
+                tg-register-form([title]="'REGISTER_FORM.TITLE' | translate", (register)="onRegister($event)")

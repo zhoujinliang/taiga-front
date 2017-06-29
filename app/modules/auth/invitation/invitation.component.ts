@@ -11,12 +11,14 @@ import { go } from "@ngrx/router-store";
 import { calculateNextUrl } from "../utils";
 
 import * as Immutable from "immutable";
+import * as _ from "lodash";
 
 @Component({
     selector: "tg-invitation-page",
     template: require("./invitation.pug")(),
 })
 export class InvitationPage implements OnInit, OnDestroy {
+    uuid: string;
     invitation: Immutable.Map<string, any>;
     subscriptions: Subscription[];
 
@@ -30,6 +32,7 @@ export class InvitationPage implements OnInit, OnDestroy {
     ngOnInit() {
         this.subscriptions = [
             this.activeRoute.params.subscribe(({uuid}) => {
+                this.uuid = uuid;
                 this.store.dispatch(new FetchInvitationAction(uuid));
             }),
             this.store.select((state) => state.getIn(["auth", "invitation"])).subscribe((invitation) => {
@@ -40,12 +43,16 @@ export class InvitationPage implements OnInit, OnDestroy {
     }
 
     onLogin(loginData: LoginData) {
-        this.store.dispatch(new LoginAction(loginData, null));
+        let data = _.extend({}, loginData, {invitation_token: this.uuid});
+        const next = "/project/" + this.invitation.get('project_slug');
+        this.store.dispatch(new LoginAction(loginData, next));
         return false;
     }
 
     onRegister(registerData: RegisterData) {
-        this.store.dispatch(new RegisterAction(registerData, null));
+        let data = _.extend({}, registerData, {token: this.uuid});
+        const next = "/project/" + this.invitation.get('project_slug');
+        this.store.dispatch(new RegisterAction(data, next));
         return false;
     }
 
