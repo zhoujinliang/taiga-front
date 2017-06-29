@@ -6,6 +6,13 @@ tg-lightbox(key="auth.password-recover")
             a.button-green((click)="closeLightbox()")
                 span(translate="COMMON.ACCEPT")
 
+tg-lightbox(key="auth.password-recover-from-recovery")
+    section
+        h2.message([innerHTML]="'CHANGE_PASSWORD_RECOVERY_FORM.SUCCESS' | translate")
+        .options
+            a.button-green((click)="closeLightbox()")
+                span(translate="COMMON.ACCEPT")
+
 div.wrapper
     div.auth
         div.auth-container

@@ -65,3 +65,12 @@ export class SetPasswordRecoverErrorsAction implements Action {
 
   constructor(public payload: Immutable.Map<string, any>) { }
 }
+
+export class ChangePasswordFromRecoveryAction implements Action {
+  readonly type = "CHANGE_PASSWORD_FROM_RECOVERY";
+  public payload: any;
+
+  constructor(password: string, uuid: string) {
+      this.payload = {password, uuid}
+  }
+}

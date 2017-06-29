@@ -30,7 +30,7 @@ export class RegisterForm implements OnInit, OnDestroy {
             ])],
             password: ["", Validators.compose([
                 Validators.required,
-                UniversalValidators.minLength(4)
+                UniversalValidators.minLength(6)
             ])],
             full_name: ["", Validators.compose([
                 Validators.required,

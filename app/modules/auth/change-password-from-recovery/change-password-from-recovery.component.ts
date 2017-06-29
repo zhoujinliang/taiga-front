@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { IState } from "../../../app.store";
 import { ConfigurationService } from "../../../ts/modules/base/conf";
-// import { ChangePasswordFromRecoveryAction } from "../auth.actions";
+import { ChangePasswordFromRecoveryAction } from "../auth.actions";
 import { Observable, Subscription } from "rxjs"
 import { CloseLightboxAction, SetMetadataAction } from "../../../app.actions";
 import { go } from "@ngrx/router-store";
@@ -49,7 +49,7 @@ export class ChangePasswordFromRecoveryPage implements OnInit, OnDestroy {
     }
 
     changePassword(newPassword: string) {
-        // this.store.dispatch(new ChangePasswordAction(newPassword, this.uuid));
+        this.store.dispatch(new ChangePasswordFromRecoveryAction(newPassword, this.uuid));
         return false;
     }
 

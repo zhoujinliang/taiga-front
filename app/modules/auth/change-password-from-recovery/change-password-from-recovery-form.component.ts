@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ConfigurationService } from "../../../ts/modules/base/conf";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
-import {PasswordValidators} from "ngx-validators";
+import { PasswordValidators } from "ngx-validators";
+import { UniversalValidators } from "ngx-validators";
 
 @Component({
     selector: "tg-change-password-from-recovery-form",
@@ -20,9 +21,11 @@ export class ChangePasswordFromRecoveryForm implements OnInit, OnDestroy {
                 private activeRoute: ActivatedRoute) {
         this.changePassword = new EventEmitter();
         this.changePasswordForm = this.fb.group({
-            password: ["", Validators.required],
-            password2: ["", Validators.required],
-            type: "normal",
+            password: ["", Validators.compose([
+                Validators.required,
+                UniversalValidators.minLength(6)
+            ])],
+            password2: "",
         }, {validator: PasswordValidators.mismatchedPasswords('password', 'password2')});
     }
 

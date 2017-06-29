@@ -108,6 +108,25 @@ export class AuthEffects {
             });
         });
 
+    @Effect()
+    changePasswordFromRecovery: Observable<Action> = this.actions$
+        .ofType("CHANGE_PASSWORD_FROM_RECOVERY")
+        .map(toPayload)
+        .switchMap(({password, uuid}) => {
+            return this.rs.user.changePasswordFromRecovery(password, uuid).flatMap(() => {
+                return [
+                    new OpenLightboxAction("auth.password-recover-from-recovery"),
+                    go(["/login"]),
+                ];
+            }).catch( (err) => {
+                const newError = new AddNotificationMessageAction(
+                    "error",
+                    this.translate.instant("CHANGE_PASSWORD_RECOVERY_FORM.ERROR"),
+                );
+                return Observable.of(newError);
+            });
+        });
+
     constructor(private actions$: Actions,
                 private storage: StorageService,
                 private config: ConfigurationService,

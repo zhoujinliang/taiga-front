@@ -80,7 +80,7 @@ export class UserResource {
     }
 
     passwordRecover(username) {
-        let url = this.urls.resolve("users-password-recovery");
+        const url = this.urls.resolve("users-password-recovery");
         return this.http.post(url, {username: username});
     }
 
@@ -100,4 +100,10 @@ export class UserResource {
                             return Rx.Observable.throw(err);
                         });
     }
+
+    changePasswordFromRecovery(password, uuid) {
+        const url = this.urls.resolve("users-change-password-from-recovery")
+        return this.http.post(url, {password: password, password2: password, token: uuid})
+    }
+
 }
