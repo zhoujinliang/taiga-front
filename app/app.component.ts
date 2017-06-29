@@ -21,6 +21,7 @@ export class AppComponent {
     currentProject: string = "";
     pageMetadata: Observable<Immutable.Map<string, any>>;
     subscriptions: Subscription[];
+    isNavigationBarEnabled: boolean;
 
     constructor(private store: Store<IState>,
                 private router: Router,
@@ -37,16 +38,8 @@ export class AppComponent {
             // Fetch current project based on the URL
             this.store.select((state) => state.getIn(['router', 'path'])).subscribe((path) => {
                 if (!path) { return }
-                const splitted_path = path.split("/");
-
-                if (splitted_path.length < 3) { return }
-                if (splitted_path[1] !== "project") { return }
-
-                const slug = splitted_path[2];
-                if (slug !== this.currentProject) {
-                    this.currentProject = slug;
-                    this.store.dispatch(new FetchCurrentProjectAction(slug));
-                }
+                this.changeProject(path);
+                this.enableDisableNavigationBar(path);
             }),
             this.user.subscribe((user) => {
                 if (user) {
@@ -61,6 +54,37 @@ export class AppComponent {
                 );
             }),
         ]
+    }
+
+    changeProject(path) {
+        const splitted_path = path.split("/");
+
+        if (splitted_path.length < 3) { return }
+        if (splitted_path[1] !== "project") { return }
+
+        const slug = splitted_path[2];
+        if (slug !== this.currentProject) {
+            this.currentProject = slug;
+            this.store.dispatch(new FetchCurrentProjectAction(slug));
+        }
+    }
+
+    enableDisableNavigationBar(path) {
+        const splitted_path = path.split("/");
+        if (splitted_path.length < 2) { return }
+
+        const sectionsWithoutHeader = [
+            "invitation",
+            "login",
+            "register",
+            "change-password",
+        ]
+
+        if (sectionsWithoutHeader.indexOf(splitted_path[1]) !== -1) {
+            this.isNavigationBarEnabled = false
+        } else {
+            this.isNavigationBarEnabled = true
+        }
     }
 
     onLogout() {

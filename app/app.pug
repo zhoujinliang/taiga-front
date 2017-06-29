@@ -5,7 +5,7 @@ tg-lightbox(key="feedback")
 tg-loader-full
 tg-notification-messages
 tg-navigation-bar(
-    *ngIf="!errorHandling.showingError",
+    *ngIf="isNavigationBarEnabled",
     [user]="user | async",
     [projects]="projects | async",
     (login)="onLogin()",
