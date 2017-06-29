@@ -25,6 +25,7 @@ import { IState } from "../../app.store";
 import { StartLoadingAction, StopLoadingAction } from "../../app.actions";
 import { CurrentUserService } from "../services/current-user.service";
 import { FetchAssignedToAction, FetchWatchingAction, CleanHomeDataAction } from "./home.actions";
+import { TranslateService } from "@ngx-translate/core";
 
 import {ChangeDetectionStrategy, Component, OnInit, OnDestroy} from "@angular/core";
 import {Observable, Subscription} from "rxjs";
@@ -39,8 +40,10 @@ export class Home implements OnInit, OnDestroy {
     assignedTo: Observable<Immutable.List<any>>;
     watching: Observable<Immutable.List<any>>;
     subscriptions: Subscription[];
+    joyRideSteps: any[];
 
-    constructor(private router: Router,
+    constructor(private translate: TranslateService,
+                private router: Router,
                 private store: Store<IState>) {
         this.store.dispatch(new StartLoadingAction());
         this.user = this.store.select((state) => state.getIn(["auth", "user"]));
@@ -80,6 +83,47 @@ export class Home implements OnInit, OnDestroy {
                     this.store.dispatch(new StopLoadingAction());
                 }
             }),
+        ];
+
+        this.joyRideSteps = [
+            {
+                element: "section.home-project-list",
+                position: "left",
+                joyride: {
+                    title: "JOYRIDE.DASHBOARD.STEP1.TITLE",
+                    text: "JOYRIDE.DASHBOARD.STEP1.TEXT",
+                },
+            },
+            {
+                element: ".working-on-container",
+                position: "right",
+                joyride: {
+                    title: "JOYRIDE.DASHBOARD.STEP2.TITLE",
+                    text: "JOYRIDE.DASHBOARD.STEP2.TEXT",
+                },
+            },
+            {
+                element: ".watching-container",
+                position: "right",
+                joyride: {
+                    title: this.translate.instant("JOYRIDE.DASHBOARD.STEP3.TITLE"),
+                    text: [
+                        "JOYRIDE.DASHBOARD.STEP3.TEXT1",
+                        "JOYRIDE.DASHBOARD.STEP3.TEXT2",
+                    ],
+                },
+            },
+            {
+                element: ".project-list .create-project-button",
+                position: "bottom",
+                joyride: {
+                    title: "JOYRIDE.DASHBOARD.STEP4.TITLE",
+                    text: [
+                        "JOYRIDE.DASHBOARD.STEP4.TEXT1",
+                        "JOYRIDE.DASHBOARD.STEP4.TEXT2",
+                    ],
+                },
+            },
         ];
     }
 

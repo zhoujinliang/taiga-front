@@ -48,6 +48,7 @@ import { Wysiwyg } from "./wysiwyg/wysiwyg.component";
 import { WysiwygService } from "./wysiwyg/wysiwyg.service";
 import { WysiwygCodeHightlighterService } from "./wysiwyg/wysiwyg-code-hightlighter.service";
 import { MediumEditor } from "./wysiwyg/medium/medium.component";
+import { JoyRide } from "./joy-ride/joy-ride.component";
 
 @NgModule({
     imports: [
@@ -89,6 +90,7 @@ import { MediumEditor } from "./wysiwyg/medium/medium.component";
         TagsLine,
         Wysiwyg,
         MediumEditor,
+        JoyRide,
     ],
     declarations: [
         BoardZoom,
@@ -128,6 +130,7 @@ import { MediumEditor } from "./wysiwyg/medium/medium.component";
         TagsDropdown,
         Wysiwyg,
         MediumEditor,
+        JoyRide,
     ],
     providers: [
         AvatarService,

@@ -94,7 +94,7 @@ export class CurrentUserService {
             .subscribe((projects) => this.setProjects(projects));
     }
 
-    disableJoyRide(section) {
+    disableJoyRide(section=null) {
         if (!this.isAuthenticated()) {
             return;
         }
