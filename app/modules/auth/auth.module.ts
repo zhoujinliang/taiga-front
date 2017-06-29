@@ -15,6 +15,8 @@ import { LoginForm } from "./login/login-form.component";
 import { LoginPage } from "./login/login.component";
 import { RegisterForm } from "./register/register-form.component";
 import { RegisterPage } from "./register/register.component";
+import { ChangePasswordFromRecoveryForm } from "./change-password-from-recovery/change-password-from-recovery-form.component";
+import { ChangePasswordFromRecoveryPage } from "./change-password-from-recovery/change-password-from-recovery.component";
 import { PublicRegisterMessage} from "./login/public-register-message.component";
 
 import {AuthEffects} from "./auth.effects";
@@ -27,6 +29,7 @@ import {AuthEffects} from "./auth.effects";
         TgComponentsModule,
         TranslateModule.forChild({}),
         RouterModule.forChild([
+            {path: "change-password/:uuid", component: ChangePasswordFromRecoveryPage},
             {path: "register", component: RegisterPage},
             {path: "login", component: LoginPage},
             {path: "forgot-password", component: ForgotPasswordPage},
@@ -37,6 +40,7 @@ import {AuthEffects} from "./auth.effects";
         LoginPage,
         RegisterPage,
         ForgotPasswordPage,
+        ChangePasswordFromRecoveryPage,
     ],
     declarations: [
         LoginPage,
@@ -45,6 +49,8 @@ import {AuthEffects} from "./auth.effects";
         RegisterForm,
         ForgotPasswordPage,
         ForgotPasswordForm,
+        ChangePasswordFromRecoveryPage,
+        ChangePasswordFromRecoveryForm,
         PublicRegisterMessage,
     ],
     providers: [
