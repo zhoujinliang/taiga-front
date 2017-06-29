@@ -1,5 +1,6 @@
-.login-form-container()
+.login-form-container
     form.login-form((ngSubmit)="onSubmit()", [formGroup]="loginForm", novalidate)
+        p.form-header(*ngIf="title") {{title}}
         fieldset
             input(
                 id="username",

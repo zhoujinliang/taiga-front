@@ -74,3 +74,15 @@ export class ChangePasswordFromRecoveryAction implements Action {
       this.payload = {password, uuid}
   }
 }
+
+export class FetchInvitationAction implements Action {
+  readonly type = "FETCH_INVITATION";
+
+  constructor(public payload: string) { }
+}
+
+export class SetInvitationAction implements Action {
+  readonly type = "SET_INVITATION";
+
+  constructor(public payload: Immutable.Map<string, any>) { }
+}

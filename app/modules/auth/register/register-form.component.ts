@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, OnInit, OnDestroy} from "@angular/core";
+import {Component, EventEmitter, Input, Output, OnInit, OnDestroy} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UniversalValidators } from "ngx-validators";
 import { UsernameValidator } from "../../utils/validators";
@@ -14,6 +14,7 @@ import {Subscription} from "rxjs";
 })
 export class RegisterForm implements OnInit, OnDestroy {
     @Output() register: EventEmitter<RegisterData>;
+    @Input() title: string;
     registerForm: FormGroup;
     queryParams: any;
     subscriptions: Subscription[];

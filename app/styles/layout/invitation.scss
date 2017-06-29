@@ -67,6 +67,10 @@
             }
         }
     }
+    tg-login-form,
+    tg-register-form {
+        width: 100%;
+    }
     .login-form,
     .register-form {
         flex: 1;
@@ -76,6 +80,16 @@
             @include font-size(large);
             @include font-type(light);
             color: $white;
+        }
+    }
+    .login-form-container {
+        .login-text {
+            display: none;
+        }
+    }
+    .register-form-container {
+        .register-text-top {
+            display: none;
         }
     }
     .register-form {

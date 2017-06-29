@@ -1,14 +1,14 @@
 div.wrapper
-    div.invitation-main
-        div.centered.invitation-container(tg-invitation)
-            a.avatar(href="", tg-bo-title="invitation.invited_by.full_name_display")
-                tg-avatar([user]="invitation.invited_by")
-                span.person-name(tg-bo-bind="invitation.invited_by.full_name_display")
+    div.invitation-main(*ngIf="invitation")
+        div.centered.invitation-container
+            a.avatar([title]="invitation.getIn(['invited_by', 'full_name_display'])")
+                tg-avatar([user]="invitation.get('invited_by')")
+                span.person-name {{ invitation.getIn(['invited_by', 'full_name_display']) }}
 
             span.invitation-text
                 p(translate="AUTH.INVITED_YOU")
-                p.project-name(tg-bo-bind="invitation.project_name")
+                p.project-name {{ invitation.get('project_name') }}
 
             div.invitation-form
-                include ../includes/modules/invitation-login-form
-                include ../includes/modules/invitation-register-form
+                tg-login-form([title]="'LOGIN_COMMON.HEADER' | translate")
+                tg-register-form([title]="'REGISTER_FORM.TITLE' | translate")

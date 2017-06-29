@@ -4,6 +4,7 @@ export const authInitialState = {
     "user": {},
     "login-errors": {},
     "register-errors": {},
+    "invitation": null,
 };
 
 export const authReducer = (state, action) => {
@@ -16,6 +17,8 @@ export const authReducer = (state, action) => {
             return state.set("register-errors", action.payload);
         case "SET_PASSWORD_RECOVER_ERRORS":
             return state.set("password-recover-errors", action.payload);
+        case "SET_INVITATION":
+            return state.set("invitation", action.payload);
         default:
             return state;
     }

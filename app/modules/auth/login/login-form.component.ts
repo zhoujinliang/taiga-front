@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, OnInit, OnDestroy} from "@angular/core";
+import {Component, EventEmitter, Input, Output, OnInit, OnDestroy} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ConfigurationService } from "../../../ts/modules/base/conf";
 import {ActivatedRoute} from "@angular/router";
@@ -11,6 +11,7 @@ import {Subscription} from "rxjs";
 })
 export class LoginForm implements OnInit, OnDestroy {
     @Output() login: EventEmitter<LoginData>;
+    @Input() title: string;
     loginForm: FormGroup;
     queryParams: any;
     subscriptions: Subscription[];

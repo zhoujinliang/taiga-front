@@ -1,5 +1,6 @@
 div.register-form-container
     form.register-form((ngSubmit)="onSubmit()", [formGroup]="registerForm", novalidate)
+        p.form-header(*ngIf="title") {{title}}
         fieldset
             // data-regexp="^[\\w.-]+$",
             input(

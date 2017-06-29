@@ -41,6 +41,16 @@ export class AuthEffects {
         .map((user) => new actions.SetUserAction(user));
 
     @Effect()
+    fetchInvitation$: Observable<Action> = this.actions$
+        .ofType("FETCH_INVITATION")
+        .map(toPayload)
+        .switchMap((payload) => {
+            return this.rs.invitations.get(payload).map((invitation) => {
+                return new actions.SetInvitationAction(invitation.data);
+            })
+        });
+
+    @Effect()
     login$: Observable<Action> = this.actions$
         .ofType("LOGIN")
         .map(toPayload)
