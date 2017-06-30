@@ -32,7 +32,7 @@ a.list-itemtype-ticket(
             )
 
         h2
-            span.ticket-id
+            span.ticket-id {{ "#" + duty.get('ref') }}&nbsp;
             span.ticket-title
                 span.ticket-blocked(
                     *ngIf="duty.get('is_blocked')",

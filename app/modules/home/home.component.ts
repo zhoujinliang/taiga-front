@@ -56,7 +56,8 @@ export class Home implements OnInit, OnDestroy {
                                       .concat(state.get("userstories"))
                                       .concat(state.get("tasks"))
                                       .concat(state.get("issues"))
-                                      .sortBy((i: any) => i.get("modified_date")));
+                                      .sortBy((i: any) => i.get("modified_date"))
+                                      .reverse());
         this.watching = this.store
                             .select((state) => state.getIn(["home", "watching"]))
                             .filter((state) => state !== null)
@@ -65,7 +66,8 @@ export class Home implements OnInit, OnDestroy {
                                     .concat(state.get("userstories"))
                                     .concat(state.get("tasks"))
                                     .concat(state.get("issues"))
-                                    .sortBy((i: any) => i.get("modified_date")));
+                                    .sortBy((i: any) => i.get("modified_date"))
+                                    .reverse());
     }
 
     ngOnInit() {
