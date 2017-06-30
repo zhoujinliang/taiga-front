@@ -31,7 +31,7 @@ export class GlobalEffects {
         .switchMap((payload) => {
           return this.rs.user.setUserStorage("joyride", payload).map(() => {
               return new SetJoyrideEnableAction(payload);
-          })
+          });
         });
 
     @Effect()
@@ -42,8 +42,9 @@ export class GlobalEffects {
           return this.rs.user.getUserStorage("joyride").map((response) => {
               return new SetJoyrideEnableAction(response.data.get('value'));
           }).catch((err) => {
-              console.log(err);
-              return Observable.of(new SetJoyrideEnableAction(Immutable.fromJS({})));
+              return this.rs.user.createUserStorage("joyride", {}).map(() => {
+                  return new SetJoyrideEnableAction(Immutable.fromJS({}));
+              });
           })
         });
 
