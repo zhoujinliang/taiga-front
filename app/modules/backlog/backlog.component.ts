@@ -169,4 +169,45 @@ export class BacklogPage implements OnInit, OnDestroy {
     loadClosedSprints(projectId) {
         this.store.dispatch(new actions.FetchBacklogClosedSprintsAction(projectId));
     }
+
+    getJoyrideSteps() {
+        return Immutable.fromJS([
+            {
+                element: ".summary",
+                position: "bottom",
+                joyride: {
+                    title: "JOYRIDE.BACKLOG.STEP1.TITLE",
+                    text: [
+                        "JOYRIDE.BACKLOG.STEP1.TEXT1",
+                        "JOYRIDE.BACKLOG.STEP1.TEXT2",
+                    ],
+                },
+            },
+            {
+                element: ".backlog-table-empty",
+                position: "bottom",
+                joyride: {
+                    title: "JOYRIDE.BACKLOG.STEP2.TITLE",
+                    text: "JOYRIDE.BACKLOG.STEP2.TEXT",
+                },
+            },
+            {
+                element: ".sprints",
+                position: "left",
+                joyride: {
+                    title: "JOYRIDE.BACKLOG.STEP3.TITLE",
+                    text: "JOYRIDE.BACKLOG.STEP3.TEXT",
+                },
+            },
+            // if (this.checkPermissionsService.check("add_us")) {
+            {
+                element: ".new-us",
+                position: "rigth",
+                joyride: {
+                    title: "JOYRIDE.BACKLOG.STEP4.TITLE",
+                    text: "JOYRIDE.BACKLOG.STEP4.TEXT",
+                },
+            }
+        ]);
+    }
 }

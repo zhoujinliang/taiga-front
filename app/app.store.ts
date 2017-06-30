@@ -27,6 +27,11 @@ const globalInitialState = {
         "description": null,
         "description_args": {},
     },
+    "joyride": {
+        "key": null,
+        "steps": null,
+        "enabled": {},
+    }
 };
 
 const initialState = Immutable.fromJS({
@@ -63,6 +68,11 @@ export const globalReducer = (state, action) => {
             return state.set("open-lightbox", action.payload);
         case "SET_METADATA":
             return state.set("page-metadata", Immutable.fromJS(action.payload))
+        case "SET_JOYRIDE":
+            return state.setIn(["joyride", "key"], action.payload.key)
+                        .setIn(["joyride", "steps"], action.payload.steps);
+        case "SET_JOYRIDE_ENABLED":
+            return state.setIn(["joyride", "enabled"], action.payload)
         default:
             return state;
     }

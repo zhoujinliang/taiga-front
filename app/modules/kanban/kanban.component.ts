@@ -164,4 +164,37 @@ export class KanbanPage implements OnInit, OnDestroy {
         }
         this.store.dispatch(new actions.CleanKanbanDataAction());
     }
+
+    getJoyrideSteps() {
+        return Immutable.fromJS([
+            {
+                element: ".kanban-table-inner",
+                position: "bottom",
+                joyride: {
+                    title: "JOYRIDE.KANBAN.STEP1.TITLE",
+                    text: "JOYRIDE.KANBAN.STEP1.TEXT",
+                },
+            },
+            {
+                element: ".card-placeholder",
+                position: "right",
+                joyride: {
+                    title: "JOYRIDE.KANBAN.STEP2.TITLE",
+                    text: "JOYRIDE.KANBAN.STEP2.TEXT",
+                },
+            },
+            //if (this.checkPermissionsService.check("add_us")) {
+            {
+                element: ".add-action",
+                position: "bottom",
+                joyride: {
+                    title: "JOYRIDE.KANBAN.STEP3.TITLE",
+                    text: [
+                        "JOYRIDE.KANBAN.STEP3.TEXT1",
+                        "JOYRIDE.KANBAN.STEP3.TEXT2",
+                    ],
+                },
+            }
+        ]);
+    }
 }

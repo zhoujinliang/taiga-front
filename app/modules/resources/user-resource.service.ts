@@ -36,9 +36,7 @@ export class UserResource {
             url += `/${key}`;
         }
 
-        const httpOptions = {};
-
-        return this.http.get(url, {}).map((response: any) => response.data.value);
+        return this.http.get(url, {});
     }
 
     setUserStorage(key, value) {

@@ -29,6 +29,7 @@ import { TranslateService } from "@ngx-translate/core";
 
 import {ChangeDetectionStrategy, Component, OnInit, OnDestroy} from "@angular/core";
 import {Observable, Subscription} from "rxjs";
+import {FetchJoyrideEnableAction, SetJoyrideAction} from "../../app.actions";
 
 @Component({
     selector: "tg-home",
@@ -40,7 +41,6 @@ export class Home implements OnInit, OnDestroy {
     assignedTo: Observable<Immutable.List<any>>;
     watching: Observable<Immutable.List<any>>;
     subscriptions: Subscription[];
-    joyRideSteps: any[];
 
     constructor(private translate: TranslateService,
                 private router: Router,
@@ -69,6 +69,8 @@ export class Home implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.store.dispatch(new FetchJoyrideEnableAction());
+
         this.subscriptions = [
             this.user.combineLatest(this.projects).subscribe(([user, projects]: any) => {
                 if (!user || user.isEmpty()) {
@@ -81,11 +83,22 @@ export class Home implements OnInit, OnDestroy {
             this.assignedTo.combineLatest(this.watching).subscribe(([assignedTo, watching]) => {
                 if (assignedTo && watching) {
                     this.store.dispatch(new StopLoadingAction());
+                    this.store.dispatch(new SetJoyrideAction("dashboard", this.getJoyrideSteps()));
                 }
             }),
         ];
 
-        this.joyRideSteps = [
+    }
+
+    ngOnDestroy() {
+        for (let sub of this.subscriptions) {
+            sub.unsubscribe()
+        }
+        this.store.dispatch(new CleanHomeDataAction());
+    }
+
+    getJoyrideSteps() {
+        return Immutable.fromJS([
             {
                 element: "section.home-project-list",
                 position: "left",
@@ -106,7 +119,7 @@ export class Home implements OnInit, OnDestroy {
                 element: ".watching-container",
                 position: "right",
                 joyride: {
-                    title: this.translate.instant("JOYRIDE.DASHBOARD.STEP3.TITLE"),
+                    title: "JOYRIDE.DASHBOARD.STEP3.TITLE",
                     text: [
                         "JOYRIDE.DASHBOARD.STEP3.TEXT1",
                         "JOYRIDE.DASHBOARD.STEP3.TEXT2",
@@ -124,13 +137,6 @@ export class Home implements OnInit, OnDestroy {
                     ],
                 },
             },
-        ];
-    }
-
-    ngOnDestroy() {
-        for (let sub of this.subscriptions) {
-            sub.unsubscribe()
-        }
-        this.store.dispatch(new CleanHomeDataAction());
+        ]);
     }
 }

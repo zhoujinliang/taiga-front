@@ -36,3 +36,29 @@ export class SetMetadataAction implements Action {
       this.payload = {title, title_args, description, description_args};
   }
 }
+
+export class PutJoyrideEnableAction implements Action {
+  readonly type = "PUT_JOYRIDE_ENABLED";
+
+  constructor(public payload: Immutable.Map<string, boolean>) { }
+}
+
+export class FetchJoyrideEnableAction implements Action {
+  readonly type = "FETCH_JOYRIDE_ENABLED";
+  public payload = null;
+}
+
+export class SetJoyrideAction implements Action {
+  readonly type = "SET_JOYRIDE";
+  public payload: any;
+
+  constructor(key: string, steps: Immutable.List<any>) {
+      this.payload = {key, steps};
+  }
+}
+
+export class SetJoyrideEnableAction implements Action {
+  readonly type = "SET_JOYRIDE_ENABLED";
+
+  constructor(public payload: Immutable.Map<string, boolean>) {}
+}

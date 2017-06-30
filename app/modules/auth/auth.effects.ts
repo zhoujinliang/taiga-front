@@ -28,8 +28,10 @@ export class AuthEffects {
         .do((user) => {
             if (user) {
                 this.storage.set("userInfo", user.toJS());
+                this.storage.set("token", user.get('auth_token'));
             } else {
                 this.storage.set("userInfo", null);
+                this.storage.set("token", null);
             }
         })
         .map((user) => new actions.SetUserAction(user));
