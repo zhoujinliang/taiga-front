@@ -22,6 +22,7 @@ import {Store} from "@ngrx/store";
 import * as _ from "lodash";
 import "rxjs/add/operator/map";
 import {IState} from "../../../app.store";
+import {ProjectsChangeOrderAction} from "../projects.actions";
 
 @Component({
     selector: "tg-project-listing",
@@ -34,5 +35,10 @@ export class ProjectsListing {
         this.projects = this.store
                             .select((state) => state.getIn(["projects", "user-projects"]))
                             .map((state) => state.sortBy((i: any) => i.get("order")));
+    }
+
+    reorderProjects(newOrder) {
+        let projectsOrder = newOrder.newOrder.map((item, idx) => ({project_id: item, order: idx}))
+        this.store.dispatch(new ProjectsChangeOrderAction(projectsOrder));
     }
 }

@@ -42,5 +42,13 @@ export class CurrentProjectsEffects {
               ));
         });
 
+    @Effect()
+    projectsChangeOrder$: Observable<Action> = this.actions$
+        .ofType("PROJECTS_CHANGE_ORDER")
+        .map(toPayload)
+        .switchMap((payload) => {
+          return this.rs.projects.bulkUpdateOrder(payload);
+        });
+
     constructor(private actions$: Actions, private rs: ResourcesService) { }
 }

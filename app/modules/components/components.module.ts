@@ -49,6 +49,7 @@ import { WysiwygService } from "./wysiwyg/wysiwyg.service";
 import { WysiwygCodeHightlighterService } from "./wysiwyg/wysiwyg-code-hightlighter.service";
 import { MediumEditor } from "./wysiwyg/medium/medium.component";
 import { JoyRide } from "./joy-ride/joy-ride.component";
+import { SortableDirective } from "./sortable/sortable.directive";
 
 @NgModule({
     imports: [
@@ -85,6 +86,7 @@ import { JoyRide } from "./joy-ride/joy-ride.component";
         ColorSelector,
         IfPermDirective,
         LoadingDirective,
+        SortableDirective,
         IssuesBullet,
         ProgressBar,
         TagsLine,
@@ -117,6 +119,7 @@ import { JoyRide } from "./joy-ride/joy-ride.component";
         ColorSelector,
         IfPermDirective,
         LoadingDirective,
+        SortableDirective,
         BigLoadingAux,
         SmallLoadingAux,
         MediumLoadingAux,

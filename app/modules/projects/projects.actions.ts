@@ -51,3 +51,9 @@ export class AppendProjectTimelineAction implements Action {
       this.payload = {timeline, currentPage, hasNext}
   }
 }
+
+export class ProjectsChangeOrderAction implements Action {
+  readonly type = "PROJECTS_CHANGE_ORDER";
+
+  constructor(public payload: any[]) {};
+}
