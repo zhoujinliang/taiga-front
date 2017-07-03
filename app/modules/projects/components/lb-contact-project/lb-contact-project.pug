@@ -5,7 +5,7 @@ form.lightbox-contact-project-container(*ngIf="project")
     h3.lightbox-contact-project-name {{project.get('name')}}
     p(translate="LIGHTBOX.CONTACT_PROJECT.WARNING")
     textarea.lightbox-contact-project-message.e2e-lightbox-contact-project-message(
-        #text,
+        (keyup)="text = $event.target.value",
         required,
         [placeholder]="'LIGHTBOX.CONTACT_PROJECT.PLACEHOLDER' | translate"
     )
@@ -13,5 +13,5 @@ form.lightbox-contact-project-container(*ngIf="project")
         translate="LIGHTBOX.CONTACT_PROJECT.SEND",
         (click)="contactProject(text.value)",
         *tgLoading="sendingFeedback",
-        [disabled]="text.value.length"
+        [disabled]="!text.length"
     )

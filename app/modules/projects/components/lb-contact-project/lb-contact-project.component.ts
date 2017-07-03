@@ -7,4 +7,5 @@ import * as Immutable from "immutable";
 })
 export class ProjectContactLightbox {
     @Input() project: Immutable.Map<string,any>;
+    text: string = "";
 }
