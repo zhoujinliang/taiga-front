@@ -30,37 +30,38 @@ interface FieldCheckFunc {
 
 @Injectable()
 export class UserTimelineService {
-    _valid_fields: string[] = [
-            "status",
-            "subject",
-            "description_diff",
-            "assigned_to",
-            "points",
-            "severity",
-            "priority",
-            "type",
-            "attachments",
-            "is_iocaine",
-            "content_diff",
-            "name",
-            "estimated_finish",
-            "estimated_start",
-            // customs
-            "blocked",
-            "moveInBacklog",
-            "milestone",
-            "color",
-    ];
 
     _invalid: FieldCheckFunc[] = [
         // Items with only invalid fields
         (timeline) => {
+            const _valid_fields: string[] = [
+                    "status",
+                    "subject",
+                    "description_diff",
+                    "assigned_to",
+                    "points",
+                    "severity",
+                    "priority",
+                    "type",
+                    "attachments",
+                    "is_iocaine",
+                    "content_diff",
+                    "name",
+                    "estimated_finish",
+                    "estimated_start",
+                    // customs
+                    "blocked",
+                    "moveInBacklog",
+                    "milestone",
+                    "color",
+            ];
+
             const value_diff = timeline.get("data").get("value_diff");
 
             if (value_diff) {
                 const fieldKey = value_diff.get("key");
 
-                if (this._valid_fields.indexOf(fieldKey) === -1) {
+                if (_valid_fields.indexOf(fieldKey) === -1) {
                     return true;
                 } else if ((fieldKey === "attachments") &&
                      (value_diff.get("value").get("new").size === 0)) {
@@ -111,7 +112,7 @@ export class UserTimelineService {
 
     filterInvalid(timeline) {
         return _.some(this._invalid, (invalid: any) => {
-            return invalid.call(this, timeline);
+            return !invalid(timeline);
         });
     }
 
@@ -139,53 +140,6 @@ export class UserTimelineService {
         return timeline;
     }
 
-    // - create a entry per every item in the values_diff
-    parseTimeline(timeline) {
-        let newdata = Immutable.List();
-
-        timeline.forEach((item) => {
-            let newItem;
-            const event = EventType.fromString(item.get("event_type"));
-
-            const data = item.get("data");
-            let values_diff = data.get("values_diff");
-
-            if (values_diff && values_diff.count()) {
-                // blocked/unblocked change must be a single change
-                if (values_diff.has("is_blocked")) {
-                    values_diff = Immutable.Map({blocked: values_diff});
-                }
-
-                if (values_diff.has("milestone")) {
-                    if (event.obj === "userstory") {
-                        values_diff = Immutable.Map({moveInBacklog: values_diff});
-                    } else {
-                        values_diff = values_diff.deleteIn(["values_diff", "milestone"]);
-                    }
-
-                } else if (event.obj === "milestone") {
-                     values_diff = Immutable.Map({milestone: values_diff});
-                 }
-
-                return values_diff.forEach((value, key) => {
-                    const obj = Immutable.Map({
-                        key,
-                        value,
-                    });
-
-                    newItem = item.setIn(["data", "value_diff"], obj);
-                    newItem = newItem.deleteIn(["data", "values_diff"]);
-                    return newdata = newdata.push(newItem);
-                });
-            } else {
-                newItem = item.deleteIn(["data", "values_diff"]);
-                return newdata = newdata.push(newItem);
-            }
-        });
-
-        return newdata
-    }
-
     parseTimelineItem(item) {
         const event = EventType.fromString(item.get("event_type"));
         let values_diff = item.getIn(["data", "values_diff"]);
@@ -207,74 +161,17 @@ export class UserTimelineService {
                 values_diff = Immutable.Map({milestone: values_diff});
             }
 
-            values_diff.forEach((value, key) => {
+            return Immutable.List(values_diff).map(([key, value]) => {
                 const obj = Immutable.Map({
                     key,
                     value,
                 });
 
-                item = item.setIn(["data", "value_diff"], obj)
+                return item.setIn(["data", "value_diff"], obj)
                            .deleteIn(["data", "values_diff"]);
             });
-            return item;
-        } else {
-            return item.deleteIn(["data", "values_diff"]);
         }
-    }
 
-    // TODO: Move to redux
-    // getProfileTimeline(userId) {
-    //     const config: any = {};
-    //
-    //     config.fetch = (page) => {
-    //         return this.rs.users.getProfileTimeline(userId, page)
-    //             .then((response) => {
-    //                 return this._parseTimeline(response);
-    //         });
-    //     };
-    //
-    //     config.map = (obj) => this._addEntyAttributes(obj);
-    //
-    //     config.filter = (items) => {
-    //         return items.filterNot((item) => this._isInValidTimeline(item));
-    //     };
-    //
-    //     return this.userTimelinePaginationSequenceService.generate(config);
-    // }
-    //
-    // getUserTimeline(userId) {
-    //     const config: any = {};
-    //
-    //     config.fetch = (page) => {
-    //         return this.rs.users.getUserTimeline(userId, page)
-    //             .then((response) => {
-    //                 return this._parseTimeline(response);
-    //         });
-    //     };
-    //
-    //     config.map = (obj) => this._addEntyAttributes(obj);
-    //
-    //     config.filter = (items) => {
-    //         return items.filterNot((item) => this._isInValidTimeline(item));
-    //     };
-    //
-    //     return this.userTimelinePaginationSequenceService.generate(config);
-    // }
-    //
-    // getProjectTimeline(projectId) {
-    //     const config: any = {};
-    //
-    //     config.fetch = (page) => {
-    //         return this.rs.projects.getTimeline(projectId, page)
-    //             .then((response) => this._parseTimeline(response));
-    //     };
-    //
-    //     config.map = (obj) => this._addEntyAttributes(obj);
-    //
-    //     config.filter = (items) => {
-    //         return items.filterNot((item) => this._isInValidTimeline(item));
-    //     };
-    //
-    //     return this.userTimelinePaginationSequenceService.generate(config);
-    // }
+        return Immutable.List([item.deleteIn(["data", "values_diff"])]);
+    }
 }

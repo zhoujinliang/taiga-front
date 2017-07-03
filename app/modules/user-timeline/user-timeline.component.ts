@@ -42,8 +42,8 @@ export class UserTimeline implements OnChanges{
 
     ngOnChanges(changes) {
         if (changes.timeline && this.timeline) {
-            this.timelineList = this.timeline.filter(this.timelineService.filterInvalid.bind(this.timelineService))
-                                             .map(this.timelineService.parseTimelineItem)
+            this.timelineList = this.timeline.flatMap(this.timelineService.parseTimelineItem)
+                                             .filter(this.timelineService.filterInvalid.bind(this.timelineService))
                                              .map(this.timelineService.attachExtraInfoToTimelineEntry.bind(this.timelineService)).toList();
         }
     }
