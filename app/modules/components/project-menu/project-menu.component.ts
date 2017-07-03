@@ -17,7 +17,7 @@
  * File: project-menu.controller.coffee
  */
 
-import {Component, Input, OnChanges} from "@angular/core";
+import {Component, Input, OnChanges, OnInit, OnDestroy} from "@angular/core";
 import * as Immutable from "immutable";
 import * as _ from "lodash";
 import {slugify} from "../../../libs/utils";
@@ -26,19 +26,33 @@ import {slugify} from "../../../libs/utils";
     selector: "tg-project-menu",
     template: require("./project-menu.pug")(),
 })
-export class ProjectMenu implements OnChanges {
-    @Input() project: any;
-    @Input() active: any = "";
-    menu: any;
+export class ProjectMenu implements OnChanges, OnInit, OnDestroy {
+    @Input() project: Immutable.Map<string, any>;
+    @Input() active: string = "";
+    menu: Immutable.Map<string, boolean>;
     videoconferenceUrl: string;
+    fixed: boolean = false;
 
     constructor() {}
+
+    setFixed(event) {
+        let position = $(window).scrollTop();
+        this.fixed = position > 100
+    }
+
+    ngOnInit() {
+        $(window).on('scroll', this.setFixed.bind(this))
+    }
 
     ngOnChanges() {
         if (this.project) {
             this._setMenu();
             this._setVideoConferenceUrl();
         }
+    }
+
+    ngOnDestroy() {
+        $(window).off('scroll', this.setFixed.bind(this))
     }
 
     _setMenu() {
