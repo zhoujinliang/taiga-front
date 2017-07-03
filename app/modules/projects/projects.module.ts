@@ -18,6 +18,7 @@ import { ProjectInfo } from "./project-detail/info/project-info.component";
 import { ProjectDetailPage } from "./project-detail/project-detail.component";
 import { CreateProjectPage } from "./create/create-project.component";
 import { ProjectTags } from "./project-detail/tags/project-tags.component";
+import { ProjectContactLightbox} from "./components/lb-contact-project/lb-contact-project.component";
 import { CurrentProjectsEffects } from "./projects.effects";
 
 @NgModule({
@@ -42,6 +43,7 @@ import { CurrentProjectsEffects } from "./projects.effects";
     declarations: [
         ProjectsListing,
         ProjectDetailPage,
+        ProjectContactLightbox,
         CreateProjectPage,
         ProjectInfo,
         ProjectData,

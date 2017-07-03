@@ -18,6 +18,9 @@
  */
 
 import {Component, Input} from "@angular/core";
+import {Store} from "@ngrx/store";
+import {IState} from "../../../../app.store";
+import {OpenLightboxAction} from "../../../../app.actions";
 
 @Component({
     selector: "tg-contact-project-button",
@@ -25,4 +28,10 @@ import {Component, Input} from "@angular/core";
 })
 export class ContactProjectButton {
     @Input() layout: string;
+
+    constructor(private store: Store<IState>) {}
+
+    contactProject() {
+        this.store.dispatch(new OpenLightboxAction("project.contact"));
+    }
 }

@@ -22,7 +22,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
 import { IState } from "../../../app.store";
-import { StartLoadingAction, StopLoadingAction, SetMetadataAction } from "../../../app.actions";
+import { StartLoadingAction, StopLoadingAction, SetMetadataAction, OpenLightboxAction, CloseLightboxAction } from "../../../app.actions";
 import { FetchCurrentProjectAction, FetchProjectTimelineAction, SetProjectTimelineAction} from "../projects.actions";
 import * as Immutable from "immutable";
 import {Observable, Subscription} from "rxjs";
