@@ -61,6 +61,7 @@ export class AppComponent {
 
         if (splitted_path.length < 3) { return }
         if (splitted_path[1] !== "project") { return }
+        if (splitted_path[2] === "new") { return }
 
         const slug = splitted_path[2];
         if (slug !== this.currentProject) {

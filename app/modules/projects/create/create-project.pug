@@ -15,10 +15,10 @@
                         p.create-project-selector-description(translate="PROJECT.CREATE.TEMPLATE_SCRUM_DESC")
                         .create-project-selector-question
                             tg-svg(
-                                svg-icon="icon-question"
-                                ng-click="vm.displayHelp('scrum', $event)"
+                                svg-icon="icon-question",
+                                (click)="toggleScrumHelp($event)"
                             )
-                        .create-project-selector-long-description(ng-show="vm.displayScrumDesc")
+                        .create-project-selector-long-description([@display]="displayScrumDesc")
                             p(translate="PROJECT.CREATE.TEMPLATE_SCRUM_LONGDESC")
             li
                 a.e2e-create-project-kanban(
@@ -33,10 +33,10 @@
                         p.create-project-selector-description(translate="PROJECT.CREATE.TEMPLATE_KANBAN_DESC")
                         .create-project-selector-question
                             tg-svg(
-                                svg-icon="icon-question"
-                                ng-click="vm.displayHelp('kanban', $event)"
+                                svg-icon="icon-question",
+                                (click)="toggleKanbanHelp($event)"
                             )
-                        .create-project-selector-long-description(ng-show="vm.displayKanbanDesc")
+                        .create-project-selector-long-description([@display]="displayKanbanDesc")
                             p(translate="PROJECT.CREATE.TEMPLATE_KANBAN_LONGDESC")
             li
                 a.e2e-duplicate-project(

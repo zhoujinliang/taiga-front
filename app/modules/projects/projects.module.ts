@@ -16,6 +16,7 @@ import { ProjectsListing } from "./listing/projects-listing.component";
 import { ProjectData } from "./project-detail/data/project-data.component";
 import { ProjectInfo } from "./project-detail/info/project-info.component";
 import { ProjectDetailPage } from "./project-detail/project-detail.component";
+import { CreateProjectPage } from "./create/create-project.component";
 import { ProjectTags } from "./project-detail/tags/project-tags.component";
 import { CurrentProjectsEffects } from "./projects.effects";
 
@@ -27,6 +28,7 @@ import { CurrentProjectsEffects } from "./projects.effects";
         TgUserTimelineModule,
         TranslateModule.forChild({}),
         RouterModule.forChild([
+            {path: "project/new", component: CreateProjectPage},
             {path: "project/:slug", component: ProjectDetailPage},
             {path: "projects", component: ProjectsListing},
         ]),
@@ -35,10 +37,12 @@ import { CurrentProjectsEffects } from "./projects.effects";
     exports: [
         ProjectsListing,
         ProjectDetailPage,
+        CreateProjectPage,
     ],
     declarations: [
         ProjectsListing,
         ProjectDetailPage,
+        CreateProjectPage,
         ProjectInfo,
         ProjectData,
         ProjectTags,
