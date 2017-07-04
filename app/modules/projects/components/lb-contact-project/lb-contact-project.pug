@@ -1,4 +1,4 @@
-form.lightbox-contact-project-container(*ngIf="project")
+form.lightbox-contact-project-container(*ngIf="project", (submit)="contactProject()")
     tg-project-logo-big.lightbox-contact-project-logo([project]="project")
 
     h2.lightbox-contact-project-title(translate="LIGHTBOX.CONTACT_PROJECT.TITLE")
@@ -10,8 +10,10 @@ form.lightbox-contact-project-container(*ngIf="project")
         [placeholder]="'LIGHTBOX.CONTACT_PROJECT.PLACEHOLDER' | translate"
     )
     button.button-green.lightbox-contact-project-button.e2e-lightbox-contact-project-button(
-        translate="LIGHTBOX.CONTACT_PROJECT.SEND",
-        (click)="contactProject(text.value)",
-        *tgLoading="sendingFeedback",
+        (click)="contactProject()",
         [disabled]="!text.length"
     )
+        span(
+            translate="LIGHTBOX.CONTACT_PROJECT.SEND",
+            *tgLoading="'contact-project'",
+        )

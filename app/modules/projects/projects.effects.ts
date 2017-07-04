@@ -9,7 +9,7 @@ import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./projects.actions";
-import {StartLoadingItemAction, StopLoadingItemAction} from "../../app.actions";
+import {StartLoadingItemAction, StopLoadingItemAction, CloseLightboxAction} from "../../app.actions";
 import {wrapLoading} from "../utils/effects";
 
 @Injectable()
@@ -101,9 +101,11 @@ export class CurrentProjectsEffects {
     contactProject$: Observable<Action> = this.actions$
         .ofType("PROJECT_CONTACT")
         .map(toPayload)
-        .switchMap(({project, message}) => {
-          return this.rs.projects.contactProject(project.get('id'), message);
-        });
+        .flatMap(wrapLoading("contact-project", ({project, message}) => {
+          return this.rs.projects.contactProject(project.get('id'), message).map(() => {
+              return new CloseLightboxAction();
+          });
+        }));
 
     constructor(private actions$: Actions, private rs: ResourcesService) { }
 }
