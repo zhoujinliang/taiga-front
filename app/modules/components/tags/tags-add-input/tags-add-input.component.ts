@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
@@ -8,6 +8,21 @@ import * as Immutable from "immutable";
 export class TagsAddInput {
     @Input() field: Immutable.Map<string,any>;
     @Input() disableColorSelection: boolean;
+    @Output() add: EventEmitter<any>;
     newTag: any = {name: "", color: ""};
     colorArray: string[];
+
+    constructor() {
+        this.add = new EventEmitter();
+    }
+
+    setName(event) {
+        this.newTag.name = event.target.value;
+        console.log(event.keyCode);
+        if (event.keyCode === 13) {
+            event.stopPropagation();
+            this.add.emit(this.newTag);
+            return false;
+        }
+    }
 }

@@ -1,8 +1,9 @@
 //- section.attachments(tg-attachments-drop="vm.addAttachments(files)")
 
-section.attachments(tg-attachments-drop="vm.addAttachments(files)")
+// tg-attachments-drop="vm.addAttachments(files)"
+section.attachments()
     .attachments-header 
-        h3.attachments-title #[span.attachments-num {{vm.attachments.size}}] #[span.attachments-text(translate="ATTACHMENT.SECTION_NAME")]
+        h3.attachments-title #[span.attachments-num {{attachments.size}}] #[span.attachments-text(translate="ATTACHMENT.SECTION_NAME")]
         .add-attach([title]="'ATTACHMENT.ADD' | translate")
             label.add-attachment-button(for="add-attach")
                 tg-svg(svg-icon="icon-add")
@@ -10,7 +11,6 @@ section.attachments(tg-attachments-drop="vm.addAttachments(files)")
                 id="add-attach",
                 type="file",
                 multiple="multiple",
-                ng-model="files",
                 tg-file-change="vm.addAttachments(files)"
             )
     .attachments-empty(ng-if="!vm.attachments.size")

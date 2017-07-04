@@ -22,4 +22,4 @@
 
 tg-tags-add-button(*ngIf="!addTag && canEdit", (click)="addTag = true")
 
-tg-tags-add-input(*ngIf="addTag && canEdit")
+tg-tags-add-input(*ngIf="addTag && canEdit", (add)="addNewTag($event)")

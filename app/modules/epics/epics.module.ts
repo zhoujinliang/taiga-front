@@ -1,6 +1,6 @@
 import {CommonModule} from "@angular/common";
 import {NgModule, NO_ERRORS_SCHEMA} from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
@@ -16,6 +16,7 @@ import {EpicsTable} from "./epics-table/epics-table.component";
 import {EpicsTableColumnToggle} from "./epics-table/epics-table-column-toggle.component";
 import {EpicRow} from "./epics-table/epic-row.component";
 import {EpicsStoryRow} from "./epics-table/epics-story-row.component";
+import {CreateEpicForm} from "./create-epic-form/create-epic-form.component";
 import {EpicsEffects} from "./epics.effects";
 
 @NgModule({
@@ -26,6 +27,7 @@ import {EpicsEffects} from "./epics.effects";
         EpicsTableColumnToggle,
         EpicRow,
         EpicsStoryRow,
+        CreateEpicForm,
     ],
     exports: [
         EpicsPage,
@@ -36,7 +38,7 @@ import {EpicsEffects} from "./epics.effects";
         TgCardsModule,
         TgComponentsModule,
         TgServicesModule,
-        FormsModule,
+        ReactiveFormsModule,
         StoreModule,
         TranslateModule.forChild({}),
         RouterModule.forChild([

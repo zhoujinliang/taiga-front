@@ -25,4 +25,5 @@ import {Component, Input} from "@angular/core";
 })
 export class AssignedItem {
     @Input() member;
+    @Input() photoOnly: boolean = false;
 }

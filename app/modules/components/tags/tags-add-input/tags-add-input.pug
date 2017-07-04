@@ -7,7 +7,7 @@
         [placeholder]="'COMMON.TAGS.PLACEHOLDER' | translate",
         tg-autofocus,
         [value]="newTag.name",
-        ng-model-options="{debounce: 200}"
+        (keyup)="setName($event)"
     )
 
     tg-tags-dropdown(
@@ -24,8 +24,8 @@
     )
 
     tg-svg.save(
-        ng-show="vm.newTag.name.length"
-        svg-icon="icon-save"
-        svg-title-translate="COMMON.TAGS.ADD"
-        ng-click="vm.addNewTag(vm.newTag.name, vm.newTag.color)"
+        (show)="newTag.name.length",
+        svg-icon="icon-save",
+        svg-title-translate="COMMON.TAGS.ADD",
+        (click)="this.add.emit(newTag)"
     )

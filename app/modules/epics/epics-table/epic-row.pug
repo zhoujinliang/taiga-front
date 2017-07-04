@@ -39,12 +39,9 @@
         *ngIf="columns.assigned"
         tg-loading="assignLoader"
     )
-        tg-assigned-to-component(
-            assigned-to="epic.get('assigned_to_extra_info')",
-            project="project",
-            on-remove-assigned="updateAssignedTo()",
-            on-assign-to="updateAssignedTo(member)",
-            tg-isolate-click
+        tg-assigned-item(
+            [member]="epic.get('assigned_to_extra_info')",
+            [photoOnly]="true"
         )
 
     .status(

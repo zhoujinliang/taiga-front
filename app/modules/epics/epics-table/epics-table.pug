@@ -33,7 +33,7 @@
             button.epics-table-option-button.e2e-epics-column-button((click)="displayOptions = !displayOptions")
                 span(translate="EPICS.TABLE.VIEW_OPTIONS")
                 tg-svg(svg-icon="icon-arrow-down")
-            form.epics-table-dropdown.e2e-epics-column-dropdown(*ngIf="displayOptions")
+            div.epics-table-dropdown.e2e-epics-column-dropdown(*ngIf="displayOptions")
                 tg-epics-table-column-toggle(title="EPICS.TABLE.VOTES", id="switch-votes", [(value)]="columns.votes")
                 tg-epics-table-column-toggle(title="EPICS.TABLE.PROJECT", id="switch-project", [(value)]="columns.project")
                 tg-epics-table-column-toggle(title="EPICS.TABLE.SPRINT", id="switch-sprint", [(value)]="columns.sprint")

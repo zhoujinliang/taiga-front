@@ -1,3 +1,7 @@
+tg-lightbox.lightbox-create-epic(key="epics.add")
+    tg-lightbox-close
+    tg-create-epic-form([project]="project|async")
+
 div.wrapper
     tg-project-menu([project]="project|async", active="epics")
 
@@ -8,8 +12,8 @@ div.wrapper
             .action-buttons(ng-if="vm.epics.size && vm.canCreateEpics()")
                 button.button-green.e2e-create-epic(
                     translate="EPICS.DASHBOARD.ADD",
-                    [title]="'EPICS.DASHBOARD.ADD_TITLE' | translate",
-                    ng-click="vm.onCreateEpic()"
+                    [title]="'EPICS.DASHBOARD.ADD' | translate",
+                    (click)="onAddEpicClicked()"
                 )
 
         tg-epics-table([epics]="epics|async", [project]="project|async", [userStories]="userStories|async")

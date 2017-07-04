@@ -7,7 +7,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Observable, Subscription } from "rxjs";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/zip";
-import { StartLoadingAction, StopLoadingAction } from "../../app.actions";
+import { StartLoadingAction, StopLoadingAction, OpenLightboxAction } from "../../app.actions";
 import { IState } from "../../app.store";
 import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import { ZoomLevelService } from "../services/zoom-level.service";
@@ -49,6 +49,10 @@ export class EpicsPage implements OnInit, OnDestroy {
 
     onSorted(value) {
         console.log(value);
+    }
+
+    onAddEpicClicked() {
+        this.store.dispatch(new OpenLightboxAction("epics.add"));
     }
 
     ngOnDestroy() {
