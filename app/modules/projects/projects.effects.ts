@@ -9,7 +9,8 @@ import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./projects.actions";
-import { SetUserProjectsAction } from "./projects.actions";
+import {StartLoadingItemAction, StopLoadingItemAction} from "../../app.actions";
+import {wrapLoading} from "../utils/effects";
 
 @Injectable()
 export class CurrentProjectsEffects {
@@ -27,20 +28,20 @@ export class CurrentProjectsEffects {
         .ofType("FETCH_USER_PROJECTS")
         .map(toPayload)
         .switchMap((userId) => this.rs.projects.getProjectsByUserId(userId))
-        .map((projects) => new SetUserProjectsAction(projects));
+        .map((projects) => new actions.SetUserProjectsAction(projects));
 
     @Effect()
     fetchProjectTimeline$: Observable<Action> = this.actions$
         .ofType("FETCH_PROJECT_TIMELINE")
         .map(toPayload)
-        .switchMap((payload) => {
+        .flatMap(wrapLoading("timeline", (payload) => {
           return this.rs.projects.getTimeline(payload.projectId, payload.page)
               .map((response:any) => new actions.AppendProjectTimelineAction(
                   response.data,
                   parseInt(response.headers.get('x-pagination-current'), 10),
                   response.headers.get('x-pagination-next') != null
               ));
-        });
+        }));
 
     @Effect()
     projectsChangeOrder$: Observable<Action> = this.actions$
@@ -48,6 +49,60 @@ export class CurrentProjectsEffects {
         .map(toPayload)
         .switchMap((payload) => {
           return this.rs.projects.bulkUpdateOrder(payload);
+        });
+
+    @Effect()
+    projectLike$: Observable<Action> = this.actions$
+        .ofType("PROJECT_LIKE")
+        .map(toPayload)
+        .flatMap(wrapLoading("like", (project) => {
+            return this.rs.projects.likeProject(project.get('id')).map(() => {
+              return new actions.SetCurrentProjectAction(project.set('is_fan', true)
+                                                                .update("total_fans", (t) => t + 1))
+            })
+        }));
+
+    @Effect()
+    projectUnlike$: Observable<Action> = this.actions$
+        .ofType("PROJECT_UNLIKE")
+        .map(toPayload)
+        .flatMap(wrapLoading("like", (project) => {
+            return this.rs.projects.unlikeProject(project.get('id')).map(() => {
+              return new actions.SetCurrentProjectAction(project.set('is_fan', false)
+                                                                .update("total_fans", (t) => t - 1))
+            })
+        }));
+
+    @Effect()
+    projectWatch$: Observable<Action> = this.actions$
+        .ofType("PROJECT_WATCH")
+        .map(toPayload)
+        .flatMap(wrapLoading("watch", ({project, notificationLevel}) => {
+            return this.rs.projects.watchProject(project.get('id'), notificationLevel).map(() => {
+              let add = project.get('is_watcher') ? 0 : 1;
+              return new actions.SetCurrentProjectAction(project.set('is_watcher', true)
+                                                                .set("notify_level", notificationLevel)
+                                                                .update("total_watchers", (t) => t + add))
+            })
+        }));
+
+    @Effect()
+    projectUnwatch$: Observable<Action> = this.actions$
+        .ofType("PROJECT_UNWATCH")
+        .map(toPayload)
+        .flatMap(wrapLoading("watch", (project) => {
+            return this.rs.projects.unwatchProject(project.get('id')).map(() => {
+              return new actions.SetCurrentProjectAction(project.set('is_watcher', false)
+                                                                .update("total_watchers", (t) => t - 1))
+            })
+        }));
+
+    @Effect()
+    contactProject$: Observable<Action> = this.actions$
+        .ofType("PROJECT_CONTACT")
+        .map(toPayload)
+        .switchMap(({project, message}) => {
+          return this.rs.projects.contactProject(project.get('id'), message);
         });
 
     constructor(private actions$: Actions, private rs: ResourcesService) { }

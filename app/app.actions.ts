@@ -22,6 +22,18 @@ export class StopLoadingAction implements Action {
   payload = null;
 }
 
+export class StartLoadingItemAction implements Action {
+  readonly type = "START_LOADING_ITEM";
+
+  constructor(public payload: string) {}
+}
+
+export class StopLoadingItemAction implements Action {
+  readonly type = "STOP_LOADING_ITEM";
+
+  constructor(public payload: string) {}
+}
+
 export class SendFeedbackAction implements Action {
   readonly type = "SEND_FEEDBACK";
 

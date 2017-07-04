@@ -57,3 +57,39 @@ export class ProjectsChangeOrderAction implements Action {
 
   constructor(public payload: any[]) {};
 }
+
+export class ProjectLikeAction implements Action {
+  readonly type = "PROJECT_LIKE";
+
+  constructor(public payload: Immutable.Map<string, any>) {};
+}
+
+export class ProjectUnlikeAction implements Action {
+  readonly type = "PROJECT_UNLIKE";
+
+  constructor(public payload: Immutable.Map<string, any>) {};
+}
+
+export class ProjectWatchAction implements Action {
+  readonly type = "PROJECT_WATCH";
+  public payload: any;
+
+  constructor(project: Immutable.Map<string, any>, notificationLevel: number) {
+      this.payload = {project, notificationLevel};
+  };
+}
+
+export class ProjectUnwatchAction implements Action {
+  readonly type = "PROJECT_UNWATCH";
+
+  constructor(public payload: Immutable.Map<string, any>) {};
+}
+
+export class ProjectContactAction implements Action {
+  readonly type = "PROJECT_CONTACT";
+  public payload: any;
+
+  constructor(project: Immutable.Map<string, any>, message: string) {
+      this.payload = {project, message};
+  };
+}

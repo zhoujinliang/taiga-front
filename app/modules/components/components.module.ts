@@ -36,7 +36,7 @@ import { FormsModule } from "@angular/forms";
 import { ColorSelector } from "./color-selector/color-selector.component";
 import { CheckPermissionsService } from "./check-permissions/check-permissions.service";
 import { IfPermDirective } from "./check-permissions/check-permissions.directive";
-import { LoadingDirective, BigLoadingAux, SmallLoadingAux, MediumLoadingAux, LoadingAux } from "./loading.directive";
+import { LoadingDirective, BigLoadingAux, SmallLoadingAux, MediumLoadingAux, TinyLoadingAux } from "./loading.directive";
 import { IssuesBullet } from "./issues-bullet.component";
 import { ProgressBar } from "./progress-bar.component";
 import { TagsLine } from "./tags/tags-line.component";
@@ -123,7 +123,7 @@ import { SortableDirective } from "./sortable/sortable.directive";
         BigLoadingAux,
         SmallLoadingAux,
         MediumLoadingAux,
-        LoadingAux,
+        TinyLoadingAux,
         IssuesBullet,
         ProgressBar,
         TagsLine,
@@ -146,7 +146,7 @@ import { SortableDirective } from "./sortable/sortable.directive";
         BigLoadingAux,
         SmallLoadingAux,
         MediumLoadingAux,
-        LoadingAux,
+        TinyLoadingAux,
     ]
 })
 export class TgComponentsModule {}

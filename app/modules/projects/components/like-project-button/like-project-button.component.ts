@@ -18,6 +18,9 @@
  */
 
 import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Store} from "@ngrx/store";
+import {IState} from "../../../../app.store";
+import {ProjectUnlikeAction, ProjectLikeAction} from "../../projects.actions";
 
 @Component({
     selector: "tg-like-project-button",
@@ -25,14 +28,15 @@ import {Component, EventEmitter, Input, Output} from "@angular/core";
 })
 export class LikeProjectButton {
     @Input() project: any;
-    @Output() click: EventEmitter<number>;
     isMouseOver: boolean;
 
-    constructor() {
-        this.click = new EventEmitter();
-    }
+    constructor(private store: Store<IState>) {}
 
-    onClick() {
-        this.click.emit(this.project.get("id"));
+    toggleLike() {
+        if (this.project.get('is_fan')) {
+            this.store.dispatch(new ProjectUnlikeAction(this.project))
+        } else {
+            this.store.dispatch(new ProjectLikeAction(this.project))
+        }
     }
 }

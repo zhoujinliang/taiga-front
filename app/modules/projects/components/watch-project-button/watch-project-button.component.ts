@@ -18,6 +18,9 @@
  */
 
 import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Store} from "@ngrx/store";
+import {IState} from "../../../../app.store";
+import {ProjectUnwatchAction, ProjectWatchAction} from "../../projects.actions";
 
 @Component({
     selector: "tg-watch-project-button",
@@ -25,10 +28,15 @@ import {Component, EventEmitter, Input, Output} from "@angular/core";
 })
 export class WatchProjectButton {
     @Input() project: any;
-    @Output() changed: EventEmitter<number>;
     showWatchOptions: boolean;
 
-    constructor() {
-        this.changed = new EventEmitter();
+    constructor(private store: Store<IState>) {}
+
+    changeWatch(newLevel) {
+        if (!newLevel) {
+            this.store.dispatch(new ProjectUnwatchAction(this.project));
+        } else {
+            this.store.dispatch(new ProjectWatchAction(this.project, newLevel));
+        }
     }
 }

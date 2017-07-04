@@ -31,7 +31,8 @@ const globalInitialState = {
         "key": null,
         "steps": null,
         "enabled": {},
-    }
+    },
+    "loading-items": {}
 };
 
 const initialState = Immutable.fromJS({
@@ -62,6 +63,10 @@ export const globalReducer = (state, action) => {
             return state.set("loading", true);
         case "STOP_LOADING":
             return state.set("loading", false);
+        case "START_LOADING_ITEM":
+            return state.setIn(["loading-items", action.payload], true);
+        case "STOP_LOADING_ITEM":
+            return state.setIn(["loading-items", action.payload], false);
         case "CLOSE_LIGHTBOX":
             return state.set("open-lightbox", "");
         case "OPEN_LIGHTBOX":
