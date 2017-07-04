@@ -34,7 +34,7 @@ export class CurrentProjectsEffects {
     fetchProjectTimeline$: Observable<Action> = this.actions$
         .ofType("FETCH_PROJECT_TIMELINE")
         .map(toPayload)
-        .flatMap(wrapLoading("timeline", (payload) => {
+        .switchMap(wrapLoading("timeline", (payload) => {
           return this.rs.projects.getTimeline(payload.projectId, payload.page)
               .map((response:any) => new actions.AppendProjectTimelineAction(
                   response.data,
