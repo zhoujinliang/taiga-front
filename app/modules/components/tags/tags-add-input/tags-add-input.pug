@@ -7,7 +7,7 @@
         [placeholder]="'COMMON.TAGS.PLACEHOLDER' | translate",
         tg-autofocus,
         [value]="newTag.name",
-        (keyup)="setName($event)"
+        (keypress)="setName($event)"
     )
 
     tg-tags-dropdown(
@@ -19,7 +19,7 @@
 
     tg-color-selector(
         *ngIf="!disableColorSelection",
-        (selectColor)="selectColor(color)",
+        (colorSelected)="newTag.color = $event",
         [isColorRequired]="false"
     )
 
@@ -27,5 +27,5 @@
         (show)="newTag.name.length",
         svg-icon="icon-save",
         svg-title-translate="COMMON.TAGS.ADD",
-        (click)="this.add.emit(newTag)"
+        (click)="addTag()"
     )

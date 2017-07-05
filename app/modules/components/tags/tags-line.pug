@@ -1,8 +1,8 @@
 .tags-container
     ng-container(*ngFor="let tag of tags")
         .tag(
-            *ngIf="tag.get(1) && !disableColorSelection",
-            [style.border-left]="'.3rem solid' + tag.get(1)"
+            *ngIf="tag.color && !disableColorSelection",
+            [style.border-left]="'.3rem solid' + tag.color"
         )
             tg-tag(
                 [tag]="tag",
@@ -12,7 +12,7 @@
 
     ng-container(*ngFor="let tag of tags")
         .tag(
-            *ngIf="!tag.get(1) || disableColorSelection"
+            *ngIf="!tag.color || disableColorSelection"
         )
             tg-tag(
                 [tag]="tag",

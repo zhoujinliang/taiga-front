@@ -18,11 +18,17 @@ export class TagsAddInput {
 
     setName(event) {
         this.newTag.name = event.target.value;
-        console.log(event.keyCode);
         if (event.keyCode === 13) {
             event.stopPropagation();
-            this.add.emit(this.newTag);
+            event.preventDefault();
+            this.addTag();
             return false;
         }
+    }
+
+    addTag() {
+        this.add.emit(this.newTag);
+        console.log(this.newTag);
+        this.newTag = {name: "", color: ""}
     }
 }

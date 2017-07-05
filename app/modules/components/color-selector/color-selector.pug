@@ -38,5 +38,7 @@
                 type="text",
                 maxlength="7",
                 placeholder="Type hex code",
+                [(ngModel)]="customColor",
                 (keydown)="onKeyDown($event)"
             )
+            // TODO: validate color format

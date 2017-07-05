@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
@@ -6,7 +6,12 @@ import * as Immutable from "immutable";
     template: require("./tag.pug")(),
 })
 export class Tag {
-    @Input() tag: Immutable.Map<string,any>;
+    @Input() tag: any;
     @Input() canEdit: boolean;
+    @Output() delete: EventEmitter<string>
     loadingRemoveTag: boolean = false;
+
+    constructor() {
+        this.delete = new EventEmitter();
+    }
 }

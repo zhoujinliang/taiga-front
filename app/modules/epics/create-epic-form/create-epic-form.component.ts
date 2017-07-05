@@ -16,12 +16,12 @@ export class CreateEpicForm implements OnChanges {
             subject: ["", Validators.required],
             description: ["", Validators.required],
             status: [null, Validators.required],
-            tags: [],
-            attachments: [],
-            teamRequirement: false,
-            clientRequirement: false,
-            blocked: false,
-            blockedNote: ""
+            tags: [[]],
+            attachments: [[]],
+            teamRequirement: [false],
+            clientRequirement: [false],
+            blocked: [false],
+            blockedNote: [""]
         });
     }
 

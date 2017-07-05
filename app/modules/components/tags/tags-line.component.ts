@@ -1,4 +1,4 @@
-import {Component, Input, forwardRef} from "@angular/core";
+import {Component, Input, forwardRef, Output, EventEmitter} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 import * as Immutable from "immutable";
@@ -18,20 +18,28 @@ import * as _ from "lodash";
 export class TagsLine implements ControlValueAccessor {
     @Input() disableColorSelection: boolean = false;
     @Input() canEdit: boolean;
+    @Output() changed: EventEmitter<any[]>;
     addTag: boolean;
-    _tags: Immutable.List<any>;
+    _tags: any[];
     onChange: any;
 
-    set tags(val: Immutable.List<any>) {
+    constructor() {
+        this.changed = new EventEmitter();
+    }
+
+    set tags(val: any[]) {
         this._tags = val;
-        this.onChange(val);
+        if (this.onChange) {
+            this.onChange(val);
+        }
+        this.changed.emit(val);
     }
 
     get tags() {
         return this._tags;
     }
 
-    writeValue(value: Immutable.List<any>) {
+    writeValue(value: any[]) {
         if (value) {
             this.tags = value;
         }
@@ -44,10 +52,10 @@ export class TagsLine implements ControlValueAccessor {
     registerOnTouched() {}
 
     onDeleteTag(tag) {
-        this._tags = this._tags.filter((t) => t == tag).toList();
+        this.tags = _.filter(this._tags, (t) => t == tag);
     }
 
     addNewTag(tag) {
-        this._tags = this._tags.push(Immutable.fromJS(tag));
+        this.tags.push(tag);
     }
 }
