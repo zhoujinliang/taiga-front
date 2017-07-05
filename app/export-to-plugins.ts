@@ -52,8 +52,6 @@ const taiga = {
     isEmail: utils.isEmail,
     isPdf: utils.isPdf,
     patch: utils.patch,
-    getRandomDefaultColor: utils.getRandomDefaultColor,
-    getDefaulColorList: utils.getDefaulColorList,
     getMatches: utils.getMatches,
     cartesianProduct: utils.cartesianProduct,
 };

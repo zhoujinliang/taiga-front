@@ -51,11 +51,14 @@ export class TagsLine implements ControlValueAccessor {
 
     registerOnTouched() {}
 
-    onDeleteTag(tag) {
-        this.tags = _.filter(this._tags, (t) => t == tag);
+    removeTag(tag) {
+        this.tags = _.filter(this._tags, (t) => t.name !== tag);
     }
 
     addNewTag(tag) {
-        this.tags.push(tag);
+        if (tag != "") {
+            this.removeTag(tag.name);
+            this.tags.push(tag);
+        }
     }
 }

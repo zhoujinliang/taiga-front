@@ -27,8 +27,8 @@ export class TagsAddInput {
     }
 
     addTag() {
-        this.add.emit(this.newTag);
-        console.log(this.newTag);
-        this.newTag = {name: "", color: ""}
+        this.add.emit({name: this.newTag.name, color: this.newTag.color});
+        this.newTag.name = "";
+        this.newTag.color = null;
     }
 }

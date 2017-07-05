@@ -19,7 +19,7 @@
 
     tg-color-selector(
         *ngIf="!disableColorSelection",
-        (colorSelected)="newTag.color = $event",
+        [(ngModel)]="newTag.color",
         [isColorRequired]="false"
     )
 

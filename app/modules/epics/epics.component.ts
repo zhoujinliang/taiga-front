@@ -18,9 +18,10 @@ import * as actions from "./epics.actions";
 })
 export class EpicsPage implements OnInit, OnDestroy {
     section = "epics";
-    project: Observable<any>;
-    epics: Observable<any[]>;
-    userStories: Observable<any[]>;
+    project: Observable<Immutable.Map<string, any>>;
+    statuses: Observable<Immutable.List<any>>;
+    epics: Observable<Immutable.List<any>>;
+    userStories: Observable<Immutable.List<any>>;
     members: Observable<any>;
     subscriptions: Subscription[];
 
@@ -29,6 +30,7 @@ export class EpicsPage implements OnInit, OnDestroy {
                 private translate: TranslateService,
                 private zoomLevel: ZoomLevelService) {
         this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
+        this.statuses = this.store.select((state) => state.getIn(["projects", "current-project", "epic_statuses"]));
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
         this.userStories = this.store.select((state) => state.getIn(["epics", "user-stories"]));
         this.epics = this.store.select((state) => state.getIn(["epics", "epics"]))

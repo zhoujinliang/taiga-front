@@ -34,6 +34,7 @@ import {FeedbackLightbox} from "./feedback/feedback-lightbox.component";
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from "@angular/forms";
 import { ColorSelector } from "./color-selector/color-selector.component";
+import { ColorSelectorService } from "./color-selector/color-selector.service";
 import { CheckPermissionsService } from "./check-permissions/check-permissions.service";
 import { IfPermDirective } from "./check-permissions/check-permissions.directive";
 import { LoadingDirective, BigLoadingAux, SmallLoadingAux, MediumLoadingAux, TinyLoadingAux } from "./loading.directive";
@@ -141,6 +142,7 @@ import { SortableDirective } from "./sortable/sortable.directive";
         CheckPermissionsService,
         WysiwygService,
         WysiwygCodeHightlighterService,
+        ColorSelectorService,
     ],
     entryComponents: [
         BigLoadingAux,

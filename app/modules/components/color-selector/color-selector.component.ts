@@ -19,11 +19,9 @@
 
 import {Component, OnInit, Input, forwardRef, Output, EventEmitter} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import {ColorSelectorService} from "./color-selector.service";
 import * as Immutable from "immutable";
 import * as _ from "lodash";
-import {getDefaulColorList} from "../../../libs/utils";
-
-const DEFAULT_COLOR = "#d3d7cf"
 
 @Component({
     selector: "tg-color-selector",
@@ -39,8 +37,8 @@ const DEFAULT_COLOR = "#d3d7cf"
 export class ColorSelector implements ControlValueAccessor, OnInit {
     @Input() initColor: string;
     @Input() isColorRequired: boolean;
-    @Input() requiredPerm: string;
-    @Input() project: Immutable.Map<string, any>;
+    @Input() canEdit: boolean = true;
+    @Input() randomInit: boolean;
     @Output() colorSelected: EventEmitter<string>;
     displayColorList: boolean = false;
     colorList: any[];
@@ -48,21 +46,26 @@ export class ColorSelector implements ControlValueAccessor, OnInit {
     _color: string = null;
     onChange: any;
 
-    constructor() {
-        this.colorList = getDefaulColorList();
+    constructor(private colorSelector: ColorSelectorService) {
+        this.colorList = this.colorSelector.getColorsList();
         this.colorSelected = new EventEmitter();
     }
 
     ngOnInit() {
-        if(this.isColorRequired) {
-            this._color = this.initColor || DEFAULT_COLOR;
+        this.displayColorList = false;
+        if(this.randomInit) {
+            this.color = this.colorSelector.getRandom();
+        } else if(this.isColorRequired) {
+            this.color = this.initColor || this.colorSelector.getDefault();
+        }
+
+        if(!this.isColorRequired) {
+            this.colorList = _.dropRight(this.colorList);
         }
     }
 
     writeValue(value: string) {
-        if (value) {
-            this.color = value;
-        }
+        this.color = value;
     }
 
     get color() {
@@ -83,17 +86,6 @@ export class ColorSelector implements ControlValueAccessor, OnInit {
 
     registerOnTouched() {}
 
-    userCanChangeColor() {
-        if (!this.requiredPerm) { return true; }
-        return this.project.get("my_permissions").indexOf(this.requiredPerm) !== -1;
-    }
-
-    checkIsColorRequired() {
-        if (!this.isColorRequired) {
-            return this.colorList = _.dropRight(this.colorList);
-        }
-    }
-
     setColor(color) {
         this.color = color;
         return this.customColor = color;
@@ -101,7 +93,7 @@ export class ColorSelector implements ControlValueAccessor, OnInit {
 
     resetColor() {
         if (this.isColorRequired && !this.color) {
-            return this.color = this.initColor || DEFAULT_COLOR;
+            return this.color = this.initColor || this.colorSelector.getDefault();
         }
     }
 

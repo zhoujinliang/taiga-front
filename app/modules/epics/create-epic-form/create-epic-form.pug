@@ -1,4 +1,4 @@
-.create-epic-container(*ngIf="project")
+.create-epic-container(*ngIf="statuses")
     h2.title(translate="EPICS.CREATE.TITLE")
 
     form((ngSubmit)="onSubmit()", [formGroup]="createEpicForm", novalidate)
@@ -11,8 +11,6 @@
                     )
             .subject
                 fieldset
-                    //data-required="true"
-                    //data-maxlength="140"
                     input.e2e-create-epic-subject(
                         type="text",
                         name="subject",
@@ -20,6 +18,8 @@
                         tg-auto-select,
                         [placeholder]="'COMMON.FIELDS.SUBJECT' | translate"
                     )
+                    tg-field-error([control]="createEpicForm.controls.subject")
+
         fieldset
             select.e2e-create-epic-status(
                 id="epic-status",
@@ -27,68 +27,68 @@
                 formControlName="status"
             )
                 option(
-                    *ngFor="let status of project.get('epic_statuses')",
+                    *ngFor="let status of statuses",
                     [value]="status.get('id')"
                 ) {{ status.get('name') }}
+
         fieldset.tags-block
             tg-tags-line(
-                *ngIf="project",
                 [canEdit]="true",
                 formControlName="tags"
             )
         fieldset
-            // textarea.e2e-create-epic-description(
-            //     formControlName="description",
-            //     [placeholder]="'EPICS.CREATE.PLACEHOLDER_DESCRIPTION' | translate"
-            // )
+            textarea.e2e-create-epic-description(
+                formControlName="description",
+                [placeholder]="'EPICS.CREATE.PLACEHOLDER_DESCRIPTION' | translate"
+            )
         fieldset
             // tg-attachments-simple(
-            //     formControlName="attachments",
+            //     formcontrolname="attachments",
             //     attachments="attachments",
-            //     (add)="addAttachment(attachment)"
+            //     (add)="addattachment(attachment)"
             // )
         .settings
-            // fieldset.team-requirement
-            //     input(
-            //         type="checkbox",
-            //         name="team_requirement",
-            //         id="team-requirement",
-            //         formControlName="teamRequirement"
-            //     )
-            //     label.requirement.trans-button.e2e-create-epic-team-requirement(
-            //         for="team-requirement",
-            //         translate="EPICS.CREATE.TEAM_REQUIREMENT"
-            //     )
-            // fieldset.client-requirement
-            //     input(
-            //         type="checkbox",
-            //         name="client_requirement",
-            //         id="client-requirement",
-            //         formControlName="clientRequirement"
-            //     )
-            //     label.requirement.trans-button.e2e-create-epic-client-requirement(
-            //         for="client-requirement",
-            //         translate="EPICS.CREATE.CLIENT_REQUIREMENT"
-            //     )
-            // fieldset
-            //     input(
-            //         type="checkbox",
-            //         name="blocked",
-            //         id="blocked",
-            //         formControlName="blocked"
-            //     )
-            //     label.requirement.trans-button.blocked.e2e-create-epic-blocked(
-            //         for="blocked",
-            //         translate="EPICS.CREATE.BLOCKED"
-            //     )
+            fieldset.team-requirement
+                input(
+                    type="checkbox",
+                    name="team_requirement",
+                    id="team-requirement",
+                    formControlName="teamRequirement"
+                )
+                label.requirement.trans-button.e2e-create-epic-team-requirement(
+                    for="team-requirement",
+                    translate="EPICS.CREATE.TEAM_REQUIREMENT"
+                )
+            fieldset.client-requirement
+                input(
+                    type="checkbox",
+                    name="client_requirement",
+                    id="client-requirement",
+                    formControlName="clientRequirement"
+                )
+                label.requirement.trans-button.e2e-create-epic-client-requirement(
+                    for="client-requirement",
+                    translate="EPICS.CREATE.CLIENT_REQUIREMENT"
+                )
+            fieldset
+                input(
+                    type="checkbox",
+                    name="blocked",
+                    id="blocked",
+                    formControlName="blocked"
+                )
+                label.requirement.trans-button.blocked.e2e-create-epic-blocked(
+                    for="blocked",
+                    translate="EPICS.CREATE.BLOCKED"
+                )
         fieldset(*ngIf="createEpicForm.controls.blocked.value")
-            // input.e2e-create-epic-blocked-note(
-            //     type="text",
-            //     name="blocked_note",
-            //     maxlength="140",
-            //     formControlName="blockedNote"
-            //     [placeholder]="'EPICS.CREATE.BLOCKED_NOTE_PLACEHOLDER' | translate"
-            // )
+            input.e2e-create-epic-blocked-note(
+                type="text",
+                name="blocked_note",
+                maxlength="140",
+                formControlName="blockedNote",
+                [placeholder]="'EPICS.CREATE.BLOCKED_NOTE_PLACEHOLDER' | translate"
+            )
         fieldset
             //tg-loading="vm.loading",
             button.button-green.create-epic-button.e2e-create-epic-button(

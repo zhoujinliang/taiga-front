@@ -7,8 +7,13 @@
         width: 700px;
     }
     .subject-container {
-        align-items: center;
+        align-items: flex-start;
         display: flex;
+        .tag-color {
+            height: 2.45rem;
+            min-width: 2.45rem;
+            width: 2.45rem;
+        }
         .subject {
             padding-left: 1rem;
             width: 100%;

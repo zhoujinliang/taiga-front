@@ -5,7 +5,7 @@ import { IState } from "../../../app.store";
 
 @Component({
     selector: "tg-lightbox",
-    template: `<div class="lightbox" [class.open]="isOpen|async">
+    template: `<div class="lightbox" [class.open]="isOpen|async" *ngIf="isOpen|async">
                  <ng-content></ng-content>
                </div>`,
 })

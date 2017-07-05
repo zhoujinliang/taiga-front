@@ -1,12 +1,12 @@
 //- Read only mode
-.color-selector(*ngIf="!userCanChangeColor()")
+.color-selector(*ngIf="!canEdit")
     .tag-color.disabled.e2e-open-color-selector(
         [class.empty-color]="!color",
         [style.background]="color"
     )
 
 //- Read & Edit mode
-.color-selector(*ngIf="userCanChangeColor()")
+.color-selector(*ngIf="canEdit")
     .tag-color.e2e-open-color-selector(
         (click)="toggleColorList()",
         [class.empty-color]="!color",

@@ -7,7 +7,7 @@
             tg-tag(
                 [tag]="tag",
                 [canEdit]="canEdit",
-                (delete)="onDeleteTag($event)"
+                (delete)="removeTag($event)"
             )
 
     ng-container(*ngFor="let tag of tags")
@@ -17,7 +17,7 @@
             tg-tag(
                 [tag]="tag",
                 [canEdit]="canEdit",
-                (delete)="onDeleteTag($event)",
+                (delete)="removeTag($event)",
             )
 
 tg-tags-add-button(*ngIf="!addTag && canEdit", (click)="addTag = true")
