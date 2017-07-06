@@ -7,7 +7,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Observable, Subscription } from "rxjs";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/zip";
-import { StartLoadingAction, StopLoadingAction, OpenLightboxAction } from "../../app.actions";
+import { StartLoadingAction, StopLoadingAction, OpenLightboxAction, SetMetadataAction} from "../../app.actions";
 import { IState } from "../../app.store";
 import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import { ZoomLevelService } from "../services/zoom-level.service";
@@ -44,6 +44,12 @@ export class EpicsPage implements OnInit, OnDestroy {
         this.subscriptions = [
             this.project.subscribe((project) => {
                 if (project) {
+                    this.store.dispatch(new SetMetadataAction(
+                        "EPICS.PAGE_TITLE",
+                        {projectName: project.get("name")},
+                        "EPICS.PAGE_DESCRIPTION",
+                        {projectName: project.get("name"), projectDescription: project.get('description')},
+                    ));
                     this.currentProjectId = project.get('id');
                     this.store.dispatch(new actions.FetchEpicsAction(project.get("id")));
                 }
