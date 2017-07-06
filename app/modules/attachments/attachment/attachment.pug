@@ -17,25 +17,24 @@ div.single-attachment(
 
     form.editable-attachment(
         *ngIf="editable",
-        (submit)="updateAttachment($event, description.value, is_deprecated.value)"
+        (ngSubmit)="updateAttachment()",
+        [formGroup]="attachmentForm"
     )
         .editable.editable-attachment-comment
             // tg-auto-select,
             input(
-                #description,
                 type="text",
                 name="description",
                 maxlength="140",
-                [value]="attachment.get('description')",
+                formControlName="description",
                 [placeholder]="'ATTACHMENT.DESCRIPTION' | translate"
             )
 
         .editable.editable-attachment-deprecated
             input(
-                #isDeprecated,
                 type="checkbox",
-                [checked]="attachment.get('is_deprecated')",
                 name="is-deprecated",
+                formControlName="isDeprecated",
                 id="attach-{{attachment.get('id')}}-is-deprecated"
             )
             label.is_deprecated(

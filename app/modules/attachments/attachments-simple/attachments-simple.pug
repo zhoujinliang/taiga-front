@@ -1,9 +1,6 @@
-//- section.attachments(tg-attachments-drop="vm.addAttachments(files)")
-
-// tg-attachments-drop="vm.addAttachments(files)"
-section.attachments()
-    .attachments-header 
-        h3.attachments-title #[span.attachments-num {{attachments.size}}] #[span.attachments-text(translate="ATTACHMENT.SECTION_NAME")]
+section.attachments
+    .attachments-header
+        h3.attachments-title #[span.attachments-num {{attachments.length}}] #[span.attachments-text(translate="ATTACHMENT.SECTION_NAME")]
         .add-attach([title]="'ATTACHMENT.ADD' | translate")
             label.add-attachment-button(for="add-attach")
                 tg-svg(svg-icon="icon-add")
@@ -11,22 +8,23 @@ section.attachments()
                 id="add-attach",
                 type="file",
                 multiple="multiple",
-                tg-file-change="vm.addAttachments(files)"
+                (change)="onChangeFile($event)"
             )
-    .attachments-empty(ng-if="!vm.attachments.size")
-        div {{'ATTACHMENT.DROP' | translate}}
+
+    .attachments-empty(*ngIf="!attachments.length")
+        div(translate="ATTACHMENT.DROP")
+
     .attachment-body.attachment-list
-        .single-attachment(tg-repeat="attachment in vm.attachments track by $index")
+        .single-attachment(*ngFor="let attachment of attachments; let idx = index")
             .attachment-name
                 tg-svg(svg-icon="icon-attachment")
-                span {{attachment.get('name')}}
+                span {{attachment.name}}
             .attachment-size
-                span {{attachment.get('size') | sizeFormat}}
+                span {{attachment.size | sizeFormat}}
 
             .attachment-settings
                 a.settings.attachment-delete(
-                    href="#",
                     [title]="'COMMON.DELETE' | translate",
-                    ng-click="vm.deleteAttachment(attachment)"
+                    (click)="deleteAttachment(idx)"
                 )
                     tg-svg(svg-icon="icon-trash")

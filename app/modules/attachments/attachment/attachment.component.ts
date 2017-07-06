@@ -17,9 +17,11 @@
  * File: attchment.controller.coffee
  */
 
-import * as moment from "moment";
-import * as Immutable from "immutable";
 import {Component, Input, Output, EventEmitter} from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UniversalValidators } from "ngx-validators";
+
+import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-attachment",
@@ -30,24 +32,38 @@ export class Attachment {
     @Output() update: EventEmitter<any>;
     @Output() delete: EventEmitter<number>;
     @Output() preview: EventEmitter<any>;
+    attachmentForm: FormGroup;
     editable: boolean;
 
-    constructor() {
+    constructor(private fb: FormBuilder) {
         this.update = new EventEmitter();
         this.delete = new EventEmitter();
         this.preview = new EventEmitter();
+    }
+
+    ngOnInit() {
+        this.attachmentForm = this.fb.group({
+            description: [this.attachment.get('description'), UniversalValidators.maxLength(140)],
+            isDeprecated: [false, ],
+        });
+    }
+
+    ngOnChanges(changes) {
+        if (changes.attachment) {
+            this.attachmentForm.controls.description.setValue(this.attachment.get('description'));
+            this.attachmentForm.controls.isDeprecated.setValue(this.attachment.get('is_deprecated'));
+        }
     }
 
     editMode(mode) {
         this.editable = mode;
     }
 
-    updateAttachment(event, description, is_deprecated) {
-        event.preventDefault();
+    updateAttachment() {
         this.editable = false;
         this.update.emit({attachmentId: this.attachment.get('id'),
-                          description,
-                          is_deprecated});
+                          descrption: this.attachmentForm.controls.description.value,
+                          is_deprecated: this.attachmentForm.controls.isDeprecated.value});
         return false;
     }
 }

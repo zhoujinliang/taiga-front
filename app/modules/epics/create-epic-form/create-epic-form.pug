@@ -42,11 +42,9 @@
                 [placeholder]="'EPICS.CREATE.PLACEHOLDER_DESCRIPTION' | translate"
             )
         fieldset
-            // tg-attachments-simple(
-            //     formcontrolname="attachments",
-            //     attachments="attachments",
-            //     (add)="addattachment(attachment)"
-            // )
+            tg-attachments-simple(
+                formControlName="attachments"
+            )
         .settings
             fieldset.team-requirement
                 input(

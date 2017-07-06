@@ -8,6 +8,7 @@ import {TranslateModule} from "@ngx-translate/core";
 
 import {TgCommonModule} from "../../ts/modules/common/common.module";
 import {TgCardsModule} from "../cards/cards.module";
+import {TgAttachmentsModule} from "../attachments/attachments.module";
 import {TgComponentsModule} from "../components/components.module";
 import {TgServicesModule} from "../services/services.module";
 import {EpicsPage} from "./epics.component";
@@ -38,6 +39,7 @@ import {EpicsEffects} from "./epics.effects";
         TgCardsModule,
         TgComponentsModule,
         TgServicesModule,
+        TgAttachmentsModule,
         ReactiveFormsModule,
         StoreModule,
         TranslateModule.forChild({}),

@@ -25,13 +25,13 @@ export class CreateEpicForm implements OnChanges, OnInit {
                 UniversalValidators.maxLength(140),
             ])],
             description: ["", Validators.required],
-            status: [null, Validators.required],
             tags: [[]],
             attachments: [[]],
             teamRequirement: [false],
             clientRequirement: [false],
             blocked: [false],
-            blockedNote: [""]
+            blockedNote: [""],
+            status: [null, Validators.required],
         });
     }
 

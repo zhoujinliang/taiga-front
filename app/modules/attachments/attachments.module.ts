@@ -2,6 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 
 import {CommonModule} from "@angular/common";
+import {ReactiveFormsModule} from "@angular/forms";
 import {TranslateModule} from "@ngx-translate/core";
 
 import {TgBaseModule} from "../../ts/modules/base/base.module";
@@ -10,6 +11,7 @@ import {TgComponentsModule} from "../components/components.module";
 import {TgPipesModule} from "../pipes/pipes.module";
 
 import { AttachmentsFull } from "./attachments-full/attachments-full.component";
+import { AttachmentsSimple } from "./attachments-simple/attachments-simple.component";
 import { Attachment } from "./attachment/attachment.component";
 import { AttachmentGallery } from "./attachment/attachment-gallery.component";
 import { AttachmentLink } from "./attachment-link/attachment-link.component";
@@ -25,14 +27,17 @@ import { AttachmentsPreviewLightbox } from "./attachments-preview/attachments-pr
         TgCommonModule,
         TgComponentsModule,
         TgBaseModule,
+        ReactiveFormsModule,
         RouterModule.forChild([]),
         TranslateModule.forChild({}),
     ],
     exports: [
         AttachmentsFull,
+        AttachmentsSimple,
     ],
     declarations: [
         AttachmentsFull,
+        AttachmentsSimple,
         Attachment,
         AttachmentGallery,
         AttachmentLink,
