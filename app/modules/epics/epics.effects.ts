@@ -12,6 +12,8 @@ import { StorageService} from "../../ts/modules/base/storage";
 import {FiltersRemoteStorageService} from "../components/filter/filter-remote.service";
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./epics.actions";
+import {CloseLightboxAction} from "../../app.actions";
+import {wrapLoading} from "../utils/effects";
 
 @Injectable()
 export class EpicsEffects {
@@ -39,6 +41,22 @@ export class EpicsEffects {
               return new actions.SetEpicUserStoriesAction(payload, userstories.data);
           });
         });
+
+    @Effect()
+    putNewEpic$: Observable<Action> = this.actions$
+        .ofType("PUT_NEW_EPIC_ACTION")
+        .map(toPayload)
+        .switchMap(wrapLoading("new-epic", ({projectId, epicData}) => {
+          let data = _.extend({}, {project: projectId}, epicData)
+          data.tags = data.tags.map((i) => [i.name, i.color]);
+          return this.rs.epics.post(data).flatMap((epic) => {
+              return Observable.from([
+                  new actions.FetchEpicsAction(projectId),
+                  new CloseLightboxAction()
+              ])
+          });
+        }));
+
 
     constructor(private actions$: Actions,
                 private rs: ResourcesService,

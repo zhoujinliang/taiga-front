@@ -24,6 +24,7 @@ export class EpicsPage implements OnInit, OnDestroy {
     userStories: Observable<Immutable.List<any>>;
     members: Observable<any>;
     subscriptions: Subscription[];
+    currentProjectId: number;
 
     constructor(private store: Store<IState>,
                 private route: ActivatedRoute,
@@ -43,6 +44,7 @@ export class EpicsPage implements OnInit, OnDestroy {
         this.subscriptions = [
             this.project.subscribe((project) => {
                 if (project) {
+                    this.currentProjectId = project.get('id');
                     this.store.dispatch(new actions.FetchEpicsAction(project.get("id")));
                 }
             }),
@@ -62,5 +64,9 @@ export class EpicsPage implements OnInit, OnDestroy {
             subs.unsubscribe();
         }
         this.store.dispatch(new actions.CleanEpicsDataAction());
+    }
+
+    createNewEpic(epicData) {
+        this.store.dispatch(new actions.PutNewEpicAction(this.currentProjectId, epicData));
     }
 }

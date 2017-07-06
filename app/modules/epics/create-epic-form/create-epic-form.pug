@@ -89,8 +89,9 @@
             )
         fieldset
             //tg-loading="vm.loading",
-            button.button-green.create-epic-button.e2e-create-epic-button(
-                type="submit",
-                [title]="'EPICS.CREATE.CREATE_EPIC' | translate",
-                translate="EPICS.CREATE.CREATE_EPIC"
-            )
+            button.button-green.create-epic-button.e2e-create-epic-button(type="submit")
+                span(
+                    [title]="'EPICS.CREATE.CREATE_EPIC' | translate",
+                    translate="EPICS.CREATE.CREATE_EPIC",
+                    *tgLoading="'new-epic'",
+                )

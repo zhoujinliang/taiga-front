@@ -38,3 +38,14 @@ export class CleanEpicsDataAction implements Action {
   readonly type = "CLEAN_EPICS_DATA";
   payload = null;
 }
+
+export class PutNewEpicAction implements Action {
+  readonly type = "PUT_NEW_EPIC_ACTION";
+  public payload: any;
+
+  constructor(projectId: number, epicData: any) {
+      this.payload = {projectId, epicData};
+  }
+
+
+}
