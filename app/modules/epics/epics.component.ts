@@ -22,6 +22,7 @@ export class EpicsPage implements OnInit, OnDestroy {
     statuses: Observable<Immutable.List<any>>;
     epics: Observable<Immutable.List<any>>;
     userStories: Observable<Immutable.List<any>>;
+    assignedOnAssignedTo: Observable<Immutable.List<any>>;
     members: Observable<any>;
     subscriptions: Subscription[];
     currentProjectId: number;
@@ -37,6 +38,8 @@ export class EpicsPage implements OnInit, OnDestroy {
         this.epics = this.store.select((state) => state.getIn(["epics", "epics"]))
                                .filter((epics) => epics !== null)
                                .do(() => this.store.dispatch(new StopLoadingAction()));
+        this.assignedOnAssignedTo = this.store.select((state) => state.getIn(["epics", "current-epic", "assigned_to"]))
+                                              .map((id) => Immutable.List([id]))
     }
 
     ngOnInit() {

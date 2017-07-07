@@ -62,3 +62,9 @@ export class PatchEpicStatusAction implements Action {
       this.payload = {epicId, epicVersion, newStatus};
   }
 }
+
+export class SetCurrentEpicAction implements Action {
+  readonly type = "SET_CURRENT_EPIC";
+
+  constructor(public payload: Immutable.Map<string, any>) { }
+}

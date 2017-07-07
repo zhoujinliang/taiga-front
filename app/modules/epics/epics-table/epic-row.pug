@@ -41,7 +41,8 @@
     )
         tg-assigned-item(
             [member]="epic.get('assigned_to_extra_info')",
-            [photoOnly]="true"
+            [photoOnly]="true",
+            (click)="$event.stopPropagation(); assignTo()",
         )
 
     .status(

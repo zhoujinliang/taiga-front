@@ -3,6 +3,7 @@ import * as Immutable from "immutable";
 export const epicsInitialState = {
     "epics": null,
     "user-stories": {},
+    "current-epic": null,
 };
 
 export const epicsReducer = (state, action) => {
@@ -21,6 +22,8 @@ export const epicsReducer = (state, action) => {
             });
         case "SET_EPIC_USER_STORIES":
             return state.setIn(["user-stories", action.payload.id], action.payload.data);
+        case "SET_CURRENT_EPIC":
+            return state.set("current-epic", action.payload);
         case "APPEND_EPICS":
             return state.update("epics", (stories) => stories.concat(action.payload));
         case "CLEAN_EPICS_DATA":

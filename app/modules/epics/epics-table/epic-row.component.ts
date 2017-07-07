@@ -2,7 +2,8 @@ import {Component, Input} from "@angular/core";
 import * as Immutable from "immutable";
 import {Store} from "@ngrx/store";
 import {IState} from "../../../app.store";
-import {FetchEpicUserStoriesAction, PatchEpicStatusAction} from "../epics.actions";
+import {SetCurrentEpicAction, FetchEpicUserStoriesAction, PatchEpicStatusAction} from "../epics.actions";
+import {OpenLightboxAction} from "../../../app.actions";
 
 @Component({
     selector: "tg-epic-row",
@@ -43,5 +44,10 @@ export class EpicRow {
     updateStatus(newStatus) {
         this.displayStatusList = false;
         this.store.dispatch(new PatchEpicStatusAction(this.epic.get('id'), this.epic.get('version'), newStatus))
+    }
+
+    assignTo() {
+        this.store.dispatch(new OpenLightboxAction("epics.assign-to"));
+        this.store.dispatch(new SetCurrentEpicAction(this.epic));
     }
 }
