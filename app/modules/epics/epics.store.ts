@@ -9,6 +9,16 @@ export const epicsReducer = (state, action) => {
     switch (action.type) {
         case "SET_EPICS":
             return state.set("epics", action.payload);
+        case "SET_EPIC":
+            return state.update("epics", (epics) => {
+                return epics.map((epic) => {
+                    if (epic.get('id') === action.payload.get('id')) {
+                        return action.payload
+                    } else {
+                        return epic
+                    }
+                });
+            });
         case "SET_EPIC_USER_STORIES":
             return state.setIn(["user-stories", action.payload.id], action.payload.data);
         case "APPEND_EPICS":

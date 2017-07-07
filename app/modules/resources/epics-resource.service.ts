@@ -59,8 +59,7 @@ export class EpicsResource {
     patch(id, patch) {
         const url = this.urls.resolve("epics") + `/${id}`;
 
-        return this.http.patch(url, patch)
-            .map((result: any) => Immutable.fromJS(result.data));
+        return this.http.patch(url, patch);
     }
 
     post(params) {

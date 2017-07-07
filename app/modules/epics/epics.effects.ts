@@ -44,7 +44,7 @@ export class EpicsEffects {
 
     @Effect()
     putNewEpic$: Observable<Action> = this.actions$
-        .ofType("PUT_NEW_EPIC_ACTION")
+        .ofType("PUT_NEW_EPIC")
         .map(toPayload)
         .switchMap(wrapLoading("new-epic", ({projectId, epicData}) => {
           let data = _.extend({}, {project: projectId}, epicData)
@@ -56,6 +56,19 @@ export class EpicsEffects {
               ])
           });
         }));
+
+
+    @Effect()
+    patchEpicStatus$: Observable<Action> = this.actions$
+        .ofType("PATCH_EPIC_STATUS")
+        .map(toPayload)
+        .switchMap((payload) => {
+            return wrapLoading(`patch-epic-status-${payload.epicId}`, ({epicId, epicVersion, newStatus}) => {
+              return this.rs.epics.patch(epicId, {version: epicVersion, status: newStatus}).map((epic) => {
+                  return new actions.SetEpicAction(epic.data)
+              });
+            })(payload);
+        });
 
 
     constructor(private actions$: Actions,

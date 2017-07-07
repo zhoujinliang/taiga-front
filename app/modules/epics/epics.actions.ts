@@ -19,6 +19,12 @@ export class SetEpicsAction implements Action {
   constructor(public payload: Immutable.List<any>) { }
 }
 
+export class SetEpicAction implements Action {
+  readonly type = "SET_EPIC";
+
+  constructor(public payload: Immutable.List<any>) { }
+}
+
 export class SetEpicUserStoriesAction implements Action {
   readonly type = "SET_EPIC_USER_STORIES";
   public payload: any;
@@ -40,12 +46,19 @@ export class CleanEpicsDataAction implements Action {
 }
 
 export class PutNewEpicAction implements Action {
-  readonly type = "PUT_NEW_EPIC_ACTION";
+  readonly type = "PUT_NEW_EPIC";
   public payload: any;
 
   constructor(projectId: number, epicData: any) {
       this.payload = {projectId, epicData};
   }
+}
 
+export class PatchEpicStatusAction implements Action {
+  readonly type = "PATCH_EPIC_STATUS";
+  public payload: any;
 
+  constructor(epicId: number, epicVersion: number, newStatus: number) {
+      this.payload = {epicId, epicVersion, newStatus};
+  }
 }

@@ -2,7 +2,7 @@ import {Component, Input} from "@angular/core";
 import * as Immutable from "immutable";
 import {Store} from "@ngrx/store";
 import {IState} from "../../../app.store";
-import {FetchEpicUserStoriesAction} from "../epics.actions";
+import {FetchEpicUserStoriesAction, PatchEpicStatusAction} from "../epics.actions";
 
 @Component({
     selector: "tg-epic-row",
@@ -14,6 +14,7 @@ export class EpicRow {
     @Input() userStories: Immutable.List<any>;
     @Input() columns: any;
     displayUserStories: boolean;
+    displayStatusList: boolean;
 
     constructor(private store: Store<IState>) {}
 
@@ -37,5 +38,10 @@ export class EpicRow {
             return (100 * progress) / total;
         }
         return 0;
+    }
+
+    updateStatus(newStatus) {
+        this.displayStatusList = false;
+        this.store.dispatch(new PatchEpicStatusAction(this.epic.get('id'), this.epic.get('version'), newStatus))
     }
 }
