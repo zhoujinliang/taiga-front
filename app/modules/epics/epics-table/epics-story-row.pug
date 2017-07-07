@@ -21,7 +21,8 @@
         )
     // tg-nav="project:project=story.getIn(['project_extra_info', 'slug'])"
     .project(
-        *ngIf="columns.project"
+        *ngIf="columns.project",
+        [routerLink]="['/project', story.get('project_id')]"
     )
         tg-project-logo-small([project]="story.get('project_extra_info')")
     .sprint(*ngIf="columns.sprint") {{story.get('milestone_name')}}
