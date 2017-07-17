@@ -22,6 +22,7 @@ div.backlog-summary
 
         div.stats.js-toggle-burndown-visibility-button(
             [title]="'BACKLOG.SPRINT_SUMMARY.TOGGLE_BAKLOG_GRAPH' | translate",
+            [class.active]="graphOpen",
             *ngIf="showGraph()",
             (click)="graphOpen = !graphOpen"
         )

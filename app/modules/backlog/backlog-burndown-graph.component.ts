@@ -71,6 +71,9 @@ export class BacklogBurndownGraph implements OnChanges {
         ];
 
         const options = {
+            axisLabels: {
+                show: true
+            },
             grid: {
                 borderWidth: { top: 0, right: 1, left: 0, bottom: 0 },
                 borderColor: "#ccc",
@@ -108,7 +111,7 @@ export class BacklogBurndownGraph implements OnChanges {
             colors,
             tooltip: true,
             tooltipOpts: {
-                content(label, xval, yval, flotItem) {
+                content: (label, xval, yval, flotItem) => {
                     let ctx = {sprintName: milestones[xval].name, value: Math.abs(yval)};
                     if (flotItem.seriesIndex === 1) {
                         return this.translate.instant("BACKLOG.CHART.OPTIMAL", ctx);
