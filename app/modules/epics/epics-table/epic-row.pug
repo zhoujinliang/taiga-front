@@ -35,14 +35,12 @@
 
     .sprint(*ngIf="columns.sprint")
 
-    .assigned.e2e-assigned-to(
-        *ngIf="columns.assigned"
-        tg-loading="assignLoader"
-    )
+    .assigned.e2e-assigned-to(*ngIf="columns.assigned")
         tg-assigned-item(
             [member]="epic.get('assigned_to_extra_info')",
             [photoOnly]="true",
             (click)="$event.stopPropagation(); assignTo()",
+            *tgLoading="'patch-epic-assigned-to-'+epic.get('id')"
         )
 
     .status(

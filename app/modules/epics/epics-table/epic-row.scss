@@ -103,6 +103,9 @@
             margin: 0;
             width: 40px;
         }
+        .loading-spinner {
+            margin: 0 30px;
+        }
     }
     .icon-upvote {
         @include svg-size(.75rem);

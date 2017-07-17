@@ -70,6 +70,17 @@ export class EpicsEffects {
             })(payload);
         });
 
+    @Effect()
+    patchEpicAssignedTo$: Observable<Action> = this.actions$
+        .ofType("PATCH_EPIC_ASSIGNED_TO")
+        .map(toPayload)
+        .switchMap((payload) => {
+            return wrapLoading(`patch-epic-assigned-to-${payload.epicId}`, ({epicId, epicVersion, newAssignedTo}) => {
+              return this.rs.epics.patch(epicId, {version: epicVersion, assigned_to: newAssignedTo}).map((epic) => {
+                  return new actions.SetEpicAction(epic.data)
+              });
+            })(payload);
+        });
 
     constructor(private actions$: Actions,
                 private rs: ResourcesService,

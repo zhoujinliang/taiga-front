@@ -1,6 +1,6 @@
 tg-lightbox(key="epics.assign-to")
     tg-lightbox-close
-    tg-assigned-to-selector([members]="members|async", [assigned]="assignedOnAssignedTo|async")
+    tg-assigned-to-selector([members]="members|async", [assigned]="assignedOnAssignedTo|async", (assign)="assignEpic($event)")
 
 tg-lightbox.lightbox-create-epic(key="epics.add")
     tg-lightbox-close

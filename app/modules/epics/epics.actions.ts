@@ -63,6 +63,15 @@ export class PatchEpicStatusAction implements Action {
   }
 }
 
+export class PatchEpicAssignedToAction implements Action {
+  readonly type = "PATCH_EPIC_ASSIGNED_TO";
+  public payload: any;
+
+  constructor(epicId: number, epicVersion: number, newAssignedTo: number) {
+      this.payload = {epicId, epicVersion, newAssignedTo};
+  }
+}
+
 export class SetCurrentEpicAction implements Action {
   readonly type = "SET_CURRENT_EPIC";
 

@@ -7,7 +7,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Observable, Subscription } from "rxjs";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/zip";
-import { StartLoadingAction, StopLoadingAction, OpenLightboxAction, SetMetadataAction} from "../../app.actions";
+import { StartLoadingAction, StopLoadingAction, OpenLightboxAction, CloseLightboxAction, SetMetadataAction} from "../../app.actions";
 import { IState } from "../../app.store";
 import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import { ZoomLevelService } from "../services/zoom-level.service";
@@ -25,6 +25,7 @@ export class EpicsPage implements OnInit, OnDestroy {
     assignedOnAssignedTo: Observable<Immutable.List<any>>;
     members: Observable<any>;
     subscriptions: Subscription[];
+    currentEpic: Immutable.Map<string, any>;
     currentProjectId: number;
 
     constructor(private store: Store<IState>,
@@ -57,6 +58,9 @@ export class EpicsPage implements OnInit, OnDestroy {
                     this.store.dispatch(new actions.FetchEpicsAction(project.get("id")));
                 }
             }),
+            this.store.select((state) => state.getIn(["epics", "current-epic"])).subscribe((currentEpic) => {
+                this.currentEpic = currentEpic;
+            })
         ];
     }
 
@@ -77,5 +81,14 @@ export class EpicsPage implements OnInit, OnDestroy {
 
     createNewEpic(epicData) {
         this.store.dispatch(new actions.PutNewEpicAction(this.currentProjectId, epicData));
+    }
+
+    assignEpic(userId) {
+        this.store.dispatch(new CloseLightboxAction());
+        this.store.dispatch(new actions.PatchEpicAssignedToAction(
+            this.currentEpic.get('id'),
+            this.currentEpic.get('version'),
+            userId
+        ))
     }
 }
