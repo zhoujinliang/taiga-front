@@ -17,8 +17,8 @@ div.sprint-table(
     )
         div.column-us
             a.us-name.clickable(
-                [routerLink]="['/project', project.slug, 'us', us.ref]",
-                [routeParams]="{'milestone': us.milestone}",
+                [routerLink]="['/project', project.get('slug'), 'us', us.get('ref')]",
+                [routeParams]="{'milestone': us.get('milestone')}",
                 [title]="'#' + us.get('ref') + ' ' +  us.get('subject')",
                 [class.closed]="us.get('is_closed')",
                 [class.blocked]="us.get('is_blocked')"
@@ -37,7 +37,7 @@ div.sprint-table(
 
 a.button-gray(
     [title]="'BACKLOG.SPRINTS.TITLE_LINK_TASKBOARD' | translate: {\"name\": sprint.name}",
-    [routerLink]="['/project', project.slug, 'taskboard', sprint.slug]",
+    [routerLink]="['/project', project.get('slug'), 'taskboard', sprint.get('slug')]",
     *tgIfPerm="'view_milestones'"
 )
     span(translate="BACKLOG.SPRINTS.LINK_TASKBOARD")

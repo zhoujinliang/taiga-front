@@ -7,6 +7,7 @@ import * as Immutable from "immutable";
     template: require('./backlog-sprint.pug')(),
 })
 export class BacklogSprint {
+    @Input() project: Immutable.Map<string, any>;
     @Input() sprint: Immutable.Map<string, any>;
     compactSprint: boolean = false;
 }

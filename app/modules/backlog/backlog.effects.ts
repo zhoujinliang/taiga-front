@@ -33,7 +33,7 @@ export class BacklogEffects {
         .switchMap((payload) => {
           const data = _.extend({project: payload.projectId}, payload.appliedFilters.toJS());
           return this.rs.userstories.filtersData(data).map((filtersData) => {
-              return new actions.SetBacklogFiltersDataAction(filtersData);
+              return new actions.SetBacklogFiltersDataAction(filtersData.data);
           });
         });
 
