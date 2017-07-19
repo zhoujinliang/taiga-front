@@ -1,6 +1,6 @@
 import {CommonModule} from "@angular/common";
 import {NgModule, NO_ERRORS_SCHEMA} from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
@@ -22,6 +22,7 @@ import {BacklogColorizeTag, BacklogColorizeTags} from "./backlog-colorize-tags.c
 import {BacklogSprints} from "./sprints/backlog-sprints.component";
 import {BacklogSprint} from "./sprints/backlog-sprint.component";
 import {BacklogSprintHeader} from "./sprints/backlog-sprint-header.component";
+import {SprintAddEditLightbox} from "./sprints/sprint-add-edit-lightbox.component";
 
 @NgModule({
     declarations: [
@@ -37,6 +38,7 @@ import {BacklogSprintHeader} from "./sprints/backlog-sprint-header.component";
         BacklogSprints,
         BacklogSprint,
         BacklogSprintHeader,
+        SprintAddEditLightbox,
     ],
     exports: [
         BacklogPage,
@@ -47,7 +49,7 @@ import {BacklogSprintHeader} from "./sprints/backlog-sprint-header.component";
         TgCardsModule,
         TgComponentsModule,
         TgServicesModule,
-        FormsModule,
+        ReactiveFormsModule,
         StoreModule,
         TranslateModule.forChild({}),
         RouterModule.forChild([

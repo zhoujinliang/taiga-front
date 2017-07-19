@@ -6,7 +6,6 @@ import "flot-axislabels";
 import "l.js";
 import * as _ from "lodash";
 import "markdown-it";
-import "pikaday";
 import "prismjs";
 import "prismjs/plugins/custom-class/prism-custom-class";
 import "reflect-metadata";

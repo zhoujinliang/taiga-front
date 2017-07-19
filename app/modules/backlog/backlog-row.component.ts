@@ -10,4 +10,5 @@ export class BacklogRow {
     @Input() project: Immutable.Map<string, any>;
     @Input() us: Immutable.Map<string, any>;
     @Input() showTags: boolean;
+    @Input() canEdit: boolean;
 }

@@ -1,11 +1,14 @@
-// div.lightbox.lightbox-generic-form.lb-create-edit-userstory(tg-lb-create-edit-userstory)
-//     include ../includes/modules/lightbox-us-create-edit
-//
-// div.lightbox.lightbox-generic-bulk(tg-lb-create-bulk-userstories)
-//     include ../includes/modules/lightbox-us-bulk
-//
-// div.lightbox.lightbox-sprint-add-edit(tg-lb-create-edit-sprint)
-//     include ../includes/modules/lightbox-sprint-add-edit
+tg-lightbox(key="backlog.new-us")
+    tg-lightbox-close
+    tg-create-us-form([statuses]="statuses|async", (createUs)="createNewUs($event)")
+
+tg-lightbox(key="backlog.new-us-bulk")
+    tg-lightbox-close
+    tg-bulk-create-lightbox((create)="createUsBulk($event)")
+
+tg-lightbox.lightbox-sprint-add-edit(key="backlog.sprint-add-edit")
+    tg-lightbox-close
+    tg-sprint-add-edit-lightbox((create)="createSprint($event)", (update)="updateSprint($event)")
 
 div.wrapper
     tg-project-menu([project]="project|async", active="backlog")
@@ -35,8 +38,20 @@ div.wrapper
 
         tg-backlog-summary([project]="project | async", [stats]="stats | async")
 
-        tg-backlog-menu([userstories]="userstories | async", [stats]="stats | async", [(showFilters)]="showFilters", [(showTags)]="showTags")
+        tg-backlog-menu(
+            [userstories]="userstories | async",
+            [stats]="stats | async",
+            [(showFilters)]="showFilters",
+            [(showTags)]="showTags",
+            (addNewUs)="addNewUs()",
+            (addNewUsBulk)="addNewUsBulk()",
+        )
 
         tg-backlog-table([userstories]="userstories | async", [showTags]="showTags", [project]="project |async")
 
-    tg-backlog-sprints.menu-secondary.sidebar([sprints]="sprints | async", [project]="project |async", (loadClosed)="loadClosedSprints()")
+    tg-backlog-sprints.menu-secondary.sidebar(
+        [sprints]="sprints | async",
+        [project]="project |async",
+        (loadClosed)="loadClosedSprints()",
+        (newSprint)="addNewSprint()"
+    )

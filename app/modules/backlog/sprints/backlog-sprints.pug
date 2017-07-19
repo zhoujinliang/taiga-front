@@ -7,7 +7,7 @@ section.sprints(*ngIf="sprints")
         ng-container(*tgIfPerm="'add_milestone'")
             a.add-sprint(
                 [title]="'BACKLOG.SPRINTS.TITLE_ACTION_NEW_SPRINT' | translate",
-                (click)="addNewSprint()",
+                (click)="newSprint.emit()",
             )
                 tg-svg(svg-icon="icon-add")
 

@@ -46,6 +46,29 @@ div.status(tg-us-status="us" on-update="ctrl.updateUserStoryStatus()")
             *tgIfPerm="'modify_us'",
             svg-icon="icon-arrow-down"
         )
+.status(*ngIf="!canEdit")
+    span {{us.getIn(['status_extra_info', 'name'])}}
+
+.status(
+    *ngIf="canEdit",
+    (mouseleave)="displayStatusList = false",
+    tg-isolate-click
+)
+    button(
+        (click)="$event.stopPropagation(); displayStatusList = !displayStatusList",
+        [style.color]="us.getIn(['status_extra_info', 'color'])",
+        *tgLoading="'patch-backlog-us-status-' + us.get('id')"
+    )
+        span.e2e-epic-status {{us.getIn(['status_extra_info', 'name'])}}
+        tg-svg(
+            svg-icon="icon-arrow-down"
+        )
+
+    ul.epic-statuses(*ngIf="displayStatusList")
+        li.e2e-edit-epic-status(
+            *ngFor="let status of project.get('epic_statuses')",
+            (click)="$event.stopPropagation(); updateStatus(status.get('id'))"
+        ) {{status.get('name')}}
 
 div.points(tg-backlog-us-points="us")
     a.us-points(href="", [title]="'COMMON.FIELDS.POINTS' | translate")

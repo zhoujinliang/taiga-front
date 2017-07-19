@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
@@ -9,5 +9,10 @@ import * as Immutable from "immutable";
 export class BacklogSprint {
     @Input() project: Immutable.Map<string, any>;
     @Input() sprint: Immutable.Map<string, any>;
+    @Output() editSprint: EventEmitter<Immutable.Map<string, any>>;
     compactSprint: boolean = false;
+
+    constructor() {
+        this.editSprint = new EventEmitter();
+    }
 }

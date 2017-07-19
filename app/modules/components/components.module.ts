@@ -51,6 +51,8 @@ import { WysiwygCodeHightlighterService } from "./wysiwyg/wysiwyg-code-hightligh
 import { MediumEditor } from "./wysiwyg/medium/medium.component";
 import { JoyRide } from "./joy-ride/joy-ride.component";
 import { SortableDirective } from "./sortable/sortable.directive";
+import { BulkCreateLightbox } from "./bulk-create-lightbox/bulk-create-lightbox.component";
+import { DatePicker} from "./date-picker/date-picker.component";
 
 @NgModule({
     imports: [
@@ -84,6 +86,8 @@ import { SortableDirective } from "./sortable/sortable.directive";
         ConfirmAskChoice,
         FieldError,
         FeedbackLightbox,
+        BulkCreateLightbox,
+        DatePicker,
         ColorSelector,
         IfPermDirective,
         LoadingDirective,
@@ -117,6 +121,8 @@ import { SortableDirective } from "./sortable/sortable.directive";
         ConfirmAskChoice,
         FieldError,
         FeedbackLightbox,
+        BulkCreateLightbox,
+        DatePicker,
         ColorSelector,
         IfPermDirective,
         LoadingDirective,

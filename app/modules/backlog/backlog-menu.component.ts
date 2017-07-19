@@ -13,9 +13,13 @@ export class BacklogMenu {
     @Output() showFiltersChange: EventEmitter<boolean>;
     @Input() showTags: boolean = false;
     @Output() showTagsChange: EventEmitter<boolean>;
+    @Output() addNewUs: EventEmitter<boolean>;
+    @Output() addNewUsBulk: EventEmitter<boolean>;
 
     constructor() {
         this.showFiltersChange = new EventEmitter();
         this.showTagsChange = new EventEmitter();
+        this.addNewUs = new EventEmitter();
+        this.addNewUsBulk = new EventEmitter();
     }
 }

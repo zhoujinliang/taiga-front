@@ -9,10 +9,12 @@ export class BacklogSprints {
     @Input() sprints: Immutable.Map<string, any>;
     @Input() project: Immutable.Map<string, any>;
     @Output() loadClosed: EventEmitter<boolean>;
+    @Output() newSprint: EventEmitter<boolean>;
     loadingClosed: boolean = false;
 
     constructor() {
         this.loadClosed = new EventEmitter();
+        this.newSprint = new EventEmitter();
     }
 
     totalSprints() {

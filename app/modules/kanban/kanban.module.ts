@@ -12,7 +12,6 @@ import {TgComponentsModule} from "../components/components.module";
 import {TgServicesModule} from "../services/services.module";
 import {KanbanArchivedStatusIntro} from "./components/kanban-archived-status-intro/kanban-archived-status-intro.component";
 import {KanbanBoardZoom} from "./components/kanban-board-zoom/kanban-board-zoom.component";
-import {KanbanBulkCreateLightbox} from "./components/kanban-bulk-create-lightbox/kanban-bulk-create-lightbox.component";
 import {KanbanTableBody} from "./components/kanban-table-body/kanban-table-body.component";
 import {KanbanTableHeader} from "./components/kanban-table-header/kanban-table-header.component";
 import {KanbanTable} from "./components/kanban-table/kanban-table.component";
@@ -31,7 +30,6 @@ import {KanbanSortableDirective} from "./sortable.directive";
         KanbanArchivedStatusIntro,
         KanbanUsEditLightbox,
         KanbanSortableDirective,
-        KanbanBulkCreateLightbox,
     ],
     exports: [
         KanbanPage,

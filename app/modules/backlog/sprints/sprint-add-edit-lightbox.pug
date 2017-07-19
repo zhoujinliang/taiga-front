@@ -1,0 +1,36 @@
+form((ngSubmit)="onSubmit()", [formGroup]="createEditSprintForm", novalidate)
+    h2.title(translate="LIGHTBOX.ADD_EDIT_SPRINT.TITLE")
+    fieldset
+        input.sprint-name.e2e-sprint-name(
+            type="text",
+            name="name",
+            formControlName="name",
+            [placeholder]="'LIGHTBOX.ADD_EDIT_SPRINT.PLACEHOLDER_SPRINT_NAME' | translate"
+        )
+        label.last-sprint-name([innerHTML]="'LIGHTBOX.ADD_EDIT_SPRINT.LAST_SPRINT_NAME' | translate:{lastSprint: lastSprint?.get('name')}")
+
+    fieldset.dates
+        div
+            tg-date-picker.date-start(
+                formControlName="startDate",
+                [placeholder]="'LIGHTBOX.ADD_EDIT_SPRINT.PLACEHOLDER_SPRINT_START' | translate"
+            )
+        div
+            tg-date-picker.date-end(
+                formControlName="endDate",
+                [placeholder]="'LIGHTBOX.ADD_EDIT_SPRINT.PLACEHOLDER_SPRINT_END' | translate"
+            )
+
+    button.button-green.submit-button(
+        type="submit",
+        [title]="'COMMON.CREATE' | translate",
+        translate="COMMON.CREATE"
+    )
+
+    a.delete-sprint(
+        *ngIf="editingSprint",
+        href="",
+        [title]="'LIGHTBOX.ADD_EDIT_SPRINT.TITLE_ACTION_DELETE_SPRINT' | translate"
+    )
+        span(translate='LIGHTBOX.ADD_EDIT_SPRINT.ACTION_DELETE_SPRINT')
+        tg-svg(svg-icon="icon-trash")

@@ -7,7 +7,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Observable, Subscription } from "rxjs";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/zip";
-import { StartLoadingAction, StopLoadingAction } from "../../app.actions";
+import { StartLoadingAction, StopLoadingAction, OpenLightboxAction } from "../../app.actions";
 import { IState } from "../../app.store";
 import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import { ZoomLevelService } from "../services/zoom-level.service";
@@ -168,6 +168,18 @@ export class BacklogPage implements OnInit, OnDestroy {
 
     loadClosedSprints(projectId) {
         this.store.dispatch(new actions.FetchBacklogClosedSprintsAction(projectId));
+    }
+
+    addNewUs() {
+        this.store.dispatch(new OpenLightboxAction("backlog.new-us"));
+    }
+
+    addNewUsBulk() {
+        this.store.dispatch(new OpenLightboxAction("backlog.new-us-bulk"));
+    }
+
+    addNewSprint() {
+        this.store.dispatch(new OpenLightboxAction("backlog.sprint-add-edit"));
     }
 
     getJoyrideSteps() {
