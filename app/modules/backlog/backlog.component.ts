@@ -20,7 +20,8 @@ export class BacklogPage implements OnInit, OnDestroy {
     section = "backlog";
     showFilters: boolean = false;
     showTags: boolean = false;
-    project: Observable<any>;
+    project: Observable<Immutable.Map<string, any>>;
+    editingSprint: Observable<Immutable.Map<string, any>>;
     userstories: Observable<any[]>;
     zoom: Observable<any>;
     appliedFilters: Observable<any>;
@@ -39,6 +40,7 @@ export class BacklogPage implements OnInit, OnDestroy {
                 private zoomLevel: ZoomLevelService) {
         this.store.dispatch(new StartLoadingAction());
         this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
+        this.editingSprint = this.store.select((state) => state.getIn(["backlog", "editing-sprint"]));
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
         this.stats = this.store.select((state) => state.getIn(["backlog", "stats"]));
         this.sprints = this.store.select((state) => state.getIn(["backlog", "sprints"]));
@@ -179,6 +181,12 @@ export class BacklogPage implements OnInit, OnDestroy {
     }
 
     addNewSprint() {
+        this.store.dispatch(new OpenLightboxAction("backlog.sprint-add-edit"));
+    }
+
+    editSprint(sprint) {
+        console.log("EDITSPRINT_FUNCTION");
+        this.store.dispatch(new actions.SetEditingSprintAction(sprint));
         this.store.dispatch(new OpenLightboxAction("backlog.sprint-add-edit"));
     }
 

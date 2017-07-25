@@ -8,7 +8,12 @@ tg-lightbox(key="backlog.new-us-bulk")
 
 tg-lightbox.lightbox-sprint-add-edit(key="backlog.sprint-add-edit")
     tg-lightbox-close
-    tg-sprint-add-edit-lightbox((create)="createSprint($event)", (update)="updateSprint($event)")
+    tg-sprint-add-edit-lightbox(
+        [project]="project|async",
+        [editingSprint]="editingSprint|async",
+        (create)="createSprint($event)",
+        (update)="updateSprint($event)",
+    )
 
 div.wrapper
     tg-project-menu([project]="project|async", active="backlog")
@@ -53,5 +58,6 @@ div.wrapper
         [sprints]="sprints | async",
         [project]="project |async",
         (loadClosed)="loadClosedSprints()",
-        (newSprint)="addNewSprint()"
+        (newSprint)="addNewSprint()",
+        (editSprint)="editSprint($event)"
     )

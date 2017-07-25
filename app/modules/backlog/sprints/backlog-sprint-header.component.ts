@@ -11,9 +11,11 @@ export class BacklogSprintHeader {
     @Input() sprint: Immutable.Map<string, any>;
     @Input() compactSprint: boolean;
     @Output() compactSprintChange: EventEmitter<boolean>;
+    @Output() editSprint: EventEmitter<Immutable.Map<string, any>>;
 
     constructor(private translate: TranslateService) {
         this.compactSprintChange = new EventEmitter();
+        this.editSprint = new EventEmitter();
     }
 
     estimatedDateRange() {

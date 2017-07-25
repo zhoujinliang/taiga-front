@@ -61,6 +61,8 @@ export const backlogReducer = (state, action) => {
         case "SET_NEW_US_LIGHTBOX_DATA":
             return state.set("current-us", action.payload.us)
                         .set("creation-state", action.payload.statusId);
+        case "SET_EDITING_SPRINT":
+            return state.set("editing-sprint", action.payload)
         case "CLEAN_BACKLOG_DATA":
             return Immutable.fromJS(backlogInitialState);
         default:

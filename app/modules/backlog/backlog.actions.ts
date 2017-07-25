@@ -159,3 +159,27 @@ export class USBulkCreateAction implements Action {
       this.payload = {projectId, statusId, stories};
   }
 }
+
+export class UpdateSprintAction implements Action {
+  readonly type = "UPDATE_SPRINT_ACTION";
+  payload: any;
+
+  constructor(sprintId: number, sprintName: string, startDate: string, endDate: string) {
+      this.payload = {sprintId, sprintName, startDate, endDate};
+  }
+}
+
+export class CreateSprintAction implements Action {
+  readonly type = "CREATE_SPRINT_ACTION";
+  payload: any;
+
+  constructor(projectId: number, sprintName: string, startDate: string, endDate: string) {
+      this.payload = {projectId, sprintName, startDate, endDate};
+  }
+}
+
+export class SetEditingSprintAction implements Action {
+  readonly type = "SET_EDITING_SPRINT";
+
+  constructor(public paylaod: Immutable.Map<string, any>) {}
+}

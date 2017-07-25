@@ -98,6 +98,26 @@ export class BacklogEffects {
             return new actions.AppendBacklogUserStoriesAction(result);
         });
 
+    @Effect()
+    createSprint$: Observable<Action> = this.actions$
+        .ofType("CREATE_SPRINT_ACTION")
+        .map(toPayload)
+        .switchMap(({projectId, sprintName, startDate, endDate}) => {
+            return this.rs.sprints.create(projectId, {name: sprintName, estimated_start: startDate, estimated_finish: endDate}).map((result) => {
+                return new actions.FetchBacklogSprintsAction(projectId);
+            });
+        });
+
+    @Effect()
+    updateSprint$: Observable<Action> = this.actions$
+        .ofType("UPDATE_SPRINT_ACTION")
+        .map(toPayload)
+        .switchMap(({sprintId, sprintName, startDate, endDate}) => {
+            return this.rs.sprints.update(sprintId, {name: sprintName, estimated_start: startDate, estimated_finish: endDate});
+        }).map((result) => {
+            return new actions.FetchBacklogSprintsAction(result.get('project_id'));
+        });
+
     constructor(private actions$: Actions,
                 private rs: ResourcesService,
                 private storage: StorageService,

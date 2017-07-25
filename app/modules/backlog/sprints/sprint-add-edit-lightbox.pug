@@ -7,6 +7,7 @@ form((ngSubmit)="onSubmit()", [formGroup]="createEditSprintForm", novalidate)
             formControlName="name",
             [placeholder]="'LIGHTBOX.ADD_EDIT_SPRINT.PLACEHOLDER_SPRINT_NAME' | translate"
         )
+        tg-field-error([control]="createEditSprintForm.controls.name")
         label.last-sprint-name([innerHTML]="'LIGHTBOX.ADD_EDIT_SPRINT.LAST_SPRINT_NAME' | translate:{lastSprint: lastSprint?.get('name')}")
 
     fieldset.dates

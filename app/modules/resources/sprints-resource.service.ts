@@ -40,6 +40,16 @@ export class SprintsResource {
         return this.http.get(url);
     }
 
+    update(sprintId, data) {
+        const url = this.urls.resolve("milestones", sprintId)
+        return this.http.patch(url, data);
+    }
+
+    create(projectId, data) {
+        const url = this.urls.resolve("milestones")
+        return this.http.post(url, _.extend({}, data, {project: projectId}));
+    }
+
     stats(projectId, sprintId) {
         const url = this.urls.resolve("milestones", `${sprintId}/stats`)
         return this.http.get(url);

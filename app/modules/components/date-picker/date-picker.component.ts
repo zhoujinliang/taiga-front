@@ -21,12 +21,13 @@ import {Component, OnInit, Input, forwardRef, Output, EventEmitter, ElementRef, 
 import {ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import {TranslateService} from "@ngx-translate/core"
 import * as Pikaday from "pikaday";
+import * as moment from "moment";
 import * as Immutable from "immutable";
 import * as _ from "lodash";
 
 @Component({
     selector: "tg-date-picker",
-    template: "<input type='text' [(value)]='date' [placeholder]='placeholder'/>",
+    template: "<input type='text' [value]='fieldValue' [placeholder]='placeholder'/>",
     providers: [
       {
         provide: NG_VALUE_ACCESSOR,
@@ -37,8 +38,9 @@ import * as _ from "lodash";
 })
 export class DatePicker implements ControlValueAccessor, OnInit, AfterContentInit {
     @Input() placeholder: string;
-    @Output() dateSelected: EventEmitter<Date>;
-    _date: Date = null;
+    @Output() dateSelected: EventEmitter<moment.Moment>;
+    fieldValue: string = null;
+    _date: moment.Moment = null;
     onChange: any;
     picker: Pikaday;
 
@@ -89,6 +91,9 @@ export class DatePicker implements ControlValueAccessor, OnInit, AfterContentIni
                 firstDay: parseInt(this.translate.instant("COMMON.PICKERDATE.FIRST_DAY_OF_WEEK"), 10),
                 format: this.translate.instant("COMMON.PICKERDATE.FORMAT"),
                 field: this.element.nativeElement.getElementsByTagName('input')[0],
+                onSelect: (date) => {
+                    this.date = this.picker.getMoment();
+                }
             }
             this.picker = new Pikaday(config)
             this.picker.setDate(this.date);
@@ -97,8 +102,13 @@ export class DatePicker implements ControlValueAccessor, OnInit, AfterContentIni
 
     ngOnInit() {}
 
-    writeValue(value: Date) {
-        this.date = value;
+    writeValue(value: moment.Moment) {
+        if (this.picker) {
+            this.picker.setDate(value);
+            this.date = value;
+        } else {
+            setTimeout(() => this.writeValue(value), 30);
+        }
     }
 
     get date() {
@@ -107,12 +117,12 @@ export class DatePicker implements ControlValueAccessor, OnInit, AfterContentIni
 
     set date(val) {
         this._date = val;
+        this.dateSelected.emit(val);
         if (this.onChange) {
             this.onChange(val);
         }
-        this.dateSelected.emit(val);
-        if (this.picker) {
-            this.picker.setDate(val);
+        if (val) {
+            this.fieldValue = val.format(this.translate.instant("COMMON.PICKERDATE.FORMAT"))
         }
     }
 
