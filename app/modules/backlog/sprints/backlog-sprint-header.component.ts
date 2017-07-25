@@ -1,5 +1,9 @@
 import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
+import { Store } from "@ngrx/store";
+import { OpenLightboxAction } from "../../../app.actions";
+import { IState } from "../../../app.store";
+import * as actions from "../backlog.actions";
 import * as moment from "moment";
 import * as Immutable from "immutable";
 
@@ -11,11 +15,14 @@ export class BacklogSprintHeader {
     @Input() sprint: Immutable.Map<string, any>;
     @Input() compactSprint: boolean;
     @Output() compactSprintChange: EventEmitter<boolean>;
-    @Output() editSprint: EventEmitter<Immutable.Map<string, any>>;
 
-    constructor(private translate: TranslateService) {
+    constructor(private store: Store<IState>, private translate: TranslateService) {
         this.compactSprintChange = new EventEmitter();
-        this.editSprint = new EventEmitter();
+    }
+
+    editSprint(sprint) {
+        this.store.dispatch(new actions.SetEditingSprintAction(sprint));
+        this.store.dispatch(new OpenLightboxAction("backlog.sprint-add-edit"));
     }
 
     estimatedDateRange() {

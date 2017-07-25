@@ -11,8 +11,6 @@ tg-lightbox.lightbox-sprint-add-edit(key="backlog.sprint-add-edit")
     tg-sprint-add-edit-lightbox(
         [project]="project|async",
         [editingSprint]="editingSprint|async",
-        (create)="createSprint($event)",
-        (update)="updateSprint($event)",
     )
 
 div.wrapper
@@ -56,8 +54,5 @@ div.wrapper
 
     tg-backlog-sprints.menu-secondary.sidebar(
         [sprints]="sprints | async",
-        [project]="project |async",
-        (loadClosed)="loadClosedSprints()",
-        (newSprint)="addNewSprint()",
-        (editSprint)="editSprint($event)"
+        [project]="project | async",
     )

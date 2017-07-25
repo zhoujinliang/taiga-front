@@ -16,7 +16,7 @@ header
         a.edit-sprint(
             *tgIfPerm="'modify_milestone'",
             [title]="'BACKLOG.EDIT_SPRINT' | translate",
-            (click)="editSprint.emit(sprint)",
+            (click)="editSprint(sprint)",
         )
             tg-svg(svg-icon="icon-edit")
 

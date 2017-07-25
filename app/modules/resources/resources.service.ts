@@ -100,6 +100,7 @@ const api_urls = {
 
     // Milestones/Sprints
     "milestones": "/milestones",
+    "milestone": "/milestones/%s",
 
     // Epics
     "epics": "/epics",

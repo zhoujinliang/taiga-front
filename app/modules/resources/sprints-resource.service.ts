@@ -36,12 +36,12 @@ export class SprintsResource {
                 private storage: StorageService) {}
 
     get(projectId, sprintId) {
-        const url = this.urls.resolve("milestones", sprintId)
+        const url = this.urls.resolve("milestone", sprintId)
         return this.http.get(url);
     }
 
     update(sprintId, data) {
-        const url = this.urls.resolve("milestones", sprintId)
+        const url = this.urls.resolve("milestone", sprintId)
         return this.http.patch(url, data);
     }
 
@@ -51,7 +51,7 @@ export class SprintsResource {
     }
 
     stats(projectId, sprintId) {
-        const url = this.urls.resolve("milestones", `${sprintId}/stats`)
+        const url = this.urls.resolve("milestone", `${sprintId}/stats`)
         return this.http.get(url);
     }
 

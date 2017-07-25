@@ -18,6 +18,7 @@ export class SprintAddEditLightbox implements OnInit, OnDestroy {
     lastSprint: Immutable.Map<string, any>;
     subscriptions: Subscription[];
     createEditSprintForm: FormGroup;
+    deleting = false;
 
     constructor(private store: Store<IState>, private fb: FormBuilder) {
         this.createEditSprintForm = this.fb.group({
@@ -31,22 +32,24 @@ export class SprintAddEditLightbox implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        let lastSprint$ = this.store.select((state) => state.getIn(["backlog", "sprints", "sprints", 0]))
+        let editingSprint$ = this.store.select((state) => state.getIn(["backlog", "editing-sprint"]))
         this.subscriptions = [
-            this.store.select((state) => state.getIn(["backlog", "sprints", "sprints", 0]))
-                      .subscribe((lastSprint) => {
+            lastSprint$.combineLatest(editingSprint$).subscribe(([lastSprint, editingSprint]) => {
+                this.editingSprint = editingSprint;
                 if (!this.editingSprint && lastSprint) {
                     this.lastSprint = lastSprint;
                     let estimatedStart = moment(lastSprint.get('estimated_finish')).add(1, "days");
                     let estimatedEnd = moment(lastSprint.get('estimated_finish')).add(15, "days");
+                    this.createEditSprintForm.controls.name.setValue('');
                     this.createEditSprintForm.controls.startDate.setValue(estimatedStart);
                     this.createEditSprintForm.controls.endDate.setValue(estimatedEnd);
                 }
-            }),
-            this.store.select((state) => state.getIn(["backlog", "editing-sprint"])).subscribe((editingSprint) => {
-                this.editingSprint = editingSprint;
                 if (this.editingSprint) {
-                    this.createEditSprintForm.controls.startDate.setValue(editingSprint.get('estimated_start'));
-                    this.createEditSprintForm.controls.endDate.setValue(editingSprint.get('estimated_finish'));
+                    this.lastSprint = null;
+                    this.createEditSprintForm.controls.name.setValue(editingSprint.get('name'));
+                    this.createEditSprintForm.controls.startDate.setValue(moment(editingSprint.get('estimated_start')));
+                    this.createEditSprintForm.controls.endDate.setValue(moment(editingSprint.get('estimated_finish')));
                 }
             })
         ]
@@ -81,4 +84,9 @@ export class SprintAddEditLightbox implements OnInit, OnDestroy {
         }
         return false;
     }
+
+    deleteSprint(sprintId) {
+        this.store.dispatch(new actions.DeleteSprintAction(sprintId));
+    }
+
 }

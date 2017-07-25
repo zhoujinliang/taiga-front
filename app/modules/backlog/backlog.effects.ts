@@ -12,6 +12,7 @@ import { StorageService} from "../../ts/modules/base/storage";
 import {FiltersRemoteStorageService} from "../components/filter/filter-remote.service";
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./backlog.actions";
+import {CloseLightboxAction} from "../../app.actions";
 
 @Injectable()
 export class BacklogEffects {
@@ -103,20 +104,27 @@ export class BacklogEffects {
         .ofType("CREATE_SPRINT_ACTION")
         .map(toPayload)
         .switchMap(({projectId, sprintName, startDate, endDate}) => {
-            return this.rs.sprints.create(projectId, {name: sprintName, estimated_start: startDate, estimated_finish: endDate}).map((result) => {
-                return new actions.FetchBacklogSprintsAction(projectId);
-            });
+            let data = {name: sprintName, estimated_start: startDate, estimated_finish: endDate};
+            return this.rs.sprints.create(projectId, data).flatMap(() =>
+                Observable.from([
+                    new actions.FetchBacklogSprintsAction(projectId),
+                    new CloseLightboxAction(),
+                ])
+            )
         });
 
     @Effect()
     updateSprint$: Observable<Action> = this.actions$
         .ofType("UPDATE_SPRINT_ACTION")
         .map(toPayload)
-        .switchMap(({sprintId, sprintName, startDate, endDate}) => {
-            return this.rs.sprints.update(sprintId, {name: sprintName, estimated_start: startDate, estimated_finish: endDate});
-        }).map((result) => {
-            return new actions.FetchBacklogSprintsAction(result.get('project_id'));
-        });
+        .switchMap(({sprintId, sprintName, startDate, endDate}) =>
+            this.rs.sprints.update(sprintId, {name: sprintName, estimated_start: startDate, estimated_finish: endDate})
+        ).flatMap((result) =>
+            Observable.from([
+                new actions.FetchBacklogSprintsAction(result.data.get('project')),
+                new CloseLightboxAction(),
+            ])
+        );
 
     constructor(private actions$: Actions,
                 private rs: ResourcesService,

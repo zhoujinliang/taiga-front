@@ -168,26 +168,12 @@ export class BacklogPage implements OnInit, OnDestroy {
         this.store.dispatch(new actions.CleanBacklogDataAction());
     }
 
-    loadClosedSprints(projectId) {
-        this.store.dispatch(new actions.FetchBacklogClosedSprintsAction(projectId));
-    }
-
     addNewUs() {
         this.store.dispatch(new OpenLightboxAction("backlog.new-us"));
     }
 
     addNewUsBulk() {
         this.store.dispatch(new OpenLightboxAction("backlog.new-us-bulk"));
-    }
-
-    addNewSprint() {
-        this.store.dispatch(new OpenLightboxAction("backlog.sprint-add-edit"));
-    }
-
-    editSprint(sprint) {
-        console.log("EDITSPRINT_FUNCTION");
-        this.store.dispatch(new actions.SetEditingSprintAction(sprint));
-        this.store.dispatch(new OpenLightboxAction("backlog.sprint-add-edit"));
     }
 
     getJoyrideSteps() {

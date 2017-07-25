@@ -1,7 +1,7 @@
 import * as Immutable from "immutable";
 
 export const backlogInitialState = {
-    "AppliedFilters": {},
+    "appliedFilters": {},
     "addTask": null,
     "archiveVisible": {},
     "bulk-create-state": null,
@@ -18,6 +18,7 @@ export const backlogInitialState = {
         "closed": 0,
         "open": 0,
     },
+    "editing-sprint": null,
 };
 
 export const backlogReducer = (state, action) => {
@@ -62,7 +63,7 @@ export const backlogReducer = (state, action) => {
             return state.set("current-us", action.payload.us)
                         .set("creation-state", action.payload.statusId);
         case "SET_EDITING_SPRINT":
-            return state.set("editing-sprint", action.payload)
+            return state.set("editing-sprint", action.payload);
         case "CLEAN_BACKLOG_DATA":
             return Immutable.fromJS(backlogInitialState);
         default:

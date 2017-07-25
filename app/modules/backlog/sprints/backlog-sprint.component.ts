@@ -9,10 +9,5 @@ import * as Immutable from "immutable";
 export class BacklogSprint {
     @Input() project: Immutable.Map<string, any>;
     @Input() sprint: Immutable.Map<string, any>;
-    @Output() editSprint: EventEmitter<Immutable.Map<string, any>>;
     compactSprint: boolean = false;
-
-    constructor() {
-        this.editSprint = new EventEmitter();
-    }
 }

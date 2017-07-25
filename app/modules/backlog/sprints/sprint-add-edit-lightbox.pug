@@ -1,4 +1,4 @@
-form((ngSubmit)="onSubmit()", [formGroup]="createEditSprintForm", novalidate)
+form(*ngIf="!deleting", (ngSubmit)="onSubmit()", [formGroup]="createEditSprintForm", novalidate)
     h2.title(translate="LIGHTBOX.ADD_EDIT_SPRINT.TITLE")
     fieldset
         input.sprint-name.e2e-sprint-name(
@@ -8,7 +8,10 @@ form((ngSubmit)="onSubmit()", [formGroup]="createEditSprintForm", novalidate)
             [placeholder]="'LIGHTBOX.ADD_EDIT_SPRINT.PLACEHOLDER_SPRINT_NAME' | translate"
         )
         tg-field-error([control]="createEditSprintForm.controls.name")
-        label.last-sprint-name([innerHTML]="'LIGHTBOX.ADD_EDIT_SPRINT.LAST_SPRINT_NAME' | translate:{lastSprint: lastSprint?.get('name')}")
+        label.last-sprint-name(
+            *ngIf="!editingSprint",
+            [innerHTML]="'LIGHTBOX.ADD_EDIT_SPRINT.LAST_SPRINT_NAME' | translate:{lastSprint: lastSprint?.get('name')}"
+        )
 
     fieldset.dates
         div
@@ -23,15 +26,40 @@ form((ngSubmit)="onSubmit()", [formGroup]="createEditSprintForm", novalidate)
             )
 
     button.button-green.submit-button(
+        *ngIf="!editingSprint",
         type="submit",
         [title]="'COMMON.CREATE' | translate",
         translate="COMMON.CREATE"
     )
 
+    button.button-green.submit-button(
+        *ngIf="editingSprint",
+        type="submit",
+        [title]="'COMMON.SAVE' | translate",
+        translate="COMMON.SAVE"
+    )
+
     a.delete-sprint(
         *ngIf="editingSprint",
-        href="",
+        (click)="deleting = true",
         [title]="'LIGHTBOX.ADD_EDIT_SPRINT.TITLE_ACTION_DELETE_SPRINT' | translate"
     )
         span(translate='LIGHTBOX.ADD_EDIT_SPRINT.ACTION_DELETE_SPRINT')
         tg-svg(svg-icon="icon-trash")
+
+div.ask(*ngIf="deleting")
+    h2.title(translate="LIGHTBOX.DELETE_SPRINT.TITLE")
+    p
+      span.subtitle(translate="NOTIFICATION.ASK_DELETE")
+      span.message {{editingSprint.get('name')}}
+    .options
+        a.button-green(
+          [title]="'COMMON.ACCEPT' | translate",
+          (click)="deleteSprint(editingSprint.get('id'))"
+        )
+          span(translate="COMMON.ACCEPT")
+        a.button-red(
+          [title]="'COMMON.CANCEL' | translate",
+          (click)="deleting = false"
+        )
+          span(translate="COMMON.CANCEL")

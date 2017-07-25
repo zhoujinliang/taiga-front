@@ -7,7 +7,7 @@ section.sprints(*ngIf="sprints")
         ng-container(*tgIfPerm="'add_milestone'")
             a.add-sprint(
                 [title]="'BACKLOG.SPRINTS.TITLE_ACTION_NEW_SPRINT' | translate",
-                (click)="newSprint.emit()",
+                (click)="newSprint()",
             )
                 tg-svg(svg-icon="icon-add")
 
@@ -28,7 +28,6 @@ section.sprints(*ngIf="sprints")
         *ngFor="let sprint of sprints.get('sprints')",
         [sprint]="sprint",
         [project]="project",
-        (editSprint)="editSprint.emit($event)",
         tg-sprint-sortable
     )
 
@@ -43,6 +42,5 @@ section.sprints(*ngIf="sprints")
     tg-backlog-sprint.sprint-closed(
         *ngFor="let sprint of sprints.get('closed-sprints')",
         [sprint]="sprint",
-        (editSprint)="editSprint.emit($event)",
         tg-sprint-sortable
     )

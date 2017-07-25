@@ -181,5 +181,11 @@ export class CreateSprintAction implements Action {
 export class SetEditingSprintAction implements Action {
   readonly type = "SET_EDITING_SPRINT";
 
-  constructor(public paylaod: Immutable.Map<string, any>) {}
+  constructor(public payload: Immutable.Map<string, any>) {}
+}
+
+export class DeleteSprintAction implements Action {
+  readonly type = "DELETE_SPRINT";
+
+  constructor(public payload: Immutable.Map<string, any>) {}
 }
