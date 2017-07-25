@@ -45,6 +45,11 @@ export class SprintsResource {
         return this.http.patch(url, data);
     }
 
+    delete(sprintId) {
+        const url = this.urls.resolve("milestone", sprintId)
+        return this.http.delete(url);
+    }
+
     create(projectId, data) {
         const url = this.urls.resolve("milestones")
         return this.http.post(url, _.extend({}, data, {project: projectId}));

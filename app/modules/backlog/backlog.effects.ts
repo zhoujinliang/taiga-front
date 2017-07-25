@@ -13,6 +13,7 @@ import {FiltersRemoteStorageService} from "../components/filter/filter-remote.se
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./backlog.actions";
 import {CloseLightboxAction} from "../../app.actions";
+import {wrapLoading} from "../utils/effects";
 
 @Injectable()
 export class BacklogEffects {
@@ -103,7 +104,7 @@ export class BacklogEffects {
     createSprint$: Observable<Action> = this.actions$
         .ofType("CREATE_SPRINT_ACTION")
         .map(toPayload)
-        .switchMap(({projectId, sprintName, startDate, endDate}) => {
+        .switchMap(wrapLoading("creating-sprint", ({projectId, sprintName, startDate, endDate}) => {
             let data = {name: sprintName, estimated_start: startDate, estimated_finish: endDate};
             return this.rs.sprints.create(projectId, data).flatMap(() =>
                 Observable.from([
@@ -111,21 +112,33 @@ export class BacklogEffects {
                     new CloseLightboxAction(),
                 ])
             )
-        });
+        }));
 
     @Effect()
     updateSprint$: Observable<Action> = this.actions$
         .ofType("UPDATE_SPRINT_ACTION")
         .map(toPayload)
-        .switchMap(({sprintId, sprintName, startDate, endDate}) =>
-            this.rs.sprints.update(sprintId, {name: sprintName, estimated_start: startDate, estimated_finish: endDate})
-        ).flatMap((result) =>
-            Observable.from([
-                new actions.FetchBacklogSprintsAction(result.data.get('project')),
-                new CloseLightboxAction(),
-            ])
-        );
+        .switchMap(wrapLoading("updating-sprint", ({sprintId, sprintName, startDate, endDate}) =>
+            this.rs.sprints.update(sprintId, {name: sprintName, estimated_start: startDate, estimated_finish: endDate}).flatMap((result) =>
+                Observable.from([
+                    new actions.FetchBacklogSprintsAction(result.data.get('project')),
+                    new CloseLightboxAction(),
+                ])
+            )
+        ));
 
+    @Effect()
+    deleteSprint$: Observable<Action> = this.actions$
+        .ofType("DELETE_SPRINT")
+        .map(toPayload)
+        .switchMap(wrapLoading("deleting-sprint", (sprint) =>
+            this.rs.sprints.delete(sprint.get('id')).flatMap((result) =>
+                Observable.from([
+                    new actions.FetchBacklogSprintsAction(sprint.get('project')),
+                    new CloseLightboxAction(),
+                ])
+            )
+        ));
     constructor(private actions$: Actions,
                 private rs: ResourcesService,
                 private storage: StorageService,

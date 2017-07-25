@@ -29,15 +29,15 @@ form(*ngIf="!deleting", (ngSubmit)="onSubmit()", [formGroup]="createEditSprintFo
         *ngIf="!editingSprint",
         type="submit",
         [title]="'COMMON.CREATE' | translate",
-        translate="COMMON.CREATE"
     )
+        span(translate="COMMON.CREATE", *tgLoading="'creating-sprint'")
 
     button.button-green.submit-button(
         *ngIf="editingSprint",
         type="submit",
         [title]="'COMMON.SAVE' | translate",
-        translate="COMMON.SAVE"
     )
+        span(translate="COMMON.SAVE", *tgLoading="'updating-sprint'")
 
     a.delete-sprint(
         *ngIf="editingSprint",
@@ -55,9 +55,9 @@ div.ask(*ngIf="deleting")
     .options
         a.button-green(
           [title]="'COMMON.ACCEPT' | translate",
-          (click)="deleteSprint(editingSprint.get('id'))"
+          (click)="deleteSprint(editingSprint)"
         )
-          span(translate="COMMON.ACCEPT")
+          span(translate="COMMON.ACCEPT", *tgLoading="'deleting-sprint'")
         a.button-red(
           [title]="'COMMON.CANCEL' | translate",
           (click)="deleting = false"

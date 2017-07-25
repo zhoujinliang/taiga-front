@@ -35,6 +35,7 @@ export class SprintAddEditLightbox implements OnInit, OnDestroy {
         let lastSprint$ = this.store.select((state) => state.getIn(["backlog", "sprints", "sprints", 0]))
         let editingSprint$ = this.store.select((state) => state.getIn(["backlog", "editing-sprint"]))
         this.subscriptions = [
+            this.store.select((state) => state.getIn(["global", "open-lightbox"])).subscribe(() => this.deleting = false),
             lastSprint$.combineLatest(editingSprint$).subscribe(([lastSprint, editingSprint]) => {
                 this.editingSprint = editingSprint;
                 if (!this.editingSprint && lastSprint) {
@@ -85,8 +86,8 @@ export class SprintAddEditLightbox implements OnInit, OnDestroy {
         return false;
     }
 
-    deleteSprint(sprintId) {
-        this.store.dispatch(new actions.DeleteSprintAction(sprintId));
+    deleteSprint(sprint) {
+        this.store.dispatch(new actions.DeleteSprintAction(sprint));
     }
 
 }
