@@ -33,9 +33,10 @@ export class CheckPermissionsService {
         this.project$.subscribe((p) => this.project = p)
     }
 
-    check(permission) {
+    check(permission, not) {
         if (!this.project) { return false; }
 
-        return this.project.get("my_permissions").indexOf(permission) !== -1;
+        let exists = this.project.get("my_permissions").indexOf(permission) !== -1;
+        return (not && !exists) || (!not && exists)
     }
 }

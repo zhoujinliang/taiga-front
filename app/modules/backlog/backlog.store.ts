@@ -25,6 +25,16 @@ export const backlogReducer = (state, action) => {
     switch (action.type) {
         case "SET_BACKLOG_USER_STORIES":
             return state.set("userstories", action.payload);
+        case "SET_US":
+            return state.update("userstories", (uss) => {
+                return uss.map((us) => {
+                    if (us.get('id') === action.payload.get('id')) {
+                        return action.payload
+                    } else {
+                        return us
+                    }
+                });
+            });
         case "APPEND_BACKLOG_USER_STORIES":
             return state.update("userstories", (stories) => stories.concat(action.payload));
         case "SET_BACKLOG_SPRINTS":

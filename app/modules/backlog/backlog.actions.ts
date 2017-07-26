@@ -189,3 +189,27 @@ export class DeleteSprintAction implements Action {
 
   constructor(public payload: Immutable.Map<string, any>) {}
 }
+
+export class PatchUsStatusAction implements Action {
+  readonly type = "PATCH_US_STATUS";
+  public payload: any;
+
+  constructor(usId: number, usVersion: number, newStatus: number) {
+      this.payload = {usId, usVersion, newStatus};
+  }
+}
+
+export class PatchUsPointsAction implements Action {
+  readonly type = "PATCH_US_POINTS";
+  public payload: any;
+
+  constructor(usId: number, usVersion: number, newPoints: any) {
+      this.payload = {usId, usVersion, newPoints};
+  }
+}
+
+export class SetUsAction implements Action {
+  readonly type = "SET_US";
+
+  constructor(public payload: Immutable.List<any>) { }
+}

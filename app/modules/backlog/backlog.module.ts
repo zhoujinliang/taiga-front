@@ -23,6 +23,7 @@ import {BacklogSprints} from "./sprints/backlog-sprints.component";
 import {BacklogSprint} from "./sprints/backlog-sprint.component";
 import {BacklogSprintHeader} from "./sprints/backlog-sprint-header.component";
 import {SprintAddEditLightbox} from "./sprints/sprint-add-edit-lightbox.component";
+import {BacklogUsPoints} from "./backlog-us-points.component";
 
 @NgModule({
     declarations: [
@@ -39,6 +40,7 @@ import {SprintAddEditLightbox} from "./sprints/sprint-add-edit-lightbox.componen
         BacklogSprint,
         BacklogSprintHeader,
         SprintAddEditLightbox,
+        BacklogUsPoints,
     ],
     exports: [
         BacklogPage,

@@ -139,6 +139,33 @@ export class BacklogEffects {
                 ])
             )
         ));
+
+    @Effect()
+    patchUsStatus$: Observable<Action> = this.actions$
+        .ofType("PATCH_US_STATUS")
+        .map(toPayload)
+        .switchMap((payload) => {
+            return wrapLoading(`patch-us-status-${payload.usId}`, ({usId, usVersion, newStatus}) => {
+              return this.rs.userstories.patch(usId, {version: usVersion, status: newStatus}).map((us) => {
+                  return new actions.SetUsAction(us.data)
+              });
+            })(payload);
+        });
+
+    @Effect()
+    patchUsPoints$: Observable<Action> = this.actions$
+        .ofType("PATCH_US_POINTS")
+        .map(toPayload)
+        .switchMap((payload) => {
+            return wrapLoading(`patch-us-points-${payload.usId}`, ({usId, usVersion, newPoints}) => {
+              return this.rs.userstories.patch(usId, {version: usVersion, points: newPoints}).flatMap((us) =>
+                  Observable.from([
+                      new actions.SetUsAction(us.data),
+                      new actions.FetchBacklogStatsAction(us.data.get('project'))
+                  ])
+              );
+            })(payload);
+        });
     constructor(private actions$: Actions,
                 private rs: ResourcesService,
                 private storage: StorageService,

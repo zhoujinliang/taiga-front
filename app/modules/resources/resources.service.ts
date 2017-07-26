@@ -113,6 +113,7 @@ const api_urls = {
 
     // User stories
     "userstories": "/userstories",
+    "userstory": "/userstories/%s",
     "bulk-create-us": "/userstories/bulk_create",
     "bulk-update-us-backlog-order": "/userstories/bulk_update_backlog_order",
     "bulk-update-us-milestone": "/userstories/bulk_update_milestone",

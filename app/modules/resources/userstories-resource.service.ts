@@ -35,13 +35,18 @@ export class UserstoriesResource {
                 private storage: StorageService) {}
 
     get(projectId, usId, extraParams) {
-        let url = this.urls.resolve("userstories", usId);
+        let url = this.urls.resolve("userstory", usId);
         let params = this.getQueryParams(projectId);
         params.project = projectId;
 
         params = _.extend({}, params, extraParams);
 
         return this.http.get(url, params);
+    }
+
+    patch(usId, data) {
+        let url = this.urls.resolve("userstory", usId);
+        return this.http.patch(url, data);
     }
 
     getByRef(projectId, ref, extraParams={}) {
