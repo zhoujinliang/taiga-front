@@ -1248,7 +1248,8 @@
         },
         "TABLE": {
             "COLUMN_US": "User Stories",
-            "TITLE_COLUMN_POINTS": "Select view per Role"
+            "TITLE_COLUMN_POINTS": "Select view per Role",
+            "ROLE_TOTAL": "{{role}}/Total"
         },
         "SPRINT_SUMMARY": {
             "TOTAL_POINTS": "total<br />points",

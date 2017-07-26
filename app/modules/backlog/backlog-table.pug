@@ -6,11 +6,29 @@ section.backlog-table([class.hidden]="!userstories || !userstories.size")
             div.user-stories(translate="BACKLOG.TABLE.COLUMN_US")
             div.status(translate="COMMON.FIELDS.STATUS")
             div.points(
-                tg-us-role-points-selector,
-                [title]="'BACKLOG.TABLE.TITLE_COLUMN_POINTS' | translate"
+                [title]="'BACKLOG.TABLE.TITLE_COLUMN_POINTS' | translate",
+                (mouseleave)="showedRolePopup = false"
             )
-                span.header-points(translate="COMMON.FIELDS.POINTS")
+                span.header-points(
+                    translate="COMMON.FIELDS.POINTS",
+                    *ngIf="!showedRole",
+                    (click)="showedRolePopup = true"
+                )
+                span.header-points(
+                    *ngIf="showedRole",
+                    translate="BACKLOG.TABLE.ROLE_TOTAL",
+                    [translateParams]="{role: showedRole.get('name')}",
+                    (click)="showedRolePopup = true"
+                )
                 tg-svg(svg-icon="icon-arrow-down")
+                ul.popover.pop-role(*ngIf="showedRolePopup")
+                    a.clear-selection([title]="'COMMON.ROLES.ALL' | translate", translate="COMMON.ROLES.ALL")
+                    ng-container(*ngFor="let role of project.get('roles')")
+                        a.role(
+                            *ngIf="role.get('computable')",
+                            [title]="role.get('name')",
+                            (click)="showedRole = role"
+                        ) {{role.get('name')}}
 
     div.backlog-table-body(
         tg-backlog-sortable,
@@ -27,6 +45,7 @@ section.backlog-table([class.hidden]="!userstories || !userstories.size")
             [project]="project",
             [canEdit]="canEdit",
             [class.blocked]="us.get('is_blocked')",
+            [showedRole]="showedRole",
         )
 
         div(tg-loading="ctrl.loadingUserstories")

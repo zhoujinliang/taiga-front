@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, HostListener} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {IState} from "../../app.store";
 import * as Immutable from "immutable";
@@ -12,10 +12,16 @@ export class BacklogUsPoints {
     @Input() us: Immutable.Map<string,any>;
     @Input() roles: Immutable.List<any>;
     @Input() points: Immutable.List<any>;
+    @Input() showedRole: Immutable.Map<string,any>;
     state: string = "";
     selectedRole: Immutable.Map<string,any>;
 
     constructor(private store: Store<IState>) {}
+
+    @HostListener('mouseleave', []) onMouseLeave() {
+        this.state = "";
+        this.selectedRole = null;
+    }
 
     computableRoles() {
         return this.roles.filter((r) => r.get('computable'));

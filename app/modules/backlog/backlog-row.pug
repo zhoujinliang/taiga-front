@@ -67,7 +67,8 @@ div.points
     tg-backlog-us-points(
         [us]="us",
         [roles]="project.get('roles')",
-        [points]="project.get('points')"
+        [points]="project.get('points')",
+        [showedRole]="showedRole"
     )
 
 a.e2e-drag(*tgIfPerm="'modify_us'", href="", [title]="'COMMON.DRAG' | translate")
