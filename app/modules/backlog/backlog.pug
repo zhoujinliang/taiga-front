@@ -50,7 +50,7 @@ div.wrapper
             (addNewUsBulk)="addNewUsBulk()",
         )
 
-        tg-backlog-table([userstories]="userstories | async", [showTags]="showTags", [project]="project |async")
+        tg-backlog-table([userstories]="userstories | async", [showTags]="showTags", [project]="project |async", [selectedUserstories]="selectedUserstories | async")
 
     tg-backlog-sprints.menu-secondary.sidebar(
         [sprints]="sprints | async",

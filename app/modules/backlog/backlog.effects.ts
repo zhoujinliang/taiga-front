@@ -23,6 +23,7 @@ export class BacklogEffects {
         .map(toPayload)
         .switchMap((payload) => {
           const params = payload.appliedFilters.toJS();
+          params.milestone = null;
           return this.rs.userstories.listAll(payload.projectId, params).map((userstories) => {
               return new actions.SetBacklogUserStoriesAction(userstories.data);
           });

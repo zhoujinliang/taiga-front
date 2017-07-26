@@ -213,3 +213,9 @@ export class SetUsAction implements Action {
 
   constructor(public payload: Immutable.List<any>) { }
 }
+
+export class SetSelectedUserstoriesAction implements Action {
+  readonly type = "SET_SELECTED_USER_STORIES";
+
+  constructor(public payload: Immutable.List<number>) { }
+}

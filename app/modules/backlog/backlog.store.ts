@@ -10,6 +10,7 @@ export const backlogInitialState = {
     "filtersData": null,
     "folds": {},
     "userstories": null,
+    "selected-userstories": [],
     "zoomLevel": 4,
     "stats": {},
     "sprints": {
@@ -74,6 +75,8 @@ export const backlogReducer = (state, action) => {
                         .set("creation-state", action.payload.statusId);
         case "SET_EDITING_SPRINT":
             return state.set("editing-sprint", action.payload);
+        case "SET_SELECTED_USER_STORIES":
+            return state.set("selected-userstories", action.payload);
         case "CLEAN_BACKLOG_DATA":
             return Immutable.fromJS(backlogInitialState);
         default:

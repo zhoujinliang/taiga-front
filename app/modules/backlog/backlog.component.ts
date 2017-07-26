@@ -22,7 +22,8 @@ export class BacklogPage implements OnInit, OnDestroy {
     showTags: boolean = false;
     project: Observable<Immutable.Map<string, any>>;
     editingSprint: Observable<Immutable.Map<string, any>>;
-    userstories: Observable<any[]>;
+    userstories: Observable<Immutable.List<any>>;
+    selectedUserstories: Observable<Immutable.List<number>>;
     zoom: Observable<any>;
     appliedFilters: Observable<any>;
     selectedFiltersCount: number = 0;
@@ -47,6 +48,7 @@ export class BacklogPage implements OnInit, OnDestroy {
         this.userstories = this.store.select((state) => state.getIn(["backlog", "userstories"]))
                                      .filter((uss) => uss !== null)
                                      .do(() => this.store.dispatch(new StopLoadingAction()));
+        this.selectedUserstories = this.store.select((state) => state.getIn(["backlog", "selected-userstories"]));
         this.zoom = this.store.select((state) => state.getIn(["backlog", "zoomLevel"])).map((level) => {
             return {
                 level,

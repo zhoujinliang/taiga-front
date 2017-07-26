@@ -1,7 +1,12 @@
 section.backlog-table([class.hidden]="!userstories || !userstories.size")
     div.backlog-table-header
         div.row.backlog-table-title
-            div.input(tg-check-permission="modify_us")
+            div.input(*tgIfPerm="'modify_us'")
+                input(
+                    type="checkbox",
+                    [checked]="userstories && userstories.size === selectedUserstories.size",
+                    (change)="selectAllChange($event.target.checked)"
+                )
             div.votes(translate="COMMON.FIELDS.VOTES")
             div.user-stories(translate="BACKLOG.TABLE.COLUMN_US")
             div.status(translate="COMMON.FIELDS.STATUS")
@@ -22,7 +27,11 @@ section.backlog-table([class.hidden]="!userstories || !userstories.size")
                 )
                 tg-svg(svg-icon="icon-arrow-down")
                 ul.popover.pop-role(*ngIf="showedRolePopup")
-                    a.clear-selection([title]="'COMMON.ROLES.ALL' | translate", translate="COMMON.ROLES.ALL")
+                    a.clear-selection(
+                        [title]="'COMMON.ROLES.ALL' | translate",
+                        translate="COMMON.ROLES.ALL",
+                        (click)="showedRole = null"
+                    )
                     ng-container(*ngFor="let role of project.get('roles')")
                         a.role(
                             *ngIf="role.get('computable')",
@@ -41,11 +50,13 @@ section.backlog-table([class.hidden]="!userstories || !userstories.size")
     )
         tg-backlog-row(
             *ngFor="let us of userstories",
+            [class.is-checked]="selectedUserstories.contains(us.get('id'))",
             [us]="us",
             [project]="project",
             [canEdit]="canEdit",
             [class.blocked]="us.get('is_blocked')",
             [showedRole]="showedRole",
+            [selectedUserstories]="selectedUserstories",
         )
 
         div(tg-loading="ctrl.loadingUserstories")

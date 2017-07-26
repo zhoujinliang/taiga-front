@@ -1,5 +1,9 @@
 .input(*tgIfPerm="'modify_us'")
-    input(type="checkbox", name="")
+    input(
+        type="checkbox",
+        [checked]="selectedUserstories.contains(us.get('id'))",
+        (change)="selectUserstory(us, $event.target.checked)"
+    )
 
 .votes(
     [class.inactive]="!us.get('total_voters')",
@@ -17,7 +21,7 @@
             [queryParams]="{'no-milestone': 1}",
             title="#{{ us.get('ref') }} {{ us.get('subject') }}"
         )
-            span {{'#' + us.get('ref')}}
+            span {{'#' + us.get('ref')}}&nbsp;
             span {{us.get('subject')}}
             tg-belong-to-epics(
                 format="pill",
