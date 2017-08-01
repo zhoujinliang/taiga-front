@@ -1,14 +1,14 @@
 div.backlog-menu
     div.backlog-table-options
         a.menu-button.move-to-current-sprint.move-to-sprint.e2e-move-to-sprint(
-            *ngIf="currentSprint",
+            *ngIf="currentSprint && selectedUserstories.size",
             [title]="'BACKLOG.MOVE_US_TO_CURRENT_SPRINT' | translate",
             id="move-to-current-sprint"
         )
             tg-svg(svg-icon="icon-move")
             span.text(translate="BACKLOG.MOVE_US_TO_CURRENT_SPRINT")
         a.menu-button.move-to-latest-sprint.move-to-sprint.e2e-move-to-sprint(
-            *ngIf="!currentSprint",
+            *ngIf="!currentSprint && selectedUserstories.size",
             [title]="'BACKLOG.MOVE_US_TO_LATEST_SPRINT' | translate",
             id="move-to-latest-sprint"
         )

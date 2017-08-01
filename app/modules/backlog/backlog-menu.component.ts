@@ -7,6 +7,7 @@ import * as Immutable from "immutable";
 })
 export class BacklogMenu {
     @Input() userstories: Immutable.List<any>;
+    @Input() selectedUserstories: Immutable.List<any>;
     @Input() stats: Immutable.List<any>;
     @Input() currentSprint: Immutable.Map<string, any>;
     @Input() showFilters: boolean = false;

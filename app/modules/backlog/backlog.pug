@@ -46,6 +46,7 @@ div.wrapper
             [stats]="stats | async",
             [(showFilters)]="showFilters",
             [(showTags)]="showTags",
+            [selectedUserstories]="selectedUserstories | async",
             (addNewUs)="addNewUs()",
             (addNewUsBulk)="addNewUsBulk()",
         )
