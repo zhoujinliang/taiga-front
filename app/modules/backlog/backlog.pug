@@ -13,7 +13,12 @@ tg-lightbox.lightbox-sprint-add-edit(key="backlog.sprint-add-edit")
         [editingSprint]="editingSprint|async",
     )
 
-div.wrapper
+div.wrapper(
+    tg-sortable,
+    item-selector="tg-backlog-row",
+    container-selector=".backlog-table-body",
+    item-data-field="us-id",
+)
     tg-project-menu([project]="project|async", active="backlog")
 
     sidebar.backlog-filter([class.active]="showFilters")

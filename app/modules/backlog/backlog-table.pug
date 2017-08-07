@@ -40,7 +40,6 @@ section.backlog-table([class.hidden]="!userstories || !userstories.size")
                         ) {{role.get('name')}}
 
     div.backlog-table-body(
-        tg-backlog-sortable,
         [class.show-tags]="showTags",
         [class.active-filters]="activeFilters",
         [class.forecasted-stories]="displayVelocity",
@@ -49,17 +48,18 @@ section.backlog-table([class.hidden]="!userstories || !userstories.size")
         infinite-scroll-immediate-check='false',
     )
         ng-container(*ngFor="let us of userstories; let idx = index")
+          .doom-line(*ngIf="doomlinePosition !== null && idx === doomlinePosition")
+            span(translate="BACKLOG.DOOMLINE")
           tg-backlog-row(
               [class.is-checked]="selectedUserstories.contains(us.get('id'))",
               [us]="us",
               [project]="project",
               [canEdit]="canEdit",
+              [data-us-id]="us.get('id')",
               [class.blocked]="us.get('is_blocked')",
               [showedRole]="showedRole",
               [selectedUserstories]="selectedUserstories",
           )
-          .doom-line(*ngIf="doomlinePosition !== null && idx === doomlinePosition")
-            span(translate="BACKLOG.DOOMLINE")
 
         div(tg-loading="ctrl.loadingUserstories")
 

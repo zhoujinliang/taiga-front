@@ -82,6 +82,7 @@ export class BacklogPage implements OnInit, OnDestroy {
 
             let total_points = stats.get('total_points')
             let current_sum = stats.get('assigned_points')
+            console.log(stats.toJS());
 
             let idx = 0
             for (let us of userstories.toJS()) {
