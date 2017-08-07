@@ -37,6 +37,7 @@ export class BacklogPage implements OnInit, OnDestroy {
     sprints: Observable<Immutable.Map<string, any>>;
     currentSprint: Observable<Immutable.Map<string, any>>;
     latestSprint: Observable<Immutable.Map<string, any>>;
+    doomlinePosition: Observable<number>;
 
     constructor(private store: Store<IState>,
                 private route: ActivatedRoute,
@@ -46,7 +47,6 @@ export class BacklogPage implements OnInit, OnDestroy {
         this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
         this.editingSprint = this.store.select((state) => state.getIn(["backlog", "editing-sprint"]));
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
-        this.stats = this.store.select((state) => state.getIn(["backlog", "stats"]));
         this.sprints = this.store.select((state) => state.getIn(["backlog", "sprints"]));
         this.latestSprint = this.sprints.map((sprints) => sprints.getIn(["sprints", 0]))
         this.currentSprint = this.sprints.map((sprints) =>
@@ -75,6 +75,24 @@ export class BacklogPage implements OnInit, OnDestroy {
                                               .map((id) => Immutable.List(id));
         this.bulkCreateState = this.store.select((state) => state.getIn(["backlog", "bulk-create-state"]));
         this.stats = this.store.select((state) => state.getIn(["backlog", "stats"]));
+        this.doomlinePosition = this.stats.combineLatest(this.userstories).map(([stats, userstories]) => {
+            if (!stats || !userstories) {
+                return null
+            }
+
+            let total_points = stats.get('total_points')
+            let current_sum = stats.get('assigned_points')
+
+            let idx = 0
+            for (let us of userstories.toJS()) {
+                current_sum += us.total_points
+                if (current_sum > total_points) {
+                    return idx
+                }
+                idx += 1
+            }
+            return null
+        })
     }
 
     ngOnInit() {

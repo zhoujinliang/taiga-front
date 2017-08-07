@@ -51,7 +51,13 @@ div.wrapper
             [latestSprint]="latestSprint | async"
         )
 
-        tg-backlog-table([userstories]="userstories | async", [showTags]="showTags", [project]="project |async", [selectedUserstories]="selectedUserstories | async")
+        tg-backlog-table(
+            [userstories]="userstories | async",
+            [showTags]="showTags",
+            [project]="project |async",
+            [selectedUserstories]="selectedUserstories | async",
+            [doomlinePosition]="doomlinePosition | async"
+        )
 
     tg-backlog-sprints.menu-secondary.sidebar(
         [sprints]="sprints | async",

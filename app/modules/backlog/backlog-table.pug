@@ -48,16 +48,18 @@ section.backlog-table([class.hidden]="!userstories || !userstories.size")
         infinite-scroll-disabled="disablePagination || !firstLoadComplete",
         infinite-scroll-immediate-check='false',
     )
-        tg-backlog-row(
-            *ngFor="let us of userstories",
-            [class.is-checked]="selectedUserstories.contains(us.get('id'))",
-            [us]="us",
-            [project]="project",
-            [canEdit]="canEdit",
-            [class.blocked]="us.get('is_blocked')",
-            [showedRole]="showedRole",
-            [selectedUserstories]="selectedUserstories",
-        )
+        ng-container(*ngFor="let us of userstories; let idx = index")
+          tg-backlog-row(
+              [class.is-checked]="selectedUserstories.contains(us.get('id'))",
+              [us]="us",
+              [project]="project",
+              [canEdit]="canEdit",
+              [class.blocked]="us.get('is_blocked')",
+              [showedRole]="showedRole",
+              [selectedUserstories]="selectedUserstories",
+          )
+          .doom-line(*ngIf="doomlinePosition !== null && idx === doomlinePosition")
+            span(translate="BACKLOG.DOOMLINE")
 
         div(tg-loading="ctrl.loadingUserstories")
 

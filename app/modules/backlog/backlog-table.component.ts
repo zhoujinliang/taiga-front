@@ -13,6 +13,7 @@ export class BacklogTable {
     @Input() userstories: Immutable.List<any>;
     @Input() selectedUserstories: Immutable.List<any>;
     @Input() currentSprint: Immutable.Map<string, any>;
+    @Input() doomlinePosition: number;
     @Input() showTags: boolean;
 
     constructor(private store: Store<IState>) {}
