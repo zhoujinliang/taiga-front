@@ -1,8 +1,8 @@
-tg-lightbox(key="backlog.new-us")
+tg-lightbox.lightbox-generic-form.lightbox-create-us(key="backlog.new-us")
     tg-lightbox-close
-    tg-create-us-form([statuses]="statuses|async", (createUs)="createNewUs($event)")
+    tg-create-us-form([project]="project|async", (createUs)="createNewUs($event)")
 
-tg-lightbox(key="backlog.new-us-bulk")
+tg-lightbox.lightbox-generic-form(key="backlog.new-us-bulk")
     tg-lightbox-close
     tg-bulk-create-lightbox((create)="createUsBulk($event)")
 

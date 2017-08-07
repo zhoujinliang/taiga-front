@@ -8,6 +8,7 @@ import {TranslateModule} from "@ngx-translate/core";
 
 import {TgCommonModule} from "../../ts/modules/common/common.module";
 import {TgCardsModule} from "../cards/cards.module";
+import {TgAttachmentsModule} from "../attachments/attachments.module";
 import {TgComponentsModule} from "../components/components.module";
 import {TgServicesModule} from "../services/services.module";
 import {BacklogPage} from "./backlog.component";
@@ -24,6 +25,7 @@ import {BacklogSprint} from "./sprints/backlog-sprint.component";
 import {BacklogSprintHeader} from "./sprints/backlog-sprint-header.component";
 import {SprintAddEditLightbox} from "./sprints/sprint-add-edit-lightbox.component";
 import {BacklogUsPoints} from "./backlog-us-points.component";
+import {CreateUsForm} from "./create-us-form/create-us-form.component";
 
 @NgModule({
     declarations: [
@@ -41,6 +43,7 @@ import {BacklogUsPoints} from "./backlog-us-points.component";
         BacklogSprintHeader,
         SprintAddEditLightbox,
         BacklogUsPoints,
+        CreateUsForm,
     ],
     exports: [
         BacklogPage,
@@ -51,6 +54,7 @@ import {BacklogUsPoints} from "./backlog-us-points.component";
         TgCardsModule,
         TgComponentsModule,
         TgServicesModule,
+        TgAttachmentsModule,
         ReactiveFormsModule,
         StoreModule,
         TranslateModule.forChild({}),
