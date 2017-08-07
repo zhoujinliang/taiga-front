@@ -167,6 +167,21 @@ export class BacklogEffects {
               );
             })(payload);
         });
+
+    @Effect()
+    moveUserStoriesToSprint$: Observable<Action> = this.actions$
+        .ofType("MOVE_USER_STORIES_TO_SPRINT")
+        .map(toPayload)
+        .switchMap(({projectId, milestoneId, bulkStories}) => {
+          return this.rs.userstories.bulkUpdateMilestone(projectId, milestoneId, bulkStories).flatMap(() =>
+              Observable.from([
+                  new actions.FetchBacklogStatsAction(projectId),
+                  new actions.FetchBacklogSprintsAction(projectId),
+                  new actions.SetSelectedUserstoriesAction(Immutable.List<number>()),
+                  new actions.RemoveBacklogUserStoriesAction(bulkStories.map(({us_id}) => us_id)),
+              ])
+          )});
+
     constructor(private actions$: Actions,
                 private rs: ResourcesService,
                 private storage: StorageService,

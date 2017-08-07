@@ -181,7 +181,7 @@ export class UserTimelineItemTitleService {
 
     _getParams(timeline, event, timeline_type) {
         const params = {};
-        const translateParams = timeline_type.translate_params || [];
+        const translateParams = (timeline_type && timeline_type.translate_params) || [];
 
         translateParams.forEach((param) => {
             return params[param] = this._translateTitleParams(param, timeline, event);

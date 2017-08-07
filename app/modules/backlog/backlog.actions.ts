@@ -28,6 +28,12 @@ export class SetBacklogUserStoriesAction implements Action {
   constructor(public payload: Immutable.List<any>) { }
 }
 
+export class RemoveBacklogUserStoriesAction implements Action {
+  readonly type = "REMOVE_BACKLOG_USER_STORIES";
+
+  constructor(public payload: number[]) { }
+}
+
 export class FetchBacklogSprintsAction implements Action {
   readonly type = "FETCH_BACKLOG_SPRINTS";
 
@@ -218,4 +224,13 @@ export class SetSelectedUserstoriesAction implements Action {
   readonly type = "SET_SELECTED_USER_STORIES";
 
   constructor(public payload: Immutable.List<number>) { }
+}
+
+export class MoveUserStoriesToSprintAction implements Action {
+  readonly type = "MOVE_USER_STORIES_TO_SPRINT";
+  public payload = null;
+
+  constructor(projectId: number, milestoneId: number, bulkStories: any) {
+      this.payload = {projectId, milestoneId, bulkStories};
+  }
 }

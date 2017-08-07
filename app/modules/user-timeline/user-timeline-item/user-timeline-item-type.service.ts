@@ -285,6 +285,15 @@ class MilestoneUpdated implements TimelineType {
     }
 }
 
+class MilestoneDeleted implements TimelineType {
+    key = "TIMELINE.MILESTONE_DELETED";
+    translate_params = ["username", "obj_name"];
+
+    check(timeline, event) {
+        return (event.obj === "milestone") && (event.type === "delete");
+    }
+}
+
 class WikiUpdated implements TimelineType {
     key = "TIMELINE.WIKI_UPDATED";
     translate_params = ["username", "obj_name"];
@@ -482,6 +491,7 @@ export class UserTimelineItemTypeService {
             new EpicUpdatedColor(),
             new EpicUpdatedGeneral(),
             new NewUser(),
+            new MilestoneDeleted(),
         ];
     }
 

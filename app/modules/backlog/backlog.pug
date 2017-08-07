@@ -47,8 +47,8 @@ div.wrapper
             [(showFilters)]="showFilters",
             [(showTags)]="showTags",
             [selectedUserstories]="selectedUserstories | async",
-            (addNewUs)="addNewUs()",
-            (addNewUsBulk)="addNewUsBulk()",
+            [currentSprint]="currentSprint | async",
+            [latestSprint]="latestSprint | async"
         )
 
         tg-backlog-table([userstories]="userstories | async", [showTags]="showTags", [project]="project |async", [selectedUserstories]="selectedUserstories | async")

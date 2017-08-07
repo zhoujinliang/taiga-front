@@ -26,6 +26,10 @@ export const backlogReducer = (state, action) => {
     switch (action.type) {
         case "SET_BACKLOG_USER_STORIES":
             return state.set("userstories", action.payload);
+        case "REMOVE_BACKLOG_USER_STORIES":
+            return state.update("userstories", (userstories) => {
+                return userstories.filter((x) => action.payload.indexOf(x.get('id')) === -1)
+            });
         case "SET_US":
             return state.update("userstories", (uss) => {
                 return uss.map((us) => {

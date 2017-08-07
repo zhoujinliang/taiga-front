@@ -12,6 +12,7 @@ import { IState } from "../../app.store";
 import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import { ZoomLevelService } from "../services/zoom-level.service";
 import * as actions from "./backlog.actions";
+import * as moment from "moment";
 
 @Component({
     template: require("./backlog.pug")(),
@@ -34,6 +35,8 @@ export class BacklogPage implements OnInit, OnDestroy {
     bulkCreateState: Observable<number>;
     stats: Observable<Immutable.Map<string, any>>;
     sprints: Observable<Immutable.Map<string, any>>;
+    currentSprint: Observable<Immutable.Map<string, any>>;
+    latestSprint: Observable<Immutable.Map<string, any>>;
 
     constructor(private store: Store<IState>,
                 private route: ActivatedRoute,
@@ -45,6 +48,16 @@ export class BacklogPage implements OnInit, OnDestroy {
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
         this.stats = this.store.select((state) => state.getIn(["backlog", "stats"]));
         this.sprints = this.store.select((state) => state.getIn(["backlog", "sprints"]));
+        this.latestSprint = this.sprints.map((sprints) => sprints.getIn(["sprints", 0]))
+        this.currentSprint = this.sprints.map((sprints) =>
+            sprints.get("sprints").filter((sprint) => {
+              let currentDate = moment();
+              let start = moment(sprint.estimated_start, 'YYYY-MM-DD');
+              let end = moment(sprint.estimated_finish, 'YYYY-MM-DD');
+
+              return currentDate >= start && currentDate <= end
+            }).first()
+        );
         this.userstories = this.store.select((state) => state.getIn(["backlog", "userstories"]))
                                      .filter((uss) => uss !== null)
                                      .do(() => this.store.dispatch(new StopLoadingAction()));
@@ -168,14 +181,6 @@ export class BacklogPage implements OnInit, OnDestroy {
             subs.unsubscribe();
         }
         this.store.dispatch(new actions.CleanBacklogDataAction());
-    }
-
-    addNewUs() {
-        this.store.dispatch(new OpenLightboxAction("backlog.new-us"));
-    }
-
-    addNewUsBulk() {
-        this.store.dispatch(new OpenLightboxAction("backlog.new-us-bulk"));
     }
 
     getJoyrideSteps() {
