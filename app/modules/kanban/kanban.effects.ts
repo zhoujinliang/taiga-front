@@ -36,7 +36,7 @@ export class KanbanEffects {
         .switchMap((payload) => {
           const data = _.extend({project: payload.projectId}, payload.appliedFilters.toJS());
           return this.rs.userstories.filtersData(data).map((filtersData) => {
-              return new actions.SetKanbanFiltersDataAction(filtersData);
+              return new actions.SetKanbanFiltersDataAction(filtersData.data);
           });
         });
 
