@@ -7,7 +7,7 @@ div.wrapper
             h1
                 tg-main-title([project]="project|async", sectionName="Wiki")
 
-        // tg-wiki-wysiwyg([page]="page|async")
+        tg-wiki-content([page]="page|async", [project]="project|async")
 
         tg-wiki-summary([page]="page|async", [project]="project|async", (delete)="onDelete($event)", *ngIf="page|async")
 

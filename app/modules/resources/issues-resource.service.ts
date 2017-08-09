@@ -90,7 +90,7 @@ export class IssuesResource {
     }
 
     filtersData(params) {
-        const url = this.urls.resolve("issue-filters");
+        const url = this.urls.resolve("issues-filters");
         return this.http.get(url, params);
     }
 

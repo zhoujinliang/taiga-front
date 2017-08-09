@@ -17,6 +17,7 @@ import {WikiListRow} from "./wiki-list-row/wiki-list-row.component";
 import {WikiNav} from "./wiki-nav/wiki-nav.component";
 import {WikiEffects} from "./wiki.effects";
 import {WikiSummary} from "./wiki-summary/wiki-summary.component";
+import {WikiContent} from "./wiki-content/wiki-content.component";
 import {WikiHistory} from "./history/wiki-history.component";
 import {WikiHistoryEntry} from "./history/wiki-history-entry.component";
 import {WikiHistoryDiff} from "./history/wiki-history-diff.component";
@@ -31,6 +32,7 @@ import {WikiHistoryDiff} from "./history/wiki-history-diff.component";
         WikiHistory,
         WikiHistoryEntry,
         WikiHistoryDiff,
+        WikiContent,
     ],
     exports: [
         WikiPage,

@@ -1,0 +1,7 @@
+div(*ngIf="page")
+    tg-wysiwyg(
+        [text]="page.get('content')",
+        [project]="project|async",
+        mode="markdown",
+    )
+    // [canEdit]="canEdit",
