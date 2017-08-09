@@ -42,7 +42,7 @@ export class TeamPage implements OnInit, OnDestroy {
     user: Observable<Immutable.Map<string, any>>;
     stats: Observable<Immutable.Map<string, any>>;
     memberships: Observable<Immutable.List<any>>;
-    filtersRole: number = null;
+    filtersRole: Immutable.Map<string, any> = null;
     filtersQ: string = "";
     subscription: Subscription;
 
@@ -68,7 +68,9 @@ export class TeamPage implements OnInit, OnDestroy {
                                    }, null)
                                    return stats.map((entry, key) => {
                                            return entry.map((value) => {
-                                               if (value === limits.getIn([key, 'max'])) {
+                                               if (limits.getIn([key, 'min']) === limits.getIn([key, 'max'])) {
+                                                   return 0.1
+                                               } else if (value === limits.getIn([key, 'max'])) {
                                                    return 1
                                                } else if (value === limits.getIn([key, 'min'])) {
                                                    return 0.1

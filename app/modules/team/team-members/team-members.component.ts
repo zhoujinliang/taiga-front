@@ -11,14 +11,13 @@ export class TeamMembers implements OnInit, OnChanges {
     @Input() project: Immutable.Map<string, any>;
     @Input() stats: Immutable.Map<string, any>;
     @Input() filtersQ: string;
-    @Input() filtersRole: number;
+    @Input() filtersRole: Immutable.Map<string, any>;
 
     ngOnInit() {
         this.filtered_memberships = this.memberships;
     }
 
     ngOnChanges(changes) {
-        console.log(this.filtersQ);
         if (this.memberships) {
             this.filtered_memberships = this.memberships
                                    .filter((member) => {
@@ -29,7 +28,7 @@ export class TeamMembers implements OnInit, OnChanges {
                                    })
                                    .filter((member) => {
                                        if (this.filtersRole) {
-                                           return member.get('role') === this.filtersRole
+                                           return member.get('role') === this.filtersRole.get('id')
                                        }
                                        return true;
                                    }).toList();

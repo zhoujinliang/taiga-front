@@ -25,7 +25,7 @@ nav(*ngIf="project")
         li(*ngFor="let item of project.get('roles')")
             a(
                 [class.active]="item.get('id') == role",
-                (click)="setRole(item.get('id'))"
+                (click)="setRole(item)"
             )
                 span.title {{ item.get('name') }}
                 tg-svg(svg-icon="icon-arrow-right")

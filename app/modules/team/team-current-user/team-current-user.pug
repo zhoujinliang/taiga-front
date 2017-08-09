@@ -12,7 +12,7 @@
                         svg-title-translate="COMMON.OWNER"
                     )
 
-                .position {{user?.get('role_name')}}
+                .position {{get_role_name()}}
 
                 tg-leave-project([project]="project", [user]="user")
 
