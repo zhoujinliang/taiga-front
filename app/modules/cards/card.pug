@@ -1,5 +1,5 @@
-.card-inner(
-    [class]="'zoom-' + zoomLevel",
+div(
+    [class]="'card-inner zoom-' + zoomLevel",
     [class.card-blocked]="item.get('is_blocked')",
     [class.archived]="archived"
 )

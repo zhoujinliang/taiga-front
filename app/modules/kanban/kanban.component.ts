@@ -40,9 +40,13 @@ export class KanbanPage implements OnInit, OnDestroy {
         this.userstoriesByState = this.store.select((state) => state.getIn(["kanban", "userstories"]))
                                             .filter((uss) => uss !== null)
                                             .do(() => this.store.dispatch(new StopLoadingAction()))
-                                            .map((userstories) => {
-                                                return userstories.groupBy((us) => us.get("status").toString());
-                                            })
+                                            .map((userstories) =>
+                                                userstories.sortBy((userstory) => userstory.get('kanban_order'))
+                                            )
+                                            .map((userstories) =>
+                                                userstories.groupBy((us) => us.get("status").toString())
+                                            )
+
         this.zoom = this.store.select((state) => state.getIn(["kanban", "zoomLevel"])).map((level) => {
             return {
                 level,
