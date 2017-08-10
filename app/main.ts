@@ -11,6 +11,15 @@ import "prismjs/plugins/custom-class/prism-custom-class";
 import "reflect-metadata";
 import "zone.js";
 
+// Styles imports
+import "./styles/core/main.scss";
+import "../node_modules/intro.js/introjs.css";
+import "../node_modules/dragula/dist/dragula.css";
+import "../node_modules/awesomplete/awesomplete.css";
+import "../node_modules/medium-editor/dist/css/medium-editor.css";
+import "../node_modules/medium-editor/dist/css/themes/default.css";
+import "../node_modules/prismjs/themes/prism-okaidia.css";
+
 import "./export-to-plugins";
 
 import {generateUniqueSessionIdentifier} from "./libs/utils";

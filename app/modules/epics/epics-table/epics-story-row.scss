@@ -1,5 +1,3 @@
-@import '../../../../styles/dependencies/mixins/epics-dashboard';
-
 .story-row {
     @include font-size(small);
     @include epics-table;

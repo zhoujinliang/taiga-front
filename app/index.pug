@@ -13,20 +13,18 @@ html(lang="en")
         meta(http-equiv="X-Frame-Options", content="deny")
 
         //-meta(name="viewport", content="width=device-width, user-scalable=no")
-        link(rel="icon", type="image/png", href="/" + v + "/images/favicon.png")
-        // TODO: REMOVE THIS IN ANY WAY
-        script(src="/" + v + "/js/jquery.min.js", type="text/javascript")
-        link(rel='stylesheet', href='/' + v + '/styles/theme-taiga.css', type='text/css')
+        link(rel="icon", type="image/png", href="/" + htmlWebpackPlugin.options.version + "/images/favicon.png")
+        script(src="/" + htmlWebpackPlugin.options.version + "/js/jquery.min.js", type="text/javascript")
 
         //- PRERENDER SERVICE: This is to know when the page is completely loaded.
         script(type='text/javascript').
             window.prerenderReady = false;
+
         //- Version pass to javascript
         script(type='text/javascript').
-            window._version = "#{v}";
+            window._version = "#{htmlWebpackPlugin.options.version}";
 
     body(tg-main)
         tg-view
-        script(src="/" + v + "/js/app.js")
         include assets/svg/sprite.svg
         include assets/svg/editor.svg

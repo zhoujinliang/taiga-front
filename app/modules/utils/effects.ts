@@ -1,3 +1,4 @@
+import { Action } from "@ngrx/store";
 import {Observable} from "rxjs";
 import {AddNotificationMessageAction} from "../../ts/modules/common/common.actions";
 import {StartLoadingItemAction, StopLoadingItemAction} from "../../app.actions";
@@ -10,9 +11,9 @@ export function genericSuccessManagement() {
     return new AddNotificationMessageAction("success");
 }
 
-export function wrapLoading(loadingKey, func) {
+export function wrapLoading(loadingKey, func): (any) => Observable<Action> {
     return (payload) => {
-        return Observable.of(new StartLoadingItemAction(loadingKey)).concat(
+        return <Observable<Action>> Observable.of(new StartLoadingItemAction(loadingKey)).concat(
             func(payload),
             Observable.of(new StopLoadingItemAction(loadingKey))
         );

@@ -23,7 +23,8 @@
     "test": "./node_modules/karma/bin/karma start",
     "e2e": "./node_modules/.bin/babel-node run-e2e.js",
     "prepublish": "typings install",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "devserver": "webpack-dev-server --content-base dist/ --history-api-fallback"
   },
   "browser": {
     "ngx-validators": "./node_modules/ngx-validators/bundles/ngx-validators.umd.js"
@@ -101,7 +102,7 @@
     "node-uuid": "^1.4.3",
     "photoswipe": "^4.1.0",
     "pre-commit": "^1.0.5",
-    "pug": "^2.0.0-beta.12",
+    "pug": "^2.0.0-rc.3",
     "pug-lint": "^2.4.0",
     "pug-lint-config-clock": "^2.0.0",
     "pugify": "^2.0.1",
@@ -118,7 +119,7 @@
     "vinyl-fs": "^2.1.1",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.9.0",
-    "webpack": "^2.3.3"
+    "webpack": "^3.5.2"
   },
   "pre-commit": [
     "scss-lint"
@@ -128,13 +129,13 @@
     "@angular/animations": "^4.0.3",
     "@angular/common": "^4.1.3",
     "@angular/compiler": "^4.1.3",
-    "@angular/compiler-cli": "^4.2.2",
+    "@angular/compiler-cli": "^4.3.3",
     "@angular/core": "^4.1.3",
     "@angular/forms": "^4.0.3",
     "@angular/http": "^4.1.3",
     "@angular/platform-browser": "^4.1.3",
     "@angular/platform-browser-dynamic": "^4.1.3",
-    "@angular/platform-server": "^4.0.2",
+    "@angular/platform-server": "^4.3.3",
     "@ngrx/core": "^1.2.0",
     "@ngrx/effects": "^2.0.3",
     "@ngrx/router-store": "^1.2.6",
@@ -147,6 +148,7 @@
     "@types/dragula": "^2.1.30",
     "@types/es6-promise": "0.0.32",
     "@types/i18next": "^2.3.35",
+    "@types/jquery": "^3.2.11",
     "@types/lodash": "^4.14.61",
     "@types/moment": "^2.13.0",
     "@types/sinon": "^2.1.2",
@@ -165,12 +167,16 @@
     "bluebird": "^3.4.6",
     "bourbon": "git+https://github.com/thoughtbot/bourbon.git",
     "checksley": "git+https://github.com/jespino/checksley-bower.git",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.28.4",
     "debounce-decorator": "^1.0.4",
     "dom-autoscroller": "^1.3.1",
     "dragula": "^3.7.2",
+    "file-loader": "^0.11.2",
     "flot-axislabels": "^1.0.0",
     "gulp-class-prefix": "^1.0.1",
     "gulp-tslint": "^8.0.0",
+    "html-webpack-plugin": "^2.30.1",
     "i18next": "^7.1.3",
     "immutable": "^3.8.1",
     "intro.js": "^2.3.0",
@@ -191,11 +197,18 @@
     "ngx-validators": "^3.0.0",
     "pikaday": "^1.4.0",
     "prismjs": "^1.6.0",
+    "pseudomap": "^1.0.2",
+    "pug-html-loader": "^1.1.5",
+    "pug-loader": "^2.3.0",
     "raven-js": "^3.7.0",
     "redux": "^3.6.0",
     "rxjs": "^5.4.0",
+    "sass-loader": "^6.0.6",
     "showdown": "^1.4.3",
+    "style-loader": "^0.18.2",
     "to-markdown": "^3.0.1",
+    "url-loader": "^0.5.9",
+    "webpack-dev-server": "^2.7.1",
     "zone.js": "^0.8.11"
   }
 }
