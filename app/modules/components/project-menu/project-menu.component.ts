@@ -18,6 +18,9 @@
  */
 
 import {Component, Input, OnChanges, OnInit, OnDestroy} from "@angular/core";
+import {Store} from "@ngrx/store";
+import {IState} from "../../../app.store";
+import {OpenLightboxAction} from "../../../app.actions";
 import * as Immutable from "immutable";
 import * as _ from "lodash";
 import {slugify} from "../../../libs/utils";
@@ -33,7 +36,7 @@ export class ProjectMenu implements OnChanges, OnInit, OnDestroy {
     videoconferenceUrl: string;
     fixed: boolean = false;
 
-    constructor() {}
+    constructor(private store: Store<IState>) {}
 
     setFixed(event) {
         let position = $(window).scrollTop();
@@ -85,8 +88,7 @@ export class ProjectMenu implements OnChanges, OnInit, OnDestroy {
     }
 
     search() {
-        // TODO
-        console.log("SEARCH");
+        this.store.dispatch(new OpenLightboxAction("search"));
     }
 
     _setVideoConferenceUrl() {

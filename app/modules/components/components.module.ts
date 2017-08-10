@@ -31,6 +31,7 @@ import {ConfirmAsk} from "./confirm/confirm-ask.component";
 import {ConfirmAskChoice} from "./confirm/confirm-ask-choice.component";
 import {FieldError} from "./field-error/field-error.component";
 import {FeedbackLightbox} from "./feedback/feedback-lightbox.component";
+import {SearchLightbox} from "./search/search-lightbox.component";
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from "@angular/forms";
 import { ColorSelector } from "./color-selector/color-selector.component";
@@ -86,6 +87,7 @@ import { DatePicker} from "./date-picker/date-picker.component";
         ConfirmAskChoice,
         FieldError,
         FeedbackLightbox,
+        SearchLightbox,
         BulkCreateLightbox,
         DatePicker,
         ColorSelector,
@@ -121,6 +123,7 @@ import { DatePicker} from "./date-picker/date-picker.component";
         ConfirmAskChoice,
         FieldError,
         FeedbackLightbox,
+        SearchLightbox,
         BulkCreateLightbox,
         DatePicker,
         ColorSelector,

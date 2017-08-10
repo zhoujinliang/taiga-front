@@ -24,6 +24,7 @@ import { EpicsModule } from "./modules/epics/epics.module";
 import { IssuesModule } from "./modules/issues/issues.module";
 import { WikiModule } from "./modules/wiki/wiki.module";
 import { TeamModule } from "./modules/team/team.module";
+import { SearchModule } from "./modules/search/search.module";
 import { AdminModule } from "./modules/admin/admin.module";
 import { UserSettingsModule } from "./modules/user-settings/user-settings.module";
 import { ProjectsModule } from "./modules/projects/projects.module";
@@ -73,6 +74,7 @@ export function HttpLoaderFactory(http: Http) {
     IssuesModule,
     WikiModule,
     TeamModule,
+    SearchModule,
     AdminModule,
     UserSettingsModule,
     TgPipesModule,

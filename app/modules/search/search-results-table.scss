@@ -1,0 +1,13 @@
+tg-search-results-table {
+    tg-assigned-item {
+        .assignable-member-single {
+            padding: 0;
+        }
+        .assignable-member-name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 80px;
+        }
+    }
+}

@@ -27,7 +27,11 @@ module.exports = {
               }
             },
             { test: /\.(pug|jade)$/,
-              loader: 'pug-loader' },
+              loader: 'pug-loader',
+              options: {
+                  pretty: true,
+              }
+            },
             { test: /\.css$/,
               loaders: [
                   { loader: "style-loader" },
