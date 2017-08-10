@@ -9,6 +9,7 @@
     "Project Management",
     "Github"
   ],
+  "sasslintConfig": ".scss-lint.yml",
   "author": "Kaleidos OpenSource SL",
   "license": "AGPL-3.0",
   "repository": {
@@ -17,7 +18,7 @@
   },
   "pugLintConfig": ".pug-lintrc.json",
   "scripts": {
-    "scss-lint": "gulp scss-lint --fail",
+    "scss-lint": "scss-lint -c .scss-lint.yml",
     "ts-lint": "tslint -c tslint.json app/**/*.ts",
     "pug-lint": "pug-lint app",
     "test": "./node_modules/karma/bin/karma start",
