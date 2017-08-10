@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, OnDestroy, Output} from "@angular/core"
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 
-import { ConfigurationService } from "../../../ts/modules/base/conf";
+import { ConfigurationService } from "../../base/conf";
 import {LoginData} from "../auth.model";
 import {Subscription} from "rxjs";
 

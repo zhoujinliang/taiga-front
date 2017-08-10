@@ -5,7 +5,7 @@ import {RouterModule} from "@angular/router";
 import { EffectsModule } from "@ngrx/effects";
 import {TranslateModule} from "@ngx-translate/core";
 
-import {TgCommonModule} from "../../ts/modules/common/common.module";
+import {TgCommonModule} from "../common/common.module";
 import {TgComponentsModule} from "../components/components.module";
 import {DiscoverHomeOrderBy} from "./components/discover-home-order-by/discover-home-order-by.component";
 import {DiscoverSearchBar} from "./components/discover-search-bar/discover-search-bar.component";

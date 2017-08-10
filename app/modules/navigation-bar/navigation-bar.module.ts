@@ -22,8 +22,8 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {TranslateModule} from "@ngx-translate/core";
 
-import {TgBaseModule} from "../../ts/modules/base/base.module";
-import {TgCommonModule} from "../../ts/modules/common/common.module";
+import {TgBaseModule} from "../base/base.module";
+import {TgCommonModule} from "../common/common.module";
 import {TgComponentsModule} from "../components/components.module";
 
 import {DropdownProjectList} from "./dropdown-project-list/dropdown-project-list.component";

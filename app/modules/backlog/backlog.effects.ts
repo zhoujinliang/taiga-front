@@ -8,7 +8,7 @@ import "rxjs/add/operator/switchMap";
 import { Observable } from "rxjs/Observable";
 import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
-import { StorageService} from "../../ts/modules/base/storage";
+import { StorageService} from "../base/storage";
 import {FiltersRemoteStorageService} from "../components/filter/filter-remote.service";
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./backlog.actions";

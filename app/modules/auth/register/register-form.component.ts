@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UniversalValidators } from "ngx-validators";
 import { UsernameValidator } from "../../utils/validators";
 import {EmailValidators} from 'ngx-validators';
-import { ConfigurationService } from "../../../ts/modules/base/conf";
+import { ConfigurationService } from "../../base/conf";
 import {ActivatedRoute} from "@angular/router";
 import {RegisterData} from "../auth.model";
 import {Subscription} from "rxjs";

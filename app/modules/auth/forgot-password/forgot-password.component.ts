@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { IState } from "../../../app.store";
-import { ConfigurationService } from "../../../ts/modules/base/conf";
+import { ConfigurationService } from "../../base/conf";
 import { calculateNextUrl } from "../utils";
 import { SetMetadataAction } from "../../../app.actions";
 import { PasswordRecoverAction } from "../auth.actions";

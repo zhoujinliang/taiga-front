@@ -26,7 +26,7 @@
 // and it should be rewritten in coffeescript style classes.
 
 import * as angular from "angular";
-import {timeout} from "../../../libs/utils";
+import {timeout} from "../../libs/utils";
 
 export let LoaderDirective = function(tgLoader, $rootscope) {
     const link = function($scope, $el, $attrs) {

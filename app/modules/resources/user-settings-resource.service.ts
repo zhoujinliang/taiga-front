@@ -25,9 +25,9 @@
 import {Injectable} from "@angular/core";
 import * as angular from "angular";
 import {sizeFormat} from "../../libs/utils";
-import {ConfigurationService} from "../../ts/modules/base/conf";
-import {HttpService} from "../../ts/modules/base/http";
-import {UrlsService} from "../../ts/modules/base/urls";
+import {ConfigurationService} from "../base/conf";
+import {HttpService} from "../base/http";
+import {UrlsService} from "../base/urls";
 import {Observable} from "rxjs";
 
 @Injectable()

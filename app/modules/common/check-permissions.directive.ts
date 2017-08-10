@@ -1,6 +1,6 @@
 import {Directive, ElementRef, Input} from "@angular/core";
 import {Store} from "@ngrx/store";
-import {IState} from "../../../app.store";
+import {IState} from "../../app.store";
 
 @Directive({
     selector: "[tg-check-permission]",

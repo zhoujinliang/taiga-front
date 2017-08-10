@@ -24,7 +24,7 @@
 
 import {Injectable} from "@angular/core";
 import {sizeFormat} from "../../libs/utils";
-import {HttpService} from "../../ts/modules/base/http";
+import {HttpService} from "../base/http";
 
 @Injectable()
 export class CustomAttributesResource {

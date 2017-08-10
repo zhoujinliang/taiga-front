@@ -20,8 +20,8 @@
 import * as Immutable from "immutable";
 
 import {Injectable} from "@angular/core";
-import {HttpService} from "../../ts/modules/base/http";
-import {UrlsService} from "../../ts/modules/base/urls";
+import {HttpService} from "../base/http";
+import {UrlsService} from "../base/urls";
 
 @Injectable()
 export class WikiResource {

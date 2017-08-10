@@ -21,8 +21,8 @@ import * as Promise from "bluebird";
 import * as Immutable from "immutable";
 
 import {Injectable} from "@angular/core";
-import {HttpService} from "../../ts/modules/base/http";
-import {UrlsService} from "../../ts/modules/base/urls";
+import {HttpService} from "../base/http";
+import {UrlsService} from "../base/urls";
 import {PaginateResponseService} from "../services/paginate-response.service";
 
 @Injectable()

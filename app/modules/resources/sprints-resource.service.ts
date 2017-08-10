@@ -25,9 +25,9 @@
 import {Injectable} from "@angular/core";
 import * as _ from "lodash";
 import * as Immutable from "immutable";
-import {UrlsService} from "../../ts/modules/base/urls";
-import {HttpService} from "../../ts/modules/base/http";
-import {StorageService} from "../../ts/modules/base/storage";
+import {UrlsService} from "../base/urls";
+import {HttpService} from "../base/http";
+import {StorageService} from "../base/storage";
 
 @Injectable()
 export class SprintsResource {

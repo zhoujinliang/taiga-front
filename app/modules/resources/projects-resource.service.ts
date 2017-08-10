@@ -24,10 +24,10 @@ import {sizeFormat} from "../../libs/utils";
 
 import {Injectable} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
-import {ConfigurationService} from "../../ts/modules/base/conf";
-import {HttpService} from "../../ts/modules/base/http";
-import {StorageService} from "../../ts/modules/base/storage";
-import {UrlsService} from "../../ts/modules/base/urls";
+import {ConfigurationService} from "../base/conf";
+import {HttpService} from "../base/http";
+import {StorageService} from "../base/storage";
+import {UrlsService} from "../base/urls";
 import {PaginateResponseService} from "../services/paginate-response.service";
 
 @Injectable()

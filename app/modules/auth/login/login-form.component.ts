@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output, OnInit, OnDestroy} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ConfigurationService } from "../../../ts/modules/base/conf";
+import { ConfigurationService } from "../../base/conf";
 import {ActivatedRoute} from "@angular/router";
 import {LoginData} from "../auth.model";
 import {Subscription} from "rxjs";

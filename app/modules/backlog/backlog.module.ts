@@ -6,7 +6,7 @@ import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
 import {TranslateModule} from "@ngx-translate/core";
 
-import {TgCommonModule} from "../../ts/modules/common/common.module";
+import {TgCommonModule} from "../common/common.module";
 import {TgCardsModule} from "../cards/cards.module";
 import {TgAttachmentsModule} from "../attachments/attachments.module";
 import {TgComponentsModule} from "../components/components.module";

@@ -11,7 +11,7 @@ import {epicsInitialState, epicsReducer} from "./modules/epics/epics.store";
 import {issuesInitialState, issuesReducer} from "./modules/issues/issues.store";
 import {projectsInitialState, projectsReducer} from "./modules/projects/projects.store";
 import {teamInitialState, teamReducer} from "./modules/team/team.store";
-import {commonInitialState, commonReducer} from "./ts/modules/common/common.store";
+import {commonInitialState, commonReducer} from "./modules/common/common.store";
 import {wikiInitialState, wikiReducer} from "./modules/wiki/wiki.store";
 import {userSettingsInitialState, userSettingsReducer} from "./modules/user-settings/user-settings.store";
 import {adminInitialState, adminReducer} from "./modules/admin/admin.store";

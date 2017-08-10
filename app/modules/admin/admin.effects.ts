@@ -10,7 +10,7 @@ import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./admin.actions";
-import {AddNotificationMessageAction} from "../../ts/modules/common/common.actions";
+import {AddNotificationMessageAction} from "../common/common.actions";
 import {go} from "@ngrx/router-store";
 import {genericErrorManagement} from "../utils/effects";
 

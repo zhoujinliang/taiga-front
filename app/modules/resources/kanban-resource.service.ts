@@ -25,7 +25,7 @@
 import {generateHash} from "../../libs/utils";
 
 import {Injectable} from "@angular/core";
-import {StorageService} from "../../ts/modules/base/storage";
+import {StorageService} from "../base/storage";
 
 @Injectable()
 export class KanbanResource {

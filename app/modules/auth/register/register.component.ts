@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { IState } from "../../../app.store";
-import { ConfigurationService } from "../../../ts/modules/base/conf";
+import { ConfigurationService } from "../../base/conf";
 import { RegisterAction } from "../auth.actions";
 import { RegisterData } from "../auth.model";
 import { Observable, Subscription } from "rxjs"

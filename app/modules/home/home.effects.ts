@@ -10,7 +10,7 @@ import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
 import * as Rx from "rxjs/Rx";
 import { ResourcesService } from "../resources/resources.service";
-import {StorageService} from "./../../ts/modules/base/storage";
+import {StorageService} from "./../base/storage";
 import { SetAssignedToAction, SetWatchingAction } from "./home.actions";
 
 function filterAndAddInfoDuties(duties, dutyType, projects) {

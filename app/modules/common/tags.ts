@@ -26,7 +26,7 @@ import {Component, Input} from "@angular/core";
 import * as angular from "angular";
 import {Awesomplete} from "awesomplete";
 import * as _ from "lodash";
-import {bindOnce, trim} from "../../../libs/utils";
+import {bindOnce, trim} from "../../libs/utils";
 
 // Directive that parses/format tags inputfield.
 
