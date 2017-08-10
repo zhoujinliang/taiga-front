@@ -29,7 +29,7 @@ import { UserSettingsModule } from "./modules/user-settings/user-settings.module
 import { ProjectsModule } from "./modules/projects/projects.module";
 import { ResourcesModule } from "./modules/resources/resources.module";
 import { TgServicesModule } from "./modules/services/services.module";
-import { TgBaseModule } from "./ts/modules/base/base.module";
+import { TgBaseModule } from "./modules/base/base.module";
 import { TgPipesModule } from "./modules/pipes/pipes.module";
 
 import { TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
@@ -37,9 +37,9 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
 import { NavigationBarModule } from "./modules/navigation-bar/navigation-bar.module";
 import { ProjectsService } from "./modules/projects/projects.service";
-import { TgCommonModule } from "./ts/modules/common/common.module";
-import { DateRange } from "./ts/modules/common/components";
-import { ProjectUrlService } from "./ts/modules/common/project-url.service";
+import { TgCommonModule } from "./modules/common/common.module";
+import { DateRange } from "./modules/common/components";
+import { ProjectUrlService } from "./modules/common/project-url.service";
 
 import {AppComponent} from "./app.component";
 import {GlobalEffects} from "./app.effects";

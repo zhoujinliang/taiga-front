@@ -25,7 +25,7 @@ import {cartesianProduct, sizeFormat} from "../../../libs/utils";
 declare var _version: string;
 
 import {Injectable} from "@angular/core";
-import {ConfigurationService} from "../../../ts/modules/base/conf";
+import {ConfigurationService} from "../../base/conf";
 
 @Injectable()
 export class AvatarService {

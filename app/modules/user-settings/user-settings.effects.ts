@@ -12,7 +12,7 @@ import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./user-settings.actions";
 import {StoreUserAction} from "../auth/auth.actions";
 import {OpenLightboxAction} from "../../app.actions";
-import {AddNotificationMessageAction} from "../../ts/modules/common/common.actions";
+import {AddNotificationMessageAction} from "../common/common.actions";
 import {genericErrorManagement, genericSuccessManagement} from "../utils/effects";
 import {LogoutAction} from "../auth/auth.actions";
 

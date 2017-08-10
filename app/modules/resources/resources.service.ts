@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-import {UrlsService} from "../../ts/modules/base/urls";
+import {UrlsService} from "../base/urls";
 
 import {CustomAttributesResource} from "./custom-attributes-resource.service";
 import {CustomAttributesValuesResource} from "./custom-attributes-values-resource.service";

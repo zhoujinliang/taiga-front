@@ -4,8 +4,8 @@ import {RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {TranslateModule} from "@ngx-translate/core";
 
-import {TgBaseModule} from "../../ts/modules/base/base.module";
-import {TgCommonModule} from "../../ts/modules/common/common.module";
+import {TgBaseModule} from "../base/base.module";
+import {TgCommonModule} from "../common/common.module";
 import {TgComponentsModule} from "../components/components.module";
 import {TgPipesModule} from "../pipes/pipes.module";
 

@@ -20,7 +20,7 @@
 import {Component, EventEmitter, Input, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import {defineImmutableProperty} from "../../libs/utils";
-import { ConfigurationService } from "../../ts/modules/base/conf";
+import { ConfigurationService } from "../base/conf";
 import { CurrentUserService } from "../services/current-user.service";
 
 @Component({

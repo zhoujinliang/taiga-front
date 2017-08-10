@@ -7,7 +7,7 @@ import { StoreModule } from "@ngrx/store";
 import {TranslateModule} from "@ngx-translate/core";
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
 
-import {TgCommonModule} from "../../ts/modules/common/common.module";
+import {TgCommonModule} from "../common/common.module";
 import {TgPipesModule} from "../pipes/pipes.module";
 import {TgComponentsModule} from "../components/components.module";
 import {TgAttachmentsModule} from "../attachments/attachments.module";

@@ -21,7 +21,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import * as _ from "lodash";
 import {defineImmutableProperty} from "../../../libs/utils";
-import { ConfigurationService } from "../../../ts/modules/base/conf";
+import { ConfigurationService } from "../../base/conf";
 import { GlobalDataService } from "../../services/global-data.service";
 // import { FeedbackService } from "../../feedback/feedback.service";
 

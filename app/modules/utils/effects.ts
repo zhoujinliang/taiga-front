@@ -1,6 +1,6 @@
 import { Action } from "@ngrx/store";
 import {Observable} from "rxjs";
-import {AddNotificationMessageAction} from "../../ts/modules/common/common.actions";
+import {AddNotificationMessageAction} from "../common/common.actions";
 import {StartLoadingItemAction, StopLoadingItemAction} from "../../app.actions";
 
 export function genericErrorManagement(err) {

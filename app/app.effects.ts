@@ -8,7 +8,7 @@ import { Observable } from "rxjs/Observable";
 import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
 import { ResourcesService } from "./modules/resources/resources.service";
-import {StorageService} from "./ts/modules/base/storage";
+import {StorageService} from "./modules/base/storage";
 import {genericErrorManagement, genericSuccessManagement} from "./modules/utils/effects";
 import {SetJoyrideEnableAction} from "./app.actions";
 

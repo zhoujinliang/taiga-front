@@ -24,7 +24,7 @@
 
 import {Component, Input, OnInit} from "@angular/core";
 import {WysiwygService} from "./wysiwyg.service";
-import {StorageService} from "../../../ts/modules/base/storage";
+import {StorageService} from "../../base/storage";
 import * as Immutable from "immutable";
 
 @Component({

@@ -18,7 +18,7 @@
  */
 
 import {Injectable} from "@angular/core";
-import {ProjectUrlService} from "../../ts/modules/common/project-url.service";
+import {ProjectUrlService} from "../common/project-url.service";
 import {ResourcesService} from "../resources/resources.service";
 import * as Immutable from "immutable";
 

@@ -24,7 +24,7 @@ import * as Rx from "rxjs";
 import {defineImmutableProperty, groupBy} from "../../libs/utils";
 
 import {Injectable} from "@angular/core";
-import {StorageService} from "../../ts/modules/base/storage";
+import {StorageService} from "../base/storage";
 import {ProjectsService} from "../projects/projects.service";
 import {ResourcesService} from "../resources/resources.service";
 

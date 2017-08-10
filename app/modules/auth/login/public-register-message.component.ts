@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import { ConfigurationService } from "../../../ts/modules/base/conf";
+import { ConfigurationService } from "../../base/conf";
 
 @Component({
     selector: "tg-public-register-message",

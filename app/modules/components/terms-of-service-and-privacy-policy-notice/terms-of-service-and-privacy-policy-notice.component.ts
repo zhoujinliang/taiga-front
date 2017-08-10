@@ -23,7 +23,7 @@
  */
 
 import {Component} from "@angular/core";
-import {ConfigurationService} from "../../../ts/modules/base/conf";
+import {ConfigurationService} from "../../base/conf";
 
 @Component({
     selector: "tg-terms-of-service-and-privacy-policy-notice",

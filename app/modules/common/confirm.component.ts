@@ -25,8 +25,8 @@
 import { Component, Input, Output, EventEmitter, OnDestroy } from "@angular/core";
 import { Store } from "@ngrx/store";
 import * as _ from "lodash";
-import { IState } from "../../../app.store";
-import {addClass, bindMethods, cancelTimeout, debounce, timeout} from "../../../libs/utils";
+import { IState } from "../../app.store";
+import {addClass, bindMethods, cancelTimeout, debounce, timeout} from "../../libs/utils";
 import { DiscardNotificationMessageAction } from "./common.actions";
 import { Subscription } from "rxjs";
 import { trigger, state, style, animate, transition } from '@angular/animations';

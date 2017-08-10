@@ -28,7 +28,7 @@ import * as angular from "angular";
 import * as _ from "lodash";
 import * as moment from "moment";
 import * as Pikaday from "pikaday";
-import {bindOnce} from "../../../libs/utils";
+import {bindOnce} from "../../libs/utils";
 
 //############################################################################
 //# Date Range Directive (used mainly for sprint date range)

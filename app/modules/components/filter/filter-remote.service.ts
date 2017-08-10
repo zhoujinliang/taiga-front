@@ -22,8 +22,8 @@ import * as Immutable from "immutable";
 import * as _ from "lodash";
 import {Observable} from "rxjs";
 import {generateHash} from "../../../libs/utils";
-import {HttpService} from "../../../ts/modules/base/http";
-import {UrlsService} from "../../../ts/modules/base/urls";
+import {HttpService} from "../../base/http";
+import {UrlsService} from "../../base/urls";
 
 @Injectable()
 export class FiltersRemoteStorageService {

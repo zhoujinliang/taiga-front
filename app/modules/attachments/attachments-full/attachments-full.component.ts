@@ -20,8 +20,8 @@
 import * as _ from "lodash";
 import * as Immutable from "immutable"
 import {sizeFormat} from "../../../libs/utils";
-import {ConfigurationService} from "../../../ts/modules/base/conf";
-import {StorageService} from "../../../ts/modules/base/storage";
+import {ConfigurationService} from "../../base/conf";
+import {StorageService} from "../../base/storage";
 import {Store} from "@ngrx/store";
 import {IState} from "../../../app.store";
 import {OpenLightboxAction} from "../../../app.actions";

@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter, OnChanges} from "@angular/core";
 import * as Immutable from "immutable";
-import {ConfigurationService} from "../../../ts/modules/base/conf";
+import {ConfigurationService} from "../../base/conf";
 import {TranslateService} from "@ngx-translate/core";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {EmailValidators} from 'ngx-validators';
