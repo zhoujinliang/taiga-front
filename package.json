@@ -24,8 +24,8 @@
     "test": "./node_modules/karma/bin/karma start",
     "e2e": "./node_modules/.bin/babel-node run-e2e.js",
     "prepublish": "typings install",
-    "watch": "webpack --watch",
-    "devserver": "webpack-dev-server --content-base dist/ --history-api-fallback"
+    "dev": "webpack-dev-server --content-base dist/ --history-api-fallback",
+    "prod": "webpack -p"
   },
   "browser": {
     "ngx-validators": "./node_modules/ngx-validators/bundles/ngx-validators.umd.js"

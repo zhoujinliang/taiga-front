@@ -16,11 +16,16 @@ module.exports = {
             bluebird: path.join(__dirname, "node_modules/bluebird/js/release/bluebird")
         },
     },
+    devtool: "source-map",
     module: {
         loaders: [
             { test: /\.ts$/,
               exclude: /\.spec\.ts$/,
-              loader: 'ts-loader' },
+              loader: 'ts-loader',
+              options: {
+                  sourceMap: true,
+              }
+            },
             { test: /\.(pug|jade)$/,
               loader: 'pug-loader' },
             { test: /\.css$/,
@@ -32,13 +37,21 @@ module.exports = {
             { test: /\.scss$/,
               loaders: [
                   { loader: "style-loader" },
-                  { loader: "css-loader" },
+                  { loader: "css-loader",
+                    options: {
+                        sourceMap: true
+                    }
+                  },
                   { loader: "sass-loader",
-                    options: {includePaths: [
-                      path.join(__dirname, "app", "styles"),
-                      path.join(__dirname, "app", "styles", "extras"),
-                      path.join(__dirname, "app", "themes", "taiga")
-                    ]}}
+                    options: {
+                        includePaths: [
+                            path.join(__dirname, "app", "styles"),
+                            path.join(__dirname, "app", "styles", "extras"),
+                            path.join(__dirname, "app", "themes", "taiga")
+                        ],
+                        sourceMap: true
+                    }
+                  }
               ]
             },
             {
