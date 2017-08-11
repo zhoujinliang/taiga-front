@@ -35,10 +35,9 @@ nav.menu(
                     span.helper(translate="EPICS.TITLE")
 
             li#nav-backlog(
-                *ngIf="menu.get('backlog')"
-                ng-mouseover="backlogHover = true"
-                ng-mouseleave="backlogHover = false"
-                ng-init="backlogHover = false"
+                *ngIf="menu.get('backlog')",
+                (mouseenter)="backlogHover = true",
+                (mouseleave)="backlogHover = false",
             )
                 a(
                     [routerLink]="['/project', project.get('slug'), 'backlog']",
@@ -53,7 +52,7 @@ nav.menu(
                   ng-container(*ngFor="let sprint of project.get('milestones')")
                       a(
                           *ngIf="!sprint.get('closed')",
-                          [routerLink]="['/project', project.get('slug'), '/taskboard', sprint.get('slug')]",
+                          [routerLink]="['/project', project.get('slug'), 'taskboard', sprint.get('slug')]",
                       ) {{sprint.get('name')}}
 
             li#nav-kanban(*ngIf="menu.get('kanban')")
