@@ -12,7 +12,7 @@ import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./search.actions";
 import {AddNotificationMessageAction} from "../common/common.actions";
 import {go} from "@ngrx/router-store";
-import {genericErrorManagement} from "../utils/effects";
+import {wrapLoading, genericErrorManagement} from "../utils/effects";
 
 @Injectable()
 export class SearchEffects {
@@ -21,11 +21,11 @@ export class SearchEffects {
         .ofType("SEARCH_IN_PROJECT")
         .debounceTime(300)
         .map(toPayload)
-        .switchMap(({projectId, term}) => {
+        .switchMap(wrapLoading("search-results", ({projectId, term}) => {
           return this.rs.search.do(projectId, term).map((result) => {
               return new actions.SetSearchResultsAction(result.data);
           });
-        });
+        }));
 
     constructor(private actions$: Actions, private rs: ResourcesService) { }
 }
