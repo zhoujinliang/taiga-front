@@ -28,8 +28,6 @@ import * as utils from "./libs/utils";
 const taiga = {
     addClass: utils.addClass,
     nl2br: utils.nl2br,
-    bindMethods: utils.bindMethods,
-    bindOnce: utils.bindOnce,
     trim: utils.trim,
     slugify: utils.slugify,
     unslugify: utils.unslugify,
@@ -49,7 +47,6 @@ const taiga = {
     replaceTags: utils.replaceTags,
     defineImmutableProperty: utils.defineImmutableProperty,
     isImage: utils.isImage,
-    isEmail: utils.isEmail,
     isPdf: utils.isPdf,
     patch: utils.patch,
     getMatches: utils.getMatches,
