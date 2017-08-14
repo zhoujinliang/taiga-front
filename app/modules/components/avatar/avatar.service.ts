@@ -17,9 +17,6 @@
  * File: avatar.service.coffee
  */
 
-import * as angular from "angular";
-import * as Immutable from "immutable";
-import * as _ from "lodash";
 import {murmurhash3_32_gc} from "../../../libs/murmurhash3_gc";
 import {cartesianProduct, sizeFormat} from "../../../libs/utils";
 declare var _version: string;

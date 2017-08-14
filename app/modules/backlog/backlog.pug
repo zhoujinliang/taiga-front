@@ -1,6 +1,6 @@
 tg-lightbox.lightbox-generic-form.lb-create-edit-userstory(key="backlog.new-us")
     tg-lightbox-close
-    tg-create-us-form([project]="project|async", (createUs)="createNewUs($event)")
+    tg-create-us-form([project]="project|async", (createUs)="createNewUs($event)", [us]="editingUs|async")
 
 tg-lightbox.lightbox-generic-form(key="backlog.new-us-bulk")
     tg-lightbox-close

@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, forwardRef} from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import * as Immutable from "immutable";
+import * as _ from "lodash";
 
 @Component({
     selector: "tg-us-estimation-for-lightbox",
@@ -18,7 +19,7 @@ export class UsEstimationForLightbox implements ControlValueAccessor, OnChanges 
     @Input() points;
     private roleOpen: number = null;
     computableRoles: Immutable.List<any> = Immutable.List();
-    _value: any;
+    _value: any = {};
     onChange: any;
 
     ngOnChanges() {
@@ -52,8 +53,21 @@ export class UsEstimationForLightbox implements ControlValueAccessor, OnChanges 
         this.roleOpen = roleId;
     }
 
-    onPointsSelect(roleId, eventId) {
+    onPointsSelect(roleId, pointsId) {
         this.roleOpen = null;
-        console.log(roleId, eventId);
+        this.value[roleId] = pointsId
+    }
+
+    getRolePoints(roleId) {
+        let pointsId = this.value[roleId]
+        return this.points.groupBy((p) => p.get('id')).map((p) => p.first()).getIn([pointsId, 'name'])
+    }
+
+    getRolePointsValue(pointsId) {
+        return this.points.groupBy((p) => p.get('id')).map((p) => p.first()).getIn([pointsId, 'value']) || 0
+    }
+
+    totalPoints() {
+        return _.sum(_.map(this.getRolePointsValue.bind(this), _.values(this.value)))
     }
 }

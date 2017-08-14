@@ -17,7 +17,6 @@
  * File: attchments-preview.controller.coffee
  */
 
-import * as angular from "angular";
 import {defineImmutableProperty, isImage} from "../../../libs/utils";
 import {Component, Input, OnChanges} from "@angular/core"
 import * as Immutable from "immutable";

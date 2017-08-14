@@ -17,7 +17,6 @@
  * File: current-user.service.coffee
  */
 
-import * as angular from "angular";
 import * as Promise from "bluebird";
 import * as Immutable from "immutable";
 import * as Rx from "rxjs";

@@ -19,8 +19,6 @@
 
 import {generateHash} from "../../libs/utils";
 
-import * as angular from "angular";
-import * as Promise from "bluebird";
 import * as Immutable from "immutable";
 
 import {Injectable} from "@angular/core";

@@ -17,7 +17,6 @@
  * File: app-meta.service.coffee
  */
 
-import * as angular from "angular";
 import {truncate} from "../../libs/utils";
 import {Observable} from "rxjs";
 

@@ -18,7 +18,6 @@
  */
 
 import {Component, EventEmitter, Input, OnChanges, Output} from "@angular/core";
-import * as angular from "angular";
 
 @Component({
     selector: "tg-discover-search-list-header",

@@ -18,7 +18,6 @@
  */
 
 import {Component, Input, OnInit} from "@angular/core";
-import * as angular from "angular";
 import * as Immutable from "immutable";
 import {ProjectLogoService} from "../../services/project-logo.service";
 

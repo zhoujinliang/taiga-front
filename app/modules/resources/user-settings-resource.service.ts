@@ -23,7 +23,6 @@
  */
 
 import {Injectable} from "@angular/core";
-import * as angular from "angular";
 import {sizeFormat} from "../../libs/utils";
 import {ConfigurationService} from "../base/conf";
 import {HttpService} from "../base/http";

@@ -19,7 +19,6 @@
 
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {Store} from "@ngrx/store";
-import * as angular from "angular";
 import {IState} from "../../../../app.store";
 import {defineImmutableProperty} from "../../../../libs/utils";
 

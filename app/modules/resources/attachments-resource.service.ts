@@ -23,7 +23,6 @@
  * File: attachments-resource.service.coffee
  */
 
-import * as angular from "angular";
 import * as Promise from "bluebird";
 import * as Immutable from "immutable";
 import {sizeFormat} from "../../libs/utils";
