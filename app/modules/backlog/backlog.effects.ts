@@ -36,6 +36,17 @@ export class BacklogEffects {
         .map(([_, action]) => action)
 
     @Effect()
+    fetchEditingUserstory$: Observable<Action> = this.actions$
+        .ofType("FETCH_EDITING_USERSTORY")
+        .map(toPayload)
+        .switchMap(wrapLoading("loading-editing-us", ({projectId, usId}) => {
+          return this.rs.userstories.get(projectId, usId, {}).map((userstory) => {
+              return new actions.SetEditingUserStoryAction(userstory.data);
+          });
+        }));
+
+
+    @Effect()
     fetchBacklogFiltersData$: Observable<Action> = this.actions$
         .ofType("FETCH_BACKLOG_FILTERS_DATA")
         .map(toPayload)

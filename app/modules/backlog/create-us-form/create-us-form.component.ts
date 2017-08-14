@@ -47,6 +47,7 @@ export class CreateUsForm implements OnChanges {
             this.createUsForm.controls.blocked.setValue(this.us.get("blocked"));
             this.createUsForm.controls.blockedNote.setValue(this.us.get("blockedNote"));
             this.createUsForm.controls.status.setValue(this.us.get("status"));
+            console.log(this.us.toJS());
         } else {
             this.createUsForm.controls.subject.setValue("");
             this.createUsForm.controls.points.setValue({});
@@ -67,6 +68,9 @@ export class CreateUsForm implements OnChanges {
         if (this.createUsForm.valid) {
             let data = this.createUsForm.value;
             data.project = this.project.get('id');
+            data.team_requirement = data.teamRequirement;
+            data.client_requirement = data.clientRequirement;
+            data.blocked_note = data.blockedNote;
             if (this.us) {
                 this.store.dispatch(new actions.UpdateUserStoryAction(this.us, data));
             } else {

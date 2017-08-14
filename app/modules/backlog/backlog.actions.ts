@@ -196,6 +196,15 @@ export class SetEditingUserStoryAction implements Action {
   constructor(public payload: Immutable.Map<string, any>) {}
 }
 
+export class FetchEditingUserStoryAction implements Action {
+  readonly type = "FETCH_EDITING_USERSTORY";
+  public payload: any;
+
+  constructor(projectId: number, usId: number) {
+      this.payload = {projectId, usId};
+  }
+}
+
 export class DeleteSprintAction implements Action {
   readonly type = "DELETE_SPRINT";
 

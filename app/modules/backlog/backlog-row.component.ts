@@ -36,7 +36,7 @@ export class BacklogRow {
     }
 
     editUserStory(us) {
-        this.store.dispatch(new actions.SetEditingUserStoryAction(us));
+        this.store.dispatch(new actions.FetchEditingUserStoryAction(us.get('project'), us.get('id')));
         this.store.dispatch(new OpenLightboxAction("backlog.new-us"));
     }
 }
