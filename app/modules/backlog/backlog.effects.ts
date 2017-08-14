@@ -30,6 +30,12 @@ export class BacklogEffects {
         });
 
     @Effect()
+    refreshBacklogUserStories$: Observable<Action> = this.actions$
+        .ofType("REFRESH_BACKLOG_USER_STORIES")
+        .withLatestFrom(this.actions$.ofType("FETCH_BACKLOG_USER_STORIES"))
+        .map(([_, action]) => action)
+
+    @Effect()
     fetchBacklogFiltersData$: Observable<Action> = this.actions$
         .ofType("FETCH_BACKLOG_FILTERS_DATA")
         .map(toPayload)
@@ -136,7 +142,7 @@ export class BacklogEffects {
             this.rs.sprints.delete(sprint.get('id')).flatMap((result) =>
                 Observable.from([
                     new actions.FetchBacklogSprintsAction(sprint.get('project')),
-                    new CloseLightboxAction(),
+                    new CloseLightboxAction()
                 ])
             )
         ));
@@ -180,6 +186,21 @@ export class BacklogEffects {
                   new actions.SetSelectedUserstoriesAction(Immutable.Map<string, boolean>()),
                   new actions.RemoveBacklogUserStoriesAction(bulkStories.map(({us_id}) => us_id)),
               ])
+          )});
+
+    @Effect()
+    createUserStory$: Observable<Action> = this.actions$
+        .ofType("CREATE_USER_STORY")
+        .map(toPayload)
+        .switchMap((data) => {
+          return this.rs.userstories.create(data).flatMap((result) => {
+              console.log(result);
+              return Observable.from([
+                  new actions.FetchBacklogStatsAction(result.data.get('project')),
+                  new actions.RefreshBacklogUserStoriesAction(),
+                  new CloseLightboxAction(),
+              ])
+          }
           )});
 
     constructor(private actions$: Actions,

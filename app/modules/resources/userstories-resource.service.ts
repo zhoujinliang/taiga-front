@@ -44,6 +44,11 @@ export class UserstoriesResource {
         return this.http.get(url, params);
     }
 
+    create(data) {
+        let url = this.urls.resolve("userstories");
+        return this.http.post(url, data);
+    }
+
     patch(usId, data) {
         let url = this.urls.resolve("userstory", usId);
         return this.http.patch(url, data);

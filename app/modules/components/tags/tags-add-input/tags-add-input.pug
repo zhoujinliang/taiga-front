@@ -7,7 +7,7 @@
         [placeholder]="'COMMON.TAGS.PLACEHOLDER' | translate",
         tg-autofocus,
         [value]="newTag.name",
-        (keypress)="setName($event)"
+        (keyup)="setName($event)"
     )
 
     tg-tags-dropdown(

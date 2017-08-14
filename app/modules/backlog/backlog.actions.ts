@@ -252,3 +252,26 @@ export class MoveUserStoriesToSprintAction implements Action {
       this.payload = {projectId, milestoneId, bulkStories};
   }
 }
+
+export class CreateUserStoryAction implements Action {
+  readonly type = "CREATE_USER_STORY";
+
+  constructor(public payload: any) {}
+}
+
+export class UpdateUserStoryAction implements Action {
+  readonly type = "UPDATE_USER_STORY";
+
+  public payload = null;
+
+  constructor(us: Immutable.Map<string, any>, changes: any) {
+      this.payload = {us, changes};
+  }
+}
+
+export class RefreshBacklogUserStoriesAction implements Action {
+  readonly type = "REFRESH_BACKLOG_USER_STORIES";
+  public payload = null;
+
+  constructor() {}
+}

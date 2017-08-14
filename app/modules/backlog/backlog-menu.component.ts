@@ -37,6 +37,7 @@ export class BacklogMenu {
     }
 
     addNewUs() {
+        this.store.dispatch(new actions.SetEditingUserStoryAction(null));
         this.store.dispatch(new OpenLightboxAction("backlog.new-us"));
     }
 
