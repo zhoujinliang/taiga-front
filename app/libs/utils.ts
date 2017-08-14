@@ -38,36 +38,8 @@ export function nl2br(str) {
     return (str + "").replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, `$1${breakTag}$2`);
 }
 
-export function bindMethods(object) {
-    const dependencies = _.keys(object);
-
-    const methods = [];
-
-    _.forIn(object, (value, key) => {
-        if (!_.includes(dependencies, key) && _.isFunction(value)) {
-            return methods.push(key);
-        }
-    });
-
-    return _.bindAll(object, methods);
-}
-
-export function bindOnce(scope, attr, continuation) {
-    const val = scope.$eval(attr);
-    if (val !== undefined) {
-        return continuation(val);
-    }
-
-    let delBind = null;
-    return delBind = scope.$watch(attr, function(val) {
-        if (val === undefined) { return; }
-        continuation(val);
-        if (delBind) { return delBind(); }
-    });
-}
-
-export function trim(data, char= undefined) {
-   return _.trim(data, char);
+export function trim(data, chr) {
+   return _.trim(data, chr);
 }
 
 export function slugify(data) {
@@ -169,12 +141,12 @@ export function sizeFormat(input, precision= 1) {
     }
 
     const units = ["bytes", "KB", "MB", "GB", "TB", "PB"];
-    let number = Math.floor(Math.log(input) / Math.log(1024));
-    if (number > 5) {
-        number = 5;
+    let num = Math.floor(Math.log(input) / Math.log(1024));
+    if (num > 5) {
+        num = 5;
     }
-    const size = (input / Math.pow(1024, number)).toFixed(precision);
-    return  `${size} ${units[number]}`;
+    const size = (input / Math.pow(1024, num)).toFixed(precision);
+    return  `${size} ${units[num]}`;
 }
 
 export function stripTags(str, exception) {
@@ -205,34 +177,20 @@ export function defineImmutableProperty(obj, name, fn) {
                 throw new Error("defineImmutableProperty third param must be a function");
             }
 
-            const fn_result = fn();
-            if (fn_result && _.isObject(fn_result)) {
-                if (fn_result.size === undefined) {
+            const fnResult = fn();
+            if (fnResult && _.isObject(fnResult)) {
+                if (fnResult.size === undefined) {
                     throw new Error("defineImmutableProperty must return immutable data");
                 }
             }
 
-            return fn_result;
+            return fnResult;
         },
     });
 }
 
-_.mixin({
-    removeKeys(obj, keys) {
-        return _.chain([keys]).flatten().reduce(
-            function(obj: any, key: any) {
-                delete obj[key]; return obj;
-            }
-            , obj).value();
-    },
-});
-
 export function isImage(name) {
    return name.match(/\.(jpe?g|png|gif|gifv|webm|svg|psd)/i) !== null;
-}
-
-export function isEmail(name) {
-   return (name != null) && (name.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) !== null);
 }
 
 export function isPdf(name) {
@@ -242,7 +200,7 @@ export function isPdf(name) {
 export function patch(oldImmutable, newImmutable) {
     const pathObj = {};
 
-    newImmutable.forEach(function(newValue, key) {
+    newImmutable.forEach((newValue, key) => {
         if (newValue !== oldImmutable.get(key)) {
             if (newValue.toJS) {
                 return pathObj[key] = newValue.toJS();
@@ -255,11 +213,11 @@ export function patch(oldImmutable, newImmutable) {
     return pathObj;
 }
 
-export function getMatches(string, regex, index= 1) {
+export function getMatches(str, regex, index= 1) {
     const matches = [];
     let match = null;
 
-    while ((match = regex.exec(string))) {
+    while ((match = regex.exec(str))) {
         if (index === -1) {
             matches.push(match);
         } else {

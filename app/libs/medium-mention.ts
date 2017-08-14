@@ -1,3 +1,5 @@
+/* tslint:disable */
+
 import * as MediumEditor from "medium-editor";
 
 export let MentionExtension = MediumEditor.Extension.extend({

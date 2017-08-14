@@ -75,6 +75,8 @@
 // > OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // > THE SOFTWARE.
 
+/* tslint:disable */
+
 export function markdownitLazyHeaders(md) {
   function heading(state, startLine, endLine, silent) {
     let ch, level, tmp, token,

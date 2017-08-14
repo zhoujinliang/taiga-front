@@ -1,3 +1,5 @@
+/* tslint:disable */
+
 import * as _ from "lodash";
 
 export let dragMultiple: any = {};
