@@ -51,14 +51,14 @@ section.backlog-table([class.hidden]="!userstories || !userstories.size")
           .doom-line(*ngIf="doomlinePosition !== null && idx === doomlinePosition")
             span(translate="BACKLOG.DOOMLINE")
           tg-backlog-row(
-              [class.is-checked]="selectedUserstories.contains(us.get('id'))",
+              [class.is-checked]="selectedUserstories.get(us.get('id'))",
               [us]="us",
               [project]="project",
               [canEdit]="canEdit",
               [data-us-id]="us.get('id')",
               [class.blocked]="us.get('is_blocked')",
               [showedRole]="showedRole",
-              [selectedUserstories]="selectedUserstories",
+              [checked]="selectedUserstories.get(us.get('id'))",
           )
 
         div(tg-loading="ctrl.loadingUserstories")

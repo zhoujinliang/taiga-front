@@ -20,9 +20,11 @@ export class BacklogTable {
 
     selectAllChange(value) {
         if (value) {
-            this.store.dispatch(new actions.SetSelectedUserstoriesAction(this.userstories.map((us) => us.get('id')).toList()));
+            this.store.dispatch(new actions.SetSelectedUserstoriesAction(
+                this.userstories.reduce((acc, us) => acc.set(us.get('id'), true), Immutable.Map())
+            ));
         } else {
-            this.store.dispatch(new actions.SetSelectedUserstoriesAction(Immutable.List([])));
+            this.store.dispatch(new actions.SetSelectedUserstoriesAction(Immutable.Map({})));
         }
     }
 }

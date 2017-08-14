@@ -1,7 +1,7 @@
 .input(*tgIfPerm="'modify_us'")
     input(
         type="checkbox",
-        [checked]="selectedUserstories.contains(us.get('id'))",
+        [checked]="checked",
         (change)="selectUserstory(us, $event.target.checked)"
     )
 

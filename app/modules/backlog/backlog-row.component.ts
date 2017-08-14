@@ -1,4 +1,4 @@
-import { Component, Input} from "@angular/core";
+import { Component, Input } from "@angular/core";
 import {Store} from "@ngrx/store";
 import {IState} from "../../app.store";
 import {OpenLightboxAction} from "../../app.actions";
@@ -14,12 +14,13 @@ export class BacklogRow {
     @Input() project: Immutable.Map<string, any>;
     @Input() us: Immutable.Map<string, any>;
     @Input() showedRole: Immutable.Map<string, any>;
-    @Input() selectedUserstories: Immutable.List<number>;
+    @Input() checked: boolean;
     @Input() showTags: boolean;
     @Input() canEdit: boolean;
     displayStatusList: boolean = false;
 
-    constructor(private store: Store<IState>) {}
+    constructor(private store: Store<IState>) {
+    }
 
     updateStatus(newStatus) {
         this.displayStatusList = false;
@@ -28,9 +29,9 @@ export class BacklogRow {
 
     selectUserstory(us, value) {
         if (value) {
-            this.store.dispatch(new actions.SetSelectedUserstoriesAction(this.selectedUserstories.push(us.get('id'))));
+            this.store.dispatch(new actions.AddSelectedUserstoriesAction(us.get('id')));
         } else {
-            this.store.dispatch(new actions.SetSelectedUserstoriesAction(this.selectedUserstories.filter((id) => id != us.get('id')).toList()));
+            this.store.dispatch(new actions.RemoveSelectedUserstoriesAction(us.get('id')));
         }
     }
 

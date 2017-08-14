@@ -229,7 +229,19 @@ export class SetUsAction implements Action {
 export class SetSelectedUserstoriesAction implements Action {
   readonly type = "SET_SELECTED_USER_STORIES";
 
-  constructor(public payload: Immutable.List<number>) { }
+  constructor(public payload: Immutable.Map<string, boolean>) { }
+}
+
+export class AddSelectedUserstoriesAction implements Action {
+  readonly type = "ADD_SELECTED_USER_STORIES";
+
+  constructor(public payload: number) { }
+}
+
+export class RemoveSelectedUserstoriesAction implements Action {
+  readonly type = "REMOVE_SELECTED_USER_STORIES";
+
+  constructor(public payload: number) { }
 }
 
 export class MoveUserStoriesToSprintAction implements Action {

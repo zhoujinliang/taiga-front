@@ -11,7 +11,7 @@ import {IState} from "../../app.store";
 })
 export class BacklogMenu {
     @Input() userstories: Immutable.List<any>;
-    @Input() selectedUserstories: Immutable.List<any>;
+    @Input() selectedUserstories: Immutable.Map<string, boolean>;
     @Input() stats: Immutable.List<any>;
     @Input() currentSprint: Immutable.Map<string, any>;
     @Input() latestSprint: Immutable.Map<string, any>;
@@ -30,7 +30,7 @@ export class BacklogMenu {
         this.store.dispatch(new actions.MoveUserStoriesToSprintAction(
             sprint.get('project'),
             sprint.get('id'),
-            this.selectedUserstories.map((us) => (
+            this.selectedUserstories.keySeq().map((us) => (
                 {us_id: us, order: userstoriesMap.getIn([us, 'sprint_order'])}
             )).toJS()
         ));

@@ -177,7 +177,7 @@ export class BacklogEffects {
               Observable.from([
                   new actions.FetchBacklogStatsAction(projectId),
                   new actions.FetchBacklogSprintsAction(projectId),
-                  new actions.SetSelectedUserstoriesAction(Immutable.List<number>()),
+                  new actions.SetSelectedUserstoriesAction(Immutable.Map<string, boolean>()),
                   new actions.RemoveBacklogUserStoriesAction(bulkStories.map(({us_id}) => us_id)),
               ])
           )});
