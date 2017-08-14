@@ -31,7 +31,7 @@
         .us-settings
             a.e2e-edit.edit-story(
                 *tgIfPerm="'modify_us'",
-                (click)="editUserStory(us.project, us.ref, $event)",
+                (click)="editUserStory(us)",
                 [title]="'COMMON.EDIT' | translate"
             )
                 tg-svg(svg-icon="icon-edit")

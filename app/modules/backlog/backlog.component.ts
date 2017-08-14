@@ -35,6 +35,7 @@ export class BacklogPage implements OnInit, OnDestroy {
     bulkCreateState: Observable<number>;
     stats: Observable<Immutable.Map<string, any>>;
     sprints: Observable<Immutable.Map<string, any>>;
+    editingUs: Observable<Immutable.Map<string, any>>;
     currentSprint: Observable<Immutable.Map<string, any>>;
     latestSprint: Observable<Immutable.Map<string, any>>;
     doomlinePosition: Observable<number>;
@@ -48,6 +49,7 @@ export class BacklogPage implements OnInit, OnDestroy {
         this.editingSprint = this.store.select((state) => state.getIn(["backlog", "editing-sprint"]));
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
         this.sprints = this.store.select((state) => state.getIn(["backlog", "sprints"]));
+        this.editingUs = this.store.select((state) => state.getIn(["backlog", "editing-us"]));
         this.latestSprint = this.sprints.map((sprints) => sprints.getIn(["sprints", 0]))
         this.currentSprint = this.sprints.map((sprints) =>
             sprints.get("sprints").filter((sprint) => {

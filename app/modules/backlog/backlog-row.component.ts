@@ -1,6 +1,7 @@
 import { Component, Input} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {IState} from "../../app.store";
+import {OpenLightboxAction} from "../../app.actions";
 import * as actions from "./backlog.actions";
 import * as Immutable from "immutable";
 
@@ -31,5 +32,10 @@ export class BacklogRow {
         } else {
             this.store.dispatch(new actions.SetSelectedUserstoriesAction(this.selectedUserstories.filter((id) => id != us.get('id')).toList()));
         }
+    }
+
+    editUserStory(us) {
+        this.store.dispatch(new actions.SetEditingUserStoryAction(us));
+        this.store.dispatch(new OpenLightboxAction("backlog.new-us"));
     }
 }

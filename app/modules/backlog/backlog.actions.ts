@@ -190,6 +190,12 @@ export class SetEditingSprintAction implements Action {
   constructor(public payload: Immutable.Map<string, any>) {}
 }
 
+export class SetEditingUserStoryAction implements Action {
+  readonly type = "SET_EDITING_USERSTORY";
+
+  constructor(public payload: Immutable.Map<string, any>) {}
+}
+
 export class DeleteSprintAction implements Action {
   readonly type = "DELETE_SPRINT";
 
