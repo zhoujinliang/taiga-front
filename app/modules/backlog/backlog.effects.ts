@@ -9,11 +9,11 @@ import { Observable } from "rxjs/Observable";
 import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
 import { StorageService} from "../base/storage";
-import {FiltersRemoteStorageService} from "../components/filter/filter-remote.service";
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./backlog.actions";
 import {CloseLightboxAction} from "../../app.actions";
 import {wrapLoading} from "../utils/effects";
+import {generateHash} from "../../libs/utils";
 
 @Injectable()
 export class BacklogEffects {
@@ -62,8 +62,10 @@ export class BacklogEffects {
         .ofType("FETCH_BACKLOG_APPLIED_FILTERS")
         .map(toPayload)
         .switchMap((projectId) => {
+          const ns = `${projectId}:backlog`;
+          const hash = generateHash([projectId, ns]);
 
-          return this.filtersRemoteStorage.getFilters(projectId, "backlog").map((filtersData) => {
+          return this.rs.user.getUserStorage(hash).map((filtersData) => {
               return new actions.SetBacklogAppliedFiltersAction(filtersData);
           });
         });
@@ -216,6 +218,5 @@ export class BacklogEffects {
 
     constructor(private actions$: Actions,
                 private rs: ResourcesService,
-                private storage: StorageService,
-                private filtersRemoteStorage: FiltersRemoteStorageService) { }
+                private storage: StorageService) { }
 }

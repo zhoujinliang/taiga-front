@@ -18,36 +18,33 @@
  */
 
 import * as Immutable from "immutable";
-import * as Rx from "rxjs/Rx";
+import * as _ from "lodash";
 
 import {Injectable} from "@angular/core";
 import {HttpService} from "../base/http";
 import {UrlsService} from "../base/urls";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class UserResource {
     constructor(private urls: UrlsService,
                 private http: HttpService) {}
 
-    getUserStorage(key) {
-        let url = this.urls.resolve("user-storage");
-
-        if (key) {
-            url += `/${key}`;
-        }
-
-        return this.http.get(url, {});
+    getUserStorage(hash) {
+        const url = this.urls.resolve("user-storage");
+        return this.http.get(`${url}/${hash}`)
+                        .map((result: any) => result.data)
+                        .catch(() => Observable.of(Immutable.Map()));
     }
 
-    setUserStorage(key, value) {
-        const url = this.urls.resolve("user-storage") + "/" + key;
-
-        const params = {
-            key,
-            value,
-        };
-
-        return this.http.put(url, params);
+    setUserStorage(hash, data) {
+        const url = this.urls.resolve("user-storage");
+        if (_.isEmpty(data)) {
+            return this.http.delete(`${url}/${hash}`);
+        }
+        return this.http.put(`${url}/${hash}`, {key: hash, value: data}).catch(() => {
+            return this.http.post(`${url}`, {key: hash, value: data});
+        });
     }
 
     createUserStorage(key, value) {
@@ -68,7 +65,7 @@ export class UserResource {
                             return Immutable.fromJS(data.data);
                         })
                         .catch((err) => {
-                            return Rx.Observable.throw(err);
+                            return Observable.throw(err);
                         });
     }
 
@@ -95,7 +92,7 @@ export class UserResource {
                             return Immutable.fromJS(data.data);
                         })
                         .catch((err) => {
-                            return Rx.Observable.throw(err);
+                            return Observable.throw(err);
                         });
     }
 

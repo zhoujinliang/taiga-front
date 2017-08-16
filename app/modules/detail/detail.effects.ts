@@ -9,7 +9,6 @@ import { Observable } from "rxjs/Observable";
 import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
 import { StorageService} from "../base/storage";
-import {FiltersRemoteStorageService} from "../components/filter/filter-remote.service";
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./detail.actions";
 
@@ -57,6 +56,5 @@ export class DetailEffects {
 
     constructor(private actions$: Actions,
                 private rs: ResourcesService,
-                private storage: StorageService,
-                private filtersRemoteStorage: FiltersRemoteStorageService) { }
+                private storage: StorageService) { }
 }

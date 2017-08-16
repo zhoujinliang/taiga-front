@@ -11,6 +11,7 @@ import {TgCardsModule} from "../cards/cards.module";
 import {TgAttachmentsModule} from "../attachments/attachments.module";
 import {TgComponentsModule} from "../components/components.module";
 import {TgServicesModule} from "../services/services.module";
+import {TgFilterModule} from "../filter/filter.module";
 import {BacklogPage} from "./backlog.component";
 import {BacklogEffects} from "./backlog.effects";
 import {BacklogSummary} from "./backlog-summary.component";
@@ -55,6 +56,7 @@ import {CreateUsForm} from "./create-us-form/create-us-form.component";
         TgComponentsModule,
         TgServicesModule,
         TgAttachmentsModule,
+        TgFilterModule,
         ReactiveFormsModule,
         StoreModule,
         TranslateModule.forChild({}),

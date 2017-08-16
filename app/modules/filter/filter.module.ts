@@ -1,7 +1,6 @@
 import {CommonModule} from "@angular/common";
-import {NgModule} from "@angular/core";
+import {NgModule, NO_ERRORS_SCHEMA} from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import {RouterModule} from "@angular/router";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
 import {TranslateModule} from "@ngx-translate/core";
@@ -9,38 +8,34 @@ import {TranslateModule} from "@ngx-translate/core";
 import {TgCommonModule} from "../common/common.module";
 import {TgPipesModule} from "../pipes/pipes.module";
 import {TgComponentsModule} from "../components/components.module";
+import {TgAttachmentsModule} from "../attachments/attachments.module";
 import {TgServicesModule} from "../services/services.module";
-import {TgFilterModule} from "../filter/filter.module";
-import {IssuesPage} from "./issues.component";
-import {IssuesTable} from "./issues-table.component";
-import {IssuesStatusInlineEdition} from "./issues-status-inline-edition.component";
-import {IssuesEffects} from "./issues.effects";
+import {Filter} from "./filter.component";
+import {FilterCategory} from "./filter-category/filter-category.component";
+import {FilterEffects} from "./filter.effects";
 
 @NgModule({
     declarations: [
-        IssuesPage,
-        IssuesTable,
-        IssuesStatusInlineEdition,
+        Filter,
+        FilterCategory,
     ],
     exports: [
-        IssuesPage,
+        Filter,
     ],
     imports: [
         CommonModule,
         TgCommonModule,
         TgComponentsModule,
+        TgAttachmentsModule,
         TgServicesModule,
         TgPipesModule,
-        TgFilterModule,
         FormsModule,
         StoreModule,
         TranslateModule.forChild({}),
-        RouterModule.forChild([
-            { path: "project/:slug/issues", component: IssuesPage },
-        ]),
-        EffectsModule.run(IssuesEffects),
+        EffectsModule.run(FilterEffects),
     ],
     providers: [
     ],
+    schemas: [NO_ERRORS_SCHEMA]
 })
-export class IssuesModule {}
+export class TgFilterModule {}

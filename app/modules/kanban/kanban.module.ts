@@ -10,6 +10,7 @@ import {TgCommonModule} from "../common/common.module";
 import {TgCardsModule} from "../cards/cards.module";
 import {TgComponentsModule} from "../components/components.module";
 import {TgServicesModule} from "../services/services.module";
+import {TgFilterModule} from "../filter/filter.module";
 import {KanbanArchivedStatusIntro} from "./components/kanban-archived-status-intro/kanban-archived-status-intro.component";
 import {KanbanBoardZoom} from "./components/kanban-board-zoom/kanban-board-zoom.component";
 import {KanbanTableBody} from "./components/kanban-table-body/kanban-table-body.component";
@@ -40,6 +41,7 @@ import {KanbanSortableDirective} from "./sortable.directive";
         TgCardsModule,
         TgComponentsModule,
         TgServicesModule,
+        TgFilterModule,
         FormsModule,
         StoreModule,
         TranslateModule.forChild({}),

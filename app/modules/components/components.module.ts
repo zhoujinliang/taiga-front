@@ -14,9 +14,6 @@ import {Avatar} from "./avatar/avatar.component";
 import { AvatarService } from "./avatar/avatar.service";
 import { BelongToEpics } from "./belong-to-epics/belong-to-epics.component";
 import { BoardZoom} from "./board-zoom/board-zoom.component";
-import {FilterCategory} from "./filter/filter-category/filter-category.component";
-import {FiltersRemoteStorageService} from "./filter/filter-remote.service";
-import {Filter} from "./filter/filter.component";
 import { LightboxClose } from "./lightbox/lightbox-close.component";
 import { Lightbox } from "./lightbox/lightbox.component";
 import { GenericSuccessLightbox } from "./lightbox/generic-success-lightbox/generic-success-lightbox.component";
@@ -74,7 +71,6 @@ import { DatePicker} from "./date-picker/date-picker.component";
         ProjectLogoBig,
         ProjectMenu,
         BoardZoom,
-        Filter,
         Lightbox,
         LightboxClose,
         GenericSuccessLightbox,
@@ -109,8 +105,6 @@ import { DatePicker} from "./date-picker/date-picker.component";
         ProjectLogoSmall,
         ProjectLogoBig,
         ProjectMenu,
-        Filter,
-        FilterCategory,
         Lightbox,
         LightboxClose,
         GenericSuccessLightbox,
@@ -147,7 +141,6 @@ import { DatePicker} from "./date-picker/date-picker.component";
     ],
     providers: [
         AvatarService,
-        FiltersRemoteStorageService,
         CheckPermissionsService,
         WysiwygService,
         WysiwygCodeHightlighterService,

@@ -17,8 +17,8 @@
  * File: users-resource.service.coffee
  */
 
-import * as Promise from "bluebird";
 import * as Immutable from "immutable";
+import * as _ from "lodash";
 
 import {Injectable} from "@angular/core";
 import {HttpService} from "../base/http";

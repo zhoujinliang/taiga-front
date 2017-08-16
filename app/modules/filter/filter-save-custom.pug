@@ -1,11 +1,4 @@
-.filters-applied
-    .single-filter.ng-animate-disabled(*ngFor="filter in filters")
-        span.name([style.border-left]="filter.color ? 'border-left: 3px solid ' + filter.color : ''") {{filter.name}}
-        a.remove-filter.e2e-remove-filter(
-           (click)="filterClicked()"
-       )
-            tg-svg(svg-icon="icon-close")
-
+.filters-save-custom
     a.button.button-gray.save-filters.ng-animate-disabled.e2e-open-custom-filter-form(
         *ngIf="filters.size && !customFilterForm",
         (click)="customFilterForm = true",
@@ -23,4 +16,3 @@
             type="text",
             [placeholder]="'COMMON.FILTERS.PLACEHOLDER_FILTER_NAME' | translate"
         )
-
