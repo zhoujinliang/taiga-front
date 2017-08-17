@@ -16,55 +16,69 @@ form((submit)="false")
         )
 
 .filters-step-cat(*ngIf="filters")
-    tg-filter-applied([filters]="appliedFilters")
+    tg-filter-applied(
+        [filters]="appliedFiltersList",
+        (removeFilter)="removeFilter.emit($event)"
+    )
     tg-filter-save-custom()
 
     .filters-cats
         ul
-            li
+            li([class.selected]="selectedCategory === 'status'")
                 tg-filter-category(
                     category="status",
                     [title]="'COMMON.FILTERS.CATEGORIES.STATUS' | translate",
                     [selectedCategory]="selectedCategory",
-                    [items]="reformatStatuses(filters.get('statuses'))",
-                    (selectCategory)="selectedCategory = $event",
+                    [items]="statusesFilters",
+                    [applied]="appliedFilters.get('status')",
+                    (selectCategory)="selectCategory($event)",
+                    (selectFilter)="selectFilter.emit($event)",
                 )
-            li
+
+            li([class.selected]="selectedCategory === 'tags'")
                 tg-filter-category(
                     category="tags",
                     [title]="'COMMON.FILTERS.CATEGORIES.TAGS' | translate",
                     [selectedCategory]="selectedCategory",
-                    [items]="reformatTags(filters.get('tags'))",
-                    [total]="totalNotEmptyTags(filters.get('tags'))",
+                    [items]="tagsFilters",
+                    [total]="notEmptyTags",
+                    [applied]="appliedFilters.get('tags')",
                     [hideEmpty]="true",
-                    (selectCategory)="selectedCategory = $event",
+                    (selectCategory)="selectCategory($event)",
+                    (selectFilter)="selectFilter.emit($event)",
                 )
 
-            li
+            li([class.selected]="selectedCategory === 'assigned_to'")
                 tg-filter-category(
-                    category="assignedTo",
+                    category="assigned_to",
                     [title]="'COMMON.FILTERS.CATEGORIES.ASSIGNED_TO' | translate",
                     [selectedCategory]="selectedCategory",
-                    [items]="reformatAssignedTo(filters.get('assigned_to'))",
-                    (selectCategory)="selectedCategory = $event",
+                    [items]="assignedToFilters",
+                    [applied]="appliedFilters.get('assigned_to')",
+                    (selectCategory)="selectCategory($event)",
+                    (selectFilter)="selectFilter.emit($event)",
                 )
 
-            li
+            li([class.selected]="selectedCategory === 'owner'")
                 tg-filter-category(
                     category="owner",
                     [title]="'COMMON.FILTERS.CATEGORIES.CREATED_BY' | translate",
                     [selectedCategory]="selectedCategory",
-                    [items]="reformatOwners(filters.get('owners'))",
-                    (selectCategory)="selectedCategory = $event",
+                    [items]="ownersFilters",
+                    [applied]="appliedFilters.get('owner')",
+                    (selectCategory)="selectCategory($event)",
+                    (selectFilter)="selectFilter.emit($event)",
                 )
 
-            li
+            li([class.selected]="selectedCategory === 'epic'")
                 tg-filter-category(
                     category="epic",
                     [title]="'COMMON.FILTERS.CATEGORIES.EPIC' | translate",
                     [selectedCategory]="selectedCategory",
-                    [items]="reformatEpics(filters.get('epics'))",
-                    (selectCategory)="selectedCategory = $event",
+                    [items]="epicsFilters",
+                    [applied]="appliedFilters.get('epic')",
+                    (selectCategory)="selectCategory($event)",
+                    (selectFilter)="selectFilter.emit($event)",
                 )
 
             // TODO Implement custom filters

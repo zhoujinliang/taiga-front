@@ -72,6 +72,7 @@ tg-filter {
     .filters-cat-single {
         align-items: center;
         color: $grayer;
+        cursor: pointer;
         display: flex;
         justify-content: space-between;
         padding: .5rem .5rem .5rem 1.5rem;

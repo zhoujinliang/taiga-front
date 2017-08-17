@@ -12,12 +12,14 @@ import {TgAttachmentsModule} from "../attachments/attachments.module";
 import {TgServicesModule} from "../services/services.module";
 import {Filter} from "./filter.component";
 import {FilterCategory} from "./filter-category/filter-category.component";
+import {FilterApplied} from "./filter-applied.component";
 import {FilterEffects} from "./filter.effects";
 
 @NgModule({
     declarations: [
         Filter,
         FilterCategory,
+        FilterApplied,
     ],
     exports: [
         Filter,

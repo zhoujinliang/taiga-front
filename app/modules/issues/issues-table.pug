@@ -70,7 +70,7 @@ section.issues-table.basic-table([class.empty]="!issues?.size")
         div.assigned-field
             div.issue-assignedto([title]="'ISSUES.TABLE.TITLE_ACTION_ASSIGNED_TO' | translate")
                 tg-assigned-item(
-                    [member]="project?.getIn(['membersById', issue.get('assigned_to')])",
+                    [member]="project?.getIn(['members_by_id', issue.get('assigned_to')])",
                     (click)="openAssignedTo(issues.get('assigned_to'))"
                 )
                 tg-svg(

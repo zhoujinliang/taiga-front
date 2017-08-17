@@ -61,7 +61,7 @@ section.backlog-table([class.hidden]="!userstories || !userstories.size")
               [checked]="selectedUserstories.get(us.get('id'))",
           )
 
-        div(tg-loading="ctrl.loadingUserstories")
+        div(*tgLoading="'loading-userstories-more'")
 
 .forecasting-add-sprint.e2e-velocity-forecasting-add(*ngIf="displayVelocity")
     tg-svg(svg-icon="icon-add")
@@ -74,7 +74,9 @@ section.backlog-table([class.hidden]="!userstories || !userstories.size")
         translate="BACKLOG.FORECASTING.CURRENT_SPRINT"
     )
 
-.empty-large.js-empty-backlog([class.hidden]="userstories && userstories.size")
+.empty-large.js-empty-backlog(
+    [class.hidden]="userstories && userstories.size"
+)
     img(
         src="/" + _version + "/images/empty/empty_mex.png",
         [alt]="'BACKLOG.EMPTY' | translate"

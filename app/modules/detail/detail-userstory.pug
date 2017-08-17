@@ -115,7 +115,7 @@ div.wrapper(*ngIf="project && us")
             )
             tg-detail-watchers.ticket-watchers(
                 [item]="us",
-                [members]="project.get('membersById')",
+                [members]="project.get('members_by_id')",
                 [canEdit]="canEdit",
                 [logged]="!!user"
             )

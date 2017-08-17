@@ -17,9 +17,10 @@
  * File: filter.controller.coffee
  */
 
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, EventEmitter, Input, Output, OnChanges} from "@angular/core";
 import {Store} from "@ngrx/store";
 import * as _ from "lodash";
+import * as Immutable from "immutable";
 import {IState} from "../../app.store";
 import * as actions from "./filter.actions";
 
@@ -27,13 +28,36 @@ import * as actions from "./filter.actions";
     selector: "tg-filter",
     template: require("./filter.pug")(),
 })
-export class Filter {
+export class Filter implements OnChanges {
     @Input() appliedFilters: any;
+    @Input() appliedFiltersList: any;
     @Input() section: string;
     @Input() filters: any;
+    @Output() selectFilter: EventEmitter<any>;
+    @Output() removeFilter: EventEmitter<any>;
     selectedCategory: string = "";
+    statusesFilters: Immutable.List<any>;
+    tagsFilters: Immutable.List<any>;
+    notEmptyTags: number;
+    assignedToFilters: Immutable.List<any>;
+    ownersFilters: Immutable.List<any>;
+    epicsFilters: Immutable.List<any>;
 
-    constructor(private store: Store<IState>) {}
+    constructor(private store: Store<IState>) {
+        this.selectFilter = new EventEmitter();
+        this.removeFilter = new EventEmitter();
+    }
+
+    ngOnChanges(changes) {
+        if (changes.filters && this.filters) {
+            this.statusesFilters = this.reformatStatuses(this.filters.get('statuses'));
+            this.tagsFilters = this.reformatTags(this.filters.get('tags'));
+            this.notEmptyTags = this.totalNotEmptyTags(this.filters.get('tags'));
+            this.assignedToFilters = this.reformatAssignedTo(this.filters.get('assigned_to'));
+            this.ownersFilters = this.reformatOwners(this.filters.get('owners'));
+            this.epicsFilters = this.reformatEpics(this.filters.get('epics'));
+        }
+    }
 
     changeQ(q) {
         this.store.dispatch(new actions.SetFiltersAction(this.section, "q", q));

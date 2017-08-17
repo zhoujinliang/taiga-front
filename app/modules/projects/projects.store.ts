@@ -18,8 +18,12 @@ export const projectsReducer = (state, action) => {
             let membersById = action.payload.get('members')
                                     .reduce((members, member) => members.set(member.get('id'), member),
                                             Immutable.Map());
+            let usStatusesById = action.payload.get('us_statuses')
+                                    .reduce((usStatuses, usStatus) => usStatuses.set(usStatus.get('id'), usStatus),
+                                            Immutable.Map());
             return state.set("current-project", action.payload)
-                        .setIn(["current-project", "membersById"], membersById);
+                        .setIn(["current-project", "members_by_id"], membersById)
+                        .setIn(["current-project", "us_statuses_by_id"], usStatusesById);
         case "SET_PROJECT_TIMELINE":
             return state.setIn(["timeline", "items"], action.payload.timeline)
                         .setIn(["timeline", "has-next"], action.payload.hasNext)

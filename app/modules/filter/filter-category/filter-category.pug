@@ -1,4 +1,4 @@
-li([class.selected]="selectedCategory === category")
+div
     a.filters-cat-single.e2e-category(
         [class.selected]="selectedCategory === category",
         (click)="selectCategory.emit(category)",
@@ -20,9 +20,10 @@ li([class.selected]="selectedCategory === category")
     )
         ng-container(*ngFor="let item of items")
             // ng-container(*ngIf="!isFilterSelected(item) && !(item.get('count') == 0 && hideEmpty)")
+            // (click)="selectFilter.emit({category: category, id: item.get('id')})"
             .single-filter.ng-animate-disabled(
-                *ngIf="!(item.get('count') == 0 && hideEmpty)",
-                (click)="selectFilter(item)"
+                *ngIf="!applied.contains(item.get('id')) && !(item.get('count') == 0 && hideEmpty)",
+                (click)="onSelectFilter(category, item)"
             )
                 span.name(
                     [style.border-left]="item.get('color') ? '3px solid ' + item.get('color'): ''"

@@ -119,24 +119,6 @@ export class SetBacklogZoom implements Action {
   constructor(public payload: number) {}
 }
 
-export class AddBacklogFilter implements Action {
-  readonly type = "ADD_BACKLOG_FILTER";
-  payload: any;
-
-  constructor(category: string, filter: string) {
-      this.payload = {category, filter};
-  }
-}
-
-export class RemoveBacklogFilter implements Action {
-  readonly type = "REMOVE_BACKLOG_FILTER";
-  payload: any;
-
-  constructor(category: string, filter: string) {
-      this.payload = {category, filter};
-  }
-}
-
 export class CleanBacklogDataAction implements Action {
   readonly type = "CLEAN_BACKLOG_DATA";
   payload = null;

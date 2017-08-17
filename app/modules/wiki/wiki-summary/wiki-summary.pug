@@ -1,10 +1,10 @@
 .summary.wiki-summary(*ngIf="page !== null")
     .wiki-username-edition
         .avatar
-            tg-avatar([user]="project.getIn(['membersById', page.get('last_modifier')])")
+            tg-avatar([user]="project.getIn(['members_by_id', page.get('last_modifier')])")
         .wiki-user-modification
             span.description(translate="WIKI.SUMMARY.LAST_MODIFICATION")
-            span.username {{ project.getIn(['membersById', page.get('last_modifier'), 'full_name_display']) }}
+            span.username {{ project.getIn(['members_by_id', page.get('last_modifier'), 'full_name_display']) }}
 
     .wiki-last-modified
         span.number {{ page.get('modified_date')|momentFormat:('WIKI.DATETIME'|translate)}}

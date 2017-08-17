@@ -16,6 +16,7 @@ import {wikiInitialState, wikiReducer} from "./modules/wiki/wiki.store";
 import {userSettingsInitialState, userSettingsReducer} from "./modules/user-settings/user-settings.store";
 import {adminInitialState, adminReducer} from "./modules/admin/admin.store";
 import {searchInitialState, searchReducer} from "./modules/search/search.store";
+import {filterInitialState, filterReducer} from "./modules/filter/filter.store";
 
 export type IState = Immutable.Map<string, any>;
 
@@ -54,6 +55,7 @@ const initialState = Immutable.fromJS({
     team: teamInitialState,
     "user-settings": userSettingsInitialState,
     search: searchInitialState,
+    filter: filterInitialState,
     router: {
         path: window.location.pathname + window.location.search
     }
@@ -102,6 +104,7 @@ export const rootReducer = (state=initialState, action) => {
                 .set("wiki", wikiReducer(state.get("wiki"), action))
                 .set("admin", adminReducer(state.get("admin"), action))
                 .set("search", searchReducer(state.get("search"), action))
+                .set("filter", filterReducer(state.get("filter"), action))
                 .set("user-settings", userSettingsReducer(state.get("user-settings"), action))
                 .set("common", commonReducer(state.get("common"), action));
 };

@@ -26,7 +26,10 @@ div.wrapper(
             [class.open]="filtersOpen",
             section="backlog",
             [appliedFilters]="appliedFilters|async",
-            [filters]="filters|async"
+            [appliedFiltersList]="appliedFiltersList|async",
+            [filters]="filters|async",
+            (selectFilter)="selectFilter($event)",
+            (removeFilter)="removeFilter($event)"
         )
     section.main.backlog
         tg-main-title([project]="project | async", [sectionName]="section")
@@ -43,13 +46,14 @@ div.wrapper(
             [latestSprint]="latestSprint | async"
         )
 
-        tg-backlog-table(
-            [userstories]="userstories | async",
-            [showTags]="showTags",
-            [project]="project |async",
-            [selectedUserstories]="selectedUserstories | async",
-            [doomlinePosition]="doomlinePosition | async"
-        )
+        ng-container(*tgLoading="'loading-userstories';size:'big'")
+            tg-backlog-table(
+                [userstories]="userstories | async",
+                [showTags]="showTags",
+                [project]="project |async",
+                [selectedUserstories]="selectedUserstories | async",
+                [doomlinePosition]="doomlinePosition | async"
+            )
 
     tg-backlog-sprints.menu-secondary.sidebar(
         [sprints]="sprints | async",

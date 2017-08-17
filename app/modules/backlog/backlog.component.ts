@@ -13,6 +13,7 @@ import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import { ZoomLevelService } from "../services/zoom-level.service";
 import * as actions from "./backlog.actions";
 import * as moment from "moment";
+import { AddFilterAction, RemoveFilterAction } from "../filter/filter.actions";
 
 @Component({
     template: require("./backlog.pug")(),
@@ -26,7 +27,8 @@ export class BacklogPage implements OnInit, OnDestroy {
     userstories: Observable<Immutable.List<any>>;
     selectedUserstories: Observable<Immutable.List<number>>;
     zoom: Observable<any>;
-    appliedFilters: Observable<any>;
+    appliedFilters: Observable<Immutable.Map<string, any>>;
+    appliedFiltersList: Observable<Immutable.List<any>>;
     selectedFiltersCount: number = 0;
     filters: Observable<any>;
     members: Observable<any>;
@@ -70,8 +72,9 @@ export class BacklogPage implements OnInit, OnDestroy {
                 visibility: this.zoomLevel.getVisibility("backlog", level),
             };
         });
-        this.appliedFilters = this.store.select((state) => state.getIn([this.section, "appliedFilters"]));
         this.filters = this.store.select((state) => state.getIn(["backlog", "filtersData"]));
+        this.appliedFilters = this.store.select((state) => state.getIn(["filter", "backlog"]));
+        this.appliedFiltersList = this.appliedFilters.combineLatest(this.project, this.filters).map(this.reformatAppliedFilters);
         this.assignedOnAssignedTo = this.store.select((state) => state.getIn(["backlog", "current-us", "assigned_to"]))
                                               .map((id) => Immutable.List(id));
         this.bulkCreateState = this.store.select((state) => state.getIn(["backlog", "bulk-create-state"]));
@@ -97,6 +100,66 @@ export class BacklogPage implements OnInit, OnDestroy {
         })
     }
 
+    reformatAppliedFilters([appliedFilters, project, filters]) {
+        let result = Immutable.List()
+        if (!appliedFilters || !project) {
+            return result;
+        }
+
+        let statusesFilters = appliedFilters.get('status').map((filter) => {
+            let usStatus = project.getIn(['us_statuses_by_id', parseInt(filter, 10)])
+            return Immutable.fromJS({
+                id: usStatus.get('id'),
+                name: usStatus.get('name'),
+                color: usStatus.get('color'),
+                type: 'status',
+            });
+        });
+
+        let tagsFilters = appliedFilters.get('tags').map((filter) => {
+            let tagColor = project.getIn(['tags_colors', filter])
+            return Immutable.fromJS({
+                id: filter,
+                name: filter,
+                color: tagColor,
+                type: 'tags',
+            });
+        });
+
+        let assignedToFilters = appliedFilters.get('assigned_to').map((filter) => {
+            let member = project.getIn(['members_by_id', parseInt(filter, 10)])
+            return Immutable.fromJS({
+                id: member.get('id'),
+                name: member.get('full_name_display') || member.get('username'),
+                color: null,
+                type: 'assigned_to',
+            });
+        });
+
+        let ownerFilters = appliedFilters.get('owner').map((filter) => {
+            let member = project.getIn(['members_by_id', parseInt(filter, 10)])
+            return Immutable.fromJS({
+                id: member.get('id'),
+                name: member.get('full_name_display') || member.get('username'),
+                color: null,
+                type: 'owner',
+            });
+        });
+
+        let epicsFilters = appliedFilters.get('epic').map((filter) => {
+            let epicsMap = filters.get('epics').reduce((acc, epic) => acc.set(epic.get('id'), epic), Immutable.Map())
+            let epic = epicsMap.get(filter)
+            return Immutable.fromJS({
+                id: epic.get('id'),
+                name: epic.get('subject'),
+                color: epic.get('color'),
+                type: 'epic',
+            });
+        });
+
+        return statusesFilters.concat(tagsFilters, assignedToFilters, ownerFilters, epicsFilters);
+    }
+
     ngOnInit() {
         this.subscriptions = [
             this.project.subscribe((project) => {
@@ -113,14 +176,6 @@ export class BacklogPage implements OnInit, OnDestroy {
                 }
             }),
         ];
-    }
-
-    addFilter({category, filter}) {
-        this.store.dispatch(new actions.AddBacklogFilter(category.get("dataType"), filter.get("id")));
-    }
-
-    removeFilter({category, filter}) {
-        this.store.dispatch(new actions.RemoveBacklogFilter(category.get("dataType"), filter.get("id")));
     }
 
     onSorted(value) {
@@ -181,5 +236,13 @@ export class BacklogPage implements OnInit, OnDestroy {
                 },
             }
         ]);
+    }
+
+    selectFilter({category, id}) {
+        this.store.dispatch(new AddFilterAction("backlog", category, id));
+    }
+
+    removeFilter(filter) {
+        this.store.dispatch(new RemoveFilterAction("backlog", filter.get('type'), filter.get('id')));
     }
 }

@@ -21,26 +21,14 @@ import {Component, EventEmitter, Input, Output} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
-    selector: "tg-filter-category",
-    template: require("./filter-category.pug")(),
+    selector: "tg-filter-applied",
+    template: require("./filter-applied.pug")(),
 })
-export class FilterCategory {
-    @Input() category: string;
-    @Input() title: string;
-    @Input() selectedCategory: string;
-    @Input() items: Immutable.List<any>;
-    @Input() total: number;
-    @Input() hideEmpty: boolean;
-    @Input() applied: Immutable.List<any>;
-    @Output() selectCategory: EventEmitter<any>;
-    @Output() selectFilter: EventEmitter<any>;
+export class FilterApplied {
+    @Input() filters: Immutable.List<any>;
+    @Output() removeFilter: EventEmitter<any>;
 
     constructor() {
-        this.selectCategory = new EventEmitter();
-        this.selectFilter = new EventEmitter();
-    }
-
-    onSelectFilter(category, item) {
-        this.selectFilter.emit({"category": category, "id": item.get('id')})
+        this.removeFilter = new EventEmitter();
     }
 }

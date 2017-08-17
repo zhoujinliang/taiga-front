@@ -55,6 +55,12 @@ export class HttpService {
 
     request(options) {
         options.headers = _.assign({}, this.headers(), options.headers || {});
+        options.params = _.mapValues(options.params, (value) => {
+            if (_.isArray(value)) {
+                return value.join();
+            }
+            return value;
+        });
         if (options.data) {
             if (options.data instanceof FormData) {
                 options.body = options.data;

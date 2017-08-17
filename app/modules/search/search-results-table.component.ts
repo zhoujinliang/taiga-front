@@ -31,7 +31,7 @@ export class SearchResultsTable {
     }
 
     getAssignedTo(item) {
-        return this.project.getIn(['membersById', item.get('assigned_to')]);
+        return this.project.getIn(['members_by_id', item.get('assigned_to')]);
     }
 
 }
