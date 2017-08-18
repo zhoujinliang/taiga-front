@@ -1,6 +1,7 @@
 declare var _version: string;
 import { NgModule } from "@angular/core";
 import { Http, HttpModule } from "@angular/http";
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, UrlHandlingStrategy, UrlTree } from "@angular/router";
@@ -46,7 +47,7 @@ import {AppComponent} from "./app.component";
 import {GlobalEffects} from "./app.effects";
 import {rootReducer} from "./app.store";
 
-export function HttpLoaderFactory(http: Http) {
+export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, `/${_version}/locales/taiga/locale-`, ".json");
 }
 
@@ -55,6 +56,7 @@ export function HttpLoaderFactory(http: Http) {
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
+    HttpClientModule,
     HomeModule,
     RouterModule.forRoot([]),
     ResourcesModule,
@@ -82,7 +84,7 @@ export function HttpLoaderFactory(http: Http) {
         loader: {
             provide: TranslateLoader,
             useFactory: HttpLoaderFactory,
-            deps: [Http],
+            deps: [HttpClient],
         },
     }),
     StoreModule.provideStore(rootReducer),
