@@ -1,13 +1,59 @@
-CopyWebpackPlugin = require('copy-webpack-plugin');
-HtmlWebpackPlugin = require('html-webpack-plugin');
-path = require("path");
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CheckerPlugin = require('awesome-typescript-loader');
+var webpack = require("webpack");
+var path = require("path");
 var version = "v-" + Date.now();
 
+
 module.exports = {
-    entry: './app/main',
+    entry: {
+        app: "./app/main",
+        vendor: ["immutable",
+                 "@angular/forms",
+                 "@angular/core",
+                 "@angular/animations",
+                 "@angular/common",
+                 "@angular/compiler",
+                 "@angular/router",
+                 "@angular/http",
+                 "@angular/platform-browser",
+                 "@angular/platform-browser-dynamic",
+                 "rxjs",
+                 "lodash",
+                 "moment",
+                 "markdown-it",
+                 "bluebird",
+                 "medium-editor",
+                 "dragula",
+                 "pug-runtime",
+                 "messageformat",
+                 "to-markdown",
+                 "medium-editor-autolist",
+                 "intro.js",
+                 "pikaday",
+                 "Flot",
+                 "Flot/jquery.flot.time",
+                 "jquery.flot.tooltip",
+                 "flot-axislabels",
+                 "l.js",
+                 "zone.js",
+                 "reflect-metadata",
+                 "@ngrx/store",
+                 "@ngrx/store-devtools",
+                 "@ngrx/router-store",
+                 "@ngrx/effects",
+                 "@ngx-translate/core",
+                 "@ngx-translate/http-loader",
+                 "ngx-validators",
+                 "ngx-infinite-scroll",
+                 "prismjs",
+                 "prismjs/plugins/custom-class/prism-custom-class",
+        ],
+    },
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: 'app.' + version + '.js'
+        filename: '[name].' + version + '.js'
     },
     resolve: {
         extensions: ['.ts', '.js'],
@@ -21,7 +67,7 @@ module.exports = {
         loaders: [
             { test: /\.ts$/,
               exclude: /\.spec\.ts$/,
-              loader: 'ts-loader',
+              loader: 'awesome-typescript-loader',
               options: {
                   sourceMap: true,
               }
@@ -94,7 +140,8 @@ module.exports = {
         new HtmlWebpackPlugin({
           version: version,
           template: 'app/index.pug'
-        })
+        }),
+        new webpack.optimize.CommonsChunkPlugin({name: "vendor", filename: 'vendor.' + version + '.js'})
     ],
 
     devServer: {
