@@ -1,10 +1,16 @@
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CheckerPlugin = require('awesome-typescript-loader');
-var webpack = require("webpack");
-var path = require("path");
-var version = "v-" + Date.now();
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CheckerPlugin = require('awesome-typescript-loader');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require("webpack");
+const path = require("path");
+const version = "v-" + Date.now();
 
+
+const extractSass = new ExtractTextPlugin({
+    filename: '[name].' + version + '.css',
+    disable: process.env.NODE_ENV === "development"
+});
 
 module.exports = {
     entry: {
@@ -85,8 +91,8 @@ module.exports = {
               ]
             },
             { test: /\.scss$/,
-              loaders: [
-                  { loader: "style-loader" },
+              use: extractSass.extract({
+                use: [
                   { loader: "css-loader",
                     options: {
                         sourceMap: true
@@ -102,7 +108,10 @@ module.exports = {
                         sourceMap: true
                     }
                   }
-              ]
+                ],
+                // use style-loader in development
+                fallback: "style-loader"
+              })
             },
             {
               test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -141,7 +150,8 @@ module.exports = {
           version: version,
           template: 'app/index.pug'
         }),
-        new webpack.optimize.CommonsChunkPlugin({name: "vendor", filename: 'vendor.' + version + '.js'})
+        new webpack.optimize.CommonsChunkPlugin({name: "vendor", filename: 'vendor.' + version + '.js'}),
+        extractSass,
     ],
 
     devServer: {
