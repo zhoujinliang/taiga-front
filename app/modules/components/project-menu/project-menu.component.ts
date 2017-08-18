@@ -34,6 +34,7 @@ export class ProjectMenu implements OnChanges, OnInit, OnDestroy {
     @Input() active: string = "";
     menu: Immutable.Map<string, boolean>;
     videoconferenceUrl: string;
+    backlogHover: boolean = false;
     fixed: boolean = false;
 
     constructor(private store: Store<IState>) {}
