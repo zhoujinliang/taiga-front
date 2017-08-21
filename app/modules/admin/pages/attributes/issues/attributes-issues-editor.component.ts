@@ -6,7 +6,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-admin-attributes-issues-editor",
-    template: require("./attributes-issues-editor.pug")(),
+    template: require("./attributes-issues-editor.pug"),
 })
 export class AdminAttributesIssuesEditor implements OnChanges {
     @Input() type: string;

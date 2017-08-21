@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-detail-block",
-    template: require("./detail-block.pug")(),
+    template: require("./detail-block.pug"),
 })
 export class DetailBlock {
     @Input() item: Immutable.Map<string,any>;

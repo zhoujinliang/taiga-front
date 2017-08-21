@@ -28,7 +28,7 @@ import * as Immutable from "immutable";
 import {Observable, Subscription} from "rxjs";
 
 @Component({
-    template: require("./project-detail.pug")(),
+    template: require("./project-detail.pug"),
 })
 export class ProjectDetailPage implements OnInit, OnDestroy {
     user: Observable<Immutable.Map<string, any>>;

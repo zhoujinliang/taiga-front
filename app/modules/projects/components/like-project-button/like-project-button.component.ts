@@ -24,7 +24,7 @@ import {ProjectUnlikeAction, ProjectLikeAction} from "../../projects.actions";
 
 @Component({
     selector: "tg-like-project-button",
-    template: require("./like-project-button.pug")(),
+    template: require("./like-project-button.pug"),
 })
 export class LikeProjectButton {
     @Input() project: any;

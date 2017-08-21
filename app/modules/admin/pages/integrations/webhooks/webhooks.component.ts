@@ -7,7 +7,7 @@ import {TranslateService} from "@ngx-translate/core";
 import * as Immutable from "immutable"
 
 @Component({
-    template: require("./webhooks.pug")(),
+    template: require("./webhooks.pug"),
 })
 export class AdminIntegrationsWebhooksPage {
     project: Observable<Immutable.Map<string, any>>;

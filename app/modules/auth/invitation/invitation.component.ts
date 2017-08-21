@@ -15,7 +15,7 @@ import * as _ from "lodash";
 
 @Component({
     selector: "tg-invitation-page",
-    template: require("./invitation.pug")(),
+    template: require("./invitation.pug"),
 })
 export class InvitationPage implements OnInit, OnDestroy {
     uuid: string;

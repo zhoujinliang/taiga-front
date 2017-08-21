@@ -8,7 +8,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-search-lightbox",
-    template: require("./search-lightbox.pug")(),
+    template: require("./search-lightbox.pug"),
 })
 export class SearchLightbox {
     @Input() project: string;

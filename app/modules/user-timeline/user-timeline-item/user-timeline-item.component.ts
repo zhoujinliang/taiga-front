@@ -22,7 +22,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-user-timeline-item",
-    template: require("./user-timeline-item.pug")(),
+    template: require("./user-timeline-item.pug"),
 })
 export class UserTimelineItem {
     @Input() item: Immutable.Map<string, any>

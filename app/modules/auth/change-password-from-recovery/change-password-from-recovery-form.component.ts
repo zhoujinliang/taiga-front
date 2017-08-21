@@ -8,7 +8,7 @@ import { UniversalValidators } from "ngx-validators";
 
 @Component({
     selector: "tg-change-password-from-recovery-form",
-    template: require("./change-password-from-recovery-form.pug")(),
+    template: require("./change-password-from-recovery-form.pug"),
 })
 export class ChangePasswordFromRecoveryForm implements OnInit, OnDestroy {
     @Output() changePassword: EventEmitter<string>;

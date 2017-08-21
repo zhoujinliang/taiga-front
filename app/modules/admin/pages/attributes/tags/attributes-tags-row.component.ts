@@ -4,7 +4,7 @@ import * as _ from "lodash";
 
 @Component({
     selector: "tg-admin-attributes-tags-row",
-    template: require("./attributes-tags-row.pug")(),
+    template: require("./attributes-tags-row.pug"),
 })
 export class AdminAttributesTagsRow {
     @Input() value: Immutable.Map<string, any>;

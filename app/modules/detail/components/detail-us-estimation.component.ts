@@ -4,7 +4,7 @@ import * as _ from "lodash";
 
 @Component({
     selector: "tg-detail-us-estimation",
-    template: require("./detail-us-estimation.pug")(),
+    template: require("./detail-us-estimation.pug"),
 })
 export class DetailUsEstimation {
     @Input() item: Immutable.Map<string,any>;

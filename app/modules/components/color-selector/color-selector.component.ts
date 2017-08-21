@@ -25,7 +25,7 @@ import * as _ from "lodash";
 
 @Component({
     selector: "tg-color-selector",
-    template: require("./color-selector.pug")(),
+    template: require("./color-selector.pug"),
     providers: [
       {
         provide: NG_VALUE_ACCESSOR,

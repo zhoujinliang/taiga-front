@@ -14,7 +14,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-login-page",
-    template: require("./login.pug")(),
+    template: require("./login.pug"),
 })
 export class LoginPage implements OnInit, OnDestroy {
     nextUrl: string;

@@ -8,7 +8,7 @@ import {Subscription} from "rxjs";
 
 @Component({
     selector: "tg-forgot-password-form",
-    template: require("./forgot-password-form.pug")(),
+    template: require("./forgot-password-form.pug"),
 })
 export class ForgotPasswordForm implements OnInit, OnDestroy {
     @Output() recover: EventEmitter<LoginData>;

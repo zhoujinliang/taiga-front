@@ -33,7 +33,7 @@ import {FetchJoyrideEnableAction, SetJoyrideAction} from "../../app.actions";
 
 @Component({
     selector: "tg-home",
-    template: require("./home.pug")(),
+    template: require("./home.pug"),
 })
 export class Home implements OnInit, OnDestroy {
     user: Observable<Immutable.Map<string, any>>;

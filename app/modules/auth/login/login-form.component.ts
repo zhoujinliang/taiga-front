@@ -7,7 +7,7 @@ import {Subscription} from "rxjs";
 
 @Component({
     selector: "tg-login-form",
-    template: require("./login-form.pug")(),
+    template: require("./login-form.pug"),
 })
 export class LoginForm implements OnInit, OnDestroy {
     @Output() login: EventEmitter<LoginData>;

@@ -26,7 +26,7 @@ import * as actions from "./filter.actions";
 
 @Component({
     selector: "tg-filter",
-    template: require("./filter.pug")(),
+    template: require("./filter.pug"),
 })
 export class Filter implements OnChanges {
     @Input() appliedFilters: any;

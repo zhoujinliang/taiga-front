@@ -22,7 +22,7 @@ import { TranslateService } from "@ngx-translate/core";
 
 @Component({
     selector: "tg-duty",
-    template: require("./duty.pug")(),
+    template: require("./duty.pug"),
 })
 export class Duty {
     @Input() duty: any;

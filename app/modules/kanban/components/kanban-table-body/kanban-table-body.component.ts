@@ -2,7 +2,7 @@ import {Component, Input} from "@angular/core";
 
 @Component({
     selector: "tg-kanban-table-body",
-    template: require("./kanban-table-body.pug")(),
+    template: require("./kanban-table-body.pug"),
 })
 export class KanbanTableBody {
     @Input() statuses: any;

@@ -35,7 +35,7 @@ import * as actions from "./team.actions";
 //############################################################################
 
 @Component({
-    template: require("./team.pug")(),
+    template: require("./team.pug"),
 })
 export class TeamPage implements OnInit, OnDestroy {
     project: Observable<Immutable.Map<string, any>>;

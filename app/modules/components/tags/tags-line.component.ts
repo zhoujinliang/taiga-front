@@ -6,7 +6,7 @@ import * as _ from "lodash";
 
 @Component({
     selector: "tg-tags-line",
-    template: require("./tags-line.pug")(),
+    template: require("./tags-line.pug"),
     providers: [
       {
         provide: NG_VALUE_ACCESSOR,

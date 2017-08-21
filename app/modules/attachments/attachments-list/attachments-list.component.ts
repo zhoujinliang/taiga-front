@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-attachments-list",
-    template: require("./attachments-list.pug")(),
+    template: require("./attachments-list.pug"),
 })
 export class AttachmentsList implements OnChanges {
     @Input() attachments: Immutable.List<any>;

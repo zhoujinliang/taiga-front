@@ -23,7 +23,7 @@ import {isImage} from "../../../libs/utils";
 
 @Component({
     selector: "tg-user-timeline-attachment",
-    template: require("./user-timeline-attachment.pug")(),
+    template: require("./user-timeline-attachment.pug"),
 })
 export class UserTimelineAttachment implements OnChanges {
     @Input() attachment: Immutable.Map<string, any>;

@@ -6,7 +6,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-admin-attributes-points-editor",
-    template: require("./attributes-points-editor.pug")(),
+    template: require("./attributes-points-editor.pug"),
 })
 export class AdminAttributesPointsEditor implements OnChanges {
     @Input() type: string;

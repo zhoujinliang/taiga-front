@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-admin-attributes-custom-fields-form",
-    template: require("./attributes-custom-fields-form.pug")(),
+    template: require("./attributes-custom-fields-form.pug"),
 })
 export class AdminAttributesCustomFieldsForm implements OnChanges, AfterViewChecked {
     @Input() value: Immutable.Map<string, any>;

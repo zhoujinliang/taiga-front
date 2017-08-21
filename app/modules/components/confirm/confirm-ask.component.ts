@@ -3,7 +3,7 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
 @Component({
     host: {class: "lightbox-generic-ask"},
     selector: "tg-confirm-ask",
-    template: require("./confirm-ask.pug")()
+    template: require("./confirm-ask.pug")
 })
 export class ConfirmAsk {
     @Input() title: string = "";

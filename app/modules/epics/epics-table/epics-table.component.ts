@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-epics-table",
-    template: require("./epics-table.pug")(),
+    template: require("./epics-table.pug"),
 })
 export class EpicsTable {
     @Input() epics: Immutable.List<any>;

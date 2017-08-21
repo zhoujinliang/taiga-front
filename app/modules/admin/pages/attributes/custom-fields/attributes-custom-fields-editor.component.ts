@@ -6,7 +6,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-admin-attributes-custom-fields-editor",
-    template: require("./attributes-custom-fields-editor.pug")(),
+    template: require("./attributes-custom-fields-editor.pug"),
 })
 export class AdminAttributesCustomFieldsEditor implements OnChanges {
     @Input() type: string;

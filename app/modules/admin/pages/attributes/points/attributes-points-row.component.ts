@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-admin-attributes-points-row",
-    template: require("./attributes-points-row.pug")(),
+    template: require("./attributes-points-row.pug"),
 })
 export class AdminAttributesPointsRow {
     @Input() value: Immutable.Map<string, any>;

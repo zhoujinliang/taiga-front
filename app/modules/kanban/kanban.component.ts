@@ -14,7 +14,7 @@ import { ZoomLevelService } from "../services/zoom-level.service";
 import * as actions from "./kanban.actions";
 
 @Component({
-    template: require("./kanban.pug")(),
+    template: require("./kanban.pug"),
 })
 export class KanbanPage implements OnInit, OnDestroy {
     section = "kanban";

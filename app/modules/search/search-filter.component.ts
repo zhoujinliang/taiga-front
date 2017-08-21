@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-search-filter",
-    template: require("./search-filter.pug")(),
+    template: require("./search-filter.pug"),
 })
 export class SearchFilter {
     @Input() results: Immutable.List<any>;

@@ -4,7 +4,7 @@ import * as _ from "lodash";
 
 @Component({
     selector: "tg-admin-edit-role-permissions",
-    template: require("./permissions-edit-role-permissions.pug")(),
+    template: require("./permissions-edit-role-permissions.pug"),
 })
 export class AdminEditRolePermissions implements OnChanges {
     @Input() role: Immutable.Map<string, any>;

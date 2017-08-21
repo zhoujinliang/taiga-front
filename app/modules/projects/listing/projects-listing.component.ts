@@ -26,7 +26,7 @@ import {ProjectsChangeOrderAction} from "../projects.actions";
 
 @Component({
     selector: "tg-project-listing",
-    template: require("./projects-listing.pug")(),
+    template: require("./projects-listing.pug"),
 })
 export class ProjectsListing {
     projects: any;

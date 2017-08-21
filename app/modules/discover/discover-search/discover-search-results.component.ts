@@ -22,7 +22,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-discover-search-results",
-    template: require("./discover-search-results.pug")(),
+    template: require("./discover-search-results.pug"),
 })
 export class DiscoverSearchResults {
     @Input() projects: Immutable.List<any>;

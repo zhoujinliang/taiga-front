@@ -4,7 +4,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-attachments-simple",
-    template: require("./attachments-simple.pug")(),
+    template: require("./attachments-simple.pug"),
     providers: [
       {
         provide: NG_VALUE_ACCESSOR,

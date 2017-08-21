@@ -12,7 +12,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
       ])
     ],
     selector: "tg-create-project-page",
-    template: require("./create-project.pug")(),
+    template: require("./create-project.pug"),
 })
 export class CreateProjectPage {
     displayScrumDesc: string = "hidden";

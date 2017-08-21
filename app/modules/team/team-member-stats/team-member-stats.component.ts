@@ -4,7 +4,7 @@ import * as Immutable from "immutable";
 @Component({
     host: {"class": "member-stats"},
     selector: "tg-team-member-stats",
-    template: require("./team-member-stats.pug")(),
+    template: require("./team-member-stats.pug"),
 })
 export class TeamMemberStats {
     @Input() stats: Immutable.Map<string, any>

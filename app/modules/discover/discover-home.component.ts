@@ -28,7 +28,7 @@ import {Observable, Subscription} from "rxjs";
 
 @Component({
     selector: "tg-discover-home",
-    template: require("./discover-home.pug")(),
+    template: require("./discover-home.pug"),
 })
 export class DiscoverHome implements OnInit {
     title: string;

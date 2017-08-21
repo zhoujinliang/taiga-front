@@ -29,7 +29,7 @@ import {ChangePasswordAction} from "./user-settings.actions";
 
 @Component({
     selector: "tg-change-password-page",
-    template: require("./change-password.pug")(),
+    template: require("./change-password.pug"),
 })
 export class ChangePasswordPage {
     constructor(private store: Store<IState>) {}

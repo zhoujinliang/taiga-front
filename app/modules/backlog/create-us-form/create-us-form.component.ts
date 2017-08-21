@@ -9,7 +9,7 @@ import * as actions from "../backlog.actions";
 
 @Component({
     selector: "tg-create-us-form",
-    template: require("./create-us-form.pug")(),
+    template: require("./create-us-form.pug"),
 })
 export class CreateUsForm implements OnChanges {
     @Input() project: Immutable.Map<string,any>;

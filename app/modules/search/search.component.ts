@@ -10,7 +10,7 @@ import * as Immutable from "immutable";
 import * as _ from "lodash";
 
 @Component({
-    template: require("./search.pug")(),
+    template: require("./search.pug"),
 })
 export class SearchPage implements OnDestroy, OnInit {
     project: Observable<Immutable.Map<string, any>>;

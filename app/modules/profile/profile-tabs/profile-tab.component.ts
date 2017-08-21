@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-profile-tab",
-    template: require("./profile-tab.pug")(),
+    template: require("./profile-tab.pug"),
 })
 export class ProfileTab {
     @Input() title: string;

@@ -32,7 +32,7 @@ import {Observable} from "rxjs";
 
 @Component({
     selector: "tg-user-settings",
-    template: require("./user-settings.pug")(),
+    template: require("./user-settings.pug"),
 })
 export class UserSettingsPage {
     user: Observable<Immutable.Map<string, any>>;

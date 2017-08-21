@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-team-members",
-    template: require("./team-members.pug")(),
+    template: require("./team-members.pug"),
 })
 export class TeamMembers implements OnInit, OnChanges {
     @Input() memberships: Immutable.List<Immutable.Map<string, any>>;

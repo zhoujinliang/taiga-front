@@ -22,7 +22,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-filter-applied",
-    template: require("./filter-applied.pug")(),
+    template: require("./filter-applied.pug"),
 })
 export class FilterApplied {
     @Input() filters: Immutable.List<any>;

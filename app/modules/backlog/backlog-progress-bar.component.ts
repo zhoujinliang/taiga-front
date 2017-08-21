@@ -5,7 +5,7 @@ import * as _ from "lodash";
 @Component({
     host: {"class": "summary-progress-bar"},
     selector: "tg-backlog-progress-bar",
-    template: require("./backlog-progress-bar.pug")(),
+    template: require("./backlog-progress-bar.pug"),
 })
 export class BacklogProgressBar {
     @Input() stats: Immutable.Map<string, any>;

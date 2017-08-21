@@ -6,7 +6,7 @@ import * as actions from "./backlog.actions";
 
 @Component({
     selector: "tg-backlog-us-points",
-    template: require("./backlog-us-points.pug")(),
+    template: require("./backlog-us-points.pug"),
 })
 export class BacklogUsPoints {
     @Input() us: Immutable.Map<string,any>;

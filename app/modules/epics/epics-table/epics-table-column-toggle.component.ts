@@ -3,7 +3,7 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
 @Component({
     host: {"class": "fieldset"},
     selector: "tg-epics-table-column-toggle",
-    template: require("./epics-table-column-toggle.pug")(),
+    template: require("./epics-table-column-toggle.pug"),
 })
 export class EpicsTableColumnToggle {
     @Input() title: string;

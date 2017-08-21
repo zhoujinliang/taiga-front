@@ -25,7 +25,7 @@ import { CurrentUserService } from "../services/current-user.service";
 
 @Component({
     selector: "tg-navigation-bar",
-    template: require("./navigation-bar.pug")(),
+    template: require("./navigation-bar.pug"),
 })
 export class NavigationBar {
     @Input() projects: any;

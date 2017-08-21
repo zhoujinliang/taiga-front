@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-epics-story-row",
-    template: require("./epics-story-row.pug")(),
+    template: require("./epics-story-row.pug"),
 })
 export class EpicsStoryRow {
     @Input() story: Immutable.Map<string, any>;

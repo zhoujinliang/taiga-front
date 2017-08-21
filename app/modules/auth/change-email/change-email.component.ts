@@ -12,7 +12,7 @@ import { calculateNextUrl } from "../utils";
 import * as Immutable from "immutable";
 
 @Component({
-    template: require("./change-email.pug")(),
+    template: require("./change-email.pug"),
 })
 export class ChangeEmailPage implements OnInit, OnDestroy {
     uuid: string;

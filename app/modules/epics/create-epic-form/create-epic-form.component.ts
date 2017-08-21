@@ -6,7 +6,7 @@ import {ColorSelectorService} from "../../components/color-selector/color-select
 
 @Component({
     selector: "tg-create-epic-form",
-    template: require("./create-epic-form.pug")(),
+    template: require("./create-epic-form.pug"),
 })
 export class CreateEpicForm implements OnChanges {
     @Input() statuses: Immutable.Map<string,any>;

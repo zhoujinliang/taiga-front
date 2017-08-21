@@ -29,7 +29,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-wysiwyg",
-    template: require("./wysiwyg.pug")(),
+    template: require("./wysiwyg.pug"),
 })
 export class Wysiwyg implements OnInit {
     @Input() text: string;

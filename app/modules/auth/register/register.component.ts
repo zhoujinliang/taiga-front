@@ -14,7 +14,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-register-page",
-    template: require("./register.pug")(),
+    template: require("./register.pug"),
 })
 export class RegisterPage implements OnInit, OnDestroy {
     nextUrl: string;

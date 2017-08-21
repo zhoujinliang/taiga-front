@@ -6,7 +6,7 @@ import {ProjectContactAction} from "../../projects.actions";
 
 @Component({
     selector: "tg-project-contact-lightbox",
-    template: require("./lb-contact-project.pug")(),
+    template: require("./lb-contact-project.pug"),
 })
 export class ProjectContactLightbox {
     @Input() project: Immutable.Map<string,any>;

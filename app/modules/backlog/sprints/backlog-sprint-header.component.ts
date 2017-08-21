@@ -9,7 +9,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-backlog-sprint-header",
-    template: require("./backlog-sprint-header.pug")(),
+    template: require("./backlog-sprint-header.pug"),
 })
 export class BacklogSprintHeader {
     @Input() sprint: Immutable.Map<string, any>;

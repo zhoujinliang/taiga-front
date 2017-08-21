@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-tag",
-    template: require("./tag.pug")(),
+    template: require("./tag.pug"),
 })
 export class Tag {
     @Input() tag: any;

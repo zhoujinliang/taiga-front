@@ -14,7 +14,7 @@ import { ZoomLevelService } from "../services/zoom-level.service";
 import * as actions from "./issues.actions";
 
 @Component({
-    template: require("./issues.pug")(),
+    template: require("./issues.pug"),
 })
 export class IssuesPage implements OnInit, OnDestroy {
     section: string = "issues";

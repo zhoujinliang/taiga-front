@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 import * as Immutable from "immutable";
 
 @Component({
-    template: require("./reports.pug")(),
+    template: require("./reports.pug"),
 })
 export class AdminReportsPage {
     project: Observable<Immutable.Map<string, any>>;

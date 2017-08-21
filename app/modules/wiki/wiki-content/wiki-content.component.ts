@@ -7,7 +7,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-wiki-content",
-    template: require("./wiki-content.pug")(),
+    template: require("./wiki-content.pug"),
 })
 export class WikiContent {
     @Input() project: Immutable.Map<string, any>;

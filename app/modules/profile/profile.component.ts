@@ -7,7 +7,7 @@ import {Observable, Subscription} from "rxjs";
 import * as actions from "./profile.actions";
 
 @Component({
-    template: require("./profile.pug")(),
+    template: require("./profile.pug"),
 })
 export class ProfilePage implements OnInit, OnDestroy {
     user: Observable<Immutable.Map<string,any>>;

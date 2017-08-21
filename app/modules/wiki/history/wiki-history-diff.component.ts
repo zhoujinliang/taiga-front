@@ -22,7 +22,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-wiki-history-diff",
-    template: require("./wiki-history-diff.pug")(),
+    template: require("./wiki-history-diff.pug"),
 })
 export class WikiHistoryDiff {
     @Input() key: string;

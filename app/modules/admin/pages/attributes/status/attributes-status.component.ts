@@ -6,7 +6,7 @@ import {TranslateService} from "@ngx-translate/core";
 import * as Immutable from "immutable"
 
 @Component({
-    template: require("./attributes-status.pug")(),
+    template: require("./attributes-status.pug"),
 })
 export class AdminAttributesStatusPage {
     project: Observable<Immutable.Map<string, any>>;

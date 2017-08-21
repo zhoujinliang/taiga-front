@@ -4,7 +4,7 @@ import * as Immutable from "immutable";
 @Component({
     host: {class: "lightbox-ask-choice"},
     selector: "tg-confirm-ask-choice",
-    template: require("./confirm-ask-choice.pug")()
+    template: require("./confirm-ask-choice.pug")
 })
 export class ConfirmAskChoice {
     @Input() title: string = "";

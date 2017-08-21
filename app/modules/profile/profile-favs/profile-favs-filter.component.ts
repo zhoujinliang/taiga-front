@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-profile-favs-filter",
-    template: require("./profile-favs-filter.pug")(),
+    template: require("./profile-favs-filter.pug"),
 })
 export class ProfileFavsFilter {
     @Input() q: string;

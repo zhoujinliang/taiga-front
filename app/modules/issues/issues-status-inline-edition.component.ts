@@ -4,7 +4,7 @@ import * as Immutable from "immutable";
 @Component({
     host: {"class": "issue-field"},
     selector: "tg-issues-status-inline-edition",
-    template: require("./issues-status-inline-edition.pug")(),
+    template: require("./issues-status-inline-edition.pug"),
 })
 export class IssuesStatusInlineEdition implements OnChanges {
     @Input() statuses: Immutable.List<any>;

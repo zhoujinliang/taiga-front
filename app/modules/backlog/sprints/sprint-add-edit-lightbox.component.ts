@@ -10,7 +10,7 @@ import * as actions from "../backlog.actions";
 
 @Component({
     selector: "tg-sprint-add-edit-lightbox",
-    template: require("./sprint-add-edit-lightbox.pug")(),
+    template: require("./sprint-add-edit-lightbox.pug"),
 })
 export class SprintAddEditLightbox implements OnInit, OnDestroy {
     @Input() project: Immutable.Map<string,any>;

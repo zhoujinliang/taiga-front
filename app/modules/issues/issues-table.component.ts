@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-issues-table",
-    template: require("./issues-table.pug")(),
+    template: require("./issues-table.pug"),
 })
 export class IssuesTable {
     @Input() project: Immutable.Map<string, any>;

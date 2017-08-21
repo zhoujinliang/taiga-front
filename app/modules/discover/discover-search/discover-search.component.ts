@@ -29,7 +29,7 @@ import * as Immutable from "immutable"
 
 @Component({
     selector: "tg-discover-search",
-    template: require("./discover-search.pug")(),
+    template: require("./discover-search.pug"),
 })
 export class DiscoverSearch implements OnInit {
     q: any;

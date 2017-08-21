@@ -27,7 +27,7 @@ import { CurrentUserService  } from "../../services/current-user.service";
 
 @Component({
     selector: "tg-home-project-list",
-    template: require("./home-project-list.pug")(),
+    template: require("./home-project-list.pug"),
 })
 export class HomeProjectList {
     @Input() projects: any;

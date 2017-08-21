@@ -22,7 +22,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-project-info",
-    template: require("./project-info.pug")(),
+    template: require("./project-info.pug"),
 })
 export class ProjectInfo {
     @Input() project: Immutable.Map<string, any>;

@@ -24,7 +24,7 @@ import {defineImmutableProperty} from "../../../../libs/utils";
 
 @Component({
     selector: "tg-discover-search-bar",
-    template: require("./discover-search-bar.pug")(),
+    template: require("./discover-search-bar.pug"),
 })
 export class DiscoverSearchBar {
     @Output() search: EventEmitter<any>;

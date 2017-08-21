@@ -16,7 +16,7 @@ import * as moment from "moment";
 import { AddFilterAction, RemoveFilterAction } from "../filter/filter.actions";
 
 @Component({
-    template: require("./backlog.pug")(),
+    template: require("./backlog.pug"),
 })
 export class BacklogPage implements OnInit, OnDestroy {
     section = "backlog";

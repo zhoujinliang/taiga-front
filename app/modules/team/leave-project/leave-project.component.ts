@@ -7,7 +7,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-leave-project",
-    template: require("./leave-project.pug")(),
+    template: require("./leave-project.pug"),
 })
 export class LeaveProject {
     @Input() user: Immutable.Map<string, any>;

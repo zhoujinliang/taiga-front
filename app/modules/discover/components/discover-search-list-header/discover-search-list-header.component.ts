@@ -21,7 +21,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from "@angular/core";
 
 @Component({
     selector: "tg-discover-search-list-header",
-    template: require("./discover-search-list-header.pug")(),
+    template: require("./discover-search-list-header.pug"),
 })
 export class DiscoverSearchListHeader implements OnChanges {
     @Input() order: string;

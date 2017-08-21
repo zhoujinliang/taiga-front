@@ -5,7 +5,7 @@ import * as _ from "lodash";
 
 @Component({
     selector: "tg-us-estimation-for-lightbox",
-    template: require("./us-estimation-for-lightbox.pug")(),
+    template: require("./us-estimation-for-lightbox.pug"),
     providers: [
       {
         provide: NG_VALUE_ACCESSOR,

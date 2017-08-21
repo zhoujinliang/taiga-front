@@ -7,7 +7,7 @@ import * as Immutable from "immutable"
 import * as actions from "../../admin.actions";
 
 @Component({
-    template: require("./memberships.pug")(),
+    template: require("./memberships.pug"),
 })
 export class AdminMembershipsPage implements OnDestroy {
     project: Observable<Immutable.Map<string, any>>;

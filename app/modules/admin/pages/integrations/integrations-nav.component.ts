@@ -4,7 +4,7 @@ import * as Immutable from "immutable";
 @Component({
     host: {"class": "menu-tertiary sidebar"},
     selector: "tg-admin-integrations-nav",
-    template: require("./integrations-nav.pug")(),
+    template: require("./integrations-nav.pug"),
 })
 export class AdminIntegrationsNav {
     @Input() project: Immutable.Map<string, any>;

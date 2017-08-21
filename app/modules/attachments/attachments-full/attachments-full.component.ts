@@ -31,7 +31,7 @@ import {Component, Input, OnChanges} from "@angular/core";
 
 @Component({
     selector: "tg-attachments-full",
-    template: require("./attachments-full.pug")(),
+    template: require("./attachments-full.pug"),
 })
 export class AttachmentsFull {
     @Input() attachments: Immutable.List<any>;

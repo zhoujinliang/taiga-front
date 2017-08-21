@@ -22,7 +22,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-filter-category",
-    template: require("./filter-category.pug")(),
+    template: require("./filter-category.pug"),
 })
 export class FilterCategory {
     @Input() category: string;

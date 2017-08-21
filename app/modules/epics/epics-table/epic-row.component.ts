@@ -7,7 +7,7 @@ import {OpenLightboxAction} from "../../../app.actions";
 
 @Component({
     selector: "tg-epic-row",
-    template: require("./epic-row.pug")(),
+    template: require("./epic-row.pug"),
 })
 export class EpicRow {
     @Input() project: Immutable.Map<string, any>;

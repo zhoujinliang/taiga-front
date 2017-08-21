@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-backlog-summary",
-    template: require("./backlog-summary.pug")(),
+    template: require("./backlog-summary.pug"),
 })
 export class BacklogSummary {
     @Input() project: Immutable.Map<string, any>;

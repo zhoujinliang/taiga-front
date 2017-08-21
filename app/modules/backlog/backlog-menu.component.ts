@@ -7,7 +7,7 @@ import {IState} from "../../app.store";
 
 @Component({
     selector: "tg-backlog-menu",
-    template: require("./backlog-menu.pug")(),
+    template: require("./backlog-menu.pug"),
 })
 export class BacklogMenu {
     @Input() userstories: Immutable.List<any>;

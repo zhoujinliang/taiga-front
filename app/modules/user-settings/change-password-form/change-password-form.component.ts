@@ -4,7 +4,7 @@ import {PasswordValidators, UniversalValidators} from 'ngx-validators';
 
 @Component({
     selector: "tg-change-password-form",
-    template: require("./change-password-form.pug")(),
+    template: require("./change-password-form.pug"),
 })
 export class ChangePasswordForm {
     @Output() changePassword: EventEmitter<any>;

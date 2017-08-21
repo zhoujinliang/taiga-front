@@ -4,7 +4,7 @@ import * as Immutable from "immutable";
 @Component({
     host: {"class": "menu-tertiary sidebar"},
     selector: "tg-admin-subnav-project",
-    template: require("./admin-subnav-project.pug")(),
+    template: require("./admin-subnav-project.pug"),
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminSubnavProject {

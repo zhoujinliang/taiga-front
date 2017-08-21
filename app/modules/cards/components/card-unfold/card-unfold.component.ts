@@ -22,7 +22,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-card-unfold",
-    template: require("./card-unfold.pug")(),
+    template: require("./card-unfold.pug"),
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardUnfold {

@@ -24,7 +24,7 @@ import { CurrentUserService } from "../../services/current-user.service";
 
 @Component({
     selector: "tg-dropdown-project-list",
-    template: require("./dropdown-project-list.pug")(),
+    template: require("./dropdown-project-list.pug"),
 })
 export class DropdownProjectList {
     @Input() projects: any;

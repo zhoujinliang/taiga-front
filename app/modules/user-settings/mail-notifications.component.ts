@@ -30,7 +30,7 @@ import * as Immutable from "immutable";
 import * as actions from "./user-settings.actions";
 
 @Component({
-    template: require("./mail-notifications.pug")(),
+    template: require("./mail-notifications.pug"),
 })
 export class MailNotificationsPage {
     notifyPolicies: Observable<Immutable.List<any>>;

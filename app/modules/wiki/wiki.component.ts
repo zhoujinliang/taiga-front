@@ -8,7 +8,7 @@ import * as actions from "./wiki.actions";
 import "rxjs/add/operator/combineLatest";
 
 @Component({
-    template: require("./wiki.pug")(),
+    template: require("./wiki.pug"),
 })
 export class WikiPage implements OnInit, OnDestroy, OnChanges {
     project: Observable<Immutable.Map<string, any>>;

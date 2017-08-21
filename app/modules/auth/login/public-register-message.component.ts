@@ -4,7 +4,7 @@ import { ConfigurationService } from "../../base/conf";
 
 @Component({
     selector: "tg-public-register-message",
-    template: require("./public-register-message.pug")(),
+    template: require("./public-register-message.pug"),
 })
 export class PublicRegisterMessage implements OnInit {
     publicRegisterEnabled;

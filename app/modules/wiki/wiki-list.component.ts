@@ -7,7 +7,7 @@ import * as Immutable from "immutable";
 import {FetchWikiLinksAction, FetchWikiPagesListAction} from "./wiki.actions";
 
 @Component({
-    template: require("./wiki-list.pug")(),
+    template: require("./wiki-list.pug"),
 })
 export class WikiListPage {
     project: Observable<Immutable.Map<string, any>>;

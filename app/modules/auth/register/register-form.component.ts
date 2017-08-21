@@ -10,7 +10,7 @@ import {Subscription} from "rxjs";
 
 @Component({
     selector: "tg-register-form",
-    template: require("./register-form.pug")(),
+    template: require("./register-form.pug"),
 })
 export class RegisterForm implements OnInit, OnDestroy {
     @Output() register: EventEmitter<RegisterData>;

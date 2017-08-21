@@ -24,7 +24,7 @@ import {OpenLightboxAction} from "../../../../app.actions";
 
 @Component({
     selector: "tg-contact-project-button",
-    template: require("./contact-project-button.pug")(),
+    template: require("./contact-project-button.pug"),
 })
 export class ContactProjectButton {
     @Input() layout: string;

@@ -23,7 +23,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-attachments-preview-lightbox",
-    template: require("./attachments-preview.pug")(),
+    template: require("./attachments-preview.pug"),
 })
 export class AttachmentsPreviewLightbox implements OnChanges {
     @Input() attachments: Immutable.List<any>;

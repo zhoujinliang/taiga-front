@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-detail-delete",
-    template: require("./detail-delete.pug")(),
+    template: require("./detail-delete.pug"),
 })
 export class DetailDelete {
 }

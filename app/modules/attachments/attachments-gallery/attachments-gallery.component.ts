@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-attachments-gallery",
-    template: require("./attachments-gallery.pug")(),
+    template: require("./attachments-gallery.pug"),
 })
 export class AttachmentsGallery {
     @Input() attachments: Immutable.List<any>;

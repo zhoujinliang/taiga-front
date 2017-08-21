@@ -6,7 +6,7 @@ import {TranslateService} from "@ngx-translate/core";
 import * as Immutable from "immutable"
 
 @Component({
-    template: require("./attributes-custom-fields.pug")(),
+    template: require("./attributes-custom-fields.pug"),
 })
 export class AdminAttributesCustomFieldsPage {
     project: Observable<Immutable.Map<string, any>>;

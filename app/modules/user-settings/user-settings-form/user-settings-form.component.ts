@@ -10,7 +10,7 @@ import {getDirtyValues, setServerErrors} from "../../utils/forms";
 
 @Component({
     selector: "tg-user-settings-form",
-    template: require("./user-settings-form.pug")(),
+    template: require("./user-settings-form.pug"),
 })
 export class UserSettingsForm implements OnChanges {
     @Input() user: Immutable.Map<string, any>;

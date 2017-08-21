@@ -7,7 +7,7 @@ import {SetBulkCreateLightboxDataAction, SetNewUsLightboxDataAction} from "../..
 
 @Component({
     selector: "tg-kanban-table-header",
-    template: require("./kanban-table-header.pug")(),
+    template: require("./kanban-table-header.pug"),
 })
 export class KanbanTableHeader {
     @Input() statuses: Immutable.List<any>;

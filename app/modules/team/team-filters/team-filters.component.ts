@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-team-filters",
-    template: require("./team-filters.pug")(),
+    template: require("./team-filters.pug"),
 })
 export class TeamFilters {
     @Input() project: Immutable.Map<string, any>;

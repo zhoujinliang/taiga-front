@@ -13,7 +13,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-change-password-from-recovery-page",
-    template: require("./change-password-from-recovery.pug")(),
+    template: require("./change-password-from-recovery.pug"),
 })
 export class ChangePasswordFromRecoveryPage implements OnInit, OnDestroy {
     nextUrl: string;

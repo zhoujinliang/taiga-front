@@ -21,7 +21,7 @@ import {Component, Input} from "@angular/core";
 
 @Component({
     selector: "tg-highlighted",
-    template: require("./highlighted.pug")(),
+    template: require("./highlighted.pug"),
 })
 export class Highlighted {
     @Input() loading: any;

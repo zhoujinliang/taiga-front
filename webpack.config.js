@@ -32,7 +32,6 @@ module.exports = {
                  "bluebird",
                  "medium-editor",
                  "dragula",
-                 "pug-runtime",
                  "messageformat",
                  "to-markdown",
                  "medium-editor-autolist",
@@ -79,10 +78,18 @@ module.exports = {
               }
             },
             { test: /\.(pug|jade)$/,
-              loader: 'pug-loader',
-              options: {
-                  pretty: true,
-              }
+              loader: [
+                  {loader: 'raw-loader'},
+                  {
+                      loader: 'pug-html-loader', options: {
+                          pretty: true,
+                          doctype: 'html',
+                          data: {
+                              _version: version
+                          }
+                      }
+                  },
+              ]
             },
             { test: /\.css$/,
               loaders: [

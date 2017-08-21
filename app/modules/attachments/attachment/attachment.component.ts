@@ -25,7 +25,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-attachment",
-    template: require("./attachment.pug")(),
+    template: require("./attachment.pug"),
 })
 export class Attachment {
     @Input() attachment: Immutable.Map<string, any>;

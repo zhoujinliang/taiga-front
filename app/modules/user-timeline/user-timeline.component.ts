@@ -28,7 +28,7 @@ import {UserTimelineService} from "./user-timeline.service";
 
 @Component({
     selector: "tg-user-timeline",
-    template: require("./user-timeline.pug")(),
+    template: require("./user-timeline.pug"),
 })
 export class UserTimeline implements OnChanges{
     @Input() timeline: Immutable.List<any>;

@@ -8,7 +8,7 @@ import {StartLoadingAction, StopLoadingAction} from "../../app.actions";
 import * as actions from "./detail.actions";
 
 @Component({
-    template: require("./detail-userstory.pug")(),
+    template: require("./detail-userstory.pug"),
 })
 export class DetailUserstoryPage implements OnInit, OnDestroy {
     us: Immutable.Map<string,any>;

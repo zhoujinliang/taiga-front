@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-profile-sidebar",
-    template: require("./profile-sidebar.pug")(),
+    template: require("./profile-sidebar.pug"),
 })
 export class ProfileSidebar implements OnInit {
     @Input() isCurrentUser: boolean;

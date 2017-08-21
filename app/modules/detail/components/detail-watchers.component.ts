@@ -4,7 +4,7 @@ import * as Immutable from "immutable";
 @Component({
     host: {"class": "ticket-watch"},
     selector: "tg-detail-watchers",
-    template: require("./detail-watchers.pug")(),
+    template: require("./detail-watchers.pug"),
 })
 export class DetailWatchers implements OnChanges {
     @Input() item: Immutable.Map<string, any>;

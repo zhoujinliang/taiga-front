@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-search-results-table",
-    template: require("./search-results-table.pug")(),
+    template: require("./search-results-table.pug"),
 })
 export class SearchResultsTable {
     @Input() project: Immutable.Map<string,any>;

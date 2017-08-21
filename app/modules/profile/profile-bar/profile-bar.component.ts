@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-profile-bar",
-    template: require("./profile-bar.pug")(),
+    template: require("./profile-bar.pug"),
 })
 export class ProfileBar {
     @Input() user: Immutable.Map<string,any>;

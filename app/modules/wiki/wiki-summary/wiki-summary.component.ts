@@ -7,7 +7,7 @@ import {CloseLightboxAction, OpenLightboxAction} from "../../../app.actions";
 
 @Component({
     selector: "tg-wiki-summary",
-    template: require("./wiki-summary.pug")(),
+    template: require("./wiki-summary.pug"),
 })
 export class WikiSummary {
     @Input() page: Immutable.Map<string, any>;

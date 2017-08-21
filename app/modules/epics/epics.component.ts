@@ -14,7 +14,7 @@ import { ZoomLevelService } from "../services/zoom-level.service";
 import * as actions from "./epics.actions";
 
 @Component({
-    template: require("./epics.pug")(),
+    template: require("./epics.pug"),
 })
 export class EpicsPage implements OnInit, OnDestroy {
     section = "epics";

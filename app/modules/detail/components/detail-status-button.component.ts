@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-detail-status-button",
-    template: require("./detail-status-button.pug")(),
+    template: require("./detail-status-button.pug"),
 })
 export class DetailStatusButton {
     @Input() status: Immutable.Map<string,any>;

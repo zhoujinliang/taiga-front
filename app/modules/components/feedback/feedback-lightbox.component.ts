@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
     host: {"class": "lightbox-feedback lightbox-generic-form"},
     selector: "tg-feedback-lightbox",
-    template: require("./feedback-lightbox.pug")(),
+    template: require("./feedback-lightbox.pug"),
 })
 export class FeedbackLightbox {
     @Output() feedback: EventEmitter<string>;

@@ -22,7 +22,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-wiki-history",
-    template: require("./wiki-history.pug")(),
+    template: require("./wiki-history.pug"),
 })
 export class WikiHistory {
     @Input() historyEntries: Immutable.List<any>;

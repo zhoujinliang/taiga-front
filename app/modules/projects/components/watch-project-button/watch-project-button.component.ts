@@ -24,7 +24,7 @@ import {ProjectUnwatchAction, ProjectWatchAction} from "../../projects.actions";
 
 @Component({
     selector: "tg-watch-project-button",
-    template: require("./watch-project-button.pug")(),
+    template: require("./watch-project-button.pug"),
 })
 export class WatchProjectButton {
     @Input() project: any;

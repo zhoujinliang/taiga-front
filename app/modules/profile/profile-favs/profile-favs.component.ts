@@ -7,7 +7,7 @@ import * as actions from "../profile.actions";
 
 @Component({
     selector: "tg-profile-favs",
-    template: require("./profile-favs.pug")(),
+    template: require("./profile-favs.pug"),
 })
 export class ProfileFavs implements OnInit, OnDestroy {
     @Input() user: Immutable.Map<string,any>;

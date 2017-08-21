@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-kanban-table",
-    template: require("./kanban-table.pug")(),
+    template: require("./kanban-table.pug"),
 })
 export class KanbanTable implements OnChanges {
     @Input() project: Immutable.Map<string, any>;

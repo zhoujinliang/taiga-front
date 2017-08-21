@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-admin-attributes-points-form",
-    template: require("./attributes-points-form.pug")(),
+    template: require("./attributes-points-form.pug"),
 })
 export class AdminAttributesPointsForm implements OnChanges, AfterViewChecked {
     @Input() value: Immutable.Map<string, any>;

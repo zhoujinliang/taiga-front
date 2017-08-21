@@ -9,7 +9,7 @@ import { PasswordRecoverAction } from "../auth.actions";
 
 @Component({
     selector: "tg-forgot-password-page",
-    template: require("./forgot-password.pug")(),
+    template: require("./forgot-password.pug"),
 })
 export class ForgotPasswordPage {
     nextUrl: string;

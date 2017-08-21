@@ -24,7 +24,7 @@ import {Component, EventEmitter, Input, OnChanges, Output} from "@angular/core";
 @Component({
     host: {class: "lightbox-select-user"},
     selector: "tg-assigned-to-selector",
-    template: require("./assigned-to-selector.pug")(),
+    template: require("./assigned-to-selector.pug"),
 })
 export class AssignedToSelector implements OnChanges {
     @Input() members: Immutable.List<any>;

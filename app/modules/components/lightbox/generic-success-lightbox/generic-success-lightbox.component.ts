@@ -6,7 +6,7 @@ import {CloseLightboxAction} from "../../../../app.actions";
 @Component({
     host: {"class": "lightbox-generic-success"},
     selector: "tg-generic-success-lightbox",
-    template: require("./generic-success-lightbox.pug")(),
+    template: require("./generic-success-lightbox.pug"),
 })
 export class GenericSuccessLightbox {
     @Input() title: string;

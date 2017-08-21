@@ -12,7 +12,7 @@ import * as Immutable from "immutable";
 
 @Component({
   selector: "tg-view",
-  template: require("./app.pug")(),
+  template: require("./app.pug"),
 })
 export class AppComponent {
     user: Observable<Immutable.Map<string, any>>;

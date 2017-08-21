@@ -23,7 +23,7 @@ import * as Immutable from "immutable";
 @Component({
     host: {class: "attachment-gallery-container"},
     selector: "tg-attachment-gallery",
-    template: require("./attachment-gallery.pug")(),
+    template: require("./attachment-gallery.pug"),
 })
 export class AttachmentGallery {
     @Input() attachment: Immutable.Map<string, any>;

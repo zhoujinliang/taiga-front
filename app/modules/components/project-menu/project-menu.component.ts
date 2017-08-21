@@ -27,7 +27,7 @@ import {slugify} from "../../../libs/utils";
 
 @Component({
     selector: "tg-project-menu",
-    template: require("./project-menu.pug")(),
+    template: require("./project-menu.pug"),
 })
 export class ProjectMenu implements OnChanges, OnInit, OnDestroy {
     @Input() project: Immutable.Map<string, any>;
