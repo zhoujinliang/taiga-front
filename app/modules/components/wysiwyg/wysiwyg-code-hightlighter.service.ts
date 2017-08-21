@@ -67,6 +67,7 @@ export class WysiwygCodeHightlighterService {
     }
 
     loadLanguage(lan) {
+        // TODO: Convert it to use a ngrx
         return new Promise(function(resolve) {
             if (!Prism.languages[lan]) {
                 return ljs.load(`/${_version}/prism/prism-${lan}.min.js`, resolve);

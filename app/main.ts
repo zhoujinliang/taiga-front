@@ -2,7 +2,6 @@ import "Flot";
 import "Flot/jquery.flot.time";
 import "jquery.flot.tooltip";
 import "flot-axislabels";
-// import * as Promise from "bluebird"
 import "l.js";
 import * as _ from "lodash";
 import "markdown-it";

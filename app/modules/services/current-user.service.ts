@@ -138,9 +138,7 @@ export class CurrentUserService {
     }
 
     _loadUserInfo() {
-        return Promise.all([
-            this.loadProjects(),
-        ]);
+        this.loadProjects()
     }
 
     setProjects(projects) {
