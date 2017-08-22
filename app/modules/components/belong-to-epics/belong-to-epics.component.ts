@@ -29,6 +29,6 @@ export class BelongToEpics {
     @Input() format: string;
 
     getTitle(epic) {
-        return `#${epic.get("id")} ${epic.get("subject")}`;
+        return `#${epic.get("ref")} ${epic.get("subject")}`;
     }
 }
