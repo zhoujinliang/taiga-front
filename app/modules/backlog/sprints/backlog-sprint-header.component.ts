@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input, Output, EventEmitter} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import { Store } from "@ngrx/store";
 import { OpenLightboxAction } from "../../../app.actions";
@@ -10,6 +10,7 @@ import * as Immutable from "immutable";
 @Component({
     selector: "tg-backlog-sprint-header",
     template: require("./backlog-sprint-header.pug"),
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BacklogSprintHeader {
     @Input() sprint: Immutable.Map<string, any>;

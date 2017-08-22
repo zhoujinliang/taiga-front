@@ -1,4 +1,4 @@
-import {Component, Input, ElementRef, OnChanges} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input, ElementRef, OnChanges} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import * as Immutable from "immutable";
 import * as _ from "lodash";
@@ -6,6 +6,7 @@ import * as _ from "lodash";
 @Component({
     selector: "tg-backlog-burndown-graph",
     template: `<div class="burndown"></div>`,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BacklogBurndownGraph implements OnChanges {
     @Input() stats: Immutable.Map<string, any>;

@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input, Output, EventEmitter} from "@angular/core";
 import * as Immutable from "immutable";
 import {OpenLightboxAction} from "../../app.actions";
 import * as actions from "./backlog.actions";
@@ -8,6 +8,7 @@ import {IState} from "../../app.store";
 @Component({
     selector: "tg-backlog-menu",
     template: require("./backlog-menu.pug"),
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BacklogMenu {
     @Input() userstories: Immutable.List<any>;

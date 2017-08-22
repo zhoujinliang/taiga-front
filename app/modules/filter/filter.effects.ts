@@ -13,8 +13,34 @@ import * as actions from "./filter.actions";
 import {AddNotificationMessageAction} from "../common/common.actions";
 import {go} from "@ngrx/router-store";
 import {genericErrorManagement} from "../utils/effects";
+import {generateHash} from "../../libs/utils";
 
 @Injectable()
 export class FilterEffects {
+
+    @Effect()
+    storeCustomFitlers$: Observable<Action> = this.actions$
+        .ofType("STORE_CUSTOM_FILTERS")
+        .map(toPayload)
+        .switchMap(({projectId, filters, section}) => {
+          const ns = `${projectId}:${section}-custom-filters`
+          const hash = generateHash([projectId, ns])
+          return this.rs.user.setUserStorage(hash, filters).map((filters) =>
+              new actions.SetCustomFiltersAction(filters.get('value'))
+          );
+        });
+
+    @Effect()
+    fetchCustomFitlers$: Observable<Action> = this.actions$
+        .ofType("FETCH_CUSTOM_FILTERS")
+        .map(toPayload)
+        .switchMap(({projectId, filters, section}) => {
+          const ns = `${projectId}:${section}-custom-filters`
+          const hash = generateHash([projectId, ns])
+          return this.rs.user.getUserStorage(hash).map((filters) => {
+              return new actions.SetCustomFiltersAction(filters.get('value'))
+          });
+        });
+
     constructor(private actions$: Actions, private rs: ResourcesService) { }
 }

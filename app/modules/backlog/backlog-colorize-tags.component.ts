@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
 
 @Component({
   selector: "tg-backlog-colorize-tag",
@@ -11,6 +11,7 @@ import {Component, Input} from "@angular/core";
           {{name}}
       </span>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BacklogColorizeTag {
     @Input("name") name: any = [];
@@ -33,6 +34,7 @@ export class BacklogColorizeTag {
         [color]="tag.get(1)">
      </tg-backlog-colorize-tag>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BacklogColorizeTags {
     @Input("tags") tags: any = [];

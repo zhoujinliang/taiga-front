@@ -13,7 +13,7 @@ import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import { ZoomLevelService } from "../services/zoom-level.service";
 import * as actions from "./backlog.actions";
 import * as moment from "moment";
-import { AddFilterAction, RemoveFilterAction } from "../filter/filter.actions";
+import * as filter_actions from "../filter/filter.actions";
 
 @Component({
     template: require("./backlog.pug"),
@@ -40,6 +40,7 @@ export class BacklogPage implements OnInit, OnDestroy {
     editingUs: Observable<Immutable.Map<string, any>>;
     currentSprint: Observable<Immutable.Map<string, any>>;
     latestSprint: Observable<Immutable.Map<string, any>>;
+    customFilters: Observable<Immutable.Map<string, any>>;
     doomlinePosition: Observable<number>;
 
     constructor(private store: Store<IState>,
@@ -75,6 +76,7 @@ export class BacklogPage implements OnInit, OnDestroy {
         this.filters = this.store.select((state) => state.getIn(["backlog", "filtersData"]));
         this.appliedFilters = this.store.select((state) => state.getIn(["filter", "backlog"]));
         this.appliedFiltersList = this.appliedFilters.combineLatest(this.project, this.filters).map(this.reformatAppliedFilters);
+        this.customFilters = this.store.select((state) => state.getIn(["filter", "custom-filters"]));
         this.assignedOnAssignedTo = this.store.select((state) => state.getIn(["backlog", "current-us", "assigned_to"]))
                                               .map((id) => Immutable.List(id));
         this.bulkCreateState = this.store.select((state) => state.getIn(["backlog", "bulk-create-state"]));
@@ -164,6 +166,7 @@ export class BacklogPage implements OnInit, OnDestroy {
         this.subscriptions = [
             this.project.subscribe((project) => {
                 if (project) {
+                    this.store.dispatch(new filter_actions.FetchCustomFiltersAction(project.get("id"), "backlog"));
                     this.store.dispatch(new actions.FetchBacklogAppliedFiltersAction(project.get("id")));
                     this.store.dispatch(new actions.FetchBacklogStatsAction(project.get("id")));
                     this.store.dispatch(new actions.FetchBacklogSprintsAction(project.get("id")));
@@ -239,10 +242,21 @@ export class BacklogPage implements OnInit, OnDestroy {
     }
 
     selectFilter({category, id}) {
-        this.store.dispatch(new AddFilterAction("backlog", category, id));
+        this.store.dispatch(new filter_actions.AddFilterAction("backlog", category, id));
+    }
+
+    selectCustomFilter(customFilter) {
+        let filters = {};
+        customFilter.forEach((ids, category) => {
+            filters[category] = []
+            for (let id of ids.split(",")) {
+                filters[category].push(id)
+            }
+        });
+        this.store.dispatch(new filter_actions.SetFiltersAction("backlog", filters));
     }
 
     removeFilter(filter) {
-        this.store.dispatch(new RemoveFilterAction("backlog", filter.get('type'), filter.get('id')));
+        this.store.dispatch(new filter_actions.RemoveFilterAction("backlog", filter.get('type'), filter.get('id')));
     }
 }

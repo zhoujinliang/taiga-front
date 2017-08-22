@@ -5,8 +5,17 @@ export class SetFiltersAction implements Action {
   readonly type = "SET_FILTERS";
   public payload: any;
 
-  constructor(public section: string, filter: string, value: any) {
-    this.payload = {section, filter, value};
+  constructor(section: string, filters: any) {
+    this.payload = {section, filters};
+  }
+}
+
+export class SetFilterAction implements Action {
+  readonly type = "SET_FILTER";
+  public payload: any;
+
+  constructor(section: string, filter: string, id: any) {
+    this.payload = {section, filter, id};
   }
 }
 
@@ -25,5 +34,29 @@ export class RemoveFilterAction implements Action {
 
   constructor(public section: string, filter: string, id: any) {
     this.payload = {section, filter, id};
+  }
+}
+
+export class SetCustomFiltersAction implements Action {
+  readonly type = "SET_CUSTOM_FILTERS";
+
+  constructor(public payload: Immutable.Map<string, any>) {}
+}
+
+export class StoreCustomFiltersAction implements Action {
+  readonly type = "STORE_CUSTOM_FILTERS";
+  public payload: any;
+
+  constructor(projectId: number, section: string, filters: Immutable.Map<string, any>) {
+    this.payload = {projectId, section, filters};
+  }
+}
+
+export class FetchCustomFiltersAction implements Action {
+  readonly type = "FETCH_CUSTOM_FILTERS";
+  public payload: any;
+
+  constructor(projectId: number, section: string) {
+    this.payload = {projectId, section};
   }
 }

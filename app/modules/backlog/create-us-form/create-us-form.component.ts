@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, Output, EventEmitter} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input, OnChanges, Output, EventEmitter} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {IState} from "../../../app.store";
 import * as Immutable from "immutable";
@@ -10,6 +10,7 @@ import * as actions from "../backlog.actions";
 @Component({
     selector: "tg-create-us-form",
     template: require("./create-us-form.pug"),
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateUsForm implements OnChanges {
     @Input() project: Immutable.Map<string,any>;

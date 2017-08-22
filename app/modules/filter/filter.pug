@@ -20,7 +20,7 @@ form((submit)="false")
         [filters]="appliedFiltersList",
         (removeFilter)="removeFilter.emit($event)"
     )
-    tg-filter-save-custom()
+    tg-filter-save-custom([appliedFilters]="appliedFiltersList")
 
     .filters-cats
         ul
@@ -81,9 +81,16 @@ form((submit)="false")
                     (selectFilter)="selectFilter.emit($event)",
                 )
 
-            // TODO Implement custom filters
-            // li.custom-filters.e2e-custom-filters(
-            //     [class.selected]="isOpen('custom-filter')",
-            //     *ngIf="customFilter.content.length > 0"
-            // )
-            //     tg-filter-custom-category([customfilters]="customFilters", [isCustom]="true")
+            li.custom-filters.e2e-custom-filters(
+                [class.selected]="selectedCategory === 'custom-filter'",
+                *ngIf="customFilters && customFilters.size > 0"
+            )
+                tg-filter-category(
+                    category="custom-filter",
+                    [title]="'COMMON.FILTERS.CATEGORIES.CUSTOM_FILTERS' | translate",
+                    [selectedCategory]="selectedCategory",
+                    [items]="customFiltersItems",
+                    [applied]="",
+                    (selectCategory)="selectCategory($event)",
+                    (selectFilter)="selectCustomFilter.emit(customFilters.get($event.id))",
+                )

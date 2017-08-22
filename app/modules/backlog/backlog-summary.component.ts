@@ -1,9 +1,10 @@
-import {Component, Input} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-backlog-summary",
     template: require("./backlog-summary.pug"),
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BacklogSummary {
     @Input() project: Immutable.Map<string, any>;

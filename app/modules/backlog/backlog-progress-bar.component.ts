@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
 import * as Immutable from "immutable";
 import * as _ from "lodash";
 
@@ -6,6 +6,7 @@ import * as _ from "lodash";
     host: {"class": "summary-progress-bar"},
     selector: "tg-backlog-progress-bar",
     template: require("./backlog-progress-bar.pug"),
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BacklogProgressBar {
     @Input() stats: Immutable.Map<string, any>;

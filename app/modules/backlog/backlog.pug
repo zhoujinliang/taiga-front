@@ -28,7 +28,9 @@ div.wrapper(
             [appliedFilters]="appliedFilters|async",
             [appliedFiltersList]="appliedFiltersList|async",
             [filters]="filters|async",
+            [customFilters]="customFilters|async",
             (selectFilter)="selectFilter($event)",
+            (selectCustomFilter)="selectCustomFilter($event)",
             (removeFilter)="removeFilter($event)"
         )
     section.main.backlog

@@ -1,4 +1,4 @@
-import {Component, Input, HostListener} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input, HostListener} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {IState} from "../../app.store";
 import * as Immutable from "immutable";
@@ -7,6 +7,7 @@ import * as actions from "./backlog.actions";
 @Component({
     selector: "tg-backlog-us-points",
     template: require("./backlog-us-points.pug"),
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BacklogUsPoints {
     @Input() us: Immutable.Map<string,any>;

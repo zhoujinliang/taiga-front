@@ -19,10 +19,8 @@ div
         *ngIf="selectedCategory === category",
     )
         ng-container(*ngFor="let item of items")
-            // ng-container(*ngIf="!isFilterSelected(item) && !(item.get('count') == 0 && hideEmpty)")
-            // (click)="selectFilter.emit({category: category, id: item.get('id')})"
             .single-filter.ng-animate-disabled(
-                *ngIf="!applied.contains(item.get('id')) && !(item.get('count') == 0 && hideEmpty)",
+                *ngIf="(!applied || !applied.contains(item.get('id'))) && !(item.get('count') == 0 && hideEmpty)",
                 (click)="onSelectFilter(category, item)"
             )
                 span.name(

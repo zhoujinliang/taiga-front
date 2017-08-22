@@ -33,8 +33,11 @@ export class Filter implements OnChanges {
     @Input() appliedFiltersList: any;
     @Input() section: string;
     @Input() filters: any;
+    @Input() customFilters: Immutable.Map<string, any>;
     @Output() selectFilter: EventEmitter<any>;
     @Output() removeFilter: EventEmitter<any>;
+    @Output() selectCustomFilter: EventEmitter<any>;
+    customFiltersItems: Immutable.List<any>;
     selectedCategory: string = "";
     statusesFilters: Immutable.List<any>;
     tagsFilters: Immutable.List<any>;
@@ -46,6 +49,7 @@ export class Filter implements OnChanges {
     constructor(private store: Store<IState>) {
         this.selectFilter = new EventEmitter();
         this.removeFilter = new EventEmitter();
+        this.selectCustomFilter = new EventEmitter();
     }
 
     ngOnChanges(changes) {
@@ -57,10 +61,15 @@ export class Filter implements OnChanges {
             this.ownersFilters = this.reformatOwners(this.filters.get('owners'));
             this.epicsFilters = this.reformatEpics(this.filters.get('epics'));
         }
+        if(changes.customFilters) {
+            this.customFiltersItems = this.customFilters.keySeq().map((id) => (
+                Immutable.fromJS({id: id, name: id, color: null, count: 0})
+            )).toList();
+        }
     }
 
     changeQ(q) {
-        this.store.dispatch(new actions.SetFiltersAction(this.section, "q", q));
+        this.store.dispatch(new actions.SetFilterAction(this.section, "q", q));
     }
 
     selectCategory(category) {

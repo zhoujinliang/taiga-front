@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import {Store} from "@ngrx/store";
 import {IState} from "../../app.store";
 import {OpenLightboxAction} from "../../app.actions";
@@ -9,6 +9,7 @@ import * as Immutable from "immutable";
     host: {"class": "row us-item-row"},
     selector: "tg-backlog-row",
     template: require("./backlog-row.pug"),
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BacklogRow {
     @Input() project: Immutable.Map<string, any>;

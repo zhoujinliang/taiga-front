@@ -1,6 +1,8 @@
 import * as Immutable from "immutable";
+import * as _ from "lodash";
 
 export const filterInitialState = {
+    "custom-filters": {},
     "backlog": {
         "q": "",
         "status": [],
@@ -31,11 +33,19 @@ export const filterInitialState = {
 
 export const filterReducer = (state, action) => {
     switch (action.type){
-        case "SET_FILTERS":
+        case "SET_FILTER":
             return state.setIn(
                 [action.payload.section, action.payload.filter],
                 Immutable.fromJS(action.payload.value)
             );
+        case "SET_FILTERS":
+            let filters = _.extend({}, filterInitialState[action.payload.section], action.payload.filters)
+            return state.set(
+                action.payload.section,
+                Immutable.fromJS(filters)
+            );
+        case "SET_CUSTOM_FILTERS":
+            return state.set("custom-filters", action.payload);
         case "ADD_FILTER":
             return state.updateIn(
                 [action.payload.section, action.payload.filter],

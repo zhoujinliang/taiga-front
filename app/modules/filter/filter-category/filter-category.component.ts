@@ -17,12 +17,13 @@
  * File: filter-category.component.coffee
  */
 
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
     selector: "tg-filter-category",
     template: require("./filter-category.pug"),
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FilterCategory {
     @Input() category: string;
