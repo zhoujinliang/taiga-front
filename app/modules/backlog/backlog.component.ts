@@ -272,7 +272,7 @@ export class BacklogPage implements OnInit, OnDestroy {
                 return filter.isEmpty() ? null : filter.toJS().join(',')
             }
             return filter;
-        })
+        }).filter((filter) => filter !== null)
         const newFilters = this.currentCustomFilters.set(filterName, transformedFilters);
         this.store.dispatch(new filter_actions.StoreCustomFiltersAction(this.projectId, section, newFilters));
     }
