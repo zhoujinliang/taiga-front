@@ -37,6 +37,8 @@ export class Filter implements OnChanges {
     @Output() selectFilter: EventEmitter<any>;
     @Output() removeFilter: EventEmitter<any>;
     @Output() selectCustomFilter: EventEmitter<any>;
+    @Output() saveCustomFilter: EventEmitter<any>;
+    @Output() removeCustomFilter: EventEmitter<any>;
     customFiltersItems: Immutable.List<any>;
     selectedCategory: string = "";
     statusesFilters: Immutable.List<any>;
@@ -50,6 +52,8 @@ export class Filter implements OnChanges {
         this.selectFilter = new EventEmitter();
         this.removeFilter = new EventEmitter();
         this.selectCustomFilter = new EventEmitter();
+        this.saveCustomFilter = new EventEmitter();
+        this.removeCustomFilter = new EventEmitter();
     }
 
     ngOnChanges(changes) {
@@ -70,6 +74,10 @@ export class Filter implements OnChanges {
 
     changeQ(q) {
         this.store.dispatch(new actions.SetFilterAction(this.section, "q", q));
+    }
+
+    storeCustomFilter(filterName, appliedFilters) {
+        this.saveCustomFilter.emit({section: this.section, filterName: filterName, filters:appliedFilters});
     }
 
     selectCategory(category) {

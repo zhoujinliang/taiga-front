@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, OnChanges} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input, OnChanges, Output, EventEmitter} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
@@ -8,11 +8,12 @@ import * as Immutable from "immutable";
 })
 export class FilterSaveCustom implements OnChanges {
     @Input() appliedFilters: Immutable.List<any>;
+    @Output() saveCustomFilter: EventEmitter<string>
     customFilterForm:boolean = false;
     customFilterName:string = "";
 
-    saveCustomFilter() {
-        console.log(this.customFilterName);
+    constructor() {
+        this.saveCustomFilter = new EventEmitter();
     }
 
     ngOnChanges(changes) {

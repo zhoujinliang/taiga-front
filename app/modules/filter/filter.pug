@@ -20,7 +20,10 @@ form((submit)="false")
         [filters]="appliedFiltersList",
         (removeFilter)="removeFilter.emit($event)"
     )
-    tg-filter-save-custom([appliedFilters]="appliedFiltersList")
+    tg-filter-save-custom(
+        [appliedFilters]="appliedFiltersList",
+        (saveCustomFilter)="storeCustomFilter($event, appliedFilters)"
+    )
 
     .filters-cats
         ul
@@ -93,4 +96,5 @@ form((submit)="false")
                     [applied]="",
                     (selectCategory)="selectCategory($event)",
                     (selectFilter)="selectCustomFilter.emit(customFilters.get($event.id))",
+                    (removeCustomFilter)="removeCustomFilter.emit($event)",
                 )

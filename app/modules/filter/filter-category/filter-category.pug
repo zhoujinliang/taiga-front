@@ -30,3 +30,9 @@ div
                 span.number.e2e-filter-count(
                     *ngIf="item.get('count') > 0"
                 ) {{item.get('count')}}
+
+                a.remove-filter.e2e-remove-custom-filter(
+                    *ngIf="category === 'custom-filter'",
+                    (click)="$event.stopPropagation(); removeCustomFilter.emit(item.get('id'))",
+                )
+                    tg-svg(svg-icon="icon-trash")

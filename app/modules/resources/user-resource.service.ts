@@ -43,7 +43,8 @@ export class UserResource {
             return this.http.delete(`${url}/${hash}`);
         }
         return this.http.put(`${url}/${hash}`, {key: hash, value: data}).catch(() => {
-            return this.http.post(`${url}`, {key: hash, value: data});
+            return this.http.post(`${url}`, {key: hash, value: data})
+                            .map((result: any) => result.data);
         });
     }
 

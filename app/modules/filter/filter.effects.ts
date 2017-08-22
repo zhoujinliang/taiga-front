@@ -26,7 +26,7 @@ export class FilterEffects {
           const ns = `${projectId}:${section}-custom-filters`
           const hash = generateHash([projectId, ns])
           return this.rs.user.setUserStorage(hash, filters).map((filters) =>
-              new actions.SetCustomFiltersAction(filters.get('value'))
+              new actions.SetCustomFiltersAction(filters.data.get('value'))
           );
         });
 

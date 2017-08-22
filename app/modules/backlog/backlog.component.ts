@@ -42,6 +42,8 @@ export class BacklogPage implements OnInit, OnDestroy {
     latestSprint: Observable<Immutable.Map<string, any>>;
     customFilters: Observable<Immutable.Map<string, any>>;
     doomlinePosition: Observable<number>;
+    projectId: number;
+    currentCustomFilters: Immutable.Map<string, any>;
 
     constructor(private store: Store<IState>,
                 private route: ActivatedRoute,
@@ -166,6 +168,7 @@ export class BacklogPage implements OnInit, OnDestroy {
         this.subscriptions = [
             this.project.subscribe((project) => {
                 if (project) {
+                    this.projectId = project.get('id');
                     this.store.dispatch(new filter_actions.FetchCustomFiltersAction(project.get("id"), "backlog"));
                     this.store.dispatch(new actions.FetchBacklogAppliedFiltersAction(project.get("id")));
                     this.store.dispatch(new actions.FetchBacklogStatsAction(project.get("id")));
@@ -177,6 +180,9 @@ export class BacklogPage implements OnInit, OnDestroy {
                     this.store.dispatch(new actions.FetchBacklogFiltersDataAction(project.get("id"), appliedFilters));
                     this.store.dispatch(new actions.FetchBacklogUserStoriesAction(project.get("id"), appliedFilters));
                 }
+            }),
+            this.customFilters.subscribe((customFilters) => {
+                this.currentCustomFilters = customFilters;
             }),
         ];
     }
@@ -258,5 +264,24 @@ export class BacklogPage implements OnInit, OnDestroy {
 
     removeFilter(filter) {
         this.store.dispatch(new filter_actions.RemoveFilterAction("backlog", filter.get('type'), filter.get('id')));
+    }
+
+    saveCustomFilter({section, filterName, filters}) {
+        let transformedFilters = filters.map((filter) => {
+            if (Immutable.List.isList(filter)) {
+                return filter.isEmpty() ? null : filter.toJS().join(',')
+            }
+            return filter;
+        })
+        const newFilters = this.currentCustomFilters.set(filterName, transformedFilters);
+        this.store.dispatch(new filter_actions.StoreCustomFiltersAction(this.projectId, section, newFilters));
+    }
+
+    removeCustomFilter({section, filterName}) {
+        const newFilters = this.currentCustomFilters.delete(filterName);
+        console.log(filterName);
+        console.log(this.currentCustomFilters.toJS());
+        console.log(newFilters.toJS());
+        this.store.dispatch(new filter_actions.StoreCustomFiltersAction(this.projectId, section, newFilters));
     }
 }

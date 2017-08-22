@@ -35,10 +35,12 @@ export class FilterCategory {
     @Input() applied: Immutable.List<any>;
     @Output() selectCategory: EventEmitter<any>;
     @Output() selectFilter: EventEmitter<any>;
+    @Output() removeCustomFilter: EventEmitter<any>;
 
     constructor() {
         this.selectCategory = new EventEmitter();
         this.selectFilter = new EventEmitter();
+        this.removeCustomFilter = new EventEmitter();
     }
 
     onSelectFilter(category, item) {
