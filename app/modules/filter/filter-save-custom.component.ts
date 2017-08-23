@@ -22,4 +22,10 @@ export class FilterSaveCustom implements OnChanges {
             this.customFilterName = "";
         }
     }
+
+    saveFilter(filterName) {
+        this.customFilterForm = false;
+        this.customFilterName = "";
+        this.saveCustomFilter.emit(filterName);
+    }
 }

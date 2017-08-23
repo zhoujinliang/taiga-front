@@ -8,7 +8,7 @@
 
     form(
         *ngIf="customFilterForm",
-        (submit)="saveCustomFilter.emit(customFilterName)"
+        (submit)="saveFilter(customFilterName)"
     )
         // tg-autofocus
         input.my-filter-name.e2e-filter-name-input(
