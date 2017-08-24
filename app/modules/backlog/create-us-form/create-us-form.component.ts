@@ -48,7 +48,6 @@ export class CreateUsForm implements OnChanges {
             this.createUsForm.controls.blocked.setValue(this.us.get("blocked"));
             this.createUsForm.controls.blockedNote.setValue(this.us.get("blockedNote"));
             this.createUsForm.controls.status.setValue(this.us.get("status"));
-            console.log(this.us.toJS());
         } else {
             this.createUsForm.controls.subject.setValue("");
             this.createUsForm.controls.points.setValue({});
