@@ -39,8 +39,11 @@ export class RemoveFilterAction implements Action {
 
 export class SetCustomFiltersAction implements Action {
   readonly type = "SET_CUSTOM_FILTERS";
+  public payload: any;
 
-  constructor(public payload: Immutable.Map<string, any>) {}
+  constructor(section: string, filter: Immutable.Map<string, any>) {
+      this.payload = {section, filter}
+  }
 }
 
 export class StoreCustomFiltersAction implements Action {

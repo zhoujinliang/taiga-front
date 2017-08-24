@@ -29,12 +29,12 @@ export class BacklogPage implements OnInit, OnDestroy {
     filters: Observable<any>;
     appliedFilters: Observable<Immutable.Map<string, any>>;
     appliedFiltersList: Observable<Immutable.List<any>>;
+    customFilters: Observable<Immutable.Map<string, any>>;
     stats: Observable<Immutable.Map<string, any>>;
     sprints: Observable<Immutable.Map<string, any>>;
     editingUs: Observable<Immutable.Map<string, any>>;
     currentSprint: Observable<Immutable.Map<string, any>>;
     latestSprint: Observable<Immutable.Map<string, any>>;
-    customFilters: Observable<Immutable.Map<string, any>>;
     doomlinePosition: Observable<number>;
     subscriptions: Subscription[];
 
@@ -63,7 +63,7 @@ export class BacklogPage implements OnInit, OnDestroy {
         this.filters = this.store.select((state) => state.getIn(["backlog", "filtersData"]));
         this.appliedFilters = this.store.select((state) => state.getIn(["filter", "backlog"]));
         this.appliedFiltersList = this.appliedFilters.combineLatest(this.project, this.filters).map(this.reformatAppliedFilters);
-        this.customFilters = this.store.select((state) => state.getIn(["filter", "custom-filters"]));
+        this.customFilters = this.store.select((state) => state.getIn(["filter", "backlog-custom-filters"]));
         this.stats = this.store.select((state) => state.getIn(["backlog", "stats"]));
         this.doomlinePosition = this.stats.combineLatest(this.userstories).map(([stats, userstories]) => {
             if (!stats || !userstories) {

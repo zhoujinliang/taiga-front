@@ -1,4 +1,5 @@
 import * as Immutable from "immutable";
+import * as filter_actions from "../filter/filter.actions";
 
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
@@ -21,14 +22,16 @@ export class KanbanPage implements OnInit, OnDestroy {
     project: Observable<any>;
     userstoriesByState: Observable<any[]>;
     zoom: Observable<any>;
-    appliedFilters: Observable<any>;
     selectedFiltersCount: number = 0;
-    filters: Observable<any>;
     members: Observable<any>;
     assignedOnAssignedTo: Observable<Immutable.List<number>>;
     filtersOpen: boolean = false;
-    subscriptions: Subscription[];
+    filters: Observable<any>;
+    appliedFilters: Observable<Immutable.Map<string, any>>;
+    appliedFiltersList: Observable<Immutable.List<any>>;
+    customFilters: Observable<Immutable.Map<string, any>>;
     bulkCreateState: Observable<number>;
+    subscriptions: Subscription[];
 
     constructor(private store: Store<IState>,
                 private route: ActivatedRoute,
@@ -54,8 +57,10 @@ export class KanbanPage implements OnInit, OnDestroy {
             };
         });
         this.appliedFilters = this.store.select((state) => state.getIn([this.section, "appliedFilters"]));
-        this.filters = this.store.select((state) => state.getIn(["kanban", "filtersData"]))
-                                 .map(this.filtersDataToFilters.bind(this));
+        this.filters = this.store.select((state) => state.getIn(["kanban", "filtersData"]));
+        this.appliedFilters = this.store.select((state) => state.getIn(["filter", "kanban"]));
+        this.appliedFiltersList = this.appliedFilters.combineLatest(this.project, this.filters).map(this.reformatAppliedFilters);
+        this.customFilters = this.store.select((state) => state.getIn(["filter", "kanban-custom-filters"]));
         this.assignedOnAssignedTo = this.store.select((state) => state.getIn(["kanban", "current-us", "assigned_to"]))
                                               .map((id) => Immutable.List(id));
         this.bulkCreateState = this.store.select((state) => state.getIn(["kanban", "bulk-create-state"]));
@@ -73,6 +78,9 @@ export class KanbanPage implements OnInit, OnDestroy {
                     this.store.dispatch(new actions.FetchKanbanFiltersDataAction(project.get("id"), appliedFilters));
                     this.store.dispatch(new actions.FetchKanbanUserStoriesAction(project.get("id"), appliedFilters));
                 }
+            }),
+            this.route.queryParams.subscribe((params) => {
+                this.setFiltersFromTheUrl(Immutable.fromJS(params));
             }),
         ];
     }
@@ -169,6 +177,67 @@ export class KanbanPage implements OnInit, OnDestroy {
         this.store.dispatch(new actions.CleanKanbanDataAction());
     }
 
+    reformatAppliedFilters([appliedFilters, project, filters]) {
+        let result = Immutable.List()
+        if (!appliedFilters || !project) {
+            return result;
+        }
+
+        let statusesFilters = appliedFilters.get('status').map((filter) => {
+            let usStatus = project.getIn(['us_statuses_by_id', parseInt(filter, 10)])
+            return Immutable.fromJS({
+                id: usStatus.get('id'),
+                name: usStatus.get('name'),
+                color: usStatus.get('color'),
+                type: 'status',
+            });
+        });
+
+        let tagsFilters = appliedFilters.get('tags').map((filter) => {
+            let tagColor = project.getIn(['tags_colors', filter])
+            return Immutable.fromJS({
+                id: filter,
+                name: filter,
+                color: tagColor,
+                type: 'tags',
+            });
+        });
+
+        let assignedToFilters = appliedFilters.get('assigned_to').map((filter) => {
+            let member = project.getIn(['members_by_id', parseInt(filter, 10)])
+            return Immutable.fromJS({
+                id: member.get('id'),
+                name: member.get('full_name_display') || member.get('username'),
+                color: null,
+                type: 'assigned_to',
+            });
+        });
+
+        let ownerFilters = appliedFilters.get('owner').map((filter) => {
+            let member = project.getIn(['members_by_id', parseInt(filter, 10)])
+            return Immutable.fromJS({
+                id: member.get('id'),
+                name: member.get('full_name_display') || member.get('username'),
+                color: null,
+                type: 'owner',
+            });
+        });
+
+        let epicsFilters = appliedFilters.get('epic').map((filter) => {
+            let epicsMap = filters.get('epics').reduce((acc, epic) => acc.set(epic.get('id'), epic), Immutable.Map())
+            let epic = epicsMap.get(filter)
+            return Immutable.fromJS({
+                id: epic.get('id'),
+                name: epic.get('subject'),
+                color: epic.get('color'),
+                type: 'epic',
+            });
+        });
+
+        return statusesFilters.concat(tagsFilters, assignedToFilters, ownerFilters, epicsFilters);
+    }
+
+
     getJoyrideSteps() {
         return Immutable.fromJS([
             {
@@ -200,5 +269,20 @@ export class KanbanPage implements OnInit, OnDestroy {
                 },
             }
         ]);
+    }
+
+    setFiltersFromTheUrl(params) {
+        let filters = {};
+        params.forEach((ids, category) => {
+            if (category === "q") {
+                filters[category] = ids
+            } else {
+                filters[category] = []
+                for (let id of ids.split(",")) {
+                    filters[category].push(id)
+                }
+            }
+        });
+        this.store.dispatch(new filter_actions.SetFiltersAction("kanban", filters));
     }
 }

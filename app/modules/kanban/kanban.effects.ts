@@ -20,10 +20,13 @@ export class KanbanEffects {
         .ofType("FETCH_KANBAN_USER_STORIES")
         .map(toPayload)
         .switchMap((payload) => {
+          let filters = payload.appliedFilters.filter((value) =>
+              !Immutable.List.isList(value) || value.size > 0
+          )
           const params = _.extend({
               include_attachments: 1,
               include_tasks: 1,
-          }, payload.appliedFilters.toJS());
+          }, filters.toJS());
           return this.rs.userstories.listAll(payload.projectId, params).map((userstories) => {
               return new actions.SetKanbanUserStoriesAction(userstories.data);
           });

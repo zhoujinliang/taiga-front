@@ -28,7 +28,7 @@ export class FilterEffects {
           return this.rs.user.setUserStorage(hash, filters).flatMap((filters) =>
               Observable.from([
                   new AddNotificationMessageAction("success"),
-                  new actions.SetCustomFiltersAction(filters.data.get('value'))
+                  new actions.SetCustomFiltersAction(section, filters.data.get('value'))
               ])
           );
         });
@@ -41,7 +41,7 @@ export class FilterEffects {
           const ns = `${projectId}:${section}-custom-filters`
           const hash = generateHash([projectId, ns])
           return this.rs.user.getUserStorage(hash).map((filters) => {
-              return new actions.SetCustomFiltersAction(filters.get('value'))
+              return new actions.SetCustomFiltersAction(section, filters.get('value'))
           });
         });
 

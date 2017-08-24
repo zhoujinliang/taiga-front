@@ -31,6 +31,15 @@ div.wrapper
             [appliedFilters]="appliedFilters|async",
             [filters]="filters|async"
         )
+        tg-filter(
+            [class.open]="filtersOpen",
+            section="kanban",
+            [appliedFilters]="appliedFilters|async",
+            [appliedFiltersList]="appliedFiltersList|async",
+            [filters]="filters|async",
+            [customFilters]="customFilters|async",
+            [project]="project|async",
+        )
 
         .kanban-header
             tg-main-title([project]="project | async", [sectionName]="section")
