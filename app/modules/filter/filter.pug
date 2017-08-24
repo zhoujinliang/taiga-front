@@ -8,7 +8,8 @@ form((submit)="false")
             type="text",
             name="q",
             [placeholder]="'COMMON.FILTERS.INPUT_PLACEHOLDER' | translate",
-            (change)="changeQ(q.value)"
+            [value]="appliedFilters.get('q')",
+            (keyup)="changeQ(q.value)"
         )
         tg-svg.search-action(
             svg-icon="icon-search",
@@ -18,11 +19,11 @@ form((submit)="false")
 .filters-step-cat(*ngIf="filters")
     tg-filter-applied(
         [filters]="appliedFiltersList",
-        (removeFilter)="removeFilter.emit($event)"
+        (removeFilter)="removeFilter($event)"
     )
     tg-filter-save-custom(
         [appliedFilters]="appliedFiltersList",
-        (saveCustomFilter)="storeCustomFilter($event, appliedFilters)"
+        (saveCustomFilter)="saveCustomFilter($event)"
     )
 
     .filters-cats
@@ -35,7 +36,7 @@ form((submit)="false")
                     [items]="statusesFilters",
                     [applied]="appliedFilters.get('status')",
                     (selectCategory)="selectCategory($event)",
-                    (selectFilter)="selectFilter.emit($event)",
+                    (selectFilter)="selectFilter($event)",
                 )
 
             li([class.selected]="selectedCategory === 'tags'")
@@ -48,7 +49,7 @@ form((submit)="false")
                     [applied]="appliedFilters.get('tags')",
                     [hideEmpty]="true",
                     (selectCategory)="selectCategory($event)",
-                    (selectFilter)="selectFilter.emit($event)",
+                    (selectFilter)="selectFilter($event)",
                 )
 
             li([class.selected]="selectedCategory === 'assigned_to'")
@@ -59,7 +60,7 @@ form((submit)="false")
                     [items]="assignedToFilters",
                     [applied]="appliedFilters.get('assigned_to')",
                     (selectCategory)="selectCategory($event)",
-                    (selectFilter)="selectFilter.emit($event)",
+                    (selectFilter)="selectFilter($event)",
                 )
 
             li([class.selected]="selectedCategory === 'owner'")
@@ -70,7 +71,7 @@ form((submit)="false")
                     [items]="ownersFilters",
                     [applied]="appliedFilters.get('owner')",
                     (selectCategory)="selectCategory($event)",
-                    (selectFilter)="selectFilter.emit($event)",
+                    (selectFilter)="selectFilter($event)",
                 )
 
             li([class.selected]="selectedCategory === 'epic'")
@@ -81,7 +82,7 @@ form((submit)="false")
                     [items]="epicsFilters",
                     [applied]="appliedFilters.get('epic')",
                     (selectCategory)="selectCategory($event)",
-                    (selectFilter)="selectFilter.emit($event)",
+                    (selectFilter)="selectFilter($event)",
                 )
 
             li.custom-filters.e2e-custom-filters(
@@ -95,6 +96,6 @@ form((submit)="false")
                     [items]="customFiltersItems",
                     [applied]="",
                     (selectCategory)="selectCategory($event)",
-                    (selectFilter)="selectCustomFilter.emit(customFilters.get($event.id))",
-                    (removeCustomFilter)="removeCustomFilter.emit($event)",
+                    (selectFilter)="selectCustomFilter(customFilters.get($event.id))",
+                    (removeCustomFilter)="removeCustomFilter($event)",
                 )

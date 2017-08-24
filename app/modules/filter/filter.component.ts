@@ -21,6 +21,7 @@ import {Component, EventEmitter, Input, Output, OnChanges} from "@angular/core";
 import {Store} from "@ngrx/store";
 import * as _ from "lodash";
 import * as Immutable from "immutable";
+import { search } from "@ngrx/router-store";
 import {IState} from "../../app.store";
 import * as actions from "./filter.actions";
 
@@ -34,11 +35,7 @@ export class Filter implements OnChanges {
     @Input() section: string;
     @Input() filters: any;
     @Input() customFilters: Immutable.Map<string, any>;
-    @Output() selectFilter: EventEmitter<any>;
-    @Output() removeFilter: EventEmitter<any>;
-    @Output() selectCustomFilter: EventEmitter<any>;
-    @Output() saveCustomFilter: EventEmitter<any>;
-    @Output() removeCustomFilter: EventEmitter<any>;
+    @Input() project: Immutable.Map<string, any>;
     customFiltersItems: Immutable.List<any>;
     selectedCategory: string = "";
     statusesFilters: Immutable.List<any>;
@@ -48,13 +45,7 @@ export class Filter implements OnChanges {
     ownersFilters: Immutable.List<any>;
     epicsFilters: Immutable.List<any>;
 
-    constructor(private store: Store<IState>) {
-        this.selectFilter = new EventEmitter();
-        this.removeFilter = new EventEmitter();
-        this.selectCustomFilter = new EventEmitter();
-        this.saveCustomFilter = new EventEmitter();
-        this.removeCustomFilter = new EventEmitter();
-    }
+    constructor(private store: Store<IState>) {}
 
     ngOnChanges(changes) {
         if (changes.filters && this.filters) {
@@ -72,13 +63,17 @@ export class Filter implements OnChanges {
         }
     }
 
-    changeQ(q) {
-        this.store.dispatch(new actions.SetFilterAction(this.section, "q", q));
+    saveCustomFilter(filterName) {
+        let transformedFilters = this.appliedFilters.map((filter) => {
+            if (Immutable.List.isList(filter)) {
+                return filter.isEmpty() ? null : filter.toJS().join(',')
+            }
+            return filter;
+        }).filter((filter) => filter !== null)
+        const newFilters = this.customFilters.set(filterName, transformedFilters);
+        this.store.dispatch(new actions.StoreCustomFiltersAction(this.project.get('id'), this.section, newFilters));
     }
 
-    storeCustomFilter(filterName, appliedFilters) {
-        this.saveCustomFilter.emit({section: this.section, filterName: filterName, filters:appliedFilters});
-    }
 
     selectCategory(category) {
         if (this.selectedCategory === category) {
@@ -127,4 +122,50 @@ export class Filter implements OnChanges {
                        .update("name", () => "Not in an epic"); // TODO TRANSLATE IT?
         });
     }
+
+    selectFilter({category, id}) {
+        this.setFiltersInTheUrl(this.appliedFilters.update(category, (value) => value.push(id)));
+    }
+
+    selectCustomFilter(customFilter) {
+        let filters = {};
+        customFilter.forEach((ids, category) => {
+            if (category === "q") {
+                filters[category] = ids
+            } else {
+                filters[category] = []
+                for (let id of ids.split(",")) {
+                    filters[category].push(id)
+                }
+            }
+        });
+        this.setFiltersInTheUrl(filters)
+    }
+
+    changeQ = _.debounce((q) => {
+        this.setFiltersInTheUrl(this.appliedFilters.set("q", q))
+    }, 300);
+
+
+    setFiltersInTheUrl(filters) {
+        let transformedFilters = filters.map((filter) => {
+            if (Immutable.List.isList(filter)) {
+                return filter.isEmpty() ? null : filter.toJS().join(',')
+            }
+            return filter;
+        }).filter((filter) => filter !== null)
+        this.store.dispatch(search(transformedFilters.toJS()));
+    }
+
+    removeFilter(filter) {
+        this.setFiltersInTheUrl(this.appliedFilters.update(filter.get('type'), (value) => {
+            return value.filter((id) => id !== filter.get('id').toString())
+        }));
+    }
+
+    removeCustomFilter({section, filterName}) {
+        const newFilters = this.customFilters.delete(filterName);
+        this.store.dispatch(new actions.StoreCustomFiltersAction(this.project.get('id'), section, newFilters));
+    }
+
 }

@@ -5,6 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
 import { Observable, Subscription } from "rxjs";
+import { search } from "@ngrx/router-store";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/zip";
 import { StartLoadingAction, StopLoadingAction, OpenLightboxAction } from "../../app.actions";
@@ -13,6 +14,7 @@ import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import { ZoomLevelService } from "../services/zoom-level.service";
 import * as actions from "./backlog.actions";
 import * as moment from "moment";
+import * as _ from "lodash";
 import * as filter_actions from "../filter/filter.actions";
 
 @Component({
@@ -43,7 +45,6 @@ export class BacklogPage implements OnInit, OnDestroy {
     customFilters: Observable<Immutable.Map<string, any>>;
     doomlinePosition: Observable<number>;
     projectId: number;
-    currentCustomFilters: Immutable.Map<string, any>;
 
     constructor(private store: Store<IState>,
                 private route: ActivatedRoute,
@@ -90,7 +91,6 @@ export class BacklogPage implements OnInit, OnDestroy {
 
             let total_points = stats.get('total_points')
             let current_sum = stats.get('assigned_points')
-            console.log(stats.toJS());
 
             let idx = 0
             for (let us of userstories.toJS()) {
@@ -181,8 +181,8 @@ export class BacklogPage implements OnInit, OnDestroy {
                     this.store.dispatch(new actions.FetchBacklogUserStoriesAction(project.get("id"), appliedFilters));
                 }
             }),
-            this.customFilters.subscribe((customFilters) => {
-                this.currentCustomFilters = customFilters;
+            this.route.queryParams.subscribe((params) => {
+                this.setFiltersFromTheUrl(Immutable.fromJS(params));
             }),
         ];
     }
@@ -247,41 +247,18 @@ export class BacklogPage implements OnInit, OnDestroy {
         ]);
     }
 
-    selectFilter({category, id}) {
-        this.store.dispatch(new filter_actions.AddFilterAction("backlog", category, id));
-    }
-
-    selectCustomFilter(customFilter) {
+    setFiltersFromTheUrl(params) {
         let filters = {};
-        customFilter.forEach((ids, category) => {
-            filters[category] = []
-            for (let id of ids.split(",")) {
-                filters[category].push(id)
+        params.forEach((ids, category) => {
+            if (category === "q") {
+                filters[category] = ids
+            } else {
+                filters[category] = []
+                for (let id of ids.split(",")) {
+                    filters[category].push(id)
+                }
             }
         });
         this.store.dispatch(new filter_actions.SetFiltersAction("backlog", filters));
-    }
-
-    removeFilter(filter) {
-        this.store.dispatch(new filter_actions.RemoveFilterAction("backlog", filter.get('type'), filter.get('id')));
-    }
-
-    saveCustomFilter({section, filterName, filters}) {
-        let transformedFilters = filters.map((filter) => {
-            if (Immutable.List.isList(filter)) {
-                return filter.isEmpty() ? null : filter.toJS().join(',')
-            }
-            return filter;
-        }).filter((filter) => filter !== null)
-        const newFilters = this.currentCustomFilters.set(filterName, transformedFilters);
-        this.store.dispatch(new filter_actions.StoreCustomFiltersAction(this.projectId, section, newFilters));
-    }
-
-    removeCustomFilter({section, filterName}) {
-        const newFilters = this.currentCustomFilters.delete(filterName);
-        console.log(filterName);
-        console.log(this.currentCustomFilters.toJS());
-        console.log(newFilters.toJS());
-        this.store.dispatch(new filter_actions.StoreCustomFiltersAction(this.projectId, section, newFilters));
     }
 }

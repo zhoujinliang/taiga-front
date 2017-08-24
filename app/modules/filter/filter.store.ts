@@ -36,7 +36,7 @@ export const filterReducer = (state, action) => {
         case "SET_FILTER":
             return state.setIn(
                 [action.payload.section, action.payload.filter],
-                Immutable.fromJS(action.payload.value)
+                Immutable.fromJS(action.payload.id)
             );
         case "SET_FILTERS":
             let filters = _.extend({}, filterInitialState[action.payload.section], action.payload.filters)

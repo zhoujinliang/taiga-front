@@ -22,7 +22,9 @@ export class BacklogEffects {
         .ofType("FETCH_BACKLOG_USER_STORIES")
         .map(toPayload)
         .switchMap(wrapLoading("loading-userstories", (payload) => {
-          let filters = payload.appliedFilters.filter((value) => value.size > 0)
+          let filters = payload.appliedFilters.filter((value) =>
+              !Immutable.List.isList(value) || value.size > 0
+          )
           const params = filters.toJS();
           params.milestone = null;
           return this.rs.userstories.listAll(payload.projectId, params).map((userstories) => {
@@ -52,7 +54,9 @@ export class BacklogEffects {
         .ofType("FETCH_BACKLOG_FILTERS_DATA")
         .map(toPayload)
         .switchMap((payload) => {
-          let filters = payload.appliedFilters.filter((value) => value.size > 0)
+          let filters = payload.appliedFilters.filter((value) =>
+              !Immutable.List.isList(value) || value.size > 0
+          )
           const data = _.extend({project: payload.projectId}, filters.toJS());
           return this.rs.userstories.filtersData(data).map((filtersData) => {
               return new actions.SetBacklogFiltersDataAction(filtersData.data);
@@ -209,7 +213,6 @@ export class BacklogEffects {
         .map(toPayload)
         .switchMap((data) => {
           return this.rs.userstories.create(data).flatMap((result) => {
-              console.log(result);
               return Observable.from([
                   new actions.FetchBacklogStatsAction(result.data.get('project')),
                   new actions.RefreshBacklogUserStoriesAction(),
