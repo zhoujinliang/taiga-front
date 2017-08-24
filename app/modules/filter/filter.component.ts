@@ -38,6 +38,9 @@ export class Filter implements OnChanges {
     @Input() project: Immutable.Map<string, any>;
     customFiltersItems: Immutable.List<any>;
     selectedCategory: string = "";
+    typesFilters: Immutable.List<any>;
+    severitiesFilters: Immutable.List<any>;
+    prioritiesFilters: Immutable.List<any>;
     statusesFilters: Immutable.List<any>;
     tagsFilters: Immutable.List<any>;
     notEmptyTags: number;
@@ -49,12 +52,19 @@ export class Filter implements OnChanges {
 
     ngOnChanges(changes) {
         if (changes.filters && this.filters) {
+            if (this.section === "issues") {
+                this.typesFilters = this.reformatStatuses(this.filters.get('types'));
+                this.severitiesFilters = this.reformatStatuses(this.filters.get('severities'));
+                this.prioritiesFilters = this.reformatStatuses(this.filters.get('priorities'));
+            }
             this.statusesFilters = this.reformatStatuses(this.filters.get('statuses'));
             this.tagsFilters = this.reformatTags(this.filters.get('tags'));
             this.notEmptyTags = this.totalNotEmptyTags(this.filters.get('tags'));
             this.assignedToFilters = this.reformatAssignedTo(this.filters.get('assigned_to'));
             this.ownersFilters = this.reformatOwners(this.filters.get('owners'));
-            this.epicsFilters = this.reformatEpics(this.filters.get('epics'));
+            if (this.section !== "issues") {
+                this.epicsFilters = this.reformatEpics(this.filters.get('epics'));
+            }
         }
         if(changes.customFilters) {
             this.customFiltersItems = this.customFilters.keySeq().map((id) => (

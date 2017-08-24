@@ -21,9 +21,25 @@ export const projectsReducer = (state, action) => {
             let usStatusesById = action.payload.get('us_statuses')
                                     .reduce((usStatuses, usStatus) => usStatuses.set(usStatus.get('id'), usStatus),
                                             Immutable.Map());
+            let issueStatusesById = action.payload.get('issue_statuses')
+                                    .reduce((issueStatuses, issueStatus) => issueStatuses.set(issueStatus.get('id'), issueStatus),
+                                            Immutable.Map());
+            let issueTypesById = action.payload.get('issue_types')
+                                    .reduce((issueTypes, issueType) => issueTypes.set(issueType.get('id'), issueType),
+                                            Immutable.Map());
+            let severitiesById = action.payload.get('severities')
+                                    .reduce((severities, severity) => severities.set(severity.get('id'), severity),
+                                            Immutable.Map());
+            let prioritiesById = action.payload.get('priorities')
+                                    .reduce((priorities, priority) => priorities.set(priority.get('id'), priority),
+                                            Immutable.Map());
             return state.set("current-project", action.payload)
                         .setIn(["current-project", "members_by_id"], membersById)
-                        .setIn(["current-project", "us_statuses_by_id"], usStatusesById);
+                        .setIn(["current-project", "us_statuses_by_id"], usStatusesById)
+                        .setIn(["current-project", "issue_statuses_by_id"], issueStatusesById)
+                        .setIn(["current-project", "issue_types_by_id"], issueTypesById)
+                        .setIn(["current-project", "severities_by_id"], severitiesById)
+                        .setIn(["current-project", "priorities_by_id"], prioritiesById);
         case "SET_PROJECT_TIMELINE":
             return state.setIn(["timeline", "items"], action.payload.timeline)
                         .setIn(["timeline", "has-next"], action.payload.hasNext)

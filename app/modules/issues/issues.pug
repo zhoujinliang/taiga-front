@@ -12,22 +12,14 @@ div.wrapper.issues.lightbox-generic-form
     tg-project-menu([project]="project|async", active="issues")
 
     .filters-bar
-        // q="ctrl.filterQ"
-        // filters="ctrl.filters"
-        // custom-filters="ctrl.customFilters"
-        // selected-filters="ctrl.selectedFilters"
-        // customFilters="ctl.customFilters"
-        // on-save-custom-filter="ctrl.saveCustomFilter(name)"
-        // on-add-filter="ctrl.addFilter(filter)"
-        // on-select-custom-filter="ctrl.selectCustomFilter(filter)"
-        // on-remove-custom-filter="ctrl.removeCustomFilter(filter)"
-        // on-remove-filter="ctrl.removeFilter(filter)"
-        // on-change-q="ctrl.changeQ(q)"
         tg-filter(
             [class.open]="filtersOpen",
             section="issues",
             [appliedFilters]="appliedFilters|async",
-            [filters]="filters|async"
+            [appliedFiltersList]="appliedFiltersList|async",
+            [filters]="filters|async",
+            [customFilters]="customFilters|async",
+            [project]="project|async",
         )
 
     section.main.issues-page

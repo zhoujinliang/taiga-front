@@ -13,7 +13,6 @@ import { IState } from "../../app.store";
 import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import * as actions from "./backlog.actions";
 import * as moment from "moment";
-import * as _ from "lodash";
 import * as filter_actions from "../filter/filter.actions";
 
 @Component({

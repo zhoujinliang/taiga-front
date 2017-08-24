@@ -12,6 +12,7 @@ import { IState } from "../../app.store";
 import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import { ZoomLevelService } from "../services/zoom-level.service";
 import * as actions from "./issues.actions";
+import * as filter_actions from "../filter/filter.actions";
 
 @Component({
     template: require("./issues.pug"),
@@ -20,12 +21,13 @@ export class IssuesPage implements OnInit, OnDestroy {
     section: string = "issues";
     project: Observable<any>;
     issues: Observable<any[]>;
-    appliedFilters: Observable<any>;
     selectedFiltersCount: number = 0;
     members: Observable<any>;
     assignedOnAssignedTo: Observable<Immutable.List<number>>;
     filters: Observable<any>;
-    filtersOpen: boolean = false;
+    appliedFilters: Observable<Immutable.Map<string, any>>;
+    appliedFiltersList: Observable<Immutable.List<any>>;
+    customFilters: Observable<Immutable.Map<string, any>>;
     subscriptions: Subscription[];
     bulkCreateState: Observable<number>;
 
@@ -39,9 +41,10 @@ export class IssuesPage implements OnInit, OnDestroy {
         this.issues = this.store.select((state) => state.getIn(["issues", "issues"]))
                                 .filter((issues) => issues !== null)
                                 .do(() => this.store.dispatch(new StopLoadingAction()));
-        this.filters = this.store.select((state) => state.getIn(["issues", "filtersData"]))
-                                 .map(this.filtersDataToFilters.bind(this));
-        this.appliedFilters = this.store.select((state) => state.getIn([this.section, "appliedFilters"]));
+        this.filters = this.store.select((state) => state.getIn(["issues", "filtersData"]));
+        this.appliedFilters = this.store.select((state) => state.getIn(["filter", "issues"]));
+        this.appliedFiltersList = this.appliedFilters.combineLatest(this.project, this.filters).map(this.reformatAppliedFilters);
+        this.customFilters = this.store.select((state) => state.getIn(["filter", "issues-custom-filters"]));
     }
 
     ngOnInit() {
@@ -59,8 +62,91 @@ export class IssuesPage implements OnInit, OnDestroy {
                     this.store.dispatch(new actions.FetchIssuesAction(project.get("id"), appliedFilters));
                 }
             }),
+            this.route.queryParams.subscribe((params) => {
+                this.setFiltersFromTheUrl(Immutable.fromJS(params));
+            }),
         ];
     }
+
+    reformatAppliedFilters([appliedFilters, project, filters]) {
+        let result = Immutable.List()
+        if (!appliedFilters || !project) {
+            return result;
+        }
+
+        let typesFilters = appliedFilters.get('type').map((filter) => {
+            let issueType = project.getIn(['issue_types_by_id', parseInt(filter, 10)])
+            return Immutable.fromJS({
+                id: issueType.get('id'),
+                name: issueType.get('name'),
+                color: issueType.get('color'),
+                type: 'type',
+            });
+        });
+
+        let severitiesFilters = appliedFilters.get('severity').map((filter) => {
+            let severity = project.getIn(['severities_by_id', parseInt(filter, 10)])
+            return Immutable.fromJS({
+                id: severity.get('id'),
+                name: severity.get('name'),
+                color: severity.get('color'),
+                type: 'severity',
+            });
+        });
+
+        let prioritiesFilters = appliedFilters.get('priority').map((filter) => {
+            let priority = project.getIn(['priorities_by_id', parseInt(filter, 10)])
+            return Immutable.fromJS({
+                id: priority.get('id'),
+                name: priority.get('name'),
+                color: priority.get('color'),
+                type: 'priority',
+            });
+        });
+
+        let statusesFilters = appliedFilters.get('status').map((filter) => {
+            let issueStatus = project.getIn(['issue_statuses_by_id', parseInt(filter, 10)])
+            return Immutable.fromJS({
+                id: issueStatus.get('id'),
+                name: issueStatus.get('name'),
+                color: issueStatus.get('color'),
+                type: 'status',
+            });
+        });
+
+        let tagsFilters = appliedFilters.get('tags').map((filter) => {
+            let tagColor = project.getIn(['tags_colors', filter])
+            return Immutable.fromJS({
+                id: filter,
+                name: filter,
+                color: tagColor,
+                type: 'tags',
+            });
+        });
+
+        let assignedToFilters = appliedFilters.get('assigned_to').map((filter) => {
+            let member = project.getIn(['members_by_id', parseInt(filter, 10)])
+            return Immutable.fromJS({
+                id: member.get('id'),
+                name: member.get('full_name_display') || member.get('username'),
+                color: null,
+                type: 'assigned_to',
+            });
+        });
+
+        let ownerFilters = appliedFilters.get('owner').map((filter) => {
+            let member = project.getIn(['members_by_id', parseInt(filter, 10)])
+            return Immutable.fromJS({
+                id: member.get('id'),
+                name: member.get('full_name_display') || member.get('username'),
+                color: null,
+                type: 'owner',
+            });
+        });
+
+        return statusesFilters.concat(typesFilters, severitiesFilters, prioritiesFilters, tagsFilters, assignedToFilters, ownerFilters);
+    }
+
 
     ngOnDestroy() {
         for (const subs of this.subscriptions) {
@@ -69,50 +155,18 @@ export class IssuesPage implements OnInit, OnDestroy {
         this.store.dispatch(new actions.CleanIssuesDataAction());
     }
 
-    filtersDataToFilters(filtersData) {
-        if (filtersData === null) {
-            return null;
-        }
-        const statuses = filtersData.get("statuses")
-                                  .map((status) => status.update("id", (id) => id.toString()));
-
-        const tags = filtersData.get("tags")
-                              .map((tag) => tag.update("id", () => tag.get("name")));
-        const tagsWithAtLeastOneElement = tags.filter((tag) => tag.count > 0);
-
-        const assignedTo = filtersData.get("assigned_to").map((user) => {
-            return user.update("id", (id) => id ? id.toString() : "null")
-                       .update("name", () => user.get("full_name") || "Undefined");
+    setFiltersFromTheUrl(params) {
+        let filters = {};
+        params.forEach((ids, category) => {
+            if (category === "q") {
+                filters[category] = ids
+            } else {
+                filters[category] = []
+                for (let id of ids.split(",")) {
+                    filters[category].push(id)
+                }
+            }
         });
-
-        const owners = filtersData.get("owners").map((owner) => {
-            return owner.update("id", (id) => id.toString())
-                        .update("name", () => owner.get("full_name"));
-        });
-
-        let filters = Immutable.List();
-        filters = filters.push(Immutable.Map({
-            content: statuses,
-            dataType: "status",
-            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.STATUS"),
-        }));
-        filters = filters.push(Immutable.Map({
-            content: tags,
-            dataType: "tags",
-            hideEmpty: true,
-            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.TAGS"),
-            totalTaggedElements: tagsWithAtLeastOneElement.size,
-        }));
-        filters = filters.push(Immutable.Map({
-            content: assignedTo,
-            dataType: "assigned_to",
-            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.ASSIGNED_TO"),
-        }));
-        filters = filters.push(Immutable.Map({
-            content: owners,
-            dataType: "owner",
-            title: this.translate.instant("COMMON.FILTERS.CATEGORIES.CREATED_BY"),
-        }));
-        return filters;
+        this.store.dispatch(new filter_actions.SetFiltersAction("issues", filters));
     }
 }

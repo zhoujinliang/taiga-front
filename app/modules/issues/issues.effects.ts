@@ -36,7 +36,7 @@ export class IssuesEffects {
         .switchMap((payload) => {
           const data = _.extend({project: payload.projectId}, payload.appliedFilters.toJS());
           return this.rs.issues.filtersData(data).map((filtersData) => {
-              return new actions.SetIssuesFiltersDataAction(filtersData);
+              return new actions.SetIssuesFiltersDataAction(filtersData.data);
           });
         });
 

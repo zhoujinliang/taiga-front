@@ -30,12 +30,6 @@ div.wrapper(
             [filters]="filters|async",
             [customFilters]="customFilters|async",
             [project]="project|async",
-            (selectFilter)="selectFilter($event)",
-            (changeQ)="changeQ($event)",
-            (selectCustomFilter)="selectCustomFilter($event)",
-            (removeFilter)="removeFilter($event)",
-            (saveCustomFilter)="saveCustomFilter($event)",
-            (removeCustomFilter)="removeCustomFilter({section: 'backlog', filterName: $event})",
         )
     section.main.backlog
         tg-main-title([project]="project | async", sectionName="backlog")

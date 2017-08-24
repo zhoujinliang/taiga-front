@@ -28,6 +28,39 @@ form((submit)="false")
 
     .filters-cats
         ul
+            li([class.selected]="selectedCategory === 'type'", *ngIf="section === 'issues'")
+                tg-filter-category(
+                    category="type",
+                    [title]="'COMMON.FILTERS.CATEGORIES.TYPE' | translate",
+                    [selectedCategory]="selectedCategory",
+                    [items]="typesFilters",
+                    [applied]="appliedFilters.get('status')",
+                    (selectCategory)="selectCategory($event)",
+                    (selectFilter)="selectFilter($event)",
+                )
+
+            li([class.selected]="selectedCategory === 'severity'", *ngIf="section === 'issues'")
+                tg-filter-category(
+                    category="severity",
+                    [title]="'COMMON.FILTERS.CATEGORIES.SEVERITY' | translate",
+                    [selectedCategory]="selectedCategory",
+                    [items]="severitiesFilters",
+                    [applied]="appliedFilters.get('status')",
+                    (selectCategory)="selectCategory($event)",
+                    (selectFilter)="selectFilter($event)",
+                )
+
+            li([class.selected]="selectedCategory === 'priority'", *ngIf="section === 'issues'")
+                tg-filter-category(
+                    category="priority",
+                    [title]="'COMMON.FILTERS.CATEGORIES.PRIORITIES' | translate",
+                    [selectedCategory]="selectedCategory",
+                    [items]="prioritiesFilters",
+                    [applied]="appliedFilters.get('status')",
+                    (selectCategory)="selectCategory($event)",
+                    (selectFilter)="selectFilter($event)",
+                )
+
             li([class.selected]="selectedCategory === 'status'")
                 tg-filter-category(
                     category="status",
@@ -74,7 +107,7 @@ form((submit)="false")
                     (selectFilter)="selectFilter($event)",
                 )
 
-            li([class.selected]="selectedCategory === 'epic'")
+            li([class.selected]="selectedCategory === 'epic'", *ngIf="section !== 'issues'")
                 tg-filter-category(
                     category="epic",
                     [title]="'COMMON.FILTERS.CATEGORIES.EPIC' | translate",
