@@ -47,7 +47,7 @@ export const filterReducer = (state, action) => {
                 Immutable.fromJS(filters)
             );
         case "SET_CUSTOM_FILTERS":
-            return state.set(`${action.paylod.section}-custom-filters`, action.payload.filter);
+            return state.set(`${action.payload.section}-custom-filters`, action.payload.filter);
         case "ADD_FILTER":
             return state.updateIn(
                 [action.payload.section, action.payload.filter],
