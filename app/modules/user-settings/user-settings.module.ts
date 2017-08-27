@@ -54,7 +54,7 @@ import {UserSettingsEffects} from "./user-settings.effects";
             { path: "user-settings/user-change-password", component: ChangePasswordPage},
             { path: "user-settings/mail-notifications", component: MailNotificationsPage},
         ]),
-        EffectsModule.run(UserSettingsEffects),
+        EffectsModule.forFeature([UserSettingsEffects]),
     ],
     providers: [
     ],

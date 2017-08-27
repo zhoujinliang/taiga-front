@@ -160,7 +160,7 @@ import {AdminIntegrationsWebhooksForm} from "./pages/integrations/webhooks/webho
             { path: "project/:slug/admin/third-parties", redirectTo: "project/:slug/admin/third-parties/webhooks"},
             { path: "project/:slug/admin/third-parties/webhooks", component: AdminIntegrationsWebhooksPage},
         ]),
-        EffectsModule.run(AdminEffects),
+        EffectsModule.forFeature([AdminEffects]),
     ],
     providers: [
     ],

@@ -1,7 +1,7 @@
 import {Component, Input} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {IState} from "../../../app.store";
-import { go } from "@ngrx/router-store";
+import { GoAction } from "../../../router.actions";
 import { CloseLightboxAction } from "../../../app.actions";
 import * as Immutable from "immutable";
 
@@ -21,7 +21,7 @@ export class SearchLightbox {
         if (!this.project) {
             return false
         }
-        this.store.dispatch(go(["/project", this.project, "search"], {text: this.text}))
+        this.store.dispatch(new GoAction(["/project", this.project, "search"], {text: this.text}))
         this.store.dispatch(new CloseLightboxAction())
     }
 }

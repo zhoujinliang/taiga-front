@@ -25,7 +25,7 @@ import {homeReducer} from "./home.store";
         RouterModule.forChild([
             {path: "", component: Home},
         ]),
-        EffectsModule.run(HomeEffects),
+        EffectsModule.forFeature([HomeEffects]),
     ],
     exports: [
         Home,

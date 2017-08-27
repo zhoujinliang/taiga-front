@@ -7,7 +7,6 @@ import { RegisterAction } from "../auth.actions";
 import { RegisterData } from "../auth.model";
 import { Observable, Subscription } from "rxjs"
 import { CloseLightboxAction, SetMetadataAction } from "../../../app.actions";
-import { go } from "@ngrx/router-store";
 import { calculateNextUrl } from "../utils";
 
 import * as Immutable from "immutable";

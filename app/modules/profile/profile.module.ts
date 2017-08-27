@@ -57,7 +57,7 @@ import {ProfileEffects} from "./profile.effects";
             { path: "profile", component: ProfilePage },
             { path: "profile/:username", component: ProfilePage },
         ]),
-        EffectsModule.run(ProfileEffects),
+        EffectsModule.forFeature([ProfileEffects]),
     ],
     providers: [
     ],

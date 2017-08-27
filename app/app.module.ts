@@ -8,7 +8,7 @@ import { RouterModule, UrlHandlingStrategy, UrlTree } from "@angular/router";
 
 // NGRX MODULES
 import { EffectsModule } from "@ngrx/effects";
-import { RouterStoreModule } from "@ngrx/router-store";
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 
@@ -87,10 +87,10 @@ export function HttpLoaderFactory(http: HttpClient) {
             deps: [HttpClient],
         },
     }),
-    StoreModule.provideStore(rootReducer),
-    StoreDevtoolsModule.instrumentOnlyWithExtension(),
-    EffectsModule.run(GlobalEffects),
-    RouterStoreModule.connectRouter(),
+    StoreModule.forRoot([rootReducer]),
+    StoreDevtoolsModule.instrument({ maxAge: 50 }),
+    EffectsModule.forRoot([GlobalEffects]),
+    StoreRouterConnectingModule,
   ],
   declarations: [
     AppComponent,

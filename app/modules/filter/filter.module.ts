@@ -36,7 +36,7 @@ import {FilterEffects} from "./filter.effects";
         FormsModule,
         StoreModule,
         TranslateModule.forChild({}),
-        EffectsModule.run(FilterEffects),
+        EffectsModule.forFeature([FilterEffects]),
     ],
     providers: [
     ],

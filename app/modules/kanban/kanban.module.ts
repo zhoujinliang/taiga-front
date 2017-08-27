@@ -48,7 +48,7 @@ import {KanbanSortableDirective} from "./sortable.directive";
         RouterModule.forChild([
             { path: "project/:slug/kanban", component: KanbanPage },
         ]),
-        EffectsModule.run(KanbanEffects),
+        EffectsModule.forFeature([KanbanEffects]),
     ],
     providers: [
     ],

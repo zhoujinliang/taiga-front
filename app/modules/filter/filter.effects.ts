@@ -11,7 +11,6 @@ import { of } from "rxjs/observable/of";
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./filter.actions";
 import {AddNotificationMessageAction} from "../common/common.actions";
-import {go} from "@ngrx/router-store";
 import {genericErrorManagement} from "../utils/effects";
 import {generateHash} from "../../libs/utils";
 

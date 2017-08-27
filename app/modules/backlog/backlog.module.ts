@@ -63,7 +63,7 @@ import {CreateUsForm} from "./create-us-form/create-us-form.component";
         RouterModule.forChild([
             { path: "project/:slug/backlog", component: BacklogPage },
         ]),
-        EffectsModule.run(BacklogEffects),
+        EffectsModule.forFeature([BacklogEffects]),
     ],
     providers: [
     ],

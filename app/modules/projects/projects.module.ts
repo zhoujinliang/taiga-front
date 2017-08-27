@@ -33,7 +33,7 @@ import { CurrentProjectsEffects } from "./projects.effects";
             {path: "project/:slug", component: ProjectDetailPage},
             {path: "projects", component: ProjectsListing},
         ]),
-        EffectsModule.run(CurrentProjectsEffects),
+        EffectsModule.forFeature([CurrentProjectsEffects]),
     ],
     exports: [
         ProjectsListing,

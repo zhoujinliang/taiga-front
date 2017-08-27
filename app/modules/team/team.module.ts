@@ -46,7 +46,7 @@ import {TeamEffects} from "./team.effects";
         RouterModule.forChild([
             { path: "project/:slug/team", component: TeamPage },
         ]),
-        EffectsModule.run(TeamEffects),
+        EffectsModule.forFeature([TeamEffects]),
     ],
     providers: [
     ],

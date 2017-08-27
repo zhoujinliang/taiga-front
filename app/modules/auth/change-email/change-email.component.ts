@@ -6,7 +6,6 @@ import { ConfigurationService } from "../../base/conf";
 import { ChangeEmailAcceptAction } from "../auth.actions";
 import { Observable, Subscription } from "rxjs"
 import { CloseLightboxAction, SetMetadataAction } from "../../../app.actions";
-import { go } from "@ngrx/router-store";
 import { calculateNextUrl } from "../utils";
 
 import * as Immutable from "immutable";

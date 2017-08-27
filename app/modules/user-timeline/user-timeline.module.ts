@@ -41,7 +41,7 @@ import {UserTimelineAttachment} from "./user-timeline-attachment/user-timeline-a
         TranslateModule.forChild({}),
         InfiniteScrollModule,
         RouterModule.forChild([]),
-        // EffectsModule.run(TeamEffects),
+        // EffectsModule.forFeature([TeamEffects]),
     ],
     providers: [
         UserTimelineService,

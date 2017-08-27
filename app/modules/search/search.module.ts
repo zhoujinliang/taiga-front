@@ -40,7 +40,7 @@ import {SearchEffects} from "./search.effects";
         RouterModule.forChild([
             { path: "project/:slug/search", component: SearchPage },
         ]),
-        EffectsModule.run(SearchEffects),
+        EffectsModule.forFeature([SearchEffects]),
     ],
     providers: [
     ],

@@ -53,7 +53,7 @@ import {WikiHistoryDiff} from "./history/wiki-history-diff.component";
             { path: "project/:slug/wiki/:page", component: WikiPage },
             { path: "project/:slug/wiki-list", component: WikiListPage },
         ]),
-        EffectsModule.run(WikiEffects),
+        EffectsModule.forFeature([WikiEffects]),
     ],
     providers: [
     ],

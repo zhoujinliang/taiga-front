@@ -46,7 +46,7 @@ import {EpicsEffects} from "./epics.effects";
         RouterModule.forChild([
             { path: "project/:slug/epics", component: EpicsPage },
         ]),
-        EffectsModule.run(EpicsEffects),
+        EffectsModule.forFeature([EpicsEffects]),
     ],
     providers: [
     ],

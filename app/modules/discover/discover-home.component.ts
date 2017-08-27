@@ -19,7 +19,7 @@
 
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {go} from "@ngrx/router-store";
+import {GoAction} from "../../router.actions";
 import {Store} from "@ngrx/store";
 import {IState} from "../../app.store";
 import {StartLoadingAction, StopLoadingAction, SetMetadataAction} from "../../app.actions";
@@ -81,7 +81,7 @@ export class DiscoverHome implements OnInit {
     }
 
     onSearch(searchData) {
-        return this.store.dispatch(go(["/discover", "search"], {text: searchData.q}));
+        return this.store.dispatch(new GoAction(["/discover", "search"], {text: searchData.q}));
     }
 
     ngOnDestroy() {

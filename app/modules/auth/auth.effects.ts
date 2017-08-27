@@ -4,7 +4,7 @@ import "rxjs/add/operator/reduce";
 import "rxjs/add/operator/switchMap";
 import {Observable} from "rxjs";
 
-import { go } from "@ngrx/router-store";
+import { GoAction } from "../../router.actions";
 import { OpenLightboxAction } from "../../app.actions";
 
 import { Injectable } from "@angular/core";
@@ -60,7 +60,7 @@ export class AuthEffects {
             return this.rs.user.login(payload.data).flatMap((user: any) => {
                 return [
                     new actions.StoreUserAction(user),
-                    go([payload.next]),
+                    new GoAction([payload.next]),
                 ];
             }).catch( (err) => {
                 const newError = new AddNotificationMessageAction(
@@ -78,7 +78,7 @@ export class AuthEffects {
         .flatMap(() => {
             return [
                 new actions.StoreUserAction(null),
-                go(["/discover"]),
+                new GoAction(["/discover"]),
             ];
         });
 
@@ -90,7 +90,7 @@ export class AuthEffects {
             return this.rs.user.register(payload.data).flatMap((user: any) => {
                 return [
                     new actions.StoreUserAction(user),
-                    go([payload.next]),
+                    new GoAction([payload.next]),
                 ];
             }).catch( (err) => {
                 const newError = new AddNotificationMessageAction(
@@ -109,7 +109,7 @@ export class AuthEffects {
             return this.rs.user.passwordRecover(username).flatMap(() => {
                 return [
                     new OpenLightboxAction("auth.password-recover"),
-                    go(["/login"]),
+                    new GoAction(["/login"]),
                 ];
             }).catch( (err) => {
                 const newError = new AddNotificationMessageAction(
@@ -128,7 +128,7 @@ export class AuthEffects {
             return this.rs.user.changePasswordFromRecovery(password, uuid).flatMap(() => {
                 return [
                     new OpenLightboxAction("auth.password-recover-from-recovery"),
-                    go(["/login"]),
+                    new GoAction(["/login"]),
                 ];
             }).catch( (err) => {
                 const newError = new AddNotificationMessageAction(
@@ -147,7 +147,7 @@ export class AuthEffects {
             return this.rs.user.changeEmail(uuid).flatMap(() => {
                 return [
                     new OpenLightboxAction("auth.change-email-success"),
-                    go(["/user-settings/user-profile"]),
+                    new GoAction(["/user-settings/user-profile"]),
                 ];
             }).catch( (err) => {
                 const newError = new AddNotificationMessageAction(

@@ -7,7 +7,7 @@ import { LoginAction } from "../auth.actions";
 import { LoginData } from "../auth.model";
 import { Observable, Subscription } from "rxjs"
 import { CloseLightboxAction, SetMetadataAction } from "../../../app.actions";
-import { go } from "@ngrx/router-store";
+import { GoAction } from "../../../router.actions";
 import { calculateNextUrl } from "../utils";
 
 import * as Immutable from "immutable";
@@ -37,7 +37,7 @@ export class LoginPage implements OnInit, OnDestroy {
             this.currentUser.combineLatest(this.activeRoute.queryParams).subscribe(([currentUser, params]) => {
                 this.nextUrl = calculateNextUrl(params['next'], params['force_next']);
                 if (currentUser) {
-                    this.store.dispatch(go(this.nextUrl));
+                    this.store.dispatch(new GoAction([this.nextUrl]));
                 }
                 return this.nextUrl
             }),

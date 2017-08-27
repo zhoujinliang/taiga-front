@@ -31,7 +31,7 @@ import {DiscoverEffects} from "./discover.effects";
             { path: "discover", component: DiscoverHome },
             { path: "discover/search", component: DiscoverSearch },
         ]),
-        EffectsModule.run(DiscoverEffects),
+        EffectsModule.forFeature([DiscoverEffects]),
     ],
     exports: [
         DiscoverHome,

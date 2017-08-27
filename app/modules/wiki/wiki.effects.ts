@@ -7,7 +7,7 @@ import "rxjs/add/operator/switchMap";
 import { Observable } from "rxjs/Observable";
 import { empty } from "rxjs/observable/empty";
 import { of } from "rxjs/observable/of";
-import { go } from '@ngrx/router-store';
+import { GoAction } from '../../router.actions';
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./wiki.actions";
 
@@ -83,10 +83,10 @@ export class WikiEffects {
         .map(toPayload)
         .switchMap(({projectSlug, wikiPageId}) => {
            return this.rs.wiki.delete(wikiPageId).switchMap((result) => {
-               return Observable.of(
+               return Observable.from([
                    new actions.SetWikiPageAction(null),
-                   go(["/project", projectSlug, "wiki"])
-               )
+                   new GoAction(["/project", projectSlug, "wiki"])
+               ])
            });
         });
 

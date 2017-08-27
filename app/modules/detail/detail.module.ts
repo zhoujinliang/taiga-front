@@ -68,7 +68,7 @@ import {DetailEffects} from "./detail.effects";
         RouterModule.forChild([
             { path: "project/:slug/us/:ref", component: DetailUserstoryPage },
         ]),
-        EffectsModule.run(DetailEffects),
+        EffectsModule.forFeature([DetailEffects]),
     ],
     providers: [
     ],

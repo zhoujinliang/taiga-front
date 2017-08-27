@@ -19,7 +19,7 @@
 
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { search } from "@ngrx/router-store";
+import { SearchAction } from "../../../router.actions";
 import { Store } from "@ngrx/store";
 import { IState } from "../../../app.store";
 import { SetMetadataAction } from "../../../app.actions";
@@ -57,10 +57,10 @@ export class DiscoverSearch implements OnInit {
     }
 
     setFilter({filter, q}) {
-        this.store.dispatch(search({filter: filter, text: q, order_by: ""}));
+        this.store.dispatch(new SearchAction({filter: filter, text: q, order_by: ""}));
     }
 
     setOrder(newOrder) {
-        this.store.dispatch(search({filter: this.filter, text: this.q, order_by: newOrder}));
+        this.store.dispatch(new SearchAction({filter: this.filter, text: this.q, order_by: newOrder}));
     }
 }

@@ -38,7 +38,7 @@ import {AuthEffects} from "./auth.effects";
             {path: "login", component: LoginPage},
             {path: "forgot-password", component: ForgotPasswordPage},
         ]),
-        EffectsModule.run(AuthEffects),
+        EffectsModule.forFeature([AuthEffects]),
     ],
     exports: [
         LoginPage,

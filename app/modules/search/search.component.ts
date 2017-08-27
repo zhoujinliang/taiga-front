@@ -4,7 +4,7 @@ import {Store} from "@ngrx/store";
 import {IState} from "../../app.store";
 import {StartLoadingAction, StopLoadingAction} from "../../app.actions";
 import {Observable, Subscription} from "rxjs";
-import {search} from "@ngrx/router-store";
+import {SearchAction} from "../../router.actions";
 import * as actions from "./search.actions";
 import * as Immutable from "immutable";
 import * as _ from "lodash";
@@ -42,7 +42,7 @@ export class SearchPage implements OnDestroy, OnInit {
     }
 
     onChangeTerm = _.debounce((value) => {
-        this.store.dispatch(search({text: this.text}))
+        this.store.dispatch(new SearchAction({text: this.text}))
     }, 300)
 
     ngOnDestroy() {

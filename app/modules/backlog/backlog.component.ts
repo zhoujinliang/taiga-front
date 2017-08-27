@@ -5,7 +5,6 @@ import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { TranslateService } from "@ngx-translate/core";
 import { Observable, Subscription } from "rxjs";
-import { search } from "@ngrx/router-store";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/zip";
 import { StartLoadingAction, StopLoadingAction, OpenLightboxAction } from "../../app.actions";

@@ -21,7 +21,7 @@ import {Component, EventEmitter, Input, Output, OnChanges} from "@angular/core";
 import {Store} from "@ngrx/store";
 import * as _ from "lodash";
 import * as Immutable from "immutable";
-import { search } from "@ngrx/router-store";
+import { SearchAction } from "../../router.actions";
 import {IState} from "../../app.store";
 import * as actions from "./filter.actions";
 
@@ -164,7 +164,7 @@ export class Filter implements OnChanges {
             }
             return filter;
         }).filter((filter) => filter !== null)
-        this.store.dispatch(search(transformedFilters.toJS()));
+        this.store.dispatch(new SearchAction(transformedFilters.toJS()));
     }
 
     removeFilter(filter) {

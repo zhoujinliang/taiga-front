@@ -38,7 +38,7 @@ import {IssuesEffects} from "./issues.effects";
         RouterModule.forChild([
             { path: "project/:slug/issues", component: IssuesPage },
         ]),
-        EffectsModule.run(IssuesEffects),
+        EffectsModule.forFeature([IssuesEffects]),
     ],
     providers: [
     ],
