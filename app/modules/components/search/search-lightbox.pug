@@ -5,7 +5,7 @@ form((ngSubmit)="submit($event)")
             type="text",
             name="text",
             id="search-text",
-            [(ngModel)]="text",
+            (change)="text = $event.target.value",
             [placeholder]="'LIGHTBOX.SEARCH.PLACEHOLDER_SEARCH' | translate"
         )
     fieldset
