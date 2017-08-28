@@ -1,6 +1,6 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import { Store } from "@ngrx/store";
-import {Observable, Subscription} from "rxjs";
+import {Observable} from "rxjs";
 import { IState } from "../../../app.store";
 
 @Component({
@@ -9,11 +9,13 @@ import { IState } from "../../../app.store";
                  <ng-content></ng-content>
                </div>`,
 })
-export class Lightbox {
+export class Lightbox implements OnInit {
     @Input() key: string;
     public isOpen: Observable<boolean>;
 
-    constructor(private store: Store<IState>) {
+    constructor(private store: Store<IState>) {}
+
+    ngOnInit() {
         this.isOpen = this.store.select((state) => state.getIn(["global", "open-lightbox"]))
                                 .map((openLightbox) => openLightbox === this.key);
     }

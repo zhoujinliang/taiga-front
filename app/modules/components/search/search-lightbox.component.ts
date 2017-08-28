@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Input} from "@angular/core";
 import {Store} from "@ngrx/store";
 import {IState} from "../../../app.store";
 import { GoAction } from "../../../router.actions";
@@ -9,6 +9,7 @@ import * as Immutable from "immutable";
 @Component({
     selector: "tg-search-lightbox",
     template: require("./search-lightbox.pug"),
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchLightbox {
     @Input() project: string;
@@ -21,7 +22,7 @@ export class SearchLightbox {
         if (!this.project) {
             return false
         }
-        this.store.dispatch(new GoAction(["/project", this.project, "search"], {text: this.text}))
-        this.store.dispatch(new CloseLightboxAction())
+        this.store.dispatch(new GoAction(["/project", this.project, "search"], {text: this.text}));
+        this.store.dispatch(new CloseLightboxAction());
     }
 }

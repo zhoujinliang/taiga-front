@@ -87,7 +87,7 @@ export function HttpLoaderFactory(http: HttpClient) {
             deps: [HttpClient],
         },
     }),
-    StoreModule.forRoot([rootReducer]),
+    StoreModule.forRoot({}, {reducerFactory: () => rootReducer}),
     StoreDevtoolsModule.instrument({ maxAge: 50 }),
     EffectsModule.forRoot([GlobalEffects]),
     StoreRouterConnectingModule,
