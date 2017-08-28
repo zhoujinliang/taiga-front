@@ -45,6 +45,7 @@ import { ProjectUrlService } from "./modules/common/project-url.service";
 
 import {AppComponent} from "./app.component";
 import {GlobalEffects} from "./app.effects";
+import {RouterEffects} from "./router.effects";
 import {rootReducer} from "./app.store";
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -89,7 +90,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     StoreModule.forRoot({}, {reducerFactory: () => rootReducer}),
     StoreDevtoolsModule.instrument({ maxAge: 50 }),
-    EffectsModule.forRoot([GlobalEffects]),
+    EffectsModule.forRoot([GlobalEffects, RouterEffects]),
     StoreRouterConnectingModule,
   ],
   declarations: [
