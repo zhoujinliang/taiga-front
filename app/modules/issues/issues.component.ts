@@ -174,6 +174,6 @@ export class IssuesPage implements OnInit, OnDestroy {
     }
 
     setOrderFromTheUrl(params) {
-        this.store.dispatch(new actions.SetIssuesOrderAction(params['order_by']));
+        this.store.dispatch(new actions.SetIssuesOrderAction(params.get('order_by')));
     }
 }

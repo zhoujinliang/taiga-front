@@ -21,6 +21,10 @@ export class IssuesTable {
     }
 
     sort(field) {
-        this.store.dispatch(new UpdateSearchAction({order_by: field}));
+        if (this.order === field) {
+            this.store.dispatch(new UpdateSearchAction({order_by: `-${field}`}));
+        } else {
+            this.store.dispatch(new UpdateSearchAction({order_by: field}));
+        }
     }
 }

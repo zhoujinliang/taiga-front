@@ -11,34 +11,50 @@ section.issues-table.basic-table([class.empty]="!issues?.size", *tgLoading="'loa
             (click)="sort('type')"
         )
             span(translate="ISSUES.TABLE.COLUMNS.TYPE")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'type'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-type'")
         div.level-field(
             (click)="sort('severity')",
         )
             span(translate="ISSUES.TABLE.COLUMNS.SEVERITY")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'severity'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-severity'")
         div.level-field(
             (click)="sort('priority')",
         )
             span(translate="ISSUES.TABLE.COLUMNS.PRIORITY")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'priority'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-priority'")
         div.votes(
             (click)="sort('total_voters')",
         )
             span(translate="ISSUES.TABLE.COLUMNS.VOTES")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'total_voters'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-total_voters'")
         div.subject(
             (click)="sort('subject')",
         )
             span(translate="ISSUES.TABLE.COLUMNS.SUBJECT")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'subject'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-subject'")
         div.issue-field(
             (click)="sort('status')",
         )
             span(translate="ISSUES.TABLE.COLUMNS.STATUS")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'status'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-status'")
         div.created-field(
             (click)="sort('created_date')",
         )
             span(translate="ISSUES.TABLE.COLUMNS.CREATED")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'created_date'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-created_date'")
         div.assigned-field(
             (click)="sort('assigned_to')",
         )
             span(translate="ISSUES.TABLE.COLUMNS.ASSIGNED_TO")
+            tg-svg(svg-icon="icon-arrow-down", *ngIf="order === 'assigned_to'")
+            tg-svg(svg-icon="icon-arrow-up", *ngIf="order === '-assigned_to'")
 
     div.row.table-main(
         *ngFor="let issue of issues",

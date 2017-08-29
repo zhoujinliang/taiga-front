@@ -25,7 +25,8 @@ export class RouterEffects {
   updateSearch = this.actions$.ofType("ROUTER_UPDATE_SEARCH")
     .map((action: RouterActions.SearchAction) => action.payload)
     .do(({ query, extras}) => {
-      const queryParams = _.extend({}, this.router.parseUrl(this.router.url).queryParams, query);
+      let queryParams = _.extend({}, this.router.parseUrl(this.router.url).queryParams, query);
+      queryParams = _.omitBy(queryParams, (value) => value === null);
       this.router.navigate([], { queryParams, ...extras });
     })
 
