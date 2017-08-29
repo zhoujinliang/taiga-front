@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Effect, Actions } from '@ngrx/effects';
 import * as RouterActions from './router.actions';
+import * as _ from "lodash";
 
 @Injectable()
 export class RouterEffects {
@@ -18,7 +19,15 @@ export class RouterEffects {
   search$ = this.actions$.ofType("ROUTER_SEARCH")
     .map((action: RouterActions.SearchAction) => action.payload)
     .do(({ query: queryParams, extras}) =>
-      this.router.navigate(null, { queryParams, ...extras }));
+      this.router.navigate([], { queryParams, ...extras }));
+
+  @Effect({ dispatch: false })
+  updateSearch = this.actions$.ofType("ROUTER_UPDATE_SEARCH")
+    .map((action: RouterActions.SearchAction) => action.payload)
+    .do(({ query, extras}) => {
+      const queryParams = _.extend({}, this.router.parseUrl(this.router.url).queryParams, query);
+      this.router.navigate([], { queryParams, ...extras });
+    })
 
   constructor(
     private actions$: Actions,

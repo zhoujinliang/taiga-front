@@ -11,6 +11,7 @@ export const issuesInitialState = {
     "folds": {},
     "issues": null,
     "zoomLevel": 4,
+    "order": null,
 };
 
 export const issuesReducer = (state, action) => {
@@ -21,6 +22,8 @@ export const issuesReducer = (state, action) => {
             return state.set("filtersData", action.payload);
         case "SET_ISSUES_APPLIED_FILTERS":
             return state.set("appliedFilters", action.payload);
+        case "SET_ISSUES_ORDER":
+            return state.set("order", action.payload);
         case "CLEAN_ISSUES_DATA":
             return Immutable.fromJS(issuesInitialState);
         default:

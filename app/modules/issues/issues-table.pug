@@ -5,16 +5,40 @@ section.issues-options(*tgIfPerm="'add_issue'")
         a.button-bulk((click)="addIssuesInBulk.emit(true)")
             tg-svg(svg-icon="icon-bulk")
 
-section.issues-table.basic-table([class.empty]="!issues?.size")
+section.issues-table.basic-table([class.empty]="!issues?.size", *tgLoading="'loading-issues';size:'big'")
     div.row.title
-        div.level-field((click)="sort('type')", translate="ISSUES.TABLE.COLUMNS.TYPE")
-        div.level-field((click)="sort('severity')", translate="ISSUES.TABLE.COLUMNS.SEVERITY")
-        div.level-field((click)="sort('priority')", translate="ISSUES.TABLE.COLUMNS.PRIORITY")
-        div.votes((click)="sort('total_voters')", translate="ISSUES.TABLE.COLUMNS.VOTES")
-        div.subject((click)="sort('subject')", translate="ISSUES.TABLE.COLUMNS.SUBJECT")
-        div.issue-field((click)="sort('status')", translate="ISSUES.TABLE.COLUMNS.STATUS")
-        div.created-field((click)="sort('created_date')", translate="ISSUES.TABLE.COLUMNS.CREATED")
-        div.assigned-field((click)="sort('assigned_to')", translate="ISSUES.TABLE.COLUMNS.ASSIGNED_TO")
+        div.level-field(
+            (click)="sort('type')"
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.TYPE")
+        div.level-field(
+            (click)="sort('severity')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.SEVERITY")
+        div.level-field(
+            (click)="sort('priority')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.PRIORITY")
+        div.votes(
+            (click)="sort('total_voters')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.VOTES")
+        div.subject(
+            (click)="sort('subject')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.SUBJECT")
+        div.issue-field(
+            (click)="sort('status')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.STATUS")
+        div.created-field(
+            (click)="sort('created_date')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.CREATED")
+        div.assigned-field(
+            (click)="sort('assigned_to')",
+        )
+            span(translate="ISSUES.TABLE.COLUMNS.ASSIGNED_TO")
 
     div.row.table-main(
         *ngFor="let issue of issues",

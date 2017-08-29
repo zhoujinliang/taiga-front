@@ -26,7 +26,7 @@ div.wrapper.issues.lightbox-generic-form
         header
             tg-main-title([project]="project | async", [sectionName]="Issues")
 
-        tg-issues-table([project]="project | async", [issues]="issues | async")
+        tg-issues-table([project]="project | async", [issues]="issues | async", [order]="order | async")
 
         // Paginator is rendered using js.
         div.paginator.issues-paginator

@@ -12,6 +12,7 @@ import { StorageService} from "../base/storage";
 import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./issues.actions";
 import {generateHash} from "../../libs/utils";
+import {wrapLoading} from "../utils/effects";
 
 @Injectable()
 export class IssuesEffects {
@@ -19,7 +20,7 @@ export class IssuesEffects {
     fetchIssues$: Observable<Action> = this.actions$
         .ofType("FETCH_ISSUES")
         .map(toPayload)
-        .switchMap((payload) => {
+        .switchMap(wrapLoading("loading-issues", (payload) => {
           const params = _.extend({
               include_attachments: 1,
               include_tasks: 1,
@@ -27,7 +28,7 @@ export class IssuesEffects {
           return this.rs.issues.list(payload.projectId, params).map((issues) => {
               return new actions.SetIssuesAction(issues.data);
           });
-        });
+        }));
 
     @Effect()
     fetchIssuesFiltersData$: Observable<Action> = this.actions$

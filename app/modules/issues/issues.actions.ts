@@ -49,6 +49,12 @@ export class SetIssuesAppliedFiltersAction implements Action {
   constructor(public payload: Immutable.Map<string, any>) { }
 }
 
+export class SetIssuesOrderAction implements Action {
+  readonly type = "SET_ISSUES_ORDER";
+
+  constructor(public payload: string) {}
+}
+
 export class CleanIssuesDataAction implements Action {
   readonly type = "CLEAN_ISSUES_DATA";
   public payload = null;

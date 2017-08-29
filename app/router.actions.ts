@@ -19,6 +19,15 @@ export class SearchAction implements Action {
   }
 }
 
+export class UpdateSearchAction implements Action {
+  readonly type = "ROUTER_UPDATE_SEARCH";
+  public payload: any;
+
+  constructor(query: object, extra: NavigationExtras = {}) {
+    this.payload = {query, extra}
+  }
+}
+
 export class ApplyFiltersAction implements Action {
   readonly type = "ROUTER_APPLY_FILTERS";
   public payload: any;

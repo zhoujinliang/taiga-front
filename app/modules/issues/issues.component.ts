@@ -21,6 +21,7 @@ export class IssuesPage implements OnInit, OnDestroy {
     section: string = "issues";
     project: Observable<any>;
     issues: Observable<any[]>;
+    order: Observable<string>;
     selectedFiltersCount: number = 0;
     members: Observable<any>;
     assignedOnAssignedTo: Observable<Immutable.List<number>>;
@@ -41,6 +42,7 @@ export class IssuesPage implements OnInit, OnDestroy {
         this.issues = this.store.select((state) => state.getIn(["issues", "issues"]))
                                 .filter((issues) => issues !== null)
                                 .do(() => this.store.dispatch(new StopLoadingAction()));
+        this.order = this.store.select((state) => state.getIn(["issues", "order"]));
         this.filters = this.store.select((state) => state.getIn(["issues", "filtersData"]));
         this.appliedFilters = this.store.select((state) => state.getIn(["filter", "issues"]));
         this.appliedFiltersList = this.appliedFilters.combineLatest(this.project, this.filters).map(this.reformatAppliedFilters);
@@ -63,6 +65,7 @@ export class IssuesPage implements OnInit, OnDestroy {
                 }
             }),
             this.route.queryParams.subscribe((params) => {
+                this.setOrderFromTheUrl(Immutable.fromJS(params));
                 this.setFiltersFromTheUrl(Immutable.fromJS(params));
             }),
         ];
@@ -168,5 +171,9 @@ export class IssuesPage implements OnInit, OnDestroy {
             }
         });
         this.store.dispatch(new filter_actions.SetFiltersAction("issues", filters));
+    }
+
+    setOrderFromTheUrl(params) {
+        this.store.dispatch(new actions.SetIssuesOrderAction(params['order_by']));
     }
 }
