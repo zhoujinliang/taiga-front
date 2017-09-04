@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, toPayload } from "@ngrx/effects";
 import { Action } from "@ngrx/store";
+import { SearchAction } from "../../router.actions";
 import * as Immutable from "immutable";
 import * as _ from "lodash";
 import "rxjs/add/operator/map";
@@ -43,6 +44,31 @@ export class FilterEffects {
               return new actions.SetCustomFiltersAction(section, filters.get('value'))
           });
         });
+
+    @Effect()
+    loadStoredFitlers$: Observable<Action> = this.actions$
+        .ofType("LOAD_STORED_FILTERS")
+        .map(toPayload)
+        .switchMap(({projectId, section}) => {
+          const ns = `${projectId}:${section}-filters`
+          const hash = generateHash([projectId, ns])
+          return this.rs.user.getUserStorage(hash).map((filters) => {
+              if (filters) {
+                  return new SearchAction(filters.get('value').toJS())
+              }
+          })
+        });
+
+    @Effect()
+    storeFitlers$: Observable<Action> = this.actions$
+        .ofType("STORE_FILTERS")
+        .map(toPayload)
+        .switchMap(({projectId, section, filters}) => {
+          const ns = `${projectId}:${section}-filters`
+          const hash = generateHash([projectId, ns])
+          return this.rs.user.setUserStorage(hash, filters).flatMap(() => Observable.empty())
+        });
+
 
     constructor(private actions$: Actions, private rs: ResourcesService) { }
 }

@@ -164,6 +164,7 @@ export class Filter implements OnChanges {
             }
             return filter;
         })
+        this.store.dispatch(new actions.StoreFiltersAction(this.project.get('id'), this.section, transformedFilters.toJS()));
         this.store.dispatch(new UpdateSearchAction(transformedFilters.toJS()));
     }
 

@@ -13,6 +13,7 @@ import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import { ZoomLevelService } from "../services/zoom-level.service";
 import * as actions from "./issues.actions";
 import * as filter_actions from "../filter/filter.actions";
+import * as _ from "lodash";
 
 @Component({
     template: require("./issues.pug"),
@@ -30,6 +31,7 @@ export class IssuesPage implements OnInit, OnDestroy {
     appliedFiltersList: Observable<Immutable.List<any>>;
     customFilters: Observable<Immutable.Map<string, any>>;
     subscriptions: Subscription[];
+    loadedStoredFilters: boolean = false;
     bulkCreateState: Observable<number>;
 
     constructor(private store: Store<IState>,
@@ -53,11 +55,6 @@ export class IssuesPage implements OnInit, OnDestroy {
         this.store.dispatch(new StartLoadingAction());
 
         this.subscriptions = [
-            this.project.subscribe((project) => {
-                if (project) {
-                    this.store.dispatch(new actions.FetchIssuesAppliedFiltersAction(project.get("id")));
-                }
-            }),
             Observable.combineLatest(this.project, this.appliedFilters).subscribe(([project, appliedFilters]: any[]) => {
                 if (project && appliedFilters) {
                     this.store.dispatch(new actions.FetchIssuesFiltersDataAction(project.get("id"), appliedFilters));
@@ -67,6 +64,16 @@ export class IssuesPage implements OnInit, OnDestroy {
             this.route.queryParams.subscribe((params) => {
                 this.setOrderFromTheUrl(Immutable.fromJS(params));
                 this.setFiltersFromTheUrl(Immutable.fromJS(params));
+            }),
+            Observable.combineLatest(this.project, this.route.queryParams).subscribe(([project, params]: any[]) => {
+                if (_.isEmpty(params) && project && !this.loadedStoredFilters) {
+                    this.loadedStoredFilters = true;
+                    this.store.dispatch(new filter_actions.LoadStoredFiltersAction(project.get('id'), "issues"));
+                    return
+                }
+                if (project && this.loadedStoredFilters) {
+                    this.store.dispatch(new actions.FetchIssuesAppliedFiltersAction(project.get("id")));
+                }
             }),
         ];
     }

@@ -12,6 +12,7 @@ import { IState } from "../../app.store";
 import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import * as actions from "./backlog.actions";
 import * as moment from "moment";
+import * as _ from "lodash";
 import * as filter_actions from "../filter/filter.actions";
 
 @Component({
@@ -34,6 +35,7 @@ export class BacklogPage implements OnInit, OnDestroy {
     currentSprint: Observable<Immutable.Map<string, any>>;
     latestSprint: Observable<Immutable.Map<string, any>>;
     doomlinePosition: Observable<number>;
+    loadedStoredFilters: boolean = false;
     subscriptions: Subscription[];
 
     constructor(private store: Store<IState>,
@@ -145,14 +147,6 @@ export class BacklogPage implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.subscriptions = [
-            this.project.subscribe((project) => {
-                if (project) {
-                    this.store.dispatch(new filter_actions.FetchCustomFiltersAction(project.get("id"), "backlog"));
-                    this.store.dispatch(new actions.FetchBacklogAppliedFiltersAction(project.get("id")));
-                    this.store.dispatch(new actions.FetchBacklogStatsAction(project.get("id")));
-                    this.store.dispatch(new actions.FetchBacklogSprintsAction(project.get("id")));
-                }
-            }),
             Observable.combineLatest(this.project, this.appliedFilters).subscribe(([project, appliedFilters]: any[]) => {
                 if (project && appliedFilters) {
                     this.store.dispatch(new actions.FetchBacklogFiltersDataAction(project.get("id"), appliedFilters));
@@ -161,6 +155,20 @@ export class BacklogPage implements OnInit, OnDestroy {
             }),
             this.route.queryParams.subscribe((params) => {
                 this.setFiltersFromTheUrl(Immutable.fromJS(params));
+            }),
+            Observable.combineLatest(this.project, this.route.queryParams).subscribe(([project, params]: any[]) => {
+                if (_.isEmpty(params) && project && !this.loadedStoredFilters) {
+                    this.loadedStoredFilters = true;
+                    this.store.dispatch(new filter_actions.LoadStoredFiltersAction(project.get('id'), "backlog"));
+                    return
+                }
+
+                if (project && this.loadedStoredFilters) {
+                    this.store.dispatch(new filter_actions.FetchCustomFiltersAction(project.get("id"), "backlog"));
+                    this.store.dispatch(new actions.FetchBacklogAppliedFiltersAction(project.get("id")));
+                    this.store.dispatch(new actions.FetchBacklogStatsAction(project.get("id")));
+                    this.store.dispatch(new actions.FetchBacklogSprintsAction(project.get("id")));
+                }
             }),
         ];
     }

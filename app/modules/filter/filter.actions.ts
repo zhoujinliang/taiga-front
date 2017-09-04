@@ -55,8 +55,26 @@ export class StoreCustomFiltersAction implements Action {
   }
 }
 
+export class StoreFiltersAction implements Action {
+  readonly type = "STORE_FILTERS";
+  public payload: any;
+
+  constructor(projectId: number, section: string, filters: any) {
+    this.payload = {projectId, section, filters};
+  }
+}
+
 export class FetchCustomFiltersAction implements Action {
   readonly type = "FETCH_CUSTOM_FILTERS";
+  public payload: any;
+
+  constructor(projectId: number, section: string) {
+    this.payload = {projectId, section};
+  }
+}
+
+export class LoadStoredFiltersAction implements Action {
+  readonly type = "LOAD_STORED_FILTERS";
   public payload: any;
 
   constructor(projectId: number, section: string) {
