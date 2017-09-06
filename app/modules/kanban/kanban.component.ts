@@ -13,6 +13,7 @@ import { IState } from "../../app.store";
 import { FetchCurrentProjectAction } from "../projects/projects.actions";
 import { ZoomLevelService } from "../services/zoom-level.service";
 import * as actions from "./kanban.actions";
+import * as _ from "lodash";
 
 @Component({
     template: require("./kanban.pug"),
@@ -31,6 +32,7 @@ export class KanbanPage implements OnInit, OnDestroy {
     appliedFiltersList: Observable<Immutable.List<any>>;
     customFilters: Observable<Immutable.Map<string, any>>;
     bulkCreateState: Observable<number>;
+    loadedStoredFilters: boolean = false;
     subscriptions: Subscription[];
 
     constructor(private store: Store<IState>,
@@ -68,11 +70,6 @@ export class KanbanPage implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.subscriptions = [
-            this.project.subscribe((project) => {
-                if (project) {
-                    this.store.dispatch(new actions.FetchKanbanAppliedFiltersAction(project.get("id")));
-                }
-            }),
             Observable.combineLatest(this.project, this.appliedFilters).subscribe(([project, appliedFilters]: any[]) => {
                 if (project && appliedFilters) {
                     this.store.dispatch(new actions.FetchKanbanFiltersDataAction(project.get("id"), appliedFilters));
@@ -81,6 +78,14 @@ export class KanbanPage implements OnInit, OnDestroy {
             }),
             this.route.queryParams.subscribe((params) => {
                 this.setFiltersFromTheUrl(Immutable.fromJS(params));
+            }),
+            this.project.filter((x) => x !== null).withLatestFrom(this.route.queryParams)
+                        .subscribe(([project, params]: any[]) => {
+                if (_.isEmpty(params) && project && !this.loadedStoredFilters) {
+                    this.loadedStoredFilters = true;
+                    this.store.dispatch(new filter_actions.LoadStoredFiltersAction(project.get('id'), "kanban"));
+                }
+                this.store.dispatch(new actions.FetchKanbanAppliedFiltersAction(project.get("id")));
             }),
         ];
     }

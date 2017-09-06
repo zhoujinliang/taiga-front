@@ -156,19 +156,16 @@ export class BacklogPage implements OnInit, OnDestroy {
             this.route.queryParams.subscribe((params) => {
                 this.setFiltersFromTheUrl(Immutable.fromJS(params));
             }),
-            Observable.combineLatest(this.project, this.route.queryParams).subscribe(([project, params]: any[]) => {
-                if (_.isEmpty(params) && project && !this.loadedStoredFilters) {
+            this.project.filter((x) => x !== null).withLatestFrom(this.route.queryParams)
+                        .subscribe(([project, params]: any[]) => {
+                if (_.isEmpty(params) && !this.loadedStoredFilters) {
                     this.loadedStoredFilters = true;
                     this.store.dispatch(new filter_actions.LoadStoredFiltersAction(project.get('id'), "backlog"));
-                    return
                 }
-
-                if (project && this.loadedStoredFilters) {
-                    this.store.dispatch(new filter_actions.FetchCustomFiltersAction(project.get("id"), "backlog"));
-                    this.store.dispatch(new actions.FetchBacklogAppliedFiltersAction(project.get("id")));
-                    this.store.dispatch(new actions.FetchBacklogStatsAction(project.get("id")));
-                    this.store.dispatch(new actions.FetchBacklogSprintsAction(project.get("id")));
-                }
+                this.store.dispatch(new filter_actions.FetchCustomFiltersAction(project.get("id"), "backlog"));
+                this.store.dispatch(new actions.FetchBacklogAppliedFiltersAction(project.get("id")));
+                this.store.dispatch(new actions.FetchBacklogStatsAction(project.get("id")));
+                this.store.dispatch(new actions.FetchBacklogSprintsAction(project.get("id")));
             }),
         ];
     }

@@ -65,15 +65,13 @@ export class IssuesPage implements OnInit, OnDestroy {
                 this.setOrderFromTheUrl(Immutable.fromJS(params));
                 this.setFiltersFromTheUrl(Immutable.fromJS(params));
             }),
-            Observable.combineLatest(this.project, this.route.queryParams).subscribe(([project, params]: any[]) => {
+            this.project.filter((x) => x !== null).withLatestFrom(this.route.queryParams)
+                        .subscribe(([project, params]: any[]) => {
                 if (_.isEmpty(params) && project && !this.loadedStoredFilters) {
                     this.loadedStoredFilters = true;
                     this.store.dispatch(new filter_actions.LoadStoredFiltersAction(project.get('id'), "issues"));
-                    return
                 }
-                if (project && this.loadedStoredFilters) {
-                    this.store.dispatch(new actions.FetchIssuesAppliedFiltersAction(project.get("id")));
-                }
+                this.store.dispatch(new actions.FetchIssuesAppliedFiltersAction(project.get("id")));
             }),
         ];
     }

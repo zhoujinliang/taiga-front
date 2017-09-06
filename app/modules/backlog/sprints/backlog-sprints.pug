@@ -25,7 +25,7 @@ section.sprints(*ngIf="sprints")
         )
 
     tg-backlog-sprint.sprint-open(
-        *ngFor="let sprint of sprints.get('sprints')",
+        *ngFor="let sprint of sprints.get('sprints').reverse()",
         [sprint]="sprint",
         [project]="project",
         tg-sprint-sortable
