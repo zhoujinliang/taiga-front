@@ -1221,7 +1221,7 @@
         "PENDING_POINTS": "Pending Points",
         "CLOSED_POINTS": "closed",
         "COMPACT_SPRINT": "Compact Sprint",
-        "GO_TO_TASKBOARD": "Go to the taskboard of {{::name}}",
+        "GO_TO_TASKBOARD": "Go to the taskboard of {{name}}",
         "EDIT_SPRINT": "Edit Sprint",
         "TOTAL_POINTS": "total",
         "STATUS_NAME": "Status Name",

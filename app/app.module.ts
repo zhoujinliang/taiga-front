@@ -21,6 +21,7 @@ import { ProfileModule } from "./modules/profile/profile.module";
 import { DetailModule } from "./modules/detail/detail.module";
 import { KanbanModule } from "./modules/kanban/kanban.module";
 import { BacklogModule } from "./modules/backlog/backlog.module";
+import { TaskboardModule } from "./modules/taskboard/taskboard.module";
 import { EpicsModule } from "./modules/epics/epics.module";
 import { IssuesModule } from "./modules/issues/issues.module";
 import { WikiModule } from "./modules/wiki/wiki.module";
@@ -73,6 +74,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DetailModule,
     KanbanModule,
     BacklogModule,
+    TaskboardModule,
     EpicsModule,
     IssuesModule,
     WikiModule,

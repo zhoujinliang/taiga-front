@@ -6,9 +6,10 @@ import {Component, Input} from "@angular/core";
 })
 export class KanbanTableBody {
     @Input() statuses: any;
-    @Input() userstories: any;
+    @Input() items: any;
     @Input() folds: any;
     @Input() zoom: any;
+    @Input() nested: boolean;
     @Input() archivedWatched: any;
     @Input() project: any;
 

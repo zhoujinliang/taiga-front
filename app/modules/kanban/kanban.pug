@@ -29,12 +29,6 @@ div.wrapper
             [class.open]="filtersOpen",
             section="kanban",
             [appliedFilters]="appliedFilters|async",
-            [filters]="filters|async"
-        )
-        tg-filter(
-            [class.open]="filtersOpen",
-            section="kanban",
-            [appliedFilters]="appliedFilters|async",
             [appliedFiltersList]="appliedFiltersList|async",
             [filters]="filters|async",
             [customFilters]="customFilters|async",
@@ -56,8 +50,10 @@ div.wrapper
 
         tg-kanban-table(
             [project]="project | async",
-            [userstories]="userstoriesByState | async",
+            [items]="userstoriesByState | async",
+            [nested]="false",
             [zoom]="zoom | async",
             (sorted)="onSorted($event)",
+            [statuses]="statuses | async",
             tg-kanban-sortable
         )

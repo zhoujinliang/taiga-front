@@ -12,6 +12,7 @@ import {SetBulkCreateLightboxDataAction, SetNewUsLightboxDataAction} from "../..
 export class KanbanTableHeader {
     @Input() statuses: Immutable.List<any>;
     @Input() folds: any;
+    @Input() nested: boolean;
     @Output("folds") foldsChange: EventEmitter<any>;
     @Input() archivedWatched: any = {};
     @Output("archivedWatched") archivedWatchedChange: EventEmitter<any>;

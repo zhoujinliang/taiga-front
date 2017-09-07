@@ -7,6 +7,7 @@ import {profileInitialState, profileReducer} from "./modules/profile/profile.sto
 import {detailInitialState, detailReducer} from "./modules/detail/detail.store";
 import {kanbanInitialState, kanbanReducer} from "./modules/kanban/kanban.store";
 import {backlogInitialState, backlogReducer} from "./modules/backlog/backlog.store";
+import {taskboardInitialState, taskboardReducer} from "./modules/taskboard/taskboard.store";
 import {epicsInitialState, epicsReducer} from "./modules/epics/epics.store";
 import {issuesInitialState, issuesReducer} from "./modules/issues/issues.store";
 import {projectsInitialState, projectsReducer} from "./modules/projects/projects.store";
@@ -44,6 +45,7 @@ const initialState = Immutable.fromJS({
     detail: detailInitialState,
     kanban: kanbanInitialState,
     backlog: backlogInitialState,
+    taskboard: taskboardInitialState,
     epics: epicsInitialState,
     issues: issuesInitialState,
     discover: discoverInitialState,
@@ -95,6 +97,7 @@ export const rootReducer = (state=initialState, action) => {
                 .set("detail", detailReducer(state.get("detail"), action))
                 .set("kanban", kanbanReducer(state.get("kanban"), action))
                 .set("backlog", backlogReducer(state.get("backlog"), action))
+                .set("taskboard", taskboardReducer(state.get("taskboard"), action))
                 .set("epics", epicsReducer(state.get("epics"), action))
                 .set("issues", issuesReducer(state.get("issues"), action))
                 .set("projects", projectsReducer(state.get("projects"), action))

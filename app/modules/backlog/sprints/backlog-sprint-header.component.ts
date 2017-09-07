@@ -13,6 +13,7 @@ import * as Immutable from "immutable";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BacklogSprintHeader {
+    @Input() project: Immutable.Map<string, any>;
     @Input() sprint: Immutable.Map<string, any>;
     @Input() compactSprint: boolean;
     @Output() compactSprintChange: EventEmitter<boolean>;

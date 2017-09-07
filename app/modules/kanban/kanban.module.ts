@@ -34,6 +34,7 @@ import {KanbanSortableDirective} from "./sortable.directive";
     ],
     exports: [
         KanbanPage,
+        KanbanTable,
     ],
     imports: [
         CommonModule,

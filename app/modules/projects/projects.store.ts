@@ -21,6 +21,9 @@ export const projectsReducer = (state, action) => {
             let usStatusesById = action.payload.get('us_statuses')
                                     .reduce((usStatuses, usStatus) => usStatuses.set(usStatus.get('id'), usStatus),
                                             Immutable.Map());
+            let taskStatusesById = action.payload.get('task_statuses')
+                                    .reduce((taskStatuses, taskStatus) => taskStatuses.set(taskStatus.get('id'), taskStatus),
+                                            Immutable.Map());
             let issueStatusesById = action.payload.get('issue_statuses')
                                     .reduce((issueStatuses, issueStatus) => issueStatuses.set(issueStatus.get('id'), issueStatus),
                                             Immutable.Map());
@@ -36,6 +39,7 @@ export const projectsReducer = (state, action) => {
             return state.set("current-project", action.payload)
                         .setIn(["current-project", "members_by_id"], membersById)
                         .setIn(["current-project", "us_statuses_by_id"], usStatusesById)
+                        .setIn(["current-project", "task_statuses_by_id"], taskStatusesById)
                         .setIn(["current-project", "issue_statuses_by_id"], issueStatusesById)
                         .setIn(["current-project", "issue_types_by_id"], issueTypesById)
                         .setIn(["current-project", "severities_by_id"], severitiesById)

@@ -22,6 +22,7 @@ export class KanbanPage implements OnInit, OnDestroy {
     section = "kanban";
     project: Observable<any>;
     userstoriesByState: Observable<any[]>;
+    statuses: Observable<any[]>;
     zoom: Observable<any>;
     selectedFiltersCount: number = 0;
     members: Observable<any>;
@@ -51,6 +52,9 @@ export class KanbanPage implements OnInit, OnDestroy {
                                             .map((userstories) =>
                                                 userstories.groupBy((us) => us.get("status").toString())
                                             )
+        this.statuses = this.store.select((state) => state.getIn(["projects", "current-project", 'us_statuses']))
+                                  .filter((statuses) => statuses)
+                                  .map((statuses) => statuses.sortBy((data) => data.get('order')));
 
         this.zoom = this.store.select((state) => state.getIn(["kanban", "zoomLevel"])).map((level) => {
             return {

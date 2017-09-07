@@ -21,6 +21,13 @@ export const filterInitialState = {
         "owner": [],
         "epic": [],
     },
+    "taskboard": {
+        "q": "",
+        "status": [],
+        "tags": [],
+        "assigned_to": [],
+        "owner": [],
+    },
     "issues": {
         "q": "",
         "type": [],

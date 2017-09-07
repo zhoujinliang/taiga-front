@@ -5,17 +5,12 @@ import * as Immutable from "immutable";
     selector: "tg-kanban-table",
     template: require("./kanban-table.pug"),
 })
-export class KanbanTable implements OnChanges {
+export class KanbanTable {
     @Input() project: Immutable.Map<string, any>;
-    @Input() userstories: Immutable.List<any>;
+    @Input() items: Immutable.List<any>;
+    @Input() statuses: Immutable.List<any> = Immutable.List();
+    @Input() nested: boolean = false;
     @Input() zoom: any;
-    statuses: Immutable.List<any> = Immutable.List();
     folds: any = {};
     archivedWatched: any = {};
-
-    ngOnChanges() {
-        if (this.project) {
-            this.statuses = this.project.get("us_statuses").sortBy((data) => data.get("order"));
-        }
-    }
 }

@@ -8,8 +8,8 @@ header
             tg-svg(svg-icon="icon-arrow-right")
         // *tgIfPerm="'view_milestones'",
         a(
-            [href]="taskboardUrl",
-            [title]="'BACKLOG.GO_TO_TASKBOARD' | translate"
+            [routerLink]="['/project', project.get('slug'), 'taskboard', sprint.get('slug')]",
+            [title]="'BACKLOG.GO_TO_TASKBOARD' | translate:{'name': sprint.get('name')}"
         )
             span {{sprint.get('name')}}
 

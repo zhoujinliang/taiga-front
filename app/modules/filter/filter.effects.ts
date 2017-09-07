@@ -53,9 +53,10 @@ export class FilterEffects {
           const ns = `${projectId}:${section}-filters`
           const hash = generateHash([projectId, ns])
           return this.rs.user.getUserStorage(hash).map((filters) => {
-              if (filters) {
-                  return new SearchAction(filters.get('value').toJS())
+              if (filters && filters.get('value')) {
+                  return new SearchAction(filters.get('value').toJS());
               }
+              return new SearchAction({});
           })
         });
 
