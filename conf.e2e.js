@@ -53,6 +53,7 @@ var config = {
     },
     onPrepare: function() {
         browser.ignoreSynchronization = true;
+        browser.driver.manage().window().setSize(1200, 800);
         // disable by default because performance problems on IE
         // track mouse movements
         // var trackMouse = function() {
@@ -114,8 +115,6 @@ var config = {
         browser.executeScript('window.sessionStorage.clear();');
         browser.executeScript('window.localStorage.clear();');
         browser.executeScript('window.localStorage.e2e = true');
-
-        browser.driver.manage().window().maximize();
 
         browser.get(browser.params.glob.host + 'login');
 
