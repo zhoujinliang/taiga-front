@@ -15,7 +15,8 @@ describe('leaving project', function(){
 
     it('leave project', async function(){
         teamHelper.team().leave();
-        await utils.lightbox.confirm.ok();
+        let lb = await teamHelper.leavingProjectWarningLb();
+        await utils.lightbox.confirm.ok(lb);
         await utils.common.takeScreenshot("team", "after-leaving");
     });
 });
@@ -64,14 +65,6 @@ describe('team', function() {
         expect(total).to.be.equal(9);
     });
 
-    it('search username', async function() {
-        let firstMemberName = await teamHelper.team().firstMember().getText();
-        teamHelper.filters().searchText(firstMemberName);
-        let total = await teamHelper.team().count();
-        expect(total).to.be.equal(1);
-        await utils.common.takeScreenshot("team", "searching-by-name");
-    });
-
     it('filter role', async function(){
         teamHelper.filters().clearText();
         let total = await teamHelper.team().count();
@@ -83,4 +76,14 @@ describe('team', function() {
         expect(newTotal).to.be.least(1);
         await utils.common.takeScreenshot("team", "filtering-by-role");
     });
+
+    it('search username', async function() {
+        teamHelper.filters().filterByRole("All");
+        let firstMemberName = await teamHelper.team().firstMember().getText();
+        teamHelper.filters().searchText(firstMemberName);
+        let total = await teamHelper.team().count();
+        expect(total).to.be.equal(1);
+        await utils.common.takeScreenshot("team", "searching-by-name");
+    });
+
 });

@@ -8,15 +8,15 @@ helper.team = function() {
   let obj = {
       el: el,
       firstRole: function() {
-        return el.$$('section[tg-team-members] .avatar span').first();
+        return el.$$('tg-team-members .avatar span').first();
       },
 
       firstMember: function() {
-        return el.$$('section[tg-team-members] a.name').first();
+        return el.$$('tg-team-members a.name').first();
       },
 
       count: function() {
-        return el.$$('section[tg-team-members] .row.member').count();
+        return el.$$('tg-team-members .row.member').count();
       },
 
       leave: function() {
@@ -39,25 +39,25 @@ helper.filters = function() {
             return text.toLowerCase() === roleName.toLowerCase();
           });
         }).click();
-
       },
 
       clearText: function(text) {
-        el.$('input[ng-model="filtersQ"]').clear();
+        el.$('form.search-in input').clear();
       },
 
       searchText: function(text) {
-        el.$('input[ng-model="filtersQ"]').sendKeys(text);
+        el.$('form.search-in input').sendKeys(text);
       }
   };
 
   return obj;
 };
 
-helper.leavingProjectWarningLb = function() {
-    return $('div[tg-lightbox-leave-project-warning]');
+helper.leavingProjectWarningLb = async function() {
+    return utils.common.getElm('tg-lightbox[key="team.leave-project"]');
 };
 
-helper.isLeaveProjectWarningOpen = function() {
-    return helper.leavingProjectWarningLb().isPresent();
+helper.isLeaveProjectWarningOpen = async function() {
+    let lb = await helper.leavingProjectWarningLb();
+    return lb.isPresent();
 };
