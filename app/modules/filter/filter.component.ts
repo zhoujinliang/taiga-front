@@ -66,7 +66,7 @@ export class Filter implements OnChanges {
                 this.epicsFilters = this.reformatEpics(this.filters.get('epics'));
             }
         }
-        if(changes.customFilters) {
+        if(changes.customFilters && this.customFilters) {
             this.customFiltersItems = this.customFilters.keySeq().map((id) => (
                 Immutable.fromJS({id: id, name: id, color: null, count: 0})
             )).toList();

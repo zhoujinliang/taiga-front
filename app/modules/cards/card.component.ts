@@ -28,7 +28,8 @@ import * as _ from "lodash";
 export class Card {
     @Input() item: Immutable.Map<string, any>;
     @Input() zoom: any;
-    @Input() project: any;
+    @Input() type: string;
+    @Input() project: Immutable.Map<string, any>;
     folded: boolean = false;
     archived: boolean = false;
     visible: string[] = [];

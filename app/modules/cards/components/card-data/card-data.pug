@@ -1,12 +1,13 @@
 .card-data(
     *ngIf='zoom.visibility.extra_info',
-    [class.empty-tasks]="item.get('tasks').size"
+    [class.empty-tasks]="item.get('tasks') && item.get('tasks').size"
 )
     span.card-estimation(
-        *ngIf="item.get('total_points') === null && zoom.visibility.empty_extra_info",
+        *ngIf="type === 'us' && item.get('total_points') === null && zoom.visibility.empty_extra_info",
         translate="US.NOT_ESTIMATED"
     )
-    span.card-estimation(*ngIf="item.get('total_points')"
+    span.card-estimation(
+        *ngIf="type === 'us' && item.get('total_points')"
     ) {{"COMMON.FIELDS.POINTS" | translate}} {{item.get('total_points')}}
     .card-statistics
         .statistic.card-iocaine(

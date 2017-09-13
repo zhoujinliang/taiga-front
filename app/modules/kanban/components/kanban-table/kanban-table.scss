@@ -120,6 +120,12 @@ tg-kanban-table {
     overflow: hidden;
     overflow-x: auto;
     width: 100%;
+    &.kanban-table-nested {
+        display: block;
+        .kanban-table-inner {
+            margin-bottom: .25rem;
+        }
+    }
     .task-column {
         flex-basis: $column-width;
         flex-grow: $column-flex;
@@ -131,6 +137,9 @@ tg-kanban-table {
         width: $column-width;
         &:last-child {
             margin-right: 0;
+        }
+        &.nested-main {
+            background: $mass-white;
         }
         .kanban-column-intro {
             @include font-type(bold);

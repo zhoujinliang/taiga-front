@@ -7,9 +7,9 @@ div(
     tg-card-owner([item]="item", [zoom]="zoom", [project]="project")
     div(*ngIf='zoom.visibility.owner')
         tg-card-title([item]="item", [zoom]="zoom", [project]="project")
-    tg-card-data([item]="item", [zoom]="zoom")
-    tg-card-completion([tasks]="item.get('tasks')", *ngIf="isVisibleCompletion()")
-    tg-card-tasks([project]="project", [tasks]="item.get('tasks')", *ngIf="isVisibleTasks()")
+    tg-card-data([item]="item", [zoom]="zoom", [type]="type")
+    tg-card-completion([tasks]="item.get('tasks')", *ngIf="type === 'us' && isVisibleCompletion()")
+    tg-card-tasks([project]="project", [tasks]="item.get('tasks')", *ngIf="type === 'us' && isVisibleTasks()")
     tg-card-slideshow(
         *ngIf="isVisibleSlideshow()",
         [images]="item.get('images')"

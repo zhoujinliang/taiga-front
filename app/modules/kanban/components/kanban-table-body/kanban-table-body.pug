@@ -32,7 +32,53 @@ div.kanban-table-body.kanban-table-nested(*ngIf="items && nested")
     div.kanban-table-inner(*ngFor="let block of items")
         // tg-kanban-wip-limit="s",
         // tg-kanban-column-height-fixer
-        div.kanban-uses-box.task-column {{block.get('subject')}}
+        div.kanban-uses-box.task-column.nested-main
+            tg-svg.vfold.fold-action(
+                svg-icon="icon-fold-row",
+                (click)='foldBlock(block)',
+                [title]="'TASKBOARD.TABLE.TITLE_ACTION_FOLD_ROW' | translate",
+                [class.hidden]="blockFolded[block.get('id')]"
+            )
+
+            tg-svg.vunfold.fold-action(
+                svg-icon="icon-unfold-row",
+                (click)='foldBlock(block)',
+                [title]="'TASKBOARD.TABLE.TITLE_ACTION_UNFOLD_ROW' | translate",
+                [class.hidden]="!blockFolded[block.get('id')]"
+            )
+
+            h3.us-title
+                a(
+                    href="",
+                    [routerLink]="['/project', project.get('slug'), 'us', block.get('ref')]",
+                    [queryParams]="{'no-milestone': block.get('milestone')}",
+                    title="#{{ block.get('ref') }} {{ block.get('subject') }}"
+                )
+                      span.us-ref {{'#' + block.get('ref')}}&nbsp;
+                      span {{block.get('subject')}}
+                      tg-belong-to-epics(
+                          format="pill",
+                          *ngIf="block.get('epics')",
+                          [epics]="block.get('epics')"
+                      )
+            p.points-value
+                span {{block.get('total_points')}}
+                span(translate="TASKBOARD.TABLE.FIELD_POINTS")
+
+            tg-svg.add-action(
+                *tgIfPerm="'add_task'",
+                [title]="'TASKBOARD.TITLE_ACTION_ADD' | translate",
+                (click)="addNewTask('standard', block)",
+                svg-icon="icon-add"
+            )
+
+            tg-svg.bulk-action(
+                *tgIfPerm="'add_task'",
+                [title]="'TASKBOARD.TITLE_ACTION_ADD_BULK' | translate",
+                (click)="addNewTask('bulk', block)",
+                svg-icon="icon-bulk"
+            )
+
 
         div.kanban-uses-box.task-column(
             *ngFor="let status of statuses; let i = index; trackBy: trackStatusFn",

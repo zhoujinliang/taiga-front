@@ -12,6 +12,7 @@ export class KanbanTableBody {
     @Input() nested: boolean;
     @Input() archivedWatched: any;
     @Input() project: any;
+    blockFolded:any = {}
 
     trackStatusFn(idx, status) {
         return status.get("id");
@@ -19,5 +20,13 @@ export class KanbanTableBody {
 
     trackUSFn(idx, us) {
         return us.get("id");
+    }
+
+    foldBlock(block) {
+        this.blockFolded[block.get('id')] = true;
+    }
+
+    unfoldBlock(block) {
+        this.blockFolded[block.get('id')] = false;
     }
 }
