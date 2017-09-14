@@ -42,7 +42,6 @@ export class SprintsResource {
 
     getBySlug(projectId, slug, extraParams = {}) {
         const url = this.urls.resolve('milestone', "by_slug");
-        console.log(url);
         let params = {
             project: projectId,
             slug: slug,

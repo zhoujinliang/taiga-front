@@ -86,7 +86,6 @@ export class TaskboardPage implements OnInit, OnDestroy {
             Observable.combineLatest(this.project, this.route.params, this.appliedFilters).subscribe(([project, params, appliedFilters]: any[]) => {
                 if (project && appliedFilters && params) {
                     this.store.dispatch(new actions.FetchTaskboardFiltersDataAction(project.get("id"), appliedFilters));
-                    console.log(params);
                     this.store.dispatch(new actions.FetchTaskboardMilestoneAction(project.get("id"), params.sprintSlug));
                 }
             }),

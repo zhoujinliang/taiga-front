@@ -72,7 +72,6 @@ export class TaskboardEffects {
         .do((payload) => {
             this.storage.set("taskboard_zoom", payload);
         }).map((payload) => {
-            console.log("HOLA");
             return new actions.SetTaskboardZoom(payload);
         });
 

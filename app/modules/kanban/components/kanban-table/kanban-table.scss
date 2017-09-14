@@ -122,6 +122,7 @@ tg-kanban-table {
     width: 100%;
     &.kanban-table-nested {
         display: block;
+        overflow-y: auto;
         .kanban-table-inner {
             margin-bottom: .25rem;
         }
