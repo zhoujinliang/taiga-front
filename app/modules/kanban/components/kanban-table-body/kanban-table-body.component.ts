@@ -18,7 +18,7 @@ export class KanbanTableBody {
         return status.get("id");
     }
 
-    trackUSFn(idx, us) {
+    trackItemFn(idx, us) {
         return us.get("id");
     }
 

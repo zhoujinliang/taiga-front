@@ -51,7 +51,7 @@ export class KanbanPage implements OnInit, OnDestroy {
                                             )
                                             .map((userstories) =>
                                                 userstories.groupBy((us) => us.get("status").toString())
-                                            )
+                                            );
         this.statuses = this.store.select((state) => state.getIn(["projects", "current-project", 'us_statuses']))
                                   .filter((statuses) => statuses)
                                   .map((statuses) => statuses.sortBy((data) => data.get('order')));
