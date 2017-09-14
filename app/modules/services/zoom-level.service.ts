@@ -14,6 +14,12 @@ export class ZoomLevelService {
                 ["attachments"],
                 ["related_tasks", "empty_extra_info"],
             ],
+            taskboard: [
+                ["ref"],
+                ["subject"],
+                ["owner", "tags", "extra_info", "unfold"],
+                ["attachments", "empty_extra_info"],
+            ],
         };
     }
 

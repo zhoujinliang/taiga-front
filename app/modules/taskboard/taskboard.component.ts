@@ -22,7 +22,9 @@ export class TaskboardPage implements OnInit, OnDestroy {
     section = "taskboard";
     project: Observable<any>;
     statuses: Observable<any[]>;
-    userstories: Observable<any[]>;
+    tasks: Observable<Immutable.List<any>>;
+    groups: Observable<Immutable.List<any>>;
+    milestone: Observable<Immutable.Map<string, any>>;
     zoom: Observable<any>;
     selectedFiltersCount: number = 0;
     members: Observable<any>;
@@ -43,21 +45,25 @@ export class TaskboardPage implements OnInit, OnDestroy {
         this.store.dispatch(new StartLoadingAction());
         this.project = this.store.select((state) => state.getIn(["projects", "current-project"]));
         this.members = this.store.select((state) => state.getIn(["projects", "current-project", "members"]));
-        this.userstories = this.store.select((state) => state.getIn(["taskboard", "userstories"]))
-                                            .filter((uss) => uss !== null)
+        this.milestone = this.store.select((state) => state.getIn(["taskboard", "milestone"]));
+        this.tasks = this.store.select((state) => state.getIn(["taskboard", "tasks"]))
+                                            .filter((tasks) => tasks !== null)
                                             .do(() => this.store.dispatch(new StopLoadingAction()))
-                                            .map((userstories) =>
-                                                userstories.sortBy((userstory) => userstory.get('taskboard_order'))
-                                            )
-                                            .map((userstories) =>
-                                                userstories.map((us) => {
-                                                    const groupedItems = us.get("tasks").groupBy((task) => task.get("status_id").toString());
-                                                    return us.set("items", groupedItems)
-                                                })
+                                            .map((tasks) =>
+                                                tasks.sortBy((task) => task.get('taskboard_order'))
                                             );
         this.statuses = this.store.select((state) => state.getIn(["projects", "current-project", 'task_statuses']))
                                   .filter((statuses) => statuses)
                                   .map((statuses) => statuses.sortBy((data) => data.get('order')));
+        this.groups = Observable.combineLatest(this.tasks, this.milestone)
+                                .filter(([tasks, milestone]) => tasks !== null && milestone !== null)
+                                .map(([tasks, milestone]) => {
+                                    const itemsByUs = tasks.groupBy((task) => task.get('user_story'));
+                                    const userstories = milestone.get('user_stories');
+                                    return userstories.map((userstory) => {
+                                        return userstory.set('items', itemsByUs.get(userstory.get('id')).groupBy((task) => task.get('status').toString()))
+                                    })
+                                });
 
         this.zoom = this.store.select((state) => state.getIn(["taskboard", "zoomLevel"])).map((level) => {
             return {
@@ -77,10 +83,16 @@ export class TaskboardPage implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.subscriptions = [
-            Observable.combineLatest(this.project, this.appliedFilters).subscribe(([project, appliedFilters]: any[]) => {
-                if (project && appliedFilters) {
+            Observable.combineLatest(this.project, this.route.params, this.appliedFilters).subscribe(([project, params, appliedFilters]: any[]) => {
+                if (project && appliedFilters && params) {
                     this.store.dispatch(new actions.FetchTaskboardFiltersDataAction(project.get("id"), appliedFilters));
-                    this.store.dispatch(new actions.FetchTaskboardUserStoriesAction(project.get("id"), appliedFilters));
+                    console.log(params);
+                    this.store.dispatch(new actions.FetchTaskboardMilestoneAction(project.get("id"), params.sprintSlug));
+                }
+            }),
+            Observable.combineLatest(this.milestone, this.appliedFilters).subscribe(([milestone, appliedFilters]: any[]) => {
+                if (milestone && appliedFilters) {
+                    this.store.dispatch(new actions.FetchTaskboardTasksAction(milestone.get('id'), appliedFilters));
                 }
             }),
             this.route.queryParams.subscribe((params) => {

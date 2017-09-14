@@ -1,6 +1,30 @@
 import { Action } from "@ngrx/store";
 import * as Immutable from "immutable";
 
+export class FetchTaskboardMilestoneAction implements Action {
+  readonly type = "FETCH_TASKBOARD_MILESTONE";
+  public payload: any;
+
+  constructor(projectId: number, milestoneSlug: string) {
+      this.payload = {
+          projectId,
+          milestoneSlug,
+      }
+  }
+}
+
+export class FetchTaskboardTasksAction implements Action {
+  readonly type = "FETCH_TASKBOARD_TASKS";
+  payload: any;
+
+  constructor(milestoneId: number, appliedFilters: any) {
+      this.payload = {
+          milestoneId,
+          appliedFilters,
+      };
+  }
+}
+
 export class FetchTaskboardUserStoriesAction implements Action {
   readonly type = "FETCH_TASKBOARD_USER_STORIES";
   payload: any;
@@ -22,8 +46,14 @@ export class MoveTaskboardUsAction implements Action {
   }
 }
 
-export class SetTaskboardUserStoriesAction implements Action {
-  readonly type = "SET_TASKBOARD_USER_STORIES";
+export class SetTaskboardMilestoneAction implements Action {
+  readonly type = "SET_TASKBOARD_MILESTONE";
+
+  constructor(public payload: Immutable.List<any>) { }
+}
+
+export class SetTaskboardTasksAction implements Action {
+  readonly type = "SET_TASKBOARD_TASKS";
 
   constructor(public payload: Immutable.List<any>) { }
 }

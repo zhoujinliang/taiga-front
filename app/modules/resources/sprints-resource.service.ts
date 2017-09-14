@@ -40,6 +40,18 @@ export class SprintsResource {
         return this.http.get(url);
     }
 
+    getBySlug(projectId, slug, extraParams = {}) {
+        const url = this.urls.resolve('milestone', "by_slug");
+        console.log(url);
+        let params = {
+            project: projectId,
+            slug: slug,
+        }
+
+        params = _.extend({}, params, extraParams);
+        return this.http.get(url, params);
+    }
+
     update(sprintId, data) {
         const url = this.urls.resolve("milestone", sprintId)
         return this.http.patch(url, data);

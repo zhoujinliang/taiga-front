@@ -9,16 +9,17 @@ export const taskboardInitialState = {
     "current-userstory": null,
     "filtersData": null,
     "folds": {},
-    "userstories": null,
+    "tasks": null,
+    "milestone": null,
     "zoomLevel": 4,
 };
 
 export const taskboardReducer = (state, action) => {
     switch (action.type) {
-        case "SET_TASKBOARD_USER_STORIES":
-            return state.set("userstories", action.payload);
-        case "APPEND_TASKBOARD_USER_STORIES":
-            return state.update("userstories", (stories) => stories.concat(action.payload));
+        case "SET_TASKBOARD_TASKS":
+            return state.set("tasks", action.payload);
+        case "SET_TASKBOARD_MILESTONE":
+            return state.set("milestone", action.payload);
         case "SET_TASKBOARD_FILTERS_DATA":
             return state.set("filtersData", action.payload);
         case "SET_TASKBOARD_APPLIED_FILTERS":

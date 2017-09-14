@@ -16,8 +16,18 @@ import {generateHash} from "../../libs/utils";
 @Injectable()
 export class TaskboardEffects {
     @Effect()
-    fetchTaskboardUserStories$: Observable<Action> = this.actions$
-        .ofType("FETCH_TASKBOARD_USER_STORIES")
+    fetchTaskboardMilestone$: Observable<Action> = this.actions$
+        .ofType("FETCH_TASKBOARD_MILESTONE")
+        .map(toPayload)
+        .switchMap((payload) => {
+          return this.rs.sprints.getBySlug(payload.projectId, payload.milestoneSlug).map((milestone) => {
+              return new actions.SetTaskboardMilestoneAction(milestone.data);
+          });
+        });
+
+    @Effect()
+    fetchTaskboardTasks$: Observable<Action> = this.actions$
+        .ofType("FETCH_TASKBOARD_TASKS")
         .map(toPayload)
         .switchMap((payload) => {
           let filters = payload.appliedFilters.filter((value) =>
@@ -25,10 +35,9 @@ export class TaskboardEffects {
           )
           const params = _.extend({
               include_attachments: 1,
-              include_tasks: 1,
           }, filters.toJS());
-          return this.rs.userstories.listAll(payload.projectId, params).map((userstories) => {
-              return new actions.SetTaskboardUserStoriesAction(userstories.data);
+          return this.rs.tasks.list(payload.projectId, payload.milestoneId, null, params).map((tasks) => {
+              return new actions.SetTaskboardTasksAction(tasks.data);
           });
         });
 
@@ -63,6 +72,7 @@ export class TaskboardEffects {
         .do((payload) => {
             this.storage.set("taskboard_zoom", payload);
         }).map((payload) => {
+            console.log("HOLA");
             return new actions.SetTaskboardZoom(payload);
         });
 

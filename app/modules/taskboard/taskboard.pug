@@ -28,7 +28,8 @@ div.wrapper
 
             .taskboard-actions
                 .zoom-loading(*tgLoading="zoomLoading")
-                tg-taskboard-board-zoom([value]="(zoom | async).level")
+                tg-taskboard-zoom([value]="(zoom | async).level")
+
                 button.button-filter.e2e-open-filter(
                     (click)="toggleFiltersOpen()",
                     [title]="selectedFiltersCount + ('COMMON.FILTERS.APPLIED_FILTERS_NUM' | translate)"
@@ -41,7 +42,7 @@ div.wrapper
         //
         tg-kanban-table(
             [project]="project | async",
-            [items]="userstories | async",
+            [items]="groups | async",
             [nested]="true",
             [zoom]="zoom | async",
             [statuses]="statuses | async",

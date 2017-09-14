@@ -18,6 +18,7 @@ import {TaskboardFilters} from "./taskboard-filters/taskboard-filters.component"
 import {TaskboardCurrentUser} from "./taskboard-current-user/taskboard-current-user.component";
 import {TaskboardMembers} from "./taskboard-members/taskboard-members.component";
 import {TaskboardMemberStats} from "./taskboard-member-stats/taskboard-member-stats.component";
+import {TaskboardZoom} from "./taskboard-zoom.component";
 import {TaskboardEffects} from "./taskboard.effects";
 
 @NgModule({
@@ -28,6 +29,7 @@ import {TaskboardEffects} from "./taskboard.effects";
         TaskboardCurrentUser,
         TaskboardMemberStats,
         TaskboardMembers,
+        TaskboardZoom,
     ],
     exports: [
         TaskboardPage,
