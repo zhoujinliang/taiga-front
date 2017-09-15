@@ -30,6 +30,19 @@
             align-items: flex-start;
         }
     }
+    &.minimized {
+        .card-owner-actions,
+        .card-owner-name {
+            display: none;
+        }
+        .card-owner {
+            img {
+                height: 1.3rem;
+                margin-right: 0;
+                width: 1.3rem;
+            }
+        }
+    }
     &.card-blocked {
         background: $red-light;
         .statistic,

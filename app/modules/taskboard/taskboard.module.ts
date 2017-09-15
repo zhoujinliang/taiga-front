@@ -18,6 +18,8 @@ import {TaskboardFilters} from "./taskboard-filters/taskboard-filters.component"
 import {TaskboardCurrentUser} from "./taskboard-current-user/taskboard-current-user.component";
 import {TaskboardMembers} from "./taskboard-members/taskboard-members.component";
 import {TaskboardMemberStats} from "./taskboard-member-stats/taskboard-member-stats.component";
+import {TaskboardSprintSummary} from "./taskboard-sprint-summary/taskboard-sprint-summary.component";
+import {TaskboardGraph} from "./taskboard-graph.component";
 import {TaskboardZoom} from "./taskboard-zoom.component";
 import {TaskboardEffects} from "./taskboard.effects";
 
@@ -30,6 +32,8 @@ import {TaskboardEffects} from "./taskboard.effects";
         TaskboardMemberStats,
         TaskboardMembers,
         TaskboardZoom,
+        TaskboardSprintSummary,
+        TaskboardGraph,
     ],
     exports: [
         TaskboardPage,

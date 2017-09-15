@@ -30,6 +30,7 @@ export class Card {
     @Input() zoom: any;
     @Input() type: string;
     @Input() project: Immutable.Map<string, any>;
+    @Input() minimized: boolean = false;
     folded: boolean = false;
     archived: boolean = false;
     visible: string[] = [];

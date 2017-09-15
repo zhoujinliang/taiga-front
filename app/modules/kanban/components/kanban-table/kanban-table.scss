@@ -7,6 +7,43 @@ $column-shrink: 0;
 $column-margin: 0 5px 0 0;
 $column-padding: .5rem 1rem;
 
+@mixin fold {
+    .card {
+        align-self: flex-start;
+        margin-top: .5rem;
+        tg-card-slideshow,
+        .card-unfold,
+        .card-tag,
+        .card-title,
+        .card-owner-actions,
+        .card-data,
+        .card-statistics,
+        .card-owner-name {
+            display: none;
+        }
+        .card-owner {
+            img {
+                height: 1.3rem;
+                margin-right: 0;
+                width: 1.3rem;
+            }
+        }
+    }
+    &.task-column,
+    .task-column {
+        align-content: flex-start;
+        display: flex;
+        flex-direction: column;
+        flex-flow: row wrap;
+    }
+    .avatar-task-link {
+        display: block;
+    }
+    .avatar-assigned-to {
+        display: none;
+    }
+}
+
 tg-kanban-table {
     display: flex;
     flex-direction: column;
@@ -127,6 +164,12 @@ tg-kanban-table {
             margin-bottom: .25rem;
         }
     }
+    .row-fold {
+        @include fold;
+    }
+    .column-fold {
+        @include fold;
+    }
     .task-column {
         flex-basis: $column-width;
         flex-grow: $column-flex;
@@ -162,6 +205,44 @@ tg-kanban-table {
     .kanban-uses-box {
         background: $mass-white;
     }
+    .task-row {
+        display: flex;
+        margin-bottom: .25rem;
+        min-height: 10rem;
+        width: 100%;
+        &.blocked {
+            .taskboard-userstory-box {
+                background: rgba($red, .6);
+
+            }
+            .taskboard-userstory-box svg,
+            .taskboard-userstory-box svg:hover,
+            .points-value,
+            .points-value:hover {
+                color: $white;
+                fill: $white;
+                transition: color .3s linear;
+            }
+            .taskboard-tasks-box {
+                background: rgba($red, .1);
+            }
+        }
+        &.row-fold {
+            min-height: 0;
+            .us-title {
+                @include ellipsis(100%);
+            }
+            .points-value,
+            .icon-add,
+            .icon-bulk {
+                display: none;
+            }
+        }
+    }
+    .taskboard-userstory-box {
+        padding: .5rem .5rem .5rem 1.5rem;
+    }
+
 }
 
 .kanban-table-inner {

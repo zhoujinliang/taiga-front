@@ -16,6 +16,15 @@ import {generateHash} from "../../libs/utils";
 @Injectable()
 export class TaskboardEffects {
     @Effect()
+    fetchTaskboardStats$: Observable<Action> = this.actions$
+        .ofType("FETCH_TASKBOARD_STATS")
+        .map(toPayload)
+        .switchMap((payload) => {
+          return this.rs.sprints.stats(payload.projectId, payload.milestoneId).map((stats) => {
+              return new actions.SetTaskboardStatsAction(stats.data);
+          });
+        });
+    @Effect()
     fetchTaskboardMilestone$: Observable<Action> = this.actions$
         .ofType("FETCH_TASKBOARD_MILESTONE")
         .map(toPayload)

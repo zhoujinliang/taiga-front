@@ -20,6 +20,8 @@ export const taskboardReducer = (state, action) => {
             return state.set("tasks", action.payload);
         case "SET_TASKBOARD_MILESTONE":
             return state.set("milestone", action.payload);
+        case "SET_TASKBOARD_STATS":
+            return state.set("stats", action.payload);
         case "SET_TASKBOARD_FILTERS_DATA":
             return state.set("filtersData", action.payload);
         case "SET_TASKBOARD_APPLIED_FILTERS":

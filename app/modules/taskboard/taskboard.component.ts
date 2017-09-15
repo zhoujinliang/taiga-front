@@ -25,6 +25,7 @@ export class TaskboardPage implements OnInit, OnDestroy {
     tasks: Observable<Immutable.List<any>>;
     groups: Observable<Immutable.List<any>>;
     milestone: Observable<Immutable.Map<string, any>>;
+    stats: Observable<Immutable.Map<string, any>>;
     zoom: Observable<any>;
     selectedFiltersCount: number = 0;
     members: Observable<any>;
@@ -36,6 +37,7 @@ export class TaskboardPage implements OnInit, OnDestroy {
     customFilters: Observable<Immutable.Map<string, any>>;
     bulkCreateState: Observable<number>;
     loadedStoredFilters: boolean = false;
+    showGraph: boolean = false;
     subscriptions: Subscription[];
 
     constructor(private store: Store<IState>,
@@ -73,6 +75,28 @@ export class TaskboardPage implements OnInit, OnDestroy {
         });
         this.appliedFilters = this.store.select((state) => state.getIn([this.section, "appliedFilters"]));
         this.filters = this.store.select((state) => state.getIn(["taskboard", "filtersData"]));
+        this.stats = this.store.select((state) => state.getIn(["taskboard", "stats"]))
+                               .map((stats) => {
+                                   if (stats) {
+                                       let totalPointsSum = stats.get('total_points').reduce((res, n) => res + n, 0);
+                                       let completedPointsSum = stats.get('completed_points').reduce((res, n) => res + n, 0);
+                                       let remainingPointsSum = totalPointsSum - completedPointsSum;
+                                       let remainingTasks = stats.get('total_tasks') - stats.get('completed_tasks');
+                                       let completedPercentage;
+                                       if (totalPointsSum) {
+                                           completedPercentage = Math.round((100*completedPointsSum)/totalPointsSum);
+                                       } else {
+                                           completedPercentage = 0;
+                                       }
+
+                                       return stats.set('totalPointsSum', totalPointsSum)
+                                                   .set('completedPointsSum', completedPointsSum)
+                                                   .set('remainingPointsSum', remainingPointsSum)
+                                                   .set('remainingTasks', remainingTasks)
+                                                   .set('completedPercentage', completedPercentage);
+                                   }
+                                   return stats
+                               });
         this.appliedFilters = this.store.select((state) => state.getIn(["filter", "taskboard"]));
         this.appliedFiltersList = this.appliedFilters.combineLatest(this.project, this.filters).map(this.reformatAppliedFilters);
         this.customFilters = this.store.select((state) => state.getIn(["filter", "taskboard-custom-filters"]));
@@ -92,6 +116,11 @@ export class TaskboardPage implements OnInit, OnDestroy {
             Observable.combineLatest(this.milestone, this.appliedFilters).subscribe(([milestone, appliedFilters]: any[]) => {
                 if (milestone && appliedFilters) {
                     this.store.dispatch(new actions.FetchTaskboardTasksAction(milestone.get('id'), appliedFilters));
+                }
+            }),
+            Observable.combineLatest(this.project, this.milestone).subscribe(([project, milestone]) => {
+                if (project && milestone) {
+                    this.store.dispatch(new actions.FetchTaskboardStatsAction(project.get("id"), milestone.get('id')));
                 }
             }),
             this.route.queryParams.subscribe((params) => {

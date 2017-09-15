@@ -37,9 +37,8 @@ div.wrapper
                     span.filter-num(*ngIf="selectedFiltersCount") {{selectedFiltersCount}}
                     tg-svg(svg-icon="icon-filters")
 
-        // tg-taskboard-sprint-summary([sprint]="sprint")
-        // tg-sprint-graph([sprint]="stats")
-        //
+        tg-taskboard-sprint-summary([stats]="stats | async", [(showGraph)]="showGraph")
+        tg-taskboard-graph([stats]="stats | async", *ngIf="showGraph")
         tg-kanban-table(
             [project]="project | async",
             [items]="groups | async",

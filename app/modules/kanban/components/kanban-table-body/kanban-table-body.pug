@@ -2,7 +2,7 @@ div.kanban-table-body(*ngIf="items", [class.kanban-table-nested]="nested")
     div.kanban-table-inner(*ngFor="let block of (nested? items : [items])")
         // tg-kanban-wip-limit="s",
         // tg-kanban-column-height-fixer,
-        div.kanban-uses-box.task-column.nested-main(*ngIf="nested")
+        div.kanban-uses-box.task-column.nested-main.task-row(*ngIf="nested", [class.row-fold]="blockFolded[block.get('id')]")
             tg-svg.vfold.fold-action(
                 svg-icon="icon-fold-row",
                 (click)='foldBlock(block)',
@@ -12,7 +12,7 @@ div.kanban-table-body(*ngIf="items", [class.kanban-table-nested]="nested")
 
             tg-svg.vunfold.fold-action(
                 svg-icon="icon-unfold-row",
-                (click)='foldBlock(block)',
+                (click)='unfoldBlock(block)',
                 [title]="'TASKBOARD.TABLE.TITLE_ACTION_UNFOLD_ROW' | translate",
                 [class.hidden]="!blockFolded[block.get('id')]"
             )
@@ -72,6 +72,7 @@ div.kanban-table-body(*ngIf="items", [class.kanban-table-nested]="nested")
                 [zoom]="zoom",
                 [project]="project",
                 [attr.data-us-id]="item.get('id')",
+                [minimized]="blockFolded[block.get('id')] || folds[status.get('id')]"
             )
 
             // TODO: fill correctly the Has stories to show input
