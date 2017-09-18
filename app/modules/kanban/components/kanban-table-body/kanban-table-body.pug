@@ -2,7 +2,7 @@ div.kanban-table-body(*ngIf="items", [class.kanban-table-nested]="nested")
     div.kanban-table-inner(*ngFor="let block of (nested? items : [items])")
         // tg-kanban-wip-limit="s",
         // tg-kanban-column-height-fixer,
-        div.kanban-uses-box.task-column.nested-main.task-row(*ngIf="nested", [class.row-fold]="blockFolded[block.get('id')]")
+        div.kanban-uss-box.task-column.nested-main.task-row(*ngIf="nested", [class.row-fold]="blockFolded[block.get('id')]")
             tg-svg.vfold.fold-action(
                 svg-icon="icon-fold-row",
                 (click)='foldBlock(block)',

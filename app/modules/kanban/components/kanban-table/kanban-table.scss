@@ -202,8 +202,19 @@ tg-kanban-table {
             padding: 0;
         }
     }
-    .kanban-uses-box {
-        background: $mass-white;
+    .kanban-uss-box {
+        background: $white;
+        padding: .5rem .5rem .5rem 1.5rem;
+        .us-title {
+            font-family: 'OpenSans-Regular', Arial, Helvetica, sans-serif;
+            font-size: 1rem;
+            margin-bottom: 0;
+            margin-right: 3rem;
+        }
+        .points-value {
+            color: $gray-light;
+            font-size: .9rem;
+        }
     }
     .task-row {
         display: flex;
