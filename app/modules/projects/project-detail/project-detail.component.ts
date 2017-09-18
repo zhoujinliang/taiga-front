@@ -58,10 +58,10 @@ export class ProjectDetailPage implements OnInit, OnDestroy {
                 ));
             }
         });
-        this.store.select((state) => state.getIn(["projects", "current-project", "id"])).subscribe((projectId) => {
-            if (projectId) {
+        this.project.subscribe((project) => {
+            if (project) {
                 this.store.dispatch(new SetProjectTimelineAction(Immutable.List(), 0, true));
-                this.store.dispatch(new FetchProjectTimelineAction(projectId, 1));
+                this.store.dispatch(new FetchProjectTimelineAction(project.get('id'), 1));
             }
         });
     }
