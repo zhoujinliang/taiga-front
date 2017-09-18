@@ -38,4 +38,4 @@
             p {{item.getIn(['member','role', 'name'])}}
 
     div(*ngFor="let attachment of item.get('attachments')")
-            div(tg-user-timeline-attachment="attachment")
+        tg-user-timeline-attachment([attachment]="attachment")
