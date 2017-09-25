@@ -1,4 +1,5 @@
 import {CommonModule} from "@angular/common";
+import { ReactiveFormsModule } from "@angular/forms";
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import { EffectsModule } from "@ngrx/effects";
@@ -21,15 +22,25 @@ import { ProjectTags } from "./project-detail/tags/project-tags.component";
 import { ProjectContactLightbox} from "./components/lb-contact-project/lb-contact-project.component";
 import { CurrentProjectsEffects } from "./projects.effects";
 
+import { CreateProjectFormActions } from "./create/components/create-project-form-actions";
+import { CreateProjectFormDescription } from "./create/components/create-project-form-description";
+import { CreateProjectFormLinks } from "./create/components/create-project-form-links";
+import { CreateProjectFormName } from "./create/components/create-project-form-name";
+import { CreateProjectFormPrivacy } from "./create/components/create-project-form-privacy";
+import { CreateProjectFormPage } from "./create/create-project-form/create-project-form.component";
+import { CreateProjectRestrictions} from "./create/create-project-restrictions/create-project-restrictions.component";
+
 @NgModule({
     imports: [
         CommonModule,
         TgCommonModule,
         TgComponentsModule,
         TgUserTimelineModule,
+        ReactiveFormsModule,
         TranslateModule.forChild({}),
         RouterModule.forChild([
             {path: "project/new", component: CreateProjectPage},
+            {path: "project/new/:type", component: CreateProjectFormPage},
             {path: "project/:slug", component: ProjectDetailPage},
             {path: "projects", component: ProjectsListing},
         ]),
@@ -39,18 +50,26 @@ import { CurrentProjectsEffects } from "./projects.effects";
         ProjectsListing,
         ProjectDetailPage,
         CreateProjectPage,
+        CreateProjectFormPage,
     ],
     declarations: [
         ProjectsListing,
         ProjectDetailPage,
         ProjectContactLightbox,
         CreateProjectPage,
+        CreateProjectFormPage,
         ProjectInfo,
         ProjectData,
         ProjectTags,
         LikeProjectButton,
         WatchProjectButton,
         ContactProjectButton,
+        CreateProjectFormActions,
+        CreateProjectFormDescription,
+        CreateProjectFormLinks,
+        CreateProjectFormName,
+        CreateProjectFormPrivacy,
+        CreateProjectRestrictions,
     ],
     providers: [
     ],

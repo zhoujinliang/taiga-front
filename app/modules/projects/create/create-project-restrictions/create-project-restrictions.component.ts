@@ -17,13 +17,15 @@
  * File: create-project-restrictions.directive.coffee
  */
 
-export let createProjectRestrictionsDirective = () =>
-    ({
-        scope: {
-            isPrivate: "=",
-            canCreatePrivateProjects: "=",
-            canCreatePublicProjects: "=",
-        },
-        templateUrl: "projects/create/create-project-restrictions/create-project-restrictions.html",
-    })
-;
+import {Component, Input} from "@angular/core";
+import * as Immutable from "immutable";
+
+@Component({
+    selector: "tg-create-project-restrictions",
+    template: require("./create-project-restrictions.pug"),
+})
+export class CreateProjectRestrictions {
+    @Input() isPrivate: boolean;
+    @Input() canCreatePrivateProjects: any = { valid: true };
+    @Input() canCreatePublicProjects: any = { valid: false, reason: "max_public_projects"};
+}
