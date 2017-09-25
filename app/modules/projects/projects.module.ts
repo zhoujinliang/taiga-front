@@ -22,12 +22,12 @@ import { ProjectTags } from "./project-detail/tags/project-tags.component";
 import { ProjectContactLightbox} from "./components/lb-contact-project/lb-contact-project.component";
 import { CurrentProjectsEffects } from "./projects.effects";
 
-import { CreateProjectFormActions } from "./create/components/create-project-form-actions";
-import { CreateProjectFormDescription } from "./create/components/create-project-form-description";
-import { CreateProjectFormLinks } from "./create/components/create-project-form-links";
-import { CreateProjectFormName } from "./create/components/create-project-form-name";
-import { CreateProjectFormBaseProject } from "./create/components/create-project-form-base-project";
-import { CreateProjectFormPrivacy } from "./create/components/create-project-form-privacy";
+import { CreateProjectFormActions } from "./create/components/create-project-form-actions.component";
+import { CreateProjectFormDescription } from "./create/components/create-project-form-description.component";
+import { CreateProjectFormLinks } from "./create/components/create-project-form-links.component";
+import { CreateProjectFormName } from "./create/components/create-project-form-name.component";
+import { CreateProjectFormBaseProject } from "./create/components/create-project-form-base-project.component";
+import { CreateProjectFormPrivacy } from "./create/components/create-project-form-privacy.component";
 import { CreateProjectFormPage } from "./create/create-project-form/create-project-form.component";
 import { CreateProjectRestrictions} from "./create/create-project-restrictions/create-project-restrictions.component";
 
