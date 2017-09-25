@@ -1,0 +1,18 @@
+fieldset([formGroup]="form")
+    fieldset.duplicate-project-reference.e2e-duplicate-project-reference
+        select(
+            formControlName="value",
+            name="base-project",
+            autofocus
+        )
+            option(
+                value="",
+                disabled,
+                selected,
+                translate="PROJECT.DUPLICATE.SELECT_PLACEHOLDER"
+            )
+            option(
+                *ngFor="let p of projects",
+                [value]="p.get('id')"
+            ) {{p.get('name')}}
+    tg-field-error([control]="form.controls.value")

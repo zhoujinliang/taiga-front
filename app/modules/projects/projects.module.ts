@@ -26,6 +26,7 @@ import { CreateProjectFormActions } from "./create/components/create-project-for
 import { CreateProjectFormDescription } from "./create/components/create-project-form-description";
 import { CreateProjectFormLinks } from "./create/components/create-project-form-links";
 import { CreateProjectFormName } from "./create/components/create-project-form-name";
+import { CreateProjectFormBaseProject } from "./create/components/create-project-form-base-project";
 import { CreateProjectFormPrivacy } from "./create/components/create-project-form-privacy";
 import { CreateProjectFormPage } from "./create/create-project-form/create-project-form.component";
 import { CreateProjectRestrictions} from "./create/create-project-restrictions/create-project-restrictions.component";
@@ -68,6 +69,7 @@ import { CreateProjectRestrictions} from "./create/create-project-restrictions/c
         CreateProjectFormDescription,
         CreateProjectFormLinks,
         CreateProjectFormName,
+        CreateProjectFormBaseProject,
         CreateProjectFormPrivacy,
         CreateProjectRestrictions,
     ],

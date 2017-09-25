@@ -23,12 +23,13 @@ import {Store} from "@ngrx/store";
 import {IState} from "../../../../app.store";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
-import { Subscription } from "rxjs";
+import { Subscription, Observable } from "rxjs";
 
 @Component({
     template: require("./create-project-form.pug"),
 })
 export class CreateProjectFormPage {
+    projects: Observable<Immutable.List<any>>;
     type: string;
     projectForm: FormGroup;
 
@@ -36,10 +37,12 @@ export class CreateProjectFormPage {
                 private route: ActivatedRoute,
                 private fb: FormBuilder) {
         this.projectForm = this.fb.group({
+            project: this.fb.group({value: ["", Validators.required]}),
             name: this.fb.group({value: ["", Validators.required]}),
             description: this.fb.group({value: ""}),
             privacy: this.fb.group({value: false}),
         })
+        this.projects = this.store.select((state) => state.getIn(["projects", "user-projects"]));
     }
 
     ngOnInit() {
