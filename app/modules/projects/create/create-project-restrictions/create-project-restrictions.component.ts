@@ -26,6 +26,6 @@ import * as Immutable from "immutable";
 })
 export class CreateProjectRestrictions {
     @Input() isPrivate: boolean;
-    @Input() canCreatePrivateProjects: any = { valid: true };
-    @Input() canCreatePublicProjects: any = { valid: false, reason: "max_public_projects"};
+    @Input() canCreatePrivateProjects:any = {};
+    @Input() canCreatePublicProjects:any = {};
 }

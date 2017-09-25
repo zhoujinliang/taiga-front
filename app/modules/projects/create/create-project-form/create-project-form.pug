@@ -30,9 +30,9 @@
         tg-create-project-form-privacy([form]="projectForm.controls.privacy")
 
         tg-create-project-restrictions(
-            is-private="projectForm.value.is_private"
-            can-create-public-projects="vm.canCreatePublicProjects"
-            can-create-private-projects="vm.canCreatePrivateProjects"
+            [isPrivate]="projectForm.controls.privacy.value",
+            canCreatePublicProjects="canCreatePublicProjects | async",
+            canCreatePrivateProjects="canCreatePrivateProjects | async"
         )
 
         tg-create-project-form-actions([form]="projectForm", (cancel)="cancelCreation()")
