@@ -6,7 +6,7 @@ a(
 
 div.navbar-dropdown.dropdown-project-list
     ul
-      li(*ngFor="let project of projects")
+      li(*ngFor="let project of projects.take(8)")
         a(
             [routerLink]='["/project", project.get("slug")]',
             [class.blocked-project]="project.get('blocked_code')"
