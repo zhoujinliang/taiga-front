@@ -24,12 +24,14 @@ import {IState} from "../../../../app.store";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription, Observable } from "rxjs";
+import { CreateProjectAction, DuplicateProjectAction} from "../../projects.actions";
 
 @Component({
     template: require("./create-project-form.pug"),
 })
 export class CreateProjectFormPage {
     projects: Observable<Immutable.List<any>>;
+    members: Observable<Immutable.List<any>>;
     canCreatePrivateProjects: Observable<any>;
     canCreatePublicProjects: Observable<any>;
     type: string;
@@ -39,12 +41,23 @@ export class CreateProjectFormPage {
                 private route: ActivatedRoute,
                 private fb: FormBuilder) {
         this.projectForm = this.fb.group({
-            project: this.fb.group({value: ["", Validators.required]}),
             name: this.fb.group({value: ["", Validators.required]}),
-            description: this.fb.group({value: ""}),
+            description: this.fb.group({value: ["", Validators.required]}),
             privacy: this.fb.group({value: false}),
         })
+        if (this.type === "duplicate") {
+            this.projectForm.controls.project = this.fb.group({value: ["", Validators.required]});
+        }
         this.projects = this.store.select((state) => state.getIn(["projects", "user-projects"]));
+        this.members = this.store.select((state) => state.getIn(["projects", "user-projects"]))
+                                 .map((projects) => {
+                                     const projectId = this.projectForm.controls.project.value
+                                     const project = projects.filter((project) => project.get('id') == projectId).first();
+                                     if (project) {
+                                         return project.get('members');
+                                     }
+                                     return Immutable.List();
+                                 });
         this.canCreatePrivateProjects = this.store.select((state) => state.getIn(["auth", "user"]))
                                                  .map((user) => {
                                                      const valid = user.get('max_private_projects') >= user.get('total_private_projects');
@@ -69,6 +82,21 @@ export class CreateProjectFormPage {
                                                          reason: reason
                                                      }
                                                  });
+    }
+
+    onSubmit() {
+        if (this.projectForm.valid) {
+            const name = this.projectForm.value.name.value;
+            const description = this.projectForm.value.description.value;
+            const privacy = this.projectForm.value.privacy.value;
+            if (this.type == "duplicate") {
+                const baseProject = this.projectForm.value.project.value;
+                // TODO Include members as last paramter
+                this.store.dispatch(new DuplicateProjectAction(baseProject, name, description, privacy, []))
+            } else {
+                this.store.dispatch(new CreateProjectAction(this.type, name, description, privacy))
+            }
+        }
     }
 
     ngOnInit() {

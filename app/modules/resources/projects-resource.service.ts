@@ -258,7 +258,7 @@ loompas, try it with a smaller than (${sizeFormat(maxFileSize)})`,
     create(data) {
         const url = this.urls.resolve("projects");
 
-        return this.http.post(url, JSON.stringify(data))
+        return this.http.post(url, data)
             .map((result: any) => Immutable.fromJS(result.data));
     }
 

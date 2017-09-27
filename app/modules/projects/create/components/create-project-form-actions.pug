@@ -7,7 +7,9 @@
     )
     button.button-green.create-project-action-submit.e2e-create-project-action-submit(
         type="submit",
-        [disabled]="!form.valid",
-        *tgLoading="'project-create-form-submit'",
-        translate="PROJECT.CREATE.TITLE"
+        [disabled]="!form.valid"
     )
+        span(
+            *tgLoading="'creating-project'",
+            translate="PROJECT.CREATE.TITLE"
+        )

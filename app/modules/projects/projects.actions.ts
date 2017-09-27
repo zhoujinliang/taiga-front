@@ -93,3 +93,21 @@ export class ProjectContactAction implements Action {
       this.payload = {project, message};
   };
 }
+
+export class CreateProjectAction implements Action {
+  readonly type = "PROJECT_CREATE";
+  public payload: any;
+
+  constructor(type, name, description, isPrivate) {
+      this.payload = {type, name, description, isPrivate};
+  };
+}
+
+export class DuplicateProjectAction implements Action {
+  readonly type = "PROJECT_DUPLICATE";
+  public payload: any;
+
+  constructor(projectId, name, description, isPrivate, importedMembers) {
+      this.payload = {projectId, name, description, isPrivate, importedMembers};
+  };
+}

@@ -11,6 +11,7 @@ import { ResourcesService } from "../resources/resources.service";
 import * as actions from "./projects.actions";
 import {StartLoadingItemAction, StopLoadingItemAction, CloseLightboxAction} from "../../app.actions";
 import {wrapLoading} from "../utils/effects";
+import {GoAction} from "../../router.actions";
 
 @Injectable()
 export class CurrentProjectsEffects {
@@ -104,6 +105,26 @@ export class CurrentProjectsEffects {
         .flatMap(wrapLoading("contact-project", ({project, message}) => {
           return this.rs.projects.contactProject(project.get('id'), message).map(() => {
               return new CloseLightboxAction();
+          });
+        }));
+
+    @Effect()
+    createProject$: Observable<Action> = this.actions$
+        .ofType("PROJECT_CREATE")
+        .map(toPayload)
+        .flatMap(wrapLoading("creating-project", ({type, name, description, isPrivate}) => {
+          return this.rs.projects.create({creation_template: type === "scrum" ? 1 : 2, name, description, is_private: isPrivate}).map((project) => {
+              return new GoAction(['/project', project.get('slug')]);
+          });
+        }));
+
+    @Effect()
+    duplicateProject$: Observable<Action> = this.actions$
+        .ofType("PROJECT_DUPLICATE")
+        .map(toPayload)
+        .flatMap(wrapLoading("creating-project", ({projectId, name, description, isPrivate}) => {
+          return this.rs.projects.duplicate(projectId, {name, description, is_private: isPrivate}).map((project) => {
+              return new GoAction(['/project', project.get('slug')]);
           });
         }));
 

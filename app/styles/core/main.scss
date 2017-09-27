@@ -168,8 +168,8 @@
 @import '../../modules/projects/create/import/import-project';
 @import '../../modules/projects/create/import-project-members/import-project-members';
 @import '../../modules/projects/create/import-project-selector/import-project-selector';
-@import '../../modules/projects/create/invite-members/invite-members';
-@import '../../modules/projects/create/invite-members/single-member/single-member';
+@import '../../modules/projects/create/components/invite-members';
+@import '../../modules/projects/create/components/single-member';
 @import '../../modules/projects/create/jira-import/jira-import-project-form/jira-import-project-form';
 @import '../../modules/projects/create/select-import-user-lightbox/select-import-user-lightbox';
 @import '../../modules/projects/create/trello-import/trello-import-project-form/trello-import-project-form';
