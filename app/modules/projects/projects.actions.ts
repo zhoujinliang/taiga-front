@@ -19,8 +19,20 @@ export class FetchCurrentProjectAction implements Action {
   constructor(public payload: string) { }
 }
 
+export class FetchDuplicateBaseProjectMembershipsAction implements Action {
+  readonly type = "FETCH_DUPLICATE_BASE_PROJECT_MEMBERSHIPS";
+
+  constructor(public payload: string) { }
+}
+
 export class SetCurrentProjectAction implements Action {
   readonly type = "SET_CURRENT_PROJECT";
+
+  constructor(public payload: Immutable.Map<string, any>) { }
+}
+
+export class SetDuplicateBaseProjectMembershipsAction implements Action {
+  readonly type = "SET_DUPLICATE_BASE_PROJECT_MEMBERSHIPS";
 
   constructor(public payload: Immutable.Map<string, any>) { }
 }
@@ -107,7 +119,7 @@ export class DuplicateProjectAction implements Action {
   readonly type = "PROJECT_DUPLICATE";
   public payload: any;
 
-  constructor(projectId, name, description, isPrivate, importedMembers) {
-      this.payload = {projectId, name, description, isPrivate, importedMembers};
+  constructor(projectId, name, description, isPrivate, users) {
+      this.payload = {projectId, name, description, isPrivate, users};
   };
 }

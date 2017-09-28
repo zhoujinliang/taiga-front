@@ -3,7 +3,8 @@ fieldset([formGroup]="form")
         select(
             formControlName="value",
             name="base-project",
-            autofocus
+            autofocus,
+            (change)="projectChange.emit($event.target.value)"
         )
             option(
                 value="",

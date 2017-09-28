@@ -27,7 +27,8 @@
         tg-create-project-form-base-project(
             *ngIf="type === 'duplicate'",
             [form]="projectForm.controls.project",
-            [projects]="projects | async"
+            [projects]="projects | async",
+            (projectChange)="onProjectChange($event)"
         )
         tg-create-project-form-name([form]="projectForm.controls.name")
         tg-create-project-form-description([form]="projectForm.controls.description")
@@ -37,7 +38,7 @@
             *ngIf="type == 'duplicate'",
             [members]="members | async",
             [invitedMembers]="invitedMembers",
-            (onToggleInvitedMember)="toggleInvitedMember(member)"
+            (onToggleInvitedMember)="toggleInvitedMember($event)"
         )
 
         tg-create-project-restrictions(

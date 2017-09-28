@@ -40,8 +40,9 @@ export class ProjectsResource {
                 private paginateResponse: PaginateResponseService) {}
 
     get(projectId: number): any {
-        const url = this.urls.resolve("projects", projectId);
-        return this.http.get(url);
+        const url = this.urls.resolve("project", projectId);
+        return this.http.get(url)
+            .map((result: any) => Immutable.fromJS(result.data));
     }
 
     getBySlug(projectSlug: string): any {
@@ -276,7 +277,8 @@ loompas, try it with a smaller than (${sizeFormat(maxFileSize)})`,
             users: members,
         };
 
-        return this.http.post(url, params);
+        return this.http.post(url, params)
+                        .map((result: any) => Immutable.fromJS(result.data));
     }
 
     getProjects(params= {}, pagination= true): any {

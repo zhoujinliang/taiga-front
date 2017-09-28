@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import * as Immutable from "immutable";
 
 @Component({
@@ -8,4 +8,9 @@ import * as Immutable from "immutable";
 export class CreateProjectFormBaseProject {
     @Input() form: any;
     @Input() projects: Immutable.List<any>;
+    @Output() projectChange: EventEmitter<number>
+
+    constructor() {
+        this.projectChange = new EventEmitter();
+    }
 }

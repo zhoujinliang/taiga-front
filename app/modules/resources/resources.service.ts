@@ -74,6 +74,7 @@ const api_urls = {
 
     // Project
     "projects": "/projects",
+    "project": "/projects/%s",
     "project-templates": "/project-templates",
     "project-modules": "/projects/%s/modules",
     "bulk-update-projects-order": "/projects/bulk_update_order",

@@ -3,6 +3,9 @@ import * as Immutable from "immutable";
 export const projectsInitialState = {
     "user-projects": [],
     "current-project": null,
+    "create": {
+        "base-project-memberships": []
+    },
     "timeline": {
         "items": null,
         "has-next": true,
@@ -44,6 +47,8 @@ export const projectsReducer = (state, action) => {
                         .setIn(["current-project", "issue_types_by_id"], issueTypesById)
                         .setIn(["current-project", "severities_by_id"], severitiesById)
                         .setIn(["current-project", "priorities_by_id"], prioritiesById);
+        case "SET_DUPLICATE_BASE_PROJECT_MEMBERSHIPS":
+            return state.setIn(["create", "base-project-memberships"], action.payload)
         case "SET_PROJECT_TIMELINE":
             return state.setIn(["timeline", "items"], action.payload.timeline)
                         .setIn(["timeline", "has-next"], action.payload.hasNext)

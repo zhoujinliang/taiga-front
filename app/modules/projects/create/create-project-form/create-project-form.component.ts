@@ -17,49 +17,42 @@
  * File: create-project-form.component.ts
  */
 
-import {Component, Input} from "@angular/core";
+import {Component, Input, OnInit, OnDestroy} from "@angular/core";
 import * as Immutable from "immutable";
 import {Store} from "@ngrx/store";
 import {IState} from "../../../../app.store";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription, Observable } from "rxjs";
-import { CreateProjectAction, DuplicateProjectAction} from "../../projects.actions";
+import { CreateProjectAction, DuplicateProjectAction, FetchDuplicateBaseProjectMembershipsAction} from "../../projects.actions";
+import * as _ from "lodash";
 
 @Component({
     template: require("./create-project-form.pug"),
 })
-export class CreateProjectFormPage {
+export class CreateProjectFormPage implements OnInit, OnDestroy{
     projects: Observable<Immutable.List<any>>;
     members: Observable<Immutable.List<any>>;
+    user: Observable<Immutable.Map<string, any>>;
     canCreatePrivateProjects: Observable<any>;
     canCreatePublicProjects: Observable<any>;
     type: string;
     projectForm: FormGroup;
+    invitedMembers: any = {};
+    subscription: Subscription;
 
     constructor(private store: Store<IState>,
                 private route: ActivatedRoute,
                 private fb: FormBuilder) {
-        this.projectForm = this.fb.group({
-            name: this.fb.group({value: ["", Validators.required]}),
-            description: this.fb.group({value: ["", Validators.required]}),
-            privacy: this.fb.group({value: false}),
-        })
-        if (this.type === "duplicate") {
-            this.projectForm.controls.project = this.fb.group({value: ["", Validators.required]});
-        }
         this.projects = this.store.select((state) => state.getIn(["projects", "user-projects"]));
-        this.members = this.store.select((state) => state.getIn(["projects", "user-projects"]))
-                                 .map((projects) => {
-                                     const projectId = this.projectForm.controls.project.value
-                                     const project = projects.filter((project) => project.get('id') == projectId).first();
-                                     if (project) {
-                                         return project.get('members');
-                                     }
-                                     return Immutable.List();
+        this.user = this.store.select((state) => state.getIn(["auth", "user"]));
+
+        const allMembers = this.store.select((state) => state.getIn(["projects", "create", "base-project-memberships"]));
+        this.members = allMembers.combineLatest(this.user)
+                                 .map(([members, user]) => {
+                                     return members.filter((member) => member.get('user') && member.get('user') !== user.get('id'));
                                  });
-        this.canCreatePrivateProjects = this.store.select((state) => state.getIn(["auth", "user"]))
-                                                 .map((user) => {
+        this.canCreatePrivateProjects = this.user.map((user) => {
                                                      const valid = user.get('max_private_projects') >= user.get('total_private_projects');
                                                      let reason = null;
                                                      if (!valid) {
@@ -70,8 +63,7 @@ export class CreateProjectFormPage {
                                                          reason: reason
                                                      }
                                                  });
-        this.canCreatePublicProjects = this.store.select((state) => state.getIn(["auth", "user"]))
-                                                 .map((user) => {
+        this.canCreatePublicProjects = this.user.map((user) => {
                                                      const valid = user.get('max_public_projects') >= user.get('total_public_projects');
                                                      let reason = null;
                                                      if (!valid) {
@@ -91,17 +83,40 @@ export class CreateProjectFormPage {
             const privacy = this.projectForm.value.privacy.value;
             if (this.type == "duplicate") {
                 const baseProject = this.projectForm.value.project.value;
-                // TODO Include members as last paramter
-                this.store.dispatch(new DuplicateProjectAction(baseProject, name, description, privacy, []))
+                const invitedMembers = _.reduce(this.invitedMembers, (acc, value, key) => value ? acc.concat([key]) : acc, []);
+                this.store.dispatch(new DuplicateProjectAction(baseProject, name, description, privacy, invitedMembers))
             } else {
                 this.store.dispatch(new CreateProjectAction(this.type, name, description, privacy))
             }
         }
     }
 
+    onProjectChange(projectSlug) {
+        this.store.dispatch(new FetchDuplicateBaseProjectMembershipsAction(projectSlug));
+    }
+
     ngOnInit() {
         this.route.params.first().subscribe((params) => {
             this.type = params.type;
+            this.projectForm = this.fb.group({
+                name: this.fb.group({value: ["", Validators.required]}),
+                description: this.fb.group({value: ["", Validators.required]}),
+                privacy: this.fb.group({value: false}),
+            })
+            if (this.type === "duplicate") {
+                this.projectForm.controls.project = this.fb.group({value: ["", Validators.required]});
+            }
         });
+        this.subscription = this.members.subscribe((members) => {
+            this.invitedMembers = members.reduce((acc, member) => acc.set(member.get('user'), true), Immutable.Map()).toJS()
+        })
+    }
+
+    toggleInvitedMember(memberId) {
+        this.invitedMembers[memberId] = !this.invitedMembers[memberId];
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }

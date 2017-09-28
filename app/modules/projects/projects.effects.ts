@@ -25,6 +25,15 @@ export class CurrentProjectsEffects {
         });
 
     @Effect()
+    fetchBaseProjectOnDuplication$: Observable<Action> = this.actions$
+        .ofType("FETCH_DUPLICATE_BASE_PROJECT_MEMBERSHIPS")
+        .map(toPayload)
+        .switchMap((projectId) => {
+          return this.rs.memberships.list(projectId)
+              .map((memberships) => new actions.SetDuplicateBaseProjectMembershipsAction(memberships.data));
+        });
+
+    @Effect()
     fetchUserProjects$: Observable<Action> = this.actions$
         .ofType("FETCH_USER_PROJECTS")
         .map(toPayload)
@@ -122,8 +131,8 @@ export class CurrentProjectsEffects {
     duplicateProject$: Observable<Action> = this.actions$
         .ofType("PROJECT_DUPLICATE")
         .map(toPayload)
-        .flatMap(wrapLoading("creating-project", ({projectId, name, description, isPrivate}) => {
-          return this.rs.projects.duplicate(projectId, {name, description, is_private: isPrivate}).map((project) => {
+        .flatMap(wrapLoading("creating-project", ({projectId, name, description, isPrivate, users}) => {
+          return this.rs.projects.duplicate(projectId, {name, description, is_private: isPrivate, users}).map((project) => {
               return new GoAction(['/project', project.get('slug')]);
           });
         }));
