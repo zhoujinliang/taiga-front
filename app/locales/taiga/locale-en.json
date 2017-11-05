@@ -384,6 +384,7 @@
             "PROJECT": "Project",
             "SPRINT": "Sprint",
             "ASSIGNED_TO": "Assigned",
+            "OWNER": "Owner",
             "STATUS": "Status",
             "PROGRESS": "Progress",
             "VIEW_OPTIONS": "View options"

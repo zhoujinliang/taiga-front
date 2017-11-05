@@ -1387,7 +1387,8 @@
                 "VOTES": "投票数",
                 "STATUS": "状态",
                 "CREATED": "已创建",
-                "ASSIGNED_TO": "指派给"
+                "ASSIGNED_TO": "指派给",
+                "OWNER":"提交人"
             },
             "TITLE_ACTION_CHANGE_STATUS": "改变状态",
             "TITLE_ACTION_ASSIGNED_TO": "指派给",
